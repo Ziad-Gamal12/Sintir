@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "486293927261",
+    "project_id": "sintir-c1f40",
+    "storage_bucket": "sintir-c1f40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486293927261:android:c7a956cd43bad103cb64b4",
+        "android_client_info": {
+          "package_name": "com.example.sintir"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQVn7mhD-5ITb_X2MfeX7_mEAQrxXfi3I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
