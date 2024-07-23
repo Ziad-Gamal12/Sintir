@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Utils/AppRoute.dart';
-import 'package:sintir/Core/Widgets/Custom_AppIcon.dart';
+import 'package:sintir/Core/Widgets/Custom_AppIogo.dart';
 import 'package:sintir/Features/Splash/presentation/Views/Widgets/SplashView_Body_BottomLeft_Icon.dart';
 import 'package:sintir/Features/Splash/presentation/Views/Widgets/SplashView_Body_TopRight_Icon.dart';
 
@@ -23,7 +23,7 @@ class _Splashview_bodyState extends State<Splashview_body> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SplashView_Body_TopRight_Icon(),
-        Custom_AppIcon(
+        Custom_AppLogo(
           height: 150,
           width: 150,
         ),
@@ -34,9 +34,7 @@ class _Splashview_bodyState extends State<Splashview_body> {
 
   autoNavigate() {
     Future.delayed(Duration(seconds: 3), () {
-      GoRouter.of(
-        context,
-      ).pushReplacement(Approute.Onboarding);
+      GoRouter.of(context).pushReplacement(Approute.Onboarding);
     });
   }
 }

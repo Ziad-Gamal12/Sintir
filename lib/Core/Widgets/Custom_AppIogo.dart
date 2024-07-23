@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sintir/Core/Utils/imageAssets.dart';
 
-class Custom_AppIcon extends StatelessWidget {
-  const Custom_AppIcon({
+class Custom_AppLogo extends StatelessWidget {
+  const Custom_AppLogo({
     super.key,
     required this.height,
     required this.width,
@@ -11,8 +12,8 @@ class Custom_AppIcon extends StatelessWidget {
   final double width;
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      Assets.assetsImagesAppIcon,
+    return SvgPicture.asset(
+      Assets.assetsImagesAppLogo,
       height: height,
       width: width,
     );
