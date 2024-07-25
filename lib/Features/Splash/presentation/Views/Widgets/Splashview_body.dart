@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Utils/AppRoute.dart';
+import 'package:sintir/Core/Utils/shared_Preference_Keys.dart';
 import 'package:sintir/Core/Widgets/Custom_AppIogo.dart';
+import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Features/Splash/presentation/Views/Widgets/SplashView_Body_BottomLeft_Icon.dart';
 import 'package:sintir/Features/Splash/presentation/Views/Widgets/SplashView_Body_TopRight_Icon.dart';
 
@@ -33,8 +35,14 @@ class _Splashview_bodyState extends State<Splashview_body> {
   }
 
   autoNavigate() {
+    bool isonBoardingSeen = shared_preferences_Services.boolgetter(
+        key: SharedPreferenceKeys.OnboardingSeen);
     Future.delayed(Duration(seconds: 3), () {
-      GoRouter.of(context).pushReplacement(Approute.Onboarding);
+      if (isonBoardingSeen == true) {
+        GoRouter.of(context).pushReplacement(Approute.StudentSignin);
+      } else {
+        GoRouter.of(context).pushReplacement(Approute.Onboarding);
+      }
     });
   }
 }

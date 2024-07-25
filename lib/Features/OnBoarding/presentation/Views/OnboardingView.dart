@@ -5,7 +5,7 @@ class Onboardingview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Onboardingview_body(),
+      body: SafeArea(child: Onboardingview_body()),
     );
   }
 }

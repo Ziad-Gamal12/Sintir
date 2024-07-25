@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:sintir/Core/Utils/AppRoute.dart';
+import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/firebase_options.dart';
 
 import 'generated/l10n.dart';
 
 void main() async {
+  shared_preferences_Services.init();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
