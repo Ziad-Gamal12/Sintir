@@ -17,5 +17,21 @@ class Assets {
   /// Assets for assetsImagesSintirLogo
   /// assets/images/Sintir_Logo.svg
   static const String assetsImagesSintirLogo = "assets/images/Sintir_Logo.svg";
+
+  /// Assets for assetsImagesTea
+  /// assets/images/Tea.svg
+  static const String assetsImagesTea = "assets/images/Tea.svg";
+
+  /// Assets for assetsImagesTeacherOnboarding1
+  /// assets/images/TeacherOnboarding1.svg
+  static const String assetsImagesTeacherOnboarding1 = "assets/images/TeacherOnboarding1.svg";
+
+  /// Assets for assetsImagesTeacherOnboarding2
+  /// assets/images/TeacherOnboarding2.svg
+  static const String assetsImagesTeacherOnboarding2 = "assets/images/TeacherOnboarding2.svg";
+
+  /// Assets for assetsImagesTeacherOnboarding3
+  /// assets/images/TeacherOnboarding3.svg
+  static const String assetsImagesTeacherOnboarding3 = "assets/images/TeacherOnboarding3.svg";
 }
 

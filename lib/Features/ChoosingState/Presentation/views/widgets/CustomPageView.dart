@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/ChoosingState/Presentation/views/widgets/CustomPageViewItem.dart';
+import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnboardingView.dart';
 
 class Custompageview extends StatelessWidget {
   final PageController controller;
@@ -23,7 +25,9 @@ class Custompageview extends StatelessWidget {
             title: "معلم",
             description:
                 "مرحبًا بك في منصة التعليم الخاصة بالمعلمين!,نحن هنا لمساعدتك في تحسين تجربة التعليم.,ابدأ بتطوير استراتيجيات تعليمية فعّالة ومبتكرة.,طور مهارات طلابك وكن جزءًا من نجاحهم.",
-            onPressed: () {}),
+            onPressed: () {
+              GoRouter.of(context).push(TeacherOnboardingView.routeName);
+            }),
       ],
     );
   }
