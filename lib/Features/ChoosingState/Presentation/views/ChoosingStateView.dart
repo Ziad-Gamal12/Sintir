@@ -9,8 +9,8 @@ class Choosingstateview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: ChoosingstateviewBody(),
+    return Scaffold(
+      body: SafeArea(child: ChoosingstateviewBody()),
     );
   }
 }
