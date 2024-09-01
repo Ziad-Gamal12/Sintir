@@ -5,12 +5,12 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:svg_flutter/svg.dart';
 
-class TeacherPageViewItem extends StatelessWidget {
+class CustomOnboardingPageViewItem extends StatelessWidget {
   final String image;
   final Widget title;
   final String description;
 
-  const TeacherPageViewItem(
+  const CustomOnboardingPageViewItem(
       {super.key,
       required this.image,
       required this.title,

@@ -18,6 +18,18 @@ class Assets {
   /// assets/images/Sintir_Logo.svg
   static const String assetsImagesSintirLogo = "assets/images/Sintir_Logo.svg";
 
+  /// Assets for assetsImagesStudentOnboardingThree
+  /// assets/images/StudentOnboardingThree.svg
+  static const String assetsImagesStudentOnboardingThree = "assets/images/StudentOnboardingThree.svg";
+
+  /// Assets for assetsImagesStudentOnboardingTwo
+  /// assets/images/StudentOnboardingTwo.svg
+  static const String assetsImagesStudentOnboardingTwo = "assets/images/StudentOnboardingTwo.svg";
+
+  /// Assets for assetsImagesStudentOnboardingone
+  /// assets/images/StudentOnboardingone.svg
+  static const String assetsImagesStudentOnboardingone = "assets/images/StudentOnboardingone.svg";
+
   /// Assets for assetsImagesTea
   /// assets/images/Tea.svg
   static const String assetsImagesTea = "assets/images/Tea.svg";

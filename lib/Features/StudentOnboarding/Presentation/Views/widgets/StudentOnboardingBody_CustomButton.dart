@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/constant.dart';
 
-class TeachehrOnboardingBody_CustomButton extends StatelessWidget {
-  const TeachehrOnboardingBody_CustomButton({
+class StudentOnboardingBody_CustomButton extends StatelessWidget {
+  const StudentOnboardingBody_CustomButton({
     super.key,
     required this.currentPage,
     required this.pageController,

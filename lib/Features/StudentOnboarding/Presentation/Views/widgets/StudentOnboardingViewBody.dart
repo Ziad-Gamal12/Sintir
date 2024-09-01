@@ -3,18 +3,18 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomDotsIndicator.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
-import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/Widgets/TeachehrOnboardingBody_CustomButton.dart';
-import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/Widgets/TeacherOnboardingPageView.dart';
+import 'package:sintir/Features/StudentOnboarding/Presentation/Views/widgets/StudentOnboardingBody_CustomButton.dart';
+import 'package:sintir/Features/StudentOnboarding/Presentation/Views/widgets/StudentOnboardingPageView.dart';
 
-class TeacherOnboardingViewBody extends StatefulWidget {
-  const TeacherOnboardingViewBody({super.key});
+class StudentOnboardingViewBody extends StatefulWidget {
+  const StudentOnboardingViewBody({super.key});
 
   @override
-  State<TeacherOnboardingViewBody> createState() =>
-      _TeacherOnboardingViewBodyState();
+  State<StudentOnboardingViewBody> createState() =>
+      _StudentOnboardingViewBodyState();
 }
 
-class _TeacherOnboardingViewBodyState extends State<TeacherOnboardingViewBody> {
+class _StudentOnboardingViewBodyState extends State<StudentOnboardingViewBody> {
   late PageController pageController;
   int currentPage = 0;
   @override
@@ -32,13 +32,13 @@ class _TeacherOnboardingViewBodyState extends State<TeacherOnboardingViewBody> {
     return Column(
       children: [
         Expanded(
-            child: TeacherOnboardingPageView(
+            child: StudentOnboardingPageView(
           pageController: pageController,
         )),
         const Customsizedbox(width: 0, height: 64),
         CustomDotsIndicator(pageController: pageController),
         const Customsizedbox(width: 0, height: 30),
-        TeachehrOnboardingBody_CustomButton(
+        StudentOnboardingBody_CustomButton(
             currentPage: currentPage, pageController: pageController),
         const Customsizedbox(width: 0, height: 27),
       ],

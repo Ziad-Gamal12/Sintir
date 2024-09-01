@@ -1,7 +1,10 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/ChoosingState/Presentation/views/widgets/CustomPageViewItem.dart';
+import 'package:sintir/Features/StudentOnboarding/Presentation/Views/StudentOnboardingView.dart';
 import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnboardingView.dart';
 
 class Custompageview extends StatelessWidget {
@@ -19,7 +22,9 @@ class Custompageview extends StatelessWidget {
             title: "طالب",
             description:
                 "مرحبًا بك في عالم التعلم والمعرفة!,اكتشف المحتوى المثير وطور مهاراتك.نحن هنا لدعمك في رحلتك التعليمية.ابدأ مغامرتك التعليمية معنا الآن!",
-            onPressed: () {}),
+            onPressed: () {
+              GoRouter.of(context).push(StudentOnboardingView.routeName);
+            }),
         Custompageviewitem(
             image: Assets.assetsImagesChooseTeacher,
             title: "معلم",
