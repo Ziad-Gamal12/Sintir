@@ -13,12 +13,13 @@ class TeacherSignUpAddressFiled extends StatelessWidget {
         hintText: "العنوان",
         prefixIcon: Icons.location_on_outlined,
         obscureText: false,
-        controller: Variables.TeacherAdressController,
+        controller: Variables.TeacherSigninAdressController,
         textInputType: TextInputType.streetAddress,
         validator: (value) {
           if (value!.isEmpty) {
             return "ادخل العنوان";
           }
+          return null;
         });
   }
 }

@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomTeaxtField.dart';
 
-class TeacherPasswordTextField extends StatefulWidget {
-  const TeacherPasswordTextField({super.key});
+class TeacherSigninPasswordTextField extends StatefulWidget {
+  const TeacherSigninPasswordTextField({super.key});
 
   @override
-  State<TeacherPasswordTextField> createState() =>
+  State<TeacherSigninPasswordTextField> createState() =>
       _TeacherPasswordTextFieldState();
 }
 
-class _TeacherPasswordTextFieldState extends State<TeacherPasswordTextField> {
+class _TeacherPasswordTextFieldState
+    extends State<TeacherSigninPasswordTextField> {
   bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class _TeacherPasswordTextFieldState extends State<TeacherPasswordTextField> {
         hintText: "كلمة المرور",
         prefixIcon: Icons.lock_outline,
         obscureText: _obscureText,
-        controller: Variables.TeacherPasswordController,
+        controller: Variables.TeacherSigninPasswordController,
         textInputType: TextInputType.visiblePassword,
         validator: (value) {
           if (value!.isEmpty) {

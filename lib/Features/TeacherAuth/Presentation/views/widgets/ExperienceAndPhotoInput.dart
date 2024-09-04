@@ -19,7 +19,7 @@ class ExperienceAndPhotoInput extends StatelessWidget {
               hintText: "عدد سنين الخبرة",
               prefixIcon: Icons.work_history_outlined,
               obscureText: false,
-              controller: Variables.TeacherWorkExperienceController,
+              controller: Variables.TeacherSigninWorkExperienceController,
               textInputType: TextInputType.number,
               validator: (value) {
                 if (value!.isEmpty) {

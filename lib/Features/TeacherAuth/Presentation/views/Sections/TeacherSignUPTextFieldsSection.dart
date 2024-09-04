@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/ExperienceAndPhotoInput.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/GenderSelectionInput.dart';
-import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/TeacherPasswordTextField.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/TeacherSignFirstAndLastNameField.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/TeacherSignUSubjectFiled.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/TeacherSignUpAddressFiled.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/TeacherSignUpEmailAddressFiled.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/TeacherSignUpPhoneNumberFiled.dart';
+import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/TeacherSigninPasswordTextField.dart';
 
 class TeacherSignUPTextFieldsSection extends StatefulWidget {
   const TeacherSignUPTextFieldsSection({
@@ -57,7 +57,7 @@ class _TeacherSignUPTextFieldsSectionState
           ),
         ),
         const Customsizedbox(width: 0, height: 10),
-        const TeacherPasswordTextField()
+        const TeacherSigninPasswordTextField()
       ],
     );
   }

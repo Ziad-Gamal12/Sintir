@@ -23,7 +23,8 @@ class _TeacherSignUpViewBodyState extends State<TeacherSignUpViewBody> {
       child: Form(
         child: Padding(
           padding: const EdgeInsets.symmetric(
-              horizontal: KHorizontalPadding, vertical: 28.0),
+            horizontal: KHorizontalPadding,
+          ),
           child: Column(
             children: [
               TeacherSignUPTextFieldsSection(

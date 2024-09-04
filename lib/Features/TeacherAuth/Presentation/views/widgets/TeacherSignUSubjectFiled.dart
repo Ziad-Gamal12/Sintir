@@ -13,7 +13,7 @@ class TeacherSignUSubjectFiled extends StatelessWidget {
         hintText: "المادة الدراسية",
         prefixIcon: Icons.menu_book_rounded,
         obscureText: false,
-        controller: Variables.TeacherSubjectController,
+        controller: Variables.TeacherSigninSubjectController,
         textInputType: TextInputType.text,
         validator: (value) {
           if (value!.isEmpty) {

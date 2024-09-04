@@ -3,19 +3,24 @@
 import 'package:flutter/material.dart';
 
 abstract class Variables {
-  static TextEditingController TeacherFirstNameController =
+  static TextEditingController TeacherSigninFirstNameController =
       TextEditingController();
-  static TextEditingController TeacherLastNameController =
+  static TextEditingController TeacherSigninLastNameController =
       TextEditingController();
-  static TextEditingController TeacherEmailController = TextEditingController();
-  static TextEditingController TeacherPasswordController =
+  static TextEditingController TeacherSigninEmailController =
       TextEditingController();
-  static TextEditingController TeacherAdressController =
+  static TextEditingController TeacherSigninPasswordController =
       TextEditingController();
-  static TextEditingController TeacherPhoneNumberController =
+  static TextEditingController TeacherSigninAdressController =
       TextEditingController();
-  static TextEditingController TeacherSubjectController =
+  static TextEditingController TeacherSigninPhoneNumberController =
       TextEditingController();
-  static TextEditingController TeacherWorkExperienceController =
+  static TextEditingController TeacherSigninSubjectController =
+      TextEditingController();
+  static TextEditingController TeacherSigninWorkExperienceController =
+      TextEditingController();
+  static TextEditingController TeacherLoginEmailController =
+      TextEditingController();
+  static TextEditingController TeacherLoginPasswordController =
       TextEditingController();
 }
