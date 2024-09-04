@@ -1,33 +1,13 @@
 {
   "project_info": {
-    "project_number": "225896905150",
-    "firebase_url": "https://chat-app-47e62-default-rtdb.firebaseio.com",
-    "project_id": "chat-app-47e62",
-    "storage_bucket": "chat-app-47e62.appspot.com"
+    "project_number": "769176418060",
+    "project_id": "sintir-2f0be",
+    "storage_bucket": "sintir-2f0be.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:225896905150:android:16ee7617e899e754b761ef",
-        "android_client_info": {
-          "package_name": "com.example.chat_appp"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDErjIrH1pFs3cEo_MOglUG9Ni9lPhgwyU"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:225896905150:android:3c802a945c4f76cdb761ef",
+        "mobilesdk_app_id": "1:769176418060:android:bed9337fd11ff52c837b29",
         "android_client_info": {
           "package_name": "com.example.sintir"
         }
@@ -35,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDErjIrH1pFs3cEo_MOglUG9Ni9lPhgwyU"
+          "current_key": "AIzaSyCqFN733F9JsJf88OE-d-3GtddIzDiXNPA"
         }
       ],
       "services": {
