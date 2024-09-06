@@ -21,7 +21,7 @@ class TeacherSignFirstAndLastNameField extends StatelessWidget {
               hintText: "الأسم الأول",
               prefixIcon: Icons.person_2_outlined,
               obscureText: false,
-              controller: Variables.TeacherSigninFirstNameController,
+              controller: Variables.TeacherSignUpFirstNameController,
               textInputType: TextInputType.name,
               validator: (value) {
                 if (value!.isEmpty) {
@@ -38,7 +38,7 @@ class TeacherSignFirstAndLastNameField extends StatelessWidget {
               hintText: "الأسم الأخير",
               prefixIcon: Icons.person_2_outlined,
               obscureText: false,
-              controller: Variables.TeacherSigninLastNameController,
+              controller: Variables.TeacherSignUpLastNameController,
               textInputType: TextInputType.name,
               validator: (value) {
                 if (value!.isEmpty) {

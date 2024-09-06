@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
+import 'package:sintir/Features/TeacherAuth/Presentation/manager/TeacherSignUP/teacher_sign_up_cubit.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/ExperienceAndPhotoInput.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/GenderSelectionInput.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/TeacherSignFirstAndLastNameField.dart';
@@ -17,11 +18,13 @@ class TeacherSignUPTextFieldsSection extends StatefulWidget {
     required this.width,
     required this.radiovalue,
     required this.onchanged,
+    required this.state,
   });
 
   final double width;
   final String? radiovalue;
   final ValueChanged<String?> onchanged;
+  final TeacherSignUpState state;
 
   @override
   State<TeacherSignUPTextFieldsSection> createState() =>
@@ -50,7 +53,9 @@ class _TeacherSignUPTextFieldsSectionState
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const ExperienceAndPhotoInput(),
+              ExperienceAndPhotoInput(
+                state: widget.state,
+              ),
               GenderSelectionInput(
                   onChanged: widget.onchanged,
                   radiovalue: widget.radiovalue ?? "ذكر",

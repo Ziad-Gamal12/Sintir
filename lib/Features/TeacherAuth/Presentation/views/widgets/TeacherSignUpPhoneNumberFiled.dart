@@ -13,7 +13,7 @@ class TeacherSignUpPhoneNumberFiled extends StatelessWidget {
         hintText: "رقم التليفون",
         prefixIcon: Icons.phone_outlined,
         obscureText: false,
-        controller: Variables.TeacherSigninPhoneNumberController,
+        controller: Variables.TeacherSignUpPhoneNumberController,
         textInputType: TextInputType.phone,
         validator: (value) {
           if (value!.isEmpty) {

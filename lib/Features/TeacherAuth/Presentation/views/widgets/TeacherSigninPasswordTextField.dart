@@ -36,7 +36,7 @@ class _TeacherPasswordTextFieldState
         hintText: "كلمة المرور",
         prefixIcon: Icons.lock_outline,
         obscureText: _obscureText,
-        controller: Variables.TeacherSigninPasswordController,
+        controller: Variables.TeacherSignUpPasswordController,
         textInputType: TextInputType.visiblePassword,
         validator: (value) {
           if (value!.isEmpty) {
