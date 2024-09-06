@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../../Core/utils/textStyles.dart';
 
 class StudentTextRich extends StatelessWidget {
@@ -17,6 +16,7 @@ class StudentTextRich extends StatelessWidget {
                 fontWeight: AppTextStyles.bold13.fontWeight,
                 color: const Color(0xff949D9E)),
           ),
+          const TextSpan(text: " "),
           TextSpan(
             text: text2,
             style: TextStyle(
