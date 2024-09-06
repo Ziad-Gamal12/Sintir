@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
@@ -27,6 +28,7 @@ class _TeacherSignUpViewBodyState extends State<TeacherSignUpViewBody> {
           ),
           child: Column(
             children: [
+              
               TeacherSignUPTextFieldsSection(
                   onchanged: (value) {
                     radiovalue = value;
@@ -49,15 +51,21 @@ class _TeacherSignUpViewBodyState extends State<TeacherSignUpViewBody> {
                   textColor: Colors.white,
                   onPressed: () {}),
               const Customsizedbox(width: 0, height: 20),
-              Text.rich(TextSpan(children: [
-                TextSpan(
-                    text: "لديك حساب بالفعل ؟ ",
-                    style: AppTextStyles.semiBold16
-                        .copyWith(color: const Color(0xff949D9E))),
-                TextSpan(
-                    text: "تسجيل الدخول",
-                    style: AppTextStyles.semiBold16.copyWith(color: KMainColor))
-              ]))
+              GestureDetector(
+                onTap: () {
+                  GoRouter.of(context).pop();
+                },
+                child: Text.rich(TextSpan(children: [
+                  TextSpan(
+                      text: "لديك حساب بالفعل ؟ ",
+                      style: AppTextStyles.semiBold16
+                          .copyWith(color: const Color(0xff949D9E))),
+                  TextSpan(
+                      text: "تسجيل الدخول",
+                      style:
+                          AppTextStyles.semiBold16.copyWith(color: KMainColor))
+                ])),
+              )
             ],
           ),
         ),
