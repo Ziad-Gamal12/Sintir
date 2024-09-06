@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/constant.dart';
+
 import '../../../../../Core/utils/textStyles.dart';
 
 class StudentTextRich extends StatelessWidget {
@@ -11,18 +13,13 @@ class StudentTextRich extends StatelessWidget {
       TextSpan(
         children: [
           TextSpan(
-            text: text1,
-            style: TextStyle(
-                fontWeight: AppTextStyles.bold13.fontWeight,
-                color: const Color(0xff949D9E)),
-          ),
+              text: text1,
+              style: AppTextStyles.semiBold16
+                  .copyWith(color: const Color(0xff818181))),
           const TextSpan(text: " "),
           TextSpan(
-            text: text2,
-            style: TextStyle(
-                fontWeight: AppTextStyles.bold13.fontWeight,
-                color: const Color(0xff4169E2)),
-          ),
+              text: text2,
+              style: AppTextStyles.semiBold16.copyWith(color: KMainColor)),
         ],
       ),
     );

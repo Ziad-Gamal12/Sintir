@@ -2,10 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
-import 'package:sintir/Features/StudentOnboarding/Presentation/Views/pages/Student_login_screen.dart';
+import 'package:sintir/Features/StudentOnboarding/Presentation/Views/Student_login_screen.dart';
 import 'package:sintir/constant.dart';
-
-import '../StudentOnboardingView.dart';
 
 class StudentOnboardingBody_CustomButton extends StatelessWidget {
   const StudentOnboardingBody_CustomButton({
@@ -27,7 +25,8 @@ class StudentOnboardingBody_CustomButton extends StatelessWidget {
           textColor: Colors.white,
           onPressed: () {
             if (currentPage == 2) {
-              Navigator.push(context,MaterialPageRoute(builder: (context) =>  StudentLoginPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => StudentLoginPage()));
             } else {
               pageController.nextPage(
                   duration: const Duration(milliseconds: 300),

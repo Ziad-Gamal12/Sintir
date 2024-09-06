@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fruits/core/Utils/Backend_EndPoints.dart';
-import 'package:fruits/core/services/DateBaseService.dart';
+import 'package:sintir/Core/services/DateBaseService.dart';
 
 class FirebaseFirestoreservice implements Datebaseservice {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -15,10 +14,7 @@ class FirebaseFirestoreservice implements Datebaseservice {
   @override
   Future<Map<String, dynamic>> getData(
       {required String key, required String docId}) async {
-    var userEntity = await firestore
-        .collection(BackendEndpoints.addUserPath)
-        .doc(docId)
-        .get();
+    var userEntity = await firestore.collection(key).doc(docId).get();
     return userEntity.data() as Map<String, dynamic>;
   }
 

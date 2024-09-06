@@ -8,7 +8,7 @@ import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnb
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherLoginView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignUpView.dart';
 
-import '../../Features/StudentOnboarding/Presentation/Views/pages/Student_login_screen.dart';
+import '../../Features/StudentOnboarding/Presentation/Views/Student_login_screen.dart';
 
 class App_router {
   static GoRouter router = GoRouter(

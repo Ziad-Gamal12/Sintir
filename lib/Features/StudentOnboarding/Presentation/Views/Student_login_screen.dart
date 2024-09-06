@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:sintir/Features/StudentOnboarding/Presentation/Views/widgets/Student_text_rich.dart';
-import 'package:svg_flutter/svg.dart';
-import '../../../../../Core/widgets/CustomButton.dart';
-import '../../../../../Core/widgets/CustomTeaxtField.dart';
-import '../widgets/CustomButtonForGoogleApple.dart';
+import 'package:sintir/constant.dart';
+
+import '../../../../Core/widgets/CustomButton.dart';
+import '../../../../Core/widgets/CustomTeaxtField.dart';
+import 'widgets/CustomButtonForGoogleApple.dart';
 
 class StudentLoginPage extends StatefulWidget {
   static const String routeName = "/StudentLoginPage";
@@ -27,23 +28,19 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(
-            Icons.chevron_left,
-            size: 30,
+            Icons.arrow_back_ios_new_rounded,
+            size: 24,
           ),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
         centerTitle: true,
-        title: Text(
-          'تسجيل الدخول',
-          style: TextStyle(
-              fontWeight: AppTextStyles.bold19Auto.fontWeight,
-              fontSize: AppTextStyles.bold19Auto.fontSize),
-        ),
+        title: const Text('تسجيل الدخول', style: AppTextStyles.bold19Auto),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+        padding: const EdgeInsets.symmetric(
+            horizontal: KHorizontalPadding, vertical: 12),
         child: Column(
           children: [
             Customteaxtfield(
@@ -54,13 +51,13 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
               textInputType: TextInputType.text,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'يرجي ادخال الايميل';
+                  return 'يرجي ادخال البريد الالكتروني';
                 }
                 return null;
               },
             ),
             const SizedBox(
-              height: 20,
+              height: 16,
             ),
             Customteaxtfield(
               controller: Variables.StudentSigninPasswordController,
@@ -86,40 +83,34 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
                         )),
               textInputType: TextInputType.text,
               validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'يرجي ادخال الايميل';
+                if (value!.isEmpty) {
+                  return 'يرجي ادخال كلمة المرور';
                 }
                 return null;
               },
             ),
+            const Customsizedbox(width: 0, height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 5),
-                  child: InkWell(
-                    onTap: () {},
-                    child: Text('هل نسيت كلمة المرور ؟',
-                        style: TextStyle(
-                            fontWeight: AppTextStyles.bold13.fontWeight,
-                            color: const Color(0xff4169E2))),
-                  ),
+                InkWell(
+                  onTap: () {},
+                  child: Text('هل نسيت كلمة المرور ؟',
+                      style: AppTextStyles.semiBold13Auto
+                          .copyWith(color: KMainColor)),
                 )
               ],
             ),
-            const SizedBox(
-              height: 25,
-            ),
+            const Customsizedbox(width: 0, height: 30),
             Custombutton(
               color: const Color(0xff4169E2),
               onPressed: () {},
               text: 'تسجيل الدخول',
               textColor: Colors.white,
             ),
-            const SizedBox(
-              height: 30,
-            ),
-            InkWell(
+            const Customsizedbox(width: 0, height: 30),
+
+            GestureDetector(
               onTap: () {},
               child: const StudentTextRich(
                 text1: 'ليس لديك حساب؟',
@@ -127,7 +118,7 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
               ),
             ),
             const SizedBox(
-              height: 50,
+              height: 55,
             ),
             Row(
               children: [
@@ -156,7 +147,7 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
               ],
             ),
             const SizedBox(
-              height: 20,
+              height: 30,
             ),
             const Custom_button(
                 image: Assets.assetsImagesGoogle,

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/ExperienceAndPhotoInput.dart';
