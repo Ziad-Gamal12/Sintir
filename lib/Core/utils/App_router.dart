@@ -8,6 +8,8 @@ import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnb
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherLoginView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignUpView.dart';
 
+import '../../Features/StudentOnboarding/Presentation/Views/pages/Student_login_screen.dart';
+
 class App_router {
   static GoRouter router = GoRouter(
     routes: <RouteBase>[
@@ -44,9 +46,15 @@ class App_router {
       GoRoute(
         path: TeacherLoginView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return TeacherLoginView();
+          return const TeacherLoginView();
         },
       ),
+      GoRoute(
+        path: StudentLoginPage.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const StudentLoginPage();
+        },
+      )
     ],
   );
 }

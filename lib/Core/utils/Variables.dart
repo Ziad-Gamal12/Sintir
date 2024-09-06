@@ -23,4 +23,8 @@ abstract class Variables {
       TextEditingController();
   static TextEditingController TeacherLoginPasswordController =
       TextEditingController();
+      static TextEditingController StudentSigninEmailController =
+      TextEditingController();
+  static TextEditingController StudentSigninPasswordController =
+      TextEditingController();
 }
