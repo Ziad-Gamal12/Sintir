@@ -11,13 +11,34 @@ part 'teacher_sign_up_state.dart';
 class TeacherSignUpCubit extends Cubit<TeacherSignUpState> {
   TeacherSignUpCubit(this.teacherAuthRepos) : super(TeacherSignUpInitial());
   final TeacherAuthRepos teacherAuthRepos;
-  Future<void> createUserWithEmailAndPassword(
-      {required String email,
-      required String password,
-      required String name}) async {
+  Future<void> createUserWithEmailAndPassword({
+    required String email,
+    required String password,
+    required String name,
+    required String firstName,
+    required String lastName,
+    required String address,
+    required String phoneNumber,
+    required String subject,
+    required String workExperience,
+    required String gender,
+    required String profilePicurl,
+    required String state,
+  }) async {
     emit(TeacherSignUpLoading());
     var result = await teacherAuthRepos.createUserWithEmailAndPassword(
-        email: email, password: password, name: name);
+        email: email,
+        password: password,
+        name: name,
+        firstName: firstName,
+        lastName: lastName,
+        address: address,
+        phoneNumber: phoneNumber,
+        subject: subject,
+        workExperience: workExperience,
+        gender: gender,
+        profilePicurl: profilePicurl,
+        state: state);
     result.fold((failure) {
       emit(TeacherSignUpFailure(errmessage: failure.message));
     }, (teacherEntity) {
@@ -25,13 +46,14 @@ class TeacherSignUpCubit extends Cubit<TeacherSignUpState> {
     });
   }
 
-  Future<void> uploadProfilePicture({required ImageSource source}) async {
-    emit(UploadProfilePictureLoading());
+  Future<void> uploadTeacherProfilePicture(
+      {required ImageSource source}) async {
+    emit(UploadTeacherProfilePictureLoading());
     var result = await teacherAuthRepos.uploadProfilePoc(source: source);
     result.fold((failure) {
-      emit(UploadProfilePictureFailure(errmessage: failure.message));
+      emit(UploadTeacherProfilePictureFailure(errmessage: failure.message));
     }, (url) {
-      emit(UploadProfilePictureSuccess(url: url));
+      emit(UploadTeacherProfilePictureSuccess(url: url));
     });
   }
 }

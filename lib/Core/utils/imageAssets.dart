@@ -6,6 +6,10 @@ class Assets {
   /// assets/images/AddressIcon.svg
   static const String assetsImagesAddressIcon = "assets/images/AddressIcon.svg";
 
+  /// Assets for assetsImagesApple
+  /// assets/images/apple.svg
+  static const String assetsImagesApple = "assets/images/apple.svg";
+
   /// Assets for assetsImagesCheckedIcon
   /// assets/images/Checked_icon.svg
   static const String assetsImagesCheckedIcon =
@@ -35,6 +39,10 @@ class Assets {
   static const String assetsImagesFirstNameIcon =
       "assets/images/FirstNameIcon.svg";
 
+  /// Assets for assetsImagesGoogle
+  /// assets/images/google.svg
+  static const String assetsImagesGoogle = "assets/images/google.svg";
+
   /// Assets for assetsImagesPadlockIcon
   /// assets/images/padlockIcon.svg
   static const String assetsImagesPadlockIcon = "assets/images/padlockIcon.svg";
@@ -46,6 +54,10 @@ class Assets {
   /// Assets for assetsImagesSintirLogo
   /// assets/images/Sintir_Logo.svg
   static const String assetsImagesSintirLogo = "assets/images/Sintir_Logo.svg";
+
+  /// Assets for assetsImagesSocial Icons
+  /// assets/images/Social Icons.svg
+  static const String assetsImagesSocialIcons = "assets/images/SocialIcons.svg";
 
   /// Assets for assetsImagesStudentOnboardingThree
   /// assets/images/StudentOnboardingThree.svg
@@ -65,6 +77,11 @@ class Assets {
   /// Assets for assetsImagesSubjectIcon
   /// assets/images/SubjectIcon.svg
   static const String assetsImagesSubjectIcon = "assets/images/SubjectIcon.svg";
+
+  /// Assets for assetsImagesSuccessAinmatedIcon
+  /// assets/images/SuccessAinmatedIcon.gif
+  static const String assetsImagesSuccessAinmatedIcon =
+      "assets/images/SuccessAinmatedIcon.gif";
 
   /// Assets for assetsImagesTea
   /// assets/images/Tea.svg
@@ -94,10 +111,4 @@ class Assets {
   /// assets/images/UploadPicIcon.svg
   static const String assetsImagesUploadPicIcon =
       "assets/images/UploadPicIcon.svg";
-
-  static const String assetsImagesGoogle = 'assets/images/google.svg';
-
-  static const String assetsImagesApple = 'assets/images/apple.svg';
-
-  static const String assetsImagesFacebook = 'assets/images/Social Icons.svg';
 }

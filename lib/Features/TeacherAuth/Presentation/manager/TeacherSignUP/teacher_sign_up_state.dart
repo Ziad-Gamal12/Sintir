@@ -21,16 +21,16 @@ final class TeacherSignUpFailure extends TeacherSignUpState {
   TeacherSignUpFailure({required this.errmessage});
 }
 
-final class UploadProfilePictureLoading extends TeacherSignUpState {}
+final class UploadTeacherProfilePictureLoading extends TeacherSignUpState {}
 
-final class UploadProfilePictureSuccess extends TeacherSignUpState {
+final class UploadTeacherProfilePictureSuccess extends TeacherSignUpState {
   final String url;
 
-  UploadProfilePictureSuccess({required this.url});
+  UploadTeacherProfilePictureSuccess({required this.url});
 }
 
-final class UploadProfilePictureFailure extends TeacherSignUpState {
+final class UploadTeacherProfilePictureFailure extends TeacherSignUpState {
   final String errmessage;
 
-  UploadProfilePictureFailure({required this.errmessage});
+  UploadTeacherProfilePictureFailure({required this.errmessage});
 }

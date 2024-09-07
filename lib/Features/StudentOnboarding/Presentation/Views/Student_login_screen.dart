@@ -168,7 +168,7 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
               height: 15,
             ),
             Custom_button(
-              image: Assets.assetsImagesFacebook,
+              image: Assets.assetsImagesSocialIcons,
               padding: 40,
               text: 'تسجيل بواسطة فيس بوك',
               // icon: FontAwesomeIcons.facebook,

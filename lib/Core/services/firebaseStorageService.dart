@@ -14,9 +14,9 @@ class firebasestorageservice {
   final Pickerassetsservice pickerassetsservice;
   firebasestorageservice({required this.pickerassetsservice});
 
-  Future<String> uploadFile({required ImageSource source}) async {
+  Future<String> uploadImage({required ImageSource source}) async {
     try {
-      File file = await pickerassetsservice.uploadAsset(source: source);
+      File file = await pickerassetsservice.getImage(source: source);
       String filePath = basename(file.path);
       var ref = storage.ref(filePath);
       String url =
@@ -24,7 +24,7 @@ class firebasestorageservice {
       return url;
     } catch (e) {
       log("Exception from firebasestorageservice.uploadFile in catch With Firebase Exception: ${e.toString()}");
-      throw CustomException(message: "خطأ في تحميل الملف");
+      throw CustomException(message: "خطأ في تحميل الصورة");
     }
   }
 }
