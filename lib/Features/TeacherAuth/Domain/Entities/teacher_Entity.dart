@@ -13,7 +13,8 @@ class teacherEntity {
   final String profilePicurl;
   final String stete;
   final List socialLinks;
-
+  final String kind; //teacher or Studednt
+  final String joinedDate;
   teacherEntity(
       {required this.firstName,
       required this.lastName,
@@ -26,7 +27,9 @@ class teacherEntity {
       required this.gender,
       required this.profilePicurl,
       required this.stete,
-      required this.socialLinks});
+      required this.socialLinks,
+      required this.kind,
+      required this.joinedDate});
   toMap() {
     return {
       "firstName": firstName,
@@ -40,7 +43,9 @@ class teacherEntity {
       "gender": gender,
       "profilePicurl": profilePicurl,
       "stete": stete,
-      "socialLinks": socialLinks
+      "socialLinks": socialLinks,
+      "kind": kind,
+      "joinedDate": joinedDate
     };
   }
 }

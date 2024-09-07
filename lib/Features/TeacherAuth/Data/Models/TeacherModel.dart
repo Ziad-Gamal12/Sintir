@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sintir/Features/TeacherAuth/Domain/Entities/Teacher_Entity.dart';
 
@@ -16,7 +17,9 @@ class Teachermodel extends teacherEntity {
       required super.gender,
       required super.profilePicurl,
       required super.stete,
-      required super.socialLinks});
+      required super.socialLinks,
+      required super.kind,
+      required super.joinedDate});
 
   factory Teachermodel.fromFirebase({
     required User user,
@@ -43,6 +46,8 @@ class Teachermodel extends teacherEntity {
       gender: gender,
       stete: state,
       socialLinks: [],
+      kind: 'teacher',
+      joinedDate: Timestamp.now().toString(),
     );
   }
 }
