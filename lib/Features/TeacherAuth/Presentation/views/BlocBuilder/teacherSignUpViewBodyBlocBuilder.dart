@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, file_names
 
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/Variables.dart';
@@ -12,22 +12,32 @@ import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/teacherSi
 import 'package:sintir/constant.dart';
 
 // ignore: must_be_immutable
-class teacherSignUpViewBodyBlocBuilder extends StatelessWidget {
-  teacherSignUpViewBodyBlocBuilder({
+class teacherSignUpViewBodyBlocBuilder extends StatefulWidget {
+  const teacherSignUpViewBodyBlocBuilder({
     super.key,
     required this.width,
     required this.state,
   });
   final TeacherSignUpState state;
   final double width;
+
+  @override
+  State<teacherSignUpViewBodyBlocBuilder> createState() =>
+      _teacherSignUpViewBodyBlocBuilderState();
+}
+
+class _teacherSignUpViewBodyBlocBuilderState
+    extends State<teacherSignUpViewBodyBlocBuilder> {
   String? radiovalue;
+
   bool isChecked = false;
+
   String? profilepictureUrl;
 
   @override
   Widget build(BuildContext context) {
     return Custom_Loading_Widget(
-      isLoading: state is TeacherSignUpLoading ? true : false,
+      isLoading: widget.state is TeacherSignUpLoading ? true : false,
       child: SingleChildScrollView(
         child: Form(
           key: Variables.TeacherSignUpFormKey,
@@ -40,11 +50,13 @@ class teacherSignUpViewBodyBlocBuilder extends StatelessWidget {
                 TeacherSignUPTextFieldsSection(
                   onPictureChanged: (value) {
                     profilepictureUrl = value;
+                    setState(() {});
                   },
-                  width: width,
+                  width: widget.width,
                   radiovalue: radiovalue,
                   onchanged: (String? value) {
                     radiovalue = value;
+                    setState(() {});
                   },
                 ),
                 const Customsizedbox(width: 0, height: 20),
@@ -52,6 +64,7 @@ class teacherSignUpViewBodyBlocBuilder extends StatelessWidget {
                     textonpressed: () {},
                     onchanged: (value) {
                       isChecked = value;
+                      setState(() {});
                     }),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.02,

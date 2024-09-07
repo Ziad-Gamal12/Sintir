@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, use_super_parameters
+
 class Failure {
   final String message;
   Failure({required this.message});

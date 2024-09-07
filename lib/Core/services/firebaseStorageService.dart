@@ -27,4 +27,8 @@ class firebasestorageservice {
       throw CustomException(message: "خطأ في تحميل الصورة");
     }
   }
+
+  Future<void> deleteImage({required String url}) async {
+    await storage.refFromURL(url).delete();
+  }
 }

@@ -46,7 +46,7 @@ class teacherSignUpViewBodyCustomButton extends StatelessWidget {
                         subject: Variables.TeacherSignUpSubjectController.text,
                         workExperience: Variables
                             .TeacherSignUpWorkExperienceController.text,
-                        gender: radiovalue!,
+                        gender: radiovalue ?? "ذكر",
                         profilePicurl: profilepictureUrl!,
                         state: BackendEndpoints.waiting);
               } else {

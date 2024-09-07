@@ -19,7 +19,7 @@ class TeacherSignUpViewBody extends StatelessWidget {
           successdialog(
               context: context,
               SuccessMessage:
-                  "تم ارسال طلب انضمامك الى طاقم المعلمين بنجاح\nسيتم التواصل معك في اقرب وقت",
+                  "تم ارسال طلب انضمامك بنجاح\nسيتم التواصل معك في اقرب وقت",
               btnOkOnPress: () {
                 GoRouter.of(context).pop();
               }).show();

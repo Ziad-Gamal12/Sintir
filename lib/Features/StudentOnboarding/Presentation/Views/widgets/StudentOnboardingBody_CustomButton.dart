@@ -25,8 +25,10 @@ class StudentOnboardingBody_CustomButton extends StatelessWidget {
           textColor: Colors.white,
           onPressed: () {
             if (currentPage == 2) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => StudentLoginPage()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const StudentLoginPage()));
             } else {
               pageController.nextPage(
                   duration: const Duration(milliseconds: 300),

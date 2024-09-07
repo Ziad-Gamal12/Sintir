@@ -60,6 +60,7 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
       return right(teacherentity);
     } on CustomException catch (e) {
       DeleteUser(user);
+
       return left(ServerFailure(message: e.message));
     } catch (e) {
       log("Exception from teacherAuthRepos_Impli.createUserWithEmailAndPassword in catch With Firebase Exception: ${e.toString()}");
@@ -94,5 +95,10 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
     if (user != null) {
       await authService.deleteUSer();
     }
+  }
+
+  @override
+  Future<void> deleteImage({required String url}) async {
+    await firebaseStorageService.deleteImage(url: url);
   }
 }

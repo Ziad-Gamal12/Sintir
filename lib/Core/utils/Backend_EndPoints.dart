@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 class BackendEndpoints {
   static String addTeacherDataCollectionName = "Teachers";
   static String emailKey = "email";

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 abstract class Datebaseservice {
   Future<void> setData(
       {required String key,
