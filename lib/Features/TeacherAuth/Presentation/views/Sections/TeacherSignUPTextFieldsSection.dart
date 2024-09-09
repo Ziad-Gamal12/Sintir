@@ -52,7 +52,7 @@ class _TeacherSignUPTextFieldsSectionState
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ExperienceAndPhotoInput(
+              ExperienceAndPhotoForm(
                 onPictureChanged: widget.onPictureChanged,
               ),
               GenderSelectionInput(

@@ -18,7 +18,7 @@ class Custompageview extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       children: [
         Custompageviewitem(
-            image: Assets.assetsImagesChooseStudent,
+            image: Assets.assetsImagesChoosingStateStudentIcon,
             title: "طالب",
             description:
                 "مرحبًا بك في عالم التعلم والمعرفة!,اكتشف المحتوى المثير وطور مهاراتك.نحن هنا لدعمك في رحلتك التعليمية.ابدأ مغامرتك التعليمية معنا الآن!",
@@ -26,7 +26,7 @@ class Custompageview extends StatelessWidget {
               GoRouter.of(context).push(StudentOnboardingView.routeName);
             }),
         Custompageviewitem(
-            image: Assets.assetsImagesChooseTeacher,
+            image: Assets.assetsImagesChoosignStateTeacherIcon,
             title: "معلم",
             description:
                 "مرحبًا بك في منصة التعليم الخاصة بالمعلمين!,نحن هنا لمساعدتك في تحسين تجربة التعليم.,ابدأ بتطوير استراتيجيات تعليمية فعّالة ومبتكرة.,طور مهارات طلابك وكن جزءًا من نجاحهم.",

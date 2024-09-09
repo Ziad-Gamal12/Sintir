@@ -29,19 +29,21 @@ class _StudentOnboardingViewBodyState extends State<StudentOnboardingViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-            child: StudentOnboardingPageView(
-          pageController: pageController,
-        )),
-        const Customsizedbox(width: 0, height: 64),
-        CustomDotsIndicator(pageController: pageController),
-        const Customsizedbox(width: 0, height: 30),
-        StudentOnboardingBody_CustomButton(
-            currentPage: currentPage, pageController: pageController),
-        const Customsizedbox(width: 0, height: 27),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 30),
+      child: Column(
+        children: [
+          Expanded(
+              child: StudentOnboardingPageView(
+            pageController: pageController,
+          )),
+          const Customsizedbox(width: 0, height: 64),
+          CustomDotsIndicator(pageController: pageController),
+          const Customsizedbox(width: 0, height: 30),
+          StudentOnboardingBody_CustomButton(
+              currentPage: currentPage, pageController: pageController),
+        ],
+      ),
     );
   }
 }
