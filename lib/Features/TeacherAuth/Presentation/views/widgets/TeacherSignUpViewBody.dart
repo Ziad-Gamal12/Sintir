@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, file_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +19,7 @@ class TeacherSignUpViewBody extends StatelessWidget {
           successdialog(
               context: context,
               SuccessMessage:
-                  "تم ارسال طلب انضمامك بنجاح\nسيتم التواصل معك في اقرب وقت!",
+                  "سيتم مراجعة طلبك للأنضام لهيئة المعلمبن في اقرب وقت!",
               btnOkOnPress: () {
                 GoRouter.of(context).pop();
               }).show();

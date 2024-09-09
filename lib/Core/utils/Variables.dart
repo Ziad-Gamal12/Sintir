@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 abstract class Variables {
   static GlobalKey<FormState> TeacherSignUpFormKey = GlobalKey<FormState>();
+  static GlobalKey<FormState> TeacherLoginFormKey = GlobalKey<FormState>();
   static TextEditingController TeacherSignUpFirstNameController =
       TextEditingController();
   static TextEditingController TeacherSignUpLastNameController =

@@ -2,10 +2,6 @@
 class Assets {
   Assets._();
   
-  /// Assets for assetsImagesAddressIcon
-  /// assets/images/AddressIcon.svg
-  static const String assetsImagesAddressIcon = "assets/images/AddressIcon.svg";
-
   /// Assets for assetsImagesApple
   /// assets/images/apple.svg
   static const String assetsImagesApple = "assets/images/apple.svg";
@@ -13,14 +9,6 @@ class Assets {
   /// Assets for assetsImagesCheckedIcon
   /// assets/images/Checked_icon.svg
   static const String assetsImagesCheckedIcon = "assets/images/Checked_icon.svg";
-
-  /// Assets for assetsImagesChooseStudent
-  /// assets/images/Choose_Student.svg
-  static const String assetsImagesChooseStudent = "assets/images/Choose_Student.svg";
-
-  /// Assets for assetsImagesChooseTeacher
-  /// assets/images/Choose_Teacher.svg
-  static const String assetsImagesChooseTeacher = "assets/images/Choose_Teacher.svg";
 
   /// Assets for assetsImagesChoosignStateTeacherIcon
   /// assets/images/ChoosignStateTeacherIcon.svg
@@ -30,25 +18,9 @@ class Assets {
   /// assets/images/ChoosingStateStudentIcon.svg
   static const String assetsImagesChoosingStateStudentIcon = "assets/images/ChoosingStateStudentIcon.svg";
 
-  /// Assets for assetsImagesEmailIcon
-  /// assets/images/emailIcon.svg
-  static const String assetsImagesEmailIcon = "assets/images/emailIcon.svg";
-
-  /// Assets for assetsImagesExperienceYearsIcon
-  /// assets/images/ExperienceYearsIcon.svg
-  static const String assetsImagesExperienceYearsIcon = "assets/images/ExperienceYearsIcon.svg";
-
-  /// Assets for assetsImagesFirstNameIcon
-  /// assets/images/FirstNameIcon.svg
-  static const String assetsImagesFirstNameIcon = "assets/images/FirstNameIcon.svg";
-
   /// Assets for assetsImagesGoogle
   /// assets/images/google.svg
   static const String assetsImagesGoogle = "assets/images/google.svg";
-
-  /// Assets for assetsImagesPadlockIcon
-  /// assets/images/padlockIcon.svg
-  static const String assetsImagesPadlockIcon = "assets/images/padlockIcon.svg";
 
   /// Assets for assetsImagesSintirIcon
   /// assets/images/Sintir_Icon.png
@@ -74,14 +46,6 @@ class Assets {
   /// assets/images/StudentOnboardingone.svg
   static const String assetsImagesStudentOnboardingone = "assets/images/StudentOnboardingone.svg";
 
-  /// Assets for assetsImagesSubjectIcon
-  /// assets/images/SubjectIcon.svg
-  static const String assetsImagesSubjectIcon = "assets/images/SubjectIcon.svg";
-
-  /// Assets for assetsImagesSuccessAinmatedIcon
-  /// assets/images/SuccessAinmatedIcon.gif
-  static const String assetsImagesSuccessAinmatedIcon = "assets/images/SuccessAinmatedIcon.gif";
-
   /// Assets for assetsImagesTea
   /// assets/images/Tea.svg
   static const String assetsImagesTea = "assets/images/Tea.svg";
@@ -97,13 +61,5 @@ class Assets {
   /// Assets for assetsImagesTeacherOnboarding3
   /// assets/images/TeacherOnboarding3.svg
   static const String assetsImagesTeacherOnboarding3 = "assets/images/TeacherOnboarding3.svg";
-
-  /// Assets for assetsImagesTelephoneIcon
-  /// assets/images/telephoneIcon.svg
-  static const String assetsImagesTelephoneIcon = "assets/images/telephoneIcon.svg";
-
-  /// Assets for assetsImagesUploadPicIcon
-  /// assets/images/UploadPicIcon.svg
-  static const String assetsImagesUploadPicIcon = "assets/images/UploadPicIcon.svg";
 }
 

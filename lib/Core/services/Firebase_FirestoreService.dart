@@ -17,6 +17,7 @@ class FirebaseFirestoreservice implements Datebaseservice {
   Future<Map<String, dynamic>> getData(
       {required String key, required String docId}) async {
     var userEntity = await firestore.collection(key).doc(docId).get();
+
     return userEntity.data() as Map<String, dynamic>;
   }
 

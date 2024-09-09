@@ -50,4 +50,22 @@ class Teachermodel extends teacherEntity {
       joinedDate: Timestamp.now().toString(),
     );
   }
+  factory Teachermodel.fromMap(Map<String, dynamic> map) {
+    return Teachermodel(
+      uid: map['uid'],
+      firstName: map['firstName'],
+      lastName: map['lastName'],
+      email: map['email'],
+      profilePicurl: map['profilePicurl'],
+      phoneNumber: map['phoneNumber'],
+      address: map['address'],
+      subject: map['subject'],
+      workExperience: map['workExperience'],
+      gender: map['gender'],
+      stete: map['stete'],
+      socialLinks: map['socialLinks'],
+      kind: map['kind'],
+      joinedDate: map['joinedDate'],
+    );
+  }
 }

@@ -98,7 +98,34 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
   }
 
   @override
-  Future<void> deleteImage({required String url}) async {
-    await firebaseStorageService.deleteImage(url: url);
+  Future<Either<Failure, teacherEntity>> signInWithEmailAndPassword(
+      {required String email, required String password}) async {
+    try {
+      User user = await authService.signInWithEmailAndPassword(email, password);
+      var teacherentity = await getTeacherData(docId: user.uid);
+      if (teacherentity.stete == BackendEndpoints.agreed) {
+        return right(teacherentity);
+      } else if (teacherentity.stete == BackendEndpoints.waiting) {
+        return left(
+            ServerFailure(message: "الطالب قيد المراجعة من قبل الادارة"));
+      } else {
+        return left(ServerFailure(message: "تم رفض طلبك من قبل الادارة"));
+      }
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.toString()));
+    } catch (e) {
+      log("Exception from teacherAuthRepos_Impli.signInWithEmailAndPassword in catch With Firebase Exception: ${e.toString()}");
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+
+  @override
+  Future<teacherEntity> getTeacherData({required String docId}) async {
+    Map<String, dynamic> data = await dataBaseService.getData(
+        key: BackendEndpoints.getTeacherDataCollectionName, docId: docId);
+
+    teacherEntity teacherentity = Teachermodel.fromMap(data);
+    log(teacherentity.toString());
+    return (teacherentity);
   }
 }

@@ -24,5 +24,7 @@ abstract class TeacherAuthRepos {
       {required String key,
       required Map<String, dynamic> data,
       required String docId});
-  Future<void> deleteImage({required String url});
+  Future<Either<Failure, teacherEntity>> signInWithEmailAndPassword(
+      {required String email, required String password});
+  Future<teacherEntity> getTeacherData({required String docId});
 }

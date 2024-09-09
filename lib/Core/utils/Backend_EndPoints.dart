@@ -2,8 +2,10 @@
 
 class BackendEndpoints {
   static String addTeacherDataCollectionName = "Teachers";
+  static String getTeacherDataCollectionName = "Teachers";
   static String emailKey = "email";
   static String passwordKey = "password";
+  static String uidKey = "uid";
   static String nameKey = "name";
   static String firstNameKey = "firstName";
   static String lastNameKey = "lastName";
@@ -17,4 +19,7 @@ class BackendEndpoints {
   static String waiting = "Waiting";
   static String agreed = "Agreed";
   static String rejected = "Rejected";
+  static String socialLinksKey = "socialLinks";
+  static String kindKey = "kind";
+  static String joinedDateKey = "joinedDate";
 }
