@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Features/ChoosingState/Presentation/views/ChoosingStateView.dart';
 import 'package:sintir/Features/Splash/Presentation/views/SplashView.dart';
+import 'package:sintir/Features/StudentOnboarding/Presentation/Views/ResetPasswordPage.dart';
 import 'package:sintir/Features/StudentOnboarding/Presentation/Views/StudentOnboardingView.dart';
 import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnboardingView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherLoginView.dart';
@@ -55,6 +56,13 @@ class App_router {
         builder: (BuildContext context, GoRouterState state) {
           return const StudentLoginPage();
         },
+      ),
+      GoRoute(
+        path: ResetPasswordPage.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const ResetPasswordPage();
+        },
+      ),
       ),
       GoRoute(
         path: teacherResetPasswordView.routeName,
