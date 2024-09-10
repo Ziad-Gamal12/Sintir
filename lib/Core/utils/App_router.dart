@@ -7,6 +7,7 @@ import 'package:sintir/Features/StudentOnboarding/Presentation/Views/StudentOnbo
 import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnboardingView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherLoginView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignUpView.dart';
+import 'package:sintir/Features/TeacherAuth/Presentation/views/teacherResetPasswordView.dart';
 
 import '../../Features/StudentOnboarding/Presentation/Views/Student_login_screen.dart';
 
@@ -53,6 +54,12 @@ class App_router {
         path: StudentLoginPage.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const StudentLoginPage();
+        },
+      ),
+      GoRoute(
+        path: teacherResetPasswordView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const teacherResetPasswordView();
         },
       )
     ],

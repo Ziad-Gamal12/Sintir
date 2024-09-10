@@ -100,8 +100,9 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
   @override
   Future<Either<Failure, teacherEntity>> signInWithEmailAndPassword(
       {required String email, required String password}) async {
+    User? user;
     try {
-      User user = await authService.signInWithEmailAndPassword(email, password);
+      user = await authService.signInWithEmailAndPassword(email, password);
       var teacherentity = await getTeacherData(docId: user.uid);
       if (teacherentity.stete == BackendEndpoints.agreed) {
         return right(teacherentity);
@@ -112,10 +113,19 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
         return left(ServerFailure(message: "تم رفض طلبك من قبل الادارة"));
       }
     } on CustomException catch (e) {
+      await teacherSignout(user);
+
       return left(ServerFailure(message: e.toString()));
     } catch (e) {
       log("Exception from teacherAuthRepos_Impli.signInWithEmailAndPassword in catch With Firebase Exception: ${e.toString()}");
+      await teacherSignout(user);
       return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+
+  Future<void> teacherSignout(User? user) async {
+    if (user != null) {
+      await authService.signout();
     }
   }
 
@@ -127,5 +137,10 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
     teacherEntity teacherentity = Teachermodel.fromMap(data);
     log(teacherentity.toString());
     return (teacherentity);
+  }
+
+  @override
+  Future<void> resetPassword({required String email}) async {
+    await authService.resetPassword(email: email);
   }
 }

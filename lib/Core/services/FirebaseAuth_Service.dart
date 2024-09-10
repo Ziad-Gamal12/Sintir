@@ -218,4 +218,31 @@ class firebaseAuthService {
   Future<void> deleteUSer() async {
     await auth.currentUser!.delete();
   }
+
+  Future<void> signout() async {
+    await auth.signOut();
+  }
+
+  Future<void> resetPassword({required String email}) async {
+    try {
+      await auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        throw CustomException(message: 'لا يوجد مستخدم بهذا البريد الالكتروني');
+      } else if (e.code == "network-request-failed") {
+        throw CustomException(message: "لا يوجد اتصال بالانترنت");
+      } else if (e.code == "internal-error") {
+        throw CustomException(
+            message: "هناك عطل داخلى سوف يتم حل هذا العطل فى اقرب وقت");
+      } else if (e.code == "user-disabled") {
+        throw CustomException(message: "تم تعطيل حسابك");
+      } else if (e.code == "too-many-requests") {
+        throw CustomException(
+            message: "لقد تم تجميع الطلبات المسموح بها من قبل");
+      } else {
+        log("Exception from FirebaseAuthService.resetPassword: ${e.toString()}");
+        throw CustomException(message: "حدث خطأ ما");
+      }
+    }
+  }
 }

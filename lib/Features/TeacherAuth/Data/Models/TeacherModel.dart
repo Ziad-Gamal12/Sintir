@@ -47,7 +47,7 @@ class Teachermodel extends teacherEntity {
       stete: state,
       socialLinks: [],
       kind: 'teacher',
-      joinedDate: Timestamp.now().toString(),
+      joinedDate: Timestamp.now().toDate().toString(),
     );
   }
   factory Teachermodel.fromMap(Map<String, dynamic> map) {
