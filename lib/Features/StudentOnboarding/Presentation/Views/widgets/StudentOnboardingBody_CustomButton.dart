@@ -1,8 +1,9 @@
 // ignore_for_file: file_names, camel_case_types
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
-import 'package:sintir/Features/StudentOnboarding/Presentation/Views/Student_login_screen.dart';
+import 'package:sintir/Features/StudenetAuth/presentation/views/Student_Sign_In_View.dart';
 import 'package:sintir/constant.dart';
 
 class StudentOnboardingBody_CustomButton extends StatelessWidget {
@@ -25,10 +26,7 @@ class StudentOnboardingBody_CustomButton extends StatelessWidget {
           textColor: Colors.white,
           onPressed: () {
             if (currentPage == 2) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const StudentLoginPage()));
+              GoRouter.of(context).push(StudentSignInView.routeName);
             } else {
               pageController.nextPage(
                   duration: const Duration(milliseconds: 300),

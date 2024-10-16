@@ -6,6 +6,10 @@ class Assets {
   /// assets/images/apple.svg
   static const String assetsImagesApple = "assets/images/apple.svg";
 
+  /// Assets for assetsImagesArrowLeftBack
+  /// assets/images/arrowLeftBack.svg
+  static const String assetsImagesArrowLeftBack = "assets/images/arrowLeftBack.svg";
+
   /// Assets for assetsImagesCheckedIcon
   /// assets/images/Checked_icon.svg
   static const String assetsImagesCheckedIcon = "assets/images/Checked_icon.svg";
@@ -18,9 +22,21 @@ class Assets {
   /// assets/images/ChoosingStateStudentIcon.svg
   static const String assetsImagesChoosingStateStudentIcon = "assets/images/ChoosingStateStudentIcon.svg";
 
+  /// Assets for assetsImagesFaceBookIcons
+  /// assets/images/faceBookIcons.svg
+  static const String assetsImagesFaceBookIcons = "assets/images/faceBookIcons.svg";
+
   /// Assets for assetsImagesGoogle
   /// assets/images/google.svg
   static const String assetsImagesGoogle = "assets/images/google.svg";
+
+  /// Assets for assetsImagesNotification
+  /// assets/images/notification.svg
+  static const String assetsImagesNotification = "assets/images/notification.svg";
+
+  /// Assets for assetsImagesProfilePicture
+  /// assets/images/Profile_Picture.svg
+  static const String assetsImagesProfilePicture = "assets/images/Profile_Picture.svg";
 
   /// Assets for assetsImagesSintirIcon
   /// assets/images/Sintir_Icon.png
@@ -29,10 +45,6 @@ class Assets {
   /// Assets for assetsImagesSintirLogo
   /// assets/images/Sintir_Logo.svg
   static const String assetsImagesSintirLogo = "assets/images/Sintir_Logo.svg";
-
-  /// Assets for assetsImagesSocialIcons
-  /// assets/images/SocialIcons.svg
-  static const String assetsImagesSocialIcons = "assets/images/SocialIcons.svg";
 
   /// Assets for assetsImagesStudentOnboardingThree
   /// assets/images/StudentOnboardingThree.svg

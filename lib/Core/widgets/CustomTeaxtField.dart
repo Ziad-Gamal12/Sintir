@@ -27,9 +27,7 @@ class Customteaxtfield extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var border = OutlineInputBorder(
-        borderSide: const BorderSide(color: Color(0xFFE6E9EA), width: 1.0),
-        borderRadius: BorderRadius.circular(4));
+    var border = const OutlineInputBorder(borderSide: BorderSide.none);
     return TextFormField(
       inputFormatters: inputFormatters,
       controller: controller,

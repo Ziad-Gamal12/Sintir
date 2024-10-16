@@ -114,7 +114,7 @@ class AppTextStyles {
   );
 
   static const TextStyle bold19Auto = TextStyle(
-    fontWeight: FontWeight.w700, // Bold
+    fontWeight: FontWeight.bold, // Bold
     fontSize: 19,
   );
 

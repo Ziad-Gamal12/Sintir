@@ -15,7 +15,7 @@ class BackendEndpoints {
   static String workExperienceKey = "workExperience";
   static String genderKey = "gender";
   static String profilePicurlKey = "profilePicurl";
-  static String stateKey = "state"; //Waiting or Agreed or Rejected
+  static String steteKey = "stete"; //Waiting or Agreed or Rejected
   static String waiting = "Waiting";
   static String agreed = "Agreed";
   static String rejected = "Rejected";

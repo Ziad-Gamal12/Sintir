@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Features/ChoosingState/Presentation/views/ChoosingStateView.dart';
 import 'package:sintir/Features/Splash/Presentation/views/SplashView.dart';
-import 'package:sintir/Features/StudentOnboarding/Presentation/Views/ResetPasswordPage.dart';
+import 'package:sintir/Features/StudenetAuth/presentation/views/Student_Sign_In_View.dart';
 import 'package:sintir/Features/StudentOnboarding/Presentation/Views/StudentOnboardingView.dart';
 import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnboardingView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherLoginView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignUpView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/teacherResetPasswordView.dart';
-
-import '../../Features/StudentOnboarding/Presentation/Views/Student_login_screen.dart';
+import 'package:sintir/Features/TeacherAuth/Presentation/views/teacherTermsAndConditionsView.dart';
 
 class App_router {
   static GoRouter router = GoRouter(
@@ -52,22 +51,21 @@ class App_router {
         },
       ),
       GoRoute(
-        path: StudentLoginPage.routeName,
-        builder: (BuildContext context, GoRouterState state) {
-          return const StudentLoginPage();
-        },
-      ),
-      GoRoute(
-        path: ResetPasswordPage.routeName,
-        builder: (BuildContext context, GoRouterState state) {
-          return const ResetPasswordPage();
-        },
-      ),
-      ),
-      GoRoute(
         path: teacherResetPasswordView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const teacherResetPasswordView();
+        },
+      ),
+      GoRoute(
+        path: Teachertermsandconditionsview.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const Teachertermsandconditionsview();
+        },
+      ),
+      GoRoute(
+        path: StudentSignInView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const StudentSignInView();
         },
       )
     ],

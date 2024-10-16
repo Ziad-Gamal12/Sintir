@@ -109,8 +109,10 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
       } else if (teacherentity.stete == BackendEndpoints.waiting) {
         return left(
             ServerFailure(message: "الطالب قيد المراجعة من قبل الادارة"));
-      } else {
+      } else if (teacherentity.stete == BackendEndpoints.rejected) {
         return left(ServerFailure(message: "تم رفض طلبك من قبل الادارة"));
+      } else {
+        return left(ServerFailure(message: "حدث خطأ ما"));
       }
     } on CustomException catch (e) {
       await teacherSignout(user);

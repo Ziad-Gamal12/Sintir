@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sintir/Core/services/BlocObserver.dart';
+import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/App_router.dart';
 import 'package:sintir/constant.dart';
@@ -11,6 +12,7 @@ import 'package:sintir/generated/l10n.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  shared_preferences_Services.init();
   setup_Getit();
   Bloc.observer = Custom_Blocobserver();
   runApp(const Sintir());

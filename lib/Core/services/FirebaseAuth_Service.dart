@@ -227,6 +227,7 @@ class firebaseAuthService {
     try {
       await auth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
+      log("Exception from FirebaseAuthService.resetPassword in catch With Firebase Exception: ${e.toString()} and the Firebase Code is ${e.code}");
       if (e.code == 'user-not-found') {
         throw CustomException(message: 'لا يوجد مستخدم بهذا البريد الالكتروني');
       } else if (e.code == "network-request-failed") {
@@ -239,6 +240,8 @@ class firebaseAuthService {
       } else if (e.code == "too-many-requests") {
         throw CustomException(
             message: "لقد تم تجميع الطلبات المسموح بها من قبل");
+      } else if (e.code == "invalid-email") {
+        throw CustomException(message: "البريد الالكتروني غير صالح");
       } else {
         log("Exception from FirebaseAuthService.resetPassword: ${e.toString()}");
         throw CustomException(message: "حدث خطأ ما");

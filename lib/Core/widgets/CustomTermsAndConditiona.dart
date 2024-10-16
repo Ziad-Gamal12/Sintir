@@ -19,18 +19,21 @@ class Customtermsandconditiona extends StatelessWidget {
         Customcheckbox(onChanged: onchanged),
         const Customsizedbox(width: 16, height: 0),
         Expanded(
-          child: SizedBox(
-            child: Text.rich(TextSpan(children: [
-              TextSpan(
-                  text: "من خلال إنشاء حساب ، فإنك توافق على",
-                  style: AppTextStyles.semiBold13Auto
-                      .copyWith(color: const Color(0xff949D9E))),
-              const TextSpan(text: " "),
-              TextSpan(
-                  text: "الشروط والأحكام الخاصة بنا ",
-                  style:
-                      AppTextStyles.semiBold13Auto.copyWith(color: KMainColor))
-            ])),
+          child: GestureDetector(
+            onTap: textonpressed,
+            child: SizedBox(
+              child: Text.rich(TextSpan(children: [
+                TextSpan(
+                    text: "من خلال إنشاء حساب ، فإنك توافق على",
+                    style: AppTextStyles.semiBold13Auto
+                        .copyWith(color: const Color(0xff949D9E))),
+                const TextSpan(text: " "),
+                TextSpan(
+                    text: "الشروط والأحكام الخاصة بنا ",
+                    style: AppTextStyles.semiBold13Auto
+                        .copyWith(color: KMainColor))
+              ])),
+            ),
           ),
         )
       ],

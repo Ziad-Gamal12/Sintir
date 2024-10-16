@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignUpView.dart';
 import 'package:sintir/constant.dart';
 
-class TeacherLoginViewBodyDonotHaveAccountText extends StatelessWidget {
-  const TeacherLoginViewBodyDonotHaveAccountText({
+class CustomLoginViewBodyDonotHaveAccountText extends StatelessWidget {
+  const CustomLoginViewBodyDonotHaveAccountText({
     super.key,
+    required this.onTap,
   });
-
+  final void Function() onTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        GoRouter.of(context).push(TeacherSignUpView.routeName);
-      },
+      onTap: onTap,
       child: Text.rich(TextSpan(children: [
         TextSpan(
             text: "ليس لديك حساب؟ ",

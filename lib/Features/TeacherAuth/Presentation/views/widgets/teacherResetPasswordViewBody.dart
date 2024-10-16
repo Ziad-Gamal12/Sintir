@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
-import 'package:sintir/Features/TeacherAuth/Presentation/manager/teacherResetPassword/teacher_reset_password_cubit.dart';
+import 'package:sintir/Features/TeacherAuth/Presentation/manager/cubit/teacher_reset_password_cubit.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/BlocBuilder/teacherResetPasswordViewBodyBlocBuilder.dart';
 
 class teacherResetPasswordViewBody extends StatelessWidget {
