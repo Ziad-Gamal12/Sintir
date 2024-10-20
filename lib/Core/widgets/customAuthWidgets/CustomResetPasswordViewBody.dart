@@ -3,30 +3,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sintir/Core/Cusbits/Custom_reset_password_cubit/Custom_reset_password_cubit.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
-import 'package:sintir/Features/TeacherAuth/Presentation/manager/cubit/teacher_reset_password_cubit.dart';
-import 'package:sintir/Features/TeacherAuth/Presentation/views/BlocBuilder/teacherResetPasswordViewBodyBlocBuilder.dart';
+import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordViewBodyBlocBuilder.dart';
 
-class teacherResetPasswordViewBody extends StatelessWidget {
-  const teacherResetPasswordViewBody({super.key});
+class CustomResetPasswordViewBody extends StatelessWidget {
+  const CustomResetPasswordViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<TeacherResetPasswordCubit, TeacherResetPasswordState>(
+    return BlocConsumer<CustomResetPasswordCubit, CustomResetPasswordState>(
       listener: (context, state) {
-        if (state is TeacherResetPasswordSuccess) {
+        if (state is CustomResetPasswordSuccess) {
           successdialog(
               context: context,
               SuccessMessage: "بنجاح,تم ارسال رسالة تحقق على بريدك الالكتروني",
               btnOkOnPress: () {
                 GoRouter.of(context).pop();
               }).show();
-        } else if (state is TeacherResetPasswordFailure) {
+        } else if (state is CustomResetPasswordFailure) {
           errordialog(context, state.errmessage).show();
         }
       },
       builder: (context, state) {
-        return teacherResetPasswordViewBodyBlocBuilder(
+        return CustomResetPasswordViewBodyBlocBuilder(
           state: state,
         );
       },

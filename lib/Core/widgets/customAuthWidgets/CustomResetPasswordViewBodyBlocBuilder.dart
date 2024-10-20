@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/Cusbits/Custom_reset_password_cubit/Custom_reset_password_cubit.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:sintir/Core/widgets/CustomTeaxtField.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
-import 'package:sintir/Features/TeacherAuth/Presentation/manager/cubit/teacher_reset_password_cubit.dart';
 import 'package:sintir/constant.dart';
 
-class teacherResetPasswordViewBodyBlocBuilder extends StatelessWidget {
-  const teacherResetPasswordViewBodyBlocBuilder({
+class CustomResetPasswordViewBodyBlocBuilder extends StatelessWidget {
+  const CustomResetPasswordViewBodyBlocBuilder({
     super.key,
     required this.state,
   });
-  final TeacherResetPasswordState state;
+  final CustomResetPasswordState state;
   @override
   Widget build(BuildContext context) {
     return Custom_Loading_Widget(
-      isLoading: state is TeacherResetPasswordLoading ? true : false,
+      isLoading: state is CustomResetPasswordLoading ? true : false,
       child: Form(
         key: Variables.TeacherResetPasswordFormKey,
         child: Padding(
@@ -60,7 +60,7 @@ class teacherResetPasswordViewBodyBlocBuilder extends StatelessWidget {
                     if (Variables.TeacherResetPasswordFormKey.currentState!
                         .validate()) {
                       context
-                          .read<TeacherResetPasswordCubit>()
+                          .read<CustomResetPasswordCubit>()
                           .sendResetPasswordEmail(
                               email: Variables.ResetPasswordController.text);
                     }

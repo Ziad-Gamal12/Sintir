@@ -3,6 +3,9 @@
 class BackendEndpoints {
   static String addTeacherDataCollectionName = "Teachers";
   static String getTeacherDataCollectionName = "Teachers";
+  static String addStudentDataCollectionName = "Students";
+
+  static String chieckIsStudentPhoneNumberExistCollectionName = "Students";
   static String emailKey = "email";
   static String passwordKey = "password";
   static String uidKey = "uid";

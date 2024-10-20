@@ -27,4 +27,16 @@ class FirebaseFirestoreservice implements Datebaseservice {
     var isExists = await firestore.collection(key).doc(docId).get();
     return isExists.exists;
   }
+
+  @override
+  Future<bool> isFeildExists(
+      {required String key,
+      required String feild,
+      required String feildValue}) async {
+    QuerySnapshot<Map<String, dynamic>> fileds = await firestore
+        .collection(key)
+        .where(feild, isEqualTo: feildValue)
+        .get();
+    return fileds.docs.isEmpty ? false : true;
+  }
 }

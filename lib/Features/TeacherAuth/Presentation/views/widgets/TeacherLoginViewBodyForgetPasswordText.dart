@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/TeacherAuth/Presentation/views/teacherResetPasswordView.dart';
+import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordView.dart';
 import 'package:sintir/constant.dart';
 
 class TeacherLoginViewBodyForgetPasswordText extends StatelessWidget {
@@ -16,7 +16,7 @@ class TeacherLoginViewBodyForgetPasswordText extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            GoRouter.of(context).push(teacherResetPasswordView.routeName);
+            GoRouter.of(context).push(CustomResetPasswordView.routeName);
           },
           child: Text(
             "نسيت كلمة المرور؟",

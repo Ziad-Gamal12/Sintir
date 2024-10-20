@@ -55,7 +55,7 @@ class _SigninTextfiledsectionState
             hintText: "كلمة المرور",
             prefixIcon: Icons.lock_outline,
             obscureText: _obscureText,
-            controller: Variables.TeacherLoginPasswordController,
+            controller: Variables.StudentSigninPasswordController,
             textInputType: TextInputType.visiblePassword,
             validator: (value) {
               if (value!.isEmpty) {

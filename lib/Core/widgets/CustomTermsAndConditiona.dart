@@ -31,7 +31,7 @@ class Customtermsandconditiona extends StatelessWidget {
                 TextSpan(
                     text: "الشروط والأحكام الخاصة بنا ",
                     style: AppTextStyles.semiBold13Auto
-                        .copyWith(color: KMainColor))
+                        .copyWith(color: KSecondaryColor))
               ])),
             ),
           ),

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 abstract class Variables {
   static GlobalKey<FormState> TeacherSignUpFormKey = GlobalKey<FormState>();
+  static GlobalKey<FormState> StudnetSignUpFormKey = GlobalKey<FormState>();
+
   static GlobalKey<FormState> TeacherLoginFormKey = GlobalKey<FormState>();
   static GlobalKey<FormState> TeacherResetPasswordFormKey =
       GlobalKey<FormState>();
@@ -32,5 +34,22 @@ abstract class Variables {
   static TextEditingController StudentSigninPasswordController =
       TextEditingController();
   static TextEditingController ResetPasswordController =
+      TextEditingController();
+  static TextEditingController studentSignUpEmailController =
+      TextEditingController();
+  static TextEditingController studentSignUpFirstNameController =
+      TextEditingController();
+  static TextEditingController studentSignUpLastNameController =
+      TextEditingController();
+  static TextEditingController studentSignUpBirthDateController =
+      TextEditingController();
+  static TextEditingController studentSignUpEducationLevelController =
+      TextEditingController();
+  static TextEditingController studentSignUpSchoolNameController =
+      TextEditingController();
+  static TextEditingController studentSignUpPasswordController =
+      TextEditingController();
+
+  static TextEditingController studentSignUpPhoneNumberController =
       TextEditingController();
 }

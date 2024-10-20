@@ -4,20 +4,18 @@ import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Core/widgets/CustomAppBar.dart';
-import 'package:sintir/Features/TeacherAuth/Domain/Repos/repos.dart';
-import 'package:sintir/Features/TeacherAuth/Presentation/manager/cubit/teacher_reset_password_cubit.dart';
-import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/teacherResetPasswordViewBody.dart';
+import 'package:sintir/Features/StudenetAuth/domain/repos/studentAuth_repo.dart';
+import 'package:sintir/Features/StudenetAuth/presentation/manager/student_sign_up_cubit/student_sign_up_cubit.dart';
+import 'package:sintir/Features/StudenetAuth/presentation/views/widgets/StudentSignupViewBody.dart';
 import 'package:svg_flutter/svg.dart';
 
-class teacherResetPasswordView extends StatelessWidget {
-  const teacherResetPasswordView({super.key});
-  static const routeName = '/teacherResetPasswordView';
+class StudentSignupView extends StatelessWidget {
+  const StudentSignupView({super.key});
+  static const routeName = "/StudentSignupView";
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TeacherResetPasswordCubit(
-          teacherAuthRepos: getIt<TeacherAuthRepos>()),
+      create: (context) => StudentSignUpCubit(getIt<StudentauthRepo>()),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -30,12 +28,12 @@ class teacherResetPasswordView extends StatelessWidget {
                 width: 30,
               )),
           title: Text(
-            "استعاده كلمة المرور",
+            "انشاء حساب",
             style: AppTextStyles.bold19Auto.copyWith(color: Colors.black),
           ),
           centerTitle: true,
         ),
-        body: const teacherResetPasswordViewBody(),
+        body: const StudentSignupViewBody(),
       ),
     );
   }

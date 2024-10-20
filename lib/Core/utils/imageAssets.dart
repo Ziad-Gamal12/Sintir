@@ -30,6 +30,10 @@ class Assets {
   /// assets/images/google.svg
   static const String assetsImagesGoogle = "assets/images/google.svg";
 
+  /// Assets for assetsImagesLevelIcon
+  /// assets/images/level_icon.svg
+  static const String assetsImagesLevelIcon = "assets/images/level_icon.svg";
+
   /// Assets for assetsImagesNotification
   /// assets/images/notification.svg
   static const String assetsImagesNotification = "assets/images/notification.svg";
