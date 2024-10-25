@@ -5,8 +5,7 @@ abstract class Datebaseservice {
       {required String key,
       required Map<String, dynamic> data,
       required String docId});
-  Future<Map<String, dynamic>> getData(
-      {required String key, required String docId});
+  Future getData({required String key, required String docId});
   Future<bool> isDataExists({required String key, required String docId});
   Future<bool> isFeildExists(
       {required String key, required String feild, required String feildValue});

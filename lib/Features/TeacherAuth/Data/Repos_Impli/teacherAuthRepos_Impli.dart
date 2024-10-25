@@ -105,19 +105,24 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
     try {
       user = await authService.signInWithEmailAndPassword(email, password);
       var teacherentity = await getTeacherData(docId: user.uid);
-      if (teacherentity.stete == BackendEndpoints.agreed) {
-        await saveTeacherData(teacherentity: teacherentity);
-        return right(teacherentity);
-      } else if (teacherentity.stete == BackendEndpoints.waiting) {
-        await teacherSignout(user);
-        return left(
-            ServerFailure(message: "الطالب قيد المراجعة من قبل الادارة"));
-      } else if (teacherentity.stete == BackendEndpoints.rejected) {
-        await teacherSignout(user);
-        return left(ServerFailure(message: "تم رفض طلبك من قبل الادارة"));
+      if (teacherentity != null) {
+        if (teacherentity.stete == BackendEndpoints.agreed) {
+          await saveTeacherData(teacherentity: teacherentity);
+          return right(teacherentity);
+        } else if (teacherentity.stete == BackendEndpoints.waiting) {
+          await teacherSignout(user);
+          return left(
+              ServerFailure(message: "الطالب قيد المراجعة من قبل الادارة"));
+        } else if (teacherentity.stete == BackendEndpoints.rejected) {
+          await teacherSignout(user);
+          return left(ServerFailure(message: "تم رفض طلبك من قبل الادارة"));
+        } else {
+          await teacherSignout(user);
+          return left(ServerFailure(message: "حدث خطأ ما"));
+        }
       } else {
         await teacherSignout(user);
-        return left(ServerFailure(message: "حدث خطأ ما"));
+        return left(ServerFailure(message: "هذا المعلم غير مسجل في التطبيق"));
       }
     } on CustomException catch (e) {
       await teacherSignout(user);
@@ -136,11 +141,15 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
   }
 
   @override
-  Future<teacherEntity> getTeacherData({required String docId}) async {
-    Map<String, dynamic> data = await dataBaseService.getData(
+  Future getTeacherData({required String docId}) async {
+    var data = await dataBaseService.getData(
         key: BackendEndpoints.getTeacherDataCollectionName, docId: docId);
-    teacherEntity teacherentity = Teachermodel.fromMap(data);
-    return (teacherentity);
+    if (data != null) {
+      teacherEntity teacherentity = Teachermodel.fromMap(data);
+      return teacherentity;
+    } else {
+      return null;
+    }
   }
 
   @override
