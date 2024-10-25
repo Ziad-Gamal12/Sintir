@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherAuth/Domain/Repos/repos.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/manager/TeacherSignUP/teacher_sign_up_cubit.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/TeacherSignUpViewBody.dart';

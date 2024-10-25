@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';

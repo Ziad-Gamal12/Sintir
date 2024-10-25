@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:sintir/Core/repos/authRepos/authrepo.dart';
 import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
 

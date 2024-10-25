@@ -51,7 +51,7 @@ class _StundetSignUpViewBody_BlocBuilderState
           padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
           child: SingleChildScrollView(
             child: Column(children: [
-              const Customsizedbox(width: 0, height: 28),
+              const Customsizedbox(width: 0, height: 20),
               StudentSignUpFirstAndLastNameField(width: width),
               const Customsizedbox(width: 0, height: 10),
               const StudentSignUpemailaddressfiled(),
@@ -105,7 +105,7 @@ class _StundetSignUpViewBody_BlocBuilderState
                 setState(() {});
               }),
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.12,
+                height: MediaQuery.of(context).size.height * 0.03,
               ),
               StudentSignUpViewBodyBlocBuilder_button(
                   stundentSignUpFormKey: Variables.StudnetSignUpFormKey,

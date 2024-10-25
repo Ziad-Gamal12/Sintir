@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/TeachertermsandconditionsviewBody.dart';
 import 'package:svg_flutter/svg.dart';
 

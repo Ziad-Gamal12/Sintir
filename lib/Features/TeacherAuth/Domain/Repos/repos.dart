@@ -27,5 +27,5 @@ abstract class TeacherAuthRepos {
   Future<Either<Failure, teacherEntity>> signInWithEmailAndPassword(
       {required String email, required String password});
   Future<teacherEntity> getTeacherData({required String docId});
-  Future<void> resetPassword({required String email});
+  Future<void> saveTeacherData({required teacherEntity teacherentity});
 }

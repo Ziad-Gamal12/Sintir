@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types, file_names
+
 import 'package:dropdown_model_list/drop_down/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +38,7 @@ class StudentSignUpViewBodyBlocBuilder_button extends StatelessWidget {
               password: Variables.studentSignUpPasswordController.text,
               phoneNumber: Variables.studentSignUpPhoneNumberController.text,
               gender: radioValue ?? "ذكر",
-              birthDate: birthDayDate!,
+              birthDate: birthDayDate!.toIso8601String(),
               schoolName: Variables.studentSignUpSchoolNameController.text,
               educationLevel: selectedItem!.title,
             ));

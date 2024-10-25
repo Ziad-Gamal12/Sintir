@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages, avoid_types_as_parameter_names
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sintir/Features/TeacherAuth/Domain/Entities/Teacher_Entity.dart';

@@ -4,8 +4,11 @@ class BackendEndpoints {
   static String addTeacherDataCollectionName = "Teachers";
   static String getTeacherDataCollectionName = "Teachers";
   static String addStudentDataCollectionName = "Students";
-
+  static String checkIsStudentExistCollectionName = "Students";
+  static String getStudentDataCollectionName = "Students";
   static String chieckIsStudentPhoneNumberExistCollectionName = "Students";
+  static String isLogined = "isLogined";
+  static String saveUserData = "userData";
   static String emailKey = "email";
   static String passwordKey = "password";
   static String uidKey = "uid";

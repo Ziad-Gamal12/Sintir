@@ -3,25 +3,27 @@
 class Studententity {
   final String firstName, lastName;
   final String email;
-  final DateTime birthDate;
-  final String gender;
-  final String schoolName;
-  final String educationLevel;
+  String? birthDate;
+  String? gender;
+  String? schoolName;
+  String? educationLevel;
   String? studentID;
   String? imageUrl;
   final String phoneNumber;
-  final String password;
+  String? kind;
+  String? password;
 
   Studententity(
       {required this.firstName,
       required this.lastName,
       required this.email,
-      required this.birthDate,
-      required this.gender,
-      required this.schoolName,
-      required this.educationLevel,
+      this.birthDate,
+      this.gender,
+      this.schoolName,
+      this.educationLevel,
       this.studentID,
+      this.kind,
       this.imageUrl,
       required this.phoneNumber,
-      required this.password});
+      this.password});
 }

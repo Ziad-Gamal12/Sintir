@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 part of 'Custom_reset_password_cubit.dart';
 
 @immutable

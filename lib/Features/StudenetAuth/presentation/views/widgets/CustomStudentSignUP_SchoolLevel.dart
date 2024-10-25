@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:dropdown_model_list/drop_down/model.dart';
 import 'package:dropdown_model_list/drop_down/search_drop_list.dart';
 import 'package:flutter/foundation.dart';

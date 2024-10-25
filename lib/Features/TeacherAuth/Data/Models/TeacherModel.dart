@@ -62,10 +62,47 @@ class Teachermodel extends teacherEntity {
       subject: map['subject'],
       workExperience: map['workExperience'],
       gender: map['gender'],
-      stete: map['stete'],
+      stete: map['state'],
       socialLinks: map['socialLinks'],
       kind: map['kind'],
       joinedDate: map['joinedDate'],
     );
+  }
+  factory Teachermodel.fromEntity({required teacherEntity teacherentity}) {
+    return Teachermodel(
+      uid: teacherentity.uid,
+      firstName: teacherentity.firstName,
+      lastName: teacherentity.lastName,
+      email: teacherentity.email,
+      profilePicurl: teacherentity.profilePicurl,
+      phoneNumber: teacherentity.phoneNumber,
+      address: teacherentity.address,
+      subject: teacherentity.subject,
+      workExperience: teacherentity.workExperience,
+      gender: teacherentity.gender,
+      stete: teacherentity.stete,
+      socialLinks: teacherentity.socialLinks,
+      kind: teacherentity.kind,
+      joinedDate: teacherentity.joinedDate,
+    );
+  }
+  @override
+  toMap() {
+    return {
+      "firstName": firstName,
+      "lastName": lastName,
+      "email": email,
+      "uid": uid,
+      "address": address,
+      "phoneNumber": phoneNumber,
+      "subject": subject,
+      "workExperience": workExperience,
+      "gender": gender,
+      "profilePicurl": profilePicurl,
+      "state": stete,
+      "socialLinks": socialLinks,
+      "kind": kind,
+      "joinedDate": joinedDate
+    };
   }
 }

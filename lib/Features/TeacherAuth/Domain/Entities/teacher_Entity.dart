@@ -30,22 +30,4 @@ class teacherEntity {
       required this.socialLinks,
       required this.kind,
       required this.joinedDate});
-  toMap() {
-    return {
-      "firstName": firstName,
-      "lastName": lastName,
-      "email": email,
-      "uid": uid,
-      "address": address,
-      "phoneNumber": phoneNumber,
-      "subject": subject,
-      "workExperience": workExperience,
-      "gender": gender,
-      "profilePicurl": profilePicurl,
-      "stete": stete,
-      "socialLinks": socialLinks,
-      "kind": kind,
-      "joinedDate": joinedDate
-    };
-  }
 }

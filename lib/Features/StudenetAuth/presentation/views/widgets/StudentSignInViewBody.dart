@@ -1,15 +1,10 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Core/widgets/CustomButton.dart';
-import 'package:sintir/Core/widgets/CustomLoginViewBodyDonotHaveAccountText.dart';
-import 'package:sintir/Core/widgets/CustomSepratedWidget.dart';
-import 'package:sintir/Core/widgets/CustomSizedBox.dart';
-import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordView.dart';
-import 'package:sintir/Features/StudenetAuth/presentation/views/Student_signUp_View.dart';
-import 'package:sintir/Features/StudenetAuth/presentation/views/widgets/Student_SigninSocialbuttonssection.dart';
-import 'package:sintir/Features/StudenetAuth/presentation/views/widgets/student_SigninTextfiledsection.dart';
-import 'package:sintir/constant.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/widgets/AwesomeDialog.dart';
+import 'package:sintir/Features/StudenetAuth/presentation/manager/StudentSignIn_Cubit/student_sign_in_cubit.dart';
+import 'package:sintir/Features/StudenetAuth/presentation/views/BlocBuilder_section/StudentSigninViewBodyBlocBuilder.dart';
 
 class StudentSignInViewBody extends StatefulWidget {
   const StudentSignInViewBody({super.key});
@@ -21,49 +16,23 @@ class StudentSignInViewBody extends StatefulWidget {
 class _StudentSignInViewBodyState extends State<StudentSignInViewBody> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Customsizedbox(width: 0, height: 12),
-            const student_SigninTextfiledsection(),
-            const Customsizedbox(width: 0, height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    GoRouter.of(context)
-                        .push(CustomResetPasswordView.routeName);
-                  },
-                  child: Text(
-                    "نسيت كلمة المرور؟",
-                    style: AppTextStyles.semiBold13Auto
-                        .copyWith(color: KMainColor),
-                  ),
-                )
-              ],
-            ),
-            const Customsizedbox(width: 0, height: 30),
-            Custombutton(
-                text: "تسجيل الدخول",
-                color: KMainColor,
-                textColor: Colors.white,
-                onPressed: () {}),
-            const Customsizedbox(width: 0, height: 30),
-            CustomLoginViewBodyDonotHaveAccountText(onTap: () {
-              GoRouter.of(context).push(StudentSignupView.routeName);
-            }),
-            const Customsizedbox(width: 0, height: 55),
-            const Customsepratedwidget(
-              centerTitle: "او",
-            ),
-            const Customsizedbox(width: 0, height: 30),
-            const Student_SigninSocialbuttonssection()
-          ],
-        ),
-      ),
+    return BlocConsumer<StudentSignInCubit, StudentSignInState>(
+      listener: (context, state) {
+        if (state is StudentSignInSuccess) {
+          successdialog(
+                  context: context,
+                  SuccessMessage: "تم تسجيل الدخول بنجاح",
+                  btnOkOnPress: () {})
+              .show();
+        } else if (state is StudentSignInFailure) {
+          errordialog(context, state.errmessage).show();
+        }
+      },
+      builder: (context, state) {
+        return StudentSigninViewBodyBlocBuilder(
+          state: state,
+        );
+      },
     );
   }
 }

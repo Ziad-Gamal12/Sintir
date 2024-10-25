@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 class SharedpreferencKeys {
   static const String isLogin = "isLogin";
   static const String state = "state";
