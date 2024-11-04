@@ -1,6 +1,5 @@
 // ignore_for_file: file_names
 
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
@@ -9,7 +8,7 @@ import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/services/DateBaseService.dart';
 import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
-import 'package:sintir/Core/services/Shared_preferences.dart';
+import 'package:sintir/Core/services/sqfliteServices.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/StudenetAuth/data/model/studentAuth_model.dart';
 import 'package:sintir/Features/StudenetAuth/domain/entities/studentEntity.dart';
@@ -18,8 +17,11 @@ import 'package:sintir/Features/StudenetAuth/domain/repos/studentAuth_repo.dart'
 class StudentauthRepoImpli implements StudentauthRepo {
   final firebaseAuthService firebaseAuth;
   final Datebaseservice datebaseservice;
+  final Sqfliteservices sqfliteservices;
   StudentauthRepoImpli(
-      {required this.firebaseAuth, required this.datebaseservice});
+      {required this.sqfliteservices,
+      required this.firebaseAuth,
+      required this.datebaseservice});
   @override
   Future<Either<Failure, Studententity>> createUserWithEmailAndPassword(
       {required Studententity studentEntity}) async {
@@ -215,9 +217,9 @@ class StudentauthRepoImpli implements StudentauthRepo {
 
   @override
   Future<void> saveStudentData({required Studententity studententity}) async {
-    await shared_preferences_Services.stringSetter(
-        key: BackendEndpoints.saveUserData,
-        value: jsonEncode(
-            StudentauthModel.fromEntity(studententity: studententity).toMap()));
+    await sqfliteservices.insertData(
+        tableName: BackendEndpoints.setStudentDataTableName,
+        data:
+            StudentauthModel.fromEntity(studententity: studententity).toMap());
   }
 }

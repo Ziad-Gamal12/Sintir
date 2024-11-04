@@ -4,6 +4,9 @@ class BackendEndpoints {
   static String addTeacherDataCollectionName = "Teachers";
   static String getTeacherDataCollectionName = "Teachers";
   static String addStudentDataCollectionName = "Students";
+  static String setStudentDataTableName = "Students";
+  static String setTeacherDataTableName = "Teachers";
+
   static String checkIsStudentExistCollectionName = "Students";
   static String getStudentDataCollectionName = "Students";
   static String chieckIsStudentPhoneNumberExistCollectionName = "Students";

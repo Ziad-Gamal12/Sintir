@@ -48,7 +48,7 @@ class StudentauthModel extends Studententity {
       gender: null,
       schoolName: null,
       educationLevel: null,
-      kind: null,
+      kind: "student",
     );
   }
   factory StudentauthModel.fromEntity({required Studententity studententity}) {
@@ -75,7 +75,7 @@ class StudentauthModel extends Studententity {
       gender: data["gender"],
       schoolName: data["schoolName"],
       educationLevel: data["educationLevel"],
-      studentID: data["studentID"],
+      studentID: data["id"],
       imageUrl: data["imageUrl"],
       phoneNumber: data["phoneNumber"],
       kind: data["kind"],
@@ -90,7 +90,7 @@ class StudentauthModel extends Studententity {
       "gender": gender,
       "schoolName": schoolName,
       "educationLevel": educationLevel,
-      "studentID": studentID,
+      "id": studentID,
       "imageUrl": imageUrl,
       "phoneNumber": phoneNumber,
       "kind": kind

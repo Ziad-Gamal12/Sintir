@@ -8,6 +8,7 @@ import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/FirebaseStorageService.dart';
 import 'package:sintir/Core/services/Firebase_FirestoreService.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
+import 'package:sintir/Core/services/sqfliteServices.dart';
 import 'package:sintir/Features/StudenetAuth/data/repoos/studentAuth_repo_impli.dart';
 import 'package:sintir/Features/StudenetAuth/domain/repos/studentAuth_repo.dart';
 import 'package:sintir/Features/TeacherAuth/Data/Repos_Impli/teacherAuthRepos_Impli.dart';
@@ -20,13 +21,16 @@ void setup_Getit() {
   getIt.registerSingleton<firebasestorageservice>(
       firebasestorageservice(pickerassetsservice: Pickerassetsservice()));
   getIt.registerSingleton<Datebaseservice>(FirebaseFirestoreservice());
+  getIt.registerSingleton<Sqfliteservices>(Sqfliteservices());
   getIt.registerSingleton<StudentauthRepo>(StudentauthRepoImpli(
+      sqfliteservices: getIt<Sqfliteservices>(),
       firebaseAuth: getIt<firebaseAuthService>(),
       datebaseservice: getIt<Datebaseservice>()));
 
   getIt.registerSingleton<Authrepo>(
       AuthrepoImpli(authService: firebaseAuthService()));
   getIt.registerSingleton<TeacherAuthRepos>(teacherAuthRepos_Impli(
+      sqfliteservices: getIt<Sqfliteservices>(),
       dataBaseService: getIt<Datebaseservice>(),
       authService: getIt<firebaseAuthService>(),
       firebaseStorageService: getIt<firebasestorageservice>()));

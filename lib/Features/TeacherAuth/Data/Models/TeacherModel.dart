@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sintir/Features/TeacherAuth/Domain/Entities/Teacher_Entity.dart';
@@ -52,7 +54,7 @@ class Teachermodel extends teacherEntity {
   }
   factory Teachermodel.fromMap(Map<String, dynamic> map) {
     return Teachermodel(
-      uid: map['uid'],
+      uid: map['id'],
       firstName: map['firstName'],
       lastName: map['lastName'],
       email: map['email'],
@@ -86,13 +88,13 @@ class Teachermodel extends teacherEntity {
       joinedDate: teacherentity.joinedDate,
     );
   }
-  @override
+
   toMap() {
     return {
       "firstName": firstName,
       "lastName": lastName,
       "email": email,
-      "uid": uid,
+      "id": uid,
       "address": address,
       "phoneNumber": phoneNumber,
       "subject": subject,
@@ -100,7 +102,7 @@ class Teachermodel extends teacherEntity {
       "gender": gender,
       "profilePicurl": profilePicurl,
       "state": stete,
-      "socialLinks": socialLinks,
+      "socialLinks": jsonEncode(socialLinks),
       "kind": kind,
       "joinedDate": joinedDate
     };

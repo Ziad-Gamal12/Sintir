@@ -1,6 +1,5 @@
 // ignore_for_file: camel_case_types, file_names, non_constant_identifier_names
 
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
@@ -11,7 +10,7 @@ import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/services/DateBaseService.dart';
 import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/FirebaseStorageService.dart';
-import 'package:sintir/Core/services/Shared_preferences.dart';
+import 'package:sintir/Core/services/sqfliteServices.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/TeacherAuth/Data/Models/TeacherModel.dart';
 import 'package:sintir/Features/TeacherAuth/Domain/Entities/Teacher_Entity.dart';
@@ -21,8 +20,10 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
   final firebaseAuthService authService;
   final firebasestorageservice firebaseStorageService;
   final Datebaseservice dataBaseService;
+  final Sqfliteservices sqfliteservices;
   teacherAuthRepos_Impli(
       {required this.dataBaseService,
+      required this.sqfliteservices,
       required this.firebaseStorageService,
       required this.authService});
   @override
@@ -154,9 +155,8 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
 
   @override
   Future<void> saveTeacherData({required teacherEntity teacherentity}) async {
-    await shared_preferences_Services.stringSetter(
-        key: BackendEndpoints.saveUserData,
-        value: jsonEncode(
-            Teachermodel.fromEntity(teacherentity: teacherentity).toMap()));
+    await sqfliteservices.insertData(
+        tableName: BackendEndpoints.setTeacherDataTableName,
+        data: Teachermodel.fromEntity(teacherentity: teacherentity).toMap());
   }
 }
