@@ -6,6 +6,7 @@ class BackendEndpoints {
   static String addStudentDataCollectionName = "Students";
   static String setStudentDataTableName = "Students";
   static String setTeacherDataTableName = "Teachers";
+  static String userKind = "kind";
 
   static String checkIsStudentExistCollectionName = "Students";
   static String getStudentDataCollectionName = "Students";

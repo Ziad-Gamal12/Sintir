@@ -3,14 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sintir/Core/services/Shared_preferences.dart';
-import 'package:sintir/Core/utils/SharedPreferenc_Keys.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/CustomLoginViewBodyDonotHaveAccountText.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
+import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/manager/teacher_sign_in/teacher_sign_in_cubit.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignUpView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/TeacherLoginEmailAdressTextFiled.dart';
@@ -33,16 +32,7 @@ class _TeacherLoginViewBodyState extends State<TeacherLoginViewBody> {
     return BlocConsumer<TeacherSignInCubit, TeacherSignInState>(
       listener: (context, state) {
         if (state is TeacherSignInSuccess) {
-          shared_preferences_Services.boolSetter(
-              key: SharedpreferencKeys.isLogin, value: true);
-          shared_preferences_Services.stringSetter(
-              key: SharedpreferencKeys.state,
-              value: SharedpreferencKeys.teacher);
-          successdialog(
-                  context: context,
-                  SuccessMessage: "تم تسجيل الدخول بنجاح",
-                  btnOkOnPress: () {})
-              .show();
+          GoRouter.of(context).pushReplacement(Homeview.routeName);
         } else if (state is TeacherSignInFailure) {
           errordialog(context, state.errmessage).show();
         }

@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
+import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 import 'package:sintir/Features/StudenetAuth/presentation/manager/StudentSignIn_Cubit/student_sign_in_cubit.dart';
 import 'package:sintir/Features/StudenetAuth/presentation/views/BlocBuilder_section/StudentSigninViewBodyBlocBuilder.dart';
 
@@ -19,11 +21,7 @@ class _StudentSignInViewBodyState extends State<StudentSignInViewBody> {
     return BlocConsumer<StudentSignInCubit, StudentSignInState>(
       listener: (context, state) {
         if (state is StudentSignInSuccess) {
-          successdialog(
-                  context: context,
-                  SuccessMessage: "تم تسجيل الدخول بنجاح",
-                  btnOkOnPress: () {})
-              .show();
+          GoRouter.of(context).pushReplacement(Homeview.routeName);
         } else if (state is StudentSignInFailure) {
           errordialog(context, state.errmessage).show();
         }

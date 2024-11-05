@@ -8,6 +8,7 @@ import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/services/DateBaseService.dart';
 import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
+import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/services/sqfliteServices.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/StudenetAuth/data/model/studentAuth_model.dart';
@@ -66,6 +67,8 @@ class StudentauthRepoImpli implements StudentauthRepo {
       var studententity = await getStudentData(
           docId: user.uid, key: BackendEndpoints.getStudentDataCollectionName);
       await saveStudentData(studententity: studententity);
+      await shared_preferences_Services.stringSetter(
+          value: "stundent", key: BackendEndpoints.userKind);
       return right(studententity);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
@@ -92,12 +95,18 @@ class StudentauthRepoImpli implements StudentauthRepo {
             docId: user.uid,
             key: BackendEndpoints.addStudentDataCollectionName);
         await saveStudentData(studententity: studentEntity);
+        await shared_preferences_Services.stringSetter(
+            value: "stundent", key: BackendEndpoints.userKind);
+
         return right(studentEntity);
       } else {
         var studententity = await getStudentData(
             docId: user.uid,
             key: BackendEndpoints.getStudentDataCollectionName);
         await saveStudentData(studententity: studententity);
+        await shared_preferences_Services.stringSetter(
+            value: "stundent", key: BackendEndpoints.userKind);
+
         return right(studententity);
       }
     } on CustomException catch (e) {
@@ -129,12 +138,18 @@ class StudentauthRepoImpli implements StudentauthRepo {
             docId: user.uid,
             key: BackendEndpoints.addStudentDataCollectionName);
         await saveStudentData(studententity: studentEntity);
+        await shared_preferences_Services.stringSetter(
+            value: "stundent", key: BackendEndpoints.userKind);
+
         return right(studentEntity);
       } else {
         var studententity = await getStudentData(
             docId: user.uid,
             key: BackendEndpoints.getStudentDataCollectionName);
         saveStudentData(studententity: studententity);
+        await shared_preferences_Services.stringSetter(
+            value: "stundent", key: BackendEndpoints.userKind);
+
         return right(studententity);
       }
     } on CustomException catch (e) {
@@ -166,12 +181,18 @@ class StudentauthRepoImpli implements StudentauthRepo {
             docId: user.uid,
             key: BackendEndpoints.addStudentDataCollectionName);
         await saveStudentData(studententity: studentEntity);
+        await shared_preferences_Services.stringSetter(
+            value: "stundent", key: BackendEndpoints.userKind);
+
         return right(studentEntity);
       } else {
         var studententity = await getStudentData(
             docId: user.uid,
             key: BackendEndpoints.getStudentDataCollectionName);
         saveStudentData(studententity: studententity);
+        await shared_preferences_Services.stringSetter(
+            value: "stundent", key: BackendEndpoints.userKind);
+
         return right(studententity);
       }
     } on CustomException catch (e) {

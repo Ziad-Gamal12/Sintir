@@ -1,0 +1,52 @@
+// ignore_for_file: file_names
+
+import 'package:flutter/material.dart';
+import 'package:sintir/Core/utils/imageAssets.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:svg_flutter/svg.dart';
+
+class CustomSearchTextField extends StatelessWidget {
+  const CustomSearchTextField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 7,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: TextField(
+        decoration: InputDecoration(
+          contentPadding:
+              const EdgeInsets.only(top: 8, bottom: 7, right: 14, left: 16),
+          prefixIconConstraints:
+              const BoxConstraints(minWidth: 20, minHeight: 20),
+          filled: true,
+          fillColor: Colors.white,
+          hintText: 'ابحث عن.......',
+          hintStyle:
+              AppTextStyles.regular13.copyWith(color: const Color(0xff949D9E)),
+          prefixIcon: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14),
+            child: SvgPicture.asset(
+              Assets.assetsImagesSearchIcon,
+              fit: BoxFit.fill,
+            ),
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide.none,
+          ),
+        ),
+      ),
+    );
+  }
+}

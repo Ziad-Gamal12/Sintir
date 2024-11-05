@@ -223,6 +223,11 @@ class firebaseAuthService {
     await auth.signOut();
   }
 
+  Future<bool> isLoggedIn() async {
+    final currentUser = auth.currentUser;
+    return currentUser != null;
+  }
+
   Future<void> resetPassword({required String email}) async {
     try {
       await auth.sendPasswordResetEmail(email: email);

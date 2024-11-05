@@ -1,8 +1,10 @@
 // ignore_for_file: file_names, non_constant_identifier_names, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/ChoosingState/Presentation/views/ChoosingStateView.dart';
+import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 import 'package:sintir/Features/Splash/Presentation/views/widgets/SplashViewBodyBottomText.dart';
 import 'package:svg_flutter/svg.dart';
 
@@ -14,6 +16,7 @@ class SplashviewBody extends StatefulWidget {
 }
 
 class _SplashviewBodyState extends State<SplashviewBody> {
+  firebaseAuthService auth = firebaseAuthService();
   @override
   void initState() {
     AuthNavigation(context);
@@ -38,19 +41,13 @@ class _SplashviewBodyState extends State<SplashviewBody> {
   }
 
   Future<void> AuthNavigation(BuildContext context) async {
+    bool isLoggedin = await auth.isLoggedIn();
     await Future.delayed(const Duration(seconds: 3), () {
-      GoRouter.of(context).pushReplacement(Choosingstateview.routeName);
-      /* if (isLogin == true) {
-        if (state == SharedpreferencKeys.teacher) {
-          GoRouter.of(context).pushReplacement(Choosingstateview.routeName);
-        } else if (state == SharedpreferencKeys.student) {
-          GoRouter.of(context).pushReplacement(Choosingstateview.routeName);
-        } else {
-          GoRouter.of(context).pushReplacement(Choosingstateview.routeName);
-        }
+      if (isLoggedin == true) {
+        GoRouter.of(context).pushReplacement(Homeview.routeName);
       } else {
         GoRouter.of(context).pushReplacement(Choosingstateview.routeName);
-      }*/
+      }
     });
   }
 }
