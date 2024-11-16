@@ -1,0 +1,23 @@
+import 'package:flutter/material.dart';
+import 'package:sintir/Features/Home/presentation/views/widgets/bestSellerCourse_item.dart';
+
+class Leatestcoursesglideview extends StatelessWidget {
+  const Leatestcoursesglideview({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: 10,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          crossAxisCount: 2,
+          childAspectRatio: 130 / 170,
+        ),
+        itemBuilder: (context, index) {
+          return const BestsellercourseItem();
+        });
+  }
+}

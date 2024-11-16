@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
@@ -27,10 +28,15 @@ class HomeViewBodyAppBar extends StatelessWidget {
           style: AppTextStyles.bold20Auto.copyWith(color: KSecondaryColor),
         ),
       ])),
-      trailing: Image.asset(
-        Assets.assetsImagesNotificationIcon,
-        height: 32,
-        width: 32,
+      trailing: InkWell(
+        onTap: () async {
+          await FirebaseAuth.instance.signOut();
+        },
+        child: Image.asset(
+          Assets.assetsImagesNotificationIcon,
+          height: 25,
+          width: 25,
+        ),
       ),
     );
   }

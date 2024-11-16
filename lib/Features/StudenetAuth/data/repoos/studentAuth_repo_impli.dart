@@ -64,12 +64,21 @@ class StudentauthRepoImpli implements StudentauthRepo {
     User? user;
     try {
       user = await firebaseAuth.signInWithEmailAndPassword(email, password);
-      var studententity = await getStudentData(
-          docId: user.uid, key: BackendEndpoints.getStudentDataCollectionName);
-      await saveStudentData(studententity: studententity);
-      await shared_preferences_Services.stringSetter(
-          value: "stundent", key: BackendEndpoints.userKind);
-      return right(studententity);
+      bool isExists = await datebaseservice.isDataExists(
+          key: BackendEndpoints.checkIsStudentExistCollectionName,
+          docId: user.uid);
+      if (isExists) {
+        Studententity studententity = await getStudentData(
+            docId: user.uid,
+            key: BackendEndpoints.getStudentDataCollectionName);
+        await saveStudentData(studententity: studententity);
+        await shared_preferences_Services.stringSetter(
+            value: "stundent", key: BackendEndpoints.userKind);
+        return right(studententity);
+      } else {
+        signout(user);
+        return left(ServerFailure(message: "خطأ في البيانات"));
+      }
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {

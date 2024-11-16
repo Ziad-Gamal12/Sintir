@@ -13,6 +13,7 @@ import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnb
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherLoginView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignUpView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/teacherTermsAndConditionsView.dart';
+import 'package:sintir/Features/tasks/presentation/views/todoListView.dart';
 
 class App_router {
   static GoRouter router = GoRouter(
@@ -87,6 +88,12 @@ class App_router {
         path: Homeview.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const Homeview();
+        },
+      ),
+      GoRoute(
+        path: Todolistview.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const Todolistview();
         },
       ),
     ],

@@ -113,7 +113,7 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
           if (teacherentity.stete == BackendEndpoints.agreed) {
             await saveTeacherData(teacherentity: teacherentity);
             await shared_preferences_Services.stringSetter(
-                value: "stundent", key: BackendEndpoints.userKind);
+                value: "teacher", key: BackendEndpoints.userKind);
 
             return right(teacherentity);
           } else if (teacherentity.stete == BackendEndpoints.waiting) {
