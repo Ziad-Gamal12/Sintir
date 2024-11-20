@@ -1,0 +1,77 @@
+// ignore_for_file: must_be_immutable, file_names
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
+
+class CustomChatTextField extends StatefulWidget {
+  final TextEditingController controller;
+  final String? Function(String?)? validator;
+  List<TextInputFormatter>? inputFormatters;
+
+  CustomChatTextField(
+      {super.key,
+      this.inputFormatters,
+      required this.controller,
+      required this.validator});
+
+  @override
+  State<CustomChatTextField> createState() => _CustomChatTextFieldState();
+}
+
+class _CustomChatTextFieldState extends State<CustomChatTextField> {
+  bool isChatTextFieldEmpty = true;
+  getisChatTextFieldEmpty() {
+    widget.controller.addListener(() {
+      setState(() {
+        isChatTextFieldEmpty = widget.controller.text.isEmpty;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    getisChatTextFieldEmpty();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var border = OutlineInputBorder(
+        borderSide: BorderSide.none, borderRadius: BorderRadius.circular(20));
+    return TextFormField(
+      inputFormatters: widget.inputFormatters,
+      controller: widget.controller,
+      keyboardType: TextInputType.text,
+      obscureText: false,
+      validator: widget.validator,
+      decoration: InputDecoration(
+          hintText: "أكتب رسالتك هنا...",
+          hintStyle: AppTextStyles.bold13.copyWith(color: Colors.grey.shade500),
+          prefixIcon: IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                FontAwesomeIcons.paperclip,
+                size: 24,
+                color: Color(0xffAEAEB2),
+              )),
+          suffixIcon: IconButton(
+            icon: Icon(
+              FontAwesomeIcons.paperPlane,
+              size: 24,
+              color: isChatTextFieldEmpty == true
+                  ? const Color(0xffAEAEB2)
+                  : Colors.black,
+            ),
+            onPressed: () {},
+          ),
+          border: border,
+          focusedBorder: border,
+          enabledBorder: border,
+          filled: true,
+          focusColor: const Color(0xfff4f4f4),
+          fillColor: const Color(0xfff4f4f4)),
+    );
+  }
+}

@@ -18,6 +18,10 @@ class Assets {
   /// assets/images/BestSellerItem_image.png
   static const String assetsImagesBestSellerItemImage = "assets/images/BestSellerItem_image.png";
 
+  /// Assets for assetsImagesBookImageTest
+  /// assets/images/BookImageTest.png
+  static const String assetsImagesBookImageTest = "assets/images/BookImageTest.png";
+
   /// Assets for assetsImagesCheckedIcon
   /// assets/images/Checked_icon.svg
   static const String assetsImagesCheckedIcon = "assets/images/Checked_icon.svg";
@@ -29,6 +33,10 @@ class Assets {
   /// Assets for assetsImagesChoosingStateStudentIcon
   /// assets/images/ChoosingStateStudentIcon.svg
   static const String assetsImagesChoosingStateStudentIcon = "assets/images/ChoosingStateStudentIcon.svg";
+
+  /// Assets for assetsImagesEducationLevelSectionBooks
+  /// assets/images/EducationLevelSectionBooks.png
+  static const String assetsImagesEducationLevelSectionBooks = "assets/images/EducationLevelSectionBooks.png";
 
   /// Assets for assetsImagesFaceBookIcons
   /// assets/images/faceBookIcons.svg

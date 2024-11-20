@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class BottomnavigationbarEntity {
   final String title;
   final IconData icon;
-  final String routeName;
+  final int index;
 
   BottomnavigationbarEntity(
-      {required this.routeName, required this.title, required this.icon});
+      {required this.index, required this.title, required this.icon});
 }

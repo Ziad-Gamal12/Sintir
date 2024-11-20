@@ -2,7 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordView.dart';
+import 'package:sintir/Features/AI_Chat/presentation/views/aiChatView.dart';
+import 'package:sintir/Features/Books_Library/Presentation/Views/EducationLevelsBooksSectionsView.dart';
+import 'package:sintir/Features/Books_Library/Presentation/Views/LevelBooksView.dart';
 import 'package:sintir/Features/ChoosingState/Presentation/views/ChoosingStateView.dart';
+import 'package:sintir/Features/Favorites/presentation/views/FavoritesView.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 import 'package:sintir/Features/Splash/Presentation/views/SplashView.dart';
 import 'package:sintir/Features/StudenetAuth/presentation/views/StudentTermsAndConditions_View.dart';
@@ -87,13 +91,37 @@ class App_router {
       GoRoute(
         path: Homeview.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return const Homeview();
+          return Homeview();
         },
       ),
       GoRoute(
         path: Todolistview.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const Todolistview();
+        },
+      ),
+      GoRoute(
+        path: Aichatview.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const Aichatview();
+        },
+      ),
+      GoRoute(
+        path: EducationLevelsBooksSectionsView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const EducationLevelsBooksSectionsView();
+        },
+      ),
+      GoRoute(
+        path: Levelbooksview.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const Levelbooksview();
+        },
+      ),
+      GoRoute(
+        path: Favoritesview.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const Favoritesview();
         },
       ),
     ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Features/tasks/presentation/views/widgets/addtask_Section.dart';
 import 'package:sintir/Features/tasks/presentation/views/widgets/tasksListView.dart';
 import 'package:sintir/Features/tasks/presentation/views/widgets/tasksListViewHeader.dart';
@@ -9,10 +10,11 @@ class TodolistviewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-        padding: EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
         child: CustomScrollView(
-          slivers: [
+          controller: Variables.scrollController,
+          slivers: const [
             SliverToBoxAdapter(
               child: Column(
                 children: [

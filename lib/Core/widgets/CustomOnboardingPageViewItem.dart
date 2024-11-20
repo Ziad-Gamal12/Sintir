@@ -21,11 +21,13 @@ class CustomOnboardingPageViewItem extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          SizedBox(
-              child: SvgPicture.asset(
-            image,
-            fit: BoxFit.fill,
-          )),
+          Expanded(
+            child: SizedBox(
+                child: SvgPicture.asset(
+              image,
+              fit: BoxFit.scaleDown,
+            )),
+          ),
           const Customsizedbox(width: 0, height: 47.5),
           title,
           const Customsizedbox(width: 0, height: 24),

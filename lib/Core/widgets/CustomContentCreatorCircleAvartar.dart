@@ -9,7 +9,7 @@ class CustomContentCreatorCircleAvartar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: 20,
+      radius: 15,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(45),
         child: Image.asset(

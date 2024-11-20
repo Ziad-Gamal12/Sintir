@@ -1,14 +1,13 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/BottomNavigationBar_Entity.dart';
 import 'package:sintir/Core/models/BottomNavigationBar_Model.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/CustomItem_BottomNavigationBar.dart';
 
 class CustomBottomnavigationbar extends StatefulWidget {
-  const CustomBottomnavigationbar({super.key});
-
+  const CustomBottomnavigationbar({super.key, required this.onItemTapped});
+  final ValueChanged<int> onItemTapped;
   @override
   State<CustomBottomnavigationbar> createState() =>
       _CustomBottomnavigationbarState();
@@ -43,13 +42,10 @@ class _CustomBottomnavigationbarState extends State<CustomBottomnavigationbar> {
               flex: currentIndex == index ? 5 : 2,
               child: GestureDetector(
                 onTap: () {
-                  if (currentIndex != index) {
-                    GoRouter.of(context)
-                        .push(bottomnavigationbarEntity.routeName);
-                  }
                   setState(() {
                     currentIndex = index;
                   });
+                  widget.onItemTapped(bottomnavigationbarEntity.index);
                 },
                 child: CustomItem_bottomnavigationbar(
                   isSelected: currentIndex == index ? true : false,

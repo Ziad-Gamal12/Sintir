@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Features/Home/presentation/views/widgets/bestSellerCourse_item.dart';
+import 'package:sintir/Core/widgets/CustomCourseItem.dart';
 
 class Leatestcoursesglideview extends StatelessWidget {
   const Leatestcoursesglideview({super.key});
@@ -17,7 +17,7 @@ class Leatestcoursesglideview extends StatelessWidget {
           childAspectRatio: 130 / 170,
         ),
         itemBuilder: (context, index) {
-          return const BestsellercourseItem();
+          return const CustomCourseItem();
         });
   }
 }

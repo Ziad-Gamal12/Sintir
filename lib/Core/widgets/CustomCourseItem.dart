@@ -6,8 +6,8 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomAddFavouriteIcon.dart';
 import 'package:sintir/Core/widgets/CustomContentCreatorCircleAvartar.dart';
 
-class BestsellercourseItem extends StatelessWidget {
-  const BestsellercourseItem({super.key});
+class CustomCourseItem extends StatelessWidget {
+  const CustomCourseItem({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class BestsellercourseItem extends StatelessWidget {
           Column(
             children: [
               Expanded(
-                flex: 7,
+                flex: 8,
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(5),

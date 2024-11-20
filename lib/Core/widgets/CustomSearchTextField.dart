@@ -6,8 +6,8 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:svg_flutter/svg.dart';
 
 class CustomSearchTextField extends StatelessWidget {
-  const CustomSearchTextField({super.key});
-
+  const CustomSearchTextField({super.key, required this.controller});
+  final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,6 +24,7 @@ class CustomSearchTextField extends StatelessWidget {
         ],
       ),
       child: TextField(
+        controller: controller,
         decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.only(top: 8, bottom: 7, right: 14, left: 16),

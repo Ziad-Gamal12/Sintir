@@ -1,6 +1,7 @@
-// ignore_for_file: camel_case_types, file_names
+// ignore_for_file: camel_case_types, file_names, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomSearchTextField.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/BestSellerCoursesHeader.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/HomeViewBodyAppBar.dart';
@@ -11,29 +12,33 @@ import 'package:sintir/Features/Home/presentation/views/widgets/leatestCoursesHe
 import 'package:sintir/constant.dart';
 
 class Homeview_Body extends StatelessWidget {
-  const Homeview_Body({super.key});
-
+  Homeview_Body({super.key});
+  TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return const CustomScrollView(
+    return CustomScrollView(
+      controller: Variables.scrollController,
       slivers: [
         SliverToBoxAdapter(
             child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
                 child: Column(children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  HomeViewBodyAppBar(),
-                  SizedBox(
+                  const HomeViewBodyAppBar(),
+                  const SizedBox(
                     height: 10,
                   ),
-                  CustomSearchTextField(),
+                  CustomSearchTextField(
+                    controller: controller,
+                  ),
                 ]))),
-        SliverToBoxAdapter(
+        const SliverToBoxAdapter(
           child: AdsListview(),
         ),
-        SliverToBoxAdapter(
+        const SliverToBoxAdapter(
           child: Column(children: [
             SizedBox(
               height: 20,
@@ -51,7 +56,7 @@ class Homeview_Body extends StatelessWidget {
             ),
           ]),
         ),
-        SliverToBoxAdapter(
+        const SliverToBoxAdapter(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: KHorizontalPadding),
             child: Column(

@@ -34,9 +34,10 @@ class _StudentOnboardingViewBodyState extends State<StudentOnboardingViewBody> {
       child: Column(
         children: [
           Expanded(
+              flex: 3,
               child: StudentOnboardingPageView(
-            pageController: pageController,
-          )),
+                pageController: pageController,
+              )),
           const Customsizedbox(width: 0, height: 64),
           CustomDotsIndicator(pageController: pageController),
           const Customsizedbox(width: 0, height: 30),

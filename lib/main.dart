@@ -1,4 +1,3 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,16 +7,20 @@ import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/App_router.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/firebase_options.dart';
 import 'package:sintir/generated/l10n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await shared_preferences_Services.init();
   setup_Getit();
+
   Bloc.observer = Custom_Blocobserver();
   runApp(
-    const Sintir(),
+    const Sintir(), // Wrap your app
   );
 }
 
@@ -26,7 +29,6 @@ class Sintir extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      builder: DevicePreview.appBuilder,
       theme: ThemeData(
           fontFamily: "Cairo",
           primaryColor: KMainColor,

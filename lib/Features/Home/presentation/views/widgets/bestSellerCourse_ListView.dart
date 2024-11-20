@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Features/Home/presentation/views/widgets/bestSellerCourse_item.dart';
+import 'package:sintir/Core/widgets/CustomCourseItem.dart';
 import 'package:sintir/constant.dart';
 
 class BestsellercourseListview extends StatelessWidget {
@@ -19,7 +19,7 @@ class BestsellercourseListview extends StatelessWidget {
             return const Padding(
               padding: EdgeInsets.symmetric(horizontal: 5),
               child: AspectRatio(
-                  aspectRatio: 140 / 202, child: BestsellercourseItem()),
+                  aspectRatio: 140 / 202, child: CustomCourseItem()),
             );
           }),
     );
