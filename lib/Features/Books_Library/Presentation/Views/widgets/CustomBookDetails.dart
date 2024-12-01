@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Core/widgets/CustomAddFavouriteIcon.dart';
+import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomAddFavouriteIcon.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/constant.dart';
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/widgets/CustomCourseItem.dart';
+import 'package:sintir/Core/utils/Variables.dart';
+import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseBottomSheet.dart';
+import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
 
 class Leatestcoursesglideview extends StatelessWidget {
   const Leatestcoursesglideview({super.key});
@@ -17,7 +19,14 @@ class Leatestcoursesglideview extends StatelessWidget {
           childAspectRatio: 130 / 170,
         ),
         itemBuilder: (context, index) {
-          return const CustomCourseItem();
+          return CustomCourseItem(
+            ontap: () {
+              Variables.HomeViewScaffoldKey.currentState!
+                  .showBottomSheet((context) {
+                return const CourseBottomSheet();
+              });
+            },
+          );
         });
   }
 }

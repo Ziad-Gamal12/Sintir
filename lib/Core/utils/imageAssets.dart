@@ -2,6 +2,26 @@
 class Assets {
   Assets._();
   
+  /// Assets for assetsImagesActiveAiChatIcon
+  /// assets/images/ActiveAiChatIcon.png
+  static const String assetsImagesActiveAiChatIcon = "assets/images/ActiveAiChatIcon.png";
+
+  /// Assets for assetsImagesActiveFavouriteIcon
+  /// assets/images/ActiveFavouriteIcon.png
+  static const String assetsImagesActiveFavouriteIcon = "assets/images/ActiveFavouriteIcon.png";
+
+  /// Assets for assetsImagesActiveHomeIcon
+  /// assets/images/ActiveHomeIcon.png
+  static const String assetsImagesActiveHomeIcon = "assets/images/ActiveHomeIcon.png";
+
+  /// Assets for assetsImagesActiveLibraryIcon
+  /// assets/images/ActiveLibraryIcon.png
+  static const String assetsImagesActiveLibraryIcon = "assets/images/ActiveLibraryIcon.png";
+
+  /// Assets for assetsImagesActiveTasksIcon
+  /// assets/images/ActiveTasksIcon.png
+  static const String assetsImagesActiveTasksIcon = "assets/images/ActiveTasksIcon.png";
+
   /// Assets for assetsImagesAdsTestImage
   /// assets/images/adsTest_Image.png
   static const String assetsImagesAdsTestImage = "assets/images/adsTest_Image.png";
@@ -34,9 +54,17 @@ class Assets {
   /// assets/images/ChoosingStateStudentIcon.svg
   static const String assetsImagesChoosingStateStudentIcon = "assets/images/ChoosingStateStudentIcon.svg";
 
+  /// Assets for assetsImagesCustomFileIcon
+  /// assets/images/CustomFileIcon.svg
+  static const String assetsImagesCustomFileIcon = "assets/images/CustomFileIcon.svg";
+
   /// Assets for assetsImagesEducationLevelSectionBooks
   /// assets/images/EducationLevelSectionBooks.png
   static const String assetsImagesEducationLevelSectionBooks = "assets/images/EducationLevelSectionBooks.png";
+
+  /// Assets for assetsImagesExamIcon
+  /// assets/images/ExamIcon.svg
+  static const String assetsImagesExamIcon = "assets/images/ExamIcon.svg";
 
   /// Assets for assetsImagesFaceBookIcons
   /// assets/images/faceBookIcons.svg
@@ -46,21 +74,49 @@ class Assets {
   /// assets/images/google.svg
   static const String assetsImagesGoogle = "assets/images/google.svg";
 
+  /// Assets for assetsImagesInActiveAiChatIcon
+  /// assets/images/inActiveAiChatIcon.png
+  static const String assetsImagesInActiveAiChatIcon = "assets/images/inActiveAiChatIcon.png";
+
+  /// Assets for assetsImagesInActiveFavouriteIcon
+  /// assets/images/inActiveFavouriteIcon.png
+  static const String assetsImagesInActiveFavouriteIcon = "assets/images/inActiveFavouriteIcon.png";
+
+  /// Assets for assetsImagesInActiveHomeIcon
+  /// assets/images/inActiveHomeIcon.png
+  static const String assetsImagesInActiveHomeIcon = "assets/images/inActiveHomeIcon.png";
+
+  /// Assets for assetsImagesInActiveLibraryIcon
+  /// assets/images/InActiveLibraryIcon.png
+  static const String assetsImagesInActiveLibraryIcon = "assets/images/InActiveLibraryIcon.png";
+
+  /// Assets for assetsImagesInActiveTasksIcon
+  /// assets/images/inActiveTasksIcon.png
+  static const String assetsImagesInActiveTasksIcon = "assets/images/inActiveTasksIcon.png";
+
   /// Assets for assetsImagesLevelIcon
   /// assets/images/level_icon.svg
   static const String assetsImagesLevelIcon = "assets/images/level_icon.svg";
+
+  /// Assets for assetsImagesLogout
+  /// assets/images/logout.png
+  static const String assetsImagesLogout = "assets/images/logout.png";
 
   /// Assets for assetsImagesNotificationIcon
   /// assets/images/notification_icon.png
   static const String assetsImagesNotificationIcon = "assets/images/notification_icon.png";
 
-  /// Assets for assetsImagesProfilePicture
-  /// assets/images/Profile_Picture.svg
-  static const String assetsImagesProfilePicture = "assets/images/Profile_Picture.svg";
-
   /// Assets for assetsImagesSearchIcon
   /// assets/images/search-icon.svg
   static const String assetsImagesSearchIcon = "assets/images/search-icon.svg";
+
+  /// Assets for assetsImagesSectionIcon
+  /// assets/images/SectionIcon.svg
+  static const String assetsImagesSectionIcon = "assets/images/SectionIcon.svg";
+
+  /// Assets for assetsImagesSetting
+  /// assets/images/setting.png
+  static const String assetsImagesSetting = "assets/images/setting.png";
 
   /// Assets for assetsImagesSintirIcon
   /// assets/images/Sintir_Icon.png
@@ -101,5 +157,9 @@ class Assets {
   /// Assets for assetsImagesUserAvatar
   /// assets/images/userAvatar.svg
   static const String assetsImagesUserAvatar = "assets/images/userAvatar.svg";
+
+  /// Assets for assetsImagesVedioIcon
+  /// assets/images/VedioIcon.svg
+  static const String assetsImagesVedioIcon = "assets/images/VedioIcon.svg";
 }
 

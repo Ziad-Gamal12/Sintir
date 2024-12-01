@@ -9,6 +9,10 @@ abstract class Variables {
   static GlobalKey<FormState> TeacherLoginFormKey = GlobalKey<FormState>();
   static GlobalKey<FormState> TeacherResetPasswordFormKey =
       GlobalKey<FormState>();
+  static GlobalKey<ScaffoldState> HomeViewScaffoldKey =
+      GlobalKey<ScaffoldState>();
+  static GlobalKey<ScaffoldState> DisplaycoursevedioveiwScaffoldKey =
+      GlobalKey<ScaffoldState>();
   static TextEditingController TeacherSignUpFirstNameController =
       TextEditingController();
   static TextEditingController TeacherSignUpLastNameController =

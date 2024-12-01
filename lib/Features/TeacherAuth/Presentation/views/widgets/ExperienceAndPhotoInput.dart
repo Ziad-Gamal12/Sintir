@@ -6,7 +6,7 @@ import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
-import 'package:sintir/Core/widgets/CustomTeaxtField.dart';
+import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/manager/TeacherSignUP/teacher_sign_up_cubit.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/BlocBuilder/PhotoInputBlocBuilder.dart';
 

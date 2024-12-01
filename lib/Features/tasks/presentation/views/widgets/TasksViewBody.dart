@@ -5,8 +5,8 @@ import 'package:sintir/Features/tasks/presentation/views/widgets/tasksListView.d
 import 'package:sintir/Features/tasks/presentation/views/widgets/tasksListViewHeader.dart';
 import 'package:sintir/constant.dart';
 
-class TodolistviewBody extends StatelessWidget {
-  const TodolistviewBody({super.key});
+class TasksViewBody extends StatelessWidget {
+  const TasksViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {

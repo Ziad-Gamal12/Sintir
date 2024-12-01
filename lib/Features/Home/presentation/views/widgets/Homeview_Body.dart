@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/Variables.dart';
-import 'package:sintir/Core/widgets/CustomSearchTextField.dart';
+import 'package:sintir/Core/widgets/CustomTextFields/CustomSearchTextField.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/BestSellerCoursesHeader.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/HomeViewBodyAppBar.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/ads_ListView.dart';

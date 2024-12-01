@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/Variables.dart';
-import 'package:sintir/Core/widgets/CustomTeaxtField.dart';
+import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 
 class TeacherSignUpAddressFiled extends StatelessWidget {
   const TeacherSignUpAddressFiled({

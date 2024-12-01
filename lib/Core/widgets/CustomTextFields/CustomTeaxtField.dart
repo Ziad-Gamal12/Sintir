@@ -6,24 +6,25 @@ import 'package:sintir/Core/utils/textStyles.dart';
 
 class Customteaxtfield extends StatelessWidget {
   final String hintText;
-  final IconData prefixIcon;
+  IconData? prefixIcon;
   Widget? suffixIcon;
   final bool obscureText;
   final TextEditingController controller;
   final TextInputType textInputType;
   final String? Function(String?)? validator;
   List<TextInputFormatter>? inputFormatters;
-
+  int? maxLines;
   Customteaxtfield(
       {super.key,
       this.inputFormatters,
       required this.hintText,
-      required this.prefixIcon,
+      this.prefixIcon,
       this.suffixIcon,
       required this.obscureText,
       required this.controller,
       required this.textInputType,
-      required this.validator});
+      required this.validator,
+      this.maxLines});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +35,7 @@ class Customteaxtfield extends StatelessWidget {
       keyboardType: textInputType,
       obscureText: obscureText,
       validator: validator,
+      maxLines: maxLines,
       decoration: InputDecoration(
           hintText: hintText,
           hintStyle:

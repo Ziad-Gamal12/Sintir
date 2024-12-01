@@ -6,6 +6,8 @@ import 'package:sintir/Features/AI_Chat/presentation/views/aiChatView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/EducationLevelsBooksSectionsView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/LevelBooksView.dart';
 import 'package:sintir/Features/ChoosingState/Presentation/views/ChoosingStateView.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/courseDetailsView.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/displayCourseVedioVeiw.dart';
 import 'package:sintir/Features/Favorites/presentation/views/FavoritesView.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 import 'package:sintir/Features/Splash/Presentation/views/SplashView.dart';
@@ -17,7 +19,7 @@ import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnb
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherLoginView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignUpView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/teacherTermsAndConditionsView.dart';
-import 'package:sintir/Features/tasks/presentation/views/todoListView.dart';
+import 'package:sintir/Features/tasks/presentation/views/TasksView.dart';
 
 class App_router {
   static GoRouter router = GoRouter(
@@ -91,13 +93,13 @@ class App_router {
       GoRoute(
         path: Homeview.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return Homeview();
+          return const Homeview();
         },
       ),
       GoRoute(
-        path: Todolistview.routeName,
+        path: TasksView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return const Todolistview();
+          return const TasksView();
         },
       ),
       GoRoute(
@@ -122,6 +124,18 @@ class App_router {
         path: Favoritesview.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const Favoritesview();
+        },
+      ),
+      GoRoute(
+        path: Coursedetailsview.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const Coursedetailsview();
+        },
+      ),
+      GoRoute(
+        path: Displaycoursevedioveiw.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const Displaycoursevedioveiw();
         },
       ),
     ],

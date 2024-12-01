@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/widgets/CustomCourseItem.dart';
+import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
 
 class Favouritecoursesgrideview extends StatelessWidget {
   const Favouritecoursesgrideview({super.key});
@@ -13,7 +13,9 @@ class Favouritecoursesgrideview extends StatelessWidget {
             mainAxisSpacing: 10,
             crossAxisSpacing: 10),
         itemBuilder: (context, index) {
-          return const CustomCourseItem();
+          return CustomCourseItem(
+            ontap: () {},
+          );
         });
   }
 }

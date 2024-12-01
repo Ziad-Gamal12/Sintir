@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/widgets/CustomChatTextField.dart';
+import 'package:sintir/Core/widgets/CustomTextFields/CustomChatTextField.dart';
 import 'package:sintir/Features/AI_Chat/presentation/views/widgets/aiChatListView.dart';
 
 class AichatviewBody extends StatelessWidget {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
-import 'package:sintir/Core/widgets/CustomAddFavouriteIcon.dart';
+import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomAddFavouriteIcon.dart';
 
 class Csutomfavoritebooklistviewitem extends StatelessWidget {
   const Csutomfavoritebooklistviewitem({super.key});
