@@ -6,6 +6,7 @@ import 'package:sintir/Features/AI_Chat/presentation/views/aiChatView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/EducationLevelsBooksSectionsView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/LevelBooksView.dart';
 import 'package:sintir/Features/ChoosingState/Presentation/views/ChoosingStateView.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFedBackView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseIntroductionView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/SendCourseReportView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/courseTestView.dart';
@@ -150,6 +151,12 @@ class App_router {
         path: Sendcoursereportview.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const Sendcoursereportview();
+        },
+      ),
+      GoRoute(
+        path: Coursefedbackview.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const Coursefedbackview();
         },
       ),
     ],

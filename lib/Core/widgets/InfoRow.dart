@@ -16,8 +16,8 @@ class InfoRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: const Color(0xff818181), size: 24),
-        const SizedBox(width: 4),
+        Icon(icon, color: const Color(0xff818181), size: 18),
+        const SizedBox(width: 5),
         Text(
           label,
           style: textStyle ??
