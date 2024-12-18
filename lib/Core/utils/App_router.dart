@@ -6,7 +6,9 @@ import 'package:sintir/Features/AI_Chat/presentation/views/aiChatView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/EducationLevelsBooksSectionsView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/LevelBooksView.dart';
 import 'package:sintir/Features/ChoosingState/Presentation/views/ChoosingStateView.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/courseDetailsView.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseIntroductionView.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/SendCourseReportView.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/courseTestView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/displayCourseVedioVeiw.dart';
 import 'package:sintir/Features/Favorites/presentation/views/FavoritesView.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
@@ -127,15 +129,27 @@ class App_router {
         },
       ),
       GoRoute(
-        path: Coursedetailsview.routeName,
+        path: CourseIntroductionView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return const Coursedetailsview();
+          return const CourseIntroductionView();
         },
       ),
       GoRoute(
         path: Displaycoursevedioveiw.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const Displaycoursevedioveiw();
+        },
+      ),
+      GoRoute(
+        path: Coursetestview.routename,
+        builder: (BuildContext context, GoRouterState state) {
+          return const Coursetestview();
+        },
+      ),
+      GoRoute(
+        path: Sendcoursereportview.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const Sendcoursereportview();
         },
       ),
     ],

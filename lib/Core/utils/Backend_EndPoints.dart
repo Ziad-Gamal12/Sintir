@@ -8,7 +8,9 @@ class BackendEndpoints {
   static String setTeacherDataTableName = "Teachers";
   static String userKind = "kind";
   static String checkIsTeacherExistCollectionName = "Teachers";
-
+  static String vedioType = "Vedio";
+  static String testType = "Test";
+  static String fileType = "File";
   static String checkIsStudentExistCollectionName = "Students";
   static String getStudentDataCollectionName = "Students";
   static String chieckIsStudentPhoneNumberExistCollectionName = "Students";

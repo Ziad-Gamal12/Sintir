@@ -13,7 +13,7 @@ class Customteaxtfield extends StatelessWidget {
   final TextInputType textInputType;
   final String? Function(String?)? validator;
   List<TextInputFormatter>? inputFormatters;
-  int? maxLines;
+  int maxLines;
   Customteaxtfield(
       {super.key,
       this.inputFormatters,
@@ -24,7 +24,7 @@ class Customteaxtfield extends StatelessWidget {
       required this.controller,
       required this.textInputType,
       required this.validator,
-      this.maxLines});
+      this.maxLines = 1});
 
   @override
   Widget build(BuildContext context) {

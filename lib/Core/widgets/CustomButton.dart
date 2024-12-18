@@ -8,10 +8,11 @@ class Custombutton extends StatelessWidget {
   final Color color;
   final Color textColor;
   final VoidCallback onPressed;
-
-  const Custombutton({
+  BorderRadiusGeometry? borderRadius;
+  Custombutton({
     Key? key,
     required this.text,
+    this.borderRadius,
     required this.color,
     required this.textColor,
     required this.onPressed,
@@ -22,7 +23,10 @@ class Custombutton extends StatelessWidget {
     return MaterialButton(
       height: 50,
       minWidth: double.infinity,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(
+        borderRadius:
+            borderRadius == null ? BorderRadius.circular(16) : borderRadius!,
+      ),
       onPressed: onPressed,
       color: color,
       child: Text(text,

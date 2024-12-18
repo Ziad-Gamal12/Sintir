@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 
-class courseDetailsViewBodyListViewHeader extends StatelessWidget {
-  const courseDetailsViewBodyListViewHeader({
+class courseIntroductionViewBodyListViewHeader extends StatelessWidget {
+  const courseIntroductionViewBodyListViewHeader({
     super.key,
   });
 

@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseBottomSheetCourseDetails.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseBottomSheetHeader.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/courseDetailsView.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseIntroductionView.dart';
 import 'package:sintir/constant.dart';
 
 class CourseBottomSheetBody extends StatelessWidget {
@@ -32,7 +32,7 @@ class CourseBottomSheetBody extends StatelessWidget {
               color: KSecondaryColor,
               textColor: Colors.white,
               onPressed: () {
-                GoRouter.of(context).push(Coursedetailsview.routeName);
+                GoRouter.of(context).push(CourseIntroductionView.routeName);
               })
         ],
       ),

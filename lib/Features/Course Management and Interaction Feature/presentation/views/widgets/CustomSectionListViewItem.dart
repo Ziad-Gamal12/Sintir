@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/displayCourseVedioVeiw.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseSectionitemEntity.dart';
 
-class CustomSectionListViewVedioItem extends StatelessWidget {
-  const CustomSectionListViewVedioItem({super.key});
-
+class CustomSectionListViewItem extends StatelessWidget {
+  const CustomSectionListViewItem({super.key, required this.item});
+  final CourseSectionitemEntity item;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        GoRouter.of(context).push(Displaycoursevedioveiw.routeName);
-      },
+      onTap: item.navigationScreen(context: context),
       child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           alignment: AlignmentDirectional.center,
@@ -23,10 +19,10 @@ class CustomSectionListViewVedioItem extends StatelessWidget {
               color: Colors.grey.shade100,
               borderRadius: BorderRadius.circular(8)),
           child: Customlisttilewidget(
-            title: "برومو - دورة حياة المنتج",
-            image: Assets.assetsImagesVedioIcon,
+            title: item.title,
+            image: item.preffixImage,
             trailing: Text(
-              "8 دقائق",
+              "${item.durationTime} دقائق",
               style: AppTextStyles.regular11
                   .copyWith(color: const Color(0xff818181)),
             ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 
-class Coursedeatailsviewbodydescription extends StatelessWidget {
-  const Coursedeatailsviewbodydescription({super.key});
+class CoursIntroductionviewbodydescription extends StatelessWidget {
+  const CoursIntroductionviewbodydescription({super.key});
 
   @override
   Widget build(BuildContext context) {

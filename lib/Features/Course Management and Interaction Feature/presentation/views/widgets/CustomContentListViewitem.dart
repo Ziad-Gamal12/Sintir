@@ -2,13 +2,15 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomSectionListView.dart';
 
 class CustomContentListViewitem extends StatelessWidget {
   const CustomContentListViewitem({
     super.key,
+    required this.sectionItem,
   });
-
+  final CoursSectionsListItemEntity sectionItem;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,9 +31,9 @@ class CustomContentListViewitem extends StatelessWidget {
       child: ExpandablePanel(
         theme: const ExpandableThemeData(),
         header: Customlisttilewidget(
-          title: "المحاضرة الأولى",
+          title: sectionItem.title,
           image: Assets.assetsImagesSectionIcon,
-          subtitle: "شرح الدرس الثانى والثالث",
+          subtitle: sectionItem.subtitle,
         ),
         collapsed: const SizedBox(),
         expanded: Container(
@@ -40,7 +42,9 @@ class CustomContentListViewitem extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(8),
           ),
-          child: const CustomSectionListView(),
+          child: CustomSectionListView(
+            items: sectionItem.items.sectionsItems,
+          ),
         ),
       ),
     );

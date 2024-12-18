@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:svg_flutter/svg_flutter.dart';
@@ -21,6 +23,8 @@ class Customlisttilewidget extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       title: Text(
         title,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
         style: AppTextStyles.semiBold16.copyWith(color: Colors.black),
       ),
       leading: SizedBox(
