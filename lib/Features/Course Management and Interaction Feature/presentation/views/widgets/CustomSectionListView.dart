@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/DisplayVediRequiresEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomFileListViewItem.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomTestListViewItem.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomVedioListViewItem.dart';
 
@@ -18,7 +19,9 @@ class CustomSectionListView extends StatelessWidget {
     } else if (item is Coursetestentity) {
       return Customtestlistviewitem(item: item);
     } else {
-      return const SizedBox();
+      return Customfilelistviewitem(
+        item: item,
+      );
     }
   }
 

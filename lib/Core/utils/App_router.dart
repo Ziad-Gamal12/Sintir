@@ -7,10 +7,12 @@ import 'package:sintir/Features/AI_Chat/presentation/views/aiChatView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/EducationLevelsBooksSectionsView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/LevelBooksView.dart';
 import 'package:sintir/Features/ChoosingState/Presentation/views/ChoosingStateView.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/DisplayVediRequiresEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFedBackView.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFilePreviewer_View.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseIntroductionView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/SendCourseReportView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/courseTestView.dart';
@@ -169,6 +171,14 @@ class App_router {
         builder: (BuildContext context, GoRouterState state) {
           return Coursefedbackview(
             fedBacks: state.extra as List<CoursefedbackItemEntity>,
+          );
+        },
+      ),
+      GoRoute(
+        path: CoursefilepreviewerView.routename,
+        builder: (BuildContext context, GoRouterState state) {
+          return CoursefilepreviewerView(
+            coursefileentity: state.extra as Coursefileentity,
           );
         },
       ),

@@ -5,6 +5,7 @@ import 'package:sintir/Core/entities/ContentCreaterEntity.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionSolutionEntity.dart';
@@ -124,6 +125,10 @@ abstract class Variables {
                       ],
                       isOpened: false)
                 ], durationTime: 120, title: "امتحان شامل على المنهج"),
+                Coursefileentity(
+                    description: "ملخص المنهج",
+                    title: "ملف تلخيص المنهج",
+                    filePath: "assets/Files/PDFTest.pdf")
               ],
               subtitle: "عملية إطلاق المنتج"),
         ],
