@@ -9,10 +9,12 @@ class Custombutton extends StatelessWidget {
   final Color textColor;
   final VoidCallback onPressed;
   BorderRadiusGeometry? borderRadius;
+  Widget? child;
   Custombutton({
     Key? key,
     required this.text,
     this.borderRadius,
+    this.child,
     required this.color,
     required this.textColor,
     required this.onPressed,
@@ -29,9 +31,10 @@ class Custombutton extends StatelessWidget {
       ),
       onPressed: onPressed,
       color: color,
-      child: Text(text,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.bold16Auto.copyWith(color: textColor)),
+      child: child ??
+          Text(text,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.bold16Auto.copyWith(color: textColor)),
     );
   }
 }

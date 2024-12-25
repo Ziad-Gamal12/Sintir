@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseBottomSheetBody.dart';
 
 class CourseBottomSheet extends StatelessWidget {
   const CourseBottomSheet({
     super.key,
+    required this.course,
   });
-
+  final CourseEntity course;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,8 +19,10 @@ class CourseBottomSheet extends StatelessWidget {
             topRight: Radius.circular(20),
           ),
           border: Border.all(color: Colors.black, width: 1)),
-      child: const SafeArea(
-        child: CourseBottomSheetBody(),
+      child: SafeArea(
+        child: CourseBottomSheetBody(
+          course: course,
+        ),
       ),
     );
   }

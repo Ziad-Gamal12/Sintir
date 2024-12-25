@@ -19,7 +19,7 @@ class _CustomdisplayingvediowidgetState
       BetterPlayerDataSourceType.network,
       widget.vedioUrl,
     );
-    betterPlayerController = BetterPlayerController(
+    var betterPlayerController2 = BetterPlayerController(
       BetterPlayerConfiguration(
         autoPlay: true,
         looping: false,
@@ -32,15 +32,19 @@ class _CustomdisplayingvediowidgetState
           );
         },
         controlsConfiguration: const BetterPlayerControlsConfiguration(
-          enableFullscreen: true,
-          enablePlaybackSpeed: true,
-          playbackSpeedIcon: Icons.speed,
-          enableSkips: true,
-          enableQualities: true,
-        ),
+            enableFullscreen: true,
+            enablePlaybackSpeed: true,
+            playbackSpeedIcon: Icons.slow_motion_video,
+            enableSkips: true,
+            enableQualities: true,
+            backwardSkipTimeInMilliseconds: 600,
+            enableMute: true,
+            enableProgressBar: true,
+            enablePlayPause: true),
       ),
       betterPlayerDataSource: dataSource,
     );
+    betterPlayerController = betterPlayerController2;
 
     super.initState();
   }

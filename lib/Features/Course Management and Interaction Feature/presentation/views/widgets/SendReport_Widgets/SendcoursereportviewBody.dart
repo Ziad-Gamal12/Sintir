@@ -6,7 +6,9 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/constant.dart';
 
 class Sendcoursereportviewbody extends StatefulWidget {
-  const Sendcoursereportviewbody({super.key});
+  const Sendcoursereportviewbody({
+    super.key,
+  });
 
   @override
   State<Sendcoursereportviewbody> createState() =>
@@ -15,7 +17,6 @@ class Sendcoursereportviewbody extends StatefulWidget {
 
 class _SendcoursereportviewbodyState extends State<Sendcoursereportviewbody> {
   String reportReson = "";
-
   TextEditingController controller = TextEditingController();
 
   @override

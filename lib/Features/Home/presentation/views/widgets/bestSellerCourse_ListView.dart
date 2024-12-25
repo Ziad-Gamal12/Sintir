@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseBottomSheet.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
 import 'package:sintir/constant.dart';
 
 class BestsellercourseListview extends StatelessWidget {
-  const BestsellercourseListview({super.key});
-
+  const BestsellercourseListview({super.key, required this.courses});
+  final List<CourseEntity> courses;
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -16,18 +17,22 @@ class BestsellercourseListview extends StatelessWidget {
       child: ListView.builder(
           padding: const EdgeInsets.only(right: KHorizontalPadding),
           scrollDirection: Axis.horizontal,
-          itemCount: 10,
+          itemCount: courses.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: AspectRatio(
                   aspectRatio: 140 / 202,
-                  child: CustomCourseItem(ontap: () {
-                    Variables.HomeViewScaffoldKey.currentState!
-                        .showBottomSheet((context) {
-                      return const CourseBottomSheet();
-                    });
-                  })),
+                  child: CustomCourseItem(
+                      courseItem: courses[index],
+                      ontap: () {
+                        Variables.HomeViewScaffoldKey.currentState!
+                            .showBottomSheet((context) {
+                          return CourseBottomSheet(
+                            course: courses[index],
+                          );
+                        });
+                      })),
             );
           }),
     );

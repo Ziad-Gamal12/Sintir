@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/utils/Backend_EndPoints.dart';
-import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomDisplayingVedioWidget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseSectionItemsListEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseSectionitemEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseContentListView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/DisplayCourseVedioView_Widgets/CustomSendNoteText.dart';
 import 'package:sintir/constant.dart';
 
 class DisplaycoursevedioveiwBody extends StatelessWidget {
-  DisplaycoursevedioveiwBody({super.key});
-
-  String videoUrl = 'https://samplelib.com/lib/preview/mp4/sample-5s.mp4';
+  const DisplaycoursevedioveiwBody(
+      {super.key, required this.vedio, required this.courseSectionsList});
+  final Coursevedioitementity vedio;
+  final List<CoursSectionsListItemEntity> courseSectionsList;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +26,7 @@ class DisplaycoursevedioveiwBody extends StatelessWidget {
                     height: 10,
                   ),
                   Customdisplayingvediowidget(
-                    vedioUrl: videoUrl,
+                    vedioUrl: vedio.vedioUrl,
                   ),
                   const SizedBox(
                     height: 25,
@@ -40,28 +38,20 @@ class DisplaycoursevedioveiwBody extends StatelessWidget {
                   const Divider(
                     height: 30,
                   ),
-                  const Text("المحتوى",
-                      textAlign: TextAlign.center, style: AppTextStyles.bold24),
+                  courseSectionsList.isEmpty
+                      ? const Text("لا يوجد عناصر أخرى",
+                          textAlign: TextAlign.center,
+                          style: AppTextStyles.semiBold20)
+                      : const Text("المحتوى",
+                          textAlign: TextAlign.center,
+                          style: AppTextStyles.bold24),
                   const SizedBox(
                     height: 15,
                   ),
                 ],
               ),
             ),
-            CourseContentListView(
-              courseSectionsEntity: [
-                CoursSectionsListItemEntity(
-                    title: "برومو - دورة حياة المنتج",
-                    items: CourseSectionItemsListEntity(sectionsItems: [
-                      CourseSectionitemEntity(
-                          preffixImage: Assets.assetsImagesExamIcon,
-                          itemType: BackendEndpoints.testType,
-                          title: "امتحان على الباب الأول كمياء ",
-                          durationTime: 100)
-                    ]),
-                    subtitle: "عملية إطلاق المنتج")
-              ],
-            ),
+            CourseContentListView(courseSectionsEntity: courseSectionsList),
           ],
         ));
   }

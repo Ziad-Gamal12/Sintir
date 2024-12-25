@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseBottomSheetCourseDetails.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseBottomSheetHeader.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
@@ -9,8 +10,9 @@ import 'package:sintir/constant.dart';
 class CourseBottomSheetBody extends StatelessWidget {
   const CourseBottomSheetBody({
     super.key,
+    required this.course,
   });
-
+  final CourseEntity course;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,18 +23,23 @@ class CourseBottomSheetBody extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          const CourseBottomSheetHeader(),
+          CourseBottomSheetHeader(
+            courseContentCreater: course.contentcreaterentity,
+          ),
           const SizedBox(
             height: 10,
           ),
-          const CourseBottomSheetCourseDetails(),
+          CourseBottomSheetCourseDetails(
+            course: course,
+          ),
           const Spacer(),
           Custombutton(
               text: "أشترك الأن",
               color: KSecondaryColor,
               textColor: Colors.white,
               onPressed: () {
-                GoRouter.of(context).push(CourseIntroductionView.routeName);
+                GoRouter.of(context)
+                    .push(CourseIntroductionView.routeName, extra: course);
               })
         ],
       ),

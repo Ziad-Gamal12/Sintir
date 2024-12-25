@@ -1,14 +1,17 @@
 // ignore_for_file: file_names
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/utils/imageAssets.dart';
+import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomAddFavouriteIcon.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomContentCreatorCircleAvartar.dart';
 
 class CustomCourseItem extends StatelessWidget {
-  const CustomCourseItem({super.key, required this.ontap});
+  const CustomCourseItem(
+      {super.key, required this.ontap, required this.courseItem});
   final VoidCallback ontap;
+  final CourseEntity courseItem;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -31,12 +34,11 @@ class CustomCourseItem extends StatelessWidget {
                         topLeft: Radius.circular(5),
                         topRight: Radius.circular(5)),
                     child: SizedBox(
-                      width: double.infinity,
-                      child: Image.asset(
-                        Assets.assetsImagesBestSellerItemImage,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                        width: double.infinity,
+                        child: CachedNetworkImage(
+                          imageUrl: courseItem.posterUrl,
+                          fit: BoxFit.cover,
+                        )),
                   ),
                 ),
                 Expanded(
@@ -46,29 +48,26 @@ class CustomCourseItem extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Text(
-                              "Creatives X Event Vol.2",
-                              textAlign: TextAlign.right,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.semiBold11
-                                  .copyWith(color: Colors.black),
-                            ),
-                          ],
+                        Text(
+                          courseItem.title,
+                          textAlign: TextAlign.right,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.semiBold11
+                              .copyWith(color: Colors.black),
                         ),
                         const SizedBox(height: 3),
                         Row(
                           children: [
-                            const CustomContentCreatorCircleAvartar(
-                              imagepath: Assets.assetsImagesBestSellerItemImage,
+                            CustomContentCreatorCircleAvartar(
+                              imagepath: courseItem
+                                  .contentcreaterentity.profileImageUrl,
                             ),
                             const SizedBox(
                               width: 10,
                             ),
                             Text(
-                              "Creatives X",
+                              courseItem.contentcreaterentity.name,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.regular10

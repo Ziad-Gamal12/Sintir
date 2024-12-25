@@ -38,34 +38,36 @@ class Homeview_Body extends StatelessWidget {
         const SliverToBoxAdapter(
           child: AdsListview(),
         ),
-        const SliverToBoxAdapter(
+        SliverToBoxAdapter(
           child: Column(children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(right: KHorizontalPadding),
               child: BestSellerCoursesHeader(),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            BestsellercourseListview(),
-            SizedBox(
+            BestsellercourseListview(courses: Variables.TestCoursesList),
+            const SizedBox(
               height: 20,
             ),
           ]),
         ),
-        const SliverToBoxAdapter(
+        SliverToBoxAdapter(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+            padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
             child: Column(
               children: [
-                Leatestcoursesheader(),
-                SizedBox(
+                const Leatestcoursesheader(),
+                const SizedBox(
                   height: 10,
                 ),
-                Leatestcoursesglideview(),
+                Leatestcoursesglideview(
+                  courses: Variables.TestCoursesList,
+                ),
               ],
             ),
           ),

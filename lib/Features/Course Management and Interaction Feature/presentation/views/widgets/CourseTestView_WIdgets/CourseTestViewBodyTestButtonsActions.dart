@@ -22,7 +22,7 @@ class CourseTestViewBodyTestButtonsActions extends StatelessWidget {
         ),
         Custombutton(
             text: "اكمال الأمتحان لاحقا",
-            color: Colors.green,
+            color: Colors.yellow.shade700,
             textColor: Colors.white,
             onPressed: () {}),
       ],

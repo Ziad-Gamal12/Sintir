@@ -1,13 +1,27 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseSectionitemEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomSectionListViewItem.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/DisplayVediRequiresEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomTestListViewItem.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomVedioListViewItem.dart';
 
 class CustomSectionListView extends StatelessWidget {
   const CustomSectionListView({
     super.key,
     required this.items,
   });
-  final List<CourseSectionitemEntity> items;
+  final List items;
+  Widget getChild(dynamic item, BuildContext context) {
+    if (item is Displayvedirequiresentity) {
+      return CustomVedioListViewItem(item: item);
+    } else if (item is Coursetestentity) {
+      return Customtestlistviewitem(item: item);
+    } else {
+      return const SizedBox();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -16,11 +30,8 @@ class CustomSectionListView extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5),
-          child: CustomSectionListViewItem(
-            item: items[index],
-          ),
-        );
+            padding: const EdgeInsets.symmetric(vertical: 5),
+            child: getChild(items[index], context));
       },
     );
   }

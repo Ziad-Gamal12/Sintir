@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
 
 class CourseBottomSheetCourseDetails extends StatelessWidget {
   const CourseBottomSheetCourseDetails({
     super.key,
+    required this.course,
   });
-
+  final CourseEntity course;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -14,13 +16,13 @@ class CourseBottomSheetCourseDetails extends StatelessWidget {
       children: [
         Text.rich(TextSpan(children: [
           TextSpan(
-              text: "Creatives X Event Vol.2",
+              text: course.title,
               style: AppTextStyles.semiBold20.copyWith(color: Colors.black)),
           const TextSpan(
             text: " ",
           ),
           TextSpan(
-              text: "(75 فديو)",
+              text: "(${course.coursSectionsListItemEntity.length} فديو)",
               style: AppTextStyles.regular11
                   .copyWith(color: const Color(0xff818181)))
         ])),
@@ -28,7 +30,7 @@ class CourseBottomSheetCourseDetails extends StatelessWidget {
           height: 10,
         ),
         Text(
-          "في كريتيڤز إكس بنحقق معادلة صعبة، معادلة إنك تستمتع و في نفس الوقت تستفيد. تستفيد من مواضيع مختلفة للمتحدثين، أو علاقات عمل تقدر تعملها أو يوم لطيف تقضيه مع أصحابك و غيره كتير. الاستفادة في مجالات زي : الجرافيك و الموشن ديزاين، الدوبلاج والفويس أوفر، اللغة الإنجليزية، الذكاء الإصطناعي، وغيره كتير.",
+          course.description,
           style: AppTextStyles.regular10.copyWith(color: Colors.black),
         ),
         const SizedBox(
@@ -40,7 +42,7 @@ class CourseBottomSheetCourseDetails extends StatelessWidget {
                 text: "المبلغ :    ",
                 style: AppTextStyles.semiBold20.copyWith(color: Colors.black)),
             TextSpan(
-                text: " 120\$ (شهرى)",
+                text: " ${course.price}\$ (شهرى)",
                 style:
                     AppTextStyles.bold20Auto.copyWith(color: KSecondaryColor))
           ]),

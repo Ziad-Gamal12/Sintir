@@ -19,13 +19,13 @@ class CustomContentListViewitem extends StatelessWidget {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.shade300,
-            blurRadius: 5,
+            color: Colors.grey.shade100,
+            blurRadius: 7,
             spreadRadius: 1,
           ),
         ],
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.black, width: 1),
+        border: Border.all(color: Colors.black, width: .5),
         color: Colors.grey.shade100,
       ),
       child: ExpandablePanel(
@@ -43,7 +43,7 @@ class CustomContentListViewitem extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
           child: CustomSectionListView(
-            items: sectionItem.items.sectionsItems,
+            items: sectionItem.items,
           ),
         ),
       ),

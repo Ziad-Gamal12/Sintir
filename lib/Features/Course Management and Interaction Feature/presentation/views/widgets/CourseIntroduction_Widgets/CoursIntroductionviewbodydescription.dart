@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 
 class CoursIntroductionviewbodydescription extends StatelessWidget {
-  const CoursIntroductionviewbodydescription({super.key});
+  const CoursIntroductionviewbodydescription({super.key, required this.course});
+  final CourseEntity course;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class CoursIntroductionviewbodydescription extends StatelessWidget {
           height: 10,
         ),
         Text(
-          "في كريتيڤز إكس بنحقق معادلة صعبة، معادلة إنك تستمتع و في نفس الوقت تستفيد. تستفيد من مواضيع مختلفة للمتحدثين، أو علاقات عمل تقدر تعملها أو يوم لطيف تقضيه مع أصحابك و غيره كتير. الاستفادة في مجالات زي : الجرافيك و الموشن ديزاين، الدوبلاج والفويس أوفر، اللغة الإنجليزية، الذكاء الإصطناعي، وغيره كتير.",
+          course.description,
           style:
               AppTextStyles.regular10.copyWith(color: const Color(0xff818181)),
           textAlign: TextAlign.center,

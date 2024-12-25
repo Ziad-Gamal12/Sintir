@@ -1,11 +1,15 @@
 // ignore_for_file: file_names, camel_case_types
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordView.dart';
 import 'package:sintir/Features/AI_Chat/presentation/views/aiChatView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/EducationLevelsBooksSectionsView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/LevelBooksView.dart';
 import 'package:sintir/Features/ChoosingState/Presentation/views/ChoosingStateView.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/DisplayVediRequiresEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFedBackView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseIntroductionView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/SendCourseReportView.dart';
@@ -132,19 +136,26 @@ class App_router {
       GoRoute(
         path: CourseIntroductionView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return const CourseIntroductionView();
+          return CourseIntroductionView(
+            course: state.extra as CourseEntity,
+          );
         },
       ),
       GoRoute(
         path: Displaycoursevedioveiw.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return const Displaycoursevedioveiw();
+          return Displaycoursevedioveiw(
+            displayVedioRequiresEntity:
+                state.extra as Displayvedirequiresentity,
+          );
         },
       ),
       GoRoute(
         path: Coursetestview.routename,
         builder: (BuildContext context, GoRouterState state) {
-          return const Coursetestview();
+          return Coursetestview(
+            coursetestentity: state.extra as Coursetestentity,
+          );
         },
       ),
       GoRoute(
@@ -156,7 +167,9 @@ class App_router {
       GoRoute(
         path: Coursefedbackview.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return const Coursefedbackview();
+          return Coursefedbackview(
+            fedBacks: state.extra as List<CoursefedbackItemEntity>,
+          );
         },
       ),
     ],

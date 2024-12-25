@@ -1,7 +1,11 @@
 class Sendcoursereportentity {
   final String title;
+  String? description;
 
-  Sendcoursereportentity({required this.title});
+  Sendcoursereportentity({
+    this.description,
+    required this.title,
+  });
   static List<Sendcoursereportentity> reportReasons = [
     Sendcoursereportentity(title: "محتوى غير لائق"),
     Sendcoursereportentity(title: "معلومات خاطئة"),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/InfoRow.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFedBackView.dart';
@@ -10,8 +11,9 @@ import 'package:sintir/constant.dart';
 class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
   const CustomCourseIntroductionViewBodyHeader({
     super.key,
+    required this.course,
   });
-
+  final CourseEntity course;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,7 +29,7 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
                       style: AppTextStyles.regular10
                           .copyWith(color: Colors.black)),
                   TextSpan(
-                      text: "Creatives X Event",
+                      text: course.contentcreaterentity.name,
                       style: AppTextStyles.semiBold10
                           .copyWith(color: KSecondaryColor))
                 ])),
@@ -35,16 +37,16 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  "تاريخ اللنشر  ( 1/2/2023)",
+                  "تاريخ اللنشر(${course.postedDate.year}/${course.postedDate.month}/${course.postedDate.day}))",
                   style: AppTextStyles.regular10
                       .copyWith(color: const Color(0xff818181)),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const InfoRow(
+                InfoRow(
                   icon: Icons.language,
-                  label: "العربية",
+                  label: course.language,
                 ),
               ],
             ),
@@ -59,7 +61,7 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
                         .copyWith(color: const Color(0xff818181)),
                   ),
                   TextSpan(
-                      text: "220",
+                      text: course.subscripers.toString(),
                       style: AppTextStyles.semiBold10
                           .copyWith(color: KSecondaryColor)),
                   TextSpan(
@@ -84,7 +86,8 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    GoRouter.of(context).push(Coursefedbackview.routeName);
+                    GoRouter.of(context).push(Coursefedbackview.routeName,
+                        extra: course.coursefedbackItemEntity);
                   },
                   child: const InfoRow(
                     icon: FontAwesomeIcons.comment,

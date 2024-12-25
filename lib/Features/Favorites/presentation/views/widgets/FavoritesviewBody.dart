@@ -13,8 +13,8 @@ class FavoritesviewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       controller: Variables.scrollController,
-      slivers: const [
-        SliverToBoxAdapter(
+      slivers: [
+        const SliverToBoxAdapter(
           child: Column(
             children: [
               Padding(
@@ -35,7 +35,7 @@ class FavoritesviewBody extends StatelessWidget {
             ],
           ),
         ),
-        SliverToBoxAdapter(
+        const SliverToBoxAdapter(
           child: Column(
             children: [
               SizedBox(
@@ -52,8 +52,10 @@ class FavoritesviewBody extends StatelessWidget {
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: KHorizontalPadding),
-          sliver: Favouritecoursesgrideview(),
+          padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+          sliver: Favouritecoursesgrideview(
+            courses: Variables.TestCoursesList,
+          ),
         )
       ],
     );
