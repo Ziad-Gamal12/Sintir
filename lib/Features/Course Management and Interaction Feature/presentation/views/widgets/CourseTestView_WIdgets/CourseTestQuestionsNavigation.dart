@@ -7,9 +7,11 @@ class Coursetestquestionsnavigation extends StatefulWidget {
     super.key,
     required this.widget,
     required this.selectQuestionAction,
+    required this.currentQuestionIndex,
   });
   final CoursetestviewBody widget;
   final ValueChanged<int> selectQuestionAction;
+  final int currentQuestionIndex;
 
   @override
   State<Coursetestquestionsnavigation> createState() =>
@@ -36,12 +38,13 @@ class _CoursetestquestionsnavigationState
             child: SizedBox(
               width: 40,
               child: CustomCountWidget(
-                countColor: e.key == currentQuestionIndex
+                countColor: e.key == widget.currentQuestionIndex
                     ? Colors.red.shade500
                     : Colors.grey.shade300,
                 count: "${e.key + 1}",
-                countTextColor:
-                    e.key == currentQuestionIndex ? Colors.white : Colors.black,
+                countTextColor: e.key == widget.currentQuestionIndex
+                    ? Colors.white
+                    : Colors.black,
               ),
             ),
           ),

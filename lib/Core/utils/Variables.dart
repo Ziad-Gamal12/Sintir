@@ -115,13 +115,13 @@ abstract class Variables {
                       questionTitle: "ما هو العدد الذرى للعنصر Mg",
                       solutions: [
                         Coursetestquestionsolutionentity(
-                            answer: "14", isCorrect: false),
+                            answer: "17", isCorrect: false),
                         Coursetestquestionsolutionentity(
-                            answer: "13", isCorrect: false),
+                            answer: "22", isCorrect: false),
                         Coursetestquestionsolutionentity(
-                            answer: "12", isCorrect: true),
+                            answer: "42", isCorrect: true),
                         Coursetestquestionsolutionentity(
-                            answer: "16", isCorrect: false),
+                            answer: "18", isCorrect: false),
                       ],
                       isOpened: false)
                 ], durationTime: 120, title: "امتحان شامل على المنهج"),

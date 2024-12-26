@@ -10,59 +10,56 @@ class CoursefedbackslistviewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 382 / 92,
-      child: Container(
-        padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
-        decoration: BoxDecoration(
-          color: const Color(0xffF2F2F7),
-          borderRadius: BorderRadius.circular(10),
+    return Container(
+      padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
+      decoration: BoxDecoration(
+        color: const Color(0xffF2F2F7),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: ListTile(
+        contentPadding: EdgeInsets.zero,
+        titleAlignment: ListTileTitleAlignment.top,
+        minLeadingWidth: 60,
+        title: Text(
+          item.name,
+          style: AppTextStyles.semiBold16.copyWith(color: Colors.black),
         ),
-        child: ListTile(
-          contentPadding: EdgeInsets.zero,
-          titleAlignment: ListTileTitleAlignment.top,
-          minLeadingWidth: 60,
-          title: Text(
-            item.name,
-            style: AppTextStyles.semiBold16.copyWith(color: Colors.black),
+        subtitle: Padding(
+          padding: const EdgeInsets.only(top: 5),
+          child: Text(
+            item.fedBack,
+            style: AppTextStyles.light14.copyWith(color: Colors.black),
           ),
-          subtitle: Padding(
-            padding: const EdgeInsets.only(top: 5),
-            child: Text(
-              item.fedBack,
-              style: AppTextStyles.light14.copyWith(color: Colors.black),
-            ),
-          ),
-          leading: SvgPicture.asset(item.userImage),
-          trailing: IntrinsicWidth(
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    const Icon(
-                      FontAwesomeIcons.thumbsUp,
-                      size: 20,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      item.likesCount,
-                      style: AppTextStyles.semiBold12
-                          .copyWith(color: Colors.black),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "${item.datePosted.year}/${item.datePosted.month}/${item.datePosted.day}",
-                  style: AppTextStyles.regular14
-                      .copyWith(color: const Color(0xff818181)),
-                )
-              ],
-            ),
+        ),
+        leading: SvgPicture.asset(item.userImage),
+        trailing: IntrinsicWidth(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  const Icon(
+                    FontAwesomeIcons.thumbsUp,
+                    size: 20,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    item.likesCount,
+                    style:
+                        AppTextStyles.semiBold12.copyWith(color: Colors.black),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                "${item.datePosted.year}/${item.datePosted.month}/${item.datePosted.day}",
+                style: AppTextStyles.regular14
+                    .copyWith(color: const Color(0xff818181)),
+              )
+            ],
           ),
         ),
       ),

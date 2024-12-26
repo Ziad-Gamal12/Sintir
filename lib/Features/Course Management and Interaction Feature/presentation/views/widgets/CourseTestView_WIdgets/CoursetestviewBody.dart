@@ -34,8 +34,11 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
       child: ListView(
         children: [
           CourseTestControlPanel(
-              stopWatchTimer: stopWatchTimer, widget: widget),
+              totalTime: widget.coursetestentity.durationTime * 1.0,
+              stopWatchTimer: stopWatchTimer,
+              widget: widget),
           Coursetestquestionsnavigation(
+            currentQuestionIndex: currentQuestionIndex,
             widget: widget,
             selectQuestionAction: (value) {
               currentQuestionIndex = value;
@@ -55,10 +58,12 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
               coursetestentity: widget.coursetestentity,
               currentQuestionIndex: currentQuestionIndex,
               answerChange: (answer) {
-                selectedAnswer = answer.toString();
+                widget.coursetestentity.questions[currentQuestionIndex]
+                    .selectedSolution = answer ?? "";
                 setState(() {});
               },
-              selectedAnswer: selectedAnswer),
+              selectedAnswer: widget.coursetestentity
+                  .questions[currentQuestionIndex].selectedSolution),
           const SizedBox(
             height: 20,
           ),

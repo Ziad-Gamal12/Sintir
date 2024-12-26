@@ -56,7 +56,7 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
               children: [
                 Text.rich(TextSpan(children: [
                   TextSpan(
-                    text: ")",
+                    text: "( ",
                     style: AppTextStyles.regular10
                         .copyWith(color: const Color(0xff818181)),
                   ),

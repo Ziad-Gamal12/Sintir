@@ -10,10 +10,12 @@ class CourseTestControlPanel extends StatelessWidget {
     super.key,
     required this.stopWatchTimer,
     required this.widget,
+    required this.totalTime,
   });
 
   final StopWatchTimer stopWatchTimer;
   final CoursetestviewBody widget;
+  final double totalTime;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +23,11 @@ class CourseTestControlPanel extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       color: Colors.grey.shade100,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           TimerDisplay(
+            stopWatchTimer: stopWatchTimer,
+            totalTime: totalTime,
             timerStream: stopWatchTimer.rawTime,
           ),
           const SizedBox(

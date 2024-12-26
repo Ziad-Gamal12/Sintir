@@ -5,9 +5,10 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 class Coursetestquestionentity {
   final String questionTitle;
   final List<Coursetestquestionsolutionentity> solutions;
+
   final bool isOpened;
   String? imageUrl;
-
+  String selectedSolution = "";
   Coursetestquestionentity({
     required this.questionTitle,
     required this.solutions,

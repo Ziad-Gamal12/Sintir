@@ -22,7 +22,7 @@ class Sendreportreasonsgridview extends StatelessWidget {
                   onchange: onChange,
                   groupValue: groupValue),
               const SizedBox(
-                width: 12,
+                width: 8,
               ),
               Text(
                 Sendcoursereportentity.reportReasons[index].title,
