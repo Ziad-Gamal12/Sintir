@@ -5,8 +5,10 @@ class CustomAddFavouriteIcon extends StatelessWidget {
   const CustomAddFavouriteIcon({
     super.key,
     required this.ontap,
+    required this.isFavourite,
   });
   final VoidCallback ontap;
+  final bool isFavourite;
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
@@ -15,8 +17,9 @@ class CustomAddFavouriteIcon extends StatelessWidget {
       child: Center(
         child: IconButton(
             onPressed: ontap,
-            icon: const Icon(
+            icon: Icon(
               FontAwesomeIcons.solidHeart,
+              color: isFavourite ? Colors.red : Colors.black,
               size: 13,
             )),
       ),

@@ -16,6 +16,7 @@ class Favouritecoursesgrideview extends StatelessWidget {
             crossAxisSpacing: 10),
         itemBuilder: (context, index) {
           return CustomCourseItem(
+            isFavourite: true,
             courseItem: courses[index],
             ontap: () {},
           );

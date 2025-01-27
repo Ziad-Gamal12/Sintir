@@ -1,11 +1,16 @@
 // ignore_for_file: file_names
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
+import 'package:sintir/Core/services/Shared_preferences.dart';
+import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/StudentProfile/presentation/views/studentProfileView.dart';
+import 'package:sintir/Features/TeacherProfile/presentation/views/TeacherProfileView.dart';
 import 'package:sintir/constant.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
@@ -13,13 +18,16 @@ class HomeViewBodyAppBar extends StatelessWidget {
   const HomeViewBodyAppBar({
     super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: CircleAvatar(
-        child: SvgPicture.asset(Assets.assetsImagesUserAvatar),
+        child: InkWell(
+            onTap: () {
+              profileNavigation(context);
+            },
+            child: SvgPicture.asset(Assets.assetsImagesUserAvatar)),
       ),
       title: Text.rich(TextSpan(children: [
         TextSpan(
@@ -37,7 +45,7 @@ class HomeViewBodyAppBar extends StatelessWidget {
           children: [
             InkWell(
               onTap: () async {
-                await FirebaseAuth.instance.signOut();
+                await firebaseAuthService().signout();
               },
               child: Image.asset(
                 Assets.assetsImagesNotificationIcon,
@@ -60,5 +68,15 @@ class HomeViewBodyAppBar extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  profileNavigation(BuildContext context) {
+    String userKind = shared_preferences_Services.stringGetter(
+        key: BackendEndpoints.userKind);
+    if (userKind == "teacher") {
+      GoRouter.of(context).push(Teacherprofileview.routeName);
+    } else {
+      GoRouter.of(context).push(Studentprofileview.routeName);
+    }
   }
 }

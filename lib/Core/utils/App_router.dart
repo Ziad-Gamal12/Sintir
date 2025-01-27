@@ -24,10 +24,14 @@ import 'package:sintir/Features/StudenetAuth/presentation/views/StudentTermsAndC
 import 'package:sintir/Features/StudenetAuth/presentation/views/Student_Sign_In_View.dart';
 import 'package:sintir/Features/StudenetAuth/presentation/views/Student_signUp_View.dart';
 import 'package:sintir/Features/StudentOnboarding/Presentation/Views/StudentOnboardingView.dart';
+import 'package:sintir/Features/StudentProfile/presentation/views/studentProfileView.dart';
 import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnboardingView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherLoginView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignUpView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/teacherTermsAndConditionsView.dart';
+import 'package:sintir/Features/TeacherProfile/presentation/views/TeacherProfileView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
 import 'package:sintir/Features/tasks/presentation/views/TasksView.dart';
 
 class App_router {
@@ -180,6 +184,30 @@ class App_router {
           return CoursefilepreviewerView(
             coursefileentity: state.extra as Coursefileentity,
           );
+        },
+      ),
+      GoRoute(
+        path: Studentprofileview.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const Studentprofileview();
+        },
+      ),
+      GoRoute(
+        path: Teacherprofileview.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const Teacherprofileview();
+        },
+      ),
+      GoRoute(
+        path: TeacherWorkenvironmentview.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const TeacherWorkenvironmentview();
+        },
+      ),
+      GoRoute(
+        path: Addcourseview.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const Addcourseview();
         },
       ),
     ],

@@ -5,7 +5,6 @@ import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomSearchTextField.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/BestSellerCoursesHeader.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/HomeViewBodyAppBar.dart';
-import 'package:sintir/Features/Home/presentation/views/widgets/ads_ListView.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/bestSellerCourse_ListView.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/leatestCoursesGlideView.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/leatestCoursesHeader.dart';
@@ -27,7 +26,7 @@ class Homeview_Body extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const HomeViewBodyAppBar(),
+                  HomeViewBodyAppBar(),
                   const SizedBox(
                     height: 10,
                   ),
@@ -35,9 +34,6 @@ class Homeview_Body extends StatelessWidget {
                     controller: controller,
                   ),
                 ]))),
-        const SliverToBoxAdapter(
-          child: AdsListview(),
-        ),
         SliverToBoxAdapter(
           child: Column(children: [
             const SizedBox(

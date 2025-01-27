@@ -9,9 +9,13 @@ import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomContentCreat
 
 class CustomCourseItem extends StatelessWidget {
   const CustomCourseItem(
-      {super.key, required this.ontap, required this.courseItem});
+      {super.key,
+      required this.ontap,
+      required this.courseItem,
+      required this.isFavourite});
   final VoidCallback ontap;
   final CourseEntity courseItem;
+  final bool isFavourite;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -85,6 +89,7 @@ class CustomCourseItem extends StatelessWidget {
               top: 8,
               left: 8,
               child: CustomAddFavouriteIcon(
+                isFavourite: isFavourite,
                 ontap: () {},
               ),
             ),

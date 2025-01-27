@@ -22,6 +22,10 @@ class Assets {
   /// assets/images/ActiveTasksIcon.png
   static const String assetsImagesActiveTasksIcon = "assets/images/ActiveTasksIcon.png";
 
+  /// Assets for assetsImagesAddImageIcon
+  /// assets/images/add-imageIcon.png
+  static const String assetsImagesAddImageIcon = "assets/images/add-imageIcon.png";
+
   /// Assets for assetsImagesAdsTestImage
   /// assets/images/adsTest_Image.png
   static const String assetsImagesAdsTestImage = "assets/images/adsTest_Image.png";
@@ -153,6 +157,14 @@ class Assets {
   /// Assets for assetsImagesTeacherOnboarding3
   /// assets/images/TeacherOnboarding3.svg
   static const String assetsImagesTeacherOnboarding3 = "assets/images/TeacherOnboarding3.svg";
+
+  /// Assets for assetsImagesTelephone
+  /// assets/images/telephone.svg
+  static const String assetsImagesTelephone = "assets/images/telephone.svg";
+
+  /// Assets for assetsImagesTwitter
+  /// assets/images/twitter.svg
+  static const String assetsImagesTwitter = "assets/images/twitter.svg";
 
   /// Assets for assetsImagesUserAvatar
   /// assets/images/userAvatar.svg

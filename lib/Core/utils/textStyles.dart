@@ -7,6 +7,10 @@ class AppTextStyles {
     fontWeight: FontWeight.w400, // Regular
     fontSize: 10,
   );
+  static const TextStyle regular21 = TextStyle(
+    fontWeight: FontWeight.w400, // Regular
+    fontSize: 21,
+  );
 
   static const TextStyle semiBold20 = TextStyle(
     fontWeight: FontWeight.w600, // SemiBold
@@ -117,6 +121,14 @@ class AppTextStyles {
     fontWeight: FontWeight.bold, // Bold
     fontSize: 19,
   );
+  static const TextStyle bold63Auto = TextStyle(
+    fontWeight: FontWeight.bold, // Bold
+    fontSize: 63,
+  );
+  static const TextStyle bold48Auto = TextStyle(
+    fontWeight: FontWeight.bold, // Bold
+    fontSize: 48,
+  );
 
   static const TextStyle bold14Auto = TextStyle(
     fontWeight: FontWeight.w700, // Bold
@@ -126,6 +138,14 @@ class AppTextStyles {
   static const TextStyle bold40Auto = TextStyle(
     fontWeight: FontWeight.w700, // Bold
     fontSize: 40,
+  );
+  static const TextStyle bold84Auto = TextStyle(
+    fontWeight: FontWeight.w700, // Bold
+    fontSize: 84,
+  );
+  static const TextStyle bold21 = TextStyle(
+    fontWeight: FontWeight.w700, // Bold
+    fontSize: 21,
   );
 
   static const TextStyle semiBold10 = TextStyle(

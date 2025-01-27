@@ -5,6 +5,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 
 class CourseEntity {
   final String id, posterUrl, title, description, price, language;
+
   final int subscripers;
   final DateTime postedDate;
   final Contentcreaterentity contentcreaterentity;

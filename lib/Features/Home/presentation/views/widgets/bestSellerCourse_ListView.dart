@@ -24,6 +24,7 @@ class BestsellercourseListview extends StatelessWidget {
               child: AspectRatio(
                   aspectRatio: 140 / 202,
                   child: CustomCourseItem(
+                      isFavourite: false,
                       courseItem: courses[index],
                       ontap: () {
                         Variables.HomeViewScaffoldKey.currentState!

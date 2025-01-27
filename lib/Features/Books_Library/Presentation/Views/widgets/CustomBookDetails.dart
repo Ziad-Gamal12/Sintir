@@ -67,7 +67,7 @@ class CustomBookDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            CustomAddFavouriteIcon(ontap: () {}),
+            CustomAddFavouriteIcon(isFavourite: false, ontap: () {}),
             const SizedBox(
               width: 20,
             ),

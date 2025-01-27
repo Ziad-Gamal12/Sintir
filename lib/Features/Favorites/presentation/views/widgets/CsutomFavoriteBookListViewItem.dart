@@ -17,7 +17,7 @@ class Csutomfavoritebooklistviewitem extends StatelessWidget {
           border: Border.all(color: Colors.black, width: 1)),
       child: Align(
         alignment: Alignment.topLeft,
-        child: CustomAddFavouriteIcon(ontap: () {}),
+        child: CustomAddFavouriteIcon(isFavourite: true, ontap: () {}),
       ),
     );
   }

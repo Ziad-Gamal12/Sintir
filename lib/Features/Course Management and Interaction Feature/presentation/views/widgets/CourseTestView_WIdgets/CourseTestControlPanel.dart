@@ -39,6 +39,7 @@ class CourseTestControlPanel extends StatelessWidget {
           ),
           CourseTestViewBodyQuestionsInfo(
               coursetestentity: widget.coursetestentity),
+              
         ],
       ),
     );

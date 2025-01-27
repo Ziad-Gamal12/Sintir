@@ -23,7 +23,6 @@ class Sqfliteservices {
     Database? database;
     String deflutePath = await getDatabasesPath();
     String path = join(deflutePath, pathFileName);
-
     database = await openDatabase(path, version: 1, onCreate: onCreate);
     return database;
   }

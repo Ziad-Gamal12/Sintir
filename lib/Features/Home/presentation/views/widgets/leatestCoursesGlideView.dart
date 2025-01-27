@@ -21,6 +21,7 @@ class Leatestcoursesglideview extends StatelessWidget {
         ),
         itemBuilder: (context, index) {
           return CustomCourseItem(
+            isFavourite: false,
             courseItem: courses[index],
             ontap: () {
               Variables.HomeViewScaffoldKey.currentState!
