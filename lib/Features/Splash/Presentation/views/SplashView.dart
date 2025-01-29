@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:sintir/Features/Splash/Presentation/views/widgets/SplashviewBody.dart';
-import 'package:sintir/constant.dart';
 
 class Splashview extends StatelessWidget {
   const Splashview({super.key});
@@ -11,7 +10,6 @@ class Splashview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: KMainColor,
       body: SplashviewBody(),
     );
   }
