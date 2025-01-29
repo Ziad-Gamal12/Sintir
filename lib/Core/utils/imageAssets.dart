@@ -22,6 +22,18 @@ class Assets {
   /// assets/images/ActiveTasksIcon.png
   static const String assetsImagesActiveTasksIcon = "assets/images/ActiveTasksIcon.png";
 
+  /// Assets for assetsImagesAddCoursePictureIcon
+  /// assets/images/AddCoursePictureIcon.png
+  static const String assetsImagesAddCoursePictureIcon = "assets/images/AddCoursePictureIcon.png";
+
+  /// Assets for assetsImagesAddCourseTextIcon
+  /// assets/images/AddCourseTextIcon.png
+  static const String assetsImagesAddCourseTextIcon = "assets/images/AddCourseTextIcon.png";
+
+  /// Assets for assetsImagesAddCourseVedioIcon
+  /// assets/images/AddCourseVedioIcon.png
+  static const String assetsImagesAddCourseVedioIcon = "assets/images/AddCourseVedioIcon.png";
+
   /// Assets for assetsImagesAddImageIcon
   /// assets/images/add-imageIcon.png
   static const String assetsImagesAddImageIcon = "assets/images/add-imageIcon.png";
