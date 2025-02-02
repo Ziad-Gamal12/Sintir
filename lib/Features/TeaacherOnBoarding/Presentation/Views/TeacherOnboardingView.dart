@@ -5,7 +5,7 @@ import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/Widgets/Te
 
 class TeacherOnboardingView extends StatelessWidget {
   const TeacherOnboardingView({super.key});
-  static const String routeName = "/TeacherOnboardingView";
+  static const routeName = "/TeacherOnboardingView";
 
   @override
   Widget build(BuildContext context) {

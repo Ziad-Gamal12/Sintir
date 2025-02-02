@@ -1,9 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/utils/imageAssets.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:svg_flutter/svg.dart';
+import 'package:lottie/lottie.dart';
 
 class CenterTextAndLogo extends StatelessWidget {
   const CenterTextAndLogo({
@@ -12,20 +10,13 @@ class CenterTextAndLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          "Sintir",
-          textAlign: TextAlign.center,
-          style: AppTextStyles.bold48Auto
-              .copyWith(color: Colors.white, fontFamily: "Poppins"),
-        ),
-        const SizedBox(width: 5),
-        SvgPicture.asset(
-          Assets.assetsImagesSintirLogo,
-          height: 80,
-          width: 80,
+        LottieBuilder.asset(
+          "assets/LottieFiles/SintirAnimatedLogo.json",
+          repeat: false,
         )
       ],
     );

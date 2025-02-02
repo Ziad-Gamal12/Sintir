@@ -1,11 +1,9 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 import 'package:sintir/constant.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class CustomDotsIndicator extends StatelessWidget {
-  const CustomDotsIndicator({
+class CustomChoosingUserKindSmoothPageIndicator extends StatelessWidget {
+  const CustomChoosingUserKindSmoothPageIndicator({
     super.key,
     required this.pageController,
   });
@@ -16,8 +14,8 @@ class CustomDotsIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return SmoothPageIndicator(
       controller: pageController,
-      count: 3,
-      effect: const ExpandingDotsEffect(
+      count: 2,
+      effect: const WormEffect(
           dotHeight: 9,
           dotWidth: 9,
           dotColor: Color(0xff87CEFA),

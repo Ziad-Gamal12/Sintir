@@ -7,7 +7,7 @@ import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/widgets/CustomDrawerWidgets/CustomInActiveDrawerItem.dart';
 import 'package:sintir/Core/widgets/CustomDrawerWidgets/Draweritem.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
-import 'package:sintir/Features/ChoosingState/Presentation/views/ChoosingStateView.dart';
+import 'package:sintir/Features/ChoosingUserKind/Presentation/views/ChoosingUserKindView.dart';
 
 class Customdrawer extends StatefulWidget {
   const Customdrawer({super.key});
@@ -82,7 +82,7 @@ class _CustomdrawerState extends State<Customdrawer> {
                           title: "تسجيل الخروج",
                           inActiveIcon: Assets.assetsImagesLogout,
                           activeIcon: Assets.assetsImagesLogout,
-                          routeName: Choosingstateview.routeName),
+                          routeName: ChoosingUserKindView.routeName),
                       iconColor: Colors.red,
                     ),
                     const SizedBox(

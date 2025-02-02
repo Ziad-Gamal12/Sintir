@@ -134,9 +134,9 @@ class Assets {
   /// assets/images/setting.png
   static const String assetsImagesSetting = "assets/images/setting.png";
 
-  /// Assets for assetsImagesSintirIcon
-  /// assets/images/Sintir_Icon.png
-  static const String assetsImagesSintirIcon = "assets/images/Sintir_Icon.png";
+  /// Assets for assetsImagesSintiAppIcon
+  /// assets/images/SintiAppIcon.png
+  static const String assetsImagesSintiAppIcon = "assets/images/SintiAppIcon.png";
 
   /// Assets for assetsImagesSintirLogo
   /// assets/images/Sintir_Logo.svg

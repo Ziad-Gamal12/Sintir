@@ -15,6 +15,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   await shared_preferences_Services.init();
   setup_Getit();
   Bloc.observer = Custom_Blocobserver();

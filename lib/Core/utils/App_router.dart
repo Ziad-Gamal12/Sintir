@@ -6,7 +6,7 @@ import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordView.da
 import 'package:sintir/Features/AI_Chat/presentation/views/aiChatView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/EducationLevelsBooksSectionsView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/LevelBooksView.dart';
-import 'package:sintir/Features/ChoosingState/Presentation/views/ChoosingStateView.dart';
+import 'package:sintir/Features/ChoosingUserKind/Presentation/views/ChoosingUserKindView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
@@ -45,9 +45,9 @@ class App_router {
         },
       ),
       GoRoute(
-        path: Choosingstateview.routeName,
+        path: ChoosingUserKindView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return const Choosingstateview();
+          return const ChoosingUserKindView();
         },
       ),
       GoRoute(

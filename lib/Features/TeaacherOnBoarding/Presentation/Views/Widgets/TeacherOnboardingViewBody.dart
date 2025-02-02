@@ -28,22 +28,27 @@ class _TeacherOnboardingViewBodyState extends State<TeacherOnboardingViewBody> {
   }
 
   @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 30),
-      child: Column(
-        children: [
-          Expanded(
-              child: TeacherOnboardingPageView(
-            pageController: pageController,
-          )),
-          const Customsizedbox(width: 0, height: 64),
-          CustomDotsIndicator(pageController: pageController),
-          const Customsizedbox(width: 0, height: 30),
-          TeachehrOnboardingBody_CustomButton(
-              currentPage: currentPage, pageController: pageController),
-        ],
-      ),
+    return Column(
+      children: [
+        Expanded(
+            flex: 2,
+            child: TeacherOnboardingPageView(
+              pageController: pageController,
+            )),
+        const Spacer(),
+        CustomDotsIndicator(pageController: pageController),
+        const Customsizedbox(width: 0, height: 20),
+        TeachehrOnboardingBody_CustomButton(
+            currentPage: currentPage, pageController: pageController),
+        const Customsizedbox(width: 0, height: 20),
+      ],
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:sintir/Core/entities/Drawer_Entity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
@@ -25,6 +24,6 @@ class Customactivedraweritem extends StatelessWidget {
         width: 3.27,
         color: KMainColor,
       ),
-    ).animate().fade(duration: 300.ms).moveX(begin: -50, duration: 300.ms);
+    );
   }
 }

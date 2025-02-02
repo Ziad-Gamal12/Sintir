@@ -1,6 +1,8 @@
-import 'package:better_player/better_player.dart';
+import 'package:chewie/chewie.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomVedioErrorWidget.dart';
+import 'package:video_player/video_player.dart';
 
 class Customdisplayingvediowidget extends StatefulWidget {
   const Customdisplayingvediowidget({super.key, required this.vedioUrl});
@@ -12,49 +14,45 @@ class Customdisplayingvediowidget extends StatefulWidget {
 
 class _CustomdisplayingvediowidgetState
     extends State<Customdisplayingvediowidget> {
-  late BetterPlayerController betterPlayerController;
+  late VideoPlayerController videoPlayerController;
+  late ChewieController chewieController;
   @override
   void initState() {
-    BetterPlayerDataSource dataSource = BetterPlayerDataSource(
-      BetterPlayerDataSourceType.network,
-      widget.vedioUrl,
+    videoPlayerController =
+        VideoPlayerController.networkUrl(Uri.parse(widget.vedioUrl));
+    videoPlayerController.initialize();
+    chewieController = ChewieController(
+      videoPlayerController: videoPlayerController,
+      aspectRatio: 16 / 9,
+      allowFullScreen: true,
+      allowMuting: true,
+      allowPlaybackSpeedChanging: true,
+      playbackSpeeds: [0.5, 1.0, 1.5, 2.0],
+      autoInitialize: true,
+      errorBuilder: (context, errorMessage) {
+        return CustomVedioErrorWidget(
+          errorMessage: errorMessage,
+        );
+      },
+      autoPlay: true,
+      looping: false,
     );
-    var betterPlayerController2 = BetterPlayerController(
-      BetterPlayerConfiguration(
-        autoPlay: true,
-        looping: false,
-        aspectRatio: 16 / 9,
-        errorBuilder: (context, errorMessage) {
-          return Center(
-            child: CustomVedioErrorWidget(
-              errorMessage: errorMessage,
-            ),
-          );
-        },
-        controlsConfiguration: const BetterPlayerControlsConfiguration(
-            enableFullscreen: true,
-            enablePlaybackSpeed: true,
-            playbackSpeedIcon: Icons.slow_motion_video,
-            enableSkips: true,
-            enableQualities: true,
-            backwardSkipTimeInMilliseconds: 600,
-            enableMute: true,
-            enableProgressBar: true,
-            enablePlayPause: true),
-      ),
-      betterPlayerDataSource: dataSource,
-    );
-    betterPlayerController = betterPlayerController2;
-
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    videoPlayerController.dispose();
+    chewieController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(12),
-      child: BetterPlayer(
-        controller: betterPlayerController,
+      child: Chewie(
+        controller: chewieController,
       ),
     );
   }

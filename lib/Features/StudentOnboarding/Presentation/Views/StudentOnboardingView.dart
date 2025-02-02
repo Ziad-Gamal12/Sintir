@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Features/StudentOnboarding/Presentation/Views/widgets/StudentOnboardingViewBody.dart';
 
 class StudentOnboardingView extends StatelessWidget {
-  static const String routeName = '/student-onboarding';
+  static const routeName = '/student-onboarding';
 
   const StudentOnboardingView({super.key});
   @override

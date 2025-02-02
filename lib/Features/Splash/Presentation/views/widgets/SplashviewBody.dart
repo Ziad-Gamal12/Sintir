@@ -1,9 +1,8 @@
 // ignore_for_file: file_names, non_constant_identifier_names, use_build_context_synchronously
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
-import 'package:sintir/Features/ChoosingState/Presentation/views/ChoosingStateView.dart';
+import 'package:sintir/Features/ChoosingUserKind/Presentation/views/ChoosingUserKindView.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 import 'package:sintir/Features/Splash/Presentation/views/widgets/CenterTextAndLogo.dart';
 import 'package:sintir/Features/Splash/Presentation/views/widgets/bottomClipperWidget.dart';
@@ -35,8 +34,7 @@ class _SplashviewBodyState extends State<SplashviewBody> {
               end: Alignment.bottomCenter,
             ),
           ),
-          child:
-              const CenterTextAndLogo().animate().fadeIn(duration: 2.seconds),
+          child: const CenterTextAndLogo(),
         ),
         const BottomClipperWidget(),
       ],
@@ -49,7 +47,7 @@ class _SplashviewBodyState extends State<SplashviewBody> {
       if (isLoggedin == true) {
         GoRouter.of(context).pushReplacement(Homeview.routeName);
       } else {
-        GoRouter.of(context).pushReplacement(Choosingstateview.routeName);
+        GoRouter.of(context).pushReplacement(ChoosingUserKindView.routeName);
       }
     });
   }
