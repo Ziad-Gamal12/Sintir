@@ -14,14 +14,9 @@ import 'package:sintir/Features/TeacherAuth/Presentation/views/widgets/TeacherSi
 class TeacherSignUPTextFieldsSection extends StatefulWidget {
   const TeacherSignUPTextFieldsSection({
     super.key,
-    required this.width,
     required this.radiovalue,
     required this.onchanged,
-    required this.onPictureChanged,
   });
-  final ValueChanged<String> onPictureChanged;
-
-  final double width;
   final String? radiovalue;
   final ValueChanged<String?> onchanged;
 
@@ -38,7 +33,7 @@ class _TeacherSignUPTextFieldsSectionState
   ) {
     return Column(
       children: [
-        TeacherSignFirstAndLastNameField(width: widget.width),
+        const TeacherSignFirstAndLastNameField(),
         const Customsizedbox(width: 0, height: 10),
         const TeacherSignUpEmailAddressFiled(),
         const Customsizedbox(width: 0, height: 10),
@@ -52,13 +47,11 @@ class _TeacherSignUPTextFieldsSectionState
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ExperienceAndPhotoForm(
-                onPictureChanged: widget.onPictureChanged,
-              ),
+              const ExperienceAndPhotoForm(),
               GenderSelectionInput(
-                  onChanged: widget.onchanged,
-                  radiovalue: widget.radiovalue ?? "ذكر",
-                  expandedFlex: 1)
+                onChanged: widget.onchanged,
+                radiovalue: widget.radiovalue ?? "ذكر",
+              )
             ],
           ),
         ),

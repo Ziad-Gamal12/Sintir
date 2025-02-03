@@ -22,6 +22,10 @@ class TeacherLoginEmailAdressTextFiled extends StatelessWidget {
             return "ادخل البريد الالكتروني";
           } else if (!value.contains("@")) {
             return "ادخل البريد الالكتروني صحيح";
+          } else if (!RegExp(
+                  r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+              .hasMatch(value)) {
+            return "ادخل البريد الأكتروني الصحيح";
           }
           return null;
         });

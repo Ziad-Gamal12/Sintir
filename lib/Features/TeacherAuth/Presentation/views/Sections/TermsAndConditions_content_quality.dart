@@ -8,12 +8,9 @@ class Section2ContentQuality extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text(
-      '''
-      2. جودة المحتوى:
-      - يُتوقع من المعلمين تقديم محتوى تعليمي عالي الجودة ودقيق.
-      - يجب أن يكون المحتوى مُعدًا بطريقة احترافية وأن يلبي احتياجات الطلاب.
-      ''',
+      '2. جودة المحتوى:\n يُتوقع من المعلمين تقديم محتوى تعليمي عالي الجودة ودقيق.\n يجب أن يكون المحتوى مُعدًا بطريقة احترافية وأن يلبي احتياجات الطلاب.',
       style: TextStyle(fontSize: 16),
+      textAlign: TextAlign.right,
     );
   }
 }

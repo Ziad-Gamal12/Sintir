@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
-import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherLoginView.dart';
+import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignInView.dart';
 import 'package:sintir/constant.dart';
 
 class TeachehrOnboardingBody_CustomButton extends StatelessWidget {
@@ -26,7 +26,7 @@ class TeachehrOnboardingBody_CustomButton extends StatelessWidget {
           textColor: Colors.white,
           onPressed: () {
             if (currentPage == 2) {
-              GoRouter.of(context).push(TeacherLoginView.routeName);
+              GoRouter.of(context).push(TeacherSignInView.routeName);
             } else {
               pageController.nextPage(
                   duration: const Duration(milliseconds: 300),

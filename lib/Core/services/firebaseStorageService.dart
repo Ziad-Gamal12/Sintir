@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
@@ -14,9 +13,8 @@ class firebasestorageservice {
   final Pickerassetsservice pickerassetsservice;
   firebasestorageservice({required this.pickerassetsservice});
 
-  Future<String> uploadImage({required ImageSource source}) async {
+  Future<String> uploadImage({required File file}) async {
     try {
-      File file = await pickerassetsservice.getImage(source: source);
       String filePath = basename(file.path);
       var ref = storage.ref(filePath);
       String url =

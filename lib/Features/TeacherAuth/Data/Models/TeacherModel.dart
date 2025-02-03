@@ -2,54 +2,57 @@
 
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sintir/Features/TeacherAuth/Domain/Entities/Teacher_Entity.dart';
 
-class Teachermodel extends teacherEntity {
+class Teachermodel {
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String uid;
+  final String address;
+  final String phoneNumber;
+  final String subject;
+  final String workExperience;
+  final String gender;
+  final String profilePicurl;
+  final String state;
+  final List<String> socialLinks;
+  final String kind; //teacher or Studednt
+  final String joinedDate;
   Teachermodel(
-      {required super.firstName,
-      required super.lastName,
-      required super.email,
-      required super.uid,
-      required super.address,
-      required super.phoneNumber,
-      required super.subject,
-      required super.workExperience,
-      required super.gender,
-      required super.profilePicurl,
-      required super.stete,
-      required super.socialLinks,
-      required super.kind,
-      required super.joinedDate});
+      {required this.firstName,
+      required this.lastName,
+      required this.email,
+      required this.uid,
+      required this.address,
+      required this.phoneNumber,
+      required this.subject,
+      required this.workExperience,
+      required this.gender,
+      required this.profilePicurl,
+      required this.state,
+      required this.socialLinks,
+      required this.kind,
+      required this.joinedDate});
 
-  factory Teachermodel.fromFirebase({
-    required User user,
-    required String firstName,
-    required String lastName,
-    required String address,
-    required String phoneNumber,
-    required String subject,
-    required String workExperience,
-    required String gender,
-    required String profilePicurl,
-    required String state,
+  factory Teachermodel.fromEntity({
+    required teacherEntity teacherentity,
   }) {
     return Teachermodel(
-      uid: user.uid,
-      firstName: firstName,
-      lastName: lastName,
-      email: user.email!,
-      profilePicurl: profilePicurl,
-      phoneNumber: phoneNumber,
-      address: address,
-      subject: subject,
-      workExperience: workExperience,
-      gender: gender,
-      stete: state,
-      socialLinks: [],
-      kind: 'teacher',
-      joinedDate: Timestamp.now().toDate().toString(),
+      uid: teacherentity.uid ?? "",
+      firstName: teacherentity.firstName,
+      lastName: teacherentity.lastName,
+      email: teacherentity.email,
+      profilePicurl: teacherentity.profilePicurl ?? "",
+      phoneNumber: teacherentity.phoneNumber,
+      address: teacherentity.address,
+      subject: teacherentity.subject,
+      workExperience: teacherentity.workExperience,
+      gender: teacherentity.gender,
+      state: teacherentity.state,
+      socialLinks: teacherentity.socialLinks,
+      kind: teacherentity.kind,
+      joinedDate: teacherentity.joinedDate,
     );
   }
   factory Teachermodel.fromMap(Map<String, dynamic> map) {
@@ -64,32 +67,32 @@ class Teachermodel extends teacherEntity {
       subject: map['subject'],
       workExperience: map['workExperience'],
       gender: map['gender'],
-      stete: map['state'],
+      state: map['state'],
       socialLinks: map['socialLinks'],
       kind: map['kind'],
       joinedDate: map['joinedDate'],
     );
   }
-  factory Teachermodel.fromEntity({required teacherEntity teacherentity}) {
-    return Teachermodel(
-      uid: teacherentity.uid,
-      firstName: teacherentity.firstName,
-      lastName: teacherentity.lastName,
-      email: teacherentity.email,
-      profilePicurl: teacherentity.profilePicurl,
-      phoneNumber: teacherentity.phoneNumber,
-      address: teacherentity.address,
-      subject: teacherentity.subject,
-      workExperience: teacherentity.workExperience,
-      gender: teacherentity.gender,
-      stete: teacherentity.stete,
-      socialLinks: teacherentity.socialLinks,
-      kind: teacherentity.kind,
-      joinedDate: teacherentity.joinedDate,
+
+  teacherEntity toEntity() {
+    return teacherEntity(
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      profilePicurl: profilePicurl,
+      phoneNumber: phoneNumber,
+      address: address,
+      subject: subject,
+      workExperience: workExperience,
+      gender: gender,
+      state: state,
+      socialLinks: socialLinks,
+      kind: kind,
+      joinedDate: joinedDate,
     );
   }
 
-  toMap() {
+  Map<String, dynamic> toMap() {
     return {
       "firstName": firstName,
       "lastName": lastName,
@@ -101,7 +104,7 @@ class Teachermodel extends teacherEntity {
       "workExperience": workExperience,
       "gender": gender,
       "profilePicurl": profilePicurl,
-      "state": stete,
+      "state": state,
       "socialLinks": jsonEncode(socialLinks),
       "kind": kind,
       "joinedDate": joinedDate

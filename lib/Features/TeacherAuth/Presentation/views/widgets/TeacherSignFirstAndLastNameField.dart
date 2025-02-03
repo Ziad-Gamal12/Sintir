@@ -8,17 +8,13 @@ import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 class TeacherSignFirstAndLastNameField extends StatelessWidget {
   const TeacherSignFirstAndLastNameField({
     super.key,
-    required this.width,
   });
-
-  final double width;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SizedBox(
-          width: (width * .5) - 21,
+        Expanded(
           child: Customteaxtfield(
               hintText: "الأسم الأول",
               prefixIcon: Icons.person_2_outlined,
@@ -34,8 +30,7 @@ class TeacherSignFirstAndLastNameField extends StatelessWidget {
               }),
         ),
         const Customsizedbox(width: 10, height: 0),
-        SizedBox(
-          width: (width * .5) - 21,
+        Expanded(
           child: Customteaxtfield(
               hintText: "الأسم الأخير",
               prefixIcon: Icons.person_2_outlined,

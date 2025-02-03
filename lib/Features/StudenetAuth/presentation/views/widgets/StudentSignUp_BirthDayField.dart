@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 
 class StudentsignupBirthdayfield extends StatefulWidget {
-  const StudentsignupBirthdayfield(
-      {super.key, required this.width, required this.birhdaydate});
-  final double width;
-  final ValueChanged<DateTime> birhdaydate;
+  const StudentsignupBirthdayfield({super.key, required this.birhdaydate});
+  final ValueChanged<DateTime?> birhdaydate;
   @override
   State<StudentsignupBirthdayfield> createState() =>
       _StudentsignupBirthdayfieldState();
@@ -22,7 +20,7 @@ class _StudentsignupBirthdayfieldState
             firstDate: DateTime(2000),
             lastDate: DateTime(2025))
         .then((value) {
-      widget.birhdaydate(value!);
+      widget.birhdaydate(value);
       setState(() {
         pickedDate = value;
       });
@@ -37,7 +35,7 @@ class _StudentsignupBirthdayfieldState
       },
       child: Container(
         height: 56,
-        width: widget.width,
+        width: double.infinity,
         decoration: BoxDecoration(
             color: const Color(0xffF9FAFA),
             borderRadius: BorderRadius.circular(4)),

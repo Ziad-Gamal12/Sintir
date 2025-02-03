@@ -9,7 +9,6 @@ import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/manager/TeacherSignUP/teacher_sign_up_cubit.dart';
-import 'package:sintir/constant.dart';
 
 class PhotoInputBlocBuilder extends StatefulWidget {
   const PhotoInputBlocBuilder({
@@ -27,7 +26,7 @@ class _PhotoInputBlocBuilderState extends State<PhotoInputBlocBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.state is UploadTeacherProfilePictureSuccess) {
+    if (widget.state is PickTeacherProfilePicSuccess) {
       return Container(
           alignment: Alignment.center,
           height: 40,
@@ -48,40 +47,6 @@ class _PhotoInputBlocBuilderState extends State<PhotoInputBlocBuilder> {
               ),
             ],
           ));
-    } else if (widget.state is UploadTeacherProfilePictureLoading) {
-      return Center(
-        child: LinearProgressIndicator(
-          minHeight: 10,
-          borderRadius: BorderRadius.circular(2),
-          color: KMainColor,
-        ),
-      );
-    } else if (widget.state is UploadTeacherProfilePictureFailure) {
-      return InkWell(
-        onTap: () {
-          UploadPicture(context);
-        },
-        child: Container(
-            alignment: Alignment.center,
-            height: 40,
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.red, width: 1)),
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.error_outline,
-                  color: Colors.red,
-                ),
-                const Customsizedbox(width: 10, height: 0),
-                Text(
-                  "فشل تحميل الصورة",
-                  style: AppTextStyles.bold13.copyWith(color: Colors.red),
-                ),
-              ],
-            )),
-      );
     } else {
       return InkWell(
         onTap: () {
@@ -115,9 +80,8 @@ class _PhotoInputBlocBuilderState extends State<PhotoInputBlocBuilder> {
     if (isCanUpload) {
       context
           .read<TeacherSignUpCubit>()
-          .uploadTeacherProfilePicture(source: ImageSource.gallery);
+          .pickTeacherProfilePic(source: ImageSource.gallery);
       isCanUpload = false;
-
       Future.delayed(const Duration(seconds: 20), () {
         isCanUpload = true;
         setState(() {});

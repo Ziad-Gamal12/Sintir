@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types, file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
@@ -17,11 +18,9 @@ import 'package:sintir/constant.dart';
 class teacherSignUpViewBodyBlocBuilder extends StatefulWidget {
   const teacherSignUpViewBodyBlocBuilder({
     super.key,
-    required this.width,
     required this.state,
   });
   final TeacherSignUpState state;
-  final double width;
 
   @override
   State<teacherSignUpViewBodyBlocBuilder> createState() =>
@@ -31,55 +30,49 @@ class teacherSignUpViewBodyBlocBuilder extends StatefulWidget {
 class _teacherSignUpViewBodyBlocBuilderState
     extends State<teacherSignUpViewBodyBlocBuilder> {
   String? radiovalue;
-
   bool isChecked = false;
-
-  String? profilepictureUrl;
-
   @override
   Widget build(BuildContext context) {
-    return Custom_Loading_Widget(
-      isLoading: widget.state is TeacherSignUpLoading ? true : false,
-      child: SingleChildScrollView(
-        child: Form(
-          key: Variables.TeacherSignUpFormKey,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: KHorizontalPadding,
-            ),
-            child: Column(
-              children: [
-                TeacherSignUPTextFieldsSection(
-                  onPictureChanged: (value) {
-                    profilepictureUrl = value;
-                    setState(() {});
-                  },
-                  width: widget.width,
-                  radiovalue: radiovalue,
-                  onchanged: (String? value) {
-                    radiovalue = value;
-                    setState(() {});
-                  },
-                ),
-                const Customsizedbox(width: 0, height: 20),
-                Customtermsandconditiona(textonpressed: () {
-                  GoRouter.of(context)
-                      .push(Teachertermsandconditionsview.routeName);
-                }, onchanged: (value) {
-                  isChecked = value;
+    return SingleChildScrollView(
+      child: Form(
+        key: Variables.TeacherSignUpFormKey,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: KHorizontalPadding, vertical: 24),
+          child: Column(
+            children: [
+              TeacherSignUPTextFieldsSection(
+                radiovalue: radiovalue,
+                onchanged: (String? value) {
+                  radiovalue = value;
                   setState(() {});
-                }),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.02,
+                },
+              ),
+              const Customsizedbox(width: 0, height: 20),
+              Customtermsandconditiona(textonpressed: () {
+                GoRouter.of(context)
+                    .push(Teachertermsandconditionsview.routeName);
+              }, onchanged: (value) {
+                isChecked = value;
+                setState(() {});
+              }),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.02,
+              ),
+              Custom_Loading_Widget(
+                isLoading: widget.state is TeacherSignUpLoading ? true : false,
+                child: teacherSignUpViewBodyCustomButton(
+                  isChecked: isChecked,
+                  radiovalue: radiovalue,
+                  isPictureUploaded:
+                      context.read<TeacherSignUpCubit>().imageFile != null
+                          ? true
+                          : false,
                 ),
-                teacherSignUpViewBodyCustomButton(
-                    profilepictureUrl: profilepictureUrl,
-                    isChecked: isChecked,
-                    radiovalue: radiovalue),
-                const Customsizedbox(width: 0, height: 20),
-                const TeacherSignUpViewBodyHaveAnAccountText()
-              ],
-            ),
+              ),
+              const Customsizedbox(width: 0, height: 20),
+              const TeacherSignUpViewBodyHaveAnAccountText()
+            ],
           ),
         ),
       ),

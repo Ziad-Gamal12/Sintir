@@ -26,7 +26,7 @@ class Homeview_Body extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  HomeViewBodyAppBar(),
+                  const HomeViewBodyAppBar(),
                   const SizedBox(
                     height: 10,
                   ),

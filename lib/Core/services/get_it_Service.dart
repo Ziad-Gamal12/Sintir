@@ -26,7 +26,7 @@ void setup_Getit() {
       sqfliteservices: getIt<Sqfliteservices>(),
       firebaseAuth: getIt<firebaseAuthService>(),
       datebaseservice: getIt<Datebaseservice>()));
-
+  getIt.registerSingleton<Pickerassetsservice>(Pickerassetsservice());
   getIt.registerSingleton<Authrepo>(
       AuthrepoImpli(authService: firebaseAuthService()));
   getIt.registerSingleton<TeacherAuthRepos>(teacherAuthRepos_Impli(

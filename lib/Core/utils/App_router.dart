@@ -26,7 +26,7 @@ import 'package:sintir/Features/StudenetAuth/presentation/views/Student_signUp_V
 import 'package:sintir/Features/StudentOnboarding/Presentation/Views/StudentOnboardingView.dart';
 import 'package:sintir/Features/StudentProfile/presentation/views/studentProfileView.dart';
 import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnboardingView.dart';
-import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherLoginView.dart';
+import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignInView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignUpView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/teacherTermsAndConditionsView.dart';
 import 'package:sintir/Features/TeacherProfile/presentation/views/TeacherProfileView.dart';
@@ -69,9 +69,9 @@ class App_router {
         },
       ),
       GoRoute(
-        path: TeacherLoginView.routeName,
+        path: TeacherSignInView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return const TeacherLoginView();
+          return const TeacherSignInView();
         },
       ),
       GoRoute(

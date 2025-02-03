@@ -6,20 +6,19 @@ import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Features/StudenetAuth/domain/entities/studentEntity.dart';
 
 abstract class StudentauthRepo {
-  Future<Either<Failure, Studententity>> createUserWithEmailAndPassword(
-      {required Studententity studentEntity});
+  Future<Either<Failure, void>> createUserWithEmailAndPassword(
+      {required Studententity studentEntity, required String password});
   Future<void> addUserToDatabase(
       {required Map<String, dynamic> data,
       required String docId,
       required String key});
-  Future<Either<Failure, Studententity>> sginInWithEmailAndPasswoed(
+  Future<Either<Failure, void>> sginInWithEmailAndPasswoed(
       {required String email, required String password});
   Future<Studententity> getStudentData(
       {required String docId, required String key});
-  Future<Either<Failure, Studententity>> signinWithGoogle();
-  Future<Either<Failure, Studententity>> signinWithFaceBook();
-  Future<Either<Failure, Studententity>> signinWithApple();
-
+  Future<Either<Failure, void>> signinWithGoogle();
+  Future<Either<Failure, void>> signinWithFaceBook();
+  Future<Either<Failure, void>> signinWithApple();
   Future<void> deleteUser({required User? user});
   Future<void> saveStudentData({required Studententity studententity});
 }

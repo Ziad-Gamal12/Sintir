@@ -6,18 +6,16 @@ import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:sintir/constant.dart';
 
 class GenderSelectionInput extends StatelessWidget {
-  const GenderSelectionInput(
-      {super.key,
-      required this.onChanged,
-      required this.radiovalue,
-      required this.expandedFlex});
+  const GenderSelectionInput({
+    super.key,
+    required this.onChanged,
+    required this.radiovalue,
+  });
   final ValueChanged<String?> onChanged;
   final String radiovalue;
-  final int expandedFlex;
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      flex: expandedFlex,
       child: SizedBox(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

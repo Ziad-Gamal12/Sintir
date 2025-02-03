@@ -2,7 +2,6 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:sintir/Features/StudenetAuth/domain/entities/studentEntity.dart';
 import 'package:sintir/Features/StudenetAuth/domain/repos/studentAuth_repo.dart';
 
 part 'student_sign_in_state.dart';
@@ -18,7 +17,7 @@ class StudentSignInCubit extends Cubit<StudentSignInState> {
     result.fold((failure) {
       emit(StudentSignInFailure(errmessage: failure.message));
     }, (studentEntity) {
-      emit(StudentSignInSuccess(studententity: studentEntity));
+      emit(StudentSignInSuccess());
     });
   }
 
@@ -28,7 +27,7 @@ class StudentSignInCubit extends Cubit<StudentSignInState> {
     result.fold((failure) {
       emit(StudentSignInFailure(errmessage: failure.message));
     }, (studentEntity) {
-      emit(StudentSignInSuccess(studententity: studentEntity));
+      emit(StudentSignInSuccess());
     });
   }
 
@@ -38,7 +37,7 @@ class StudentSignInCubit extends Cubit<StudentSignInState> {
     result.fold((failure) {
       emit(StudentSignInFailure(errmessage: failure.message));
     }, (studentEntity) {
-      emit(StudentSignInSuccess(studententity: studentEntity));
+      emit(StudentSignInSuccess());
     });
   }
 
@@ -48,7 +47,7 @@ class StudentSignInCubit extends Cubit<StudentSignInState> {
     result.fold((failure) {
       emit(StudentSignInFailure(errmessage: failure.message));
     }, (studentEntity) {
-      emit(StudentSignInSuccess(studententity: studentEntity));
+      emit(StudentSignInSuccess());
     });
   }
 }

@@ -3,54 +3,30 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sintir/Features/StudenetAuth/domain/entities/studentEntity.dart';
 
-class StudentauthModel extends Studententity {
+class StudentauthModel {
+  final String firstName, lastName;
+  final String email;
+  final String uid;
+  final String birthDate;
+  final String gender;
+  final String schoolName;
+  final String educationLevel;
+  final String imageUrl;
+  final String phoneNumber;
+  final String kind;
   StudentauthModel(
-      {required super.firstName,
-      required super.lastName,
-      required super.email,
-      super.birthDate,
-      super.gender,
-      super.schoolName,
-      super.educationLevel,
-      super.kind,
-      required super.studentID,
-      required super.imageUrl,
-      required super.phoneNumber,
-      super.password});
-  factory StudentauthModel.fromUserAndEntity(
-      {required User user, required Studententity studententity}) {
-    return StudentauthModel(
-      firstName: user.displayName ?? "",
-      lastName: studententity.lastName,
-      email: user.email ?? "",
-      birthDate: studententity.birthDate,
-      gender: studententity.gender,
-      schoolName: studententity.schoolName,
-      educationLevel: studententity.educationLevel,
-      studentID: user.uid,
-      imageUrl: studententity.gender == "ذكر"
-          ? "https://cdn-icons-png.flaticon.com/128/2202/2202112.png"
-          : "https://cdn-icons-png.flaticon.com/128/6997/6997662.png",
-      phoneNumber: studententity.phoneNumber,
-      password: studententity.password,
-      kind: "student",
-    );
-  }
-  factory StudentauthModel.fromFirebase({required User user}) {
-    return StudentauthModel(
-      firstName: user.displayName ?? "",
-      email: user.email ?? "",
-      studentID: user.uid,
-      imageUrl: user.photoURL,
-      phoneNumber: user.phoneNumber ?? "",
-      lastName: '',
-      birthDate: null,
-      gender: null,
-      schoolName: null,
-      educationLevel: null,
-      kind: "student",
-    );
-  }
+      {required this.firstName,
+      required this.lastName,
+      required this.email,
+      required this.uid,
+      required this.birthDate,
+      required this.gender,
+      required this.schoolName,
+      required this.educationLevel,
+      required this.imageUrl,
+      required this.phoneNumber,
+      required this.kind});
+
   factory StudentauthModel.fromEntity({required Studententity studententity}) {
     return StudentauthModel(
       firstName: studententity.firstName,
@@ -60,12 +36,13 @@ class StudentauthModel extends Studententity {
       gender: studententity.gender,
       schoolName: studententity.schoolName,
       educationLevel: studententity.educationLevel,
-      studentID: studententity.studentID,
+      uid: studententity.uid ?? "",
       imageUrl: studententity.imageUrl,
       phoneNumber: studententity.phoneNumber,
       kind: studententity.kind,
     );
   }
+
   factory StudentauthModel.fromJson({required Map<String, dynamic> data}) {
     return StudentauthModel(
       firstName: data["firstName"],
@@ -75,12 +52,43 @@ class StudentauthModel extends Studententity {
       gender: data["gender"],
       schoolName: data["schoolName"],
       educationLevel: data["educationLevel"],
-      studentID: data["id"],
+      uid: data["id"],
       imageUrl: data["imageUrl"],
       phoneNumber: data["phoneNumber"],
       kind: data["kind"],
     );
   }
+  factory StudentauthModel.fromFirebase({required User user}) {
+    return StudentauthModel(
+      firstName: user.displayName!.split(" ")[0],
+      lastName: "",
+      email: user.email!,
+      uid: user.uid,
+      birthDate: "",
+      gender: "",
+      schoolName: "",
+      educationLevel: "",
+      imageUrl: "",
+      phoneNumber: "",
+      kind: "student",
+    );
+  }
+  Studententity toEntity() {
+    return Studententity(
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      birthDate: birthDate,
+      gender: gender,
+      schoolName: schoolName,
+      educationLevel: educationLevel,
+      uid: uid,
+      imageUrl: imageUrl,
+      phoneNumber: phoneNumber,
+      kind: kind,
+    );
+  }
+
   toMap() {
     return {
       "firstName": firstName,
@@ -90,7 +98,7 @@ class StudentauthModel extends Studententity {
       "gender": gender,
       "schoolName": schoolName,
       "educationLevel": educationLevel,
-      "id": studentID,
+      "id": uid,
       "imageUrl": imageUrl,
       "phoneNumber": phoneNumber,
       "kind": kind

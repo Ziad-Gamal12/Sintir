@@ -20,6 +20,8 @@ class TeacherSignUpPhoneNumberFiled extends StatelessWidget {
         validator: (value) {
           if (value!.isEmpty) {
             return "ادخل رقم التليفون";
+          } else if (value.length != 11) {
+            return "رجاء ادخل رقم تليفون صحيح ";
           }
           return null;
         });

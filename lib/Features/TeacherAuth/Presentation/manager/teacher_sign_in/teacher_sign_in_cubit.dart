@@ -2,7 +2,6 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:sintir/Features/TeacherAuth/Domain/Entities/Teacher_Entity.dart';
 import 'package:sintir/Features/TeacherAuth/Domain/Repos/repos.dart';
 
 part 'teacher_sign_in_state.dart';
@@ -19,7 +18,7 @@ class TeacherSignInCubit extends Cubit<TeacherSignInState> {
     result.fold((failure) {
       emit(TeacherSignInFailure(errmessage: failure.message));
     }, (teacherEntity) {
-      emit(TeacherSignInSuccess(teacherentity: teacherEntity));
+      emit(TeacherSignInSuccess());
     });
   }
 }

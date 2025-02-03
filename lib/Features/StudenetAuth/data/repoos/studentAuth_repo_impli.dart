@@ -24,16 +24,16 @@ class StudentauthRepoImpli implements StudentauthRepo {
       required this.firebaseAuth,
       required this.datebaseservice});
   @override
-  Future<Either<Failure, Studententity>> createUserWithEmailAndPassword(
-      {required Studententity studentEntity}) async {
+  Future<Either<Failure, void>> createUserWithEmailAndPassword(
+      {required Studententity studentEntity, required String password}) async {
     User? user;
     try {
       user = await firebaseAuth.createUserWithEmailAndPassword(
-          studentEntity.email,
-          studentEntity.password!,
-          studentEntity.firstName);
-      var studententity = StudentauthModel.fromUserAndEntity(
-          studententity: studentEntity, user: user);
+          studentEntity.email, password, studentEntity.firstName);
+      studentEntity.uid = user.uid;
+      StudentauthModel studententity = StudentauthModel.fromEntity(
+        studententity: studentEntity,
+      );
       bool isPhoneNumberExist = await datebaseservice.isFeildExists(
           key: BackendEndpoints.chieckIsStudentPhoneNumberExistCollectionName,
           feild: "phoneNumber",
@@ -43,7 +43,8 @@ class StudentauthRepoImpli implements StudentauthRepo {
             data: studententity.toMap(),
             docId: user.uid,
             key: BackendEndpoints.addStudentDataCollectionName);
-        return right(studententity);
+        await saveStudentData(studententity: studentEntity);
+        return right(null);
       } else {
         deleteUser(user: user);
         return left(ServerFailure(message: "هذا الرقم مستخدم من قبل"));
@@ -59,7 +60,7 @@ class StudentauthRepoImpli implements StudentauthRepo {
   }
 
   @override
-  Future<Either<Failure, Studententity>> sginInWithEmailAndPasswoed(
+  Future<Either<Failure, void>> sginInWithEmailAndPasswoed(
       {required String email, required String password}) async {
     User? user;
     try {
@@ -74,7 +75,7 @@ class StudentauthRepoImpli implements StudentauthRepo {
         await saveStudentData(studententity: studententity);
         await shared_preferences_Services.stringSetter(
             value: "stundent", key: BackendEndpoints.userKind);
-        return right(studententity);
+        return right(null);
       } else {
         signout(user);
         return left(ServerFailure(message: "خطأ في البيانات"));
@@ -89,7 +90,7 @@ class StudentauthRepoImpli implements StudentauthRepo {
   }
 
   @override
-  Future<Either<Failure, Studententity>> signinWithGoogle() async {
+  Future<Either<Failure, void>> signinWithGoogle() async {
     User? user;
     bool? isExist;
     try {
@@ -98,16 +99,16 @@ class StudentauthRepoImpli implements StudentauthRepo {
           key: BackendEndpoints.checkIsStudentExistCollectionName,
           docId: user.uid);
       if (!isExist) {
-        var studentEntity = StudentauthModel.fromFirebase(user: user);
+        StudentauthModel studentauthmodel =
+            StudentauthModel.fromFirebase(user: user);
         await addUserToDatabase(
-            data: studentEntity.toMap(),
+            data: studentauthmodel.toMap(),
             docId: user.uid,
             key: BackendEndpoints.addStudentDataCollectionName);
-        await saveStudentData(studententity: studentEntity);
+        await saveStudentData(studententity: studentauthmodel.toEntity());
         await shared_preferences_Services.stringSetter(
             value: "stundent", key: BackendEndpoints.userKind);
-
-        return right(studentEntity);
+        return right(null);
       } else {
         var studententity = await getStudentData(
             docId: user.uid,
@@ -116,7 +117,7 @@ class StudentauthRepoImpli implements StudentauthRepo {
         await shared_preferences_Services.stringSetter(
             value: "stundent", key: BackendEndpoints.userKind);
 
-        return right(studententity);
+        return right(null);
       }
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
@@ -132,7 +133,7 @@ class StudentauthRepoImpli implements StudentauthRepo {
   }
 
   @override
-  Future<Either<Failure, Studententity>> signinWithFaceBook() async {
+  Future<Either<Failure, void>> signinWithFaceBook() async {
     User? user;
     bool? isExist;
     try {
@@ -141,16 +142,17 @@ class StudentauthRepoImpli implements StudentauthRepo {
           key: BackendEndpoints.checkIsStudentExistCollectionName,
           docId: user.uid);
       if (!isExist) {
-        var studentEntity = StudentauthModel.fromFirebase(user: user);
+        StudentauthModel studentauthmodel =
+            StudentauthModel.fromFirebase(user: user);
         await addUserToDatabase(
-            data: studentEntity.toMap(),
+            data: studentauthmodel.toMap(),
             docId: user.uid,
             key: BackendEndpoints.addStudentDataCollectionName);
-        await saveStudentData(studententity: studentEntity);
+        await saveStudentData(studententity: studentauthmodel.toEntity());
         await shared_preferences_Services.stringSetter(
             value: "stundent", key: BackendEndpoints.userKind);
 
-        return right(studentEntity);
+        return right(null);
       } else {
         var studententity = await getStudentData(
             docId: user.uid,
@@ -159,7 +161,7 @@ class StudentauthRepoImpli implements StudentauthRepo {
         await shared_preferences_Services.stringSetter(
             value: "stundent", key: BackendEndpoints.userKind);
 
-        return right(studententity);
+        return right(null);
       }
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
@@ -175,25 +177,26 @@ class StudentauthRepoImpli implements StudentauthRepo {
   }
 
   @override
-  Future<Either<Failure, Studententity>> signinWithApple() async {
+  Future<Either<Failure, void>> signinWithApple() async {
     User? user;
     bool? isExist;
     try {
       user = await firebaseAuth.signInWithApple();
-      var studentEntity = StudentauthModel.fromFirebase(user: user);
+      StudentauthModel studentauthmodel =
+          StudentauthModel.fromFirebase(user: user);
       isExist = await datebaseservice.isDataExists(
           key: BackendEndpoints.checkIsStudentExistCollectionName,
           docId: user.uid);
       if (!isExist) {
         await addUserToDatabase(
-            data: studentEntity.toMap(),
+            data: studentauthmodel.toMap(),
             docId: user.uid,
             key: BackendEndpoints.addStudentDataCollectionName);
-        await saveStudentData(studententity: studentEntity);
+        await saveStudentData(studententity: studentauthmodel.toEntity());
         await shared_preferences_Services.stringSetter(
             value: "stundent", key: BackendEndpoints.userKind);
 
-        return right(studentEntity);
+        return right(null);
       } else {
         var studententity = await getStudentData(
             docId: user.uid,
@@ -202,7 +205,7 @@ class StudentauthRepoImpli implements StudentauthRepo {
         await shared_preferences_Services.stringSetter(
             value: "stundent", key: BackendEndpoints.userKind);
 
-        return right(studententity);
+        return right(null);
       }
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
@@ -242,7 +245,7 @@ class StudentauthRepoImpli implements StudentauthRepo {
   Future<Studententity> getStudentData(
       {required String docId, required String key}) async {
     final data = await datebaseservice.getData(key: key, docId: docId);
-    return StudentauthModel.fromJson(data: data);
+    return StudentauthModel.fromJson(data: data).toEntity();
   }
 
   @override

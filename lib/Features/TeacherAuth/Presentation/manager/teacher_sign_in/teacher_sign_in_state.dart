@@ -7,11 +7,7 @@ final class TeacherSignInInitial extends TeacherSignInState {}
 
 final class TeacherSignInLoading extends TeacherSignInState {}
 
-final class TeacherSignInSuccess extends TeacherSignInState {
-  final teacherEntity teacherentity;
-
-  TeacherSignInSuccess({required this.teacherentity});
-}
+final class TeacherSignInSuccess extends TeacherSignInState {}
 
 final class TeacherSignInFailure extends TeacherSignInState {
   final String errmessage;

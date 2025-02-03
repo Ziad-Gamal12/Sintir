@@ -20,7 +20,7 @@ class StudentSignUpPhoneNumberFiled extends StatelessWidget {
         validator: (value) {
           if (value!.isEmpty) {
             return "ادخل رقم التليفون";
-          } else if (value.length < 11 || value.length > 11) {
+          } else if (value.length != 11) {
             return "ادخل رقم التليفون صحيح";
           }
           return null;

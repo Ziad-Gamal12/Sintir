@@ -7,10 +7,7 @@ final class StudentSignInInitial extends StudentSignInState {}
 
 final class StudentSignInLoading extends StudentSignInState {}
 
-final class StudentSignInSuccess extends StudentSignInState {
-  final Studententity studententity;
-  StudentSignInSuccess({required this.studententity});
-}
+final class StudentSignInSuccess extends StudentSignInState {}
 
 final class StudentSignInFailure extends StudentSignInState {
   final String errmessage;

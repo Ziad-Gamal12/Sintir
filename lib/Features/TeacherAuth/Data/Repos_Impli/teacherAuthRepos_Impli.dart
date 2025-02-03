@@ -1,10 +1,10 @@
 // ignore_for_file: camel_case_types, file_names, non_constant_identifier_names
 
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/services/DateBaseService.dart';
@@ -28,41 +28,24 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
       required this.firebaseStorageService,
       required this.authService});
   @override
-  Future<Either<Failure, teacherEntity>> createUserWithEmailAndPassword({
-    required String email,
-    required String password,
-    required String name,
-    required String firstName,
-    required String lastName,
-    required String address,
-    required String phoneNumber,
-    required String subject,
-    required String workExperience,
-    required String gender,
-    required String profilePicurl,
-    required String state,
-  }) async {
+  Future<Either<Failure, void>> createUserWithEmailAndPassword(
+      {required teacherEntity teacherEntity, required String password}) async {
     User? user;
     try {
       user = await authService.createUserWithEmailAndPassword(
-          email, password, name);
-      var teacherentity = Teachermodel.fromFirebase(
-          user: user,
-          firstName: firstName,
-          lastName: lastName,
-          address: address,
-          phoneNumber: phoneNumber,
-          subject: subject,
-          workExperience: workExperience,
-          gender: gender,
-          profilePicurl: profilePicurl,
-          state: state);
+          teacherEntity.email, password, teacherEntity.firstName);
+      teacherEntity.uid = user.uid;
+      Teachermodel teacherModel =
+          Teachermodel.fromEntity(teacherentity: teacherEntity);
+      await saveTeacherData(
+        teacherentity: teacherEntity,
+      );
       await addTeacherData(
           key: BackendEndpoints.addTeacherDataCollectionName,
-          data: teacherentity.toMap(),
+          data: teacherModel.toMap(),
           docId: user.uid);
       await authService.auth.currentUser!.sendEmailVerification();
-      return right(teacherentity);
+      return right(null);
     } on CustomException catch (e) {
       DeleteUser(user);
       return left(ServerFailure(message: e.message));
@@ -75,9 +58,9 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
 
   @override
   Future<Either<Failure, String>> uploadProfilePoc(
-      {required ImageSource source}) async {
+      {required File image}) async {
     try {
-      String url = await firebaseStorageService.uploadImage(source: source);
+      String url = await firebaseStorageService.uploadImage(file: image);
       return right(url);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
@@ -107,20 +90,22 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
     User? user;
     try {
       user = await authService.signInWithEmailAndPassword(email, password);
-      var teacherentity = await getTeacherData(docId: user.uid);
+      teacherEntity? teacherentity = await getTeacherData(docId: user.uid);
       if (authService.auth.currentUser!.emailVerified) {
         if (teacherentity != null) {
-          if (teacherentity.stete == BackendEndpoints.agreed) {
-            await saveTeacherData(teacherentity: teacherentity);
+          if (teacherentity.state == BackendEndpoints.agreed) {
+            await saveTeacherData(
+              teacherentity: teacherentity,
+            );
             await shared_preferences_Services.stringSetter(
                 value: "teacher", key: BackendEndpoints.userKind);
 
             return right(teacherentity);
-          } else if (teacherentity.stete == BackendEndpoints.waiting) {
+          } else if (teacherentity.state == BackendEndpoints.waiting) {
             await teacherSignout(user);
             return left(
                 ServerFailure(message: "الطالب قيد المراجعة من قبل الادارة"));
-          } else if (teacherentity.stete == BackendEndpoints.rejected) {
+          } else if (teacherentity.state == BackendEndpoints.rejected) {
             await teacherSignout(user);
             return left(ServerFailure(message: "تم رفض طلبك من قبل الادارة"));
           } else {
@@ -134,7 +119,8 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
       } else {
         await authService.auth.currentUser!.sendEmailVerification();
         await teacherSignout(user);
-        return left(ServerFailure(message: "التحقق من صحة البريد الالكتروني"));
+        return left(ServerFailure(
+            message: "تم ارسال رابط التفعيل الى بريدك الالكتروني"));
       }
     } on CustomException catch (e) {
       await teacherSignout(user);
@@ -157,15 +143,17 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
     var data = await dataBaseService.getData(
         key: BackendEndpoints.getTeacherDataCollectionName, docId: docId);
     if (data != null) {
-      teacherEntity teacherentity = Teachermodel.fromMap(data);
+      teacherEntity teacherentity = Teachermodel.fromMap(data).toEntity();
       return teacherentity;
     } else {
-      return null;
+      null;
     }
   }
 
   @override
-  Future<void> saveTeacherData({required teacherEntity teacherentity}) async {
+  Future<void> saveTeacherData({
+    required teacherEntity teacherentity,
+  }) async {
     await sqfliteservices.insertData(
         tableName: BackendEndpoints.setTeacherDataTableName,
         data: Teachermodel.fromEntity(teacherentity: teacherentity).toMap());

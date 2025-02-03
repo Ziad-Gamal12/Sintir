@@ -31,17 +31,24 @@ class StudentSignUpViewBodyBlocBuilder_button extends StatelessWidget {
           if (isTermsAndConditionChecked) {
             BlocProvider.of<StudentSignUpCubit>(context)
                 .createUserWithEmailAndPassword(
+                    password: Variables.studentSignUpPasswordController.text,
                     studentEntity: Studententity(
-              firstName: Variables.studentSignUpFirstNameController.text,
-              lastName: Variables.studentSignUpLastNameController.text,
-              email: Variables.studentSignUpEmailController.text,
-              password: Variables.studentSignUpPasswordController.text,
-              phoneNumber: Variables.studentSignUpPhoneNumberController.text,
-              gender: radioValue ?? "ذكر",
-              birthDate: birthDayDate!.toIso8601String(),
-              schoolName: Variables.studentSignUpSchoolNameController.text,
-              educationLevel: selectedItem!.title,
-            ));
+                      kind: "student",
+                      imageUrl: radioValue == "ذكر"
+                          ? "https://cdn-icons-png.flaticon.com/128/2202/2202112.png"
+                          : "https://cdn-icons-png.flaticon.com/128/6997/6997662.png",
+                      firstName:
+                          Variables.studentSignUpFirstNameController.text,
+                      lastName: Variables.studentSignUpLastNameController.text,
+                      email: Variables.studentSignUpEmailController.text,
+                      phoneNumber:
+                          Variables.studentSignUpPhoneNumberController.text,
+                      gender: radioValue ?? "ذكر",
+                      birthDate: birthDayDate!.toIso8601String(),
+                      schoolName:
+                          Variables.studentSignUpSchoolNameController.text,
+                      educationLevel: selectedItem!.title,
+                    ));
           } else {
             errordialog(context, "الرجاء أوافق على الشروط والاحكام").show();
           }

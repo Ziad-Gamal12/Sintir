@@ -1,7 +1,8 @@
 // ignore_for_file: file_names, camel_case_types
 
-import 'package:flutter/widgets.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:sintir/constant.dart';
 
 class Custom_Loading_Widget extends StatelessWidget {
   final bool isLoading;
@@ -11,6 +12,13 @@ class Custom_Loading_Widget extends StatelessWidget {
       {super.key, required this.isLoading, required this.child});
   @override
   Widget build(BuildContext context) {
-    return ModalProgressHUD(inAsyncCall: isLoading, child: child);
+    return isLoading == true
+        ? Center(
+            child: LoadingAnimationWidget.staggeredDotsWave(
+              color: KMainColor,
+              size: 50,
+            ),
+          )
+        : child;
   }
 }
