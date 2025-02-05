@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/ContentCreaterEntity.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
 
@@ -22,7 +23,11 @@ class CourseBottomSheetHeader extends StatelessWidget {
               image: Assets.assetsImagesUserAvatar),
         ),
         const Spacer(),
-        IconButton(onPressed: () {}, icon: const Icon(FontAwesomeIcons.xmark))
+        IconButton(
+            onPressed: () {
+              GoRouter.of(context).pop();
+            },
+            icon: const Icon(FontAwesomeIcons.xmark))
       ],
     );
   }

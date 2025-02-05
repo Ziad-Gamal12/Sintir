@@ -16,7 +16,7 @@ class CustomSearchTextField extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.shade200,
             spreadRadius: 1,
             blurRadius: 7,
             offset: const Offset(0, 8),

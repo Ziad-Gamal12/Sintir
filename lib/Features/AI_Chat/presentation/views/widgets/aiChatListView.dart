@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Features/AI_Chat/domain/entities/messageEntity.dart';
 import 'package:sintir/Features/AI_Chat/presentation/views/widgets/aiChatListViewItem.dart';
 import 'package:sintir/constant.dart';
@@ -17,7 +16,6 @@ class Aichatlistview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        controller: Variables.scrollController,
         padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
         itemCount: messages.length,
         itemBuilder: (context, index) {

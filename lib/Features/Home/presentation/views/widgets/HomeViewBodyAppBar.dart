@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/utils/Variables.dart';
@@ -39,19 +38,15 @@ class HomeViewBodyAppBar extends StatelessWidget {
           style: AppTextStyles.bold20Auto.copyWith(color: KSecondaryColor),
         ),
       ])),
-      trailing: IntrinsicWidth(
+      trailing: SizedBox(
+        width: 88,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            InkWell(
-              onTap: () async {
-                await firebaseAuthService().signout();
-              },
-              child: Image.asset(
-                Assets.assetsImagesNotificationIcon,
-                height: 25,
-                width: 25,
-              ),
+            Image.asset(
+              Assets.assetsImagesNotificationIcon,
+              height: 25,
+              width: 25,
             ),
             const SizedBox(
               width: 15,

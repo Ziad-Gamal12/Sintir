@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, file_names
+
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/Drawer_Entity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';

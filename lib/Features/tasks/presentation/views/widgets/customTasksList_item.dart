@@ -25,7 +25,7 @@ class _CustomtaskslistItemState extends State<CustomtaskslistItem> {
       width: double.infinity,
       height: 61,
       decoration: BoxDecoration(
-        color: const Color(0xffE5E5EA).withOpacity(.3),
+        color: Colors.grey.shade100,
         borderRadius: BorderRadius.circular(8),
       ),
       child: ListTile(
@@ -48,7 +48,6 @@ class _CustomtaskslistItemState extends State<CustomtaskslistItem> {
             onTap: () {
               isSelected = !isSelected;
               setState(() {});
-              print(isSelected);
             },
             child: Container(
                 alignment: Alignment.center,

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/Drawer_Entity.dart';
-import 'package:sintir/Core/models/DrawerModel.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
-import 'package:sintir/Core/widgets/CustomDrawerWidgets/CustomInActiveDrawerItem.dart';
+import 'package:sintir/Core/widgets/CustomDrawerWidgets/CustomDrawerSettingsWidget.dart';
+import 'package:sintir/Core/widgets/CustomDrawerWidgets/CustomDrawerSignOutWidget.dart';
 import 'package:sintir/Core/widgets/CustomDrawerWidgets/Draweritem.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
-import 'package:sintir/Features/ChoosingUserKind/Presentation/views/ChoosingUserKindView.dart';
 
 class Customdrawer extends StatefulWidget {
   const Customdrawer({super.key});
@@ -43,7 +42,7 @@ class _CustomdrawerState extends State<Customdrawer> {
               ),
               SliverToBoxAdapter(
                   child: Column(
-                children: DrawerModel.toList().asMap().entries.map((e) {
+                children: DrawerEntity.toList().asMap().entries.map((e) {
                   return InkWell(
                       onTap: () {
                         if (currentdraweritemIndex != e.key) {
@@ -61,31 +60,17 @@ class _CustomdrawerState extends State<Customdrawer> {
                           drawerEntity: e.value));
                 }).toList(),
               )),
-              SliverFillRemaining(
+              const SliverFillRemaining(
                 hasScrollBody: false,
                 child: Column(
                   children: [
-                    const Spacer(),
-                    Custominactivedraweritem(
-                      drawerEntity: DrawerEntity(
-                        title: "اعدادات النظام",
-                        activeIcon: Assets.assetsImagesSetting,
-                        inActiveIcon: Assets.assetsImagesSetting,
-                        routeName: "",
-                      ),
-                    ),
-                    const SizedBox(
+                    Spacer(),
+                    CustomDrawerSettingsWidget(),
+                    SizedBox(
                       height: 20,
                     ),
-                    Custominactivedraweritem(
-                      drawerEntity: DrawerEntity(
-                          title: "تسجيل الخروج",
-                          inActiveIcon: Assets.assetsImagesLogout,
-                          activeIcon: Assets.assetsImagesLogout,
-                          routeName: ChoosingUserKindView.routeName),
-                      iconColor: Colors.red,
-                    ),
-                    const SizedBox(
+                    CustomDrawerSignOutWidget(),
+                    SizedBox(
                       height: 48,
                     ),
                   ],

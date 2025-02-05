@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomDropdownButton.dart';
+import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
 
 class Taskslistviewheader extends StatefulWidget {
   const Taskslistviewheader({super.key});
@@ -14,43 +15,37 @@ class _TaskslistviewheaderState extends State<Taskslistviewheader> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          "المهام الخاص بى",
-          style: AppTextStyles.bold20Auto.copyWith(color: Colors.black),
-        ),
-        const Spacer(),
-        CustomDropdownButton(
-          valueChanged: (value) {
-            currentvalue = value;
-          },
-          hintText: "غير مكتملة",
-          items: [
-            DropdownMenuItem(
-              value: "الكل",
-              child: Text(
-                "الكل",
-                style: AppTextStyles.semiBold12.copyWith(color: Colors.black),
-              ),
+    return CustomListORGridTextHeader(
+      text: "المهام الخاص بى",
+      trailing: CustomDropdownButton(
+        valueChanged: (value) {
+          currentvalue = value;
+        },
+        hintText: "غير مكتملة",
+        items: [
+          DropdownMenuItem(
+            value: "الكل",
+            child: Text(
+              "الكل",
+              style: AppTextStyles.semiBold12.copyWith(color: Colors.black),
             ),
-            DropdownMenuItem(
-              value: "مكتملة",
-              child: Text(
-                "مكتملة",
-                style: AppTextStyles.semiBold12.copyWith(color: Colors.black),
-              ),
+          ),
+          DropdownMenuItem(
+            value: "مكتملة",
+            child: Text(
+              "مكتملة",
+              style: AppTextStyles.semiBold12.copyWith(color: Colors.black),
             ),
-            DropdownMenuItem(
-              value: "غير مكتملة",
-              child: Text(
-                "غير مكتملة",
-                style: AppTextStyles.semiBold12.copyWith(color: Colors.black),
-              ),
+          ),
+          DropdownMenuItem(
+            value: "غير مكتملة",
+            child: Text(
+              "غير مكتملة",
+              style: AppTextStyles.semiBold12.copyWith(color: Colors.black),
             ),
-          ],
-        )
-      ],
+          ),
+        ],
+      ),
     );
   }
 }

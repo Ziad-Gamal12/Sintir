@@ -16,7 +16,7 @@ class Teachermodel {
   final String gender;
   final String profilePicurl;
   final String state;
-  final List<String> socialLinks;
+  final List socialLinks;
   final String kind; //teacher or Studednt
   final String joinedDate;
   Teachermodel(

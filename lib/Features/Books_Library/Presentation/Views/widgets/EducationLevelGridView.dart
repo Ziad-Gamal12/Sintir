@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/LevelBooksView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/widgets/EducaitonLevelGridViewItem.dart';
 import 'package:sintir/constant.dart';
@@ -11,7 +10,6 @@ class Educationlevelgridview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        controller: Variables.scrollController,
         padding: const EdgeInsets.symmetric(
             horizontal: KHorizontalPadding, vertical: 20),
         itemCount: 12,

@@ -8,14 +8,14 @@ import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomAddFavourite
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomContentCreatorCircleAvartar.dart';
 
 class CustomCourseItem extends StatelessWidget {
-  const CustomCourseItem(
-      {super.key,
-      required this.ontap,
-      required this.courseItem,
-      required this.isFavourite});
+  CustomCourseItem({
+    super.key,
+    required this.ontap,
+    required this.courseItem,
+  });
   final VoidCallback ontap;
   final CourseEntity courseItem;
-  final bool isFavourite;
+  bool isFavourite = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

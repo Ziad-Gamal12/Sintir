@@ -17,7 +17,6 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 abstract class Variables {
   static GlobalKey<FormState> TeacherSignUpFormKey = GlobalKey<FormState>();
   static GlobalKey<FormState> StudnetSignUpFormKey = GlobalKey<FormState>();
-  static ScrollController scrollController = ScrollController();
   static GlobalKey<FormState> TeacherLoginFormKey = GlobalKey<FormState>();
   static GlobalKey<FormState> TeacherResetPasswordFormKey =
       GlobalKey<FormState>();

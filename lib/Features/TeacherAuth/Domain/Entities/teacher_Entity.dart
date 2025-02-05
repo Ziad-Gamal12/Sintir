@@ -12,7 +12,7 @@ class teacherEntity {
   final String gender;
   String? profilePicurl;
   final String state;
-  final List<String> socialLinks;
+  final List socialLinks;
   final String kind; //teacher or Studednt
   final String joinedDate;
   teacherEntity(

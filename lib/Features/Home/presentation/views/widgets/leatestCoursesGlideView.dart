@@ -9,9 +9,7 @@ class Leatestcoursesglideview extends StatelessWidget {
   final List<CourseEntity> courses;
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+    return SliverGrid.builder(
         itemCount: courses.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           mainAxisSpacing: 10,
@@ -20,17 +18,19 @@ class Leatestcoursesglideview extends StatelessWidget {
           childAspectRatio: 130 / 170,
         ),
         itemBuilder: (context, index) {
-          return CustomCourseItem(
-            isFavourite: false,
-            courseItem: courses[index],
-            ontap: () {
-              Variables.HomeViewScaffoldKey.currentState!
-                  .showBottomSheet((context) {
-                return CourseBottomSheet(
-                  course: courses[index],
-                );
-              });
-            },
+          return Padding(
+            padding: const EdgeInsets.symmetric(),
+            child: CustomCourseItem(
+              courseItem: courses[index],
+              ontap: () {
+                Variables.HomeViewScaffoldKey.currentState!
+                    .showBottomSheet((context) {
+                  return CourseBottomSheet(
+                    course: courses[index],
+                  );
+                });
+              },
+            ),
           );
         });
   }

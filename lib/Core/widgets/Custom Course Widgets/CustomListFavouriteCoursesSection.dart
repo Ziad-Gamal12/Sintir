@@ -20,9 +20,7 @@ class Customlistfavouritecoursessection extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: CustomCourseItem(
-                    isFavourite: true,
-                    ontap: () {},
-                    courseItem: Variables.courseEntity),
+                    ontap: () {}, courseItem: Variables.courseEntity),
               ),
             );
           }),

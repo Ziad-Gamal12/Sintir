@@ -7,7 +7,7 @@ class TasksListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverList.builder(
-        itemCount: 10,
+        itemCount: 11,
         itemBuilder: (context, index) {
           return const Padding(
             padding: EdgeInsets.symmetric(vertical: 5),

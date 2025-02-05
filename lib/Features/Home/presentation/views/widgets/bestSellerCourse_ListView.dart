@@ -22,18 +22,18 @@ class BestsellercourseListview extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: AspectRatio(
-                  aspectRatio: 140 / 202,
-                  child: CustomCourseItem(
-                      isFavourite: false,
-                      courseItem: courses[index],
-                      ontap: () {
-                        Variables.HomeViewScaffoldKey.currentState!
-                            .showBottomSheet((context) {
-                          return CourseBottomSheet(
-                            course: courses[index],
-                          );
-                        });
-                      })),
+                aspectRatio: 140 / 202,
+                child: CustomCourseItem(
+                    courseItem: courses[index],
+                    ontap: () {
+                      Variables.HomeViewScaffoldKey.currentState!
+                          .showBottomSheet((context) {
+                        return CourseBottomSheet(
+                          course: courses[index],
+                        );
+                      });
+                    }),
+              ),
             );
           }),
     );

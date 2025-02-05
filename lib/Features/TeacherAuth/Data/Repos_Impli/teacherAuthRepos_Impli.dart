@@ -99,7 +99,6 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
             );
             await shared_preferences_Services.stringSetter(
                 value: "teacher", key: BackendEndpoints.userKind);
-
             return right(teacherentity);
           } else if (teacherentity.state == BackendEndpoints.waiting) {
             await teacherSignout(user);

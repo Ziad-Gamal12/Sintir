@@ -16,9 +16,9 @@ class CustomprofilemycoursesSlivergridview extends StatelessWidget {
             crossAxisSpacing: 40),
         itemBuilder: (context, index) {
           return CustomCourseItem(
-              ontap: () {},
-              courseItem: Variables.courseEntity,
-              isFavourite: false);
+            ontap: () {},
+            courseItem: Variables.courseEntity,
+          );
         });
   }
 }
