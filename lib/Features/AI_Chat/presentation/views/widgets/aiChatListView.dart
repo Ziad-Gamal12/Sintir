@@ -5,7 +5,7 @@ import 'package:sintir/constant.dart';
 
 class Aichatlistview extends StatelessWidget {
   Aichatlistview({super.key});
-  List messages = [
+  List<Messageentity> messages = [
     Messageentity(message: "hello my freind ", isUserMessage: true),
     Messageentity(message: "Hey Ziad! How's it going?", isUserMessage: false),
     Messageentity(message: "All good, how about you?", isUserMessage: true),

@@ -63,7 +63,8 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
                 setState(() {});
               },
               selectedAnswer: widget.coursetestentity
-                  .questions[currentQuestionIndex].selectedSolution),
+                      .questions[currentQuestionIndex].selectedSolution ??
+                  ""),
           const SizedBox(
             height: 20,
           ),

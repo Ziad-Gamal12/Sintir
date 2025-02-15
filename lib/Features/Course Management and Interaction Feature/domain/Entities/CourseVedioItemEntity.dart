@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/DisplayVediRequiresEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/displayCourseVedioVeiw.dart';
@@ -8,7 +7,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 class Coursevedioitementity {
   final String title, vedioUrl;
   final int durationTime;
-  String type = BackendEndpoints.vedioType;
+  String? type;
   String preffixImage = Assets.assetsImagesVedioIcon;
   ontap(
       {required BuildContext context,
@@ -20,5 +19,6 @@ class Coursevedioitementity {
   Coursevedioitementity(
       {required this.title,
       required this.vedioUrl,
-      required this.durationTime});
+      required this.durationTime,
+      this.type});
 }

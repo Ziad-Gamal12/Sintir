@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/InfoRow.dart';
@@ -11,11 +12,11 @@ import 'package:sintir/constant.dart';
 class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
   const CustomCourseIntroductionViewBodyHeader({
     super.key,
-    required this.course,
   });
-  final CourseEntity course;
+
   @override
   Widget build(BuildContext context) {
+    var course = context.read<CourseEntity>();
     return Column(
       children: [
         Row(
@@ -29,7 +30,7 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
                       style: AppTextStyles.regular10
                           .copyWith(color: Colors.black)),
                   TextSpan(
-                      text: course.contentcreaterentity.name,
+                      text: course.contentcreaterentity?.name,
                       style: AppTextStyles.semiBold10
                           .copyWith(color: KSecondaryColor))
                 ])),
@@ -61,7 +62,7 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
                         .copyWith(color: const Color(0xff818181)),
                   ),
                   TextSpan(
-                      text: course.subscripers.toString(),
+                      text: course.subscripersIDS.length.toString(),
                       style: AppTextStyles.semiBold10
                           .copyWith(color: KSecondaryColor)),
                   TextSpan(

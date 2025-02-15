@@ -40,7 +40,7 @@ class CustomCourseItem extends StatelessWidget {
                     child: SizedBox(
                         width: double.infinity,
                         child: CachedNetworkImage(
-                          imageUrl: courseItem.posterUrl,
+                          imageUrl: courseItem.posterUrl!,
                           fit: BoxFit.cover,
                         )),
                   ),
@@ -65,13 +65,13 @@ class CustomCourseItem extends StatelessWidget {
                           children: [
                             CustomContentCreatorCircleAvartar(
                               imagepath: courseItem
-                                  .contentcreaterentity.profileImageUrl,
+                                  .contentcreaterentity!.profileImageUrl,
                             ),
                             const SizedBox(
                               width: 10,
                             ),
                             Text(
-                              courseItem.contentcreaterentity.name,
+                              courseItem.contentcreaterentity!.name,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.regular10

@@ -3,7 +3,10 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomContentListViewitem.dart';
 
 class CourseContentListView extends StatelessWidget {
-  const CourseContentListView({super.key, required this.courseSectionsEntity});
+  const CourseContentListView({
+    super.key,
+    required this.courseSectionsEntity,
+  });
   final List<CoursSectionsListItemEntity> courseSectionsEntity;
   @override
   Widget build(BuildContext context) {

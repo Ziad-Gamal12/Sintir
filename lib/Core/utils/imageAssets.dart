@@ -154,6 +154,10 @@ class Assets {
   /// assets/images/StudentOnboardingone.svg
   static const String assetsImagesStudentOnboardingone = "assets/images/StudentOnboardingone.svg";
 
+  /// Assets for assetsImagesSuccessIcon
+  /// assets/images/SuccessIcon.svg
+  static const String assetsImagesSuccessIcon = "assets/images/SuccessIcon.svg";
+
   /// Assets for assetsImagesTea
   /// assets/images/Tea.svg
   static const String assetsImagesTea = "assets/images/Tea.svg";

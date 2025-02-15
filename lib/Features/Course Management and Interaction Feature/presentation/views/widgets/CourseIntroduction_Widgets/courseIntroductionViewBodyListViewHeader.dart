@@ -12,7 +12,7 @@ class courseIntroductionViewBodyListViewHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       "المحتوى",
-      style: AppTextStyles.bold24.copyWith(color: Colors.black),
+      style: AppTextStyles.semiBold20.copyWith(color: Colors.black),
       textAlign: TextAlign.center,
     );
   }

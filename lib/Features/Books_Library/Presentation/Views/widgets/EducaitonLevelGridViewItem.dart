@@ -31,7 +31,7 @@ class Educaitonlevelgridviewitem extends StatelessWidget {
           ),
           child: Text(
             "الصف الثالث الأبتدائى",
-            style: AppTextStyles.semiBold14.copyWith(color: Colors.black),
+            style: AppTextStyles.bold14Auto.copyWith(color: Colors.black),
           ),
         ));
   }

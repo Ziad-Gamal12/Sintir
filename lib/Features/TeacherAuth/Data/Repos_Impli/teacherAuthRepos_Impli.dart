@@ -9,23 +9,20 @@ import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/services/DateBaseService.dart';
 import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
-import 'package:sintir/Core/services/FirebaseStorageService.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
-import 'package:sintir/Core/services/sqfliteServices.dart';
+import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/TeacherAuth/Data/Models/TeacherModel.dart';
-import 'package:sintir/Features/TeacherAuth/Domain/Entities/Teacher_Entity.dart';
+import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
 import 'package:sintir/Features/TeacherAuth/Domain/Repos/repos.dart';
 
 class teacherAuthRepos_Impli implements TeacherAuthRepos {
   final firebaseAuthService authService;
-  final firebasestorageservice firebaseStorageService;
+  final StorageService storageService;
   final Datebaseservice dataBaseService;
-  final Sqfliteservices sqfliteservices;
   teacherAuthRepos_Impli(
       {required this.dataBaseService,
-      required this.sqfliteservices,
-      required this.firebaseStorageService,
+      required this.storageService,
       required this.authService});
   @override
   Future<Either<Failure, void>> createUserWithEmailAndPassword(
@@ -37,9 +34,6 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
       teacherEntity.uid = user.uid;
       Teachermodel teacherModel =
           Teachermodel.fromEntity(teacherentity: teacherEntity);
-      await saveTeacherData(
-        teacherentity: teacherEntity,
-      );
       await addTeacherData(
           key: BackendEndpoints.addTeacherDataCollectionName,
           data: teacherModel.toMap(),
@@ -60,7 +54,7 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
   Future<Either<Failure, String>> uploadProfilePoc(
       {required File image}) async {
     try {
-      String url = await firebaseStorageService.uploadImage(file: image);
+      String url = await storageService.uploadFile(file: image);
       return right(url);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
@@ -94,9 +88,6 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
       if (authService.auth.currentUser!.emailVerified) {
         if (teacherentity != null) {
           if (teacherentity.state == BackendEndpoints.agreed) {
-            await saveTeacherData(
-              teacherentity: teacherentity,
-            );
             await shared_preferences_Services.stringSetter(
                 value: "teacher", key: BackendEndpoints.userKind);
             return right(teacherentity);
@@ -139,22 +130,13 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
 
   @override
   Future getTeacherData({required String docId}) async {
-    var data = await dataBaseService.getData(
+    List<Map<String, dynamic>>? data = await dataBaseService.getData(
         key: BackendEndpoints.getTeacherDataCollectionName, docId: docId);
     if (data != null) {
-      teacherEntity teacherentity = Teachermodel.fromMap(data).toEntity();
+      teacherEntity teacherentity = Teachermodel.fromMap(data[0]).toEntity();
       return teacherentity;
     } else {
       null;
     }
-  }
-
-  @override
-  Future<void> saveTeacherData({
-    required teacherEntity teacherentity,
-  }) async {
-    await sqfliteservices.insertData(
-        tableName: BackendEndpoints.setTeacherDataTableName,
-        data: Teachermodel.fromEntity(teacherentity: teacherentity).toMap());
   }
 }

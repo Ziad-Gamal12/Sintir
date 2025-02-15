@@ -22,7 +22,7 @@ class CourseBottomSheetCourseDetails extends StatelessWidget {
             text: " ",
           ),
           TextSpan(
-              text: "(${course.coursSectionsListItemEntity.length} فديو)",
+              text: "(${course.coursSectionsListItemEntity!.length} فديو)",
               style: AppTextStyles.regular11
                   .copyWith(color: const Color(0xff818181)))
         ])),

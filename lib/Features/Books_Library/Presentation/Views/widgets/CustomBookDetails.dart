@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomAddFavouriteIcon.dart';
-import 'package:sintir/Core/widgets/CustomButton.dart';
+import 'package:sintir/Features/Books_Library/Presentation/Views/widgets/CutomBookDetailsBookACtions.dart';
 import 'package:sintir/constant.dart';
 
 class CustomBookDetails extends StatelessWidget {
@@ -63,26 +62,7 @@ class CustomBookDetails extends StatelessWidget {
           ],
         ),
         const Spacer(),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            CustomAddFavouriteIcon(isFavourite: false, ontap: () {}),
-            const SizedBox(
-              width: 20,
-            ),
-            Flexible(
-              child: SizedBox(
-                width: 156,
-                child: Custombutton(
-                    text: "معاينة الكتاب",
-                    color: KSecondaryColor,
-                    textColor: Colors.white,
-                    onPressed: () {}),
-              ),
-            )
-          ],
-        )
+        const CutomBookDetailsBookACtions()
       ],
     );
   }

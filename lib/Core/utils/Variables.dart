@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/ContentCreaterEntity.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
@@ -12,7 +13,6 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/DisplayVediRequiresEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/SendCourseReportEntity.dart';
 
 abstract class Variables {
   static GlobalKey<FormState> TeacherSignUpFormKey = GlobalKey<FormState>();
@@ -80,7 +80,13 @@ abstract class Variables {
       TextEditingController();
   static TextEditingController AddCourseCoursePhoneController =
       TextEditingController();
+  static TextEditingController AddCourseCourseCodeController =
+      TextEditingController();
+  static TextEditingController AddCourseCourseTextContentController =
+      TextEditingController();
+
   static CourseEntity courseEntity = CourseEntity(
+      state: BackendEndpoints.coursePublishedState,
       id: "12345567",
       posterUrl:
           "https://img.freepik.com/free-psd/e-learning-online-courses-poster-template_23-2149109793.jpg",
@@ -89,7 +95,7 @@ abstract class Variables {
           "في كريتيڤز إكس بنحقق معادلة صعبة، معادلة إنك تستمتع و في نفس الوقت تستفيد .",
       price: "120",
       language: "العربيه",
-      subscripers: 70,
+      subscripersIDS: [],
       postedDate: DateTime(2024, 8, 11),
       contentcreaterentity: Contentcreaterentity(
           name: "Adel Gamal",
@@ -105,7 +111,7 @@ abstract class Variables {
                   vedioEntity: Coursevedioitementity(
                       title: "برومو - دورة حياة",
                       vedioUrl:
-                          "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4",
+                          "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
                       durationTime: 130),
                   sections: []),
               Coursetestentity(questions: [
@@ -152,9 +158,6 @@ abstract class Variables {
             likesCount: "11",
             datePosted: DateTime(2024, 9, 13))
       ],
-      courseReports: [
-        Sendcoursereportentity(
-            title: "محتوى ذو جودة منخفضة", description: "كورس لا يستحق الفلوس")
-      ]);
+      courseReports: []);
   static List<CourseEntity> TestCoursesList = [courseEntity];
 }

@@ -13,11 +13,11 @@ class CustomVedioErrorWidget extends StatelessWidget {
         alignment: Alignment.center,
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-            color: Colors.transparent.withOpacity(.3),
+            color: Colors.grey.shade100,
             borderRadius: BorderRadius.circular(12)),
         child: Text(
           errorMessage ?? "حدث خطأ ما! يرجى اعادة المحاولة",
-          style: AppTextStyles.semiBold16.copyWith(color: Colors.white),
+          style: AppTextStyles.semiBold16.copyWith(color: Colors.black),
         ));
   }
 }

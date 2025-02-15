@@ -7,13 +7,11 @@ class Bookslistview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverList.builder(itemBuilder: (context, index) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
+      return const Padding(
+        padding: EdgeInsets.symmetric(vertical: 5),
         child: SizedBox(
-          height: MediaQuery.sizeOf(context).height * .3,
-          width: MediaQuery.sizeOf(context).width,
-          child: const AspectRatio(
-              aspectRatio: 130 / 190,
+          child: AspectRatio(
+              aspectRatio: 90 / 53,
               child: Column(
                 children: [
                   Bookslistviewitem(),

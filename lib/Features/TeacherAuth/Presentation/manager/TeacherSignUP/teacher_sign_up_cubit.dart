@@ -6,7 +6,7 @@ import 'package:bloc/bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
-import 'package:sintir/Features/TeacherAuth/Domain/Entities/Teacher_Entity.dart';
+import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
 import 'package:sintir/Features/TeacherAuth/Domain/Repos/repos.dart';
 
 part 'teacher_sign_up_state.dart';
@@ -42,7 +42,7 @@ class TeacherSignUpCubit extends Cubit<TeacherSignUpState> {
   }
 
   Future<void> pickTeacherProfilePic({required ImageSource source}) async {
-    File image = await pickerassetsservice.getImage(source: source);
+    File? image = await pickerassetsservice.getImage(source: source);
     imageFile = image;
     emit(PickTeacherProfilePicSuccess());
   }

@@ -1,10 +1,12 @@
+// ignore_for_file: must_be_immutable, file_names
+
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomChatTextField.dart';
 import 'package:sintir/Features/AI_Chat/presentation/views/widgets/aiChatListView.dart';
 
-class AichatviewBody extends StatelessWidget {
-  AichatviewBody({super.key});
-  TextEditingController controller = TextEditingController();
+class AiChatViewBody extends StatelessWidget {
+  AiChatViewBody({super.key});
+  TextEditingController customAiChatController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -17,7 +19,7 @@ class AichatviewBody extends StatelessWidget {
           child: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: CustomChatTextField(
-                controller: controller,
+                controller: customAiChatController,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "ادخل النص";

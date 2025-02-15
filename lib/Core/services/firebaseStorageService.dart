@@ -7,13 +7,14 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
+import 'package:sintir/Core/services/StorageService.dart';
 
-class firebasestorageservice {
+class firebasestorageservice implements StorageService {
   final storage = FirebaseStorage.instance;
   final Pickerassetsservice pickerassetsservice;
   firebasestorageservice({required this.pickerassetsservice});
-
-  Future<String> uploadImage({required File file}) async {
+  @override
+  Future<String> uploadFile({required File file}) async {
     try {
       String filePath = basename(file.path);
       var ref = storage.ref(filePath);
@@ -26,7 +27,8 @@ class firebasestorageservice {
     }
   }
 
-  Future<void> deleteImage({required String url}) async {
+  @override
+  Future<void> deleteFile({required String url}) async {
     await storage.refFromURL(url).delete();
   }
 }

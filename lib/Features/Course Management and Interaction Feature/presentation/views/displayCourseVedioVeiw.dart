@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/DisplayVediRequiresEntity.dart';
@@ -18,9 +19,9 @@ class Displaycoursevedioveiw extends StatelessWidget {
       key: Variables.DisplaycoursevedioveiwScaffoldKey,
       appBar: CustomAppBar(
           appBartitle: displayVedioRequiresEntity.vedioEntity.title),
-      body: DisplaycoursevedioveiwBody(
-        vedio: displayVedioRequiresEntity.vedioEntity,
-        courseSectionsList: displayVedioRequiresEntity.sections,
+      body: Provider.value(
+        value: displayVedioRequiresEntity,
+        child: const DisplaycoursevedioveiwBody(),
       ),
     );
   }

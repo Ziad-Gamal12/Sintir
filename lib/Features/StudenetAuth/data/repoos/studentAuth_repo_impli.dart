@@ -9,7 +9,6 @@ import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/services/DateBaseService.dart';
 import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
-import 'package:sintir/Core/services/sqfliteServices.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/StudenetAuth/data/model/studentAuth_model.dart';
 import 'package:sintir/Features/StudenetAuth/domain/entities/studentEntity.dart';
@@ -18,11 +17,8 @@ import 'package:sintir/Features/StudenetAuth/domain/repos/studentAuth_repo.dart'
 class StudentauthRepoImpli implements StudentauthRepo {
   final firebaseAuthService firebaseAuth;
   final Datebaseservice datebaseservice;
-  final Sqfliteservices sqfliteservices;
   StudentauthRepoImpli(
-      {required this.sqfliteservices,
-      required this.firebaseAuth,
-      required this.datebaseservice});
+      {required this.firebaseAuth, required this.datebaseservice});
   @override
   Future<Either<Failure, void>> createUserWithEmailAndPassword(
       {required Studententity studentEntity, required String password}) async {
@@ -43,7 +39,6 @@ class StudentauthRepoImpli implements StudentauthRepo {
             data: studententity.toMap(),
             docId: user.uid,
             key: BackendEndpoints.addStudentDataCollectionName);
-        await saveStudentData(studententity: studentEntity);
         return right(null);
       } else {
         deleteUser(user: user);
@@ -69,10 +64,6 @@ class StudentauthRepoImpli implements StudentauthRepo {
           key: BackendEndpoints.checkIsStudentExistCollectionName,
           docId: user.uid);
       if (isExists) {
-        Studententity studententity = await getStudentData(
-            docId: user.uid,
-            key: BackendEndpoints.getStudentDataCollectionName);
-        await saveStudentData(studententity: studententity);
         await shared_preferences_Services.stringSetter(
             value: "stundent", key: BackendEndpoints.userKind);
         return right(null);
@@ -105,15 +96,10 @@ class StudentauthRepoImpli implements StudentauthRepo {
             data: studentauthmodel.toMap(),
             docId: user.uid,
             key: BackendEndpoints.addStudentDataCollectionName);
-        await saveStudentData(studententity: studentauthmodel.toEntity());
         await shared_preferences_Services.stringSetter(
             value: "stundent", key: BackendEndpoints.userKind);
         return right(null);
       } else {
-        var studententity = await getStudentData(
-            docId: user.uid,
-            key: BackendEndpoints.getStudentDataCollectionName);
-        await saveStudentData(studententity: studententity);
         await shared_preferences_Services.stringSetter(
             value: "stundent", key: BackendEndpoints.userKind);
 
@@ -148,16 +134,11 @@ class StudentauthRepoImpli implements StudentauthRepo {
             data: studentauthmodel.toMap(),
             docId: user.uid,
             key: BackendEndpoints.addStudentDataCollectionName);
-        await saveStudentData(studententity: studentauthmodel.toEntity());
         await shared_preferences_Services.stringSetter(
             value: "stundent", key: BackendEndpoints.userKind);
 
         return right(null);
       } else {
-        var studententity = await getStudentData(
-            docId: user.uid,
-            key: BackendEndpoints.getStudentDataCollectionName);
-        saveStudentData(studententity: studententity);
         await shared_preferences_Services.stringSetter(
             value: "stundent", key: BackendEndpoints.userKind);
 
@@ -192,16 +173,11 @@ class StudentauthRepoImpli implements StudentauthRepo {
             data: studentauthmodel.toMap(),
             docId: user.uid,
             key: BackendEndpoints.addStudentDataCollectionName);
-        await saveStudentData(studententity: studentauthmodel.toEntity());
         await shared_preferences_Services.stringSetter(
             value: "stundent", key: BackendEndpoints.userKind);
 
         return right(null);
       } else {
-        var studententity = await getStudentData(
-            docId: user.uid,
-            key: BackendEndpoints.getStudentDataCollectionName);
-        saveStudentData(studententity: studententity);
         await shared_preferences_Services.stringSetter(
             value: "stundent", key: BackendEndpoints.userKind);
 
@@ -239,20 +215,5 @@ class StudentauthRepoImpli implements StudentauthRepo {
       required String docId,
       required String key}) async {
     await datebaseservice.setData(data: data, docId: docId, key: key);
-  }
-
-  @override
-  Future<Studententity> getStudentData(
-      {required String docId, required String key}) async {
-    final data = await datebaseservice.getData(key: key, docId: docId);
-    return StudentauthModel.fromJson(data: data).toEntity();
-  }
-
-  @override
-  Future<void> saveStudentData({required Studententity studententity}) async {
-    await sqfliteservices.insertData(
-        tableName: BackendEndpoints.setStudentDataTableName,
-        data:
-            StudentauthModel.fromEntity(studententity: studententity).toMap());
   }
 }

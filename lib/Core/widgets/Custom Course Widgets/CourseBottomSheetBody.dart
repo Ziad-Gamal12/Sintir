@@ -24,7 +24,7 @@ class CourseBottomSheetBody extends StatelessWidget {
             height: 20,
           ),
           CourseBottomSheetHeader(
-            courseContentCreater: course.contentcreaterentity,
+            courseContentCreater: course.contentcreaterentity!,
           ),
           const SizedBox(
             height: 10,

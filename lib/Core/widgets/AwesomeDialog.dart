@@ -9,6 +9,7 @@ AwesomeDialog errordialog(context, String? error) {
       dialogType: DialogType.error,
       animType: AnimType.bottomSlide,
       title: 'خطأ',
+      btnOkText: 'حسنا',
       desc: error,
       btnOkOnPress: () {},
       btnOkColor: Colors.red);
@@ -23,6 +24,7 @@ AwesomeDialog successdialog(
       dialogType: DialogType.success,
       animType: AnimType.bottomSlide,
       title: 'نجاح',
+      btnOkText: 'حسنا',
       desc: SuccessMessage,
       btnOkOnPress: btnOkOnPress,
       btnOkColor: Colors.green);
@@ -35,6 +37,7 @@ AwesomeDialog warningdialog(context, String? WarningMessage) {
       animType: AnimType.bottomSlide,
       title: 'تحذير',
       desc: WarningMessage,
+      btnOkText: 'حسنا',
       btnOkOnPress: () {},
       btnOkColor: Colors.yellow);
 }

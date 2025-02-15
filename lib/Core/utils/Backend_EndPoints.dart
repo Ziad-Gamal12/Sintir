@@ -6,6 +6,12 @@ class BackendEndpoints {
   static String addStudentDataCollectionName = "Students";
   static String setStudentDataTableName = "Students";
   static String setTeacherDataTableName = "Teachers";
+  static String addCourseToCoursesCollection = "Courses";
+  static String getRecentCoursesCollection = "Courses";
+  static String addCourseToTeacherSubCollection = "Courses";
+  static String coursePublishedState = "Published";
+  static String coursePendingState = "Pending";
+  static String coursedeclinedState = "Declined";
   static String userKind = "kind";
   static String checkIsTeacherExistCollectionName = "Teachers";
   static String vedioType = "Vedio";

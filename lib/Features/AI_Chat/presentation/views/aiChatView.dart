@@ -10,7 +10,7 @@ class Aichatview extends StatelessWidget {
     return Scaffold(
       appBar: const CustomAppBar(appBartitle: "المساعد الألى"),
       body: SafeArea(
-        child: AichatviewBody(),
+        child: AiChatViewBody(),
       ),
     );
   }

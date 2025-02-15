@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 class CoursSectionsListItemEntity {
   final String title, subtitle;
   final List items;

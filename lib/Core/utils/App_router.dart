@@ -30,7 +30,6 @@ import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignInView
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignUpView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/teacherTermsAndConditionsView.dart';
 import 'package:sintir/Features/TeacherProfile/presentation/views/TeacherProfileView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseFirstContentView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
 import 'package:sintir/Features/tasks/presentation/views/TasksView.dart';
@@ -209,12 +208,6 @@ class App_router {
         path: Addcourseview.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const Addcourseview();
-        },
-      ),
-      GoRoute(
-        path: Addcoursefirstcontentview.routeName,
-        builder: (BuildContext context, GoRouterState state) {
-          return const Addcoursefirstcontentview();
         },
       ),
     ],

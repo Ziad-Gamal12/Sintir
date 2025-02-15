@@ -14,11 +14,8 @@ abstract class StudentauthRepo {
       required String key});
   Future<Either<Failure, void>> sginInWithEmailAndPasswoed(
       {required String email, required String password});
-  Future<Studententity> getStudentData(
-      {required String docId, required String key});
   Future<Either<Failure, void>> signinWithGoogle();
   Future<Either<Failure, void>> signinWithFaceBook();
   Future<Either<Failure, void>> signinWithApple();
   Future<void> deleteUser({required User? user});
-  Future<void> saveStudentData({required Studententity studententity});
 }

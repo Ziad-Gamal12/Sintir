@@ -6,7 +6,7 @@ import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
-import 'package:sintir/Features/TeacherAuth/Domain/Entities/Teacher_Entity.dart';
+import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/manager/TeacherSignUP/teacher_sign_up_cubit.dart';
 import 'package:sintir/constant.dart';
 

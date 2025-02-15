@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 
-import 'package:sintir/Features/TeacherAuth/Domain/Entities/Teacher_Entity.dart';
+import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
 
 class Teachermodel {
   final String firstName;
@@ -76,6 +76,7 @@ class Teachermodel {
 
   teacherEntity toEntity() {
     return teacherEntity(
+      uid: uid,
       firstName: firstName,
       lastName: lastName,
       email: email,

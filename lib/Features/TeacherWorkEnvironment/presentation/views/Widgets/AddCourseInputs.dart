@@ -27,6 +27,20 @@ class AddCourseInputs extends StatelessWidget {
           height: 10,
         ),
         Customteaxtfield(
+            hintText: "يرجى كتابه كود الدورة هنا ...",
+            obscureText: false,
+            controller: Variables.AddCourseCourseCodeController,
+            textInputType: TextInputType.text,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "ادخل كود الدورة";
+              }
+              return null;
+            }),
+        const SizedBox(
+          height: 10,
+        ),
+        Customteaxtfield(
             hintText: "يرجى تقديم وصف مختصر للأهداف الرئيسية للدورة..",
             obscureText: false,
             controller: Variables.AddCourseCourseDescriptionController,
@@ -91,7 +105,7 @@ class AddCourseInputs extends StatelessWidget {
                   Customteaxtfield(
                       hintText: "السعر بالجنية المصرى",
                       obscureText: false,
-                      controller: Variables.AddCourseCourseLevelController,
+                      controller: Variables.AddCourseCoursePriceController,
                       textInputType: TextInputType.text,
                       validator: (value) {
                         if (value!.isEmpty) {

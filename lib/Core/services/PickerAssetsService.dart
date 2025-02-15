@@ -6,9 +6,19 @@ import 'package:image_picker/image_picker.dart';
 
 class Pickerassetsservice {
   final ImagePicker picker = ImagePicker();
-  Future<File> getImage({required ImageSource source}) async {
+  Future<File?> getImage({required ImageSource source}) async {
     final pickedFile = await picker.pickImage(source: source);
-    File file = File(pickedFile!.path);
+    if (pickedFile == null) return null;
+    File file = File(pickedFile.path);
+    return file;
+  }
+
+  Future<File?> getVideo({required ImageSource source}) async {
+    final pickedFile = await picker.pickVideo(
+      source: source,
+    );
+    if (pickedFile == null) return null;
+    File file = File(pickedFile.path);
     return file;
   }
 }

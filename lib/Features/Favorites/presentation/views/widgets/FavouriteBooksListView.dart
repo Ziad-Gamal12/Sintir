@@ -7,7 +7,7 @@ class Favouritebookslistview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.sizeOf(context).height * .3,
+      height: MediaQuery.sizeOf(context).height * .27,
       child: ListView.builder(
           padding: const EdgeInsets.only(right: 11),
           scrollDirection: Axis.horizontal,
@@ -15,7 +15,7 @@ class Favouritebookslistview extends StatelessWidget {
             return const Padding(
               padding: EdgeInsets.symmetric(horizontal: 5),
               child: AspectRatio(
-                  aspectRatio: 137 / 200,
+                  aspectRatio: 115 / 170,
                   child: Csutomfavoritebooklistviewitem()),
             );
           }),
