@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
@@ -34,13 +36,23 @@ class CourseBottomSheetBody extends StatelessWidget {
           ),
           const Spacer(),
           Custombutton(
+              text: "استكشاف المحتوى",
+              color: Colors.white,
+              textColor: Colors.black,
+              side: const BorderSide(width: 1, color: Colors.black),
+              onPressed: () {
+                log(course.coursSectionsListItemEntity!.length.toString());
+                GoRouter.of(context)
+                    .push(CourseIntroductionView.routeName, extra: course);
+              }),
+          const SizedBox(
+            height: 10,
+          ),
+          Custombutton(
               text: "أشترك الأن",
               color: KSecondaryColor,
               textColor: Colors.white,
-              onPressed: () {
-                GoRouter.of(context)
-                    .push(CourseIntroductionView.routeName, extra: course);
-              })
+              onPressed: () {})
         ],
       ),
     );

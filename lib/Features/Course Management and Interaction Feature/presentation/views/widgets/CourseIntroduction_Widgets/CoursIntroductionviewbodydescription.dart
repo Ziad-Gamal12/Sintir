@@ -12,6 +12,7 @@ class CoursIntroductionviewbodydescription extends StatelessWidget {
   Widget build(BuildContext context) {
     CourseEntity course = context.read<CourseEntity>();
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           "الوصف",
@@ -24,7 +25,7 @@ class CoursIntroductionviewbodydescription extends StatelessWidget {
           course.description,
           style:
               AppTextStyles.regular10.copyWith(color: const Color(0xff818181)),
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.start,
         )
       ],
     );

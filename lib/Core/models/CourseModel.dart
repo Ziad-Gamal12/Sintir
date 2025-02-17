@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/models/contentCreaterModel.dart';
 import 'package:sintir/Core/models/subscripersIDSModel.dart';
@@ -13,6 +14,8 @@ class Coursemodel {
   final List coursSectionsListItemEntity;
   final List coursefedbackItemEntity;
   final List courseReports;
+  final int subscripersCount;
+
   Coursemodel(
       {required this.id,
       required this.posterUrl,
@@ -22,6 +25,7 @@ class Coursemodel {
       required this.language,
       required this.state,
       required this.subscripersIDS,
+      required this.subscripersCount,
       required this.postedDate,
       required this.contentcreaterentity,
       required this.coursSectionsListItemEntity,
@@ -30,6 +34,7 @@ class Coursemodel {
 
   factory Coursemodel.fromEntity({required CourseEntity courseEntity}) {
     return Coursemodel(
+      subscripersCount: courseEntity.subscripersCount,
       id: courseEntity.id,
       posterUrl: courseEntity.posterUrl ?? "",
       title: courseEntity.title,
@@ -75,10 +80,11 @@ class Coursemodel {
       price: json['price'],
       language: json['language'],
       state: json['state'],
+      subscripersCount: json['subscripersCount'],
       subscripersIDS: json['subscripersIDS']
           .map((e) => Subscripersidsmodel.fromJson(e).toJson())
           .toList(),
-      postedDate: json['postedDate'],
+      postedDate: (json['postedDate'] as Timestamp).toDate(),
       contentcreaterentity: json['contentcreaterentity'],
       coursSectionsListItemEntity: (json['coursSectionsListItemEntity'])
           .map((e) => Courssectionslistitemsmodel.fromJson(e).toJson())
@@ -93,6 +99,7 @@ class Coursemodel {
   }
   CourseEntity toEntity() {
     return CourseEntity(
+      subscripersCount: subscripersCount,
       id: id,
       posterUrl: posterUrl,
       title: title,
@@ -132,7 +139,8 @@ class Coursemodel {
       'subscripersIDS': subscripersIDS,
       'coursSectionsListItemEntity': coursSectionsListItemEntity,
       'coursefedbackItemEntity': coursefedbackItemEntity,
-      'courseReports': courseReports
+      'courseReports': courseReports,
+      'subscripersCount': subscripersCount
     };
   }
 }

@@ -20,7 +20,7 @@ class Homeview extends StatelessWidget {
       child: Scaffold(
         key: Variables.HomeViewScaffoldKey,
         endDrawer: const Customdrawer(),
-        body: SafeArea(child: Homeview_Body()),
+        body: const SafeArea(child: Homeview_Body()),
       ),
     );
   }

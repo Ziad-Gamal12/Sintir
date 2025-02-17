@@ -9,10 +9,18 @@ class GetCoursesCubit extends Cubit<GetCoursesState> {
   GetCoursesCubit({required this.coursesrepo}) : super(GetCoursesInitial());
   final Coursesrepo coursesrepo;
   getRecentCourses() async {
-    emit(GetCoursesloading());
+    emit(GetCoursesLoading());
     final result = await coursesrepo.getRecentCourses();
     result.fold(
         (failure) => emit(GetCoursesFailure(errmessage: failure.message)),
-        (courses) => emit(GetCoursesSuccess(courses: courses)));
+        (courses) => emit(GetRecentCoursesSuccess(courses: courses)));
+  }
+
+  getPopularCourses() async {
+    emit(GetCoursesLoading());
+    final result = await coursesrepo.getPopularCourses();
+    result.fold(
+        (failure) => emit(GetCoursesFailure(errmessage: failure.message)),
+        (courses) => emit(GetPopularCoursesSuccess(courses: courses)));
   }
 }

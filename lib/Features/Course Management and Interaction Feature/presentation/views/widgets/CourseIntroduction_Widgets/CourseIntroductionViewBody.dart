@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseContentListView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/CoursIntroductionviewbodydescription.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/CustomCourseIntroductionViewBodyHeader.dart';
@@ -41,10 +42,19 @@ class CourseIntroductionViewBody extends StatelessWidget {
               height: 15,
             ),
           ),
-          CourseContentListView(
-            courseSectionsEntity:
-                context.read<CourseEntity>().coursSectionsListItemEntity!,
-          )
+          if (context.read<CourseEntity>().coursSectionsListItemEntity!.isEmpty)
+            SliverToBoxAdapter(
+              child: Center(
+                  child: Text(
+                "سيتم اضافة المحتوى قريبا ⌛️",
+                style: AppTextStyles.bold24.copyWith(color: Colors.black),
+              )),
+            )
+          else
+            CourseContentListView(
+              courseSectionsEntity:
+                  context.read<CourseEntity>().coursSectionsListItemEntity!,
+            )
         ],
       ),
     );

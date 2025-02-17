@@ -8,6 +8,8 @@ class BackendEndpoints {
   static String setTeacherDataTableName = "Teachers";
   static String addCourseToCoursesCollection = "Courses";
   static String getRecentCoursesCollection = "Courses";
+  static String getPopularCoursesCollection = "Courses";
+
   static String addCourseToTeacherSubCollection = "Courses";
   static String coursePublishedState = "Published";
   static String coursePendingState = "Pending";

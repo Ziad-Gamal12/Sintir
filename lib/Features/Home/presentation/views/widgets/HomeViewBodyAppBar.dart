@@ -43,10 +43,13 @@ class HomeViewBodyAppBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Image.asset(
-              Assets.assetsImagesNotificationIcon,
-              height: 25,
-              width: 25,
+            InkWell(
+              onTap: () {},
+              child: Image.asset(
+                Assets.assetsImagesNotificationIcon,
+                height: 25,
+                width: 25,
+              ),
             ),
             const SizedBox(
               width: 15,

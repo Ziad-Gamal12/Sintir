@@ -86,6 +86,7 @@ abstract class Variables {
       TextEditingController();
 
   static CourseEntity courseEntity = CourseEntity(
+      subscripersCount: 0,
       state: BackendEndpoints.coursePublishedState,
       id: "12345567",
       posterUrl:

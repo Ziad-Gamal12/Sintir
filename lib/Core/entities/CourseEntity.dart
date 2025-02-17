@@ -13,6 +13,7 @@ class CourseEntity {
   List<CoursSectionsListItemEntity>? coursSectionsListItemEntity;
   final List<CoursefedbackItemEntity> coursefedbackItemEntity;
   final List<Coursereportsitementity> courseReports;
+  final int subscripersCount;
 
   CourseEntity(
       {required this.id,
@@ -23,6 +24,7 @@ class CourseEntity {
       required this.price,
       required this.language,
       required this.subscripersIDS,
+      required this.subscripersCount,
       required this.postedDate,
       this.contentcreaterentity,
       this.coursSectionsListItemEntity,

@@ -30,9 +30,7 @@ class Sintir extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => UserCubit(
-        userrepo: getIt.get<Userrepo>(),
-      )..getUserData(),
+      create: (context) => UserCubit(userrepo: getIt<Userrepo>()),
       child: MaterialApp.router(
         theme: ThemeData(
             fontFamily: "Cairo",

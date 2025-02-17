@@ -9,12 +9,14 @@ class Custombutton extends StatelessWidget {
   final Color textColor;
   final VoidCallback onPressed;
   BorderRadiusGeometry? borderRadius;
+  BorderSide? side;
   Widget? child;
   Custombutton({
     Key? key,
     required this.text,
     this.borderRadius,
     this.child,
+    this.side,
     required this.color,
     required this.textColor,
     required this.onPressed,
@@ -26,6 +28,7 @@ class Custombutton extends StatelessWidget {
       height: 50,
       minWidth: double.infinity,
       shape: RoundedRectangleBorder(
+        side: side ?? BorderSide.none,
         borderRadius:
             borderRadius == null ? BorderRadius.circular(16) : borderRadius!,
       ),

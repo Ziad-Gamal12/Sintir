@@ -20,19 +20,18 @@ class Userrepoimpli implements Userrepo {
   @override
   Future<Either<Failure, UserEntity>> getUserData() async {
     try {
-      List<Map<String, dynamic>>? data = await datebaseservicel.getData(
+      Map<String, dynamic>? data = await datebaseservicel.getData(
           key: getCollectionName(), docId: getDocId());
 
+      if (data == null) return left(ServerFailure(message: "لا يوجد مستخدم"));
       if (shared_preferences_Services.stringGetter(
               key: BackendEndpoints.userKind) ==
           "teacher") {
-        teacherEntity? teacherentity =
-            Teachermodel.fromMap(data == null ? {} : data[0]).toEntity();
+        teacherEntity? teacherentity = Teachermodel.fromMap(data).toEntity();
         return right(UserEntity(teacher: teacherentity));
       } else {
         Studententity? studentEntity =
-            StudentauthModel.fromJson(data: data == null ? {} : data[0])
-                .toEntity();
+            StudentauthModel.fromJson(data: data).toEntity();
         return right(UserEntity(student: studentEntity));
       }
     } catch (e) {

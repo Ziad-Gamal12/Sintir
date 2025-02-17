@@ -31,21 +31,28 @@ class CustomAddCourseActionButton extends StatelessWidget {
             if (formKey.currentState!.validate()) {
               if (context.read<AddCourseCubitCubit>().coursePosterImage !=
                   null) {
-                CourseEntity course = CourseEntity(
-                    id: Variables.AddCourseCourseCodeController.text,
-                    state: BackendEndpoints.coursePendingState,
-                    title: Variables.AddCourseCourseNameController.text,
-                    description:
-                        Variables.AddCourseCourseDescriptionController.text,
-                    price: Variables.AddCourseCoursePriceController.text,
-                    language: Variables.AddCourseCourseLanguageController.text,
-                    subscripersIDS: [],
-                    postedDate: DateTime.now(),
-                    coursefedbackItemEntity: [],
-                    courseReports: []);
-                context.read<AddCourseCubitCubit>().addCourse(
-                    courseEntity: course,
-                    teacherentity: context.read<UserCubit>().teacherentity);
+                if (context.read<UserCubit>().teacherentity != null) {
+                  CourseEntity course = CourseEntity(
+                      subscripersCount: 0,
+                      id: Variables.AddCourseCourseCodeController.text,
+                      state: BackendEndpoints.coursePendingState,
+                      title: Variables.AddCourseCourseNameController.text,
+                      description:
+                          Variables.AddCourseCourseDescriptionController.text,
+                      price: Variables.AddCourseCoursePriceController.text,
+                      language:
+                          Variables.AddCourseCourseLanguageController.text,
+                      subscripersIDS: [],
+                      postedDate: DateTime.now(),
+                      coursefedbackItemEntity: [],
+                      courseReports: []);
+                  context.read<AddCourseCubitCubit>().addCourse(
+                      courseEntity: course,
+                      teacherentity: context.read<UserCubit>().teacherentity);
+                } else {
+                  errordialog(context, "حدث مشكلة فى جلب بياناتك!حاول مره أخرى")
+                      .show();
+                }
               } else {
                 errordialog(context, "يرجى اضافة صورة للدورة").show();
               }

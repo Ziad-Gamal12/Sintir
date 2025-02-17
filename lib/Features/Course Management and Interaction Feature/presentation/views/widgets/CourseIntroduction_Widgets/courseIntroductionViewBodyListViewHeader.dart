@@ -13,7 +13,7 @@ class courseIntroductionViewBodyListViewHeader extends StatelessWidget {
     return Text(
       "المحتوى",
       style: AppTextStyles.semiBold20.copyWith(color: Colors.black),
-      textAlign: TextAlign.center,
+      textAlign: TextAlign.start,
     );
   }
 }

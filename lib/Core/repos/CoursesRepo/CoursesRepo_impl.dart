@@ -57,13 +57,41 @@ class CoursesrepoImpl implements Coursesrepo {
   @override
   Future<Either<Failure, List<CourseEntity>>> getRecentCourses() async {
     try {
-      List data = await datebaseservice.getData(
+      List? data = await datebaseservice.getData(
+        query: {
+          "state": BackendEndpoints.coursePublishedState,
+          "orderBy": "postedDate"
+        },
         key: BackendEndpoints.getRecentCoursesCollection,
       );
-
+      if (data == null) return right([]);
       List<CourseEntity> courses =
           data.map((e) => Coursemodel.fromJson(e).toEntity()).toList();
       return right(courses);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      log("Exception from CoursesrepoImpl.getRecentCourses in catch With Firebase Exception: ${e.toString()}");
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CourseEntity>>> getPopularCourses() async {
+    try {
+      List data = await datebaseservice.getData(
+        query: {
+          "state": BackendEndpoints.coursePublishedState,
+          "orderBy": "subscripersCount",
+          "limit": 10
+        },
+        key: BackendEndpoints.getPopularCoursesCollection,
+      );
+      List<CourseEntity> courses =
+          data.map((e) => Coursemodel.fromJson(e).toEntity()).toList();
+      return right(courses);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
     } catch (e) {
       log("Exception from CoursesrepoImpl.getRecentCourses in catch With Firebase Exception: ${e.toString()}");
       return left(ServerFailure(message: "حدث خطأ ما"));
