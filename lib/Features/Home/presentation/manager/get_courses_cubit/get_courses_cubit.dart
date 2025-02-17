@@ -16,6 +16,13 @@ class GetCoursesCubit extends Cubit<GetCoursesState> {
         (courses) => emit(GetRecentCoursesSuccess(courses: courses)));
   }
 
+  handleRefresh() async {
+    Future.delayed(const Duration(seconds: 2), () {
+      getRecentCourses();
+      getPopularCourses();
+    });
+  }
+
   getPopularCourses() async {
     emit(GetCoursesLoading());
     final result = await coursesrepo.getPopularCourses();

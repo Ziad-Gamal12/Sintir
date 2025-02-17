@@ -6,6 +6,7 @@ import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomSearchTextField.dart';
+import 'package:sintir/Core/widgets/customRefreshWidget.dart';
 import 'package:sintir/Core/widgets/errorWidget.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_courses_cubit/get_courses_cubit.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/HomeViewBodyAppBar.dart';
@@ -38,82 +39,88 @@ class _Homeview_BodyState extends State<Homeview_Body> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<GetCoursesCubit, GetCoursesState>(
-        builder: (context, state) {
-      if (state is GetCoursesFailure) {
-        return Errorwidget(
-          errMessage: state.errmessage,
-        );
-      }
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
-        child: Skeletonizer(
-          enabled: state is GetCoursesLoading,
-          child: CustomScrollView(
-            slivers: [
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 20,
-                ),
-              ),
-              SliverToBoxAdapter(
-                  child: Column(children: [
-                const HomeViewBodyAppBar(),
-                const SizedBox(
-                  height: 10,
-                ),
-                CustomSearchTextField(
-                  controller: homeSearchController,
-                ),
-              ])),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 20,
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Column(children: [
-                  CustomListORGridTextHeader(
-                    text: "ألاكثر مشاهده",
+    return Customrefreshwidget(
+      onRefresh: () async {
+        context.read<GetCoursesCubit>().handleRefresh();
+      },
+      child: BlocConsumer<GetCoursesCubit, GetCoursesState>(
+          builder: (context, state) {
+        if (state is GetCoursesFailure) {
+          return Errorwidget(
+            errMessage: state.errmessage,
+          );
+        }
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+          child: Skeletonizer(
+            enabled: state is GetCoursesLoading,
+            child: CustomScrollView(
+              slivers: [
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 20,
                   ),
+                ),
+                SliverToBoxAdapter(
+                    child: Column(children: [
+                  const HomeViewBodyAppBar(),
                   const SizedBox(
                     height: 10,
                   ),
-                  Transform.translate(
-                      offset: const Offset(16, 0),
-                      child: BestsellercourseListview(courses: popularCourses)),
-                ]),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 20,
+                  CustomSearchTextField(
+                    controller: homeSearchController,
+                  ),
+                ])),
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 20,
+                  ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: CustomListORGridTextHeader(
-                  text: "أحدث الكورسات",
+                SliverToBoxAdapter(
+                  child: Column(children: [
+                    CustomListORGridTextHeader(
+                      text: "ألاكثر مشاهده",
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Transform.translate(
+                        offset: const Offset(16, 0),
+                        child:
+                            BestsellercourseListview(courses: popularCourses)),
+                  ]),
                 ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 10,
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 20,
+                  ),
                 ),
-              ),
-              Leatestcoursesglideview(
-                courses: recentCourses,
-              ),
-            ],
+                SliverToBoxAdapter(
+                  child: CustomListORGridTextHeader(
+                    text: "أحدث الكورسات",
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 10,
+                  ),
+                ),
+                Leatestcoursesglideview(
+                  courses: recentCourses,
+                ),
+              ],
+            ),
           ),
-        ),
-      );
-    }, listener: (context, state) {
-      if (state is GetCoursesLoading) {
-        isLoading = true;
-      } else if (state is GetRecentCoursesSuccess) {
-        recentCourses = state.courses;
-      } else if (state is GetPopularCoursesSuccess) {
-        popularCourses = state.courses;
-      }
-    });
+        );
+      }, listener: (context, state) {
+        if (state is GetCoursesLoading) {
+          isLoading = true;
+        } else if (state is GetRecentCoursesSuccess) {
+          recentCourses = state.courses;
+        } else if (state is GetPopularCoursesSuccess) {
+          popularCourses = state.courses;
+        }
+      }),
+    );
   }
 }
