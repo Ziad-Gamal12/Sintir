@@ -10,4 +10,5 @@ abstract class Coursesrepo {
   Future<Either<Failure, List<CourseEntity>>> getPopularCourses();
 
   Future<Either<Failure, String>> uplaodFile({required File file});
+  Future<Either<Failure, List<CourseEntity>>> getMyCourses();
 }

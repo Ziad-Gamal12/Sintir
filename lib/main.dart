@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
+import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/repos/UserRepos.dart/userRepo.dart';
 import 'package:sintir/Core/services/BlocObserver.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
@@ -30,7 +31,8 @@ class Sintir extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => UserCubit(userrepo: getIt<Userrepo>()),
+      create: (context) => UserCubit(
+          userrepo: getIt<Userrepo>(), coursesrepo: getIt<Coursesrepo>()),
       child: MaterialApp.router(
         theme: ThemeData(
             fontFamily: "Cairo",

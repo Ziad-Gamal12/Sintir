@@ -5,8 +5,8 @@ import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
-class Errorwidget extends StatelessWidget {
-  Errorwidget({super.key, this.errMessage});
+class ScreenErrorwidget extends StatelessWidget {
+  ScreenErrorwidget({super.key, this.errMessage});
   String? errMessage;
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,10 @@ class Errorwidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SvgPicture.asset(Assets.assetsImagesErrorIcon),
+        SvgPicture.asset(
+          Assets.assetsImagesErrorIcon,
+          fit: BoxFit.cover,
+        ),
         errMessage != null
             ? Text(errMessage!,
                 textAlign: TextAlign.center,

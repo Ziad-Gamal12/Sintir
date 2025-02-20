@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
+import 'package:sintir/Features/TeacherProfile/data/models/customSocialLinksItemModel.dart';
 
 class Teachermodel {
   final String firstName;
@@ -50,7 +51,9 @@ class Teachermodel {
       workExperience: teacherentity.workExperience,
       gender: teacherentity.gender,
       state: teacherentity.state,
-      socialLinks: teacherentity.socialLinks,
+      socialLinks: teacherentity.socialLinks
+          .map((e) => Customsociallinksitemmodel.fromEnity(e).toJson())
+          .toList(),
       kind: teacherentity.kind,
       joinedDate: teacherentity.joinedDate,
     );
@@ -87,7 +90,9 @@ class Teachermodel {
       workExperience: workExperience,
       gender: gender,
       state: state,
-      socialLinks: socialLinks,
+      socialLinks: socialLinks
+          .map((e) => Customsociallinksitemmodel.fromJson(e).toEntity())
+          .toList(),
       kind: kind,
       joinedDate: joinedDate,
     );

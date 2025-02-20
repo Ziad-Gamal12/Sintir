@@ -1,5 +1,7 @@
 // ignore_for_file: file_names, camel_case_types
 
+import 'package:sintir/Features/TeacherProfile/domain/entities/customSocialLinksItemEntity.dart';
+
 class teacherEntity {
   String? uid;
   final String firstName;
@@ -12,7 +14,7 @@ class teacherEntity {
   final String gender;
   String? profilePicurl;
   final String state;
-  final List socialLinks;
+  final List<Customsociallinksitementity> socialLinks;
   final String kind; //teacher or Studednt
   final String joinedDate;
   teacherEntity(

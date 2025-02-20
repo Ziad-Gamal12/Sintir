@@ -13,3 +13,19 @@ final class GetUserDataFailed extends UserState {
 }
 
 final class GetUserDataLoading extends UserState {}
+
+final class GetMyCoursesInitial extends UserState {}
+
+final class GetMyCourseLoading extends UserState {}
+
+final class GetMyCourseFailure extends UserState {
+  final String errMessage;
+
+  GetMyCourseFailure({required this.errMessage});
+}
+
+final class GetMyCourseSuccess extends UserState {
+  final List<CourseEntity> courses;
+
+  GetMyCourseSuccess({required this.courses});
+}

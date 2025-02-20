@@ -130,10 +130,10 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
 
   @override
   Future getTeacherData({required String docId}) async {
-    List<Map<String, dynamic>>? data = await dataBaseService.getData(
+    Map<String, dynamic>? data = await dataBaseService.getData(
         key: BackendEndpoints.getTeacherDataCollectionName, docId: docId);
     if (data != null) {
-      teacherEntity teacherentity = Teachermodel.fromMap(data[0]).toEntity();
+      teacherEntity teacherentity = Teachermodel.fromMap(data).toEntity();
       return teacherentity;
     } else {
       null;

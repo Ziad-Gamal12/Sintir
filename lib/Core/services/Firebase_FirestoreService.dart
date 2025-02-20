@@ -53,11 +53,27 @@ class FirebaseFirestoreservice implements Datebaseservice {
 
   @override
   Future getData(
-      {required String key, String? docId, Map<String, dynamic>? query}) async {
+      {String? subCollectionKey,
+      String? subDocId,
+      required String key,
+      String? docId,
+      Map<String, dynamic>? query}) async {
     try {
       if (docId != null) {
-        var userEntity = await firestore.collection(key).doc(docId).get();
-        return userEntity.data() as Map<String, dynamic>;
+        var userEntity = firestore.collection(key).doc(docId);
+        if (subCollectionKey != null) {
+          var result = userEntity.collection(subCollectionKey);
+          if (subDocId != null) {
+            var docresult = result.doc(subDocId);
+            return docresult.get();
+          }
+          return await result
+              .get()
+              .then((e) => e.docs.map((e) => e.data()).toList());
+        } else {
+          var result = await userEntity.get();
+          return result.data() as Map<String, dynamic>;
+        }
       } else {
         Query queryData = firestore.collection(key);
         if (query != null) {

@@ -6,8 +6,8 @@ import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomSearchTextField.dart';
+import 'package:sintir/Core/widgets/ScreenErrorwidget.dart';
 import 'package:sintir/Core/widgets/customRefreshWidget.dart';
-import 'package:sintir/Core/widgets/errorWidget.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_courses_cubit/get_courses_cubit.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/HomeViewBodyAppBar.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/bestSellerCourse_ListView.dart';
@@ -28,8 +28,6 @@ class _Homeview_BodyState extends State<Homeview_Body> {
   void initState() {
     context.read<GetCoursesCubit>().getRecentCourses();
     context.read<GetCoursesCubit>().getPopularCourses();
-    context.read<UserCubit>().getUserData();
-
     super.initState();
   }
 
@@ -46,7 +44,7 @@ class _Homeview_BodyState extends State<Homeview_Body> {
       child: BlocConsumer<GetCoursesCubit, GetCoursesState>(
           builder: (context, state) {
         if (state is GetCoursesFailure) {
-          return Errorwidget(
+          return ScreenErrorwidget(
             errMessage: state.errmessage,
           );
         }
@@ -63,7 +61,10 @@ class _Homeview_BodyState extends State<Homeview_Body> {
                 ),
                 SliverToBoxAdapter(
                     child: Column(children: [
-                  const HomeViewBodyAppBar(),
+                  HomeViewBodyAppBar(
+                    teacher: context.read<UserCubit>().teacherentity,
+                    student: context.read<UserCubit>().studententity,
+                  ),
                   const SizedBox(
                     height: 10,
                   ),

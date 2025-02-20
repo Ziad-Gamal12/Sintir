@@ -1,14 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/StudentProfile/presentation/views/widgets/StudentprofileviewBody.dart';
 
-class Studentprofileview extends StatelessWidget {
+class Studentprofileview extends StatefulWidget {
   const Studentprofileview({super.key});
   static const routeName = '/Studentprofileview';
+
+  @override
+  State<Studentprofileview> createState() => _StudentprofileviewState();
+}
+
+class _StudentprofileviewState extends State<Studentprofileview> {
+  @override
+  void initState() {
+    context.read<UserCubit>().getUsersCourses();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: CustomAppBar(appBartitle: "الملف الشخصى"),
+    return Scaffold(
+      appBar: const CustomAppBar(appBartitle: "الملف الشخصى"),
       body: StudentprofileviewBody(),
     );
   }

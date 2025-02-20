@@ -10,7 +10,9 @@ class BackendEndpoints {
   static String getRecentCoursesCollection = "Courses";
   static String getPopularCoursesCollection = "Courses";
 
-  static String addCourseToTeacherSubCollection = "Courses";
+  static String addCourseToUserDocSubCollectioName = "Courses";
+  static String getCoursesfromUserDocSubCollectioName = "Courses";
+
   static String coursePublishedState = "Published";
   static String coursePendingState = "Pending";
   static String coursedeclinedState = "Declined";

@@ -1,5 +1,6 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, must_be_immutable
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -8,25 +9,35 @@ import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/StudenetAuth/domain/entities/studentEntity.dart';
 import 'package:sintir/Features/StudentProfile/presentation/views/studentProfileView.dart';
+import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
 import 'package:sintir/Features/TeacherProfile/presentation/views/TeacherProfileView.dart';
 import 'package:sintir/constant.dart';
-import 'package:svg_flutter/svg_flutter.dart';
 
 class HomeViewBodyAppBar extends StatelessWidget {
-  const HomeViewBodyAppBar({
-    super.key,
-  });
+  HomeViewBodyAppBar({super.key, this.student, this.teacher});
+  teacherEntity? teacher;
+  Studententity? student;
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: CircleAvatar(
+      leading: SizedBox(
+        width: 60,
         child: InkWell(
             onTap: () {
               profileNavigation(context);
             },
-            child: SvgPicture.asset(Assets.assetsImagesUserAvatar)),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(80),
+              child: CachedNetworkImage(
+                imageUrl: getProfilePic(),
+                height: 80,
+                width: 80,
+                fit: BoxFit.cover,
+              ),
+            )),
       ),
       title: Text.rich(TextSpan(children: [
         TextSpan(
@@ -34,7 +45,7 @@ class HomeViewBodyAppBar extends StatelessWidget {
           style: AppTextStyles.bold20Auto.copyWith(color: Colors.black),
         ),
         TextSpan(
-          text: "زياد",
+          text: getUserName(),
           style: AppTextStyles.bold20Auto.copyWith(color: KSecondaryColor),
         ),
       ])),
@@ -75,6 +86,26 @@ class HomeViewBodyAppBar extends StatelessWidget {
       GoRouter.of(context).push(Teacherprofileview.routeName);
     } else {
       GoRouter.of(context).push(Studentprofileview.routeName);
+    }
+  }
+
+  String getProfilePic() {
+    if (student != null) {
+      return student!.imageUrl;
+    } else if (teacher != null) {
+      return teacher!.profilePicurl!;
+    } else {
+      return "https://cdn-icons-png.flaticon.com/128/847/847969.png";
+    }
+  }
+
+  String getUserName() {
+    if (student != null) {
+      return student!.firstName;
+    } else if (teacher != null) {
+      return teacher!.firstName;
+    } else {
+      return "غير معروف";
     }
   }
 }

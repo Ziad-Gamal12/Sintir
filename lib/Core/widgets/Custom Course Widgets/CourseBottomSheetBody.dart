@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
@@ -19,8 +17,7 @@ class CourseBottomSheetBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 16, right: 16, bottom: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
         children: [
           const SizedBox(
             height: 20,
@@ -34,14 +31,13 @@ class CourseBottomSheetBody extends StatelessWidget {
           CourseBottomSheetCourseDetails(
             course: course,
           ),
-          const Spacer(),
+          const SizedBox(height: 50),
           Custombutton(
               text: "استكشاف المحتوى",
               color: Colors.white,
               textColor: Colors.black,
               side: const BorderSide(width: 1, color: Colors.black),
               onPressed: () {
-                log(course.coursSectionsListItemEntity!.length.toString());
                 GoRouter.of(context)
                     .push(CourseIntroductionView.routeName, extra: course);
               }),
