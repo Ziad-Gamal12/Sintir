@@ -5,8 +5,8 @@ import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/manager/AddCourseCubit/add_course_cubit.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseViewBody.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseCubit/add_course_cubit.dart';
 
 class Addcourseview extends StatefulWidget {
   const Addcourseview({super.key});

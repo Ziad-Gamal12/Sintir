@@ -7,7 +7,7 @@ import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/manager/AddCourseCubit/add_course_cubit.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseCubit/add_course_cubit.dart';
 import 'package:sintir/constant.dart';
 
 class CustomAddCourseActionButton extends StatelessWidget {

@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/manager/AddCourseCubit/add_course_cubit.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseInputs.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CustomAddCourseActionButton.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseCubit/add_course_cubit.dart';
 import 'package:sintir/constant.dart';
 
 class Addcourseviewbody extends StatelessWidget {

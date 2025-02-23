@@ -70,6 +70,14 @@ class Assets {
   /// assets/images/ChoosingStateStudentIcon.svg
   static const String assetsImagesChoosingStateStudentIcon = "assets/images/ChoosingStateStudentIcon.svg";
 
+  /// Assets for assetsImagesComplain
+  /// assets/images/complain.png
+  static const String assetsImagesComplain = "assets/images/complain.png";
+
+  /// Assets for assetsImagesContentManagement
+  /// assets/images/content-management.png
+  static const String assetsImagesContentManagement = "assets/images/content-management.png";
+
   /// Assets for assetsImagesCustomFileIcon
   /// assets/images/CustomFileIcon.svg
   static const String assetsImagesCustomFileIcon = "assets/images/CustomFileIcon.svg";
@@ -77,6 +85,10 @@ class Assets {
   /// Assets for assetsImagesEducationLevelSectionBooks
   /// assets/images/EducationLevelSectionBooks.png
   static const String assetsImagesEducationLevelSectionBooks = "assets/images/EducationLevelSectionBooks.png";
+
+  /// Assets for assetsImagesError
+  /// assets/images/error.png
+  static const String assetsImagesError = "assets/images/error.png";
 
   /// Assets for assetsImagesErrorIcon
   /// assets/images/errorIcon.svg
@@ -89,6 +101,10 @@ class Assets {
   /// Assets for assetsImagesFaceBookIcons
   /// assets/images/faceBookIcons.svg
   static const String assetsImagesFaceBookIcons = "assets/images/faceBookIcons.svg";
+
+  /// Assets for assetsImagesFeedback
+  /// assets/images/feedback.png
+  static const String assetsImagesFeedback = "assets/images/feedback.png";
 
   /// Assets for assetsImagesGoogle
   /// assets/images/google.svg
@@ -157,6 +173,10 @@ class Assets {
   /// Assets for assetsImagesStudentOnboardingone
   /// assets/images/StudentOnboardingone.svg
   static const String assetsImagesStudentOnboardingone = "assets/images/StudentOnboardingone.svg";
+
+  /// Assets for assetsImagesStudents
+  /// assets/images/students.png
+  static const String assetsImagesStudents = "assets/images/students.png";
 
   /// Assets for assetsImagesSuccessIcon
   /// assets/images/SuccessIcon.svg

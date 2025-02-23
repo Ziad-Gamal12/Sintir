@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/manager/AddCourseCubit/add_course_cubit.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseCubit/add_course_cubit.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class Addcourseposter extends StatelessWidget {
