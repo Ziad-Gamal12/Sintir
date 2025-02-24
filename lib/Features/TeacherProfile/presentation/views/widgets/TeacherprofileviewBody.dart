@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';

@@ -81,20 +81,12 @@ class Coursemodel {
       language: json['language'],
       state: json['state'],
       subscripersCount: json['subscripersCount'],
-      subscripersIDS: json['subscripersIDS']
-          .map((e) => Subscripersidsmodel.fromJson(e).toJson())
-          .toList(),
+      subscripersIDS: json['subscripersIDS'],
       postedDate: (json['postedDate'] as Timestamp).toDate(),
       contentcreaterentity: json['contentcreaterentity'],
-      coursSectionsListItemEntity: (json['coursSectionsListItemEntity'])
-          .map((e) => Courssectionslistitemsmodel.fromJson(e).toJson())
-          .toList(),
-      coursefedbackItemEntity: (json['coursefedbackItemEntity'])
-          .map((e) => Coursefedbacksmodel.fromJson(e).toJson())
-          .toList(),
-      courseReports: (json['courseReports'])
-          .map((e) => CoursereportsitemModel.fromJson(e).toJson())
-          .toList(),
+      coursSectionsListItemEntity: (json['coursSectionsListItemEntity']),
+      coursefedbackItemEntity: (json['coursefedbackItemEntity']),
+      courseReports: (json['courseReports']),
     );
   }
   CourseEntity toEntity() {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomMyCoursesGridHeader.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
@@ -10,8 +9,8 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/constant.dart';
 
 class TeacherWorkenvironmentviewBody extends StatelessWidget {
-  const TeacherWorkenvironmentviewBody({super.key});
-
+  const TeacherWorkenvironmentviewBody({super.key, required this.myCourses});
+  final List<CourseEntity> myCourses;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -57,7 +56,7 @@ class TeacherWorkenvironmentviewBody extends StatelessWidget {
             ),
           ),
           Custommycoursesslivergrideview(
-            courses: context.read<List<CourseEntity>>(),
+            courses: myCourses,
           )
         ],
       ),

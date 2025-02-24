@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
 
 class Coursefedbacksmodel {
@@ -27,7 +28,7 @@ class Coursefedbacksmodel {
       name: json["name"],
       fedBack: json["fedBack"],
       likesCount: json["likesCount"],
-      datePosted: DateTime.parse(json["datePosted"]),
+      datePosted: (json["datePosted"] as Timestamp).toDate(),
     );
   }
   CoursefedbackItemEntity toEntity() => CoursefedbackItemEntity(

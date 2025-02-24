@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/widgets/CustomContentListViewitem.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomContentListViewitem.dart';
 
 class CourseContentListView extends StatelessWidget {
   const CourseContentListView({

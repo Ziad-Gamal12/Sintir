@@ -2,9 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/CoursedetailsviewOptionitemEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailsSectionsPAgeViewItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailsViewRowOptions.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CoursedetailsReportspageviewitem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CoursedetailsStudentReviewspageviewitem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CoursedetailsStudentspageviewitem.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CustomCourseDetailsBodyCourse_Info.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CustomCourseDetails_OptionIte.dart';
 import 'package:sintir/constant.dart';
 
 class CoursedetailviewBody extends StatefulWidget {
@@ -17,9 +20,39 @@ class CoursedetailviewBody extends StatefulWidget {
 
 class _CoursedetailviewBodyState extends State<CoursedetailviewBody> {
   int courrentIndex = 0;
-  List<Widget> options = [];
+  late PageController pageController;
+  @override
+  void initState() {
+    pageController = PageController();
+    pageController.addListener(() {
+      courrentIndex = pageController.page!.toInt();
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<Widget> options = [
+      Coursedetailssectionspageviewitem(
+        courseSectionsEntity: widget.courseEntity.coursSectionsListItemEntity!,
+      ),
+      Coursedetailsstudentspageviewitem(
+        subscribers: widget.courseEntity.subscripersIDS,
+      ),
+      Coursedetailsstudentreviewspageviewitem(
+        reviews: widget.courseEntity.coursefedbackItemEntity,
+      ),
+      Coursedetailsreportspageviewitem(
+        reports: widget.courseEntity.courseReports,
+      ),
+    ];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
       child: CustomScrollView(
@@ -33,36 +66,19 @@ class _CoursedetailviewBodyState extends State<CoursedetailviewBody> {
               height: 20,
             ),
           ),
-          SliverToBoxAdapter(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: CoursedetailsviewOptionitemEntity.toList()
-                .asMap()
-                .entries
-                .map((e) {
-              return Expanded(
-                child: InkWell(
-                  onTap: () {
-                    courrentIndex = e.key;
-                    setState(() {});
-                  },
-                  child: CustomcoursedetailsOptionitem(
-                    item: e.value,
-                    isSelected: e.key == courrentIndex,
-                  ),
-                ),
-              );
-            }).toList(),
-          )),
+          CourseDetailsViewRowOptions(
+              pageController: pageController,
+              onChanged: (value) {
+                courrentIndex = value;
+                setState(() {});
+              },
+              courrentIndex: courrentIndex),
           SliverFillRemaining(
-            hasScrollBody: true,
-            child: PageView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: options.length,
-                itemBuilder: (context, index) {
-                  return options[index];
-                }),
-          )
+              hasScrollBody: true,
+              child: PageView(
+                  controller: pageController,
+                  scrollDirection: Axis.horizontal,
+                  children: options))
         ],
       ),
     );

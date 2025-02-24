@@ -86,6 +86,10 @@ class Assets {
   /// assets/images/EducationLevelSectionBooks.png
   static const String assetsImagesEducationLevelSectionBooks = "assets/images/EducationLevelSectionBooks.png";
 
+  /// Assets for assetsImagesEmptyBox
+  /// assets/images/empty-box.png
+  static const String assetsImagesEmptyBox = "assets/images/empty-box.png";
+
   /// Assets for assetsImagesError
   /// assets/images/error.png
   static const String assetsImagesError = "assets/images/error.png";
@@ -213,5 +217,9 @@ class Assets {
   /// Assets for assetsImagesVedioIcon
   /// assets/images/VedioIcon.svg
   static const String assetsImagesVedioIcon = "assets/images/VedioIcon.svg";
+
+  /// Assets for assetsImagesWarning
+  /// assets/images/warning.png
+  static const String assetsImagesWarning = "assets/images/warning.png";
 }
 
