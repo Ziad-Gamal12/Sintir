@@ -3,9 +3,9 @@
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionSolutionEntity.dart';
 
 class Coursetestquestionentity {
-  final String questionTitle;
-  final List<Coursetestquestionsolutionentity> solutions;
-  final bool isOpened;
+  String questionTitle;
+  List<Coursetestquestionsolutionentity> solutions;
+  bool isOpened;
   String? imageUrl;
   String? selectedSolution;
   Coursetestquestionentity(
@@ -14,4 +14,18 @@ class Coursetestquestionentity {
       required this.isOpened,
       this.imageUrl,
       this.selectedSolution = ""});
+
+  int index = 0;
+  addSolution(Coursetestquestionsolutionentity? solution) {
+    if (solution != null) {
+      solutions.add(solution);
+    }
+    index++;
+    solutions.add(
+        Coursetestquestionsolutionentity(answer: "$index", isCorrect: false));
+  }
+
+  removeSolution(Coursetestquestionsolutionentity solution) {
+    solutions.remove(solution);
+  }
 }

@@ -1,6 +1,6 @@
 class Coursetestquestionsolutionentity {
-  final String answer;
-  final bool isCorrect;
+  String answer;
+  bool isCorrect;
 
   Coursetestquestionsolutionentity(
       {required this.answer, required this.isCorrect});

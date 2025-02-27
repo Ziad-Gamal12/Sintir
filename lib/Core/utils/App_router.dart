@@ -30,6 +30,8 @@ import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignInView
 import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignUpView.dart';
 import 'package:sintir/Features/TeacherAuth/Presentation/views/teacherTermsAndConditionsView.dart';
 import 'package:sintir/Features/TeacherProfile/presentation/views/TeacherProfileView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionSQLView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/CourseDetailView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
@@ -219,6 +221,18 @@ class App_router {
           return Coursedetailview(
             courseEntity: state.extra as CourseEntity,
           );
+        },
+      ),
+      GoRoute(
+        path: Addcoursesectionview.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const Addcoursesectionview();
+        },
+      ),
+      GoRoute(
+        path: Addcoursesectionsqlview.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const Addcoursesectionsqlview();
         },
       ),
     ],

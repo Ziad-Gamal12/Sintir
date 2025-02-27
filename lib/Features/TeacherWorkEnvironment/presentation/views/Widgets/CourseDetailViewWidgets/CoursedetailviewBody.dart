@@ -2,12 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailsSectionsPAgeViewItem.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailsViewRowOptions.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CoursedetailsReportspageviewitem.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CoursedetailsStudentReviewspageviewitem.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CoursedetailsStudentspageviewitem.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CustomCourseDetailsBodyCourse_Info.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsSectionsPAgeViewItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsViewRowOptions.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CoursedetailsReportspageviewitem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CoursedetailsStudentReviewspageviewitem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CoursedetailsStudentspageviewitem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CustomCourseDetailsBodyCourse_Info.dart';
 import 'package:sintir/constant.dart';
 
 class CoursedetailviewBody extends StatefulWidget {
@@ -39,20 +39,6 @@ class _CoursedetailviewBodyState extends State<CoursedetailviewBody> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> options = [
-      Coursedetailssectionspageviewitem(
-        courseSectionsEntity: widget.courseEntity.coursSectionsListItemEntity!,
-      ),
-      Coursedetailsstudentspageviewitem(
-        subscribers: widget.courseEntity.subscripersIDS,
-      ),
-      Coursedetailsstudentreviewspageviewitem(
-        reviews: widget.courseEntity.coursefedbackItemEntity,
-      ),
-      Coursedetailsreportspageviewitem(
-        reports: widget.courseEntity.courseReports,
-      ),
-    ];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
       child: CustomScrollView(
@@ -78,7 +64,21 @@ class _CoursedetailviewBodyState extends State<CoursedetailviewBody> {
               child: PageView(
                   controller: pageController,
                   scrollDirection: Axis.horizontal,
-                  children: options))
+                  children: [
+                    Coursedetailssectionspageviewitem(
+                      courseSectionsEntity:
+                          widget.courseEntity.coursSectionsListItemEntity!,
+                    ),
+                    Coursedetailsstudentspageviewitem(
+                      subscribers: widget.courseEntity.subscripersIDS,
+                    ),
+                    Coursedetailsstudentreviewspageviewitem(
+                      reviews: widget.courseEntity.coursefedbackItemEntity,
+                    ),
+                    Coursedetailsreportspageviewitem(
+                      reports: widget.courseEntity.courseReports,
+                    ),
+                  ]))
         ],
       ),
     );

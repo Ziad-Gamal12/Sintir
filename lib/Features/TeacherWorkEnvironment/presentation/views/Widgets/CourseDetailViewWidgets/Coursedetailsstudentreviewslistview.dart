@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CoursedetailsstudentreviewsListViewitem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CoursedetailsstudentreviewsListViewitem.dart';
 
 class Coursedetailsstudentreviewslistview extends StatelessWidget {
   const Coursedetailsstudentreviewslistview({super.key, required this.reviews});

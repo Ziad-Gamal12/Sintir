@@ -18,6 +18,8 @@ abstract class Variables {
   static GlobalKey<FormState> TeacherSignUpFormKey = GlobalKey<FormState>();
   static GlobalKey<FormState> StudnetSignUpFormKey = GlobalKey<FormState>();
   static GlobalKey<FormState> TeacherLoginFormKey = GlobalKey<FormState>();
+  static GlobalKey<FormState> AddCourseSectionSqlFormKey =
+      GlobalKey<FormState>();
   static GlobalKey<FormState> TeacherResetPasswordFormKey =
       GlobalKey<FormState>();
   static GlobalKey<ScaffoldState> HomeViewScaffoldKey =
@@ -84,7 +86,12 @@ abstract class Variables {
       TextEditingController();
   static TextEditingController AddCourseCourseTextContentController =
       TextEditingController();
-
+  static TextEditingController AddCoursesectionNameController =
+      TextEditingController();
+  static TextEditingController AddCoursesesectionDescriptionController =
+      TextEditingController();
+  static TextEditingController AddsqlTestName = TextEditingController();
+  static TextEditingController AddsqlTestDuration = TextEditingController();
   static CourseEntity courseEntity = CourseEntity(
       subscripersCount: 0,
       state: BackendEndpoints.coursePublishedState,

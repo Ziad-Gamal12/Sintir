@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CusstomCard.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CustomCoursesInfoItemChild.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/CustomCoursesInfoItemChild.dart';
 
 class TeacherworkenvironmentcoursesInfo extends StatelessWidget {
   const TeacherworkenvironmentcoursesInfo({super.key});

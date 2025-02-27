@@ -9,10 +9,11 @@ class Customteaxtfield extends StatelessWidget {
   IconData? prefixIcon;
   Widget? suffixIcon;
   final bool obscureText;
-  final TextEditingController controller;
+  TextEditingController? controller;
   final TextInputType textInputType;
   final String? Function(String?)? validator;
   List<TextInputFormatter>? inputFormatters;
+  Function(String?)? onSaved;
   int maxLines;
   Customteaxtfield(
       {super.key,
@@ -21,15 +22,17 @@ class Customteaxtfield extends StatelessWidget {
       this.prefixIcon,
       this.suffixIcon,
       required this.obscureText,
-      required this.controller,
+      this.controller,
       required this.textInputType,
       required this.validator,
+      this.onSaved,
       this.maxLines = 1});
 
   @override
   Widget build(BuildContext context) {
     var border = const OutlineInputBorder(borderSide: BorderSide.none);
     return TextFormField(
+      onSaved: onSaved,
       inputFormatters: inputFormatters,
       controller: controller,
       keyboardType: textInputType,

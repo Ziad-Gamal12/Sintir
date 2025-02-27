@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/SubscriberEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CoursedetailsStudentsGridviewItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CoursedetailsStudentsGridviewItem.dart';
 
 class CoursedetailsStudentsGridview extends StatelessWidget {
   const CoursedetailsStudentsGridview({super.key, required this.subscribers});

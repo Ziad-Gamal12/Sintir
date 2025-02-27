@@ -4,8 +4,8 @@ import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomMyCoursesGridHeader.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CustomMyCoursesSliverGrideView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkEnvironmentCourses_info.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/CustomMyCoursesSliverGrideView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/TeacherWorkEnvironmentCourses_info.dart';
 import 'package:sintir/constant.dart';
 
 class TeacherWorkenvironmentviewBody extends StatelessWidget {

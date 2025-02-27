@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewBody.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/TeacherWorkenvironmentviewBody.dart';
 
 class TeacherWorkenvironmentview extends StatelessWidget {
   const TeacherWorkenvironmentview({super.key, required this.myCourses});

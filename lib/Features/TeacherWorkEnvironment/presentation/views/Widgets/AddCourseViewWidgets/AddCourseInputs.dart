@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCoursePoster.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseViewWidgets/AddCoursePoster.dart';
 
 class AddCourseInputs extends StatelessWidget {
   const AddCourseInputs({

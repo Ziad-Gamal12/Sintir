@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionSolutionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/courseTestView.dart';
 
 class Coursetestentity {
-  final int durationTime;
-  final String title;
+  int durationTime;
+  String title;
   final List<Coursetestquestionentity> questions;
   String? type;
   String preffixImage = Assets.assetsImagesExamIcon;
@@ -19,4 +20,20 @@ class Coursetestentity {
       required this.durationTime,
       required this.questions,
       this.type});
+
+  void addQuestion(Coursetestquestionentity? question) {
+    if (question != null) {
+      questions.add(question);
+    }
+    questions.add(Coursetestquestionentity(
+        isOpened: false,
+        questionTitle: "",
+        solutions: [
+          Coursetestquestionsolutionentity(answer: "", isCorrect: false)
+        ]));
+  }
+
+  void removeQuestion(Coursetestquestionentity question) {
+    questions.remove(question);
+  }
 }

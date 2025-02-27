@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/SubscriberEntity.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomSearchTextField.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CoursedetailsStudentsGridview.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CoursedetailsStudentsGridview.dart';
 
 class Coursedetailsstudentspageviewitem extends StatelessWidget {
   Coursedetailsstudentspageviewitem({super.key, required this.subscribers});

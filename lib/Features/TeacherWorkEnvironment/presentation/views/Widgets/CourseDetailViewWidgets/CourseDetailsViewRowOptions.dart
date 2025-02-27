@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/CoursedetailsviewOptionitemEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CustomCourseDetails_OptionIte.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CustomCourseDetails_OptionIte.dart';
 
 class CourseDetailsViewRowOptions extends StatelessWidget {
   const CourseDetailsViewRowOptions({
