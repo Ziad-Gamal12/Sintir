@@ -15,11 +15,12 @@ class Coursetestentity {
     GoRouter.of(context).push(Coursetestview.routename, extra: item);
   }
 
-  Coursetestentity(
-      {required this.title,
-      required this.durationTime,
-      required this.questions,
-      this.type});
+  Coursetestentity({
+    required this.title,
+    required this.durationTime,
+    required this.questions,
+    this.type,
+  });
 
   void addQuestion(Coursetestquestionentity? question) {
     if (question != null) {

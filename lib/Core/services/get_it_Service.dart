@@ -18,6 +18,8 @@ import 'package:sintir/Features/StudenetAuth/data/repoos/studentAuth_repo_impli.
 import 'package:sintir/Features/StudenetAuth/domain/repos/studentAuth_repo.dart';
 import 'package:sintir/Features/TeacherAuth/Data/Repos_Impli/teacherAuthRepos_Impli.dart';
 import 'package:sintir/Features/TeacherAuth/Domain/Repos/repos.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos_impl/AddCourseSectionRepo_impl.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/repos/AddCourseSectionRepo.dart';
 
 final getIt = GetIt.instance;
 
@@ -44,4 +46,8 @@ void setup_Getit() {
       storageService: getIt<StorageService>()));
   getIt.registerSingleton<Userrepo>(
       Userrepoimpli(datebaseservicel: getIt<Datebaseservice>()));
+  getIt.registerSingleton<Addcoursesectionrepo>(AddcoursesectionrepoImpl(
+      storageService: getIt<StorageService>(),
+      datebaseservice: getIt<Datebaseservice>(),
+      pickerassetsservice: getIt<Pickerassetsservice>()));
 }

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/AddCourseSQlAddSolutionItem.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/add_sql_test_cubit/add_sql_test_cubit.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/AddCourseSQlAddSolutionItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseSectionCubit/AddCourseSectionCubit.dart';
 
 class CustomQuestionSolutionsList extends StatefulWidget {
   const CustomQuestionSolutionsList({
@@ -19,20 +19,17 @@ class CustomQuestionSolutionsList extends StatefulWidget {
 
 class _CustomQuestionSolutionsListState
     extends State<CustomQuestionSolutionsList> {
-  String selectedValue = "";
+  String selectedValue = "-1";
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddSQlTestCubit, AddSQlTestState>(
+    return BlocBuilder<AddCourseSectionCubit, AddCourseSectionState>(
       builder: (context, state) {
+        Coursetestquestionentity question =
+            context.read<Coursetestquestionentity>();
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: context
-              .read<Coursetestquestionentity>()
-              .solutions
-              .asMap()
-              .entries
-              .map((e) {
+          children: question.solutions.asMap().entries.map((e) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: Row(
@@ -45,9 +42,10 @@ class _CustomQuestionSolutionsListState
                         setState(() {
                           selectedValue = value!;
                         });
-                        context.read<AddSQlTestCubit>().changeSelectedSolution(
-                            question: context.read<Coursetestquestionentity>(),
-                            index: e.key);
+                        context
+                            .read<AddCourseSectionCubit>()
+                            .changeSelectedSolution(
+                                question: question, index: e.key);
                       },
                     ),
                   ),
@@ -56,7 +54,7 @@ class _CustomQuestionSolutionsListState
                   ),
                   IconButton(
                     onPressed: () {
-                      context.read<AddSQlTestCubit>().removeSolutin(
+                      context.read<AddCourseSectionCubit>().removeSolutin(
                           solution: e.value,
                           question: context.read<Coursetestquestionentity>());
                     },

@@ -16,4 +16,12 @@ abstract class Datebaseservice {
   Future<bool> isDataExists({required String key, required String docId});
   Future<bool> isFeildExists(
       {required String key, required String feild, required String feildValue});
+
+  Future<void> updateDate(
+      {required String collectionKey,
+      required doc,
+      required dynamic data,
+      required String field,
+      String? subCollectionKey,
+      String? subDocId});
 }

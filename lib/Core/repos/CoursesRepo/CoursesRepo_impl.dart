@@ -96,7 +96,7 @@ class CoursesrepoImpl implements Coursesrepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      log("Exception from CoursesrepoImpl.getRecentCourses in catch With Firebase Exception: ${e.toString()}");
+      log("Exception from CoursesrepoImpl.getPopularCourses in catch With Firebase Exception: ${e.toString()}");
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }

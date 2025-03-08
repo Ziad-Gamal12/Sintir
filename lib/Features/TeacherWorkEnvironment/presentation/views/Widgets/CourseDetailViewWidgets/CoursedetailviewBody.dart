@@ -66,8 +66,7 @@ class _CoursedetailviewBodyState extends State<CoursedetailviewBody> {
                   scrollDirection: Axis.horizontal,
                   children: [
                     Coursedetailssectionspageviewitem(
-                      courseSectionsEntity:
-                          widget.courseEntity.coursSectionsListItemEntity!,
+                      courseEntity: widget.courseEntity,
                     ),
                     Coursedetailsstudentspageviewitem(
                       subscribers: widget.courseEntity.subscripersIDS,

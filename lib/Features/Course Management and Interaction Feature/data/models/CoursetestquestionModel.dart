@@ -2,7 +2,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
 
 class Coursetestquestionmodel {
-  final String questionTitle;
+  final String? questionTitle;
   final List<Map<String, dynamic>> solutions;
   final bool isOpened;
   String? imageUrl;
@@ -17,8 +17,10 @@ class Coursetestquestionmodel {
 
   factory Coursetestquestionmodel.fromJson(Map<String, dynamic> json) =>
       Coursetestquestionmodel(
-          questionTitle: json["questionTitle"],
-          solutions: json["solutions"],
+          questionTitle: json["questionTitle"] ?? "",
+          solutions: (json["solutions"] as List<dynamic>)
+              .map((e) => e as Map<String, dynamic>)
+              .toList(),
           isOpened: json["isOpened"],
           imageUrl: json["imageUrl"],
           selectedSolution: json["selectedSolution"]);

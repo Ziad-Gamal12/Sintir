@@ -1,18 +1,23 @@
 // ignore_for_file: file_names
 
+import 'dart:io';
+
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionSolutionEntity.dart';
 
 class Coursetestquestionentity {
-  String questionTitle;
+  String? questionTitle;
   List<Coursetestquestionsolutionentity> solutions;
   bool isOpened;
   String? imageUrl;
   String? selectedSolution;
+  File? imageFile;
+
   Coursetestquestionentity(
       {required this.questionTitle,
       required this.solutions,
       required this.isOpened,
       this.imageUrl,
+      this.imageFile,
       this.selectedSolution = ""});
 
   int index = 0;

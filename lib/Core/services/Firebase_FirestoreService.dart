@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/services/DateBaseService.dart';
@@ -146,5 +148,55 @@ class FirebaseFirestoreservice implements Datebaseservice {
         .where(feild, isEqualTo: feildValue)
         .get();
     return fileds.docs.isEmpty ? false : true;
+  }
+
+  @override
+  Future<void> updateDate(
+      {required String collectionKey,
+      required doc,
+      required dynamic data,
+      required String field,
+      String? subCollectionKey,
+      String? subDocId}) async {
+    try {
+      if (subCollectionKey != null) {
+        await firestore
+            .collection(collectionKey)
+            .doc(doc)
+            .collection(subCollectionKey)
+            .doc(subDocId)
+            .update({field: data});
+      } else {
+        await firestore
+            .collection(collectionKey)
+            .doc(doc)
+            .update({field: data});
+      }
+    } on FirebaseException catch (e) {
+      if (e.code == 'permission-denied') {
+        throw CustomException(
+            message:
+                "🚨 ليس لديك الإذن اللازم لإضافة البيانات. يرجى مراجعة صلاحياتك أو تعديل قواعد الأمان في Firestore.");
+      } else if (e.code == "unavailable") {
+        throw CustomException(
+            message: "🚨 الخادم غير متوفر حاليا. يرجى المحاولة لاحقا.");
+      } else if (e.code == "invalid-argument") {
+        throw CustomException(
+            message:
+                "❌ تم تمرير بيانات غير صحيحة. يرجى التحقق من المدخلات وإعادة المحاولة.");
+      } else if (e.code == "deadline-exceeded") {
+        throw CustomException(
+            message:
+                "⏳ انتهت المهلة الزمنية للطلب. يرجى المحاولة مرة أخرى لاحقًا.");
+      } else if (e.code == "resource-exhausted") {
+        throw CustomException(
+            message: "🚨 استهلاك الحافزات المتاحة. يرجى المحاولة لاحقًا.");
+      } else {
+        throw CustomException(message: "حدث خطأ ما");
+      }
+    } catch (e) {
+      log("Exception from Firebase_FirestoreService.updateDate in catch With Firebase Exception: ${e.toString()}");
+      throw CustomException(message: "حدث خطأ ما");
+    }
   }
 }

@@ -18,14 +18,15 @@ abstract class Variables {
   static GlobalKey<FormState> TeacherSignUpFormKey = GlobalKey<FormState>();
   static GlobalKey<FormState> StudnetSignUpFormKey = GlobalKey<FormState>();
   static GlobalKey<FormState> TeacherLoginFormKey = GlobalKey<FormState>();
-  static GlobalKey<FormState> AddCourseSectionSqlFormKey =
-      GlobalKey<FormState>();
+  static GlobalKey<FormState> AddCourseSectionFormKey = GlobalKey<FormState>();
   static GlobalKey<FormState> TeacherResetPasswordFormKey =
       GlobalKey<FormState>();
   static GlobalKey<ScaffoldState> HomeViewScaffoldKey =
       GlobalKey<ScaffoldState>();
   static GlobalKey<ScaffoldState> DisplaycoursevedioveiwScaffoldKey =
       GlobalKey<ScaffoldState>();
+  static GlobalKey<FormState> AddCourseSectionSQLtestFormKey =
+      GlobalKey<FormState>();
   static TextEditingController TeacherSignUpFirstNameController =
       TextEditingController();
   static TextEditingController TeacherSignUpLastNameController =

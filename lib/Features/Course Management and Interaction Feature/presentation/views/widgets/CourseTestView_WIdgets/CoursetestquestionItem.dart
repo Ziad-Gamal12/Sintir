@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomRadioWidget.dart';
@@ -32,30 +33,44 @@ class _CoursetestquestionItemState extends State<CoursetestquestionItem> {
         const SizedBox(
           height: 10,
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: widget
-              .coursetestentity.questions[widget.currentQuestionIndex].solutions
-              .asMap()
-              .entries
-              .map((e) {
-            return Row(
-              children: [
-                CustomRadioWidget(
-                    value: e.value.answer,
-                    groupValue: widget.selectedAnswer,
-                    onchange: widget.answerChange),
-                const SizedBox(
-                  width: 10,
-                ),
-                Text(widget
-                    .coursetestentity
-                    .questions[widget.currentQuestionIndex]
-                    .solutions[e.key]
-                    .answer)
-              ],
-            );
-          }).toList(),
+        Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: widget.coursetestentity
+                    .questions[widget.currentQuestionIndex].solutions
+                    .asMap()
+                    .entries
+                    .map((e) {
+                  return Row(
+                    children: [
+                      CustomRadioWidget(
+                          value: e.value.answer,
+                          groupValue: widget.selectedAnswer,
+                          onchange: widget.answerChange),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(widget
+                          .coursetestentity
+                          .questions[widget.currentQuestionIndex]
+                          .solutions[e.key]
+                          .answer)
+                    ],
+                  );
+                }).toList(),
+              ),
+            ),
+            Expanded(
+                child: widget.coursetestentity
+                            .questions[widget.currentQuestionIndex].imageUrl !=
+                        null
+                    ? CachedNetworkImage(
+                        imageUrl: widget.coursetestentity
+                            .questions[widget.currentQuestionIndex].imageUrl!)
+                    : const SizedBox())
+          ],
         ),
       ],
     );

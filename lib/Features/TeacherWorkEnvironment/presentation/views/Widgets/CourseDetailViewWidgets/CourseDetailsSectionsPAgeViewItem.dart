@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/CustomContentListViewitem.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionView.dart';
 import 'package:sintir/constant.dart';
 
 class Coursedetailssectionspageviewitem extends StatelessWidget {
   const Coursedetailssectionspageviewitem(
-      {super.key, required this.courseSectionsEntity});
-  final List<CoursSectionsListItemEntity> courseSectionsEntity;
+      {super.key, required this.courseEntity});
+  final CourseEntity courseEntity;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -26,14 +26,18 @@ class Coursedetailssectionspageviewitem extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            courseSectionsEntity.isNotEmpty
+            courseEntity.coursSectionsListItemEntity!.isNotEmpty
                 ? ListView.builder(
                     shrinkWrap: true,
-                    itemCount: courseSectionsEntity.length,
+                    itemCount: courseEntity.coursSectionsListItemEntity!.length,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      return CustomContentListViewitem(
-                        sectionItem: courseSectionsEntity[index],
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: CustomContentListViewitem(
+                          sectionItem:
+                              courseEntity.coursSectionsListItemEntity![index],
+                        ),
                       );
                     },
                   )
@@ -46,7 +50,8 @@ class Coursedetailssectionspageviewitem extends StatelessWidget {
           right: 0,
           child: InkWell(
             onTap: () {
-              GoRouter.of(context).push(Addcoursesectionview.routeName);
+              GoRouter.of(context)
+                  .push(Addcoursesectionview.routeName, extra: courseEntity);
             },
             child: const CircleAvatar(
               backgroundColor: KMainColor,

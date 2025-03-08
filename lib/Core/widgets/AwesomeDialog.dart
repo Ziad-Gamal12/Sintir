@@ -30,7 +30,8 @@ AwesomeDialog successdialog(
       btnOkColor: Colors.green);
 }
 
-AwesomeDialog warningdialog(context, String? WarningMessage) {
+AwesomeDialog warningdialog(
+    context, String? WarningMessage, void Function()? btnOkOnPress) {
   return AwesomeDialog(
       context: context,
       dialogType: DialogType.warning,
@@ -38,8 +39,8 @@ AwesomeDialog warningdialog(context, String? WarningMessage) {
       title: 'تحذير',
       desc: WarningMessage,
       btnOkText: 'حسنا',
-      btnOkOnPress: () {},
-      btnOkColor: Colors.yellow);
+      btnOkOnPress: btnOkOnPress,
+      btnOkColor: Colors.yellow.shade800);
 }
 
 AwesomeDialog infodialog({

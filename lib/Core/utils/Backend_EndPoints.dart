@@ -6,13 +6,16 @@ class BackendEndpoints {
   static String addStudentDataCollectionName = "Students";
   static String setStudentDataTableName = "Students";
   static String setTeacherDataTableName = "Teachers";
+  static String addSectionToTeacherCollection = "Teachers";
+
   static String addCourseToCoursesCollection = "Courses";
   static String getRecentCoursesCollection = "Courses";
   static String getPopularCoursesCollection = "Courses";
+  static String addCourseSectionCollection = "Courses";
 
+  static String addCourseSectiontoTeacherSubCollection = "Courses";
   static String addCourseToUserDocSubCollectioName = "Courses";
   static String getCoursesfromUserDocSubCollectioName = "Courses";
-
   static String coursePublishedState = "Published";
   static String coursePendingState = "Pending";
   static String coursedeclinedState = "Declined";

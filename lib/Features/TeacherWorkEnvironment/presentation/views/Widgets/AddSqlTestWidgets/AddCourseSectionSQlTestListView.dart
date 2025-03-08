@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/AddCourseSQLAddQuestionListItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/AddCourseSQLAddQuestionListItem.dart';
 
 class Addcoursesectionsqltestlistview extends StatelessWidget {
   const Addcoursesectionsqltestlistview({super.key, required this.questions});

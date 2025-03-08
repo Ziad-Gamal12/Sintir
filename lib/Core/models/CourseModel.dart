@@ -8,12 +8,12 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 
 class Coursemodel {
   final String id, posterUrl, title, description, price, language, state;
-  final List subscripersIDS;
+  final List<Map<String, dynamic>> subscripersIDS;
   final DateTime postedDate;
   final Map contentcreaterentity;
-  final List coursSectionsListItemEntity;
-  final List coursefedbackItemEntity;
-  final List courseReports;
+  final List<Map<String, dynamic>> coursSectionsListItemEntity;
+  final List<Map<String, dynamic>> coursefedbackItemEntity;
+  final List<Map<String, dynamic>> courseReports;
   final int subscripersCount;
 
   Coursemodel(
@@ -81,12 +81,22 @@ class Coursemodel {
       language: json['language'],
       state: json['state'],
       subscripersCount: json['subscripersCount'],
-      subscripersIDS: json['subscripersIDS'],
+      subscripersIDS: (json['subscripersIDS'] as List<dynamic>)
+          .map((e) => e as Map<String, dynamic>)
+          .toList(),
       postedDate: (json['postedDate'] as Timestamp).toDate(),
       contentcreaterentity: json['contentcreaterentity'],
-      coursSectionsListItemEntity: (json['coursSectionsListItemEntity']),
-      coursefedbackItemEntity: (json['coursefedbackItemEntity']),
-      courseReports: (json['courseReports']),
+      coursSectionsListItemEntity:
+          (json['coursSectionsListItemEntity'] as List<dynamic>)
+              .map((e) => e as Map<String, dynamic>)
+              .toList(),
+      coursefedbackItemEntity:
+          (json['coursefedbackItemEntity'] as List<dynamic>)
+              .map((e) => e as Map<String, dynamic>)
+              .toList(),
+      courseReports: (json['courseReports'] as List<dynamic>)
+          .map((e) => e as Map<String, dynamic>)
+          .toList(),
     );
   }
   CourseEntity toEntity() {

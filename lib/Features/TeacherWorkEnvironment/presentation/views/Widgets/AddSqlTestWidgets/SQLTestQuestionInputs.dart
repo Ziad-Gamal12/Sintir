@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/CustomQuestionSolutionsList.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/addcourseSQLTEstQuestionItemTextField.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/add_sql_test_cubit/add_sql_test_cubit.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/CustomQuestionSolutionsList.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/addcourseSQLTEstQuestionItemTextField.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseSectionCubit/AddCourseSectionCubit.dart';
 
 class SQLTestQuestionInputs extends StatelessWidget {
   const SQLTestQuestionInputs({
@@ -41,7 +41,7 @@ class SQLTestQuestionInputs extends StatelessWidget {
                   borderRadius: BorderRadius.circular(0),
                   textColor: Colors.black,
                   onPressed: () {
-                    context.read<AddSQlTestCubit>().addSolution(
+                    context.read<AddCourseSectionCubit>().addSolution(
                           question: context.read<Coursetestquestionentity>(),
                         );
                   })

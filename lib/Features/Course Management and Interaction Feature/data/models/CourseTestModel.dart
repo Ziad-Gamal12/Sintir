@@ -15,7 +15,9 @@ class Coursetestmodel {
       Coursetestmodel(
           durationTime: json["durationTime"],
           title: json["title"],
-          questions: json["questions"],
+          questions: (json["questions"] as List<dynamic>)
+              .map((e) => e as Map<String, dynamic>)
+              .toList(),
           type: json["type"]);
 
   factory Coursetestmodel.fromEntity(Coursetestentity coursetestentity) =>

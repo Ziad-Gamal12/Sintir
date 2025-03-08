@@ -1,19 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/AddcoursesectionsqlviewBody.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/add_sql_test_cubit/add_sql_test_cubit.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/repos/AddCourseSectionRepo.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/AddcoursesectionsqlviewBody.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseSectionCubit/AddCourseSectionCubit.dart';
 
-class Addcoursesectionsqlview extends StatelessWidget {
-  const Addcoursesectionsqlview({super.key});
+class Addcoursesectionsqlview extends StatefulWidget {
+  const Addcoursesectionsqlview({super.key, required this.courseEntity});
   static const routeName = '/Addcoursesectionsqlview';
+  final CourseEntity courseEntity;
+  @override
+  State<Addcoursesectionsqlview> createState() =>
+      _AddcoursesectionsqlviewState();
+}
+
+class _AddcoursesectionsqlviewState extends State<Addcoursesectionsqlview>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocProvider(
-      create: (context) => AddSQlTestCubit(),
-      child: const Scaffold(
-        appBar: CustomAppBar(appBartitle: "SQL"),
-        body: AddcoursesectionsqlviewBody(),
+      create: (context) => AddCourseSectionCubit(getIt<Addcoursesectionrepo>()),
+      child: Scaffold(
+        appBar: const CustomAppBar(appBartitle: "SQL"),
+        body: AddcoursesectionsqlviewBody(
+          courseEntity: widget.courseEntity,
+        ),
       ),
     );
   }
