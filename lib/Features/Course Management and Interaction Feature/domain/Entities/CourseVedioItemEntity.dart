@@ -5,8 +5,8 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/displayCourseVedioVeiw.dart';
 
 class Coursevedioitementity {
-  final String title, vedioUrl;
-  final int durationTime;
+  String title, vedioUrl;
+  int durationTime;
   String? type;
   String preffixImage = Assets.assetsImagesVedioIcon;
   ontap(

@@ -32,10 +32,11 @@ import 'package:sintir/Features/TeacherAuth/Presentation/views/teacherTermsAndCo
 import 'package:sintir/Features/TeacherProfile/presentation/views/TeacherProfileView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionSQLView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionVedioView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/CourseDetailView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ReviewSQlExamView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ReviewSectionView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
 import 'package:sintir/Features/tasks/presentation/views/TasksView.dart';
 
@@ -242,12 +243,18 @@ class App_router {
         },
       ),
       GoRoute(
-        path: Reviewsqlexamview.routeName,
+        path: ReviewSectionView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return Reviewsqlexamview(
+          return ReviewSectionView(
             navigatesqlreviewrequirmentsentity:
                 state.extra as Navigatesqlreviewrequirmentsentity,
           );
+        },
+      ),
+      GoRoute(
+        path: Addcoursesectionvedioview.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const Addcoursesectionvedioview();
         },
       ),
     ],

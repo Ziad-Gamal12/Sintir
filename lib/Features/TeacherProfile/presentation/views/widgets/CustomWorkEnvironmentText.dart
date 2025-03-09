@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
-import 'package:sintir/Core/models/CourseModel.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
 import 'package:sintir/constant.dart';
@@ -18,14 +15,6 @@ class CustomWorkEnvironmentText extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        log(myCourses
-            .map((e) {
-              return Coursemodel.fromEntity(courseEntity: e)
-                  .toJson()
-                  .toString();
-            })
-            .toList()
-            .toString());
         GoRouter.of(context)
             .push(TeacherWorkenvironmentview.routeName, extra: myCourses);
       },

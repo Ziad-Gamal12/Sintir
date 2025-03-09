@@ -4,11 +4,11 @@ import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/repos/AddCourseSectionRepo.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewSQlTestWidgets/ReviewsqlexamviewBody.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewSectionWidgets/ReviewSectionViewBody.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseSectionCubit/AddCourseSectionCubit.dart';
 
-class Reviewsqlexamview extends StatelessWidget {
-  const Reviewsqlexamview(
+class ReviewSectionView extends StatelessWidget {
+  const ReviewSectionView(
       {super.key, required this.navigatesqlreviewrequirmentsentity});
   static const routeName = '/reviewsqlexamview';
   final Navigatesqlreviewrequirmentsentity navigatesqlreviewrequirmentsentity;
@@ -18,7 +18,7 @@ class Reviewsqlexamview extends StatelessWidget {
       create: (context) => AddCourseSectionCubit(getIt<Addcoursesectionrepo>()),
       child: Scaffold(
         appBar: const CustomAppBar(appBartitle: "مراجعه"),
-        body: ReviewsqlexamviewBody(
+        body: ReviewSectionViewBody(
           navigatesqlreviewrequirmentsentity:
               navigatesqlreviewrequirmentsentity,
         ),

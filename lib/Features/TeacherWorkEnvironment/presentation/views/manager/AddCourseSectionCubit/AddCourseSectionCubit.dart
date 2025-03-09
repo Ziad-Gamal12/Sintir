@@ -8,13 +8,15 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionSolutionEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/repos/AddCourseSectionRepo.dart';
 
 part 'AddCourseSectionState.dart';
 
 class AddCourseSectionCubit extends Cubit<AddCourseSectionState> {
-  AddCourseSectionCubit(this.addcoursesectionrepo)
-      : super(AddCourseSectionInitial());
+  AddCourseSectionCubit(
+    this.addcoursesectionrepo,
+  ) : super(AddCourseSectionInitial());
   final Addcoursesectionrepo addcoursesectionrepo;
   CoursSectionsListItemEntity coursSectionsListItemEntity =
       CoursSectionsListItemEntity(
@@ -31,6 +33,8 @@ class AddCourseSectionCubit extends Cubit<AddCourseSectionState> {
     title: Variables.AddsqlTestName.text,
     durationTime: int.tryParse(Variables.AddsqlTestDuration.text) ?? 0,
   );
+  Coursevedioitementity coursevedioitementity =
+      Coursevedioitementity(title: "", vedioUrl: "", durationTime: 0);
   int currentSolutionIndex = -1;
   int previousSolutionIndex = -1;
 
@@ -104,5 +108,14 @@ class AddCourseSectionCubit extends Cubit<AddCourseSectionState> {
         emit(AddCourseSectionAddSectionFailure(errMessage: "حدث خطأ ما"));
       }
     });
+  }
+
+  pickSectionVedio() async {
+    // File? vedio =
+    //     await pickerassetsservice.getVideo(source: ImageSource.gallery);
+    // if (vedio != null) {
+    //   coursSectionsListItemEntity.vedioFile = vedio;
+    //   emit(AddCourseSectionVedioPicked());
+    // }
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionSolutionEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewSQlTestWidgets/CustomReviewQuestionSolutionListitem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewSectionWidgets/ReviewSQlTestWidgets/CustomReviewQuestionSolutionListitem.dart';
 
 class Customreviewquestionsolutionlist extends StatelessWidget {
   const Customreviewquestionsolutionlist({super.key, required this.solutions});

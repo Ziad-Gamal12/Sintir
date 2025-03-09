@@ -15,33 +15,40 @@ class Coursedetailssectionspageviewitem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Column(
-          children: [
-            const SizedBox(
-              height: 20,
+        CustomScrollView(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          slivers: [
+            const SliverToBoxAdapter(
+              child: SizedBox(
+                height: 20,
+              ),
             ),
-            CustomListORGridTextHeader(
-              text: "المحتوى",
+            SliverToBoxAdapter(
+              child: CustomListORGridTextHeader(
+                text: "المحتوى",
+              ),
             ),
-            const SizedBox(
-              height: 10,
+            const SliverToBoxAdapter(
+              child: SizedBox(
+                height: 10,
+              ),
             ),
-            courseEntity.coursSectionsListItemEntity!.isNotEmpty
-                ? ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: courseEntity.coursSectionsListItemEntity!.length,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: CustomContentListViewitem(
-                          sectionItem:
-                              courseEntity.coursSectionsListItemEntity![index],
-                        ),
-                      );
-                    },
-                  )
-                : const CustomEmptyWidget()
+            if (courseEntity.coursSectionsListItemEntity!.isNotEmpty)
+              SliverList.builder(
+                itemCount: courseEntity.coursSectionsListItemEntity!.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5),
+                    child: CustomContentListViewitem(
+                      sectionItem:
+                          courseEntity.coursSectionsListItemEntity![index],
+                    ),
+                  );
+                },
+              )
+            else
+              const SliverToBoxAdapter(child: CustomEmptyWidget())
           ],
         ),
         Positioned(
