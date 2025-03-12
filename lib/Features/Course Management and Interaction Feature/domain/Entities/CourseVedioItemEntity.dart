@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
@@ -7,6 +9,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 class Coursevedioitementity {
   String title, vedioUrl;
   int durationTime;
+  File? file;
   String? type;
   String preffixImage = Assets.assetsImagesVedioIcon;
   ontap(
@@ -20,5 +23,6 @@ class Coursevedioitementity {
       {required this.title,
       required this.vedioUrl,
       required this.durationTime,
+      this.file,
       this.type});
 }

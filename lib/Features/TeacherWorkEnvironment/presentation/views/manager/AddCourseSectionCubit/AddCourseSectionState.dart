@@ -38,3 +38,10 @@ final class AddCourseSectionAddSectionFailure extends AddCourseSectionState {
   final String errMessage;
   AddCourseSectionAddSectionFailure({required this.errMessage});
 }
+
+final class AddCourseSectionVedioPicked extends AddCourseSectionState {
+  final File vedioFile;
+  AddCourseSectionVedioPicked({required this.vedioFile});
+}
+
+final class AddCourseSectionVedioUnPicked extends AddCourseSectionState {}

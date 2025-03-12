@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/repos/AddCourseSectionRepo.dart';
@@ -24,7 +25,8 @@ class _AddcoursesectionsqlviewState extends State<Addcoursesectionsqlview>
   Widget build(BuildContext context) {
     super.build(context);
     return BlocProvider(
-      create: (context) => AddCourseSectionCubit(getIt<Addcoursesectionrepo>()),
+      create: (context) => AddCourseSectionCubit(
+          getIt<Addcoursesectionrepo>(), getIt<Pickerassetsservice>()),
       child: Scaffold(
         appBar: const CustomAppBar(appBartitle: "SQL"),
         body: AddcoursesectionsqlviewBody(

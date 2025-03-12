@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
+import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
@@ -16,8 +20,10 @@ part 'AddCourseSectionState.dart';
 class AddCourseSectionCubit extends Cubit<AddCourseSectionState> {
   AddCourseSectionCubit(
     this.addcoursesectionrepo,
+    this.pickerassetsservice,
   ) : super(AddCourseSectionInitial());
   final Addcoursesectionrepo addcoursesectionrepo;
+  final Pickerassetsservice pickerassetsservice;
   CoursSectionsListItemEntity coursSectionsListItemEntity =
       CoursSectionsListItemEntity(
     title: Variables.AddCoursesectionNameController.text,
@@ -110,12 +116,14 @@ class AddCourseSectionCubit extends Cubit<AddCourseSectionState> {
     });
   }
 
-  pickSectionVedio() async {
-    // File? vedio =
-    //     await pickerassetsservice.getVideo(source: ImageSource.gallery);
-    // if (vedio != null) {
-    //   coursSectionsListItemEntity.vedioFile = vedio;
-    //   emit(AddCourseSectionVedioPicked());
-    // }
+  void pickSectionVedio() async {
+    File? vedio =
+        await pickerassetsservice.getVideo(source: ImageSource.gallery);
+    if (vedio != null) {
+      coursevedioitementity.file = vedio;
+      emit(AddCourseSectionVedioPicked(vedioFile: vedio));
+    } else {
+      emit(AddCourseSectionVedioUnPicked());
+    }
   }
 }

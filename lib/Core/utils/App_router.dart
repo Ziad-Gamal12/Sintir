@@ -36,7 +36,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCou
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/CourseDetailView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ReviewSectionView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ReviewSqlTestSectionView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
 import 'package:sintir/Features/tasks/presentation/views/TasksView.dart';
 
@@ -243,9 +243,9 @@ class App_router {
         },
       ),
       GoRoute(
-        path: ReviewSectionView.routeName,
+        path: ReviewSqlTestSectionView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return ReviewSectionView(
+          return ReviewSqlTestSectionView(
             navigatesqlreviewrequirmentsentity:
                 state.extra as Navigatesqlreviewrequirmentsentity,
           );

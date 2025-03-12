@@ -1,13 +1,15 @@
 import 'dart:developer';
+import 'dart:io';
 
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
+import 'package:sintir/Core/widgets/showSnackBar.dart';
 import 'package:video_player/video_player.dart';
 
 class Customdisplayingvediowidget extends StatefulWidget {
-  const Customdisplayingvediowidget({super.key, required this.videoUrl});
-  final String videoUrl;
+  Customdisplayingvediowidget({super.key, this.videoUrl, this.file});
+  String? videoUrl;
+  File? file;
   @override
   State<Customdisplayingvediowidget> createState() =>
       _CustomdisplayingvediowidgetState();
@@ -15,11 +17,10 @@ class Customdisplayingvediowidget extends StatefulWidget {
 
 class _CustomdisplayingvediowidgetState
     extends State<Customdisplayingvediowidget> {
-  late VideoPlayerController videoController;
-  ChewieController? chewieController;
+  late VideoPlayerController videoPlayerController;
   @override
   void initState() {
-    initVedioController();
+    initVedioController(context);
     super.initState();
   }
 
@@ -33,36 +34,42 @@ class _CustomdisplayingvediowidgetState
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
-      child: chewieController != null &&
-              chewieController!.videoPlayerController.value.isInitialized
+      child: videoPlayerController.value.isInitialized
           ? AspectRatio(
-              aspectRatio: 16 / 9, child: Chewie(controller: chewieController!))
+              aspectRatio: 16 / 9,
+              child: VideoPlayer(
+                videoPlayerController,
+              ))
           : Custom_Loading_Widget(
-              isLoading: chewieController == null, child: const SizedBox()),
+              isLoading: videoPlayerController.value.isInitialized == false,
+              child: const SizedBox()),
     );
   }
 
-  Future<void> initVedioController() async {
-    videoController =
-        VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
+  Future<void> initVedioController(BuildContext context) async {
     try {
-      await videoController
-          .initialize(); // Ensure video is initialized before proceeding
-      setState(() {
-        chewieController = ChewieController(
-          videoPlayerController: videoController,
-          aspectRatio: 16 / 9,
-          autoPlay: true,
-          looping: false,
+      if (widget.file != null) {
+        videoPlayerController = VideoPlayerController.file(
+          widget.file!,
+          videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: true),
         );
-      });
+      } else if (widget.videoUrl != null) {
+        videoPlayerController = VideoPlayerController.networkUrl(
+          Uri.parse(widget.videoUrl!),
+          videoPlayerOptions: VideoPlayerOptions(allowBackgroundPlayback: true),
+        );
+      } else {
+        showSnackBar(context, "حدث خطأ فى العنصر");
+      }
+
+      await videoPlayerController.initialize();
+      setState(() {});
     } catch (e) {
       log("Video Initialization Error: $e");
     }
   }
 
   disposeControllers() async {
-    await videoController.dispose();
-    chewieController?.dispose();
+    videoPlayerController.dispose();
   }
 }

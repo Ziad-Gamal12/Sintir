@@ -6,7 +6,7 @@ import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ReviewSectionView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ReviewSqlTestSectionView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseSectionCubit/AddCourseSectionCubit.dart';
 import 'package:sintir/constant.dart';
 
@@ -60,7 +60,7 @@ class AddCourseSectionSqlTestActionbuttons extends StatelessWidget {
       Coursetestentity courseTestEntity, BuildContext context) {
     if (Variables.AddCourseSectionSQLtestFormKey.currentState!.validate()) {
       Variables.AddCourseSectionSQLtestFormKey.currentState!.save();
-      GoRouter.of(context).push(ReviewSectionView.routeName,
+      GoRouter.of(context).push(ReviewSqlTestSectionView.routeName,
           extra: Navigatesqlreviewrequirmentsentity(
               coursetestentity: courseTestEntity,
               section: section,

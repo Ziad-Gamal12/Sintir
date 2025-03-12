@@ -75,7 +75,7 @@ dependencies:
   svg_flutter: ^0.0.1
   syncfusion_flutter_datepicker: ^27.1.53
   timer_count_down: ^2.2.2
-  video_player: ^2.9.2
+  video_player: ^2.9.3
 dev_dependencies:
   flutter_launcher_icons: "^0.13.1"
 
