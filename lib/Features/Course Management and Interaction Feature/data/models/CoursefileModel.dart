@@ -22,14 +22,14 @@ class Coursefilemodel {
   factory Coursefilemodel.fromEntity(Coursefileentity coursefileentity) {
     return Coursefilemodel(
       title: coursefileentity.title,
-      filePath: coursefileentity.filePath,
+      filePath: coursefileentity.fileUrl,
       description: coursefileentity.description,
       type: coursefileentity.type,
     );
   }
   Coursefileentity toEnity() => Coursefileentity(
         title: title,
-        filePath: filePath,
+        fileUrl: filePath,
         description: description,
         type: type,
       );

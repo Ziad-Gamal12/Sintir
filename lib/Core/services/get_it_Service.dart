@@ -1,6 +1,8 @@
 // ignore_for_file: file_names, non_constant_identifier_names
 
 import 'package:get_it/get_it.dart';
+import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
+import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepoImpli.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo_impl.dart';
 import 'package:sintir/Core/repos/UserRepos.dart/UserRepoImpli.dart';
@@ -50,4 +52,6 @@ void setup_Getit() {
       storageService: getIt<StorageService>(),
       datebaseservice: getIt<Datebaseservice>(),
       pickerassetsservice: getIt<Pickerassetsservice>()));
+  getIt.registerSingleton<Assetspickerrepo>(
+      Assetspickerrepoimpli(pickerassetsservice: getIt<Pickerassetsservice>()));
 }

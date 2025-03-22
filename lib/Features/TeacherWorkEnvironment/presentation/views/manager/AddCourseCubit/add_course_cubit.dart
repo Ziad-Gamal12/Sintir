@@ -3,12 +3,11 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/models/contentCreaterModel.dart';
+import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
-import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
 
 part 'add_course_state.dart';
@@ -16,10 +15,10 @@ part 'add_course_state.dart';
 class AddCourseCubitCubit extends Cubit<AddCourseCubitState> {
   AddCourseCubitCubit({
     required this.coursesrepo,
-    required this.pickerassetsservice,
+    required this.assetspickerrepo,
   }) : super(AddCourseCubitInitial());
   final Coursesrepo coursesrepo;
-  final Pickerassetsservice pickerassetsservice;
+  final Assetspickerrepo assetspickerrepo;
   File? coursePosterImage;
   addCourse(
       {required CourseEntity courseEntity,
@@ -48,14 +47,12 @@ class AddCourseCubitCubit extends Cubit<AddCourseCubitState> {
 
   pickCoursePosterImage() async {
     emit(AddCourseCubitAssetLoading());
-    try {
-      coursePosterImage =
-          await pickerassetsservice.getImage(source: ImageSource.gallery);
-      coursePosterImage != null
-          ? emit(AddCourseCubitAssetPicked(file: coursePosterImage))
-          : null;
-    } catch (e) {
-      emit(AddCourseCubitFailure("حدث خطأ ما"));
-    }
+    final result = await assetspickerrepo.pickImageFromGallery();
+    result.fold((failure) {
+      emit(AddCourseCubitFailure(failure.message));
+    }, (file) {
+      coursePosterImage = file;
+      emit(AddCourseCubitAssetPicked(file: coursePosterImage));
+    });
   }
 }

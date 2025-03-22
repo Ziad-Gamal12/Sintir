@@ -9,7 +9,7 @@ class Coursevedioitemmodel {
       {required this.title,
       required this.vedioUrl,
       required this.durationTime,
-      this.type = "Vedio"});
+      this.type = "Video"});
   factory Coursevedioitemmodel.fromJson(Map<String, dynamic> json) =>
       Coursevedioitemmodel(
         title: json['title'],

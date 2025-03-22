@@ -9,8 +9,8 @@ import 'package:sintir/Features/Books_Library/Presentation/Views/LevelBooksView.
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/ChoosingUserKindView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/DisplayVediRequiresEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFedBackView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFilePreviewer_View.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseIntroductionView.dart';
@@ -31,6 +31,7 @@ import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignUpView
 import 'package:sintir/Features/TeacherAuth/Presentation/views/teacherTermsAndConditionsView.dart';
 import 'package:sintir/Features/TeacherProfile/presentation/views/TeacherProfileView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionFileView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionSQLView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionVedioView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionView.dart';
@@ -157,8 +158,7 @@ class App_router {
         path: Displaycoursevedioveiw.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return Displaycoursevedioveiw(
-            displayVedioRequiresEntity:
-                state.extra as Displayvedirequiresentity,
+            displayVedioRequiresEntity: state.extra as Coursevedioitementity,
           );
         },
       ),
@@ -254,7 +254,17 @@ class App_router {
       GoRoute(
         path: Addcoursesectionvedioview.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return const Addcoursesectionvedioview();
+          return Addcoursesectionvedioview(
+            courseEntity: state.extra as CourseEntity,
+          );
+        },
+      ),
+      GoRoute(
+        path: Addcoursesectionfileview.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return Addcoursesectionfileview(
+            courseEntity: state.extra as CourseEntity,
+          );
         },
       ),
     ],

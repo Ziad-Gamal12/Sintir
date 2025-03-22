@@ -12,7 +12,6 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionSolutionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/DisplayVediRequiresEntity.dart';
 
 abstract class Variables {
   static GlobalKey<FormState> TeacherSignUpFormKey = GlobalKey<FormState>();
@@ -116,13 +115,11 @@ abstract class Variables {
         CoursSectionsListItemEntity(
             title: "برومو - دورة حياة المنتج",
             items: [
-              Displayvedirequiresentity(
-                  vedioEntity: Coursevedioitementity(
-                      title: "برومو - دورة حياة",
-                      vedioUrl:
-                          "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
-                      durationTime: 130),
-                  sections: []),
+              Coursevedioitementity(
+                  title: "برومو - دورة حياة",
+                  vedioUrl:
+                      "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
+                  durationTime: 130),
               Coursetestentity(questions: [
                 // Coursetestentity coursetestentity = Coursetestentity(
                 Coursetestquestionentity(
@@ -155,7 +152,7 @@ abstract class Variables {
               Coursefileentity(
                   description: "ملخص المنهج",
                   title: "ملف تلخيص المنهج",
-                  filePath: "assets/Files/PDFTest.pdf")
+                  fileUrl: "assets/Files/PDFTest.pdf")
             ],
             subtitle: "عملية إطلاق المنتج"),
       ],

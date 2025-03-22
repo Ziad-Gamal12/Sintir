@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/AddcoursesectionOptionItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionFileView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionSQLView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionVedioView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/AddCourseSectionContentItem.dart';
@@ -31,6 +32,12 @@ class AddCourseSectionContentOptions extends StatelessWidget {
                   } else if (e.key == 0) {
                     GoRouter.of(context).push(
                       Addcoursesectionvedioview.routeName,
+                      extra: courseEntity,
+                    );
+                  } else {
+                    GoRouter.of(context).push(
+                      Addcoursesectionfileview.routeName,
+                      extra: courseEntity,
                     );
                   }
                 }

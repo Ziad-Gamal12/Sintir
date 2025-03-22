@@ -16,7 +16,6 @@ class _TeacherprofileviewState extends State<Teacherprofileview> {
   @override
   void initState() {
     context.read<UserCubit>().getUsersCourses();
-    context.read<UserCubit>().getUserData();
     super.initState();
   }
 

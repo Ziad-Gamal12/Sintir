@@ -8,7 +8,9 @@ import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursSectionsListItemsModel.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/repos/AddCourseSectionRepo.dart';
 
 class AddcoursesectionrepoImpl implements Addcoursesectionrepo {
@@ -38,7 +40,7 @@ class AddcoursesectionrepoImpl implements Addcoursesectionrepo {
   }
 
   @override
-  Future<Either<Failure, void>> addCourseSection({
+  Future<Either<Failure, void>> updateCourseSections({
     required CourseEntity courseEntity,
   }) async {
     try {
@@ -58,8 +60,9 @@ class AddcoursesectionrepoImpl implements Addcoursesectionrepo {
 
   Future<void> addCourseSectionToTeacherSubCollection(
       CourseEntity courseEntity, List<Map<String, dynamic>> sections) async {
+    var field = "coursSectionsListItemEntity";
     await datebaseservice.updateDate(
-        field: "coursSectionsListItemEntity",
+        field: field,
         doc: FirebaseAuth.instance.currentUser!.uid,
         collectionKey: BackendEndpoints.addSectionToTeacherCollection,
         subCollectionKey:
@@ -70,10 +73,37 @@ class AddcoursesectionrepoImpl implements Addcoursesectionrepo {
 
   Future<void> addSectiontoCoursesCollection(
       CourseEntity courseEntity, List<Map<String, dynamic>> sections) async {
+    var field = "coursSectionsListItemEntity";
     await datebaseservice.updateDate(
-        field: "coursSectionsListItemEntity",
+        field: field,
         doc: courseEntity.id,
         collectionKey: BackendEndpoints.addCourseSectionCollection,
         data: sections);
+  }
+
+  @override
+  Future<Either<Failure, void>> uploadVideo(
+      {required Coursevedioitementity coursevedioitementity}) async {
+    try {
+      String url =
+          await storageService.uploadFile(file: coursevedioitementity.file!);
+      coursevedioitementity.vedioUrl = url;
+      return right(null);
+    } catch (e) {
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> uploadFile(
+      {required Coursefileentity coursefileEntity}) async {
+    try {
+      String url =
+          await storageService.uploadFile(file: coursefileEntity.file!);
+      coursefileEntity.fileUrl = url;
+      return right(null);
+    } catch (e) {
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
   }
 }

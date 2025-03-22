@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/DisplayVediRequiresEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomFileListViewItem.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomTestListViewItem.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomVedioListViewItem.dart';
@@ -14,7 +14,7 @@ class CustomSectionListView extends StatelessWidget {
   });
   final List items;
   Widget getChild(dynamic item, BuildContext context) {
-    if (item is Displayvedirequiresentity) {
+    if (item is Coursevedioitementity) {
       return CustomVedioListViewItem(item: item);
     } else if (item is Coursetestentity) {
       return Customtestlistviewitem(item: item);

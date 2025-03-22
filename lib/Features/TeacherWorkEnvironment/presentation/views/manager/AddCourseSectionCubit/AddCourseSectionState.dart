@@ -45,3 +45,10 @@ final class AddCourseSectionVedioPicked extends AddCourseSectionState {
 }
 
 final class AddCourseSectionVedioUnPicked extends AddCourseSectionState {}
+
+final class AddCourseSectionFilePicked extends AddCourseSectionState {
+  final File file;
+  AddCourseSectionFilePicked({required this.file});
+}
+
+final class AddCourseSectionFileUnPicked extends AddCourseSectionState {}
