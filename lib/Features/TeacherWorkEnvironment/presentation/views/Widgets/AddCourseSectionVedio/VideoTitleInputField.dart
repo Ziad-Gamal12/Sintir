@@ -1,0 +1,25 @@
+import 'package:flutter/material.dart';
+import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
+
+class VideoTitleInputField extends StatelessWidget {
+  const VideoTitleInputField({super.key, required this.courseVedioItemEntity});
+  final Coursevedioitementity courseVedioItemEntity;
+  @override
+  Widget build(BuildContext context) {
+    return Customteaxtfield(
+      hintText: "يرجى كتابة اسم الفيديو هنا ...",
+      obscureText: false,
+      textInputType: TextInputType.text,
+      onSaved: (value) {
+        courseVedioItemEntity.title = value!;
+      },
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "ادخل اسم الفيديو";
+        }
+        return null;
+      },
+    );
+  }
+}

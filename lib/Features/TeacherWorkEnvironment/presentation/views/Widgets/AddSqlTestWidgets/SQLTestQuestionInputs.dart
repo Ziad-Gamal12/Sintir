@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/CustomQuestionSolutionsList.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/addcourseSQLTEstQuestionItemTextField.dart';
@@ -9,8 +10,11 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manage
 class SQLTestQuestionInputs extends StatelessWidget {
   const SQLTestQuestionInputs({
     super.key,
+    required this.courseTestEntity,
+    required this.coursetestquestionentity,
   });
-
+  final Coursetestquestionentity coursetestquestionentity;
+  final Coursetestentity courseTestEntity;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,14 +28,19 @@ class SQLTestQuestionInputs extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          const AddcourseSQLTEstQuestionItemTextField(),
+          AddcourseSQLTEstQuestionItemTextField(
+            coursetestquestionentity: coursetestquestionentity,
+          ),
           const SizedBox(
             height: 10,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const CustomQuestionSolutionsList(),
+              CustomQuestionSolutionsList(
+                question: coursetestquestionentity,
+                coursetestentity: courseTestEntity,
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -42,7 +51,7 @@ class SQLTestQuestionInputs extends StatelessWidget {
                   textColor: Colors.black,
                   onPressed: () {
                     context.read<AddCourseSectionCubit>().addSolution(
-                          question: context.read<Coursetestquestionentity>(),
+                          question: coursetestquestionentity,
                         );
                   })
             ],

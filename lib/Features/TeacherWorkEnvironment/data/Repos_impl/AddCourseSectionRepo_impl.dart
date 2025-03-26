@@ -82,26 +82,26 @@ class AddcoursesectionrepoImpl implements Addcoursesectionrepo {
   }
 
   @override
-  Future<Either<Failure, void>> uploadVideo(
+  Future<Either<Failure, String>> uploadVideo(
       {required Coursevedioitementity coursevedioitementity}) async {
     try {
       String url =
           await storageService.uploadFile(file: coursevedioitementity.file!);
-      coursevedioitementity.vedioUrl = url;
-      return right(null);
+
+      return right(url);
     } catch (e) {
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
 
   @override
-  Future<Either<Failure, void>> uploadFile(
+  Future<Either<Failure, String>> uploadFile(
       {required Coursefileentity coursefileEntity}) async {
     try {
       String url =
           await storageService.uploadFile(file: coursefileEntity.file!);
-      coursefileEntity.fileUrl = url;
-      return right(null);
+
+      return right(url);
     } catch (e) {
       return left(ServerFailure(message: "حدث خطأ ما"));
     }

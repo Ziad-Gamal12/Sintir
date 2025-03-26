@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionSolutionEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/AddCourseSectionSQlTestListView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/AddCourseSectionSqlTestAddQuestionsActionbutton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/CustomAddCourseSectionSqlNameAndDuration.dart';
@@ -12,13 +13,23 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manage
 import 'package:sintir/constant.dart';
 
 class AddcoursesectionsqlviewBody extends StatelessWidget {
-  const AddcoursesectionsqlviewBody({super.key, required this.courseEntity});
-  final CourseEntity courseEntity;
+  const AddcoursesectionsqlviewBody({
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
-    Coursetestentity coursetestentity =
-        context.read<AddCourseSectionCubit>().coursetestentity;
-
+    Coursetestentity coursetestentity = Coursetestentity(
+      questions: [
+        Coursetestquestionentity(
+            isOpened: false,
+            questionTitle: "",
+            solutions: [
+              Coursetestquestionsolutionentity(answer: "0", isCorrect: false)
+            ])
+      ],
+      title: Variables.AddsqlTestName.text,
+      durationTime: int.tryParse(Variables.AddsqlTestDuration.text) ?? 0,
+    );
     return BlocBuilder<AddCourseSectionCubit, AddCourseSectionState>(
       builder: (context, state) {
         return Form(
@@ -40,12 +51,12 @@ class AddcoursesectionsqlviewBody extends StatelessWidget {
                       ),
                     ),
                     Addcoursesectionsqltestlistview(
-                      questions: coursetestentity.questions,
+                      coursetestentity: coursetestentity,
                     )
                   ],
                 ),
                 AddCourseSectionSqlTestActionbuttons(
-                  courseEntity: courseEntity,
+                  courseTestEntity: coursetestentity,
                 ),
               ],
             ),

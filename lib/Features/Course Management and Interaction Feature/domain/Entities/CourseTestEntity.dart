@@ -23,18 +23,18 @@ class Coursetestentity {
   });
 
   void addQuestion(Coursetestquestionentity? question) {
-    if (question != null) {
-      questions.add(question);
-    }
-    questions.add(Coursetestquestionentity(
-        isOpened: false,
-        questionTitle: "",
-        solutions: [
-          Coursetestquestionsolutionentity(answer: "", isCorrect: false)
-        ]));
+    question ??= Coursetestquestionentity(
+      isOpened: false,
+      questionTitle: "",
+      solutions: [
+        Coursetestquestionsolutionentity(answer: "0", isCorrect: false)
+      ],
+    );
+    questions.add(question);
   }
 
   void removeQuestion(Coursetestquestionentity question) {
+    question.questionController.dispose();
     questions.remove(question);
   }
 }

@@ -33,6 +33,8 @@ class _AddCourseSQlAddSolutionItemState
             }),
         Expanded(
           child: Customteaxtfield(
+              controller:
+                  widget.coursetestquestionsolutionentity.solutionController,
               hintText: "يرجى كتابه الاجابه هنا ...",
               obscureText: false,
               textInputType: TextInputType.text,

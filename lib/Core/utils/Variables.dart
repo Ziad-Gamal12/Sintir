@@ -17,6 +17,8 @@ abstract class Variables {
   static GlobalKey<FormState> TeacherSignUpFormKey = GlobalKey<FormState>();
   static GlobalKey<FormState> StudnetSignUpFormKey = GlobalKey<FormState>();
   static GlobalKey<FormState> TeacherLoginFormKey = GlobalKey<FormState>();
+  static GlobalKey<FormState> AddCourseSectionVideoItemFormKey =
+      GlobalKey<FormState>();
   static GlobalKey<FormState> AddCourseSectionFormKey = GlobalKey<FormState>();
   static GlobalKey<FormState> TeacherResetPasswordFormKey =
       GlobalKey<FormState>();

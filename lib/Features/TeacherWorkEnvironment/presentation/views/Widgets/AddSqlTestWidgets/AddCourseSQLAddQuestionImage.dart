@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
@@ -9,9 +8,11 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 
 class Addcoursesqladdquestionimage extends StatefulWidget {
   const Addcoursesqladdquestionimage(
-      {super.key, required this.pickerassetsservice});
+      {super.key,
+      required this.pickerassetsservice,
+      required this.coursetestquestionentity});
   final Pickerassetsservice pickerassetsservice;
-
+  final Coursetestquestionentity coursetestquestionentity;
   @override
   State<Addcoursesqladdquestionimage> createState() =>
       _AddcoursesqladdquestionimageState();
@@ -21,14 +22,12 @@ class _AddcoursesqladdquestionimageState
     extends State<Addcoursesqladdquestionimage> {
   @override
   Widget build(BuildContext context) {
-    Coursetestquestionentity question =
-        context.read<Coursetestquestionentity>();
     return InkWell(
       onTap: () async {
         File? image = await widget.pickerassetsservice
             .getImage(source: ImageSource.gallery);
         if (context.mounted) {
-          question.imageFile = image;
+          widget.coursetestquestionentity.imageFile = image;
           setState(() {});
         }
       },
@@ -40,9 +39,9 @@ class _AddcoursesqladdquestionimageState
           color: const Color(0xffF9FAFA),
           borderRadius: BorderRadius.circular(10),
         ),
-        child: question.imageFile != null
+        child: widget.coursetestquestionentity.imageFile != null
             ? Image.file(
-                question.imageFile!,
+                widget.coursetestquestionentity.imageFile!,
                 fit: BoxFit.cover,
               )
             : Image.asset(

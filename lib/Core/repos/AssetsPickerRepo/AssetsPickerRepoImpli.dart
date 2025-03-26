@@ -76,7 +76,7 @@ class Assetspickerrepoimpli implements Assetspickerrepo {
   Future<Either<Failure, File>> pickVideoFromGallery() async {
     try {
       File? file =
-          await pickerassetsservice.getVideo(source: ImageSource.camera);
+          await pickerassetsservice.getVideo(source: ImageSource.gallery);
       if (file != null) {
         return right(file);
       } else {

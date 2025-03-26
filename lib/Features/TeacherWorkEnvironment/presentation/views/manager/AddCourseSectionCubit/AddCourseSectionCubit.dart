@@ -6,8 +6,6 @@ import 'package:meta/meta.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
-import 'package:sintir/Core/utils/Variables.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
@@ -23,46 +21,28 @@ class AddCourseSectionCubit extends Cubit<AddCourseSectionState> {
     this.assetspickerrepo,
   ) : super(AddCourseSectionInitial());
   final Addcoursesectionrepo addcoursesectionrepo;
-
   final Assetspickerrepo assetspickerrepo;
-  CoursSectionsListItemEntity coursSectionsListItemEntity =
-      CoursSectionsListItemEntity(
-    title: Variables.AddCoursesectionNameController.text,
-    subtitle: Variables.AddCoursesesectionDescriptionController.text,
-    items: [],
-  );
-  Coursetestentity coursetestentity = Coursetestentity(
-    questions: [
-      Coursetestquestionentity(isOpened: false, questionTitle: "", solutions: [
-        Coursetestquestionsolutionentity(answer: "0", isCorrect: false)
-      ])
-    ],
-    title: Variables.AddsqlTestName.text,
-    durationTime: int.tryParse(Variables.AddsqlTestDuration.text) ?? 0,
-  );
-  Coursevedioitementity coursevedioitementity =
-      Coursevedioitementity(title: "", vedioUrl: "", durationTime: 0);
 
-  int currentSolutionIndex = -1;
-  int previousSolutionIndex = -1;
-
-  void addNewQuestion() {
+  void addNewQuestion({required Coursetestentity coursetestentity}) {
     coursetestentity.addQuestion(null);
     emit(AddCourseSectionTestQuestionAdded());
   }
 
-  void removeQuestion({required Coursetestquestionentity question}) {
+  void removeQuestion(
+      {required Coursetestentity coursetestentity,
+      required Coursetestquestionentity question}) {
     coursetestentity.removeQuestion(question);
     emit(AddCourseSectionTestQuestionRemoved());
   }
 
   void removeSolutin(
       {required Coursetestquestionsolutionentity solution,
+      required Coursetestentity coursetestentity,
       required Coursetestquestionentity question}) {
     if (question.solutions.length > 1) {
       question.removeSolution(solution);
     } else {
-      removeQuestion(question: question);
+      removeQuestion(question: question, coursetestentity: coursetestentity);
     }
     emit(AddCourseSectionTestSolutionRemoved());
   }
@@ -74,13 +54,10 @@ class AddCourseSectionCubit extends Cubit<AddCourseSectionState> {
 
   void changeSelectedSolution(
       {required Coursetestquestionentity question, required int index}) {
-    previousSolutionIndex = currentSolutionIndex;
-    currentSolutionIndex = index;
-    if (previousSolutionIndex != -1) {
-      question.solutions[previousSolutionIndex].isCorrect = false;
-      question.solutions[currentSolutionIndex].isCorrect = true;
+    for (var solution in question.solutions) {
+      solution.isCorrect = false;
     }
-    question.solutions[currentSolutionIndex].isCorrect = true;
+    question.solutions[index].isCorrect = true;
 
     emit(AddCourseSectionTestSolutionChanged());
   }
@@ -93,65 +70,20 @@ class AddCourseSectionCubit extends Cubit<AddCourseSectionState> {
       courseEntity: courseEntity,
     );
     result.fold((failure) {
-      emit(AddCourseSectionAddSectionFailure(errMessage: failure.message));
+      emit(UpdateCourseSectionsFailure(errMessage: failure.message));
     }, (success) {
-      emit(AddCourseSectionAddSectionSuccess());
+      emit(UpdateCourseSectionsSuccess());
     });
   }
 
-  void addSQlTest(
-      {required Coursetestentity test,
-      required CoursSectionsListItemEntity section,
-      bool isUpdate = false,
-      required CourseEntity courseEntity}) async {
-    emit(AddCourseSectionAddSectionLoading());
-    var resulte = await addcoursesectionrepo.uploadTestQuestionsImages(
-        questions: test.questions);
-    resulte.fold((failure) {
-      emit(AddCourseSectionAddSectionFailure(errMessage: failure.message));
-    }, (success) {
-      section.items.add(test);
-      if (courseEntity.coursSectionsListItemEntity != null) {
-        if (isUpdate == false) {
-          courseEntity.coursSectionsListItemEntity!.add(section);
-        }
-        updateCourseSections(courseEntity: courseEntity);
-      } else {
-        emit(AddCourseSectionAddSectionFailure(errMessage: "حدث خطأ ما"));
-      }
-    });
-  }
-
-  void addVideo(
-      {required Coursevedioitementity coursevedioitementity,
-      required CoursSectionsListItemEntity section,
-      bool isUpdate = false,
-      required CourseEntity courseEntity}) async {
-    emit(AddCourseSectionAddSectionLoading());
-    var resulte = await addcoursesectionrepo.uploadVideo(
-        coursevedioitementity: coursevedioitementity);
-    resulte.fold((failure) {
-      emit(AddCourseSectionAddSectionFailure(errMessage: failure.message));
-    }, (success) {
-      section.items.add(coursevedioitementity);
-      if (courseEntity.coursSectionsListItemEntity != null) {
-        if (isUpdate == false) {
-          courseEntity.coursSectionsListItemEntity!.add(section);
-        }
-        updateCourseSections(courseEntity: courseEntity);
-      } else {
-        emit(AddCourseSectionAddSectionFailure(errMessage: "حدث خطأ ما"));
-      }
-    });
-  }
-
-  void pickSectionVedio() async {
+  void pickSectionVedio(
+      {required Coursevedioitementity coursevedioitementity}) async {
     final result = await assetspickerrepo.pickVideoFromGallery();
     result.fold((failure) {
       emit(AddCourseSectionVedioUnPicked());
     }, (vedio) {
       coursevedioitementity.file = vedio;
-      emit(AddCourseSectionVedioPicked(vedioFile: vedio));
+      emit(AddCourseSectionVedioPicked(videoFile: vedio));
     });
   }
 
@@ -164,25 +96,42 @@ class AddCourseSectionCubit extends Cubit<AddCourseSectionState> {
     });
   }
 
-  void addFile(
-      {required Coursefileentity file,
-      required CoursSectionsListItemEntity section,
-      bool isUpdate = false,
-      required CourseEntity courseEntity}) async {
-    emit(AddCourseSectionAddSectionLoading());
-    var resulte = await addcoursesectionrepo.uploadFile(coursefileEntity: file);
+  void uploadFile({
+    required Coursefileentity coursefileEntity,
+  }) async {
+    emit(FileUploadedingLoading());
+    var result = await addcoursesectionrepo.uploadFile(
+        coursefileEntity: coursefileEntity);
+    result.fold((failure) {
+      emit(FileUploadedingFailure(errMessage: failure.message));
+    }, (url) {
+      emit(FileUploadedingSuccuss(url: url));
+    });
+  }
+
+  void uploadVideo({
+    required Coursevedioitementity coursevedioitementity,
+  }) async {
+    emit(VideoUploadedingLoading());
+    var result = await addcoursesectionrepo.uploadVideo(
+        coursevedioitementity: coursevedioitementity);
+    result.fold((failure) {
+      emit(VideoUploadedingFailure(errMessage: failure.message));
+    }, (url) {
+      emit(VideoUploadedingSuccuss(url: url));
+    });
+  }
+
+  void uploadTestQuestionsImages({
+    required Coursetestentity test,
+  }) async {
+    emit(QuestionsImagesUploadedingLoading());
+    var resulte = await addcoursesectionrepo.uploadTestQuestionsImages(
+        questions: test.questions);
     resulte.fold((failure) {
-      emit(AddCourseSectionAddSectionFailure(errMessage: failure.message));
+      emit(QuestionsImagesUploadedingFailure(errMessage: failure.message));
     }, (success) {
-      section.items.add(file);
-      if (courseEntity.coursSectionsListItemEntity != null) {
-        if (isUpdate == false) {
-          courseEntity.coursSectionsListItemEntity!.add(section);
-        }
-        updateCourseSections(courseEntity: courseEntity);
-      } else {
-        emit(AddCourseSectionAddSectionFailure(errMessage: "حدث خطأ ما"));
-      }
+      emit(QuestionsImagesUploadedingSuccuss());
     });
   }
 }

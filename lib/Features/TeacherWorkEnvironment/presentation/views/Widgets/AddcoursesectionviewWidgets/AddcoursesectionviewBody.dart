@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable, file_names
 
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/AddCourseSectionContentOptions.dart';
@@ -9,8 +8,9 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/constant.dart';
 
 class Addcoursesectionviewbody extends StatelessWidget {
-  const Addcoursesectionviewbody({super.key, required this.courseEntity});
-  final CourseEntity courseEntity;
+  const Addcoursesectionviewbody({
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -33,9 +33,7 @@ class Addcoursesectionviewbody extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            AddCourseSectionContentOptions(
-              courseEntity: courseEntity,
-            )
+            const AddCourseSectionContentOptions()
           ],
         ),
       ),

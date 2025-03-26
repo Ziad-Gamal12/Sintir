@@ -1,76 +1,60 @@
 // ignore_for_file: must_be_immutable, file_names
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
-import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
-import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
-import 'package:sintir/Core/widgets/Video%20Previewer%20Widgets/CustomDisplayingVedioWidget.dart';
+import 'package:sintir/Core/widgets/showSnackBar.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
+import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/CustomAddCourseVideoSectionButton.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/VideoPreviewWidget.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/VideoTitleInputField.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseSectionCubit/AddCourseSectionCubit.dart';
 import 'package:sintir/constant.dart';
 
-class Addcoursesectionvedioviewbody extends StatelessWidget {
-  Addcoursesectionvedioviewbody({super.key, required this.courseEntity});
-  File? vedioFile;
-  final CourseEntity courseEntity;
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+class Addcoursesectionvedioviewbody extends StatefulWidget {
+  const Addcoursesectionvedioviewbody({
+    super.key,
+  });
+
+  @override
+  State<Addcoursesectionvedioviewbody> createState() =>
+      _AddcoursesectionvedioviewbodyState();
+}
+
+class _AddcoursesectionvedioviewbodyState
+    extends State<Addcoursesectionvedioviewbody> {
+  Coursevedioitementity coursevedioitementity =
+      Coursevedioitementity(title: "", vedioUrl: "", durationTime: 0);
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AddCourseSectionCubit, AddCourseSectionState>(
       listener: (context, state) {
-        if (state is AddCourseSectionVedioPicked) {
-          vedioFile = state.vedioFile;
-        } else if (state is AddCourseSectionVedioUnPicked) {
-          vedioFile = null;
-        } else if (state is AddCourseSectionAddSectionSuccess) {
-          successdialog(
-                  context: context,
-                  SuccessMessage: "تم اضافة الفديو بنجاح",
-                  btnOkOnPress: () {})
-              .show();
-        } else if (state is AddCourseSectionAddSectionFailure) {
-          errordialog(context, state.errMessage).show();
-        }
+        addCourseSectionVideoBlocListener(state, context);
       },
       builder: (context, state) => Stack(
         children: [
           Form(
-            key: formKey,
+            key: Variables.AddCourseSectionVideoItemFormKey,
             child: Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: KHorizontalPadding, vertical: KVerticalPadding),
               child: Column(
                 children: [
-                  Customteaxtfield(
-                      hintText: "يرجى كتابه أسم الفديو هنا ...",
-                      obscureText: false,
-                      textInputType: TextInputType.text,
-                      onSaved: (value) {
-                        context.read<Coursevedioitementity>().title = value!;
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "ادخل اسم الفديو";
-                        }
-                        return null;
-                      }),
-                  const SizedBox(
-                    height: 10,
+                  VideoTitleInputField(
+                    courseVedioItemEntity: coursevedioitementity,
                   ),
-                  vedioFile == null
-                      ? const SizedBox()
-                      : CustomDisplayingVideoWidget(
-                          durtationChanged: (value) {
-                            context.read<Coursevedioitementity>().durationTime =
-                                value;
-                          },
-                          file: vedioFile,
+                  const SizedBox(height: 10),
+                  coursevedioitementity.file != null
+                      ? VideoPreviewWidget(
+                          videoFile: coursevedioitementity.file!,
+                          coursevedioitementity: coursevedioitementity,
                         )
+                      : const SizedBox()
                 ],
               ),
             ),
@@ -79,15 +63,49 @@ class Addcoursesectionvedioviewbody extends StatelessWidget {
             left: 16,
             right: 16,
             bottom: 32,
-            child: Custom_Loading_Widget(
-                isLoading: state is AddCourseSectionAddSectionLoading,
-                child: CustomAddCourseVideoSectionButton(
-                    vedioFile: vedioFile,
-                    formKey: formKey,
-                    courseEntity: courseEntity)),
+            child: CustomAddCourseVideoSectionButton(
+              coursevedioitementity: coursevedioitementity,
+            ),
           )
         ],
       ),
     );
+  }
+
+  void addCourseSectionVideoBlocListener(
+      AddCourseSectionState state, BuildContext context) {
+    if (state is VideoUploadedingSuccuss) {
+      videoUploadingSuccess(context, state);
+    } else if (state is VideoUploadedingFailure) {
+      showSnackBar(context, state.errMessage);
+    } else if (state is UpdateCourseSectionsSuccess) {
+      successdialog(
+          context: context,
+          SuccessMessage: "تم اضافة الملف بنجاح",
+          btnOkOnPress: () {
+            context.go(
+              Homeview.routeName,
+            );
+          }).show();
+    } else if (state is UpdateCourseSectionsFailure) {
+      errordialog(context, state.errMessage).show();
+    } else if (state is AddCourseSectionVedioPicked) {
+      coursevedioitementity.file = state.videoFile;
+    } else if (state is AddCourseSectionVedioUnPicked) {
+      showSnackBar(context, "لم يتم اختيار فيديو");
+    }
+  }
+
+  void videoUploadingSuccess(
+      BuildContext context, VideoUploadedingSuccuss state) {
+    Optionnavigationrequirementsentity optionnavigationrequirementsentity =
+        context.read<Optionnavigationrequirementsentity>();
+    Variables.AddCourseSectionVideoItemFormKey.currentState!.save();
+    coursevedioitementity.vedioUrl = state.url;
+    optionnavigationrequirementsentity.section.items.add(coursevedioitementity);
+    optionnavigationrequirementsentity.course.coursSectionsListItemEntity!
+        .add(optionnavigationrequirementsentity.section);
+    context.read<AddCourseSectionCubit>().updateCourseSections(
+        courseEntity: optionnavigationrequirementsentity.course);
   }
 }

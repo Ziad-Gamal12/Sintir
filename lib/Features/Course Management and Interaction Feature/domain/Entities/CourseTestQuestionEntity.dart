@@ -2,11 +2,13 @@
 
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionSolutionEntity.dart';
 
 class Coursetestquestionentity {
   String? questionTitle;
   List<Coursetestquestionsolutionentity> solutions;
+  TextEditingController questionController;
   bool isOpened;
   String? imageUrl;
   String? selectedSolution;
@@ -18,7 +20,8 @@ class Coursetestquestionentity {
       required this.isOpened,
       this.imageUrl,
       this.imageFile,
-      this.selectedSolution = ""});
+      this.selectedSolution = ""})
+      : questionController = TextEditingController(text: questionTitle);
 
   int index = 0;
   addSolution(Coursetestquestionsolutionentity? solution) {
@@ -31,6 +34,7 @@ class Coursetestquestionentity {
   }
 
   removeSolution(Coursetestquestionsolutionentity solution) {
+    solution.solutionController.dispose();
     solutions.remove(solution);
   }
 }

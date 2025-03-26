@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseSectionCubit/AddCourseSectionCubit.dart';
@@ -10,11 +9,12 @@ class CustomAddCourseSectionFileActionButton extends StatelessWidget {
   const CustomAddCourseSectionFileActionButton({
     super.key,
     required this.formKey,
+    required this.fileentity,
   });
+  final Coursefileentity fileentity;
   final GlobalKey<FormState> formKey;
   @override
   Widget build(BuildContext context) {
-    var fileentity = context.read<Coursefileentity>();
     return BlocBuilder<AddCourseSectionCubit, AddCourseSectionState>(
       builder: (context, state) {
         return Custombutton(
@@ -27,13 +27,9 @@ class CustomAddCourseSectionFileActionButton extends StatelessWidget {
                     .pickSectionFile();
               } else {
                 if (formKey.currentState!.validate()) {
-                  formKey.currentState!.save();
-                  BlocProvider.of<AddCourseSectionCubit>(context).addFile(
-                      file: fileentity,
-                      section: context
-                          .read<AddCourseSectionCubit>()
-                          .coursSectionsListItemEntity,
-                      courseEntity: context.read<CourseEntity>());
+                  BlocProvider.of<AddCourseSectionCubit>(context).uploadFile(
+                    coursefileEntity: fileentity,
+                  );
                 }
               }
             });

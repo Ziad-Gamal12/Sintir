@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 
 class AddCourseSectionFileTextFields extends StatelessWidget {
   const AddCourseSectionFileTextFields({
     super.key,
+    required this.coursefilEentity,
   });
-
+  final Coursefileentity coursefilEentity;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -17,7 +17,7 @@ class AddCourseSectionFileTextFields extends StatelessWidget {
             obscureText: false,
             textInputType: TextInputType.text,
             onSaved: (value) {
-              context.read<Coursefileentity>().title = value!;
+              coursefilEentity.title = value!;
             },
             validator: (value) {
               if (value!.isEmpty) {
@@ -34,7 +34,7 @@ class AddCourseSectionFileTextFields extends StatelessWidget {
             obscureText: false,
             textInputType: TextInputType.text,
             onSaved: (value) {
-              context.read<Coursefileentity>().description = value!;
+              coursefilEentity.description = value!;
             },
             validator: (value) {
               if (value!.isEmpty) {

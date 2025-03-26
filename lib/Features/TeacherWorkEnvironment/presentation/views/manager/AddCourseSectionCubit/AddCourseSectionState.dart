@@ -30,18 +30,18 @@ final class AddCourseSectionTestQuestionUploadImageFailure
   AddCourseSectionTestQuestionUploadImageFailure({required this.errMessage});
 }
 
-final class AddCourseSectionAddSectionLoading extends AddCourseSectionState {}
+final class UpdateCourseSectionsLoading extends AddCourseSectionState {}
 
-final class AddCourseSectionAddSectionSuccess extends AddCourseSectionState {}
+final class UpdateCourseSectionsSuccess extends AddCourseSectionState {}
 
-final class AddCourseSectionAddSectionFailure extends AddCourseSectionState {
+final class UpdateCourseSectionsFailure extends AddCourseSectionState {
   final String errMessage;
-  AddCourseSectionAddSectionFailure({required this.errMessage});
+  UpdateCourseSectionsFailure({required this.errMessage});
 }
 
 final class AddCourseSectionVedioPicked extends AddCourseSectionState {
-  final File vedioFile;
-  AddCourseSectionVedioPicked({required this.vedioFile});
+  final File videoFile;
+  AddCourseSectionVedioPicked({required this.videoFile});
 }
 
 final class AddCourseSectionVedioUnPicked extends AddCourseSectionState {}
@@ -52,3 +52,36 @@ final class AddCourseSectionFilePicked extends AddCourseSectionState {
 }
 
 final class AddCourseSectionFileUnPicked extends AddCourseSectionState {}
+
+final class VideoUploadedingSuccuss extends AddCourseSectionState {
+  final String url;
+  VideoUploadedingSuccuss({required this.url});
+}
+
+final class VideoUploadedingFailure extends AddCourseSectionState {
+  final String errMessage;
+  VideoUploadedingFailure({required this.errMessage});
+}
+
+final class VideoUploadedingLoading extends AddCourseSectionState {}
+
+final class FileUploadedingSuccuss extends AddCourseSectionState {
+  final String url;
+  FileUploadedingSuccuss({required this.url});
+}
+
+final class FileUploadedingFailure extends AddCourseSectionState {
+  final String errMessage;
+  FileUploadedingFailure({required this.errMessage});
+}
+
+final class FileUploadedingLoading extends AddCourseSectionState {}
+
+final class QuestionsImagesUploadedingSuccuss extends AddCourseSectionState {}
+
+final class QuestionsImagesUploadedingFailure extends AddCourseSectionState {
+  final String errMessage;
+  QuestionsImagesUploadedingFailure({required this.errMessage});
+}
+
+final class QuestionsImagesUploadedingLoading extends AddCourseSectionState {}

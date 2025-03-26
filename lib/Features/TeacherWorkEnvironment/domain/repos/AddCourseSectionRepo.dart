@@ -12,10 +12,10 @@ abstract class Addcoursesectionrepo {
   Future<Either<Failure, void>> updateCourseSections({
     required CourseEntity courseEntity,
   });
-  Future<Either<Failure, void>> uploadVideo({
+  Future<Either<Failure, String>> uploadVideo({
     required Coursevedioitementity coursevedioitementity,
   });
-  Future<Either<Failure, void>> uploadFile({
+  Future<Either<Failure, String>> uploadFile({
     required Coursefileentity coursefileEntity,
   });
 }
