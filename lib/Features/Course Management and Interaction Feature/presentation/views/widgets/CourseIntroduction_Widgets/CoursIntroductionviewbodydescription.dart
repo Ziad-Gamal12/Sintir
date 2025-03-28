@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 
@@ -10,7 +11,8 @@ class CoursIntroductionviewbodydescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CourseEntity course = context.read<CourseEntity>();
+    CourseEntity course =
+        context.read<Bottomsheetnavigationrequirmentsentity>().course;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

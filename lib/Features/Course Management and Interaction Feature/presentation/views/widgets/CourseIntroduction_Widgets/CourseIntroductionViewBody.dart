@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseContentListView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/CoursIntroductionviewbodydescription.dart';
@@ -42,7 +42,11 @@ class CourseIntroductionViewBody extends StatelessWidget {
               height: 15,
             ),
           ),
-          if (context.read<CourseEntity>().coursSectionsListItemEntity!.isEmpty)
+          if (context
+              .read<Bottomsheetnavigationrequirmentsentity>()
+              .course
+              .coursSectionsListItemEntity!
+              .isEmpty)
             SliverToBoxAdapter(
               child: Center(
                   child: Text(
@@ -52,8 +56,10 @@ class CourseIntroductionViewBody extends StatelessWidget {
             )
           else
             CourseContentListView(
-              courseSectionsEntity:
-                  context.read<CourseEntity>().coursSectionsListItemEntity!,
+              courseSectionsEntity: context
+                  .read<Bottomsheetnavigationrequirmentsentity>()
+                  .course
+                  .coursSectionsListItemEntity!,
             )
         ],
       ),

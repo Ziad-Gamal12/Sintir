@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, camel_case_types
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordView.dart';
 import 'package:sintir/Features/AI_Chat/presentation/views/aiChatView.dart';
@@ -151,7 +152,8 @@ class App_router {
         path: CourseIntroductionView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return CourseIntroductionView(
-            course: state.extra as CourseEntity,
+            bottomsheetnavigationrequirmentsentity:
+                state.extra as Bottomsheetnavigationrequirmentsentity,
           );
         },
       ),

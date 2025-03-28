@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/InfoRow.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFedBackView.dart';
@@ -16,7 +16,7 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var course = context.read<CourseEntity>();
+    var course = context.read<Bottomsheetnavigationrequirmentsentity>().course;
     return Column(
       children: [
         Row(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:sintir/Core/helper/CourseHelper.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseBottomSheet.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
@@ -26,7 +28,10 @@ class Leatestcoursesglideview extends StatelessWidget {
                 Variables.HomeViewScaffoldKey.currentState!
                     .showBottomSheet((context) {
                   return CourseBottomSheet(
-                    course: courses[index],
+                    bottomsheetnavigationrequirmentsentity:
+                        Bottomsheetnavigationrequirmentsentity(
+                            course: courses[index],
+                            isSubscribed: isSubscribed(course: courses[index])),
                   );
                 });
               },

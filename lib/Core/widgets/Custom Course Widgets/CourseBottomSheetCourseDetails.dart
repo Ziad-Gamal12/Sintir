@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
@@ -6,11 +8,11 @@ import 'package:sintir/constant.dart';
 class CourseBottomSheetCourseDetails extends StatelessWidget {
   const CourseBottomSheetCourseDetails({
     super.key,
-    required this.course,
   });
-  final CourseEntity course;
   @override
   Widget build(BuildContext context) {
+    CourseEntity course =
+        context.read<Bottomsheetnavigationrequirmentsentity>().course;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -36,17 +38,21 @@ class CourseBottomSheetCourseDetails extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        Text.rich(
-          TextSpan(children: [
-            TextSpan(
-                text: "المبلغ :    ",
-                style: AppTextStyles.semiBold20.copyWith(color: Colors.black)),
-            TextSpan(
-                text: " ${course.price}\$ (شهرى)",
-                style:
-                    AppTextStyles.bold20Auto.copyWith(color: KSecondaryColor))
-          ]),
-        ),
+        context.read<Bottomsheetnavigationrequirmentsentity>().isSubscribed ==
+                true
+            ? Container()
+            : Text.rich(
+                TextSpan(children: [
+                  TextSpan(
+                      text: "المبلغ :    ",
+                      style: AppTextStyles.semiBold20
+                          .copyWith(color: Colors.black)),
+                  TextSpan(
+                      text: " ${course.price}\$ (شهرى)",
+                      style: AppTextStyles.bold20Auto
+                          .copyWith(color: KSecondaryColor))
+                ]),
+              ),
       ],
     );
   }
