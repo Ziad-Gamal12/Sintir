@@ -5,10 +5,11 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
 
 class CourseEntity {
-  final String id, title, description, price, language, state;
+  final String id, title, description, language, state;
+  final int price;
   final List<Subscriberentity> subscripersIDS;
   String? posterUrl;
-  final DateTime postedDate;
+  final String postedDate;
   Contentcreaterentity? contentcreaterentity;
   List<CoursSectionsListItemEntity>? coursSectionsListItemEntity;
   final List<CoursefedbackItemEntity> coursefedbackItemEntity;

@@ -38,7 +38,7 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
                   height: 10,
                 ),
                 Text(
-                  "تاريخ اللنشر(${course.postedDate.year}/${course.postedDate.month}/${course.postedDate.day}))",
+                  "تاريخ اللنشر(${course.postedDate})",
                   style: AppTextStyles.regular10
                       .copyWith(color: const Color(0xff818181)),
                 ),

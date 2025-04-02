@@ -5,14 +5,17 @@ import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepoImpli.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo_impl.dart';
-import 'package:sintir/Core/repos/UserRepos.dart/UserRepoImpli.dart';
-import 'package:sintir/Core/repos/UserRepos.dart/userRepo.dart';
+import 'package:sintir/Core/repos/PaymentRepo/paymentRepo.dart';
+import 'package:sintir/Core/repos/PaymentRepo/paymentRepo_impli.dart';
+import 'package:sintir/Core/repos/UserRepos/UserRepoImpli.dart';
+import 'package:sintir/Core/repos/UserRepos/userRepo.dart';
 import 'package:sintir/Core/repos/authRepos/authRepo_impli.dart';
 import 'package:sintir/Core/repos/authRepos/authrepo.dart';
 import 'package:sintir/Core/services/DateBaseService.dart';
 import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/FirebaseStorageService.dart';
 import 'package:sintir/Core/services/Firebase_FirestoreService.dart';
+import 'package:sintir/Core/services/PayMobService.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/services/sqfliteServices.dart';
@@ -54,4 +57,6 @@ void setup_Getit() {
       pickerassetsservice: getIt<Pickerassetsservice>()));
   getIt.registerSingleton<Assetspickerrepo>(
       Assetspickerrepoimpli(pickerassetsservice: getIt<Pickerassetsservice>()));
+  getIt.registerSingleton<Paymentrepo>(
+      PaymentrepoImpli(payMobService: PayMobService()));
 }

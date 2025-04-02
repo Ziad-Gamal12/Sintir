@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
-import 'package:sintir/Core/repos/UserRepos.dart/userRepo.dart';
+import 'package:sintir/Core/repos/UserRepos/userRepo.dart';
 import 'package:sintir/Features/StudenetAuth/domain/entities/studentEntity.dart';
 import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
 

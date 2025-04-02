@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/models/contentCreaterModel.dart';
 import 'package:sintir/Core/models/subscripersIDSModel.dart';
@@ -7,9 +6,10 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursereportsitemModel.dart';
 
 class Coursemodel {
-  final String id, posterUrl, title, description, price, language, state;
+  final String id, posterUrl, title, description, language, state;
   final List<Map<String, dynamic>> subscripersIDS;
-  final DateTime postedDate;
+  final int price;
+  final String postedDate;
   final Map contentcreaterentity;
   final List<Map<String, dynamic>> coursSectionsListItemEntity;
   final List<Map<String, dynamic>> coursefedbackItemEntity;
@@ -84,7 +84,7 @@ class Coursemodel {
       subscripersIDS: (json['subscripersIDS'] as List<dynamic>)
           .map((e) => e as Map<String, dynamic>)
           .toList(),
-      postedDate: (json['postedDate'] as Timestamp).toDate(),
+      postedDate: json['postedDate'],
       contentcreaterentity: json['contentcreaterentity'],
       coursSectionsListItemEntity:
           (json['coursSectionsListItemEntity'] as List<dynamic>)
@@ -127,7 +127,7 @@ class Coursemodel {
     );
   }
 
-  toJson() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'posterUrl': posterUrl,

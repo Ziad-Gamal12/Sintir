@@ -3,8 +3,8 @@ import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/helper/CourseHelper.dart';
 import 'package:sintir/Core/utils/Variables.dart';
-import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseBottomSheet.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
+import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheet.dart';
 
 class Leatestcoursesglideview extends StatelessWidget {
   const Leatestcoursesglideview({super.key, required this.courses});

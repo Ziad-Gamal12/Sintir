@@ -39,11 +39,13 @@ class CustomAddCourseActionButton extends StatelessWidget {
                       title: Variables.AddCourseCourseNameController.text,
                       description:
                           Variables.AddCourseCourseDescriptionController.text,
-                      price: Variables.AddCourseCoursePriceController.text,
+                      price: int.parse(
+                          Variables.AddCourseCoursePriceController.text),
                       language:
                           Variables.AddCourseCourseLanguageController.text,
                       subscripersIDS: [],
-                      postedDate: DateTime.now(),
+                      postedDate:
+                          "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}.}",
                       coursefedbackItemEntity: [],
                       courseReports: []);
                   context.read<AddCourseCubitCubit>().addCourse(

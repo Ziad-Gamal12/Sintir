@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
-import 'package:sintir/Core/repos/UserRepos.dart/userRepo.dart';
+import 'package:sintir/Core/repos/UserRepos/userRepo.dart';
 import 'package:sintir/Core/services/BlocObserver.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';

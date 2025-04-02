@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sintir/Core/entities/UserEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
-import 'package:sintir/Core/repos/UserRepos.dart/userRepo.dart';
+import 'package:sintir/Core/repos/UserRepos/userRepo.dart';
 import 'package:sintir/Core/services/DateBaseService.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';

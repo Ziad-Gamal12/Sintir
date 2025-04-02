@@ -61,7 +61,7 @@ class CustomCourseDetailsBodyCourse_Info extends StatelessWidget {
                 ],
               ),
               Text(
-                "تاريخ اللنشر  (${courseEntity.postedDate.day}/${courseEntity.postedDate.month}/${courseEntity.postedDate.year})",
+                "تاريخ اللنشر  (${courseEntity.postedDate})",
                 style: AppTextStyles.regular10
                     .copyWith(color: const Color(0xff818181)),
               ),

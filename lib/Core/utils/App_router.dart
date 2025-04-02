@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:sintir/Core/widgets/WebViewer/WebView.dart';
 import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordView.dart';
 import 'package:sintir/Features/AI_Chat/presentation/views/aiChatView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/EducationLevelsBooksSectionsView.dart';
@@ -270,6 +271,14 @@ class App_router {
           return Addcoursesectionfileview(
             optionnavigationrequirementsentity:
                 state.extra as Optionnavigationrequirementsentity,
+          );
+        },
+      ),
+      GoRoute(
+        path: Webviewer.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return Webviewer(
+            url: state.extra as String,
           );
         },
       ),

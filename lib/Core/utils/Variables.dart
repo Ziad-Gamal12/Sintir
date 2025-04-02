@@ -103,10 +103,10 @@ abstract class Variables {
       title: "أساسيات دمج الصور",
       description:
           "في كريتيڤز إكس بنحقق معادلة صعبة، معادلة إنك تستمتع و في نفس الوقت تستفيد .",
-      price: "120",
+      price: 120,
       language: "العربيه",
       subscripersIDS: [],
-      postedDate: DateTime(2024, 8, 11),
+      postedDate: "2022-12-12",
       contentcreaterentity: Contentcreaterentity(
           name: "Adel Gamal",
           profileImageUrl:
