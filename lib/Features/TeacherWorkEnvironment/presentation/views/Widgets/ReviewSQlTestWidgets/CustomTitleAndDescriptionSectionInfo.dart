@@ -7,7 +7,7 @@ class CustomTitleAndDescriptionSectionInfo extends StatelessWidget {
     super.key,
     required this.courseSectionEntity,
   });
-  final CoursSectionsListItemEntity courseSectionEntity;
+  final CourseSectionEntity courseSectionEntity;
 
   @override
   Widget build(BuildContext context) {

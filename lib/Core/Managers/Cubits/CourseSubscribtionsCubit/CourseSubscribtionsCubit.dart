@@ -1,23 +1,25 @@
+// ignore_for_file: file_names, depend_on_referenced_packages
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/BillingDataEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/OrderDataEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/PaymentDataEntity.dart';
-import 'package:sintir/Core/repos/PaymentRepo/paymentRepo.dart';
+import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
 import 'package:sintir/Features/StudenetAuth/domain/entities/studentEntity.dart';
 import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
 
-part 'payment_state.dart';
+part 'CourseSubscribtionsState.dart';
 
-class PaymentCubit extends Cubit<PaymentState> {
-  PaymentCubit(
-      {required this.paymentrepo,
+class CourseSubscribtionsCubit extends Cubit<CourseSubscribtionsState> {
+  CourseSubscribtionsCubit(
+      {required this.subscribtionRepo,
       required this.course,
       required this.student,
       required this.teacher})
-      : super(PaymentInitial());
-  final Paymentrepo paymentrepo;
+      : super(SubscribeToCoursesInitial());
+  final CourseSubscibtionsRepo subscribtionRepo;
   final CourseEntity course;
   teacherEntity? teacher;
   Studententity? student;
@@ -84,12 +86,44 @@ class PaymentCubit extends Cubit<PaymentState> {
 
   void paywithFawry() async {
     emit(PaymentLoading());
-    var result = await paymentrepo.payWithFawry(
+    var result = await subscribtionRepo.payWithFawry(
         orderEntity: getOrderEntity(), paymententity: getPaymentEntity());
     result.fold((failure) {
       emit(PaymentError(message: failure.message));
     }, (token) {
       emit(PaymentSuccess(token: token));
+    });
+  }
+
+  void subscribeToCourse() async {
+    emit(SubscibeingToCourseLoading());
+    var result = await subscribtionRepo.subscribeToCourse(
+        course: course, student: student, teacher: teacher);
+    result.fold((failure) {
+      emit(SubscibeingToCourseFailure(errMessge: failure.message));
+    }, (message) {
+      emit(SubscibeingToCourseSuccess());
+    });
+  }
+
+  String getUserUId() {
+    if (student != null) {
+      return student!.uid!;
+    } else if (teacher != null) {
+      return teacher!.uid!;
+    } else {
+      return "";
+    }
+  }
+
+  void checkIfSubscribed() async {
+    emit(CheckIfSubscribedLoading());
+    var result = await subscribtionRepo.checkIfSubscribed(
+        userID: getUserUId(), courseID: course.id);
+    result.fold((failure) {
+      emit(CheckIfSubscribedFailure(errMessage: failure.message));
+    }, (isSubscribed) {
+      emit(CheckIfSubscribedSuccess(isSubscribed: isSubscribed));
     });
   }
 }

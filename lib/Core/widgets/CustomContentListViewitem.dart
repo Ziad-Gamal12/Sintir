@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
@@ -10,7 +12,7 @@ class CustomContentListViewitem extends StatelessWidget {
     super.key,
     required this.sectionItem,
   });
-  final CoursSectionsListItemEntity sectionItem;
+  final CourseSectionEntity sectionItem;
   @override
   Widget build(BuildContext context) {
     return Container(

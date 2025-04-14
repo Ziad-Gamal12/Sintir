@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/AI_Chat/presentation/views/aiChatView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/EducationLevelsBooksSectionsView.dart';

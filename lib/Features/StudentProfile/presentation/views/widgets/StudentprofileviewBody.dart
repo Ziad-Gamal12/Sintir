@@ -3,17 +3,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
+import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomFavourtiteListHeader.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomListFavouriteCoursesSection.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomMyCoursesGridHeader.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomprofilemycoursesSlivergridview.dart';
+import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/ScreenErrorwidget.dart';
 import 'package:sintir/Features/StudentProfile/presentation/views/widgets/Studentprofile_Info.dart';
 import 'package:sintir/constant.dart';
 
 class StudentprofileviewBody extends StatelessWidget {
   StudentprofileviewBody({super.key});
-  List myCourses = [];
+  List<CourseEntity> myCourses = [];
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -74,10 +76,14 @@ class StudentprofileviewBody extends StatelessWidget {
                   height: 10,
                 ),
               ),
-              CustomprofilemycoursesSlivergridview(
-                ontap: () {},
-                courses: const [],
-              )
+              myCourses.isEmpty
+                  ? const SliverToBoxAdapter(
+                      child: CustomEmptyWidget(),
+                    )
+                  : CustomprofilemycoursesSlivergridview(
+                      ontap: () {},
+                      courses: myCourses,
+                    )
             ],
           ),
         );

@@ -16,7 +16,8 @@ class ScreenErrorwidget extends StatelessWidget {
       children: [
         SvgPicture.asset(
           Assets.assetsImagesErrorIcon,
-          fit: BoxFit.cover,
+          height: 200,
+          width: 200,
         ),
         errMessage != null
             ? Text(errMessage!,

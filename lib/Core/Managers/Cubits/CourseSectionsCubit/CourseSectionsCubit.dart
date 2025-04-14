@@ -1,26 +1,28 @@
+// ignore_for_file: file_names, depend_on_referenced_packages
+
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
-import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
+import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionSolutionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/repos/AddCourseSectionRepo.dart';
 
-part 'AddCourseSectionState.dart';
+part 'CourseSectionsState.dart';
 
-class AddCourseSectionCubit extends Cubit<AddCourseSectionState> {
-  AddCourseSectionCubit(
-    this.addcoursesectionrepo,
+class CourseSectionsCubit extends Cubit<CourseSectionsState> {
+  CourseSectionsCubit(
+    this.coursesectionrepo,
     this.assetspickerrepo,
   ) : super(AddCourseSectionInitial());
-  final Addcoursesectionrepo addcoursesectionrepo;
+  final CourseSectionsRepo coursesectionrepo;
   final Assetspickerrepo assetspickerrepo;
 
   void addNewQuestion({required Coursetestentity coursetestentity}) {
@@ -62,17 +64,18 @@ class AddCourseSectionCubit extends Cubit<AddCourseSectionState> {
     emit(AddCourseSectionTestSolutionChanged());
   }
 
-  void updateCourseSections({
-    required CourseEntity courseEntity,
+  void addCourseSection({
+    required CourseSectionEntity section,
+    required String courseId,
   }) async {
-    Either<Failure, void> result =
-        await addcoursesectionrepo.updateCourseSections(
-      courseEntity: courseEntity,
+    Either<Failure, void> result = await coursesectionrepo.addCourseSection(
+      section: section,
+      courseId: courseId,
     );
     result.fold((failure) {
-      emit(UpdateCourseSectionsFailure(errMessage: failure.message));
-    }, (success) {
-      emit(UpdateCourseSectionsSuccess());
+      emit(AddCourseSectionFailure(errMessage: failure.message));
+    }, (sucUpdateCourseSectionsFailurecess) {
+      emit(AddCourseSectionSuccess());
     });
   }
 
@@ -100,8 +103,8 @@ class AddCourseSectionCubit extends Cubit<AddCourseSectionState> {
     required Coursefileentity coursefileEntity,
   }) async {
     emit(FileUploadedingLoading());
-    var result = await addcoursesectionrepo.uploadFile(
-        coursefileEntity: coursefileEntity);
+    var result =
+        await coursesectionrepo.uploadFile(coursefileEntity: coursefileEntity);
     result.fold((failure) {
       emit(FileUploadedingFailure(errMessage: failure.message));
     }, (url) {
@@ -113,7 +116,7 @@ class AddCourseSectionCubit extends Cubit<AddCourseSectionState> {
     required Coursevedioitementity coursevedioitementity,
   }) async {
     emit(VideoUploadedingLoading());
-    var result = await addcoursesectionrepo.uploadVideo(
+    var result = await coursesectionrepo.uploadVideo(
         coursevedioitementity: coursevedioitementity);
     result.fold((failure) {
       emit(VideoUploadedingFailure(errMessage: failure.message));
@@ -126,12 +129,23 @@ class AddCourseSectionCubit extends Cubit<AddCourseSectionState> {
     required Coursetestentity test,
   }) async {
     emit(QuestionsImagesUploadedingLoading());
-    var resulte = await addcoursesectionrepo.uploadTestQuestionsImages(
+    var resulte = await coursesectionrepo.uploadTestQuestionsImages(
         questions: test.questions);
     resulte.fold((failure) {
       emit(QuestionsImagesUploadedingFailure(errMessage: failure.message));
     }, (success) {
       emit(QuestionsImagesUploadedingSuccuss());
+    });
+  }
+
+  void getCourseSections({required String courseId}) async {
+    emit(GetCourseSectionsLoading());
+    Either<Failure, List<CourseSectionEntity>> result =
+        await coursesectionrepo.getCourseSections(courseId: courseId);
+    result.fold((failure) {
+      emit(GetCourseSectionsFailure(errMessage: failure.message));
+    }, (sections) {
+      emit(GetCourseSectionsSuccess(sections: sections));
     });
   }
 }

@@ -3,10 +3,12 @@
 import 'package:get_it/get_it.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepoImpli.dart';
+import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
+import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo_impl.dart';
+import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
+import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo_impli.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo_impl.dart';
-import 'package:sintir/Core/repos/PaymentRepo/paymentRepo.dart';
-import 'package:sintir/Core/repos/PaymentRepo/paymentRepo_impli.dart';
 import 'package:sintir/Core/repos/UserRepos/UserRepoImpli.dart';
 import 'package:sintir/Core/repos/UserRepos/userRepo.dart';
 import 'package:sintir/Core/repos/authRepos/authRepo_impli.dart';
@@ -23,8 +25,6 @@ import 'package:sintir/Features/StudenetAuth/data/repoos/studentAuth_repo_impli.
 import 'package:sintir/Features/StudenetAuth/domain/repos/studentAuth_repo.dart';
 import 'package:sintir/Features/TeacherAuth/Data/Repos_Impli/teacherAuthRepos_Impli.dart';
 import 'package:sintir/Features/TeacherAuth/Domain/Repos/repos.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos_impl/AddCourseSectionRepo_impl.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/repos/AddCourseSectionRepo.dart';
 
 final getIt = GetIt.instance;
 
@@ -51,12 +51,13 @@ void setup_Getit() {
       storageService: getIt<StorageService>()));
   getIt.registerSingleton<Userrepo>(
       Userrepoimpli(datebaseservicel: getIt<Datebaseservice>()));
-  getIt.registerSingleton<Addcoursesectionrepo>(AddcoursesectionrepoImpl(
+  getIt.registerSingleton<CourseSectionsRepo>(CourseSectionsRepoImpl(
       storageService: getIt<StorageService>(),
       datebaseservice: getIt<Datebaseservice>(),
       pickerassetsservice: getIt<Pickerassetsservice>()));
   getIt.registerSingleton<Assetspickerrepo>(
       Assetspickerrepoimpli(pickerassetsservice: getIt<Pickerassetsservice>()));
-  getIt.registerSingleton<Paymentrepo>(
-      PaymentrepoImpli(payMobService: PayMobService()));
+  getIt.registerSingleton<CourseSubscibtionsRepo>(CourseSubscibtionsRepoimpli(
+      payMobService: PayMobService(),
+      datebaseservice: getIt<Datebaseservice>()));
 }

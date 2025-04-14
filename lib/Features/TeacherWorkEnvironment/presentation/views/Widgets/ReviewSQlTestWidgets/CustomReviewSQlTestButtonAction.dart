@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseSectionCubit/AddCourseSectionCubit.dart';
 import 'package:sintir/constant.dart';
 
 class CustomReviewSQlTestButtonAction extends StatelessWidget {
@@ -16,7 +16,7 @@ class CustomReviewSQlTestButtonAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddCourseSectionCubit, AddCourseSectionState>(
+    return BlocBuilder<CourseSectionsCubit, CourseSectionsState>(
       builder: (context, state) {
         return Custom_Loading_Widget(
           isLoading: state is UpdateCourseSectionsLoading ||
@@ -26,7 +26,7 @@ class CustomReviewSQlTestButtonAction extends StatelessWidget {
               color: KMainColor,
               textColor: Colors.white,
               onPressed: () {
-                context.read<AddCourseSectionCubit>().uploadTestQuestionsImages(
+                context.read<CourseSectionsCubit>().uploadTestQuestionsImages(
                       test: navigatesqlreviewrequirmentsentity.coursetestentity,
                     );
               }),

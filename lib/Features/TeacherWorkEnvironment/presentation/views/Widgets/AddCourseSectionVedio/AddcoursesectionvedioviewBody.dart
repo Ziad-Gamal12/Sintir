@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/showSnackBar.dart';
@@ -12,7 +13,6 @@ import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNav
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/CustomAddCourseVideoSectionButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/VideoPreviewWidget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/VideoTitleInputField.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseSectionCubit/AddCourseSectionCubit.dart';
 import 'package:sintir/constant.dart';
 
 class Addcoursesectionvedioviewbody extends StatefulWidget {
@@ -27,12 +27,12 @@ class Addcoursesectionvedioviewbody extends StatefulWidget {
 
 class _AddcoursesectionvedioviewbodyState
     extends State<Addcoursesectionvedioviewbody> {
-  Coursevedioitementity coursevedioitementity =
-      Coursevedioitementity(title: "", vedioUrl: "", durationTime: 0);
+  Coursevedioitementity coursevedioitementity = Coursevedioitementity(
+      title: "", vedioUrl: "", durationTime: 0, joinedBy: []);
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AddCourseSectionCubit, AddCourseSectionState>(
+    return BlocConsumer<CourseSectionsCubit, CourseSectionsState>(
       listener: (context, state) {
         addCourseSectionVideoBlocListener(state, context);
       },
@@ -73,12 +73,12 @@ class _AddcoursesectionvedioviewbodyState
   }
 
   void addCourseSectionVideoBlocListener(
-      AddCourseSectionState state, BuildContext context) {
+      CourseSectionsState state, BuildContext context) {
     if (state is VideoUploadedingSuccuss) {
       videoUploadingSuccess(context, state);
     } else if (state is VideoUploadedingFailure) {
       showSnackBar(context, state.errMessage);
-    } else if (state is UpdateCourseSectionsSuccess) {
+    } else if (state is AddCourseSectionSuccess) {
       successdialog(
           context: context,
           SuccessMessage: "تم اضافة الملف بنجاح",
@@ -87,7 +87,7 @@ class _AddcoursesectionvedioviewbodyState
               Homeview.routeName,
             );
           }).show();
-    } else if (state is UpdateCourseSectionsFailure) {
+    } else if (state is AddCourseSectionFailure) {
       errordialog(context, state.errMessage).show();
     } else if (state is AddCourseSectionVedioPicked) {
       coursevedioitementity.file = state.videoFile;
@@ -98,14 +98,13 @@ class _AddcoursesectionvedioviewbodyState
 
   void videoUploadingSuccess(
       BuildContext context, VideoUploadedingSuccuss state) {
+    Variables.AddCourseSectionVideoItemFormKey.currentState!.save();
     Optionnavigationrequirementsentity optionnavigationrequirementsentity =
         context.read<Optionnavigationrequirementsentity>();
-    Variables.AddCourseSectionVideoItemFormKey.currentState!.save();
     coursevedioitementity.vedioUrl = state.url;
     optionnavigationrequirementsentity.section.items.add(coursevedioitementity);
-    optionnavigationrequirementsentity.course.coursSectionsListItemEntity!
-        .add(optionnavigationrequirementsentity.section);
-    context.read<AddCourseSectionCubit>().updateCourseSections(
-        courseEntity: optionnavigationrequirementsentity.course);
+    context.read<CourseSectionsCubit>().addCourseSection(
+        courseId: optionnavigationrequirementsentity.courseID,
+        section: optionnavigationrequirementsentity.section);
   }
 }

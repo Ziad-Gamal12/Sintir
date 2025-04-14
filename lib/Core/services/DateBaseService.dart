@@ -6,6 +6,8 @@ abstract class Datebaseservice {
       required Map<String, dynamic> data,
       String? subCollectionKey,
       String? subDocId,
+      String? subCollection2Key,
+      String? sub2DocId,
       String? docId});
   Future getData(
       {String? subCollectionKey,
@@ -13,7 +15,11 @@ abstract class Datebaseservice {
       required String key,
       String? docId,
       Map<String, dynamic>? query});
-  Future<bool> isDataExists({required String key, required String docId});
+  Future<bool> isDataExists(
+      {required String key,
+      required String docId,
+      String? subCollectionKey,
+      String? subDocId});
   Future<bool> isFeildExists(
       {required String key, required String feild, required String feildValue});
 
@@ -22,6 +28,11 @@ abstract class Datebaseservice {
       required doc,
       required dynamic data,
       required String field,
+      String? subCollectionKey,
+      String? subDocId});
+  Future<void> deleteDoc(
+      {required String collectionKey,
+      required String docId,
       String? subCollectionKey,
       String? subDocId});
 }

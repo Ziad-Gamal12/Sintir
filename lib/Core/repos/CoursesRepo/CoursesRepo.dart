@@ -1,3 +1,7 @@
+// ignore_for_file: file_names, duplicate_ignore
+
+// ignore_for_file: file_names
+
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -8,6 +12,8 @@ abstract class Coursesrepo {
   Future<Either<Failure, void>> addCourse({required CourseEntity courseEntity});
   Future<Either<Failure, List<CourseEntity>>> getRecentCourses();
   Future<Either<Failure, List<CourseEntity>>> getPopularCourses();
+  Future<Either<Failure, void>> updateCourseSections(
+      {required CourseEntity course});
 
   Future<Either<Failure, String>> uplaodFile({required File file});
   Future<Either<Failure, List<CourseEntity>>> getMyCourses();

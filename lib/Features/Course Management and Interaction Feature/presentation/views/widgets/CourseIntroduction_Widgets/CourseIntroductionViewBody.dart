@@ -1,68 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseContentListView.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/CoursIntroductionviewbodydescription.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/CustomCourseIntroductionViewBodyHeader.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/courseIntroductionViewBodyListViewHeader.dart';
-import 'package:sintir/constant.dart';
+import 'package:sintir/Core/widgets/ScreenErrorwidget.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/CourseIntroductionLoadingView.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/CourseIntroductionSuccessView.dart';
 
-class CourseIntroductionViewBody extends StatelessWidget {
-  const CourseIntroductionViewBody({
-    super.key,
-  });
+class CourseIntroductionViewBody extends StatefulWidget {
+  const CourseIntroductionViewBody({super.key});
+
+  @override
+  State<CourseIntroductionViewBody> createState() =>
+      _CourseIntroductionViewBodyState();
+}
+
+class _CourseIntroductionViewBodyState
+    extends State<CourseIntroductionViewBody> {
+  @override
+  void initState() {
+    super.initState();
+    if (mounted) {
+      context.read<CourseSectionsCubit>().getCourseSections(
+          courseId:
+              context.read<Bottomsheetnavigationrequirmentsentity>().course.id);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
-      child: CustomScrollView(
-        slivers: [
-          const SliverToBoxAdapter(
-            child: CustomCourseIntroductionViewBodyHeader(),
-          ),
-          const SliverToBoxAdapter(
-            child: SizedBox(
-              height: 10,
+    return BlocBuilder<CourseSectionsCubit, CourseSectionsState>(
+      builder: (context, state) {
+        if (state is GetCourseSectionsSuccess) {
+          return CourseIntroductionSuccessView(sections: state.sections);
+        } else if (state is GetCourseSectionsFailure) {
+          return Center(
+            child: ScreenErrorwidget(
+              errMessage: state.errMessage,
             ),
-          ),
-          const SliverToBoxAdapter(
-            child: CoursIntroductionviewbodydescription(),
-          ),
-          const SliverToBoxAdapter(
-            child: SizedBox(
-              height: 10,
-            ),
-          ),
-          const SliverToBoxAdapter(
-            child: courseIntroductionViewBodyListViewHeader(),
-          ),
-          const SliverToBoxAdapter(
-            child: SizedBox(
-              height: 15,
-            ),
-          ),
-          if (context
-              .read<Bottomsheetnavigationrequirmentsentity>()
-              .course
-              .coursSectionsListItemEntity!
-              .isEmpty)
-            SliverToBoxAdapter(
-              child: Center(
-                  child: Text(
-                "سيتم اضافة المحتوى قريبا ⌛️",
-                style: AppTextStyles.bold24.copyWith(color: Colors.black),
-              )),
-            )
-          else
-            CourseContentListView(
-              courseSectionsEntity: context
-                  .read<Bottomsheetnavigationrequirmentsentity>()
-                  .course
-                  .coursSectionsListItemEntity!,
-            )
-        ],
-      ),
+          );
+        } else if (state is GetCourseSectionsLoading) {
+          return const CourseIntroductionLoadingView();
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 }

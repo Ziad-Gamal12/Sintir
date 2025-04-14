@@ -4,6 +4,7 @@ import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomContainerSectionItem.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomUnAvilableSectionWidget.dart';
 
@@ -30,7 +31,18 @@ class Customtestlistviewitem extends StatelessWidget {
                         color: Colors.red,
                         textColor: Colors.white,
                         onPressed: () => isAvilabe
-                            ? item.ontap(context: context, item: item)
+                            ? item.ontap(
+                                context: context,
+                                item: Coursetestviewnavigationsrequirmentsentity(
+                                    test: item,
+                                    course: context
+                                        .read<
+                                            Bottomsheetnavigationrequirmentsentity>()
+                                        .course),
+                                course: context
+                                    .read<
+                                        Bottomsheetnavigationrequirmentsentity>()
+                                    .course)
                             : null,
                         child: const Icon(
                           Icons.key,

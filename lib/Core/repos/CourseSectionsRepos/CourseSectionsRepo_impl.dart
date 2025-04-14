@@ -1,23 +1,25 @@
+// ignore_for_file: file_names
+
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
+import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
 import 'package:sintir/Core/services/DateBaseService.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursSectionsListItemsModel.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/repos/AddCourseSectionRepo.dart';
 
-class AddcoursesectionrepoImpl implements Addcoursesectionrepo {
+class CourseSectionsRepoImpl implements CourseSectionsRepo {
   final Pickerassetsservice pickerassetsservice;
   final StorageService storageService;
   final Datebaseservice datebaseservice;
-  AddcoursesectionrepoImpl(
+  CourseSectionsRepoImpl(
       {required this.pickerassetsservice,
       required this.datebaseservice,
       required this.storageService});
@@ -40,45 +42,38 @@ class AddcoursesectionrepoImpl implements Addcoursesectionrepo {
   }
 
   @override
-  Future<Either<Failure, void>> updateCourseSections({
-    required CourseEntity courseEntity,
-  }) async {
+  Future<Either<Failure, void>> addCourseSection(
+      {required String courseId, required CourseSectionEntity section}) async {
     try {
-      List<Map<String, dynamic>> sections =
-          courseEntity.coursSectionsListItemEntity!.map((e) {
-        return Courssectionslistitemsmodel.fromEntity(
-                coursSectionsListItemEntity: e)
-            .toJson();
-      }).toList();
-      await addSectiontoCoursesCollection(courseEntity, sections);
-      await addCourseSectionToTeacherSubCollection(courseEntity, sections);
+      var json =
+          CourseSectionModel.fromEntity(coursSectionsListItemEntity: section)
+              .toJson();
+      await datebaseservice.setData(
+          data: json,
+          key: BackendEndpoints.addCourseSectionCollection,
+          docId: courseId,
+          subCollectionKey: BackendEndpoints.sectionsSubCollection);
+      await addCourseSectionToTeacherSubCollection(
+          json: json, courseId: courseId);
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
 
   Future<void> addCourseSectionToTeacherSubCollection(
-      CourseEntity courseEntity, List<Map<String, dynamic>> sections) async {
-    var field = "coursSectionsListItemEntity";
-    await datebaseservice.updateDate(
-        field: field,
-        doc: FirebaseAuth.instance.currentUser!.uid,
-        collectionKey: BackendEndpoints.addSectionToTeacherCollection,
-        subCollectionKey:
-            BackendEndpoints.addCourseSectiontoTeacherSubCollection,
-        subDocId: courseEntity.id,
-        data: sections);
-  }
-
-  Future<void> addSectiontoCoursesCollection(
-      CourseEntity courseEntity, List<Map<String, dynamic>> sections) async {
-    var field = "coursSectionsListItemEntity";
-    await datebaseservice.updateDate(
-        field: field,
-        doc: courseEntity.id,
-        collectionKey: BackendEndpoints.addCourseSectionCollection,
-        data: sections);
+      {required Map<String, dynamic> json, required String courseId}) async {
+    await datebaseservice.setData(
+      data: json,
+      docId: FirebaseAuth.instance.currentUser!.uid,
+      key: BackendEndpoints.addSectionToTeacherCollection,
+      subCollection2Key:
+          BackendEndpoints.addCourseSectionCollectionToTeacherSubCollection,
+      subCollectionKey: BackendEndpoints.addCourseSectiontoTeacherSubCollection,
+      subDocId: courseId,
+    );
   }
 
   @override
@@ -102,6 +97,25 @@ class AddcoursesectionrepoImpl implements Addcoursesectionrepo {
           await storageService.uploadFile(file: coursefileEntity.file!);
 
       return right(url);
+    } catch (e) {
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CourseSectionEntity>>> getCourseSections(
+      {required String courseId}) async {
+    try {
+      List sections = await datebaseservice.getData(
+          key: BackendEndpoints.getCourseSectionsCollection,
+          docId: courseId,
+          subCollectionKey: BackendEndpoints.getCourseSectionsSubCollection);
+      List<CourseSectionEntity> courseSections = sections
+          .map((e) => CourseSectionModel.fromJson(e).toEntity())
+          .toList();
+      return right(courseSections);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
     } catch (e) {
       return left(ServerFailure(message: "حدث خطأ ما"));
     }

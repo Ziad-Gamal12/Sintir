@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/AddCourseSQlAddSolutionItem.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseSectionCubit/AddCourseSectionCubit.dart';
 
 class CustomQuestionSolutionsList extends StatefulWidget {
   const CustomQuestionSolutionsList({
@@ -25,7 +25,7 @@ class _CustomQuestionSolutionsListState
     extends State<CustomQuestionSolutionsList> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddCourseSectionCubit, AddCourseSectionState>(
+    return BlocBuilder<CourseSectionsCubit, CourseSectionsState>(
       builder: (context, state) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -42,7 +42,7 @@ class _CustomQuestionSolutionsListState
                           .toString(),
                       onChange: (value) {
                         context
-                            .read<AddCourseSectionCubit>()
+                            .read<CourseSectionsCubit>()
                             .changeSelectedSolution(
                                 question: widget.question, index: e.key);
                       },
@@ -53,7 +53,7 @@ class _CustomQuestionSolutionsListState
                   ),
                   IconButton(
                     onPressed: () {
-                      context.read<AddCourseSectionCubit>().removeSolutin(
+                      context.read<CourseSectionsCubit>().removeSolutin(
                           coursetestentity: widget.coursetestentity,
                           solution: e.value,
                           question: widget.question);

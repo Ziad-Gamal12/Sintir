@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
@@ -20,13 +22,6 @@ class CourseBottomSheetCourseDetails extends StatelessWidget {
           TextSpan(
               text: course.title,
               style: AppTextStyles.semiBold20.copyWith(color: Colors.black)),
-          const TextSpan(
-            text: " ",
-          ),
-          TextSpan(
-              text: "(${course.coursSectionsListItemEntity!.length} فديو)",
-              style: AppTextStyles.regular11
-                  .copyWith(color: const Color(0xff818181)))
         ])),
         const SizedBox(
           height: 10,

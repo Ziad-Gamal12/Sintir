@@ -1,8 +1,10 @@
+// ignore_for_file: file_names
+
 import 'package:sintir/Core/entities/CourseEntity.dart';
 
 class Bottomsheetnavigationrequirmentsentity {
   final CourseEntity course;
-  final bool isSubscribed;
+  bool isSubscribed;
   Bottomsheetnavigationrequirmentsentity(
       {required this.course, required this.isSubscribed});
 }

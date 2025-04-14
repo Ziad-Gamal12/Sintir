@@ -40,7 +40,7 @@ class AddCourseCubitCubit extends Cubit<AddCourseCubitState> {
           emit(AddCourseCubitSuccess());
         });
       });
-    } on Exception catch (e) {
+    } on Exception {
       emit(AddCourseCubitFailure("حدث خطأ ما"));
     }
   }

@@ -7,12 +7,21 @@ class BackendEndpoints {
   static String setStudentDataTableName = "Students";
   static String setTeacherDataTableName = "Teachers";
   static String addSectionToTeacherCollection = "Teachers";
-
+  static String teachersCollection = "Teachers";
+  static String studentsCollection = "Students";
+  static String updateCourseSectionCollection = "Courses";
+  static String sectionsSubCollection = "Sections";
+  static String subscribersSubCollection = "Subscribers";
+  static String getCourseSectionsSubCollection = "Sections";
+  static String getCourseSectionsCollection = "Courses";
+  static String addCourseSectionCollectionToTeacherSubCollection = "Sections";
   static String addCourseToCoursesCollection = "Courses";
   static String getRecentCoursesCollection = "Courses";
   static String getPopularCoursesCollection = "Courses";
   static String addCourseSectionCollection = "Courses";
-
+  static String subscribetoCourseCollection = "Courses";
+  static String checkifSubscribedCollection = "Courses";
+  static String checkifSubscribedSubCollection = "Subscribers";
   static String addCourseSectiontoTeacherSubCollection = "Courses";
   static String addCourseToUserDocSubCollectioName = "Courses";
   static String getCoursesfromUserDocSubCollectioName = "Courses";

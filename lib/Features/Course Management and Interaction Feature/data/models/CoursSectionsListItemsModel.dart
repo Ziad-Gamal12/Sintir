@@ -5,20 +5,20 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
 
-class Courssectionslistitemsmodel {
+class CourseSectionModel {
   final String title, subtitle;
   final List items;
 
-  Courssectionslistitemsmodel(
+  CourseSectionModel(
       {required this.title, required this.subtitle, required this.items});
-  factory Courssectionslistitemsmodel.fromEntity(
-          {required CoursSectionsListItemEntity coursSectionsListItemEntity}) =>
-      Courssectionslistitemsmodel(
+  factory CourseSectionModel.fromEntity(
+          {required CourseSectionEntity coursSectionsListItemEntity}) =>
+      CourseSectionModel(
           title: coursSectionsListItemEntity.title,
           subtitle: coursSectionsListItemEntity.subtitle,
           items: coursSectionsListItemEntity.items);
-  factory Courssectionslistitemsmodel.fromJson(Map<String, dynamic> json) {
-    return Courssectionslistitemsmodel(
+  factory CourseSectionModel.fromJson(Map<String, dynamic> json) {
+    return CourseSectionModel(
         title: json['title'],
         subtitle: json['subtitle'],
         items: (json['items'] as List<dynamic>)
@@ -26,7 +26,7 @@ class Courssectionslistitemsmodel {
             .toList());
   }
 
-  CoursSectionsListItemEntity toEntity() => CoursSectionsListItemEntity(
+  CourseSectionEntity toEntity() => CourseSectionEntity(
       title: title,
       subtitle: subtitle,
       items: getItemsEntity(items as List<Map<String, dynamic>>));

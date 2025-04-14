@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ReviewSqlTestSectionView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseSectionCubit/AddCourseSectionCubit.dart';
 import 'package:sintir/constant.dart';
 
 class AddCourseSectionSqlTestActionbuttons extends StatelessWidget {
@@ -43,7 +43,7 @@ class AddCourseSectionSqlTestActionbuttons extends StatelessWidget {
             InkWell(
               onTap: () {
                 context
-                    .read<AddCourseSectionCubit>()
+                    .read<CourseSectionsCubit>()
                     .addNewQuestion(coursetestentity: courseTestEntity);
               },
               child: const CircleAvatar(
@@ -66,7 +66,7 @@ class AddCourseSectionSqlTestActionbuttons extends StatelessWidget {
           extra: Navigatesqlreviewrequirmentsentity(
               coursetestentity: courseTestEntity,
               section: optionnavigationrequirementsentity.section,
-              courseEntity: optionnavigationrequirementsentity.course));
+              courseID: optionnavigationrequirementsentity.courseID));
     }
   }
 }

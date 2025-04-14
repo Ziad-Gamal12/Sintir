@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:sintir/Core/entities/PaymentEntities/BillingDataEntity.dart';
 
 class Billingdatamodel {

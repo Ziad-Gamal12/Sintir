@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:developer';
 import 'dart:io';
 
@@ -83,11 +85,7 @@ class CoursesrepoImpl implements Coursesrepo {
   Future<Either<Failure, List<CourseEntity>>> getPopularCourses() async {
     try {
       List data = await datebaseservice.getData(
-        query: {
-          "state": BackendEndpoints.coursePublishedState,
-          "orderBy": "subscripersCount",
-          "limit": 10
-        },
+        query: {"state": BackendEndpoints.coursePublishedState, "limit": 10},
         key: BackendEndpoints.getPopularCoursesCollection,
       );
       List<CourseEntity> courses =
@@ -133,5 +131,24 @@ class CoursesrepoImpl implements Coursesrepo {
 
   Future<String> getUId() async {
     return FirebaseAuth.instance.currentUser!.uid;
+  }
+
+  @override
+  Future<Either<Failure, void>> updateCourseSections(
+      // Update this method
+      {required CourseEntity course}) async {
+    try {
+      await datebaseservice.updateDate(
+          collectionKey: BackendEndpoints.updateCourseSectionCollection,
+          doc: course.id,
+          data: course.contentcreaterentity!,
+          field: "coursSectionsListItemEntity");
+      return right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      log("Exception from CoursesrepoImpl.updateCourseSections in catch With Firebase Exception: ${e.toString()}");
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
   }
 }

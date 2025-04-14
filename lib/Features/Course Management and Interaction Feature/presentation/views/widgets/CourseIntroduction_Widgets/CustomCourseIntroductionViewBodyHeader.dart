@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/InfoRow.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFedBackView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/SendCourseReportView.dart';
 import 'package:sintir/constant.dart';
 
@@ -62,7 +61,7 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
                         .copyWith(color: const Color(0xff818181)),
                   ),
                   TextSpan(
-                      text: course.subscripersIDS.length.toString(),
+                      text: "course.subscripersIDS.length.toString()",
                       style: AppTextStyles.semiBold10
                           .copyWith(color: KSecondaryColor)),
                   TextSpan(
@@ -87,8 +86,8 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    GoRouter.of(context).push(Coursefedbackview.routeName,
-                        extra: course.coursefedbackItemEntity);
+                    // GoRouter.of(context).push(Coursefedbackview.routeName,
+                    //     extra: course.coursefedbackItemEntity);
                   },
                   child: const InfoRow(
                     icon: FontAwesomeIcons.comment,

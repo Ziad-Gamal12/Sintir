@@ -9,9 +9,9 @@ import 'package:sintir/Features/AI_Chat/presentation/views/aiChatView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/EducationLevelsBooksSectionsView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/LevelBooksView.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/ChoosingUserKindView.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileviewnavigationsrequirmentsentity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestViewNavigationsRequirmentsEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVideoviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFedBackView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFilePreviewer_View.dart';
@@ -162,7 +162,8 @@ class App_router {
         path: Displaycoursevedioveiw.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return Displaycoursevedioveiw(
-            displayVedioRequiresEntity: state.extra as Coursevedioitementity,
+            coursevideoviewnavigationsrequirmentsentity:
+                state.extra as Coursevideoviewnavigationsrequirmentsentity,
           );
         },
       ),
@@ -170,7 +171,8 @@ class App_router {
         path: Coursetestview.routename,
         builder: (BuildContext context, GoRouterState state) {
           return Coursetestview(
-            coursetestentity: state.extra as Coursetestentity,
+            coursetestviewnavigationsrequirmentsentity:
+                state.extra as Coursetestviewnavigationsrequirmentsentity,
           );
         },
       ),
@@ -192,7 +194,8 @@ class App_router {
         path: CoursefilepreviewerView.routename,
         builder: (BuildContext context, GoRouterState state) {
           return CoursefilepreviewerView(
-            coursefileentity: state.extra as Coursefileentity,
+            coursefileviewnavigationsrequirmentsentity:
+                state.extra as Coursefileviewnavigationsrequirmentsentity,
           );
         },
       ),

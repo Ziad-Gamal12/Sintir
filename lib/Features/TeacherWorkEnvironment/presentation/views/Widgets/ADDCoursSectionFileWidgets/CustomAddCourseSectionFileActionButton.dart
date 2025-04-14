@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseSectionCubit/AddCourseSectionCubit.dart';
 import 'package:sintir/constant.dart';
 
 class CustomAddCourseSectionFileActionButton extends StatelessWidget {
@@ -15,7 +15,7 @@ class CustomAddCourseSectionFileActionButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddCourseSectionCubit, AddCourseSectionState>(
+    return BlocBuilder<CourseSectionsCubit, CourseSectionsState>(
       builder: (context, state) {
         return Custombutton(
             text: fileentity.file != null ? "اضافة الملف" : "تحديد الملف",
@@ -23,11 +23,10 @@ class CustomAddCourseSectionFileActionButton extends StatelessWidget {
             textColor: Colors.white,
             onPressed: () {
               if (fileentity.file == null) {
-                BlocProvider.of<AddCourseSectionCubit>(context)
-                    .pickSectionFile();
+                BlocProvider.of<CourseSectionsCubit>(context).pickSectionFile();
               } else {
                 if (formKey.currentState!.validate()) {
-                  BlocProvider.of<AddCourseSectionCubit>(context).uploadFile(
+                  BlocProvider.of<CourseSectionsCubit>(context).uploadFile(
                     coursefileEntity: fileentity,
                   );
                 }

@@ -2,11 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseSectionCubit/AddCourseSectionCubit.dart';
 import 'package:sintir/constant.dart';
 
 class CustomAddCourseVideoSectionButton extends StatelessWidget {
@@ -18,7 +18,7 @@ class CustomAddCourseVideoSectionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddCourseSectionCubit, AddCourseSectionState>(
+    return BlocBuilder<CourseSectionsCubit, CourseSectionsState>(
       builder: (context, state) {
         return Custom_Loading_Widget(
           isLoading: state is VideoUploadedingLoading ||
@@ -33,12 +33,12 @@ class CustomAddCourseVideoSectionButton extends StatelessWidget {
               textColor: Colors.white,
               onPressed: () {
                 if (coursevedioitementity.file == null) {
-                  context.read<AddCourseSectionCubit>().pickSectionVedio(
+                  context.read<CourseSectionsCubit>().pickSectionVedio(
                       coursevedioitementity: coursevedioitementity);
                 } else {
                   if (Variables.AddCourseSectionVideoItemFormKey.currentState!
                       .validate()) {
-                    context.read<AddCourseSectionCubit>().uploadVideo(
+                    context.read<CourseSectionsCubit>().uploadVideo(
                         coursevedioitementity: coursevedioitementity);
                   }
                 }

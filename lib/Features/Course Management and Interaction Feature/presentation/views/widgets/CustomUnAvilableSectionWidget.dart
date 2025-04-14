@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/Overlay%20Container%20Widget.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/Overlay%20Container%20Widget.dart';
 
 class CustomUnAvailableSectionWidget extends StatelessWidget {
   const CustomUnAvailableSectionWidget({

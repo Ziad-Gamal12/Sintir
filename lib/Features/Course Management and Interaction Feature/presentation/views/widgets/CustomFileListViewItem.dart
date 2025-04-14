@@ -4,6 +4,7 @@ import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomContainerSectionItem.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomUnAvilableSectionWidget.dart';
 
@@ -30,7 +31,20 @@ class Customfilelistviewitem extends StatelessWidget {
                         color: Colors.yellow.shade600,
                         textColor: Colors.white,
                         onPressed: () => isAvilabe
-                            ? item.ontap(context: context, item: item)
+                            ? item.ontap(
+                                context: context,
+                                item:
+                                    Coursefileviewnavigationsrequirmentsentity(
+                                  file: item,
+                                  course: context
+                                      .read<
+                                          Bottomsheetnavigationrequirmentsentity>()
+                                      .course,
+                                ),
+                                course: context
+                                    .read<
+                                        Bottomsheetnavigationrequirmentsentity>()
+                                    .course)
                             : null,
                         child: const Icon(
                           Icons.file_copy,

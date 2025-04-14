@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sintir/Core/Managers/Cubits/PaymentCubit/payment_cubit.dart';
+import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
@@ -11,15 +11,11 @@ import 'package:sintir/constant.dart';
 class CourseBottomSheetUnSubscribedActionButtons extends StatelessWidget {
   const CourseBottomSheetUnSubscribedActionButtons({
     super.key,
-    required this.bottomsheetnavigationrequirmentsentity,
   });
-
-  final Bottomsheetnavigationrequirmentsentity
-      bottomsheetnavigationrequirmentsentity;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PaymentCubit, PaymentState>(
+    return BlocBuilder<CourseSubscribtionsCubit, CourseSubscribtionsState>(
       builder: (context, state) {
         return Column(
           children: [
@@ -30,19 +26,22 @@ class CourseBottomSheetUnSubscribedActionButtons extends StatelessWidget {
                 side: const BorderSide(width: 1, color: Colors.black),
                 onPressed: () {
                   GoRouter.of(context).push(CourseIntroductionView.routeName,
-                      extra: bottomsheetnavigationrequirmentsentity);
+                      extra: context
+                          .read<Bottomsheetnavigationrequirmentsentity>());
                 }),
             const SizedBox(
               height: 10,
             ),
             Custom_Loading_Widget(
-              isLoading: state is PaymentLoading,
+              isLoading: state is SubscibeingToCourseLoading,
               child: Custombutton(
                   text: "أشترك الأن",
                   color: KSecondaryColor,
                   textColor: Colors.white,
                   onPressed: () {
-                    context.read<PaymentCubit>().paywithFawry();
+                    context
+                        .read<CourseSubscribtionsCubit>()
+                        .subscribeToCourse();
                   }),
             ),
           ],

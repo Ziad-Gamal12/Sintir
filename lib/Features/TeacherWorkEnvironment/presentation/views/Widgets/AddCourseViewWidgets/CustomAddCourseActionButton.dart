@@ -33,21 +33,17 @@ class CustomAddCourseActionButton extends StatelessWidget {
                   null) {
                 if (context.read<UserCubit>().teacherentity != null) {
                   CourseEntity course = CourseEntity(
-                      subscripersCount: 0,
-                      id: Variables.AddCourseCourseCodeController.text,
-                      state: BackendEndpoints.coursePendingState,
-                      title: Variables.AddCourseCourseNameController.text,
-                      description:
-                          Variables.AddCourseCourseDescriptionController.text,
-                      price: int.parse(
-                          Variables.AddCourseCoursePriceController.text),
-                      language:
-                          Variables.AddCourseCourseLanguageController.text,
-                      subscripersIDS: [],
-                      postedDate:
-                          "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}.}",
-                      coursefedbackItemEntity: [],
-                      courseReports: []);
+                    id: Variables.AddCourseCourseCodeController.text,
+                    state: BackendEndpoints.coursePendingState,
+                    title: Variables.AddCourseCourseNameController.text,
+                    description:
+                        Variables.AddCourseCourseDescriptionController.text,
+                    price: int.parse(
+                        Variables.AddCourseCoursePriceController.text),
+                    language: Variables.AddCourseCourseLanguageController.text,
+                    postedDate:
+                        "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}.}",
+                  );
                   context.read<AddCourseCubitCubit>().addCourse(
                       courseEntity: course,
                       teacherentity: context.read<UserCubit>().teacherentity);

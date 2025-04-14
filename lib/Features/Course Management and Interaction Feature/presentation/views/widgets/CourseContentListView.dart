@@ -7,7 +7,7 @@ class CourseContentListView extends StatelessWidget {
     super.key,
     required this.courseSectionsEntity,
   });
-  final List<CoursSectionsListItemEntity> courseSectionsEntity;
+  final List<CourseSectionEntity> courseSectionsEntity;
   @override
   Widget build(BuildContext context) {
     return SliverList.builder(

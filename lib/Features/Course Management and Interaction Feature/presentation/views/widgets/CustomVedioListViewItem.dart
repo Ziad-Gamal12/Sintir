@@ -4,6 +4,7 @@ import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVideoviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomContainerSectionItem.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomUnAvilableSectionWidget.dart';
 
@@ -15,8 +16,17 @@ class CustomVedioListViewItem extends StatelessWidget {
     bool isAvilabe =
         context.read<Bottomsheetnavigationrequirmentsentity>().isSubscribed;
     return GestureDetector(
-      onTap: () =>
-          isAvilabe ? item.ontap(context: context, requires: item) : null,
+      onTap: () => isAvilabe
+          ? item.ontap(
+              context: context,
+              requires: Coursevideoviewnavigationsrequirmentsentity(
+                  courseEntity: context
+                      .read<Bottomsheetnavigationrequirmentsentity>()
+                      .course,
+                  video: item),
+              course:
+                  context.read<Bottomsheetnavigationrequirmentsentity>().course)
+          : null,
       child: Stack(
         children: [
           Customcontainersectionitem(

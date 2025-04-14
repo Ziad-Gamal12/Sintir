@@ -1,27 +1,33 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:sintir/Core/Managers/Cubits/PaymentCubit/payment_cubit.dart';
+import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
 import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
-import 'package:sintir/Core/repos/PaymentRepo/paymentRepo.dart';
+import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetBody.dart';
 
 class CourseBottomSheet extends StatelessWidget {
   const CourseBottomSheet({
     super.key,
-    required this.bottomsheetnavigationrequirmentsentity,
+    required this.courseEntity,
   });
-  final Bottomsheetnavigationrequirmentsentity
-      bottomsheetnavigationrequirmentsentity;
+  final CourseEntity courseEntity;
 
   @override
   Widget build(BuildContext context) {
+    Bottomsheetnavigationrequirmentsentity
+        bottomsheetnavigationrequirmentsentity =
+        Bottomsheetnavigationrequirmentsentity(
+            course: courseEntity, isSubscribed: false);
     return BlocProvider(
-      create: (context) => PaymentCubit(
-        paymentrepo: getIt<Paymentrepo>(),
-        course: bottomsheetnavigationrequirmentsentity.course,
+      create: (context) => CourseSubscribtionsCubit(
+        subscribtionRepo: getIt<CourseSubscibtionsRepo>(),
+        course: courseEntity,
         student: context.read<UserCubit>().studententity,
         teacher: context.read<UserCubit>().teacherentity,
       ),

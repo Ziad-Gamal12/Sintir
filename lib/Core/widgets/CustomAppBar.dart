@@ -17,6 +17,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   AppBar build(BuildContext context) {
     return AppBar(
       leadingWidth: 40,
+      elevation: 0,
+      scrolledUnderElevation: 0,
       leading: Padding(
         padding: const EdgeInsets.only(right: 10),
         child: InkWell(
@@ -39,6 +41,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(50);
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Core/widgets/showSnackBar.dart';
@@ -10,7 +11,6 @@ import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ADDCoursSectionFileWidgets/AddCourseSectionFileTextFields.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ADDCoursSectionFileWidgets/CustomAddCourseSectionFileActionButton.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseSectionCubit/AddCourseSectionCubit.dart';
 import 'package:sintir/constant.dart';
 
 class AddcoursesectionfileviewBody extends StatefulWidget {
@@ -24,16 +24,13 @@ class AddcoursesectionfileviewBody extends StatefulWidget {
 
 class _AddcoursesectionfileviewBodyState
     extends State<AddcoursesectionfileviewBody> {
-  Coursefileentity coursefilEentity = Coursefileentity(
-    title: "",
-    description: "",
-    fileUrl: "",
-  );
+  Coursefileentity coursefilEentity =
+      Coursefileentity(title: "", description: "", fileUrl: "", joinedBy: []);
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AddCourseSectionCubit, AddCourseSectionState>(
+    return BlocConsumer<CourseSectionsCubit, CourseSectionsState>(
       listener: (context, state) {
         addCourseSectionFileItemBLocListener(state, context);
       },
@@ -70,7 +67,7 @@ class _AddcoursesectionfileviewBodyState
   }
 
   void addCourseSectionFileItemBLocListener(
-      AddCourseSectionState state, BuildContext context) {
+      CourseSectionsState state, BuildContext context) {
     if (state is AddCourseSectionFilePicked) {
       coursefilEentity.file = state.file;
     } else if (state is AddCourseSectionFileUnPicked) {
@@ -79,7 +76,7 @@ class _AddcoursesectionfileviewBodyState
       fileUploadedSuccessState(context, state);
     } else if (state is FileUploadedingFailure) {
       showSnackBar(context, state.errMessage);
-    } else if (state is UpdateCourseSectionsSuccess) {
+    } else if (state is AddCourseSectionSuccess) {
       successdialog(
           context: context,
           SuccessMessage: "تم اضافة الملف بنجاح",
@@ -88,21 +85,20 @@ class _AddcoursesectionfileviewBodyState
               Homeview.routeName,
             );
           }).show();
-    } else if (state is UpdateCourseSectionsFailure) {
+    } else if (state is AddCourseSectionFailure) {
       errordialog(context, state.errMessage).show();
     }
   }
 
   void fileUploadedSuccessState(
       BuildContext context, FileUploadedingSuccuss state) {
+    formKey.currentState!.save();
     Optionnavigationrequirementsentity optionnavigationrequirementsentity =
         context.read<Optionnavigationrequirementsentity>();
-    formKey.currentState!.save();
     coursefilEentity.fileUrl = state.url;
     optionnavigationrequirementsentity.section.items.add(coursefilEentity);
-    optionnavigationrequirementsentity.course.coursSectionsListItemEntity!
-        .add(optionnavigationrequirementsentity.section);
-    context.read<AddCourseSectionCubit>().updateCourseSections(
-        courseEntity: optionnavigationrequirementsentity.course);
+    context.read<CourseSectionsCubit>().addCourseSection(
+        courseId: optionnavigationrequirementsentity.courseID,
+        section: optionnavigationrequirementsentity.section);
   }
 }

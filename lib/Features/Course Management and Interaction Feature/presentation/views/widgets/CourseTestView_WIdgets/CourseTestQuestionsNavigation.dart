@@ -31,6 +31,7 @@ class _CoursetestquestionsnavigationState
           onTap: () {
             currentQuestionIndex = e.key;
             widget.selectQuestionAction(currentQuestionIndex);
+            e.value.isOpened = true;
             setState(() {});
           },
           child: Padding(

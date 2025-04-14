@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, use_super_parameters
+// ignore_for_file: file_names, use_super_parameters, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';

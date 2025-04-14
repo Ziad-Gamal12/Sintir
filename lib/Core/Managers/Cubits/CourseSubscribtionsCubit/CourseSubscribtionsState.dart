@@ -1,0 +1,44 @@
+// ignore_for_file: file_names
+
+part of 'CourseSubscribtionsCubit.dart';
+
+@immutable
+sealed class CourseSubscribtionsState {}
+
+final class SubscribeToCoursesInitial extends CourseSubscribtionsState {}
+
+final class PaymentSuccess extends CourseSubscribtionsState {
+  final String token;
+  PaymentSuccess({required this.token});
+}
+
+final class PaymentError extends CourseSubscribtionsState {
+  final String message;
+  PaymentError({required this.message});
+}
+
+final class PaymentLoading extends CourseSubscribtionsState {}
+
+final class SubscibeingToCourseLoading extends CourseSubscribtionsState {}
+
+final class SubscibeingToCourseSuccess extends CourseSubscribtionsState {}
+
+final class SubscibeingToCourseFailure extends CourseSubscribtionsState {
+  final String errMessge;
+
+  SubscibeingToCourseFailure({required this.errMessge});
+}
+
+final class CheckIfSubscribedSuccess extends CourseSubscribtionsState {
+  final bool isSubscribed;
+
+  CheckIfSubscribedSuccess({required this.isSubscribed});
+}
+
+final class CheckIfSubscribedLoading extends CourseSubscribtionsState {}
+
+final class CheckIfSubscribedFailure extends CourseSubscribtionsState {
+  final String errMessage;
+
+  CheckIfSubscribedFailure({required this.errMessage});
+}

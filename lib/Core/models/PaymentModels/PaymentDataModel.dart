@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:sintir/Core/entities/PaymentEntities/PaymentDataEntity.dart';
 import 'package:sintir/Core/models/PaymentModels/BillingDataModel.dart';
 

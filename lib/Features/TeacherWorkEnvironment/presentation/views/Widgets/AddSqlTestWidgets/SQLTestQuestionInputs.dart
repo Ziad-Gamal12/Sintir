@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/CustomQuestionSolutionsList.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/addcourseSQLTEstQuestionItemTextField.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseSectionCubit/AddCourseSectionCubit.dart';
 
 class SQLTestQuestionInputs extends StatelessWidget {
   const SQLTestQuestionInputs({
@@ -50,7 +50,7 @@ class SQLTestQuestionInputs extends StatelessWidget {
                   borderRadius: BorderRadius.circular(0),
                   textColor: Colors.black,
                   onPressed: () {
-                    context.read<AddCourseSectionCubit>().addSolution(
+                    context.read<CourseSectionsCubit>().addSolution(
                           question: coursetestquestionentity,
                         );
                   })

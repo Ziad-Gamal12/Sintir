@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsSectionsPAgeViewItem.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsViewRowOptions.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CoursedetailsReportspageviewitem.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CoursedetailsStudentReviewspageviewitem.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CoursedetailsStudentspageviewitem.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CustomCourseDetailsBodyCourse_Info.dart';
 import 'package:sintir/constant.dart';
 
@@ -68,15 +65,15 @@ class _CoursedetailviewBodyState extends State<CoursedetailviewBody> {
                     Coursedetailssectionspageviewitem(
                       courseEntity: widget.courseEntity,
                     ),
-                    Coursedetailsstudentspageviewitem(
-                      subscribers: widget.courseEntity.subscripersIDS,
-                    ),
-                    Coursedetailsstudentreviewspageviewitem(
-                      reviews: widget.courseEntity.coursefedbackItemEntity,
-                    ),
-                    Coursedetailsreportspageviewitem(
-                      reports: widget.courseEntity.courseReports,
-                    ),
+                    // Coursedetailsstudentspageviewitem(
+                    //   subscribers: widget.courseEntity.subscripersIDS,
+                    // ),
+                    // Coursedetailsstudentreviewspageviewitem(
+                    //   reviews: widget.courseEntity.coursefedbackItemEntity,
+                    // ),
+                    // Coursedetailsreportspageviewitem(
+                    //   reports: widget.courseEntity.courseReports,
+                    // ),
                   ]))
         ],
       ),

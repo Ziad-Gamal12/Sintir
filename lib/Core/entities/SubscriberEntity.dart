@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 class Subscriberentity {
   final String id;
   final String name, gender, phone, educationLevel, imageUrl, address;

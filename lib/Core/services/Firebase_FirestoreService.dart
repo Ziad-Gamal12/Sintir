@@ -14,15 +14,46 @@ class FirebaseFirestoreservice implements Datebaseservice {
       required Map<String, dynamic> data,
       String? subCollectionKey,
       String? subDocId,
+      String? subCollection2Key,
+      String? sub2DocId,
       String? docId}) async {
     try {
       if (subCollectionKey != null) {
-        await firestore
-            .collection(key)
-            .doc(docId)
-            .collection(subCollectionKey)
-            .doc(subDocId)
-            .set(data);
+        if (subDocId != null) {
+          if (subCollection2Key != null) {
+            if (sub2DocId != null) {
+              await firestore
+                  .collection(key)
+                  .doc(docId)
+                  .collection(subCollectionKey)
+                  .doc(subDocId)
+                  .collection(subCollection2Key)
+                  .doc(sub2DocId)
+                  .set(data);
+            } else {
+              await firestore
+                  .collection(key)
+                  .doc(docId)
+                  .collection(subCollectionKey)
+                  .doc(subDocId)
+                  .collection(subCollection2Key)
+                  .add(data);
+            }
+          } else {
+            await firestore
+                .collection(key)
+                .doc(docId)
+                .collection(subCollectionKey)
+                .doc(subDocId)
+                .set(data);
+          }
+        } else {
+          await firestore
+              .collection(key)
+              .doc(docId)
+              .collection(subCollectionKey)
+              .add(data);
+        }
       } else {
         if (docId != null) {
           await firestore.collection(key).doc(docId).set(data);
@@ -133,7 +164,19 @@ class FirebaseFirestoreservice implements Datebaseservice {
 
   @override
   Future<bool> isDataExists(
-      {required String key, required String docId}) async {
+      {required String key,
+      required String docId,
+      String? subCollectionKey,
+      String? subDocId}) async {
+    if (subCollectionKey != null) {
+      var isExists = await firestore
+          .collection(key)
+          .doc(docId)
+          .collection(subCollectionKey)
+          .doc(subDocId)
+          .get();
+      return isExists.exists;
+    }
     var isExists = await firestore.collection(key).doc(docId).get();
     return isExists.exists;
   }
@@ -198,5 +241,22 @@ class FirebaseFirestoreservice implements Datebaseservice {
       log("Exception from Firebase_FirestoreService.updateDate in catch With Firebase Exception: ${e.toString()}");
       throw CustomException(message: "حدث خطأ ما");
     }
+  }
+
+  @override
+  Future<void> deleteDoc(
+      {required String collectionKey,
+      required String docId,
+      String? subCollectionKey,
+      String? subDocId}) async {
+    if (subCollectionKey != null) {
+      await firestore
+          .collection(collectionKey)
+          .doc(docId)
+          .collection(subCollectionKey)
+          .doc(subDocId)
+          .delete();
+    }
+    await firestore.collection(collectionKey).doc(docId).delete();
   }
 }

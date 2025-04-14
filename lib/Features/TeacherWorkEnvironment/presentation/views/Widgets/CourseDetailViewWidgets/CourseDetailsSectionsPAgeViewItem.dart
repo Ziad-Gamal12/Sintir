@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
-import 'package:sintir/Core/widgets/CustomContentListViewitem.dart';
-import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionView.dart';
 import 'package:sintir/constant.dart';
@@ -34,21 +32,21 @@ class Coursedetailssectionspageviewitem extends StatelessWidget {
                 height: 10,
               ),
             ),
-            if (courseEntity.coursSectionsListItemEntity!.isNotEmpty)
-              SliverList.builder(
-                itemCount: courseEntity.coursSectionsListItemEntity!.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: CustomContentListViewitem(
-                      sectionItem:
-                          courseEntity.coursSectionsListItemEntity![index],
-                    ),
-                  );
-                },
-              )
-            else
-              const SliverToBoxAdapter(child: CustomEmptyWidget())
+            // if (courseEntity.coursSectionsListItemEntity!.isNotEmpty)
+            //   SliverList.builder(
+            //     itemCount: courseEntity.coursSectionsListItemEntity!.length,
+            //     itemBuilder: (context, index) {
+            //       return Padding(
+            //         padding: const EdgeInsets.symmetric(vertical: 5),
+            //         child: CustomContentListViewitem(
+            //           sectionItem:
+            //               courseEntity.coursSectionsListItemEntity![index],
+            //         ),
+            //       );
+            //     },
+            //   )
+            // else
+            //   const SliverToBoxAdapter(child: CustomEmptyWidget())
           ],
         ),
         Positioned(
