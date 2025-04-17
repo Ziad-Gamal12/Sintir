@@ -2,51 +2,45 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursefileModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursevedioitemModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
 
 class CourseSectionModel {
-  final String title, subtitle;
-  final List items;
+  final String id, title, subtitle;
 
   CourseSectionModel(
-      {required this.title, required this.subtitle, required this.items});
+      {required this.title, required this.subtitle, required this.id});
   factory CourseSectionModel.fromEntity(
           {required CourseSectionEntity coursSectionsListItemEntity}) =>
       CourseSectionModel(
           title: coursSectionsListItemEntity.title,
           subtitle: coursSectionsListItemEntity.subtitle,
-          items: coursSectionsListItemEntity.items);
+          id: coursSectionsListItemEntity.id);
   factory CourseSectionModel.fromJson(Map<String, dynamic> json) {
     return CourseSectionModel(
-        title: json['title'],
-        subtitle: json['subtitle'],
-        items: (json['items'] as List<dynamic>)
-            .map((e) => e as Map<String, dynamic>)
-            .toList());
+      title: json['title'],
+      subtitle: json['subtitle'],
+      id: json['id'],
+    );
   }
 
-  CourseSectionEntity toEntity() => CourseSectionEntity(
-      title: title,
-      subtitle: subtitle,
-      items: getItemsEntity(items as List<Map<String, dynamic>>));
+  CourseSectionEntity toEntity() =>
+      CourseSectionEntity(title: title, subtitle: subtitle, id: id);
   Map<String, dynamic> toJson() {
-    return {"title": title, "subtitle": subtitle, "items": getItemsJson()};
+    return {"title": title, "subtitle": subtitle, "id": id};
   }
 
-  List<Map<String, dynamic>> getItemsJson() {
-    List<Map<String, dynamic>> courseItems = [];
-    for (var item in items) {
-      if (item is Coursetestentity) {
-        courseItems.add(Coursetestmodel.fromEntity(item).toJson());
-      } else if (item is Coursevedioitementity) {
-        courseItems.add(Coursevedioitemmodel.fromEntity(item).toJson());
-      } else {
-        courseItems.add(Coursefilemodel.fromEntity(item).toJson());
-      }
-    }
-    return courseItems;
-  }
+  // List<Map<String, dynamic>> getItemsJson() {
+  //   List<Map<String, dynamic>> courseItems = [];
+  //   for (var item in items) {
+  //     if (item is Coursetestentity) {
+  //       courseItems.add(Coursetestmodel.fromEntity(item).toJson());
+  //     } else if (item is Coursevedioitementity) {
+  //       courseItems.add(Coursevedioitemmodel.fromEntity(item).toJson());
+  //     } else {
+  //       courseItems.add(Coursefilemodel.fromEntity(item).toJson());
+  //     }
+  //   }
+  //   return courseItems;
+  // }
 
   List getItemsEntity(List<Map<String, dynamic>> items) {
     List courseItems = [];

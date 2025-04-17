@@ -5,9 +5,11 @@ class Navigatesqlreviewrequirmentsentity {
   final CourseSectionEntity section;
   final String courseID;
   final Coursetestentity coursetestentity;
+  final bool isNewSection;
   Navigatesqlreviewrequirmentsentity({
     required this.section,
     required this.courseID,
+    required this.isNewSection,
     required this.coursetestentity,
   });
 }

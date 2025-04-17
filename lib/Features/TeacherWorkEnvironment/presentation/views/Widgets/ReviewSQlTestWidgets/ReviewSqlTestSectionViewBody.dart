@@ -97,10 +97,16 @@ class ReviewSqlTestSectionViewBody extends StatelessWidget {
   }
 
   void questionsImagesUploadedSuccessState(BuildContext context) {
-    navigatesqlreviewrequirmentsentity.section.items
-        .add(navigatesqlreviewrequirmentsentity.coursetestentity);
-    context.read<CourseSectionsCubit>().addCourseSection(
-        section: navigatesqlreviewrequirmentsentity.section,
-        courseId: navigatesqlreviewrequirmentsentity.courseID);
+    if (navigatesqlreviewrequirmentsentity.isNewSection) {
+      context.read<CourseSectionsCubit>().addCourseSection(
+          sectionItem: navigatesqlreviewrequirmentsentity.coursetestentity,
+          courseId: navigatesqlreviewrequirmentsentity.courseID,
+          section: navigatesqlreviewrequirmentsentity.section);
+    } else {
+      context.read<CourseSectionsCubit>().addSectionItem(
+          courseId: navigatesqlreviewrequirmentsentity.courseID,
+          sectionId: navigatesqlreviewrequirmentsentity.section.id,
+          sectionItem: navigatesqlreviewrequirmentsentity.coursetestentity);
+    }
   }
 }

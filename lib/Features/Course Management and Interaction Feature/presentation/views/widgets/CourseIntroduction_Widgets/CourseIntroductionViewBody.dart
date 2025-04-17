@@ -29,6 +29,11 @@ class _CourseIntroductionViewBodyState
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CourseSectionsCubit, CourseSectionsState>(
+      buildWhen: (previous, current) {
+        return current is GetCourseSectionsSuccess ||
+            current is GetCourseSectionsFailure ||
+            current is GetCourseSectionsLoading;
+      },
       builder: (context, state) {
         if (state is GetCourseSectionsSuccess) {
           return CourseIntroductionSuccessView(sections: state.sections);

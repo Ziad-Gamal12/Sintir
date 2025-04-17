@@ -14,6 +14,7 @@ abstract class CourseSectionsRepo {
   Future<Either<Failure, void>> addCourseSection({
     required CourseSectionEntity section,
     required String courseId,
+    required sectionItem,
   });
   Future<Either<Failure, String>> uploadVideo({
     required Coursevedioitementity coursevedioitementity,
@@ -23,4 +24,11 @@ abstract class CourseSectionsRepo {
   });
   Future<Either<Failure, List<CourseSectionEntity>>> getCourseSections(
       {required String courseId});
+  Future<Either<Failure, void>> addSectionItem({
+    required sectionItem,
+    required String courseId,
+    required sectionId,
+  });
+  Future<Either<Failure, List>> getSectionsItems(
+      {required String courseId, required String sectionId});
 }

@@ -90,6 +90,8 @@ class FirebaseFirestoreservice implements Datebaseservice {
       String? subDocId,
       required String key,
       String? docId,
+      String? subCollection2Key,
+      String? sub2DocId,
       Map<String, dynamic>? query}) async {
     try {
       if (docId != null) {
@@ -98,6 +100,16 @@ class FirebaseFirestoreservice implements Datebaseservice {
           var result = userEntity.collection(subCollectionKey);
           if (subDocId != null) {
             var docresult = result.doc(subDocId);
+            if (subCollection2Key != null) {
+              var subCollectionresult = docresult.collection(subCollection2Key);
+              if (sub2DocId != null) {
+                var subDocresult = subCollectionresult.doc(sub2DocId);
+                return subDocresult.get();
+              }
+              return subCollectionresult
+                  .get()
+                  .then((e) => e.docs.map((e) => e.data()).toList());
+            }
             return docresult.get();
           }
           return await result

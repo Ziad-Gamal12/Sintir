@@ -64,6 +64,7 @@ class AddCourseSectionSqlTestActionbuttons extends StatelessWidget {
       Variables.AddCourseSectionSQLtestFormKey.currentState!.save();
       GoRouter.of(context).push(ReviewSqlTestSectionView.routeName,
           extra: Navigatesqlreviewrequirmentsentity(
+              isNewSection: optionnavigationrequirementsentity.isNewSection,
               coursetestentity: courseTestEntity,
               section: optionnavigationrequirementsentity.section,
               courseID: optionnavigationrequirementsentity.courseID));

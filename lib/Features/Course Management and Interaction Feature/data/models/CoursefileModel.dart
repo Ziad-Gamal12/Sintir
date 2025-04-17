@@ -1,25 +1,21 @@
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/JoinedByModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 
 class Coursefilemodel {
   final String title;
   final String filePath;
   final String description;
-  final List<Map<String, dynamic>> joinedBy;
-
+  final String id;
   String? type;
 
   Coursefilemodel(
       {required this.title,
       required this.filePath,
       required this.description,
-      required this.joinedBy,
+      required this.id,
       this.type = "File"});
   factory Coursefilemodel.fromJson(Map<String, dynamic> json) {
     return Coursefilemodel(
-      joinedBy: (json['joinedBy'] as List<dynamic>)
-          .map((e) => e as Map<String, dynamic>)
-          .toList(),
+      id: json['id'],
       title: json['title'],
       filePath: json['filePath'],
       description: json['description'],
@@ -28,9 +24,7 @@ class Coursefilemodel {
   }
   factory Coursefilemodel.fromEntity(Coursefileentity coursefileentity) {
     return Coursefilemodel(
-      joinedBy: coursefileentity.joinedBy.map((e) {
-        return JoinedbyModel.fromEntity(e).toJson();
-      }).toList(),
+      id: coursefileentity.id,
       title: coursefileentity.title,
       filePath: coursefileentity.fileUrl,
       description: coursefileentity.description,
@@ -38,8 +32,7 @@ class Coursefilemodel {
     );
   }
   Coursefileentity toEnity() => Coursefileentity(
-        joinedBy:
-            joinedBy.map((e) => JoinedbyModel.fromJson(e).toEntity()).toList(),
+        id: id,
         title: title,
         fileUrl: filePath,
         description: description,
@@ -51,6 +44,6 @@ class Coursefilemodel {
         'filePath': filePath,
         'description': description,
         'type': type,
-        'joinedBy': joinedBy
+        'id': id
       };
 }

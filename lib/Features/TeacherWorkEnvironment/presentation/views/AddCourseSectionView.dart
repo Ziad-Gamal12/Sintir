@@ -21,11 +21,12 @@ class Addcoursesectionview extends StatelessWidget {
   Widget build(BuildContext context) {
     Optionnavigationrequirementsentity optionnavigationrequirementsentity =
         Optionnavigationrequirementsentity(
+      isNewSection: true,
       courseID: course.id,
       section: CourseSectionEntity(
-        title: Variables.AddCoursesectionNameController.text,
-        subtitle: Variables.AddCoursesesectionDescriptionController.text,
-        items: [],
+        title: "",
+        subtitle: "",
+        id: "${DateTime.now().toIso8601String()}-${Variables.AddCoursesectionNameController.text}",
       ),
     );
     return BlocProvider(

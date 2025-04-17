@@ -100,3 +100,24 @@ final class GetCourseSectionsFailure extends CourseSectionsState {
   final String errMessage;
   GetCourseSectionsFailure({required this.errMessage});
 }
+
+final class AddCourseSectionItemFailure extends CourseSectionsState {
+  final String errMessage;
+  AddCourseSectionItemFailure({required this.errMessage});
+}
+
+final class AddCourseSectionItemSuccess extends CourseSectionsState {}
+
+final class AddCourseSectionItemLoading extends CourseSectionsState {}
+
+final class GetSectionItemsLoading extends CourseSectionsState {}
+
+final class GetSectionItemsSuccess extends CourseSectionsState {
+  final List items;
+  GetSectionItemsSuccess({required this.items});
+}
+
+final class GetSectionItemsFailure extends CourseSectionsState {
+  final String errMessage;
+  GetSectionItemsFailure({required this.errMessage});
+}

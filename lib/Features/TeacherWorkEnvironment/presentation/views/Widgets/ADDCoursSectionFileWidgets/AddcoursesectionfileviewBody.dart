@@ -24,8 +24,11 @@ class AddcoursesectionfileviewBody extends StatefulWidget {
 
 class _AddcoursesectionfileviewBodyState
     extends State<AddcoursesectionfileviewBody> {
-  Coursefileentity coursefilEentity =
-      Coursefileentity(title: "", description: "", fileUrl: "", joinedBy: []);
+  Coursefileentity coursefilEentity = Coursefileentity(
+      title: "",
+      description: "",
+      fileUrl: "",
+      id: "${DateTime.now().toIso8601String()}-File");
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
@@ -96,9 +99,16 @@ class _AddcoursesectionfileviewBodyState
     Optionnavigationrequirementsentity optionnavigationrequirementsentity =
         context.read<Optionnavigationrequirementsentity>();
     coursefilEentity.fileUrl = state.url;
-    optionnavigationrequirementsentity.section.items.add(coursefilEentity);
-    context.read<CourseSectionsCubit>().addCourseSection(
-        courseId: optionnavigationrequirementsentity.courseID,
-        section: optionnavigationrequirementsentity.section);
+    if (optionnavigationrequirementsentity.isNewSection) {
+      context.read<CourseSectionsCubit>().addCourseSection(
+          sectionItem: coursefilEentity,
+          courseId: optionnavigationrequirementsentity.courseID,
+          section: optionnavigationrequirementsentity.section);
+    } else {
+      context.read<CourseSectionsCubit>().addSectionItem(
+          courseId: optionnavigationrequirementsentity.courseID,
+          sectionId: optionnavigationrequirementsentity.section.id,
+          sectionItem: coursefilEentity);
+    }
   }
 }

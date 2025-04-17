@@ -19,6 +19,9 @@ class BackendEndpoints {
   static String getRecentCoursesCollection = "Courses";
   static String getPopularCoursesCollection = "Courses";
   static String addCourseSectionCollection = "Courses";
+  static String coursesCollection = "Courses";
+  static String courseSectionsSubCollection = "Sections";
+  static String sectionItemsSubCollection = "Items";
   static String subscribetoCourseCollection = "Courses";
   static String checkifSubscribedCollection = "Courses";
   static String checkifSubscribedSubCollection = "Subscribers";

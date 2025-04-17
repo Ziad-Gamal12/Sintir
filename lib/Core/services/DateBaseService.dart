@@ -14,6 +14,8 @@ abstract class Datebaseservice {
       String? subDocId,
       required String key,
       String? docId,
+      String? subCollection2Key,
+      String? sub2DocId,
       Map<String, dynamic>? query});
   Future<bool> isDataExists(
       {required String key,

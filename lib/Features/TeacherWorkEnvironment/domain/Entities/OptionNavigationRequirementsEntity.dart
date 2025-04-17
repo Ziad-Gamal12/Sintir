@@ -2,8 +2,11 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 
 class Optionnavigationrequirementsentity {
   final CourseSectionEntity section;
+  final bool isNewSection;
   final String courseID;
 
   Optionnavigationrequirementsentity(
-      {required this.section, required this.courseID});
+      {required this.section,
+      required this.courseID,
+      required this.isNewSection});
 }

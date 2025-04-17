@@ -83,8 +83,7 @@ class Testresultemodel {
         "serialNumber": serialNumber,
         "joinedDate": joinedDate,
         "coursetest": includeCourseTest
-            ? Coursetestmodel.fromEntity(coursetest)
-                .toJson(includeResults: false)
+            ? Coursetestmodel.fromEntity(coursetest).toJson()
             : null,
         "totalQuestions": totalQuestions,
         "solvedQuestions": solvedQuestions,

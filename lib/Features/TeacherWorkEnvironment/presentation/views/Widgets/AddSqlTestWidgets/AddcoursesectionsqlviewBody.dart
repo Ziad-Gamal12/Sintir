@@ -20,8 +20,7 @@ class AddcoursesectionsqlviewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     Coursetestentity coursetestentity = Coursetestentity(
       type: "Test",
-      results: [],
-      joinedBy: [],
+      id: "${DateTime.now().toIso8601String()}-Test",
       questions: [
         Coursetestquestionentity(
             isOpened: false,

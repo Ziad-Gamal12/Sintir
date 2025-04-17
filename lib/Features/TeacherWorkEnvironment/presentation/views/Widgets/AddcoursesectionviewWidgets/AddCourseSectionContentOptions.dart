@@ -27,6 +27,7 @@ class AddCourseSectionContentOptions extends StatelessWidget {
               onTap: () {
                 if (Variables.AddCourseSectionFormKey.currentState!
                     .validate()) {
+                  Variables.AddCourseSectionFormKey.currentState!.save();
                   if (e.key == 1) {
                     GoRouter.of(context).push(Addcoursesectionsqlview.routeName,
                         extra: optionRequirementsEntity);

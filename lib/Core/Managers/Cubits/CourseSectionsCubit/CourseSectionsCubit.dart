@@ -67,15 +67,29 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
   void addCourseSection({
     required CourseSectionEntity section,
     required String courseId,
+    required sectionItem,
   }) async {
     Either<Failure, void> result = await coursesectionrepo.addCourseSection(
-      section: section,
-      courseId: courseId,
-    );
+        section: section, courseId: courseId, sectionItem: sectionItem);
     result.fold((failure) {
       emit(AddCourseSectionFailure(errMessage: failure.message));
     }, (sucUpdateCourseSectionsFailurecess) {
       emit(AddCourseSectionSuccess());
+    });
+  }
+
+  void addSectionItem({
+    required String courseId,
+    required String sectionId,
+    required dynamic sectionItem,
+  }) async {
+    emit(AddCourseSectionItemLoading());
+    final result = await coursesectionrepo.addSectionItem(
+        sectionItem: sectionItem, courseId: courseId, sectionId: sectionId);
+    result.fold((failure) {
+      emit(AddCourseSectionItemFailure(errMessage: failure.message));
+    }, (sucUpdateCourseSectionsFailurecess) {
+      emit(AddCourseSectionItemSuccess());
     });
   }
 
@@ -146,6 +160,18 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
       emit(GetCourseSectionsFailure(errMessage: failure.message));
     }, (sections) {
       emit(GetCourseSectionsSuccess(sections: sections));
+    });
+  }
+
+  void getSectionItems(
+      {required String sectionId, required String courseId}) async {
+    emit(GetSectionItemsLoading());
+    Either<Failure, List> result = await coursesectionrepo.getSectionsItems(
+        courseId: courseId, sectionId: sectionId);
+    result.fold((failure) {
+      emit(GetSectionItemsFailure(errMessage: failure.message));
+    }, (items) {
+      emit(GetSectionItemsSuccess(items: items));
     });
   }
 }

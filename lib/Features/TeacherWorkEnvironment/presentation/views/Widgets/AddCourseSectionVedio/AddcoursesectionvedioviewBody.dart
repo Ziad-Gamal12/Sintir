@@ -28,7 +28,10 @@ class Addcoursesectionvedioviewbody extends StatefulWidget {
 class _AddcoursesectionvedioviewbodyState
     extends State<Addcoursesectionvedioviewbody> {
   Coursevedioitementity coursevedioitementity = Coursevedioitementity(
-      title: "", vedioUrl: "", durationTime: 0, joinedBy: []);
+      title: "",
+      vedioUrl: "",
+      durationTime: 0,
+      id: "${DateTime.now().toIso8601String()}-Video");
 
   @override
   Widget build(BuildContext context) {
@@ -102,9 +105,16 @@ class _AddcoursesectionvedioviewbodyState
     Optionnavigationrequirementsentity optionnavigationrequirementsentity =
         context.read<Optionnavigationrequirementsentity>();
     coursevedioitementity.vedioUrl = state.url;
-    optionnavigationrequirementsentity.section.items.add(coursevedioitementity);
-    context.read<CourseSectionsCubit>().addCourseSection(
-        courseId: optionnavigationrequirementsentity.courseID,
-        section: optionnavigationrequirementsentity.section);
+    if (optionnavigationrequirementsentity.isNewSection) {
+      context.read<CourseSectionsCubit>().addCourseSection(
+          sectionItem: coursevedioitementity,
+          courseId: optionnavigationrequirementsentity.courseID,
+          section: optionnavigationrequirementsentity.section);
+    } else {
+      context.read<CourseSectionsCubit>().addSectionItem(
+          courseId: optionnavigationrequirementsentity.courseID,
+          sectionId: optionnavigationrequirementsentity.section.id,
+          sectionItem: coursevedioitementity);
+    }
   }
 }
