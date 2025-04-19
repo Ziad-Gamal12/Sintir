@@ -121,3 +121,12 @@ final class GetSectionItemsFailure extends CourseSectionsState {
   final String errMessage;
   GetSectionItemsFailure({required this.errMessage});
 }
+
+final class AddJoinedByFailure extends CourseSectionsState {
+  final String errMessage;
+  AddJoinedByFailure({required this.errMessage});
+}
+
+final class AddJoinedBySuccess extends CourseSectionsState {}
+
+final class AddJoinedByLoading extends CourseSectionsState {}

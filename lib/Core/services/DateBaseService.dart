@@ -1,14 +1,10 @@
 // ignore_for_file: file_names
 
 abstract class Datebaseservice {
-  Future<void> setData(
-      {required String key,
-      required Map<String, dynamic> data,
-      String? subCollectionKey,
-      String? subDocId,
-      String? subCollection2Key,
-      String? sub2DocId,
-      String? docId});
+  Future<void> setData({
+    required Map<String, dynamic> data,
+    required Map<String, dynamic>? json,
+  });
   Future getData(
       {String? subCollectionKey,
       String? subDocId,

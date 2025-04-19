@@ -91,13 +91,16 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
             imageUrl: teacher.profilePicurl!,
             address: teacher.address);
         await datebaseservice.setData(
-            data: Subscripersidsmodel.fromEntit(
-                    subscriberentity: teacherSubscriber)
-                .toJson(),
-            key: BackendEndpoints.subscribetoCourseCollection,
-            docId: course.id,
-            subDocId: teacher.uid,
-            subCollectionKey: BackendEndpoints.subscribersSubCollection);
+          data:
+              Subscripersidsmodel.fromEntit(subscriberentity: teacherSubscriber)
+                  .toJson(),
+          json: {
+            "mainCollection": BackendEndpoints.coursesCollection,
+            "docId": course.id,
+            "subDocId": teacher.uid,
+            "subCollection": BackendEndpoints.subscribersSubCollection
+          },
+        );
       } else if (student != null) {
         Subscriberentity studentSubscriber = Subscriberentity(
             id: student.uid!,
@@ -108,13 +111,16 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
             imageUrl: student.imageUrl,
             address: "");
         await datebaseservice.setData(
-            data: Subscripersidsmodel.fromEntit(
-                    subscriberentity: studentSubscriber)
-                .toJson(),
-            key: BackendEndpoints.subscribetoCourseCollection,
-            docId: course.id,
-            subDocId: student.uid,
-            subCollectionKey: BackendEndpoints.subscribersSubCollection);
+          data:
+              Subscripersidsmodel.fromEntit(subscriberentity: studentSubscriber)
+                  .toJson(),
+          json: {
+            "mainCollection": BackendEndpoints.coursesCollection,
+            "docId": course.id,
+            "subDocId": student.uid,
+            "subCollection": BackendEndpoints.subscribersSubCollection
+          },
+        );
       } else {
         await deleteCourseFromMyCourseList(teacher, course, student);
         return left(ServerFailure(message: "حدث خطاء في انشاء الطلبية"));
@@ -122,12 +128,10 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
       return right(null);
     } on CustomException catch (e) {
       await deleteCourseFromMyCourseList(teacher, course, student);
-
       return left(ServerFailure(message: e.message));
     } catch (e) {
       log("Exception from CoursesrepoImpl.addCourse in catch With Firebase Exception: ${e.toString()}");
       await deleteCourseFromMyCourseList(teacher, course, student);
-
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
@@ -135,13 +139,16 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
   Future<void> addCourseToMyCourseList(teacherEntity? teacher,
       CourseEntity course, Studententity? student) async {
     await datebaseservice.setData(
-        key: teacher == null
+      json: {
+        "mainCollection": teacher == null
             ? BackendEndpoints.studentsCollection
             : BackendEndpoints.teachersCollection,
-        data: Coursemodel.fromEntity(courseEntity: course).toJson(),
-        docId: teacher == null ? student!.uid : teacher.uid,
-        subDocId: course.id,
-        subCollectionKey: BackendEndpoints.subscribetoCourseCollection);
+        "docId": teacher == null ? student!.uid : teacher.uid,
+        "subDocId": course.id,
+        "subCollection": BackendEndpoints.subscribetoCourseCollection
+      },
+      data: Coursemodel.fromEntity(courseEntity: course).toJson(),
+    );
   }
 
   Future<void> updateSubscribersIdsList(CourseEntity course) async {}

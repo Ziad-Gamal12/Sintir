@@ -28,17 +28,20 @@ class CoursesrepoImpl implements Coursesrepo {
       {required CourseEntity courseEntity}) async {
     try {
       await datebaseservice.setData(
-        key: BackendEndpoints.addCourseToCoursesCollection,
-        docId: courseEntity.id,
+        json: {
+          "mainCollection": BackendEndpoints.coursesCollection,
+          "docId": courseEntity.id
+        },
         data: Coursemodel.fromEntity(courseEntity: courseEntity).toJson(),
       );
       await datebaseservice.setData(
-          key: BackendEndpoints.addTeacherDataCollectionName,
           data: Coursemodel.fromEntity(courseEntity: courseEntity).toJson(),
-          docId: courseEntity.contentcreaterentity!.id,
-          subDocId: courseEntity.id,
-          subCollectionKey:
-              BackendEndpoints.addCourseToUserDocSubCollectioName);
+          json: {
+            "mainCollection": BackendEndpoints.teachersCollection,
+            "docId": courseEntity.contentcreaterentity!.id,
+            "subCollection": BackendEndpoints.coursesCollection,
+            "subDocId": courseEntity.id
+          });
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));

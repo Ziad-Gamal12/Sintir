@@ -9,56 +9,51 @@ import 'package:sintir/Core/services/DateBaseService.dart';
 class FirebaseFirestoreservice implements Datebaseservice {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   @override
-  Future<void> setData(
-      {required String key,
-      required Map<String, dynamic> data,
-      String? subCollectionKey,
-      String? subDocId,
-      String? subCollection2Key,
-      String? sub2DocId,
-      String? docId}) async {
+  Future<void> setData({
+    required Map<String, dynamic> data,
+    required Map<String, dynamic>? json,
+  }) async {
     try {
-      if (subCollectionKey != null) {
-        if (subDocId != null) {
-          if (subCollection2Key != null) {
-            if (sub2DocId != null) {
-              await firestore
-                  .collection(key)
-                  .doc(docId)
-                  .collection(subCollectionKey)
-                  .doc(subDocId)
-                  .collection(subCollection2Key)
-                  .doc(sub2DocId)
-                  .set(data);
+      if (json != null) {
+        if (json["mainCollection"] != null) {
+          var query = firestore.collection(json["mainCollection"]);
+          if (json["docId"] != null) {
+            if (json["subCollection"] != null) {
+              var query1 =
+                  query.doc(json["docId"]).collection(json["subCollection"]);
+              if (json["subDocId"] != null) {
+                if (json["subCollection2"] != null) {
+                  var query2 = query1
+                      .doc(json["subDocId"])
+                      .collection(json["subCollection2"]);
+                  if (json["sub2DocId"] != null) {
+                    if (json["subCollection3"] != null) {
+                      var query3 = query2
+                          .doc(json["sub2DocId"])
+                          .collection(json["subCollection3"]);
+                      if (json["sub3DocId"] != null) {
+                        await query3.doc(json["sub3DocId"]).set(data);
+                      } else {
+                        await query3.add(data);
+                      }
+                    } else {
+                      await query2.doc(json["sub2DocId"]).set(data);
+                    }
+                  } else {
+                    await query2.add(data);
+                  }
+                } else {
+                  await query1.doc(json["subDocId"]).set(data);
+                }
+              } else {
+                await query1.add(data);
+              }
             } else {
-              await firestore
-                  .collection(key)
-                  .doc(docId)
-                  .collection(subCollectionKey)
-                  .doc(subDocId)
-                  .collection(subCollection2Key)
-                  .add(data);
+              await query.doc(json["docId"]).set(data);
             }
           } else {
-            await firestore
-                .collection(key)
-                .doc(docId)
-                .collection(subCollectionKey)
-                .doc(subDocId)
-                .set(data);
+            await query.add(data);
           }
-        } else {
-          await firestore
-              .collection(key)
-              .doc(docId)
-              .collection(subCollectionKey)
-              .add(data);
-        }
-      } else {
-        if (docId != null) {
-          await firestore.collection(key).doc(docId).set(data);
-        } else {
-          await firestore.collection(key).add(data);
         }
       }
     } on FirebaseException catch (e) {

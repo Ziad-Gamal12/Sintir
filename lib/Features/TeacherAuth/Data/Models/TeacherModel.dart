@@ -1,7 +1,5 @@
 // ignore_for_file: file_names
 
-import 'dart:convert';
-
 import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
 import 'package:sintir/Features/TeacherProfile/data/models/customSocialLinksItemModel.dart';
 
@@ -111,7 +109,7 @@ class Teachermodel {
       "gender": gender,
       "profilePicurl": profilePicurl,
       "state": state,
-      "socialLinks": jsonEncode(socialLinks),
+      "socialLinks": socialLinks,
       "kind": kind,
       "joinedDate": joinedDate
     };

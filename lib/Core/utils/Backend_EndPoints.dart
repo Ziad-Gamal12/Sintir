@@ -13,6 +13,7 @@ class BackendEndpoints {
   static String sectionsSubCollection = "Sections";
   static String subscribersSubCollection = "Subscribers";
   static String getCourseSectionsSubCollection = "Sections";
+  static String joinedBySubCollection = "JoinedBy";
   static String getCourseSectionsCollection = "Courses";
   static String addCourseSectionCollectionToTeacherSubCollection = "Sections";
   static String addCourseToCoursesCollection = "Courses";

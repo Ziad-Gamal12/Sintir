@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CourseTestControlPanel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CourseTestQuestionsNavigation.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CoursetestquestionItem.dart';
@@ -17,8 +19,27 @@ class CoursetestviewBody extends StatefulWidget {
 
 class _CoursetestviewBodyState extends State<CoursetestviewBody> {
   final stopWatchTimer = StopWatchTimer(mode: StopWatchMode.countDown);
+
   @override
   void initState() {
+    if (mounted) {
+      context.read<CourseSectionsCubit>().addJoinedBy(
+            courseId: context
+                .read<Coursetestviewnavigationsrequirmentsentity>()
+                .course
+                .id,
+            sectionId: context
+                .read<Coursetestviewnavigationsrequirmentsentity>()
+                .sectionId,
+            sectionItemId: context
+                .read<Coursetestviewnavigationsrequirmentsentity>()
+                .test
+                .id,
+            joinedByEntity: context
+                .read<CourseSectionsCubit>()
+                .getJoinedByEntity(context: context),
+          );
+    }
     widget.coursetestentity.questions[0].isOpened = true;
     stopWatchTimer.setPresetMinuteTime(widget.coursetestentity.durationTime);
     stopWatchTimer.onStartTimer();

@@ -1,9 +1,12 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:pdfx/pdfx.dart';
+import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseFIlePreViewer_Widgets/CourseFileOverView.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -49,6 +52,24 @@ class _CoursefilepreviewerviewbodyState
   @override
   void initState() {
     loadPdf();
+    if (mounted) {
+      context.read<CourseSectionsCubit>().addJoinedBy(
+            courseId: context
+                .read<Coursefileviewnavigationsrequirmentsentity>()
+                .course
+                .id,
+            sectionId: context
+                .read<Coursefileviewnavigationsrequirmentsentity>()
+                .sectionId,
+            sectionItemId: context
+                .read<Coursefileviewnavigationsrequirmentsentity>()
+                .file
+                .id,
+            joinedByEntity: context
+                .read<CourseSectionsCubit>()
+                .getJoinedByEntity(context: context),
+          );
+    }
     super.initState();
   }
 

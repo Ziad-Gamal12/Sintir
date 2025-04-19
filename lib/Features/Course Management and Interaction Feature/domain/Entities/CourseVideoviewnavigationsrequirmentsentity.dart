@@ -4,7 +4,10 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 class Coursevideoviewnavigationsrequirmentsentity {
   final Coursevedioitementity video;
   final CourseEntity courseEntity;
+  final String sectionId;
 
   Coursevideoviewnavigationsrequirmentsentity(
-      {required this.video, required this.courseEntity});
+      {required this.video,
+      required this.courseEntity,
+      required this.sectionId});
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomFileListViewItem.dart';
@@ -11,15 +12,24 @@ class CustomSectionListView extends StatelessWidget {
   const CustomSectionListView({
     super.key,
     required this.items,
+    required this.section,
   });
   final List items;
+  final CourseSectionEntity section;
   Widget getChild(dynamic item, BuildContext context) {
     if (item is Coursevedioitementity) {
-      return CustomVedioListViewItem(item: item);
+      return CustomVedioListViewItem(
+        item: item,
+        section: section,
+      );
     } else if (item is Coursetestentity) {
-      return Customtestlistviewitem(item: item);
+      return Customtestlistviewitem(
+        item: item,
+        section: section,
+      );
     } else {
       return Customfilelistviewitem(
+        section: section,
         item: item,
       );
     }

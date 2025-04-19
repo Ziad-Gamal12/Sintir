@@ -69,7 +69,10 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
       {required String key,
       required Map<String, dynamic> data,
       required String docId}) async {
-    await dataBaseService.setData(key: key, data: data, docId: docId);
+    await dataBaseService.setData(
+      json: {"mainCollection": key, "docId": docId},
+      data: data,
+    );
   }
 
   Future<void> DeleteUser(User? user) async {

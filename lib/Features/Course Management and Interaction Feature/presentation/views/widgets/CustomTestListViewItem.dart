@@ -3,14 +3,17 @@ import 'package:provider/provider.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomContainerSectionItem.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomUnAvilableSectionWidget.dart';
 
 class Customtestlistviewitem extends StatelessWidget {
-  const Customtestlistviewitem({super.key, required this.item});
+  const Customtestlistviewitem(
+      {super.key, required this.item, required this.section});
   final Coursetestentity item;
+  final CourseSectionEntity section;
   @override
   Widget build(BuildContext context) {
     bool isAvilabe =
@@ -35,6 +38,7 @@ class Customtestlistviewitem extends StatelessWidget {
                                 context: context,
                                 item: Coursetestviewnavigationsrequirmentsentity(
                                     test: item,
+                                    sectionId: section.id,
                                     course: context
                                         .read<
                                             Bottomsheetnavigationrequirmentsentity>()

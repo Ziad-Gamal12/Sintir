@@ -14,11 +14,13 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CourseTestModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursefileModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursevedioitemModel.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/JoinedByModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
 
 class CourseSectionsRepoImpl implements CourseSectionsRepo {
   final Pickerassetsservice pickerassetsservice;
@@ -55,19 +57,14 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
       var json =
           CourseSectionModel.fromEntity(coursSectionsListItemEntity: section)
               .toJson();
-      await datebaseservice.setData(
-          data: json,
-          key: BackendEndpoints.addCourseSectionCollection,
-          docId: courseId,
-          subCollectionKey: BackendEndpoints.sectionsSubCollection,
-          subDocId: section.id);
-      Either<Failure, void> result = await addSectionItem(
-        sectionItem: sectionItem,
-        courseId: courseId,
-        sectionId: section.id,
-      );
+      await datebaseservice.setData(data: json, json: {
+        "mainCollection": BackendEndpoints.coursesCollection,
+        "docId": courseId,
+        "subCollection": BackendEndpoints.sectionsSubCollection,
+        "subDocId": section.id
+      });
 
-      return result;
+      return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
@@ -124,44 +121,44 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
   Future<Either<Failure, void>> addSectionItem({
     required sectionItem,
     required String courseId,
-    required sectionId,
+    required String sectionId,
   }) async {
     try {
       if (sectionItem is Coursetestentity) {
         Map<String, dynamic> json =
             Coursetestmodel.fromEntity(sectionItem).toJson();
-        await datebaseservice.setData(
-            key: BackendEndpoints.coursesCollection,
-            docId: courseId,
-            subCollectionKey: BackendEndpoints.sectionsSubCollection,
-            subDocId: sectionId,
-            subCollection2Key: BackendEndpoints.sectionItemsSubCollection,
-            sub2DocId: sectionItem.id,
-            data: json);
+        await datebaseservice.setData(json: {
+          "mainCollection": BackendEndpoints.coursesCollection,
+          "docId": courseId,
+          "subCollection": BackendEndpoints.sectionsSubCollection,
+          "subDocId": sectionId,
+          "subCollection2": BackendEndpoints.sectionItemsSubCollection,
+          "sub2DocId": sectionItem.id
+        }, data: json);
         return right(null);
       } else if (sectionItem is Coursevedioitementity) {
         Map<String, dynamic> json =
             Coursevedioitemmodel.fromEntity(sectionItem).toJson();
-        await datebaseservice.setData(
-            key: BackendEndpoints.coursesCollection,
-            docId: courseId,
-            subCollectionKey: BackendEndpoints.sectionsSubCollection,
-            subDocId: sectionId,
-            subCollection2Key: BackendEndpoints.sectionItemsSubCollection,
-            sub2DocId: sectionItem.id,
-            data: json);
+        await datebaseservice.setData(json: {
+          "mainCollection": BackendEndpoints.coursesCollection,
+          "docId": courseId,
+          "subCollection": BackendEndpoints.sectionsSubCollection,
+          "subDocId": sectionId,
+          "subCollection2": BackendEndpoints.sectionItemsSubCollection,
+          "sub2DocId": sectionItem.id
+        }, data: json);
         return right(null);
       } else if (sectionItem is Coursefileentity) {
         Map<String, dynamic> json =
             Coursefilemodel.fromEntity(sectionItem).toJson();
-        await datebaseservice.setData(
-            key: BackendEndpoints.coursesCollection,
-            docId: courseId,
-            subCollectionKey: BackendEndpoints.sectionsSubCollection,
-            subDocId: sectionId,
-            subCollection2Key: BackendEndpoints.sectionItemsSubCollection,
-            sub2DocId: sectionItem.id,
-            data: json);
+        await datebaseservice.setData(json: {
+          "mainCollection": BackendEndpoints.coursesCollection,
+          "docId": courseId,
+          "subCollection": BackendEndpoints.sectionsSubCollection,
+          "subDocId": sectionId,
+          "subCollection2": BackendEndpoints.sectionItemsSubCollection,
+          "sub2DocId": sectionItem.id
+        }, data: json);
         return right(null);
       } else {
         return left(
@@ -205,6 +202,33 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
       return left(ServerFailure(message: e.message));
     } catch (e) {
       log("Exception from CourseSectionsrepoImpl.getSectionsItems in catch With Firebase Exception: ${e.toString()}");
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> addJoinedBy(
+      {required JoinedByEntity joinedByEntity,
+      required String courseId,
+      required String sectionId,
+      required String sectionItemId}) async {
+    try {
+      Map<String, dynamic> json =
+          JoinedbyModel.fromEntity(joinedByEntity).toJson();
+      await datebaseservice.setData(json: {
+        "mainCollection": BackendEndpoints.coursesCollection,
+        "docId": courseId,
+        "subCollection": BackendEndpoints.sectionsSubCollection,
+        "subDocId": sectionId,
+        "subCollection2": BackendEndpoints.sectionItemsSubCollection,
+        "sub2DocId": sectionItemId,
+        "subCollection3": BackendEndpoints.joinedBySubCollection,
+        "sub3DocId": joinedByEntity.uid
+      }, data: json);
+      return right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }

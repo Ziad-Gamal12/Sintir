@@ -42,7 +42,7 @@ class CustomAddCourseActionButton extends StatelessWidget {
                         Variables.AddCourseCoursePriceController.text),
                     language: Variables.AddCourseCourseLanguageController.text,
                     postedDate:
-                        "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}.}",
+                        "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}",
                   );
                   context.read<AddCourseCubitCubit>().addCourse(
                       courseEntity: course,

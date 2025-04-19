@@ -214,6 +214,9 @@ class StudentauthRepoImpli implements StudentauthRepo {
       {required Map<String, dynamic> data,
       required String docId,
       required String key}) async {
-    await datebaseservice.setData(data: data, docId: docId, key: key);
+    await datebaseservice.setData(
+      data: data,
+      json: {"mainCollection": key, "docId": docId},
+    );
   }
 }

@@ -2,9 +2,10 @@
 
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
@@ -14,6 +15,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionSolutionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
 
 part 'CourseSectionsState.dart';
 
@@ -73,8 +75,14 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
         section: section, courseId: courseId, sectionItem: sectionItem);
     result.fold((failure) {
       emit(AddCourseSectionFailure(errMessage: failure.message));
-    }, (sucUpdateCourseSectionsFailurecess) {
-      emit(AddCourseSectionSuccess());
+    }, (success) async {
+      final result = await coursesectionrepo.addSectionItem(
+          courseId: courseId, sectionId: section.id, sectionItem: sectionItem);
+      result.fold((failure) {
+        emit(AddCourseSectionFailure(errMessage: failure.message));
+      }, (success) {
+        emit(AddCourseSectionSuccess());
+      });
     });
   }
 
@@ -173,5 +181,49 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
     }, (items) {
       emit(GetSectionItemsSuccess(items: items));
     });
+  }
+
+  void addJoinedBy({
+    required JoinedByEntity joinedByEntity,
+    required String courseId,
+    required String sectionId,
+    required String sectionItemId,
+  }) async {
+    emit(AddJoinedByLoading());
+    Either<Failure, void> result = await coursesectionrepo.addJoinedBy(
+        joinedByEntity: joinedByEntity,
+        courseId: courseId,
+        sectionId: sectionId,
+        sectionItemId: sectionItemId);
+    result.fold((failure) {
+      emit(AddJoinedByFailure(errMessage: failure.message));
+    }, (sucUpdateCourseSectionsFailurecess) {
+      emit(AddJoinedBySuccess());
+    });
+  }
+
+  JoinedByEntity getJoinedByEntity({required BuildContext context}) {
+    if (context.read<UserCubit>().teacherentity != null) {
+      return JoinedByEntity(
+        imageUrl: context.read<UserCubit>().teacherentity!.profilePicurl!,
+        name: context.read<UserCubit>().teacherentity!.firstName,
+        joinedDate: DateTime.now(),
+        uid: context.read<UserCubit>().teacherentity!.uid!,
+      );
+    } else if (context.read<UserCubit>().studententity != null) {
+      return JoinedByEntity(
+        imageUrl: context.read<UserCubit>().studententity!.imageUrl,
+        name: context.read<UserCubit>().studententity!.firstName,
+        joinedDate: DateTime.now(),
+        uid: context.read<UserCubit>().studententity!.uid!,
+      );
+    } else {
+      return JoinedByEntity(
+        imageUrl: "",
+        name: "غير معروف",
+        joinedDate: DateTime.now(),
+        uid: "",
+      );
+    }
   }
 }

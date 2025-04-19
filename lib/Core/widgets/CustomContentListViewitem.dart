@@ -19,6 +19,7 @@ class CustomContentListViewitem extends StatelessWidget {
   });
   final CourseSectionEntity sectionItem;
   List sectionItems = [];
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CourseSectionsCubit, CourseSectionsState>(
@@ -49,14 +50,12 @@ class CustomContentListViewitem extends StatelessWidget {
             theme: const ExpandableThemeData(),
             header: InkWell(
               onTap: () {
-                if (sectionItems.isEmpty) {
-                  context.read<CourseSectionsCubit>().getSectionItems(
-                      sectionId: sectionItem.id,
-                      courseId: context
-                          .read<Bottomsheetnavigationrequirmentsentity>()
-                          .course
-                          .id);
-                }
+                context.read<CourseSectionsCubit>().getSectionItems(
+                    sectionId: sectionItem.id,
+                    courseId: context
+                        .read<Bottomsheetnavigationrequirmentsentity>()
+                        .course
+                        .id);
               },
               child: Customlisttilewidget(
                 title: sectionItem.title,
@@ -76,6 +75,7 @@ class CustomContentListViewitem extends StatelessWidget {
                 enabled: state is GetSectionItemsLoading,
                 child: CustomSectionListView(
                   items: sectionItems,
+                  section: sectionItem,
                 ),
               ),
             ),
