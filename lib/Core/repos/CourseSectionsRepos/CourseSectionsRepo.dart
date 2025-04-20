@@ -7,6 +7,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/TestResulteEntity.dart';
 
 abstract class CourseSectionsRepo {
   Future<Either<Failure, void>> uploadTestQuestionsImages(
@@ -34,6 +35,11 @@ abstract class CourseSectionsRepo {
       {required String courseId, required String sectionId});
   Future<Either<Failure, void>> addJoinedBy(
       {required JoinedByEntity joinedByEntity,
+      required String courseId,
+      required String sectionId,
+      required String sectionItemId});
+  Future<Either<Failure, void>> addTestResult(
+      {required TestresulteEntity testResult,
       required String courseId,
       required String sectionId,
       required String sectionItemId});

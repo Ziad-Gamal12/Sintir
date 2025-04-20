@@ -5,9 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:pdfx/pdfx.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
+import 'package:sintir/Core/widgets/showSnackBar.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseFIlePreViewer_Widgets/CourseFileOverView.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/addingJoinedByLoadingWidget.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class Coursefilepreviewerviewbody extends StatefulWidget {
@@ -78,31 +80,54 @@ class _CoursefilepreviewerviewbodyState
     if (pdfControllerPinch == null) {
       return const Center(child: CircularProgressIndicator());
     } else {
-      return Skeletonizer(
-        enabled: isLoading,
-        child: Column(
-          children: [
-            CourseFileOverView(
-                totalPages: totalPages,
-                pdfControllerPinch: pdfControllerPinch!,
-                currentPage: currentPage),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(
-                child: PdfViewPinch(
-                    controller: pdfControllerPinch!,
-                    onDocumentLoaded: (doc) {
-                      totalPages = doc.pagesCount;
-                      setState(() {});
-                    },
-                    onPageChanged: (page) {
-                      setState(() {
-                        currentPage = page;
-                      });
-                    }))
-          ],
-        ),
+      return BlocConsumer<CourseSectionsCubit, CourseSectionsState>(
+        listener: (context, state) {
+          if (state is AddJoinedBySuccess) {
+            showSnackBar(context, "تم الانضمام بنجاح");
+          } else if (state is AddJoinedByFailure) {
+            showSnackBar(context, state.errMessage);
+          }
+        },
+        builder: (context, state) {
+          return Stack(
+            children: [
+              Skeletonizer(
+                enabled: isLoading,
+                child: Column(
+                  children: [
+                    CourseFileOverView(
+                        totalPages: totalPages,
+                        pdfControllerPinch: pdfControllerPinch!,
+                        currentPage: currentPage),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Expanded(
+                        child: PdfViewPinch(
+                            controller: pdfControllerPinch!,
+                            onDocumentLoaded: (doc) {
+                              totalPages = doc.pagesCount;
+                              setState(() {});
+                            },
+                            onPageChanged: (page) {
+                              setState(() {
+                                currentPage = page;
+                              });
+                            }))
+                  ],
+                ),
+              ),
+              Visibility(
+                visible: state is AddJoinedByLoading ? true : false,
+                child: const Positioned(
+                    bottom: 16,
+                    left: 16,
+                    right: 16,
+                    child: addingJoinedByLoadingWidget()),
+              )
+            ],
+          );
+        },
       );
     }
   }

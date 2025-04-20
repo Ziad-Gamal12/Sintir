@@ -15,12 +15,14 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursefileModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursevedioitemModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/JoinedByModel.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/TestResulteModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/TestResulteEntity.dart';
 
 class CourseSectionsRepoImpl implements CourseSectionsRepo {
   final Pickerassetsservice pickerassetsservice;
@@ -224,6 +226,33 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
         "sub2DocId": sectionItemId,
         "subCollection3": BackendEndpoints.joinedBySubCollection,
         "sub3DocId": joinedByEntity.uid
+      }, data: json);
+      return right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> addTestResult(
+      {required TestresulteEntity testResult,
+      required String courseId,
+      required String sectionId,
+      required String sectionItemId}) async {
+    try {
+      Map<String, dynamic> json =
+          Testresultemodel.fromEntity(testResult).toJson();
+      await datebaseservice.setData(json: {
+        "mainCollection": BackendEndpoints.coursesCollection,
+        "docId": courseId,
+        "subCollection": BackendEndpoints.sectionsSubCollection,
+        "subDocId": sectionId,
+        "subCollection2": BackendEndpoints.sectionItemsSubCollection,
+        "sub2DocId": sectionItemId,
+        "subCollection3": BackendEndpoints.testResultsSubCollection,
+        "sub3DocId": testResult.serialNumber
       }, data: json);
       return right(null);
     } on CustomException catch (e) {

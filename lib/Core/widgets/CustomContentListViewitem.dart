@@ -50,12 +50,14 @@ class CustomContentListViewitem extends StatelessWidget {
             theme: const ExpandableThemeData(),
             header: InkWell(
               onTap: () {
-                context.read<CourseSectionsCubit>().getSectionItems(
-                    sectionId: sectionItem.id,
-                    courseId: context
-                        .read<Bottomsheetnavigationrequirmentsentity>()
-                        .course
-                        .id);
+                if (sectionItems.isEmpty) {
+                  context.read<CourseSectionsCubit>().getSectionItems(
+                      sectionId: sectionItem.id,
+                      courseId: context
+                          .read<Bottomsheetnavigationrequirmentsentity>()
+                          .course
+                          .id);
+                }
               },
               child: Customlisttilewidget(
                 title: sectionItem.title,
@@ -70,7 +72,6 @@ class CustomContentListViewitem extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
               ),
-              //update this by getting the section items list
               child: Skeletonizer(
                 enabled: state is GetSectionItemsLoading,
                 child: CustomSectionListView(

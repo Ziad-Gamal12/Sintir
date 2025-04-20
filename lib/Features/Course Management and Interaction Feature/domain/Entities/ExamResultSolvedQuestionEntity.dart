@@ -1,17 +1,11 @@
 class ExamResultSolvedQuestionEntity {
-  final String selectedAnswer, rightAnswer;
+  final String selectedAnswer, rightAnswer, questionTitle, imageUrl;
   final bool isCorrect;
 
   ExamResultSolvedQuestionEntity(
       {required this.selectedAnswer,
+      required this.questionTitle,
       required this.rightAnswer,
+      required this.imageUrl,
       required this.isCorrect});
-
-  bool checkisCorrect() {
-    if (selectedAnswer == rightAnswer) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 }

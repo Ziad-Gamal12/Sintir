@@ -130,3 +130,12 @@ final class AddJoinedByFailure extends CourseSectionsState {
 final class AddJoinedBySuccess extends CourseSectionsState {}
 
 final class AddJoinedByLoading extends CourseSectionsState {}
+
+final class AddTestResultLoading extends CourseSectionsState {}
+
+final class AddTestResultFailure extends CourseSectionsState {
+  final String errMessage;
+  AddTestResultFailure({required this.errMessage});
+}
+
+final class AddTestResultSuccess extends CourseSectionsState {}
