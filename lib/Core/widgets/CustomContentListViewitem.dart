@@ -8,9 +8,8 @@ import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
 import 'package:sintir/Core/widgets/showSnackBar.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseSectionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomSectionListView.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class CustomContentListViewitem extends StatelessWidget {
   CustomContentListViewitem({
@@ -19,14 +18,11 @@ class CustomContentListViewitem extends StatelessWidget {
   });
   final CourseSectionEntity sectionItem;
   List sectionItems = [];
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CourseSectionsCubit, CourseSectionsState>(
       listener: (context, state) {
-        if (state is GetSectionItemsSuccess) {
-          sectionItems = state.items;
-        } else if (state is GetSectionItemsFailure) {
+        if (state is GetSectionItemsFailure) {
           showSnackBar(context, state.errMessage);
         }
       },
@@ -52,11 +48,12 @@ class CustomContentListViewitem extends StatelessWidget {
               onTap: () {
                 if (sectionItems.isEmpty) {
                   context.read<CourseSectionsCubit>().getSectionItems(
-                      sectionId: sectionItem.id,
-                      courseId: context
-                          .read<Bottomsheetnavigationrequirmentsentity>()
-                          .course
-                          .id);
+                        sectionId: sectionItem.id,
+                        courseId: context
+                            .read<Bottomsheetnavigationrequirmentsentity>()
+                            .course
+                            .id,
+                      );
                 }
               },
               child: Customlisttilewidget(
@@ -72,12 +69,11 @@ class CustomContentListViewitem extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Skeletonizer(
-                enabled: state is GetSectionItemsLoading,
-                child: CustomSectionListView(
-                  items: sectionItems,
-                  section: sectionItem,
-                ),
+              child: CustomSectionListView(
+                section: sectionItem,
+                itemsChanged: (value) {
+                  sectionItems = value;
+                },
               ),
             ),
           ),

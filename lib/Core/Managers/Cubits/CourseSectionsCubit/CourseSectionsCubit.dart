@@ -9,8 +9,8 @@ import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseSectionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionSolutionEntity.dart';
@@ -181,7 +181,7 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
     result.fold((failure) {
       emit(GetSectionItemsFailure(errMessage: failure.message));
     }, (items) {
-      emit(GetSectionItemsSuccess(items: items));
+      emit(GetSectionItemsSuccess(items: items, sectionId: sectionId));
     });
   }
 

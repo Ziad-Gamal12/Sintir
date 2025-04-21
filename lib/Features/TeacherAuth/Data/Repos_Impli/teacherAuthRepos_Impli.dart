@@ -78,6 +78,7 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
   Future<void> DeleteUser(User? user) async {
     if (user != null) {
       await authService.deleteUSer();
+      await teacherSignout();
     }
   }
 
@@ -95,40 +96,38 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
                 value: "teacher", key: BackendEndpoints.userKind);
             return right(teacherentity);
           } else if (teacherentity.state == BackendEndpoints.waiting) {
-            await teacherSignout(user);
+            await teacherSignout();
             return left(
-                ServerFailure(message: "الطالب قيد المراجعة من قبل الادارة"));
+                ServerFailure(message: "الطلب قيد المراجعة من قبل الادارة"));
           } else if (teacherentity.state == BackendEndpoints.rejected) {
-            await teacherSignout(user);
+            await teacherSignout();
             return left(ServerFailure(message: "تم رفض طلبك من قبل الادارة"));
           } else {
-            await teacherSignout(user);
+            await teacherSignout();
             return left(ServerFailure(message: "حدث خطأ ما"));
           }
         } else {
-          await teacherSignout(user);
+          await teacherSignout();
           return left(ServerFailure(message: "هذا المعلم غير مسجل في التطبيق"));
         }
       } else {
         await authService.auth.currentUser!.sendEmailVerification();
-        await teacherSignout(user);
+        await teacherSignout();
         return left(ServerFailure(
             message: "تم ارسال رابط التفعيل الى بريدك الالكتروني"));
       }
     } on CustomException catch (e) {
-      await teacherSignout(user);
+      await teacherSignout();
       return left(ServerFailure(message: e.toString()));
     } catch (e) {
       log("Exception from teacherAuthRepos_Impli.signInWithEmailAndPassword in catch With Firebase Exception: ${e.toString()}");
-      await teacherSignout(user);
+      await teacherSignout();
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
 
-  Future<void> teacherSignout(User? user) async {
-    if (user != null) {
-      await authService.signout();
-    }
+  Future<void> teacherSignout() async {
+    await authService.signout();
   }
 
   @override

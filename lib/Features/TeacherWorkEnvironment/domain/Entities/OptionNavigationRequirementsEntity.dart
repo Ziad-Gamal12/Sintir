@@ -1,4 +1,4 @@
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseSectionEntity.dart';
 
 class Optionnavigationrequirementsentity {
   final CourseSectionEntity section;

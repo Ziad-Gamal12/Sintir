@@ -1,7 +1,7 @@
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CourseTestModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursefileModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursevedioitemModel.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseSectionEntity.dart';
 
 class CourseSectionModel {
   final String id, title, subtitle;
@@ -27,20 +27,6 @@ class CourseSectionModel {
   Map<String, dynamic> toJson() {
     return {"title": title, "subtitle": subtitle, "id": id};
   }
-
-  // List<Map<String, dynamic>> getItemsJson() {
-  //   List<Map<String, dynamic>> courseItems = [];
-  //   for (var item in items) {
-  //     if (item is Coursetestentity) {
-  //       courseItems.add(Coursetestmodel.fromEntity(item).toJson());
-  //     } else if (item is Coursevedioitementity) {
-  //       courseItems.add(Coursevedioitemmodel.fromEntity(item).toJson());
-  //     } else {
-  //       courseItems.add(Coursefilemodel.fromEntity(item).toJson());
-  //     }
-  //   }
-  //   return courseItems;
-  // }
 
   List getItemsEntity(List<Map<String, dynamic>> items) {
     List courseItems = [];

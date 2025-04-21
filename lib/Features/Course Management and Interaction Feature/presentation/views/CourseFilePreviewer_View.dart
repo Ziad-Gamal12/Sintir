@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
@@ -21,11 +22,15 @@ class CoursefilepreviewerView extends StatelessWidget {
         getIt<CourseSectionsRepo>(),
         getIt<Assetspickerrepo>(),
       ),
-      child: Scaffold(
-        appBar: CustomAppBar(
-            appBartitle: coursefileviewnavigationsrequirmentsentity.file.title),
-        body: Coursefilepreviewerviewbody(
-          file: coursefileviewnavigationsrequirmentsentity.file,
+      child: Provider.value(
+        value: coursefileviewnavigationsrequirmentsentity,
+        child: Scaffold(
+          appBar: CustomAppBar(
+              appBartitle:
+                  coursefileviewnavigationsrequirmentsentity.file.title),
+          body: Coursefilepreviewerviewbody(
+            file: coursefileviewnavigationsrequirmentsentity.file,
+          ),
         ),
       ),
     );

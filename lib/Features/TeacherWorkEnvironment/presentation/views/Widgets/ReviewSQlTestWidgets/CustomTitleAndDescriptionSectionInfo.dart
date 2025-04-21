@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursSectionsListItemEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseSectionEntity.dart';
 
 class CustomTitleAndDescriptionSectionInfo extends StatelessWidget {
   const CustomTitleAndDescriptionSectionInfo({

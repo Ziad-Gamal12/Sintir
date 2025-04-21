@@ -114,7 +114,8 @@ final class GetSectionItemsLoading extends CourseSectionsState {}
 
 final class GetSectionItemsSuccess extends CourseSectionsState {
   final List items;
-  GetSectionItemsSuccess({required this.items});
+  final String sectionId;
+  GetSectionItemsSuccess({required this.items, required this.sectionId});
 }
 
 final class GetSectionItemsFailure extends CourseSectionsState {
