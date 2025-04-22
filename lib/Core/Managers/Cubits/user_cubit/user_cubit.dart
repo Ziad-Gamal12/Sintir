@@ -5,6 +5,7 @@ import 'package:meta/meta.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/repos/UserRepos/userRepo.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
 import 'package:sintir/Features/StudenetAuth/domain/entities/studentEntity.dart';
 import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
 
@@ -40,5 +41,30 @@ class UserCubit extends Cubit<UserState> {
       }
       emit(GetUserDataSuccess());
     });
+  }
+
+  JoinedByEntity getJoinedByEntity() {
+    if (teacherentity != null) {
+      return JoinedByEntity(
+        imageUrl: teacherentity!.profilePicurl!,
+        name: teacherentity!.firstName,
+        joinedDate: DateTime.now(),
+        uid: teacherentity!.uid!,
+      );
+    } else if (studententity != null) {
+      return JoinedByEntity(
+        imageUrl: studententity!.imageUrl,
+        name: studententity!.firstName,
+        joinedDate: DateTime.now(),
+        uid: studententity!.uid!,
+      );
+    } else {
+      return JoinedByEntity(
+        imageUrl: "",
+        name: "غير معروف",
+        joinedDate: DateTime.now(),
+        uid: "",
+      );
+    }
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
+import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
@@ -43,7 +43,7 @@ class AddCourseSectionSqlTestActionbuttons extends StatelessWidget {
             InkWell(
               onTap: () {
                 context
-                    .read<CourseSectionsCubit>()
+                    .read<TestItemCubit>()
                     .addNewQuestion(coursetestentity: courseTestEntity);
               },
               child: const CircleAvatar(

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseFedBack_Widgets/CourseFedBacksListView_item.dart';
 
 class Coursefedbackslistview extends StatelessWidget {
   const Coursefedbackslistview({super.key, required this.courseFedBacks});
-  final List<CoursefedbackItemEntity> courseFedBacks;
+  final List courseFedBacks;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

@@ -1,31 +1,34 @@
 // ignore_for_file: must_be_immutable, file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/courseTestViewBodyDetailsItem.dart';
 
 class CourseTestViewBodyQuestionsInfo extends StatelessWidget {
   CourseTestViewBodyQuestionsInfo({
     super.key,
-    required this.coursetestentity,
   });
-
-  final Coursetestentity coursetestentity;
 
   @override
   Widget build(BuildContext context) {
+    Coursetestentity test = context
+        .read<Coursetestviewnavigationsrequirmentsentity>()
+        .test; //widget.coursetestentity>
+
     return Column(
       children: [
         Coursetestviewbodydetailsitem(
             title: "عدد الأسئلة الكلى",
-            count: coursetestentity.questions.length.toString(),
+            count: test.questions.length.toString(),
             countColor: Colors.grey.shade400,
             countTextColor: Colors.black),
         const SizedBox(
           height: 10,
         ),
         StreamBuilder<Object>(
-            stream: getSolvedQuestions(),
+            stream: getSolvedQuestions(test: test),
             builder: (context, snapshot) {
               return Coursetestviewbodydetailsitem(
                   title: "عدد الأسئلة التى تم حلها ",
@@ -37,7 +40,7 @@ class CourseTestViewBodyQuestionsInfo extends StatelessWidget {
           height: 10,
         ),
         StreamBuilder<Object>(
-            stream: getUnSolvedQuestions(),
+            stream: getUnSolvedQuestions(coursetestentity: test),
             builder: (context, snapshot) {
               return Coursetestviewbodydetailsitem(
                   title: "عدد الأسئلة التى  لم يتم حلها ",
@@ -54,8 +57,8 @@ class CourseTestViewBodyQuestionsInfo extends StatelessWidget {
 
   int solvedcount = 0;
 
-  Stream<Object>? getSolvedQuestions() {
-    for (var question in coursetestentity.questions) {
+  Stream<Object>? getSolvedQuestions({required Coursetestentity test}) {
+    for (var question in test.questions) {
       if (question.selectedSolution != "") {
         solvedcount++;
       }
@@ -63,7 +66,8 @@ class CourseTestViewBodyQuestionsInfo extends StatelessWidget {
     return Stream.value(solvedcount);
   }
 
-  Stream<Object>? getUnSolvedQuestions() {
+  Stream<Object>? getUnSolvedQuestions(
+      {required Coursetestentity coursetestentity}) {
     int unsolvedcount = coursetestentity.questions.length - solvedcount;
     return Stream.value(unsolvedcount);
   }

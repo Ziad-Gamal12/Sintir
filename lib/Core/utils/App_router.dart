@@ -12,7 +12,6 @@ import 'package:sintir/Features/ChoosingUserKind/Presentation/views/ChoosingUser
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVideoviewnavigationsrequirmentsentity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/TestResulteEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFedBackView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFilePreviewer_View.dart';
@@ -188,7 +187,7 @@ class App_router {
         path: Coursefedbackview.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return Coursefedbackview(
-            fedBacks: state.extra as List<CoursefedbackItemEntity>,
+            fedBacks: state.extra as List,
           );
         },
       ),

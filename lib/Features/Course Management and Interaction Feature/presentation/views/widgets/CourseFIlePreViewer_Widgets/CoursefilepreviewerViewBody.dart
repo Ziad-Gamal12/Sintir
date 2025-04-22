@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:pdfx/pdfx.dart';
-import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
+import 'package:sintir/Core/Managers/Cubits/file_item_cubit/file_item_cubit.dart';
+import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/widgets/showSnackBar.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileviewnavigationsrequirmentsentity.dart';
@@ -42,7 +43,9 @@ class _CoursefilepreviewerviewbodyState
           isLoading = false;
         });
       } else {
-        throw Exception("Failed to load PDF");
+        if (mounted) {
+          showSnackBar(context, "لم يتم تحميل الملف");
+        }
       }
     } catch (e) {
       setState(() {
@@ -55,7 +58,7 @@ class _CoursefilepreviewerviewbodyState
   void initState() {
     loadPdf();
     if (mounted) {
-      context.read<CourseSectionsCubit>().addJoinedBy(
+      context.read<FileItemCubit>().joinToFileItem(
             courseId: context
                 .read<Coursefileviewnavigationsrequirmentsentity>()
                 .course
@@ -67,9 +70,7 @@ class _CoursefilepreviewerviewbodyState
                 .read<Coursefileviewnavigationsrequirmentsentity>()
                 .file
                 .id,
-            joinedByEntity: context
-                .read<CourseSectionsCubit>()
-                .getJoinedByEntity(context: context),
+            joinedByEntity: context.read<UserCubit>().getJoinedByEntity(),
           );
     }
     super.initState();
@@ -80,11 +81,11 @@ class _CoursefilepreviewerviewbodyState
     if (pdfControllerPinch == null) {
       return const Center(child: CircularProgressIndicator());
     } else {
-      return BlocConsumer<CourseSectionsCubit, CourseSectionsState>(
+      return BlocConsumer<FileItemCubit, FileItemState>(
         listener: (context, state) {
-          if (state is AddJoinedBySuccess) {
+          if (state is JoinToFileITemSuccess) {
             showSnackBar(context, "تم الانضمام بنجاح");
-          } else if (state is AddJoinedByFailure) {
+          } else if (state is JoinToFileITemFailure) {
             showSnackBar(context, state.errMessage);
           }
         },
@@ -118,7 +119,7 @@ class _CoursefilepreviewerviewbodyState
                 ),
               ),
               Visibility(
-                visible: state is AddJoinedByLoading ? true : false,
+                visible: state is JoinToFileITemLoading ? true : false,
                 child: const Positioned(
                     bottom: 16,
                     left: 16,

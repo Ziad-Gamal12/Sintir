@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewSQlTestWidgets/CustomReviewSqlQuestionListItem.dart';
 
 class Customreviewsqlquestionssliverlist extends StatelessWidget {
-  const Customreviewsqlquestionssliverlist(
-      {super.key, required this.questions});
-  final List<Coursetestquestionentity> questions;
+  const Customreviewsqlquestionssliverlist({
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
+    List<Coursetestquestionentity> questions = context
+        .read<Navigatesqlreviewrequirmentsentity>()
+        .coursetestentity
+        .questions;
     return SliverList.builder(
         itemCount: questions.length,
         itemBuilder: (context, index) {

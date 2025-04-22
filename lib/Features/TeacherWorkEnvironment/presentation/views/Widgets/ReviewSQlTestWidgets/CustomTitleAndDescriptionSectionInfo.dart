@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseSectionEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
 
 class CustomTitleAndDescriptionSectionInfo extends StatelessWidget {
   const CustomTitleAndDescriptionSectionInfo({
     super.key,
-    required this.courseSectionEntity,
   });
-  final CourseSectionEntity courseSectionEntity;
 
   @override
   Widget build(BuildContext context) {
+    CourseSectionEntity courseSectionEntity =
+        context.read<Navigatesqlreviewrequirmentsentity>().section;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

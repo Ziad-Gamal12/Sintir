@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/InfoRow.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFedBackView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/SendCourseReportView.dart';
 import 'package:sintir/constant.dart';
 
@@ -75,8 +76,8 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  // GoRouter.of(context).push(Coursefedbackview.routeName,
-                  //     extra: course.coursefedbackItemEntity);
+                  GoRouter.of(context)
+                      .push(Coursefedbackview.routeName, extra: []);
                 },
                 child: const InfoRow(
                   icon: FontAwesomeIcons.comment,

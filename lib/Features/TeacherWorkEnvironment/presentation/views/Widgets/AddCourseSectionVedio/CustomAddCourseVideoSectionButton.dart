@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
+import 'package:sintir/Core/Managers/Cubits/video_item_cubit/video_item_cubit.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
@@ -18,11 +18,11 @@ class CustomAddCourseVideoSectionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CourseSectionsCubit, CourseSectionsState>(
+    return BlocBuilder<VideoItemCubit, VideoItemState>(
       builder: (context, state) {
         return Custom_Loading_Widget(
-          isLoading: state is VideoUploadedingLoading ||
-              state is UpdateCourseSectionsLoading,
+          isLoading:
+              state is UploadVideoLoading || state is AddVideoItemLoading,
           child: Custombutton(
               text: coursevedioitementity.file == null
                   ? "تحديد فديو"
@@ -33,12 +33,12 @@ class CustomAddCourseVideoSectionButton extends StatelessWidget {
               textColor: Colors.white,
               onPressed: () {
                 if (coursevedioitementity.file == null) {
-                  context.read<CourseSectionsCubit>().pickSectionVedio(
+                  context.read<VideoItemCubit>().pickVideoFile(
                       coursevedioitementity: coursevedioitementity);
                 } else {
                   if (Variables.AddCourseSectionVideoItemFormKey.currentState!
                       .validate()) {
-                    context.read<CourseSectionsCubit>().uploadVideo(
+                    context.read<VideoItemCubit>().uploadVideo(
                         coursevedioitementity: coursevedioitementity);
                   }
                 }

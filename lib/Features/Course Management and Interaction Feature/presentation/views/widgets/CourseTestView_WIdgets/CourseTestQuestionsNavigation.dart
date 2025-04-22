@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CoursetestviewBody.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CustomCountWidget.dart';
 
@@ -24,9 +27,10 @@ class _CoursetestquestionsnavigationState
 
   @override
   Widget build(BuildContext context) {
+    Coursetestentity test =
+        context.read<Coursetestviewnavigationsrequirmentsentity>().test;
     return Wrap(
-      children:
-          widget.widget.coursetestentity.questions.asMap().entries.map((e) {
+      children: test.questions.asMap().entries.map((e) {
         return InkWell(
           onTap: () {
             currentQuestionIndex = e.key;

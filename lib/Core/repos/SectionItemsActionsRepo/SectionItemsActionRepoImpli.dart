@@ -1,0 +1,135 @@
+import 'package:dartz/dartz.dart';
+import 'package:sintir/Core/errors/Exceptioons.dart';
+import 'package:sintir/Core/errors/Failures.dart';
+import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
+import 'package:sintir/Core/services/DateBaseService.dart';
+import 'package:sintir/Core/utils/Backend_EndPoints.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CourseTestModel.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursefileModel.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursevedioitemModel.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/JoinedByModel.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
+
+class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
+  final Datebaseservice datebaseservice;
+
+  SectionItemsActionsRepoImpli({required this.datebaseservice});
+
+  @override
+  Future<Either<Failure, void>> addSectionItem({
+    required sectionItem,
+    required String courseId,
+    required String sectionId,
+  }) async {
+    try {
+      if (sectionItem is Coursetestentity) {
+        Map<String, dynamic> json =
+            Coursetestmodel.fromEntity(sectionItem).toJson();
+        await datebaseservice.setData(json: {
+          "mainCollection": BackendEndpoints.coursesCollection,
+          "docId": courseId,
+          "subCollection": BackendEndpoints.sectionsSubCollection,
+          "subDocId": sectionId,
+          "subCollection2": BackendEndpoints.sectionItemsSubCollection,
+          "sub2DocId": sectionItem.id
+        }, data: json);
+        return right(null);
+      } else if (sectionItem is Coursevedioitementity) {
+        Map<String, dynamic> json =
+            Coursevedioitemmodel.fromEntity(sectionItem).toJson();
+        await datebaseservice.setData(json: {
+          "mainCollection": BackendEndpoints.coursesCollection,
+          "docId": courseId,
+          "subCollection": BackendEndpoints.sectionsSubCollection,
+          "subDocId": sectionId,
+          "subCollection2": BackendEndpoints.sectionItemsSubCollection,
+          "sub2DocId": sectionItem.id
+        }, data: json);
+        return right(null);
+      } else if (sectionItem is Coursefileentity) {
+        Map<String, dynamic> json =
+            Coursefilemodel.fromEntity(sectionItem).toJson();
+        await datebaseservice.setData(json: {
+          "mainCollection": BackendEndpoints.coursesCollection,
+          "docId": courseId,
+          "subCollection": BackendEndpoints.sectionsSubCollection,
+          "subDocId": sectionId,
+          "subCollection2": BackendEndpoints.sectionItemsSubCollection,
+          "sub2DocId": sectionItem.id
+        }, data: json);
+        return right(null);
+      } else {
+        return left(
+            ServerFailure(message: "العنصر غير معرف, يرجى المحاولة مرة أخرى"));
+      }
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List>> getSectionsItems(
+      {required String courseId, required String sectionId}) async {
+    try {
+      List items = [];
+      List? data = await datebaseservice.getData(
+          key: BackendEndpoints.coursesCollection,
+          docId: courseId,
+          subCollectionKey: BackendEndpoints.sectionsSubCollection,
+          subDocId: sectionId,
+          subCollection2Key: BackendEndpoints.sectionItemsSubCollection);
+      if (data == null) {
+        return left(ServerFailure(message: "البيانات غير موجودة"));
+      }
+      if (data.isEmpty) {
+        return right([]);
+      }
+      for (var item in data) {
+        if (item["type"] == "Test") {
+          items.add(Coursetestmodel.fromJson(item).toEntity());
+        } else if (item["type"] == "Vedio") {
+          items.add(Coursevedioitemmodel.fromJson(item).toEntity());
+        } else {
+          items.add(Coursefilemodel.fromJson(item).toEnity());
+        }
+      }
+      return right(items);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> addJoinedBy(
+      {required JoinedByEntity joinedByEntity,
+      required String courseId,
+      required String sectionId,
+      required String sectionItemId}) async {
+    try {
+      Map<String, dynamic> json =
+          JoinedbyModel.fromEntity(joinedByEntity).toJson();
+      await datebaseservice.setData(json: {
+        "mainCollection": BackendEndpoints.coursesCollection,
+        "docId": courseId,
+        "subCollection": BackendEndpoints.sectionsSubCollection,
+        "subDocId": sectionId,
+        "subCollection2": BackendEndpoints.sectionItemsSubCollection,
+        "sub2DocId": sectionItemId,
+        "subCollection3": BackendEndpoints.joinedBySubCollection,
+        "sub3DocId": joinedByEntity.uid
+      }, data: json);
+      return right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+}

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
+import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/showSnackBar.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
@@ -13,71 +14,87 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/constant.dart';
 
 class ReviewSqlTestSectionViewBody extends StatelessWidget {
-  const ReviewSqlTestSectionViewBody(
-      {super.key, required this.navigatesqlreviewrequirmentsentity});
-  final Navigatesqlreviewrequirmentsentity navigatesqlreviewrequirmentsentity;
+  const ReviewSqlTestSectionViewBody({
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CourseSectionsCubit, CourseSectionsState>(
-      listener: (context, state) {
-        reviewSQlTestBlocListener(state, context);
-      },
-      builder: (context, state) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
-          child: Stack(
-            children: [
-              CustomScrollView(
-                slivers: [
-                  const SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: 20,
+    return MultiBlocListener(
+        listeners: [
+          BlocListener<TestItemCubit, TestItemState>(
+              listener: (context, state) {
+            testItemBlocListener(state, context);
+          }),
+          BlocListener<CourseSectionsCubit, CourseSectionsState>(
+              listener: (context, state) {
+            courseSectionListener(state, context);
+          })
+        ],
+        child: BlocBuilder<TestItemCubit, TestItemState>(
+            builder: (context, state) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+            child: Stack(
+              children: [
+                CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: 20,
+                      ),
                     ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: CustomTitleAndDescriptionSectionInfo(
-                      courseSectionEntity:
-                          navigatesqlreviewrequirmentsentity.section,
+                    SliverToBoxAdapter(
+                      child: CustomTitleAndDescriptionSectionInfo(),
                     ),
-                  ),
-                  const SliverToBoxAdapter(
-                    child: Divider(
-                      color: Colors.black,
-                      height: 40,
+                    SliverToBoxAdapter(
+                      child: Divider(
+                        color: Colors.black,
+                        height: 40,
+                      ),
                     ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: CustomReviewSqlTestNameAndDuration(
-                        coursetestentity: navigatesqlreviewrequirmentsentity
-                            .coursetestentity),
-                  ),
-                  const SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: 10,
+                    SliverToBoxAdapter(
+                      child: CustomReviewSqlTestNameAndDuration(),
                     ),
-                  ),
-                  Customreviewsqlquestionssliverlist(
-                      questions: navigatesqlreviewrequirmentsentity
-                          .coursetestentity.questions),
-                ],
-              ),
-              Positioned(
-                bottom: 20,
-                left: 0,
-                right: 0,
-                child: CustomReviewSQlTestButtonAction(
-                    navigatesqlreviewrequirmentsentity:
-                        navigatesqlreviewrequirmentsentity),
-              )
-            ],
-          ),
-        );
-      },
-    );
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: 10,
+                      ),
+                    ),
+                    Customreviewsqlquestionssliverlist(),
+                  ],
+                ),
+                Positioned(
+                  bottom: 20,
+                  left: 0,
+                  right: 0,
+                  child: CustomReviewSQlTestButtonAction(),
+                )
+              ],
+            ),
+          );
+        }));
   }
 
-  void reviewSQlTestBlocListener(
-      CourseSectionsState state, BuildContext context) {
+  void testItemBlocListener(TestItemState state, BuildContext context) {
+    if (state is QuestionsImagesUploadedingSuccuss) {
+      questionsImagesUploadedSuccessState(context);
+    } else if (state is QuestionsImagesUploadedingFailure) {
+      showSnackBar(context, state.errMessage);
+    } else if (state is AddTestItemFailure) {
+      errordialog(context, state.errMessage).show();
+    } else if (state is AddTestItemSuccess) {
+      successdialog(
+          context: context,
+          SuccessMessage: "تم اضافة الملف بنجاح",
+          btnOkOnPress: () {
+            context.go(
+              Homeview.routeName,
+            );
+          }).show();
+    }
+  }
+
+  void courseSectionListener(CourseSectionsState state, BuildContext context) {
     if (state is AddCourseSectionFailure) {
       errordialog(context, state.errMessage).show();
     } else if (state is AddCourseSectionSuccess) {
@@ -89,24 +106,22 @@ class ReviewSqlTestSectionViewBody extends StatelessWidget {
               Homeview.routeName,
             );
           }).show();
-    } else if (state is QuestionsImagesUploadedingSuccuss) {
-      questionsImagesUploadedSuccessState(context);
-    } else if (state is QuestionsImagesUploadedingFailure) {
-      showSnackBar(context, state.errMessage);
     }
   }
 
   void questionsImagesUploadedSuccessState(BuildContext context) {
+    Navigatesqlreviewrequirmentsentity navigatesqlreviewrequirmentsentity =
+        context.read<Navigatesqlreviewrequirmentsentity>();
     if (navigatesqlreviewrequirmentsentity.isNewSection) {
       context.read<CourseSectionsCubit>().addCourseSection(
           sectionItem: navigatesqlreviewrequirmentsentity.coursetestentity,
           courseId: navigatesqlreviewrequirmentsentity.courseID,
           section: navigatesqlreviewrequirmentsentity.section);
     } else {
-      context.read<CourseSectionsCubit>().addSectionItem(
+      context.read<TestItemCubit>().addTestItem(
           courseId: navigatesqlreviewrequirmentsentity.courseID,
           sectionId: navigatesqlreviewrequirmentsentity.section.id,
-          sectionItem: navigatesqlreviewrequirmentsentity.coursetestentity);
+          test: navigatesqlreviewrequirmentsentity.coursetestentity);
     }
   }
 }

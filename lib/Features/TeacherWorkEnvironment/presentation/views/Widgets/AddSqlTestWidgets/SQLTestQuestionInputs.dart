@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
+import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
@@ -50,7 +50,7 @@ class SQLTestQuestionInputs extends StatelessWidget {
                   borderRadius: BorderRadius.circular(0),
                   textColor: Colors.black,
                   onPressed: () {
-                    context.read<CourseSectionsCubit>().addSolution(
+                    context.read<TestItemCubit>().addSolution(
                           question: coursetestquestionentity,
                         );
                   })

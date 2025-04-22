@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
+import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
+import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
+import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
@@ -15,14 +19,25 @@ class ReviewSqlTestSectionView extends StatelessWidget {
   final Navigatesqlreviewrequirmentsentity navigatesqlreviewrequirmentsentity;
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CourseSectionsCubit(
-          getIt<CourseSectionsRepo>(), getIt<Assetspickerrepo>()),
-      child: Scaffold(
-        appBar: const CustomAppBar(appBartitle: "مراجعه"),
-        body: ReviewSqlTestSectionViewBody(
-          navigatesqlreviewrequirmentsentity:
-              navigatesqlreviewrequirmentsentity,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<TestItemCubit>(
+          create: (context) => TestItemCubit(
+            sectionItemsActionsRepo: getIt<SectionItemsActionsRepo>(),
+            testitemrepo: getIt<Testitemrepo>(),
+            assetspickerrepo: getIt<Assetspickerrepo>(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => CourseSectionsCubit(
+              getIt<CourseSectionsRepo>(), getIt<Assetspickerrepo>()),
+        )
+      ],
+      child: Provider.value(
+        value: navigatesqlreviewrequirmentsentity,
+        child: const Scaffold(
+          appBar: CustomAppBar(appBartitle: "مراجعه"),
+          body: ReviewSqlTestSectionViewBody(),
         ),
       ),
     );

@@ -9,8 +9,16 @@ import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo_impli.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo_impl.dart';
+import 'package:sintir/Core/repos/File-Item-Repo/FileItemRepo.dart';
+import 'package:sintir/Core/repos/File-Item-Repo/FileItemRepoImpli.dart';
+import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
+import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepoImpli.dart';
+import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo-Impli.dart';
+import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 import 'package:sintir/Core/repos/UserRepos/UserRepoImpli.dart';
 import 'package:sintir/Core/repos/UserRepos/userRepo.dart';
+import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepo.dart';
+import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepoImpli.dart';
 import 'package:sintir/Core/repos/authRepos/authRepo_impli.dart';
 import 'package:sintir/Core/repos/authRepos/authrepo.dart';
 import 'package:sintir/Core/services/DateBaseService.dart';
@@ -52,12 +60,23 @@ void setup_Getit() {
   getIt.registerSingleton<Userrepo>(
       Userrepoimpli(datebaseservicel: getIt<Datebaseservice>()));
   getIt.registerSingleton<CourseSectionsRepo>(CourseSectionsRepoImpl(
-      storageService: getIt<StorageService>(),
-      datebaseservice: getIt<Datebaseservice>(),
-      pickerassetsservice: getIt<Pickerassetsservice>()));
+    datebaseservice: getIt<Datebaseservice>(),
+  ));
   getIt.registerSingleton<Assetspickerrepo>(
       Assetspickerrepoimpli(pickerassetsservice: getIt<Pickerassetsservice>()));
   getIt.registerSingleton<CourseSubscibtionsRepo>(CourseSubscibtionsRepoimpli(
       payMobService: PayMobService(),
       datebaseservice: getIt<Datebaseservice>()));
+
+  getIt.registerSingleton<Testitemrepo>(Testitemrepoimpli(
+      storageService: getIt<StorageService>(),
+      datebaseservice: getIt<Datebaseservice>()));
+  getIt.registerSingleton<SectionItemsActionsRepo>(
+      SectionItemsActionsRepoImpli(datebaseservice: getIt<Datebaseservice>()));
+  getIt.registerSingleton<VideoItemRepo>(VideoItemRepoImpli(
+    storageService: getIt<StorageService>(),
+  ));
+  getIt.registerSingleton<FileItemRepo>(FileItemRepoImpli(
+    storageService: getIt<StorageService>(),
+  ));
 }

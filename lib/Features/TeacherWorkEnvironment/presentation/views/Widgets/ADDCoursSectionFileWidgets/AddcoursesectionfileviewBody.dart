@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
+import 'package:sintir/Core/Managers/Cubits/file_item_cubit/file_item_cubit.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
-import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Core/widgets/showSnackBar.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
@@ -33,52 +33,51 @@ class _AddcoursesectionfileviewBodyState
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CourseSectionsCubit, CourseSectionsState>(
-      listener: (context, state) {
-        addCourseSectionFileItemBLocListener(state, context);
-      },
-      builder: (context, state) {
-        return Provider.value(
-          value: coursefilEentity,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
-            child: Form(
-              key: formKey,
-              child: Stack(
-                children: [
-                  AddCourseSectionFileTextFields(
-                    coursefilEentity: coursefilEentity,
-                  ),
-                  Positioned(
-                      bottom: 20,
-                      left: 16,
-                      right: 16,
-                      child: Custom_Loading_Widget(
-                          isLoading: state is UpdateCourseSectionsLoading ||
-                              state is FileUploadedingLoading,
-                          child: CustomAddCourseSectionFileActionButton(
-                            fileentity: coursefilEentity,
-                            formKey: formKey,
-                          ))),
-                ],
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<FileItemCubit, FileItemState>(listener: (context, state) {
+          fileItemListener(state, context);
+        }),
+        BlocListener<CourseSectionsCubit, CourseSectionsState>(
+            listener: (context, state) {
+          courseSectionListener(state, context);
+        })
+      ],
+      child: BlocBuilder<FileItemCubit, FileItemState>(
+        builder: (context, state) {
+          return Provider.value(
+            value: coursefilEentity,
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+              child: Form(
+                key: formKey,
+                child: Stack(
+                  children: [
+                    AddCourseSectionFileTextFields(
+                      coursefilEentity: coursefilEentity,
+                    ),
+                    Positioned(
+                        bottom: 20,
+                        left: 16,
+                        right: 16,
+                        child: CustomAddCourseSectionFileActionButton(
+                          fileentity: coursefilEentity,
+                          formKey: formKey,
+                        )),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
-  void addCourseSectionFileItemBLocListener(
-      CourseSectionsState state, BuildContext context) {
-    if (state is AddCourseSectionFilePicked) {
-      coursefilEentity.file = state.file;
-    } else if (state is AddCourseSectionFileUnPicked) {
-      showSnackBar(context, "حدث خطأ اثناء اختيار الملف");
-    } else if (state is FileUploadedingSuccuss) {
-      fileUploadedSuccessState(context, state);
-    } else if (state is FileUploadedingFailure) {
-      showSnackBar(context, state.errMessage);
+  void courseSectionListener(CourseSectionsState state, BuildContext context) {
+    if (state is AddCourseSectionFailure) {
+      errordialog(context, state.errMessage).show();
     } else if (state is AddCourseSectionSuccess) {
       successdialog(
           context: context,
@@ -88,13 +87,33 @@ class _AddcoursesectionfileviewBodyState
               Homeview.routeName,
             );
           }).show();
-    } else if (state is AddCourseSectionFailure) {
-      errordialog(context, state.errMessage).show();
     }
   }
 
-  void fileUploadedSuccessState(
-      BuildContext context, FileUploadedingSuccuss state) {
+  void fileItemListener(FileItemState state, BuildContext context) {
+    if (state is AddFileItemFailure) {
+      errordialog(context, state.errMessage).show();
+    } else if (state is AddFileItemSuccess) {
+      successdialog(
+          context: context,
+          SuccessMessage: "تم اضافة الملف بنجاح",
+          btnOkOnPress: () {
+            context.go(
+              Homeview.routeName,
+            );
+          }).show();
+    } else if (state is PickFileSuccess) {
+      coursefilEentity.file = state.file;
+    } else if (state is PickFileFailure) {
+      showSnackBar(context, "لم يتم اختيار فيديو");
+    } else if (state is UplaodFileSuccess) {
+      fileUploadedSuccessState(context, state);
+    } else if (state is UplaodFileFailure) {
+      showSnackBar(context, state.errMessage);
+    }
+  }
+
+  void fileUploadedSuccessState(BuildContext context, UplaodFileSuccess state) {
     formKey.currentState!.save();
     Optionnavigationrequirementsentity optionnavigationrequirementsentity =
         context.read<Optionnavigationrequirementsentity>();

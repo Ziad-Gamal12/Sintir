@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
+import 'package:sintir/Core/Managers/Cubits/video_item_cubit/video_item_cubit.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
-import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
+import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
+import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
@@ -22,9 +23,10 @@ class Displaycoursevedioveiw extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CourseSectionsCubit(
-        getIt<CourseSectionsRepo>(),
-        getIt<Assetspickerrepo>(),
+      create: (context) => VideoItemCubit(
+        videoItemRepo: getIt<VideoItemRepo>(),
+        assetspickerrepo: getIt<Assetspickerrepo>(),
+        sectionItemsActionsRepo: getIt<SectionItemsActionsRepo>(),
       ),
       child: Scaffold(
         key: Variables.DisplaycoursevedioveiwScaffoldKey,

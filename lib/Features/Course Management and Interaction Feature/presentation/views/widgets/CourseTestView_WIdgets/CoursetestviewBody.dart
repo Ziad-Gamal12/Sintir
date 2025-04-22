@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
+import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
+import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/showSnackBar.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
@@ -17,8 +17,9 @@ import 'package:sintir/constant.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class CoursetestviewBody extends StatefulWidget {
-  const CoursetestviewBody({super.key, required this.coursetestentity});
-  final Coursetestentity coursetestentity;
+  const CoursetestviewBody({
+    super.key,
+  });
   @override
   State<CoursetestviewBody> createState() => _CoursetestviewBodyState();
 }
@@ -28,7 +29,11 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
 
   @override
   void initState() {
-    intitStateMethod();
+    if (mounted) {
+      intitStateMethod(
+          test:
+              context.read<Coursetestviewnavigationsrequirmentsentity>().test);
+    }
     super.initState();
   }
 
@@ -37,11 +42,14 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CourseSectionsCubit, CourseSectionsState>(
+    Coursetestentity test = context
+        .read<Coursetestviewnavigationsrequirmentsentity>()
+        .test; //widget.coursetestentity>
+    return BlocConsumer<TestItemCubit, TestItemState>(
       listener: (context, state) {
-        if (state is AddJoinedBySuccess) {
+        if (state is JoinToTestItemSuccess) {
           showSnackBar(context, "تم الانضمام بنجاح");
-        } else if (state is AddJoinedByFailure) {
+        } else if (state is JoinToTestItemFailure) {
           showSnackBar(context, state.errMessage);
         } else if (state is AddTestResultSuccess) {
           successdialog(
@@ -50,8 +58,9 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
               btnOkOnPress: () {
                 GoRouter.of(context).pushReplacement(
                     Reviewtestresultview.routeName,
-                    extra: context.read<CourseSectionsCubit>().getTestResults(
-                        context: context, test: widget.coursetestentity));
+                    extra: context
+                        .read<TestItemCubit>()
+                        .getTestResults(context: context, test: test));
               }).show();
         } else if (state is AddTestResultFailure) {
           errordialog(context, state.errMessage).show();
@@ -60,76 +69,64 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
       builder: (context, state) {
         return Stack(
           children: [
-            Provider.value(
-              value: widget.coursetestentity,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: KHorizontalPadding, vertical: 20),
-                child: ListView(
-                  children: [
-                    CourseTestControlPanel(
-                        totalTime: widget.coursetestentity.durationTime * 1.0,
-                        stopWatchTimer: stopWatchTimer,
-                        widget: widget),
-                    Coursetestquestionsnavigation(
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: KHorizontalPadding, vertical: 20),
+              child: ListView(
+                children: [
+                  CourseTestControlPanel(
+                      stopWatchTimer: stopWatchTimer, widget: widget),
+                  Coursetestquestionsnavigation(
+                    currentQuestionIndex: currentQuestionIndex,
+                    widget: widget,
+                    selectQuestionAction: (value) {
+                      currentQuestionIndex = value;
+                      setState(() {});
+                    },
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Divider(
+                    color: Colors.grey,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CoursetestquestionItem(
                       currentQuestionIndex: currentQuestionIndex,
-                      widget: widget,
-                      selectQuestionAction: (value) {
-                        currentQuestionIndex = value;
+                      answerChange: (answer) {
+                        test.questions[currentQuestionIndex].selectedSolution =
+                            answer ?? "";
                         setState(() {});
                       },
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const Divider(
-                      color: Colors.grey,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    CoursetestquestionItem(
-                        coursetestentity: widget.coursetestentity,
-                        currentQuestionIndex: currentQuestionIndex,
-                        answerChange: (answer) {
-                          widget
-                              .coursetestentity
-                              .questions[currentQuestionIndex]
-                              .selectedSolution = answer ?? "";
-                          setState(() {});
-                        },
-                        selectedAnswer: widget
-                                .coursetestentity
-                                .questions[currentQuestionIndex]
-                                .selectedSolution ??
-                            ""),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TestQuestionNavigationButtons(
-                      nextQuestion: () {
-                        if (currentQuestionIndex <
-                            widget.coursetestentity.questions.length - 1) {
-                          currentQuestionIndex++;
-                          widget.coursetestentity
-                              .questions[currentQuestionIndex].isOpened = true;
-                          selectedAnswer = "";
-                          setState(() {});
-                        }
-                      },
-                      previousQuestion: () {
-                        if (currentQuestionIndex > 0) {
-                          currentQuestionIndex--;
-                          setState(() {});
-                        }
-                      },
-                    )
-                  ],
-                ),
+                      selectedAnswer: test.questions[currentQuestionIndex]
+                              .selectedSolution ??
+                          ""),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TestQuestionNavigationButtons(
+                    nextQuestion: () {
+                      if (currentQuestionIndex < test.questions.length - 1) {
+                        currentQuestionIndex++;
+                        test.questions[currentQuestionIndex].isOpened = true;
+                        selectedAnswer = "";
+                        setState(() {});
+                      }
+                    },
+                    previousQuestion: () {
+                      if (currentQuestionIndex > 0) {
+                        currentQuestionIndex--;
+                        setState(() {});
+                      }
+                    },
+                  )
+                ],
               ),
             ),
             Visibility(
-              visible: state is AddJoinedByLoading ? true : false,
+              visible: state is JoinToTestItemLoading ? true : false,
               child: const Positioned(
                   bottom: 16,
                   left: 16,
@@ -142,9 +139,9 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
     );
   }
 
-  void intitStateMethod() {
+  void intitStateMethod({required Coursetestentity test}) {
     if (mounted) {
-      context.read<CourseSectionsCubit>().addJoinedBy(
+      context.read<TestItemCubit>().joinToTestItem(
             courseId: context
                 .read<Coursetestviewnavigationsrequirmentsentity>()
                 .course
@@ -156,13 +153,11 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
                 .read<Coursetestviewnavigationsrequirmentsentity>()
                 .test
                 .id,
-            joinedByEntity: context
-                .read<CourseSectionsCubit>()
-                .getJoinedByEntity(context: context),
+            joinedByEntity: context.read<UserCubit>().getJoinedByEntity(),
           );
     }
-    widget.coursetestentity.questions[0].isOpened = true;
-    stopWatchTimer.setPresetMinuteTime(widget.coursetestentity.durationTime);
+    test.questions[0].isOpened = true;
+    stopWatchTimer.setPresetMinuteTime(test.durationTime);
     stopWatchTimer.onStartTimer();
   }
 }

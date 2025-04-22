@@ -7,48 +7,21 @@ import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
 import 'package:sintir/Core/services/DateBaseService.dart';
-import 'package:sintir/Core/services/PickerAssetsService.dart';
-import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CourseSectionModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CourseTestModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursefileModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursevedioitemModel.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/JoinedByModel.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/TestResulteModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseSectionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/TestResulteEntity.dart';
 
 class CourseSectionsRepoImpl implements CourseSectionsRepo {
-  final Pickerassetsservice pickerassetsservice;
-  final StorageService storageService;
   final Datebaseservice datebaseservice;
-  CourseSectionsRepoImpl(
-      {required this.pickerassetsservice,
-      required this.datebaseservice,
-      required this.storageService});
-
-  @override
-  Future<Either<Failure, void>> uploadTestQuestionsImages(
-      {required List<Coursetestquestionentity> questions}) async {
-    try {
-      for (var question in questions) {
-        if (question.imageFile != null) {
-          String url =
-              await storageService.uploadFile(file: question.imageFile!);
-          question.imageUrl = url;
-        }
-      }
-      return right(null);
-    } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
-    }
-  }
+  CourseSectionsRepoImpl({
+    required this.datebaseservice,
+  });
 
   @override
   Future<Either<Failure, void>> addCourseSection(
@@ -69,32 +42,6 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
-    }
-  }
-
-  @override
-  Future<Either<Failure, String>> uploadVideo(
-      {required Coursevedioitementity coursevedioitementity}) async {
-    try {
-      String url =
-          await storageService.uploadFile(file: coursevedioitementity.file!);
-
-      return right(url);
-    } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
-    }
-  }
-
-  @override
-  Future<Either<Failure, String>> uploadFile(
-      {required Coursefileentity coursefileEntity}) async {
-    try {
-      String url =
-          await storageService.uploadFile(file: coursefileEntity.file!);
-
-      return right(url);
     } catch (e) {
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
@@ -204,60 +151,6 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
       return left(ServerFailure(message: e.message));
     } catch (e) {
       log("Exception from CourseSectionsrepoImpl.getSectionsItems in catch With Firebase Exception: ${e.toString()}");
-      return left(ServerFailure(message: "حدث خطأ ما"));
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> addJoinedBy(
-      {required JoinedByEntity joinedByEntity,
-      required String courseId,
-      required String sectionId,
-      required String sectionItemId}) async {
-    try {
-      Map<String, dynamic> json =
-          JoinedbyModel.fromEntity(joinedByEntity).toJson();
-      await datebaseservice.setData(json: {
-        "mainCollection": BackendEndpoints.coursesCollection,
-        "docId": courseId,
-        "subCollection": BackendEndpoints.sectionsSubCollection,
-        "subDocId": sectionId,
-        "subCollection2": BackendEndpoints.sectionItemsSubCollection,
-        "sub2DocId": sectionItemId,
-        "subCollection3": BackendEndpoints.joinedBySubCollection,
-        "sub3DocId": joinedByEntity.uid
-      }, data: json);
-      return right(null);
-    } on CustomException catch (e) {
-      return left(ServerFailure(message: e.message));
-    } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> addTestResult(
-      {required TestresulteEntity testResult,
-      required String courseId,
-      required String sectionId,
-      required String sectionItemId}) async {
-    try {
-      Map<String, dynamic> json =
-          Testresultemodel.fromEntity(testResult).toJson();
-      await datebaseservice.setData(json: {
-        "mainCollection": BackendEndpoints.coursesCollection,
-        "docId": courseId,
-        "subCollection": BackendEndpoints.sectionsSubCollection,
-        "subDocId": sectionId,
-        "subCollection2": BackendEndpoints.sectionItemsSubCollection,
-        "sub2DocId": sectionItemId,
-        "subCollection3": BackendEndpoints.testResultsSubCollection,
-        "sub3DocId": testResult.serialNumber
-      }, data: json);
-      return right(null);
-    } on CustomException catch (e) {
-      return left(ServerFailure(message: e.message));
-    } catch (e) {
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CourseTestViewBodyQuestionsInfo.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CourseTestViewBodyTestButtonsActions.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CoursetestviewBody.dart';
@@ -10,15 +13,17 @@ class CourseTestControlPanel extends StatelessWidget {
     super.key,
     required this.stopWatchTimer,
     required this.widget,
-    required this.totalTime,
   });
 
   final StopWatchTimer stopWatchTimer;
   final CoursetestviewBody widget;
-  final double totalTime;
 
   @override
   Widget build(BuildContext context) {
+    Coursetestentity test = context
+        .read<Coursetestviewnavigationsrequirmentsentity>()
+        .test; //widget.coursetestentity>
+
     return Container(
       padding: const EdgeInsets.all(12),
       color: Colors.grey.shade100,
@@ -27,7 +32,6 @@ class CourseTestControlPanel extends StatelessWidget {
         children: [
           TimerDisplay(
             stopWatchTimer: stopWatchTimer,
-            totalTime: totalTime,
             timerStream: stopWatchTimer.rawTime,
           ),
           const SizedBox(
@@ -37,9 +41,7 @@ class CourseTestControlPanel extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          CourseTestViewBodyQuestionsInfo(
-              coursetestentity: widget.coursetestentity),
-              
+          CourseTestViewBodyQuestionsInfo(),
         ],
       ),
     );

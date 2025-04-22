@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
+import 'package:sintir/Core/Managers/Cubits/file_item_cubit/file_item_cubit.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
-import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
+import 'package:sintir/Core/repos/File-Item-Repo/FileItemRepo.dart';
+import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileviewnavigationsrequirmentsentity.dart';
@@ -18,9 +19,10 @@ class CoursefilepreviewerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CourseSectionsCubit(
-        getIt<CourseSectionsRepo>(),
-        getIt<Assetspickerrepo>(),
+      create: (context) => FileItemCubit(
+        fileItemRepo: getIt<FileItemRepo>(),
+        assetspickerrepo: getIt<Assetspickerrepo>(),
+        sectionItemsActionsRepo: getIt<SectionItemsActionsRepo>(),
       ),
       child: Provider.value(
         value: coursefileviewnavigationsrequirmentsentity,

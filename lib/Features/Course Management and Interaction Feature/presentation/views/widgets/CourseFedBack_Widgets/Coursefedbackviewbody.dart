@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomChatTextField.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseFedBack_Widgets/CourseFedBacksListView.dart';
 import 'package:sintir/constant.dart';
 
 class Coursefedbackviewbody extends StatefulWidget {
   const Coursefedbackviewbody({super.key, required this.fedBacks});
-  final List<CoursefedbackItemEntity> fedBacks;
+  final List fedBacks;
   @override
   State<Coursefedbackviewbody> createState() => _CoursefedbackviewbodyState();
 }

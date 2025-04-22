@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
+import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
+import 'package:sintir/Core/Managers/Cubits/video_item_cubit/video_item_cubit.dart';
 import 'package:sintir/Core/widgets/Video%20Previewer%20Widgets/CustomDisplayingVedioWidget.dart';
 import 'package:sintir/Core/widgets/showSnackBar.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
@@ -24,7 +25,7 @@ class _DisplaycoursevedioveiwBodyState
   @override
   void initState() {
     if (mounted) {
-      context.read<CourseSectionsCubit>().addJoinedBy(
+      context.read<VideoItemCubit>().joinToVideoItem(
             courseId: context
                 .read<Coursevideoviewnavigationsrequirmentsentity>()
                 .courseEntity
@@ -36,9 +37,7 @@ class _DisplaycoursevedioveiwBodyState
                 .read<Coursevideoviewnavigationsrequirmentsentity>()
                 .video
                 .id,
-            joinedByEntity: context
-                .read<CourseSectionsCubit>()
-                .getJoinedByEntity(context: context),
+            joinedByEntity: context.read<UserCubit>().getJoinedByEntity(),
           );
     }
     super.initState();
@@ -48,12 +47,11 @@ class _DisplaycoursevedioveiwBodyState
   Widget build(BuildContext context) {
     final Coursevedioitementity vedio =
         context.read<Coursevideoviewnavigationsrequirmentsentity>().video;
-
-    return BlocConsumer<CourseSectionsCubit, CourseSectionsState>(
+    return BlocConsumer<VideoItemCubit, VideoItemState>(
       listener: (context, state) {
-        if (state is AddJoinedBySuccess) {
+        if (state is JoinToVideoItemSuccess) {
           showSnackBar(context, "تم الانضمام بنجاح");
-        } else if (state is AddJoinedByFailure) {
+        } else if (state is JoinToVideoItemFailure) {
           showSnackBar(context, state.errMessage);
         }
       },
@@ -84,7 +82,7 @@ class _DisplaycoursevedioveiwBodyState
                   ],
                 )),
             Visibility(
-                visible: state is AddJoinedByLoading ? true : false,
+                visible: state is JoinToVideoItemLoading ? true : false,
                 child: const Positioned(
                     bottom: 16,
                     left: 16,

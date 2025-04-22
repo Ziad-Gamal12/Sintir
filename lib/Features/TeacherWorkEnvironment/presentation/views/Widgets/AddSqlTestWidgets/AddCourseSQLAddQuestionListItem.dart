@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
+import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
@@ -50,7 +50,7 @@ class _AddcoursesqladdquestionlistitemState
 
   void removeQuestionItem(BuildContext context) {
     warningdialog(context, "هل انت متاكد من حذف السؤال", () {
-      context.read<CourseSectionsCubit>().removeQuestion(
+      context.read<TestItemCubit>().removeQuestion(
           question: widget.coursetestquestionentity,
           coursetestentity: widget.coursetestentity);
     }).show();

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
+import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
@@ -32,7 +32,7 @@ class AddcoursesectionsqlviewBody extends StatelessWidget {
       title: Variables.AddsqlTestName.text,
       durationTime: int.tryParse(Variables.AddsqlTestDuration.text) ?? 0,
     );
-    return BlocBuilder<CourseSectionsCubit, CourseSectionsState>(
+    return BlocBuilder<TestItemCubit, TestItemState>(
       builder: (context, state) {
         return Form(
           key: Variables.AddCourseSectionSQLtestFormKey,

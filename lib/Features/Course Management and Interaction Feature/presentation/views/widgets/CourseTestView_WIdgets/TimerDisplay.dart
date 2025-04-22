@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/constant.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class TimerDisplay extends StatefulWidget {
   final Stream<int> timerStream;
-  final double totalTime;
   final StopWatchTimer stopWatchTimer;
   const TimerDisplay({
     super.key,
     required this.timerStream,
-    required this.totalTime,
     required this.stopWatchTimer,
   });
 
@@ -27,9 +28,9 @@ class _TimerDisplayState extends State<TimerDisplay> {
     _rawTimeStream = widget.stopWatchTimer.rawTime.asBroadcastStream();
   }
 
-  double _calculateProgress(int rawTime) {
+  double _calculateProgress(int rawTime, double totalTime) {
     final currentMinutes = (rawTime / 60000).truncate().toDouble();
-    return currentMinutes / widget.totalTime;
+    return currentMinutes / totalTime;
   }
 
   Color getProgressColor(double progress) {
@@ -44,6 +45,8 @@ class _TimerDisplayState extends State<TimerDisplay> {
 
   @override
   Widget build(BuildContext context) {
+    Coursetestentity test =
+        context.read<Coursetestviewnavigationsrequirmentsentity>().test;
     return SizedBox(
       height: 100,
       width: 100,
@@ -72,7 +75,8 @@ class _TimerDisplayState extends State<TimerDisplay> {
             stream: _rawTimeStream,
             builder: (context, snapshot) {
               final rawTime = snapshot.data ?? 0;
-              final progress = _calculateProgress(rawTime);
+              final progress =
+                  _calculateProgress(rawTime, test.durationTime * 1.0);
               return CircularProgressIndicator(
                 strokeWidth: 8,
                 color: getProgressColor(progress),

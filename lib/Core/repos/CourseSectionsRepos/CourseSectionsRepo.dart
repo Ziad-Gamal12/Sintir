@@ -2,45 +2,24 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/errors/Failures.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseSectionEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/TestResulteEntity.dart';
 
 abstract class CourseSectionsRepo {
-  Future<Either<Failure, void>> uploadTestQuestionsImages(
-      {required List<Coursetestquestionentity> questions});
-
   Future<Either<Failure, void>> addCourseSection({
     required CourseSectionEntity section,
     required String courseId,
     required sectionItem,
   });
-  Future<Either<Failure, String>> uploadVideo({
-    required Coursevedioitementity coursevedioitementity,
-  });
-  Future<Either<Failure, String>> uploadFile({
-    required Coursefileentity coursefileEntity,
-  });
+
   Future<Either<Failure, List<CourseSectionEntity>>> getCourseSections(
       {required String courseId});
+  // SectionItemsActionsRepo
   Future<Either<Failure, void>> addSectionItem({
     required sectionItem,
     required String courseId,
     required String sectionId,
   });
+  // SectionItemsActionsRepo
   Future<Either<Failure, List>> getSectionsItems(
       {required String courseId, required String sectionId});
-  Future<Either<Failure, void>> addJoinedBy(
-      {required JoinedByEntity joinedByEntity,
-      required String courseId,
-      required String sectionId,
-      required String sectionItemId});
-  Future<Either<Failure, void>> addTestResult(
-      {required TestresulteEntity testResult,
-      required String courseId,
-      required String sectionId,
-      required String sectionItemId});
 }

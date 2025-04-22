@@ -1,17 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomRadioWidget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestViewNavigationsRequirmentsEntity.dart';
 
 class CoursetestquestionItem extends StatefulWidget {
   const CoursetestquestionItem(
       {super.key,
-      required this.coursetestentity,
       required this.currentQuestionIndex,
       required this.answerChange,
       required this.selectedAnswer});
-  final Coursetestentity coursetestentity;
   final int currentQuestionIndex;
   final ValueChanged<String?> answerChange;
   final String selectedAnswer;
@@ -22,11 +22,13 @@ class CoursetestquestionItem extends StatefulWidget {
 class _CoursetestquestionItemState extends State<CoursetestquestionItem> {
   @override
   Widget build(BuildContext context) {
+    Coursetestentity test =
+        context.read<Coursetestviewnavigationsrequirmentsentity>().test;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "${widget.currentQuestionIndex + 1}-  ${widget.coursetestentity.questions[widget.currentQuestionIndex].questionTitle}",
+          "${widget.currentQuestionIndex + 1}-  ${test.questions[widget.currentQuestionIndex].questionTitle}",
           style: AppTextStyles.semiBold16.copyWith(color: Colors.black),
           textAlign: TextAlign.right,
         ),
@@ -38,8 +40,7 @@ class _CoursetestquestionItemState extends State<CoursetestquestionItem> {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: widget.coursetestentity
-                    .questions[widget.currentQuestionIndex].solutions
+                children: test.questions[widget.currentQuestionIndex].solutions
                     .asMap()
                     .entries
                     .map((e) {
@@ -52,24 +53,21 @@ class _CoursetestquestionItemState extends State<CoursetestquestionItem> {
                       const SizedBox(
                         width: 10,
                       ),
-                      Text(widget
-                          .coursetestentity
-                          .questions[widget.currentQuestionIndex]
-                          .solutions[e.key]
-                          .answer)
+                      Text(test.questions[widget.currentQuestionIndex]
+                          .solutions[e.key].answer)
                     ],
                   );
                 }).toList(),
               ),
             ),
             Expanded(
-                child: widget.coursetestentity
-                            .questions[widget.currentQuestionIndex].imageUrl !=
-                        null
-                    ? CachedNetworkImage(
-                        imageUrl: widget.coursetestentity
-                            .questions[widget.currentQuestionIndex].imageUrl!)
-                    : const SizedBox())
+                child:
+                    test.questions[widget.currentQuestionIndex].imageUrl != null
+                        ? CachedNetworkImage(
+                            imageUrl: test
+                                .questions[widget.currentQuestionIndex]
+                                .imageUrl!)
+                        : const SizedBox())
           ],
         ),
       ],

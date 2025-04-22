@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
+import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/widgets/CustomRadioWidget.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionSolutionEntity.dart';
@@ -25,7 +25,7 @@ class _AddCourseSQlAddSolutionItemState
     extends State<AddCourseSQlAddSolutionItem> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CourseSectionsCubit, CourseSectionsState>(
+    return BlocBuilder<TestItemCubit, TestItemState>(
       builder: (context, state) {
         return Row(
           children: [
