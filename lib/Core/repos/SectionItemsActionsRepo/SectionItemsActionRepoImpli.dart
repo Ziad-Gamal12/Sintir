@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
@@ -28,38 +29,41 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
       if (sectionItem is Coursetestentity) {
         Map<String, dynamic> json =
             Coursetestmodel.fromEntity(sectionItem).toJson();
-        await datebaseservice.setData(json: {
-          "mainCollection": BackendEndpoints.coursesCollection,
-          "docId": courseId,
-          "subCollection": BackendEndpoints.sectionsSubCollection,
-          "subDocId": sectionId,
-          "subCollection2": BackendEndpoints.sectionItemsSubCollection,
-          "sub2DocId": sectionItem.id
-        }, data: json);
+        await datebaseservice.setData(
+            requirements: FireStoreRequirmentsEntity(
+                collection: BackendEndpoints.coursesCollection,
+                docId: courseId,
+                subCollection: BackendEndpoints.sectionsSubCollection,
+                subDocId: sectionId,
+                subCollection2: BackendEndpoints.sectionItemsSubCollection,
+                sub2DocId: sectionItem.id),
+            data: json);
         return right(null);
       } else if (sectionItem is Coursevedioitementity) {
         Map<String, dynamic> json =
             Coursevedioitemmodel.fromEntity(sectionItem).toJson();
-        await datebaseservice.setData(json: {
-          "mainCollection": BackendEndpoints.coursesCollection,
-          "docId": courseId,
-          "subCollection": BackendEndpoints.sectionsSubCollection,
-          "subDocId": sectionId,
-          "subCollection2": BackendEndpoints.sectionItemsSubCollection,
-          "sub2DocId": sectionItem.id
-        }, data: json);
+        await datebaseservice.setData(
+            requirements: FireStoreRequirmentsEntity(
+                collection: BackendEndpoints.coursesCollection,
+                docId: courseId,
+                subCollection: BackendEndpoints.sectionsSubCollection,
+                subDocId: sectionId,
+                subCollection2: BackendEndpoints.sectionItemsSubCollection,
+                sub2DocId: sectionItem.id),
+            data: json);
         return right(null);
       } else if (sectionItem is Coursefileentity) {
         Map<String, dynamic> json =
             Coursefilemodel.fromEntity(sectionItem).toJson();
-        await datebaseservice.setData(json: {
-          "mainCollection": BackendEndpoints.coursesCollection,
-          "docId": courseId,
-          "subCollection": BackendEndpoints.sectionsSubCollection,
-          "subDocId": sectionId,
-          "subCollection2": BackendEndpoints.sectionItemsSubCollection,
-          "sub2DocId": sectionItem.id
-        }, data: json);
+        await datebaseservice.setData(
+            requirements: FireStoreRequirmentsEntity(
+                collection: BackendEndpoints.coursesCollection,
+                docId: courseId,
+                subCollection: BackendEndpoints.sectionsSubCollection,
+                subDocId: sectionId,
+                subCollection2: BackendEndpoints.sectionItemsSubCollection,
+                sub2DocId: sectionItem.id),
+            data: json);
         return right(null);
       } else {
         return left(
@@ -78,11 +82,14 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
     try {
       List items = [];
       List? data = await datebaseservice.getData(
-          key: BackendEndpoints.coursesCollection,
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.coursesCollection,
           docId: courseId,
-          subCollectionKey: BackendEndpoints.sectionsSubCollection,
+          subCollection: BackendEndpoints.sectionsSubCollection,
           subDocId: sectionId,
-          subCollection2Key: BackendEndpoints.sectionItemsSubCollection);
+          subCollection2: BackendEndpoints.sectionItemsSubCollection,
+        ),
+      );
       if (data == null) {
         return left(ServerFailure(message: "البيانات غير موجودة"));
       }
@@ -115,16 +122,17 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
     try {
       Map<String, dynamic> json =
           JoinedbyModel.fromEntity(joinedByEntity).toJson();
-      await datebaseservice.setData(json: {
-        "mainCollection": BackendEndpoints.coursesCollection,
-        "docId": courseId,
-        "subCollection": BackendEndpoints.sectionsSubCollection,
-        "subDocId": sectionId,
-        "subCollection2": BackendEndpoints.sectionItemsSubCollection,
-        "sub2DocId": sectionItemId,
-        "subCollection3": BackendEndpoints.joinedBySubCollection,
-        "sub3DocId": joinedByEntity.uid
-      }, data: json);
+      await datebaseservice.setData(
+          requirements: FireStoreRequirmentsEntity(
+              collection: BackendEndpoints.coursesCollection,
+              docId: courseId,
+              subCollection: BackendEndpoints.sectionsSubCollection,
+              subDocId: sectionId,
+              subCollection2: BackendEndpoints.sectionItemsSubCollection,
+              sub2DocId: sectionItemId,
+              subCollection3: BackendEndpoints.joinedBySubCollection,
+              sub3DocId: joinedByEntity.uid),
+          data: json);
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));

@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/services/DateBaseService.dart';
 
@@ -11,49 +12,48 @@ class FirebaseFirestoreservice implements Datebaseservice {
   @override
   Future<void> setData({
     required Map<String, dynamic> data,
-    required Map<String, dynamic>? json,
+    required FireStoreRequirmentsEntity requirements,
   }) async {
     try {
-      if (json != null) {
-        if (json["mainCollection"] != null) {
-          var query = firestore.collection(json["mainCollection"]);
-          if (json["docId"] != null) {
-            if (json["subCollection"] != null) {
-              var query1 =
-                  query.doc(json["docId"]).collection(json["subCollection"]);
-              if (json["subDocId"] != null) {
-                if (json["subCollection2"] != null) {
-                  var query2 = query1
-                      .doc(json["subDocId"])
-                      .collection(json["subCollection2"]);
-                  if (json["sub2DocId"] != null) {
-                    if (json["subCollection3"] != null) {
-                      var query3 = query2
-                          .doc(json["sub2DocId"])
-                          .collection(json["subCollection3"]);
-                      if (json["sub3DocId"] != null) {
-                        await query3.doc(json["sub3DocId"]).set(data);
-                      } else {
-                        await query3.add(data);
-                      }
+      if (requirements.collection != null) {
+        var query = firestore.collection(requirements.collection!);
+        if (requirements.docId != null) {
+          if (requirements.subCollection != null) {
+            var query1 = query
+                .doc(requirements.docId)
+                .collection(requirements.subCollection!);
+            if (requirements.subDocId != null) {
+              if (requirements.subCollection2 != null) {
+                var query2 = query1
+                    .doc(requirements.subDocId)
+                    .collection(requirements.subCollection2!);
+                if (requirements.sub2DocId != null) {
+                  if (requirements.subCollection3 != null) {
+                    var query3 = query2
+                        .doc(requirements.sub2DocId)
+                        .collection(requirements.subCollection3!);
+                    if (requirements.sub3DocId != null) {
+                      await query3.doc(requirements.sub3DocId).set(data);
                     } else {
-                      await query2.doc(json["sub2DocId"]).set(data);
+                      await query3.add(data);
                     }
                   } else {
-                    await query2.add(data);
+                    await query2.doc(requirements.sub2DocId).set(data);
                   }
                 } else {
-                  await query1.doc(json["subDocId"]).set(data);
+                  await query2.add(data);
                 }
               } else {
-                await query1.add(data);
+                await query1.doc(requirements.subDocId).set(data);
               }
             } else {
-              await query.doc(json["docId"]).set(data);
+              await query1.add(data);
             }
           } else {
-            await query.add(data);
+            await query.doc(requirements.docId).set(data);
           }
+        } else {
+          await query.add(data);
         }
       }
     } on FirebaseException catch (e) {
@@ -80,42 +80,81 @@ class FirebaseFirestoreservice implements Datebaseservice {
   }
 
   @override
-  Future getData(
-      {String? subCollectionKey,
-      String? subDocId,
-      required String key,
-      String? docId,
-      String? subCollection2Key,
-      String? sub2DocId,
-      Map<String, dynamic>? query}) async {
+  Future getData({
+    required FireStoreRequirmentsEntity requirements,
+    Map<String, dynamic>? query,
+  }) async {
     try {
-      if (docId != null) {
-        var userEntity = firestore.collection(key).doc(docId);
-        if (subCollectionKey != null) {
-          var result = userEntity.collection(subCollectionKey);
-          if (subDocId != null) {
-            var docresult = result.doc(subDocId);
-            if (subCollection2Key != null) {
-              var subCollectionresult = docresult.collection(subCollection2Key);
-              if (sub2DocId != null) {
-                var subDocresult = subCollectionresult.doc(sub2DocId);
-                return subDocresult.get();
+      CollectionReference<Map<String, dynamic>> currentCollection =
+          firestore.collection(requirements.collection!);
+      if (requirements.docId != null) {
+        DocumentReference<Map<String, dynamic>> docRef =
+            currentCollection.doc(requirements.docId!);
+        if (requirements.subCollection != null) {
+          currentCollection = docRef.collection(requirements.subCollection!);
+          if (requirements.subDocId != null) {
+            DocumentReference<Map<String, dynamic>> subDocRef =
+                currentCollection.doc(requirements.subDocId!);
+
+            if (requirements.subCollection2 != null) {
+              currentCollection =
+                  subDocRef.collection(requirements.subCollection2!);
+
+              if (requirements.sub2DocId != null) {
+                DocumentReference<Map<String, dynamic>> sub2DocRef =
+                    currentCollection.doc(requirements.sub2DocId!);
+
+                if (requirements.subCollection3 != null) {
+                  currentCollection =
+                      sub2DocRef.collection(requirements.subCollection3!);
+
+                  if (requirements.sub3DocId != null) {
+                    DocumentReference<Map<String, dynamic>> sub3DocRef =
+                        currentCollection.doc(requirements.sub3DocId!);
+
+                    if (requirements.subCollection4 != null) {
+                      currentCollection =
+                          sub3DocRef.collection(requirements.subCollection4!);
+
+                      if (requirements.sub4DocId != null) {
+                        final sub4DocRef =
+                            currentCollection.doc(requirements.sub4DocId!);
+                        final sub4DocSnapshot = await sub4DocRef.get();
+                        return sub4DocSnapshot.data();
+                      } else {
+                        final sub4Snapshot = await currentCollection.get();
+                        return sub4Snapshot.docs.map((e) => e.data()).toList();
+                      }
+                    } else {
+                      final sub3DocSnapshot = await sub3DocRef.get();
+                      return sub3DocSnapshot.data();
+                    }
+                  } else {
+                    final sub3Snapshot = await currentCollection.get();
+                    return sub3Snapshot.docs.map((e) => e.data()).toList();
+                  }
+                } else {
+                  final sub2DocSnapshot = await sub2DocRef.get();
+                  return sub2DocSnapshot.data();
+                }
+              } else {
+                final sub2Snapshot = await currentCollection.get();
+                return sub2Snapshot.docs.map((e) => e.data()).toList();
               }
-              return subCollectionresult
-                  .get()
-                  .then((e) => e.docs.map((e) => e.data()).toList());
+            } else {
+              final subDocSnapshot = await subDocRef.get();
+              return subDocSnapshot.data();
             }
-            return docresult.get();
+          } else {
+            final subSnapshot = await currentCollection.get();
+            return subSnapshot.docs.map((e) => e.data()).toList();
           }
-          return await result
-              .get()
-              .then((e) => e.docs.map((e) => e.data()).toList());
         } else {
-          var result = await userEntity.get();
-          return result.data() as Map<String, dynamic>;
+          final docSnapshot = await docRef.get();
+          return docSnapshot.data();
         }
       } else {
-        Query queryData = firestore.collection(key);
+        Query queryData = currentCollection;
         if (query != null) {
           if (query["isFree"] != null) {
             queryData = queryData.where("price", isEqualTo: 0);
@@ -141,30 +180,35 @@ class FirebaseFirestoreservice implements Datebaseservice {
           }
         }
 
-        var result = await queryData.get();
-        return result.docs.map((e) => e.data()).toList();
+        final querySnapshot = await queryData.get();
+        return querySnapshot.docs.map((e) => e.data()).toList();
       }
     } on FirebaseException catch (e) {
-      if (e.code == 'permission-denied') {
-        throw CustomException(
+      switch (e.code) {
+        case 'permission-denied':
+          throw CustomException(
             message:
-                "🚨 ليس لديك الإذن اللازم لإضافة البيانات. يرجى مراجعة صلاحياتك أو تعديل قواعد الأمان في Firestore.");
-      } else if (e.code == "unavailable") {
-        throw CustomException(
-            message: "🚨 الخادم غير متوفر حاليا. يرجى المحاولة لاحقا.");
-      } else if (e.code == "invalid-argument") {
-        throw CustomException(
+                "🚨 ليس لديك الإذن اللازم للوصول إلى البيانات. يرجى مراجعة صلاحياتك.",
+          );
+        case 'unavailable':
+          throw CustomException(
+            message: "🚨 الخادم غير متوفر حاليا. حاول مرة أخرى لاحقا.",
+          );
+        case 'invalid-argument':
+          throw CustomException(
             message:
-                "❌ تم تمرير بيانات غير صحيحة. يرجى التحقق من المدخلات وإعادة المحاولة.");
-      } else if (e.code == "deadline-exceeded") {
-        throw CustomException(
-            message:
-                "⏳ انتهت المهلة الزمنية للطلب. يرجى المحاولة مرة أخرى لاحقًا.");
-      } else if (e.code == "resource-exhausted") {
-        throw CustomException(
-            message: "🚨 استهلاك الحافزات المتاحة. يرجى المحاولة لاحقًا.");
-      } else {
-        throw CustomException(message: "حدث خطأ ما");
+                "❌ تم تمرير بيانات غير صحيحة. تأكد من المدخلات وحاول مجددًا.",
+          );
+        case 'deadline-exceeded':
+          throw CustomException(
+            message: "⏳ انتهت المهلة الزمنية للطلب. حاول مرة أخرى.",
+          );
+        case 'resource-exhausted':
+          throw CustomException(
+            message: "🚨 تم استهلاك الموارد المتاحة. يرجى المحاولة لاحقًا.",
+          );
+        default:
+          throw CustomException(message: "❌ حدث خطأ غير متوقع.");
       }
     }
   }

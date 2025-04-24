@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
@@ -41,16 +42,17 @@ class Testitemrepoimpli implements Testitemrepo {
     try {
       Map<String, dynamic> json =
           Testresultemodel.fromEntity(testResult).toJson();
-      await datebaseservice.setData(json: {
-        "mainCollection": BackendEndpoints.coursesCollection,
-        "docId": courseId,
-        "subCollection": BackendEndpoints.sectionsSubCollection,
-        "subDocId": sectionId,
-        "subCollection2": BackendEndpoints.sectionItemsSubCollection,
-        "sub2DocId": sectionItemId,
-        "subCollection3": BackendEndpoints.testResultsSubCollection,
-        "sub3DocId": testResult.serialNumber
-      }, data: json);
+      await datebaseservice.setData(
+          requirements: FireStoreRequirmentsEntity(
+              collection: BackendEndpoints.coursesCollection,
+              docId: courseId,
+              subCollection: BackendEndpoints.sectionsSubCollection,
+              subDocId: sectionId,
+              subCollection2: BackendEndpoints.sectionItemsSubCollection,
+              sub2DocId: sectionItemId,
+              subCollection3: BackendEndpoints.testResultsSubCollection,
+              sub3DocId: testResult.serialNumber),
+          data: json);
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));

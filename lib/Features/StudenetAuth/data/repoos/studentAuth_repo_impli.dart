@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/services/DateBaseService.dart';
@@ -215,8 +216,11 @@ class StudentauthRepoImpli implements StudentauthRepo {
       required String docId,
       required String key}) async {
     await datebaseservice.setData(
+      requirements: FireStoreRequirmentsEntity(
+        collection: key,
+        docId: docId,
+      ),
       data: data,
-      json: {"mainCollection": key, "docId": docId},
     );
   }
 }

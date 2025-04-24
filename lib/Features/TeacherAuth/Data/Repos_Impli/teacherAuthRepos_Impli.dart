@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/services/DateBaseService.dart';
@@ -70,7 +71,10 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
       required Map<String, dynamic> data,
       required String docId}) async {
     await dataBaseService.setData(
-      json: {"mainCollection": key, "docId": docId},
+      requirements: FireStoreRequirmentsEntity(
+        collection: key,
+        docId: docId,
+      ),
       data: data,
     );
   }
@@ -133,7 +137,11 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
   @override
   Future getTeacherData({required String docId}) async {
     Map<String, dynamic>? data = await dataBaseService.getData(
-        key: BackendEndpoints.getTeacherDataCollectionName, docId: docId);
+      requirements: FireStoreRequirmentsEntity(
+        collection: BackendEndpoints.getTeacherDataCollectionName,
+        docId: docId,
+      ),
+    );
     if (data != null) {
       teacherEntity teacherentity = Teachermodel.fromMap(data).toEntity();
       return teacherentity;

@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/models/CourseModel.dart';
@@ -27,21 +28,29 @@ class CoursesrepoImpl implements Coursesrepo {
   Future<Either<Failure, void>> addCourse(
       {required CourseEntity courseEntity}) async {
     try {
+      bool isExists = await datebaseservice.isDataExists(
+          key: BackendEndpoints.coursesCollection, docId: courseEntity.id);
+      if (isExists) {
+        return left(ServerFailure(
+            message:
+                "هذة الدورة موجوده بالفعل يجب عليك تغيير الكود الخاص بالدورة"));
+      }
       await datebaseservice.setData(
-        json: {
-          "mainCollection": BackendEndpoints.coursesCollection,
-          "docId": courseEntity.id
-        },
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.coursesCollection,
+          docId: courseEntity.id,
+        ),
         data: Coursemodel.fromEntity(courseEntity: courseEntity).toJson(),
       );
       await datebaseservice.setData(
-          data: Coursemodel.fromEntity(courseEntity: courseEntity).toJson(),
-          json: {
-            "mainCollection": BackendEndpoints.teachersCollection,
-            "docId": courseEntity.contentcreaterentity!.id,
-            "subCollection": BackendEndpoints.coursesCollection,
-            "subDocId": courseEntity.id
-          });
+        data: Coursemodel.fromEntity(courseEntity: courseEntity).toJson(),
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.teachersCollection,
+          docId: courseEntity.contentcreaterentity!.id,
+          subCollection: BackendEndpoints.coursesCollection,
+          subDocId: courseEntity.id,
+        ),
+      );
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
@@ -70,7 +79,9 @@ class CoursesrepoImpl implements Coursesrepo {
           "state": BackendEndpoints.coursePublishedState,
           "orderBy": "postedDate"
         },
-        key: BackendEndpoints.getRecentCoursesCollection,
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.coursesCollection,
+        ),
       );
       if (data == null) return right([]);
       List<CourseEntity> courses =
@@ -89,7 +100,9 @@ class CoursesrepoImpl implements Coursesrepo {
     try {
       List data = await datebaseservice.getData(
         query: {"state": BackendEndpoints.coursePublishedState, "limit": 10},
-        key: BackendEndpoints.getPopularCoursesCollection,
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.coursesCollection,
+        ),
       );
       List<CourseEntity> courses =
           data.map((e) => Coursemodel.fromJson(e).toEntity()).toList();
@@ -106,10 +119,12 @@ class CoursesrepoImpl implements Coursesrepo {
   Future<Either<Failure, List<CourseEntity>>> getMyCourses() async {
     try {
       List data = await datebaseservice.getData(
-          key: getUsersCollectionName(),
-          docId: await getUId(),
-          subCollectionKey:
-              BackendEndpoints.getCoursesfromUserDocSubCollectioName);
+        requirements: FireStoreRequirmentsEntity(
+            collection: getUsersCollectionName(),
+            docId: await getUId(),
+            subCollection:
+                BackendEndpoints.getCoursesfromUserDocSubCollectioName),
+      );
       if (data.isEmpty) return right([]);
       List<CourseEntity> courses =
           data.map((e) => Coursemodel.fromJson(e).toEntity()).toList();

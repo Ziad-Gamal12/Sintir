@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/OrderDataEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/PaymentDataEntity.dart';
 import 'package:sintir/Core/entities/SubscriberEntity.dart';
@@ -16,6 +17,7 @@ import 'package:sintir/Core/models/subscripersIDSModel.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
 import 'package:sintir/Core/services/DateBaseService.dart';
 import 'package:sintir/Core/services/PayMobService.dart';
+import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/StudenetAuth/domain/entities/studentEntity.dart';
 import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
@@ -94,12 +96,11 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
           data:
               Subscripersidsmodel.fromEntit(subscriberentity: teacherSubscriber)
                   .toJson(),
-          json: {
-            "mainCollection": BackendEndpoints.coursesCollection,
-            "docId": course.id,
-            "subDocId": teacher.uid,
-            "subCollection": BackendEndpoints.subscribersSubCollection
-          },
+          requirements: FireStoreRequirmentsEntity(
+              collection: BackendEndpoints.coursesCollection,
+              docId: course.id,
+              subDocId: teacher.uid,
+              subCollection: BackendEndpoints.subscribersSubCollection),
         );
       } else if (student != null) {
         Subscriberentity studentSubscriber = Subscriberentity(
@@ -114,12 +115,11 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
           data:
               Subscripersidsmodel.fromEntit(subscriberentity: studentSubscriber)
                   .toJson(),
-          json: {
-            "mainCollection": BackendEndpoints.coursesCollection,
-            "docId": course.id,
-            "subDocId": student.uid,
-            "subCollection": BackendEndpoints.subscribersSubCollection
-          },
+          requirements: FireStoreRequirmentsEntity(
+              collection: BackendEndpoints.coursesCollection,
+              docId: course.id,
+              subDocId: student.uid,
+              subCollection: BackendEndpoints.subscribersSubCollection),
         );
       } else {
         await deleteCourseFromMyCourseList(teacher, course, student);
@@ -139,14 +139,13 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
   Future<void> addCourseToMyCourseList(teacherEntity? teacher,
       CourseEntity course, Studententity? student) async {
     await datebaseservice.setData(
-      json: {
-        "mainCollection": teacher == null
-            ? BackendEndpoints.studentsCollection
-            : BackendEndpoints.teachersCollection,
-        "docId": teacher == null ? student!.uid : teacher.uid,
-        "subDocId": course.id,
-        "subCollection": BackendEndpoints.subscribetoCourseCollection
-      },
+      requirements: FireStoreRequirmentsEntity(
+          collection: teacher == null
+              ? BackendEndpoints.studentsCollection
+              : BackendEndpoints.teachersCollection,
+          docId: teacher == null ? student!.uid : teacher.uid,
+          subDocId: course.id,
+          subCollection: BackendEndpoints.subscribetoCourseCollection),
       data: Coursemodel.fromEntity(courseEntity: course).toJson(),
     );
   }
@@ -184,14 +183,25 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
       {required String userID, required String courseID}) async {
     try {
       bool isSubscribed = await datebaseservice.isDataExists(
-        key: BackendEndpoints.checkifSubscribedCollection,
+        key: await getCheckIfSubscribedCollectionName(),
         subCollectionKey: BackendEndpoints.checkifSubscribedSubCollection,
-        docId: courseID,
-        subDocId: userID,
+        docId: userID,
+        subDocId: courseID,
       );
       return right(isSubscribed);
     } catch (e) {
       return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+
+  Future<String> getCheckIfSubscribedCollectionName() async {
+    String role = await shared_preferences_Services.stringGetter(
+        key: BackendEndpoints.userKind);
+
+    if (role == "teacher") {
+      return BackendEndpoints.getTeacherDataCollectionName;
+    } else {
+      return BackendEndpoints.getStudentDataCollectionName;
     }
   }
 }

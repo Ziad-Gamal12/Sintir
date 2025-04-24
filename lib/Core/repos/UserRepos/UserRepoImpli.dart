@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/UserEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/UserRepos/userRepo.dart';
@@ -23,7 +24,11 @@ class Userrepoimpli implements Userrepo {
   Future<Either<Failure, UserEntity>> getUserData() async {
     try {
       Map<String, dynamic>? data = await datebaseservicel.getData(
-          key: getCollectionName(), docId: getDocId());
+        requirements: FireStoreRequirmentsEntity(
+          collection: getCollectionName(),
+          docId: getDocId(),
+        ),
+      );
 
       if (data == null) return left(ServerFailure(message: "لا يوجد مستخدم"));
       if (shared_preferences_Services.stringGetter(

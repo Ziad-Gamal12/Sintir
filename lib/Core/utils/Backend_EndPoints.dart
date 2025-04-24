@@ -26,7 +26,7 @@ class BackendEndpoints {
   static String sectionItemsSubCollection = "Items";
   static String subscribetoCourseCollection = "Courses";
   static String checkifSubscribedCollection = "Courses";
-  static String checkifSubscribedSubCollection = "Subscribers";
+  static String checkifSubscribedSubCollection = "Courses";
   static String addCourseSectiontoTeacherSubCollection = "Courses";
   static String addCourseToUserDocSubCollectioName = "Courses";
   static String getCoursesfromUserDocSubCollectioName = "Courses";
@@ -55,7 +55,7 @@ class BackendEndpoints {
   static String workExperienceKey = "workExperience";
   static String genderKey = "gender";
   static String profilePicurlKey = "profilePicurl";
-  static String steteKey = "stete"; //Waiting or Agreed or Rejected
+  static String steteKey = "stete";
   static String waiting = "Waiting";
   static String agreed = "Agreed";
   static String rejected = "Rejected";

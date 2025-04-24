@@ -1,17 +1,14 @@
 // ignore_for_file: file_names
 
+import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
+
 abstract class Datebaseservice {
   Future<void> setData({
     required Map<String, dynamic> data,
-    required Map<String, dynamic>? json,
+    required FireStoreRequirmentsEntity requirements,
   });
   Future getData(
-      {String? subCollectionKey,
-      String? subDocId,
-      required String key,
-      String? docId,
-      String? subCollection2Key,
-      String? sub2DocId,
+      {required FireStoreRequirmentsEntity requirements,
       Map<String, dynamic>? query});
   Future<bool> isDataExists(
       {required String key,
