@@ -64,8 +64,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '769176418060',
     projectId: 'sintir-2f0be',
     storageBucket: 'sintir-2f0be.appspot.com',
-    androidClientId: '769176418060-1205tv1mu7qohs1122hm6h91hdbplcch.apps.googleusercontent.com',
-    iosClientId: '769176418060-jl97he6j82c8q91v3i5be8ngjlkvdb6u.apps.googleusercontent.com',
+    androidClientId:
+        '769176418060-1205tv1mu7qohs1122hm6h91hdbplcch.apps.googleusercontent.com',
+    iosClientId:
+        '769176418060-jl97he6j82c8q91v3i5be8ngjlkvdb6u.apps.googleusercontent.com',
     iosBundleId: 'com.example.sintir',
   );
 
@@ -75,8 +77,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '769176418060',
     projectId: 'sintir-2f0be',
     storageBucket: 'sintir-2f0be.appspot.com',
-    androidClientId: '769176418060-1205tv1mu7qohs1122hm6h91hdbplcch.apps.googleusercontent.com',
-    iosClientId: '769176418060-jl97he6j82c8q91v3i5be8ngjlkvdb6u.apps.googleusercontent.com',
+    androidClientId:
+        '769176418060-1205tv1mu7qohs1122hm6h91hdbplcch.apps.googleusercontent.com',
+    iosClientId:
+        '769176418060-jl97he6j82c8q91v3i5be8ngjlkvdb6u.apps.googleusercontent.com',
     iosBundleId: 'com.example.sintir',
   );
 
