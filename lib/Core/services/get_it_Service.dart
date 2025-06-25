@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, non_constant_identifier_names
 
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepoImpli.dart';
@@ -25,10 +26,14 @@ import 'package:sintir/Core/services/DateBaseService.dart';
 import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/FirebaseStorageService.dart';
 import 'package:sintir/Core/services/Firebase_FirestoreService.dart';
+import 'package:sintir/Core/services/GeminiAPiService.dart';
 import 'package:sintir/Core/services/PayMobService.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
+import 'package:sintir/Core/services/elevenlabsApi.dart';
 import 'package:sintir/Core/services/sqfliteServices.dart';
+import 'package:sintir/Features/Ai_Teacher/data/repos_impli/AiTeacherRepo_Impli.dart';
+import 'package:sintir/Features/Ai_Teacher/domain/Repos/AITeacherRepo.dart';
 import 'package:sintir/Features/StudenetAuth/data/repoos/studentAuth_repo_impli.dart';
 import 'package:sintir/Features/StudenetAuth/domain/repos/studentAuth_repo.dart';
 import 'package:sintir/Features/TeacherAuth/Data/Repos_Impli/teacherAuthRepos_Impli.dart';
@@ -41,7 +46,7 @@ void setup_Getit() {
   getIt.registerSingleton<firebasestorageservice>(
       firebasestorageservice(pickerassetsservice: Pickerassetsservice()));
   getIt.registerSingleton<StorageService>(getIt<firebasestorageservice>());
-
+  getIt.registerSingleton<Dio>(Dio());
   getIt.registerSingleton<Datebaseservice>(FirebaseFirestoreservice());
   getIt.registerSingleton<Sqfliteservices>(Sqfliteservices());
   getIt.registerSingleton<Coursesrepo>(CoursesrepoImpl(
@@ -78,5 +83,10 @@ void setup_Getit() {
   ));
   getIt.registerSingleton<FileItemRepo>(FileItemRepoImpli(
     storageService: getIt<StorageService>(),
+  ));
+  getIt.registerSingleton<AiTeacherRepo>(AiTeacherRepoImpli(
+    pickerassetsservice: getIt<Pickerassetsservice>(),
+    geminiApiService: GeminiApiService(dio: getIt<Dio>()),
+    elevenlabsApi: ElevenlabsApi(dio: getIt<Dio>()),
   ));
 }

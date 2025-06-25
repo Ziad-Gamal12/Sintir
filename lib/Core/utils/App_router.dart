@@ -5,7 +5,7 @@ import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart
 import 'package:sintir/Core/entities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebView.dart';
 import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordView.dart';
-import 'package:sintir/Features/AI_Chat/presentation/views/aiChatView.dart';
+import 'package:sintir/Features/Ai_Teacher/presentation/views/AiTeacherView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/EducationLevelsBooksSectionsView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/LevelBooksView.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/ChoosingUserKindView.dart';
@@ -127,9 +127,9 @@ class App_router {
         },
       ),
       GoRoute(
-        path: Aichatview.routeName,
+        path: AiTeacherview.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return const Aichatview();
+          return const AiTeacherview();
         },
       ),
       GoRoute(

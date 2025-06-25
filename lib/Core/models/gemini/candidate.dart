@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:sintir/Core/entities/gemini/GeminiCandidate.dart';
 
 import 'content.dart';
 
@@ -16,13 +17,20 @@ class Candidate {
         finishReason: json['finishReason'] as String?,
         avgLogprobs: (json['avgLogprobs'] as num?)?.toDouble(),
       );
-
+  factory Candidate.fromEntity(GeminiCandidate entity) => Candidate(
+      content:
+          entity.content == null ? null : Content.fromEntity(entity.content!),
+      finishReason: entity.finishReason,
+      avgLogprobs: entity.avgLogprobs);
   Map<String, dynamic> toJson() => {
         'content': content?.toJson(),
         'finishReason': finishReason,
         'avgLogprobs': avgLogprobs,
       };
-
+  GeminiCandidate toEntity() => GeminiCandidate(
+      content: content?.toEntity(),
+      finishReason: finishReason,
+      avgLogprobs: avgLogprobs);
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;

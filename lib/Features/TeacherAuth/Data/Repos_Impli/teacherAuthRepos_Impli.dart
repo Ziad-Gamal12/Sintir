@@ -93,7 +93,8 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
     try {
       user = await authService.signInWithEmailAndPassword(email, password);
       teacherEntity? teacherentity = await getTeacherData(docId: user.uid);
-      if (authService.auth.currentUser!.emailVerified) {
+
+      if (user.emailVerified == true) {
         if (teacherentity != null) {
           if (teacherentity.state == BackendEndpoints.agreed) {
             await shared_preferences_Services.stringSetter(
@@ -115,10 +116,8 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
           return left(ServerFailure(message: "هذا المعلم غير مسجل في التطبيق"));
         }
       } else {
-        await authService.auth.currentUser!.sendEmailVerification();
         await teacherSignout();
-        return left(ServerFailure(
-            message: "تم ارسال رابط التفعيل الى بريدك الالكتروني"));
+        return left(ServerFailure(message: "يرجى التحقق من بريدك الالكتروني"));
       }
     } on CustomException catch (e) {
       await teacherSignout();

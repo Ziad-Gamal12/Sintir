@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:sintir/Core/entities/gemini/GeminiResponse.dart';
 
 import 'candidate.dart';
 import 'usage_metadata.dart';
@@ -34,7 +35,8 @@ class Gemini {
         'modelVersion': modelVersion,
         'responseId': responseId,
       };
-
+  GeminiResponse toEntity() =>
+      GeminiResponse(candidates: candidates?.map((e) => e.toEntity()).toList());
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;

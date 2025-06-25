@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:sintir/Core/utils/imageAssets.dart';
-import 'package:sintir/Features/AI_Chat/presentation/views/aiChatView.dart';
+import 'package:sintir/Features/Ai_Teacher/presentation/views/AiTeacherView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/EducationLevelsBooksSectionsView.dart';
 import 'package:sintir/Features/Favorites/presentation/views/FavoritesView.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
@@ -33,7 +33,7 @@ class DrawerEntity {
           title: "المساعد الألي",
           activeIcon: Assets.assetsImagesInActiveAiChatIcon,
           inActiveIcon: Assets.assetsImagesInActiveAiChatIcon,
-          routeName: Aichatview.routeName),
+          routeName: AiTeacherview.routeName),
       DrawerEntity(
           title: "المكتبه",
           activeIcon: Assets.assetsImagesActiveLibraryIcon,
