@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/AddcoursesectionOptionItem.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionFileView.dart';
@@ -10,13 +8,13 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCou
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/AddCourseSectionContentItem.dart';
 
 class AddCourseSectionContentOptions extends StatelessWidget {
-  const AddCourseSectionContentOptions({
-    super.key,
-  });
+  AddCourseSectionContentOptions(
+      {super.key, required this.optionRequirementsEntity, this.onSave});
+  final Optionnavigationrequirementsentity optionRequirementsEntity;
+  VoidCallback? onSave;
+
   @override
   Widget build(BuildContext context) {
-    Optionnavigationrequirementsentity optionRequirementsEntity =
-        context.read<Optionnavigationrequirementsentity>();
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: Addcoursesectionoptionitem.toList().asMap().entries.map((e) {
@@ -25,23 +23,20 @@ class AddCourseSectionContentOptions extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: InkWell(
               onTap: () {
-                if (Variables.AddCourseSectionFormKey.currentState!
-                    .validate()) {
-                  Variables.AddCourseSectionFormKey.currentState!.save();
-                  if (e.key == 1) {
-                    GoRouter.of(context).push(Addcoursesectionsqlview.routeName,
-                        extra: optionRequirementsEntity);
-                  } else if (e.key == 0) {
-                    GoRouter.of(context).push(
-                      Addcoursesectionvedioview.routeName,
-                      extra: optionRequirementsEntity,
-                    );
-                  } else {
-                    GoRouter.of(context).push(
-                      Addcoursesectionfileview.routeName,
-                      extra: optionRequirementsEntity,
-                    );
-                  }
+                onSave;
+                if (e.key == 1) {
+                  GoRouter.of(context).push(Addcoursesectionsqlview.routeName,
+                      extra: optionRequirementsEntity);
+                } else if (e.key == 0) {
+                  GoRouter.of(context).push(
+                    Addcoursesectionvedioview.routeName,
+                    extra: optionRequirementsEntity,
+                  );
+                } else {
+                  GoRouter.of(context).push(
+                    Addcoursesectionfileview.routeName,
+                    extra: optionRequirementsEntity,
+                  );
                 }
               },
               child: Addcoursesectioncontentitem(

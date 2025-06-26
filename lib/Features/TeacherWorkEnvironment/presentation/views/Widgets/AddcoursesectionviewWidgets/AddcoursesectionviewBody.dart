@@ -1,8 +1,10 @@
 // ignore_for_file: must_be_immutable, file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/AddCourseSectionContentOptions.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/AddCourseSectionTextFields.dart';
 import 'package:sintir/constant.dart';
@@ -33,7 +35,13 @@ class Addcoursesectionviewbody extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            const AddCourseSectionContentOptions()
+            AddCourseSectionContentOptions(
+              onSave: () {
+                Variables.AddCourseSectionFormKey.currentState!.save();
+              },
+              optionRequirementsEntity:
+                  context.read<Optionnavigationrequirementsentity>(),
+            )
           ],
         ),
       ),

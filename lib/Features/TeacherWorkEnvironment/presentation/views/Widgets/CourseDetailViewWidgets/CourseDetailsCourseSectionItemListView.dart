@@ -6,6 +6,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/Cour
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomFileListViewItem.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomTestListViewItem.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomVedioListViewItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CustomAddNewCourseSectionItemButton.dart';
 
 class CourseDetailsCourseSectionItemListView extends StatelessWidget {
   const CourseDetailsCourseSectionItemListView(
@@ -18,16 +19,27 @@ class CourseDetailsCourseSectionItemListView extends StatelessWidget {
   final List<dynamic> items;
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: items.length,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5),
-          child: getChild(items[index], context),
-        );
-      },
+    return Column(
+      children: [
+        CustomAddNewCourseSectionItemButton(
+          courseId: course.id,
+          section: section,
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        ListView.builder(
+          itemCount: items.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: getChild(items[index], context),
+            );
+          },
+        )
+      ],
     );
   }
 

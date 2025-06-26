@@ -43,7 +43,7 @@ class _CustomCourseDetailsSectionsListViewitemState
       listener: (context, state) {
         if (state is GetSectionItemsSuccess &&
             state.sectionId == widget.sectionItem.id) {
-          sectionLessons.addAll(state.items);
+          sectionLessons = state.items;
         } else if (state is GetSectionItemsFailure) {
           ShowSnackBar(
               context: context,
