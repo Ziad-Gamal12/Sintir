@@ -21,6 +21,7 @@ class _CourseDetailsStudentsReviewsPageViewItemState
   @override
   void initState() {
     super.initState();
+
     if (widget.feedBacks.isEmpty) {
       context
           .read<CourseFeedBacksCubit>()

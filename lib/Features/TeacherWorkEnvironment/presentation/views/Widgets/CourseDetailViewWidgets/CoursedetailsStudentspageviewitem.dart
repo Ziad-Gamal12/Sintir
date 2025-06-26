@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable, file_names
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
@@ -21,13 +23,43 @@ class Coursedetailsstudentspageviewitem extends StatefulWidget {
 class _CoursedetailsstudentspageviewitemState
     extends State<Coursedetailsstudentspageviewitem> {
   TextEditingController controller = TextEditingController();
-
+  List<Subscriberentity> searchedSubscribers = [];
+  Timer? _debounce;
   @override
   void initState() {
     super.initState();
-    if (widget.subscribers.isEmpty) {
-      context.read<CourseSubscribtionsCubit>().getCoursSubscribers();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.addListener(_onSearchChanged);
+      if (widget.subscribers.isEmpty) {
+        context.read<CourseSubscribtionsCubit>().getCoursSubscribers();
+      }
+    });
+  }
+
+  void _onSearchChanged() {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      searchedSubscribers = getSearchedList();
+      setState(() {});
+    });
+  }
+
+  List<Subscriberentity> getSearchedList() {
+    List<Subscriberentity> searchedSubscribers = [];
+    if (controller.text.isNotEmpty) {
+      for (Subscriberentity e in widget.subscribers) {
+        if ((e.name.toLowerCase()).startsWith(controller.text.toLowerCase())) {
+          searchedSubscribers.add(e);
+        }
+      }
     }
+    return searchedSubscribers;
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -47,7 +79,9 @@ class _CoursedetailsstudentspageviewitemState
               ),
               if (widget.subscribers.isNotEmpty)
                 CoursedetailsStudentsGridview(
-                  subscribers: widget.subscribers,
+                  subscribers: searchedSubscribers.isEmpty
+                      ? widget.subscribers
+                      : searchedSubscribers,
                 )
               else
                 const CustomEmptyWidget()
