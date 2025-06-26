@@ -6,7 +6,7 @@ import 'package:svg_flutter/svg_flutter.dart';
 
 class CoursefedbackslistviewItem extends StatelessWidget {
   const CoursefedbackslistviewItem({super.key, required this.item});
-  final CoursefedbackItemEntity item;
+  final CoursefeedbackItemEntity item;
 
   @override
   Widget build(BuildContext context) {

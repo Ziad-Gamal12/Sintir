@@ -6,7 +6,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 class Coursedetailsstudentreviewslistviewitem extends StatelessWidget {
   const Coursedetailsstudentreviewslistviewitem(
       {super.key, required this.reviews});
-  final CoursefedbackItemEntity reviews;
+  final CoursefeedbackItemEntity reviews;
   @override
   Widget build(BuildContext context) {
     return Container(

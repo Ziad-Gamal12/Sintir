@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
+import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetCourseDetails.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetHeader.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CustomCourseBottomSheetActionButtons.dart';
-import 'package:sintir/Core/widgets/showSnackBar.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CourseBottomSheetBody extends StatefulWidget {
@@ -77,7 +78,11 @@ class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
       context.read<Bottomsheetnavigationrequirmentsentity>().isSubscribed =
           state.isSubscribed;
     } else if (state is CheckIfSubscribedFailure) {
-      showSnackBar(context, state.errMessage);
+      ShowSnackBar(
+          context: context,
+          child: Text(state.errMessage,
+              style: AppTextStyles.regular14.copyWith(color: Colors.white)),
+          backgroundColor: Colors.red);
     }
   }
 }

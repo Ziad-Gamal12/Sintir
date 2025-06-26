@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
 
 class CustomAddCourseSectionSqlNameAndDuration extends StatelessWidget {
   const CustomAddCourseSectionSqlNameAndDuration({

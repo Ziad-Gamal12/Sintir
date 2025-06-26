@@ -5,9 +5,10 @@ import 'dart:io';
 
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomVedioErrorWidget.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
-import 'package:sintir/Core/widgets/showSnackBar.dart';
 import 'package:video_player/video_player.dart';
 
 class CustomDisplayingVideoWidget extends StatefulWidget {
@@ -46,7 +47,11 @@ class _CustomDisplayingVideoWidgetState
         videoPlayerController =
             VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl!));
       } else {
-        showSnackBar(context, "حدث خطأ فى العنصر");
+        ShowSnackBar(
+            context: context,
+            child: Text("حدث خطأ فى العنصر",
+                style: AppTextStyles.regular14.copyWith(color: Colors.white)),
+            backgroundColor: Colors.red);
         return;
       }
       await videoPlayerController.initialize();

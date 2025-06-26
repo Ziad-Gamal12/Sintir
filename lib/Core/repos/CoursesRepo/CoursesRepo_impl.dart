@@ -4,20 +4,20 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
+import 'package:sintir/Core/helper/GetUID.dart';
 import 'package:sintir/Core/models/CourseModel.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
-import 'package:sintir/Core/services/DateBaseService.dart';
+import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 
 class CoursesrepoImpl implements Coursesrepo {
-  final Datebaseservice datebaseservice;
+  final Databaseservice datebaseservice;
   final StorageService storageService;
 
   CoursesrepoImpl({
@@ -35,22 +35,24 @@ class CoursesrepoImpl implements Coursesrepo {
             message:
                 "هذة الدورة موجوده بالفعل يجب عليك تغيير الكود الخاص بالدورة"));
       }
-      await datebaseservice.setData(
-        requirements: FireStoreRequirmentsEntity(
-          collection: BackendEndpoints.coursesCollection,
-          docId: courseEntity.id,
+      await Future.wait([
+        datebaseservice.setData(
+          requirements: FireStoreRequirmentsEntity(
+            collection: BackendEndpoints.coursesCollection,
+            docId: courseEntity.id,
+          ),
+          data: Coursemodel.fromEntity(courseEntity: courseEntity).toJson(),
         ),
-        data: Coursemodel.fromEntity(courseEntity: courseEntity).toJson(),
-      );
-      await datebaseservice.setData(
-        data: Coursemodel.fromEntity(courseEntity: courseEntity).toJson(),
-        requirements: FireStoreRequirmentsEntity(
-          collection: BackendEndpoints.teachersCollection,
-          docId: courseEntity.contentcreaterentity!.id,
-          subCollection: BackendEndpoints.coursesCollection,
-          subDocId: courseEntity.id,
-        ),
-      );
+        datebaseservice.setData(
+          data: Coursemodel.fromEntity(courseEntity: courseEntity).toJson(),
+          requirements: FireStoreRequirmentsEntity(
+            collection: BackendEndpoints.teachersCollection,
+            docId: courseEntity.contentcreaterentity!.id,
+            subCollection: BackendEndpoints.coursesCollection,
+            subDocId: courseEntity.id,
+          ),
+        )
+      ]);
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
@@ -66,7 +68,6 @@ class CoursesrepoImpl implements Coursesrepo {
       String url = await storageService.uploadFile(file: file);
       return right(url);
     } on CustomException catch (e) {
-      log("Exception from CoursesrepoImpl.uplaodFile in catch With firestorage Exception: ${e.toString()}");
       return left(ServerFailure(message: e.message));
     }
   }
@@ -90,7 +91,6 @@ class CoursesrepoImpl implements Coursesrepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      log("Exception from CoursesrepoImpl.getRecentCourses in catch With Firebase Exception: ${e.toString()}");
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
@@ -110,7 +110,6 @@ class CoursesrepoImpl implements Coursesrepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      log("Exception from CoursesrepoImpl.getPopularCourses in catch With Firebase Exception: ${e.toString()}");
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
@@ -121,7 +120,7 @@ class CoursesrepoImpl implements Coursesrepo {
       List data = await datebaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
             collection: getUsersCollectionName(),
-            docId: await getUId(),
+            docId: getUID(),
             subCollection:
                 BackendEndpoints.getCoursesfromUserDocSubCollectioName),
       );
@@ -132,7 +131,6 @@ class CoursesrepoImpl implements Coursesrepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      log("Exception from CoursesrepoImpl.getMyCourses in catch With Firebase Exception: ${e.toString()}");
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
@@ -144,29 +142,6 @@ class CoursesrepoImpl implements Coursesrepo {
       return BackendEndpoints.getTeacherDataCollectionName;
     } else {
       return BackendEndpoints.getStudentDataCollectionName;
-    }
-  }
-
-  Future<String> getUId() async {
-    return FirebaseAuth.instance.currentUser!.uid;
-  }
-
-  @override
-  Future<Either<Failure, void>> updateCourseSections(
-      // Update this method
-      {required CourseEntity course}) async {
-    try {
-      await datebaseservice.updateDate(
-          collectionKey: BackendEndpoints.updateCourseSectionCollection,
-          doc: course.id,
-          data: course.contentcreaterentity!,
-          field: "coursSectionsListItemEntity");
-      return right(null);
-    } on CustomException catch (e) {
-      return left(ServerFailure(message: e.message));
-    } catch (e) {
-      log("Exception from CoursesrepoImpl.updateCourseSections in catch With Firebase Exception: ${e.toString()}");
-      return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
 }

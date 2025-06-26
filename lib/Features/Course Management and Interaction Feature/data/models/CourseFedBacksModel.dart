@@ -1,20 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
 
-class Coursefedbacksmodel {
+class Coursefeedbacksmodel {
   final String userImage, name, fedBack, likesCount;
   final DateTime datePosted;
 
-  Coursefedbacksmodel(
+  Coursefeedbacksmodel(
       {required this.userImage,
       required this.name,
       required this.fedBack,
       required this.likesCount,
       required this.datePosted});
 
-  factory Coursefedbacksmodel.fromEntity(
-      {required CoursefedbackItemEntity coursefedbackItemEntity}) {
-    return Coursefedbacksmodel(
+  factory Coursefeedbacksmodel.fromEntity(
+      {required CoursefeedbackItemEntity coursefedbackItemEntity}) {
+    return Coursefeedbacksmodel(
       userImage: coursefedbackItemEntity.userImage,
       name: coursefedbackItemEntity.name,
       fedBack: coursefedbackItemEntity.fedBack,
@@ -22,8 +22,8 @@ class Coursefedbacksmodel {
       datePosted: coursefedbackItemEntity.datePosted,
     );
   }
-  factory Coursefedbacksmodel.fromJson(Map<String, dynamic> json) {
-    return Coursefedbacksmodel(
+  factory Coursefeedbacksmodel.fromJson(Map<String, dynamic> json) {
+    return Coursefeedbacksmodel(
       userImage: json["userImage"],
       name: json["name"],
       fedBack: json["fedBack"],
@@ -31,7 +31,7 @@ class Coursefedbacksmodel {
       datePosted: (json["datePosted"] as Timestamp).toDate(),
     );
   }
-  CoursefedbackItemEntity toEntity() => CoursefedbackItemEntity(
+  CoursefeedbackItemEntity toEntity() => CoursefeedbackItemEntity(
         userImage: userImage,
         name: name,
         fedBack: fedBack,

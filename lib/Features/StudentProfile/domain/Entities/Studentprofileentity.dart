@@ -1,4 +1,4 @@
-import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Features/StudentProfile/domain/Entities/StudentProfile_InfoEntity.dart';
 import 'package:sintir/Features/StudentProfile/domain/Entities/StundentProfileFavouriteCourseEntity.dart';
 

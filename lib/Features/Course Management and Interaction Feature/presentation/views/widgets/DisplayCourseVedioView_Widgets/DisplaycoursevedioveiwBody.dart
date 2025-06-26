@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/Managers/Cubits/video_item_cubit/video_item_cubit.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVideoviewnavigationsrequirmentsentity.dart';
+import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/Video%20Previewer%20Widgets/CustomDisplayingVedioWidget.dart';
-import 'package:sintir/Core/widgets/showSnackBar.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVideoviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/DisplayCourseVedioView_Widgets/CustomSendNoteText.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/addingJoinedByLoadingWidget.dart';
 import 'package:sintir/constant.dart';
@@ -50,9 +51,17 @@ class _DisplaycoursevedioveiwBodyState
     return BlocConsumer<VideoItemCubit, VideoItemState>(
       listener: (context, state) {
         if (state is JoinToVideoItemSuccess) {
-          showSnackBar(context, "تم الانضمام بنجاح");
+          ShowSnackBar(
+              context: context,
+              child: Text("تم الانضمام بنجاح",
+                  style: AppTextStyles.regular14.copyWith(color: Colors.black)),
+              backgroundColor: Colors.grey.shade200);
         } else if (state is JoinToVideoItemFailure) {
-          showSnackBar(context, state.errMessage);
+          ShowSnackBar(
+              context: context,
+              child: Text(state.errMessage,
+                  style: AppTextStyles.regular14.copyWith(color: Colors.white)),
+              backgroundColor: Colors.red);
         }
       },
       builder: (context, state) {

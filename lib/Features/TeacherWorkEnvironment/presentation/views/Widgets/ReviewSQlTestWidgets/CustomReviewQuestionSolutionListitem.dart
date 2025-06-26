@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionSolutionEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestQuestionSolutionEntity.dart';
 import 'package:sintir/constant.dart';
 
 class CustomReviewQuestionSolutionListitem extends StatelessWidget {

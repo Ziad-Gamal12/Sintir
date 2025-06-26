@@ -3,8 +3,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Core/widgets/showSnackBar.dart';
 
 class Customcontactitem extends StatelessWidget {
   const Customcontactitem(
@@ -22,8 +22,13 @@ class Customcontactitem extends StatelessWidget {
             style: AppTextStyles.regular10.copyWith(color: Colors.black)),
         IconButton(
             onPressed: () async {
-              await Clipboard.setData(ClipboardData(text: title))
-                  .then((value) => showSnackBar(context, "تم نسخ النص بنجاح"));
+              await Clipboard.setData(ClipboardData(text: title)).then(
+                  (value) => ShowSnackBar(
+                      context: context,
+                      child: Text("تم النسخ  بنجاح",
+                          style: AppTextStyles.regular14
+                              .copyWith(color: Colors.black)),
+                      backgroundColor: Colors.grey.shade200));
             },
             icon: const Icon(
               Icons.copy,

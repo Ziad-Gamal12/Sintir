@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 
 class Orderitemmodel {
   final String name, amountcents, quantity, description;

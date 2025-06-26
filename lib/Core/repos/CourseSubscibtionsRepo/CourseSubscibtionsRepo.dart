@@ -1,7 +1,8 @@
 // ignore_for_file: file_names
 
 import 'package:dartz/dartz.dart';
-import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/OrderDataEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/PaymentDataEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
@@ -18,4 +19,6 @@ abstract class CourseSubscibtionsRepo {
       Studententity? student});
   Future<Either<Failure, bool>> checkIfSubscribed(
       {required String userID, required String courseID});
+  Future<Either<Failure, List<Subscriberentity>>> getSubscribers(
+      {required String courseID});
 }

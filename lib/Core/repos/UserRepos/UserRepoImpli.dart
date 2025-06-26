@@ -8,7 +8,7 @@ import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/UserEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/UserRepos/userRepo.dart';
-import 'package:sintir/Core/services/DateBaseService.dart';
+import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/StudenetAuth/data/model/studentAuth_model.dart';
@@ -17,7 +17,7 @@ import 'package:sintir/Features/TeacherAuth/Data/Models/TeacherModel.dart';
 import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
 
 class Userrepoimpli implements Userrepo {
-  final Datebaseservice datebaseservicel;
+  final Databaseservice datebaseservicel;
 
   Userrepoimpli({required this.datebaseservicel});
   @override

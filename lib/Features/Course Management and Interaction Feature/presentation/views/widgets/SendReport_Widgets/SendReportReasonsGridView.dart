@@ -24,9 +24,12 @@ class Sendreportreasonsgridview extends StatelessWidget {
               const SizedBox(
                 width: 8,
               ),
-              Text(
-                Sendcoursereportentity.reportReasons[index].title,
-                style: AppTextStyles.semiBold12.copyWith(color: Colors.black),
+              Expanded(
+                child: Text(
+                  Sendcoursereportentity.reportReasons[index].title,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.semiBold12.copyWith(color: Colors.black),
+                ),
               )
             ],
           );

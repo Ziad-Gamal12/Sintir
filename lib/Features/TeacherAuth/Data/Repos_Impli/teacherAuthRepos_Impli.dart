@@ -8,7 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
-import 'package:sintir/Core/services/DateBaseService.dart';
+import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/services/StorageService.dart';
@@ -20,7 +20,7 @@ import 'package:sintir/Features/TeacherAuth/Domain/Repos/repos.dart';
 class teacherAuthRepos_Impli implements TeacherAuthRepos {
   final firebaseAuthService authService;
   final StorageService storageService;
-  final Datebaseservice dataBaseService;
+  final Databaseservice dataBaseService;
   teacherAuthRepos_Impli(
       {required this.dataBaseService,
       required this.storageService,

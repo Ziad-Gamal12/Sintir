@@ -2,7 +2,7 @@
 
 import 'dart:developer';
 
-import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 
 bool isSubscribed({
   required CourseEntity course,

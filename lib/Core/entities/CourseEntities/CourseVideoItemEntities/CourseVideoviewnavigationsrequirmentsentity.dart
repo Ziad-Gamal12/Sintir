@@ -1,5 +1,5 @@
-import 'package:sintir/Core/entities/CourseEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
 
 class Coursevideoviewnavigationsrequirmentsentity {
   final Coursevedioitementity video;

@@ -6,7 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:pdfx/pdfx.dart';
 import 'package:sintir/Core/Managers/Cubits/file_item_cubit/file_item_cubit.dart';
 import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
-import 'package:sintir/Core/widgets/showSnackBar.dart';
+import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseFIlePreViewer_Widgets/CourseFileOverView.dart';
@@ -44,7 +45,11 @@ class _CoursefilepreviewerviewbodyState
         });
       } else {
         if (mounted) {
-          showSnackBar(context, "لم يتم تحميل الملف");
+          ShowSnackBar(
+              context: context,
+              child: Text("حدث خطأ في تحميل الملف",
+                  style: AppTextStyles.regular14.copyWith(color: Colors.white)),
+              backgroundColor: Colors.red);
         }
       }
     } catch (e) {
@@ -84,9 +89,19 @@ class _CoursefilepreviewerviewbodyState
       return BlocConsumer<FileItemCubit, FileItemState>(
         listener: (context, state) {
           if (state is JoinToFileITemSuccess) {
-            showSnackBar(context, "تم الانضمام بنجاح");
+            ShowSnackBar(
+                context: context,
+                child: Text("تم الإنضمام بنجاح",
+                    style:
+                        AppTextStyles.regular14.copyWith(color: Colors.white)),
+                backgroundColor: Colors.green);
           } else if (state is JoinToFileITemFailure) {
-            showSnackBar(context, state.errMessage);
+            ShowSnackBar(
+                context: context,
+                child: Text(state.errMessage,
+                    style:
+                        AppTextStyles.regular14.copyWith(color: Colors.white)),
+                backgroundColor: Colors.red);
           }
         },
         builder: (context, state) {

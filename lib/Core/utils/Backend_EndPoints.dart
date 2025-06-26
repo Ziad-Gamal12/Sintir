@@ -10,6 +10,8 @@ class BackendEndpoints {
   static String teachersCollection = "Teachers";
   static String studentsCollection = "Students";
   static String updateCourseSectionCollection = "Courses";
+  static String reportsSubCollection = "Reports";
+  static String feedBacksSubCollection = "Feedbacks";
   static String sectionsSubCollection = "Sections";
   static String subscribersSubCollection = "Subscribers";
   static String getCourseSectionsSubCollection = "Sections";

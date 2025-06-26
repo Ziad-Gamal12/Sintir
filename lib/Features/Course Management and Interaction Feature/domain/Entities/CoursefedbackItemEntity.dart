@@ -1,8 +1,8 @@
-class CoursefedbackItemEntity {
+class CoursefeedbackItemEntity {
   final String userImage, name, fedBack, likesCount;
   final DateTime datePosted;
 
-  CoursefedbackItemEntity(
+  CoursefeedbackItemEntity(
       {required this.userImage,
       required this.name,
       required this.fedBack,

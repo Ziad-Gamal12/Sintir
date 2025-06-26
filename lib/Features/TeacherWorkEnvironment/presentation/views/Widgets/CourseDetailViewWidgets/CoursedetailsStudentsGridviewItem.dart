@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/entities/SubscriberEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 
 class CoursedetailsStudentsGridviewItem extends StatelessWidget {
@@ -10,8 +10,9 @@ class CoursedetailsStudentsGridviewItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: const Color(0xffF2F2F7),
+        color: Colors.grey.shade100,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
@@ -24,6 +25,12 @@ class CoursedetailsStudentsGridviewItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(80),
               child: CachedNetworkImage(
                 imageUrl: subscriberentity.imageUrl,
+                errorWidget: (context, url, error) {
+                  return const Icon(
+                    Icons.person,
+                    size: 80,
+                  );
+                },
                 height: 80,
                 width: 80,
                 fit: BoxFit.cover,
@@ -43,7 +50,7 @@ class CoursedetailsStudentsGridviewItem extends StatelessWidget {
                 text: " ",
               ),
               TextSpan(
-                  text: subscriberentity.gender,
+                  text: "(${subscriberentity.gender})",
                   style: AppTextStyles.regular10
                       .copyWith(color: const Color(0xff818181)))
             ]),
@@ -54,10 +61,14 @@ class CoursedetailsStudentsGridviewItem extends StatelessWidget {
             style: AppTextStyles.semiBold16
                 .copyWith(color: const Color(0xff818181)),
           ),
-          Text(
-            "ID:${subscriberentity.id}",
-            style: AppTextStyles.semiBold16
-                .copyWith(color: const Color(0xff818181)),
+          Expanded(
+            child: SizedBox(
+              child: Text(
+                "ID:${subscriberentity.id}",
+                style: AppTextStyles.regular13
+                    .copyWith(color: const Color(0xff818181)),
+              ),
+            ),
           ),
         ],
       ),

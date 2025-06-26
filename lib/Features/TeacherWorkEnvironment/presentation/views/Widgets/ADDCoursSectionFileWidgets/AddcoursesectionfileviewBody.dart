@@ -4,8 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/Managers/Cubits/file_item_cubit/file_item_cubit.dart';
+import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
-import 'package:sintir/Core/widgets/showSnackBar.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
@@ -105,11 +106,19 @@ class _AddcoursesectionfileviewBodyState
     } else if (state is PickFileSuccess) {
       coursefilEentity.file = state.file;
     } else if (state is PickFileFailure) {
-      showSnackBar(context, "لم يتم اختيار فيديو");
+      ShowSnackBar(
+          context: context,
+          child: Text("لم يتم اختيار الملف",
+              style: AppTextStyles.regular14.copyWith(color: Colors.white)),
+          backgroundColor: Colors.red);
     } else if (state is UplaodFileSuccess) {
       fileUploadedSuccessState(context, state);
     } else if (state is UplaodFileFailure) {
-      showSnackBar(context, state.errMessage);
+      ShowSnackBar(
+          context: context,
+          child: Text(state.errMessage,
+              style: AppTextStyles.regular14.copyWith(color: Colors.white)),
+          backgroundColor: Colors.red);
     }
   }
 

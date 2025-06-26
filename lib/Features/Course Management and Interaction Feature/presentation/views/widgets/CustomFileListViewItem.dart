@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileviewnavigationsrequirmentsentity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseSectionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomContainerSectionItem.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomUnAvilableSectionWidget.dart';
 
 class Customfilelistviewitem extends StatelessWidget {
   const Customfilelistviewitem(
-      {super.key, required this.item, required this.section});
+      {super.key,
+      required this.item,
+      required this.section,
+      required this.isAvilabe,
+      required this.course});
   final Coursefileentity item;
   final CourseSectionEntity section;
+  final bool isAvilabe;
+  final CourseEntity course;
   @override
   Widget build(BuildContext context) {
-    bool isAvilabe =
-        context.read<Bottomsheetnavigationrequirmentsentity>().isSubscribed;
     return Stack(
       children: [
         Customcontainersectionitem(
@@ -40,15 +43,9 @@ class Customfilelistviewitem extends StatelessWidget {
                                     Coursefileviewnavigationsrequirmentsentity(
                                   file: item,
                                   sectionId: section.id,
-                                  course: context
-                                      .read<
-                                          Bottomsheetnavigationrequirmentsentity>()
-                                      .course,
+                                  course: course,
                                 ),
-                                course: context
-                                    .read<
-                                        Bottomsheetnavigationrequirmentsentity>()
-                                    .course)
+                                course: course)
                             : null,
                         child: const Icon(
                           Icons.file_copy,

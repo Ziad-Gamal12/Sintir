@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-import 'package:sintir/Core/entities/ContentCreaterEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/ContentCreaterEntity.dart';
 import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
 
 class Contentcreatermodel {

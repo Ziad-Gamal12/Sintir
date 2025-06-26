@@ -5,10 +5,10 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseSectionEntity.dart';
 
 part 'CourseSectionsState.dart';
 
@@ -26,7 +26,7 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
     required sectionItem,
   }) async {
     Either<Failure, void> result = await coursesectionrepo.addCourseSection(
-        section: section, courseId: courseId, sectionItem: sectionItem);
+        section: section, courseId: courseId);
     result.fold((failure) {
       emit(AddCourseSectionFailure(errMessage: failure.message));
     }, (success) async {
@@ -55,7 +55,7 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
     });
   }
 
-  void getCourseSections({required String courseId}) async {
+  Future<void> getCourseSections({required String courseId}) async {
     emit(GetCourseSectionsLoading());
     Either<Failure, List<CourseSectionEntity>> result =
         await coursesectionrepo.getCourseSections(courseId: courseId);

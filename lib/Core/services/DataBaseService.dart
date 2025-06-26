@@ -2,7 +2,7 @@
 
 import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 
-abstract class Datebaseservice {
+abstract class Databaseservice {
   Future<void> setData({
     required Map<String, dynamic> data,
     required FireStoreRequirmentsEntity requirements,

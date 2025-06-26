@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseSectionEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomContainerSectionItem.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomUnAvilableSectionWidget.dart';
 
 class Customtestlistviewitem extends StatelessWidget {
-  const Customtestlistviewitem(
-      {super.key, required this.item, required this.section});
+  const Customtestlistviewitem({
+    super.key,
+    required this.item,
+    required this.section,
+    required this.isAvilabe,
+    required this.course,
+  });
   final Coursetestentity item;
   final CourseSectionEntity section;
+  final bool isAvilabe;
+  final CourseEntity course;
   @override
   Widget build(BuildContext context) {
-    bool isAvilabe =
-        context.read<Bottomsheetnavigationrequirmentsentity>().isSubscribed;
     return Stack(
       children: [
         Customcontainersectionitem(
@@ -36,17 +40,12 @@ class Customtestlistviewitem extends StatelessWidget {
                         onPressed: () => isAvilabe
                             ? item.ontap(
                                 context: context,
-                                item: Coursetestviewnavigationsrequirmentsentity(
-                                    test: item,
-                                    sectionId: section.id,
-                                    course: context
-                                        .read<
-                                            Bottomsheetnavigationrequirmentsentity>()
-                                        .course),
-                                course: context
-                                    .read<
-                                        Bottomsheetnavigationrequirmentsentity>()
-                                    .course)
+                                item:
+                                    Coursetestviewnavigationsrequirmentsentity(
+                                        test: item,
+                                        sectionId: section.id,
+                                        course: course),
+                                course: course)
                             : null,
                         child: const Icon(
                           Icons.key,

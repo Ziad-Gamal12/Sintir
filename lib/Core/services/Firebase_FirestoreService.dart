@@ -5,9 +5,9 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
-import 'package:sintir/Core/services/DateBaseService.dart';
+import 'package:sintir/Core/services/DataBaseService.dart';
 
-class FirebaseFirestoreservice implements Datebaseservice {
+class FirebaseFirestoreservice implements Databaseservice {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   @override
   Future<void> setData({

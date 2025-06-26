@@ -42,3 +42,15 @@ final class CheckIfSubscribedFailure extends CourseSubscribtionsState {
 
   CheckIfSubscribedFailure({required this.errMessage});
 }
+
+final class GetCourseSubscribersLoading extends CourseSubscribtionsState {}
+
+final class GetCourseSubscribersSuccess extends CourseSubscribtionsState {
+  final List<Subscriberentity> subscribers;
+  GetCourseSubscribersSuccess({required this.subscribers});
+}
+
+final class GetCourseSubscribersFailure extends CourseSubscribtionsState {
+  final String errMessage;
+  GetCourseSubscribersFailure({required this.errMessage});
+}

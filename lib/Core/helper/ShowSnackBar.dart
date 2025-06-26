@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
 
 ShowSnackBar(
     {required BuildContext context,
@@ -14,4 +15,17 @@ ShowSnackBar(
     ),
     content: child,
   ));
+}
+
+ShowErrorSnackBar({
+  required BuildContext context,
+  required String errMessage,
+}) {
+  ScaffoldMessenger.of(context).showSnackBar(ShowSnackBar(
+      context: context,
+      child: Text(
+        errMessage,
+        style: AppTextStyles.regular14.copyWith(color: Colors.white),
+      ),
+      backgroundColor: Colors.red));
 }

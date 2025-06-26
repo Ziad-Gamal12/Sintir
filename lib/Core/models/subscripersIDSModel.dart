@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-import 'package:sintir/Core/entities/SubscriberEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
 
 class Subscripersidsmodel {
   final String id;

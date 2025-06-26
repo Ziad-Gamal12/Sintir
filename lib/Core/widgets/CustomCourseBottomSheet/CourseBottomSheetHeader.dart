@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
-import 'package:sintir/Core/entities/ContentCreaterEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/ContentCreaterEntity.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
 
 import '../../utils/imageAssets.dart';

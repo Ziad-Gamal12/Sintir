@@ -4,7 +4,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 
 class Coursedetailsstudentreviewslistview extends StatelessWidget {
   const Coursedetailsstudentreviewslistview({super.key, required this.reviews});
-  final List<CoursefedbackItemEntity> reviews;
+  final List<CoursefeedbackItemEntity> reviews;
 
   @override
   Widget build(BuildContext context) {

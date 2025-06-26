@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
+import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
-import 'package:sintir/Core/widgets/showSnackBar.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewSQlTestWidgets/CustomReviewSQlTestButtonAction.dart';
@@ -79,7 +80,11 @@ class ReviewSqlTestSectionViewBody extends StatelessWidget {
     if (state is QuestionsImagesUploadedingSuccuss) {
       questionsImagesUploadedSuccessState(context);
     } else if (state is QuestionsImagesUploadedingFailure) {
-      showSnackBar(context, state.errMessage);
+      ShowSnackBar(
+          context: context,
+          child: Text(state.errMessage,
+              style: AppTextStyles.regular14.copyWith(color: Colors.white)),
+          backgroundColor: Colors.red);
     } else if (state is AddTestItemFailure) {
       errordialog(context, state.errMessage).show();
     } else if (state is AddTestItemSuccess) {

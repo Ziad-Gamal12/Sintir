@@ -3,19 +3,19 @@
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
-import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
 import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/OrderDataEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/PaymentDataEntity.dart';
-import 'package:sintir/Core/entities/SubscriberEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
+import 'package:sintir/Core/helper/GetUID.dart';
 import 'package:sintir/Core/models/CourseModel.dart';
-import 'package:sintir/Core/models/PaymentModels/OrderDataModel.dart';
 import 'package:sintir/Core/models/PaymentModels/PaymentDataModel.dart';
 import 'package:sintir/Core/models/subscripersIDSModel.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
-import 'package:sintir/Core/services/DateBaseService.dart';
+import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/PayMobService.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
@@ -24,7 +24,7 @@ import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
 
 class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
   final PayMobService payMobService;
-  final Datebaseservice datebaseservice;
+  final Databaseservice datebaseservice;
 
   CourseSubscibtionsRepoimpli(
       {required this.datebaseservice, required this.payMobService});
@@ -58,7 +58,6 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
             ServerFailure(message: "حدث خطأ أثناء الحصول على التوكن الخاص بك"));
       } else {
         orderEntity.authToken = authtoken;
-        log(Orderdatamodel.fromEntity(orderEntity).toJson().toString());
         paymententity.authToken = authtoken;
       }
       int? paymentToken = await createPaymentOrder(orderEntity: orderEntity);
@@ -71,7 +70,6 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
       String token = await getPaymentToken(paymententity: paymententity);
       return right(token);
     } catch (e) {
-      log("Exception from PaymentrepoImpli.payWithFawry in catch With Firebase Exception: ${e.toString()}");
       return Left(ServerFailure(message: e.toString()));
     }
   }
@@ -82,58 +80,81 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
       teacherEntity? teacher,
       Studententity? student}) async {
     try {
-      await addCourseToMyCourseList(teacher, course, student);
-      if (teacher != null) {
-        Subscriberentity teacherSubscriber = Subscriberentity(
-            id: teacher.uid!,
-            name: teacher.firstName,
-            gender: teacher.gender,
-            phone: teacher.phoneNumber,
-            educationLevel: "",
-            imageUrl: teacher.profilePicurl!,
-            address: teacher.address);
-        await datebaseservice.setData(
-          data:
-              Subscripersidsmodel.fromEntit(subscriberentity: teacherSubscriber)
-                  .toJson(),
-          requirements: FireStoreRequirmentsEntity(
-              collection: BackendEndpoints.coursesCollection,
-              docId: course.id,
-              subDocId: teacher.uid,
-              subCollection: BackendEndpoints.subscribersSubCollection),
-        );
-      } else if (student != null) {
-        Subscriberentity studentSubscriber = Subscriberentity(
-            id: student.uid!,
-            name: student.firstName,
-            gender: student.gender,
-            phone: student.phoneNumber,
-            educationLevel: student.educationLevel,
-            imageUrl: student.imageUrl,
-            address: "");
-        await datebaseservice.setData(
-          data:
-              Subscripersidsmodel.fromEntit(subscriberentity: studentSubscriber)
-                  .toJson(),
-          requirements: FireStoreRequirmentsEntity(
-              collection: BackendEndpoints.coursesCollection,
-              docId: course.id,
-              subDocId: student.uid,
-              subCollection: BackendEndpoints.subscribersSubCollection),
-        );
+      if ((teacher != null && student == null) ||
+          (teacher == null && student != null)) {
+        Subscriberentity subscriber = getSubscriberEntity(teacher, student);
+        await Future.wait([
+          addCourseToMyCourseList(teacher, course, student),
+          addNewSubscriber(
+              subscriber,
+              getFireStoreRequirmentsEntity(
+                courseId: course.id,
+              )),
+        ]);
+        return right(null);
       } else {
-        await deleteCourseFromMyCourseList(teacher, course, student);
         return left(ServerFailure(message: "حدث خطاء في انشاء الطلبية"));
       }
-      return right(null);
     } on CustomException catch (e) {
       await deleteCourseFromMyCourseList(teacher, course, student);
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      log("Exception from CoursesrepoImpl.addCourse in catch With Firebase Exception: ${e.toString()}");
       await deleteCourseFromMyCourseList(teacher, course, student);
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
+  }
+
+  Future<void> addNewSubscriber(
+    Subscriberentity subscriberentity,
+    FireStoreRequirmentsEntity fireStoreRequirmentsEntity,
+  ) async {
+    await datebaseservice.setData(
+      data: Subscripersidsmodel.fromEntit(subscriberentity: subscriberentity)
+          .toJson(),
+      requirements: fireStoreRequirmentsEntity,
+    );
+  }
+
+  Subscriberentity getSubscriberEntity(
+      teacherEntity? teacher, Studententity? student) {
+    if (teacher != null) {
+      return Subscriberentity(
+          id: getUID(),
+          name: teacher.firstName,
+          gender: teacher.gender,
+          phone: teacher.phoneNumber,
+          educationLevel: "",
+          imageUrl: teacher.profilePicurl!,
+          address: teacher.address);
+    } else if (student != null) {
+      return Subscriberentity(
+          id: getUID(),
+          name: student.firstName,
+          gender: student.gender,
+          phone: student.phoneNumber,
+          educationLevel: student.educationLevel,
+          imageUrl: student.imageUrl,
+          address: "");
+    } else {
+      return Subscriberentity(
+          id: "",
+          name: "",
+          gender: "",
+          phone: "",
+          educationLevel: "",
+          imageUrl: "",
+          address: "");
+    }
+  }
+
+  FireStoreRequirmentsEntity getFireStoreRequirmentsEntity({
+    required String courseId,
+  }) {
+    return FireStoreRequirmentsEntity(
+        collection: BackendEndpoints.coursesCollection,
+        docId: courseId,
+        subDocId: getUID(),
+        subCollection: BackendEndpoints.subscribersSubCollection);
   }
 
   Future<void> addCourseToMyCourseList(teacherEntity? teacher,
@@ -202,6 +223,30 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
       return BackendEndpoints.getTeacherDataCollectionName;
     } else {
       return BackendEndpoints.getStudentDataCollectionName;
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Subscriberentity>>> getSubscribers(
+      {required String courseID}) async {
+    try {
+      List subscribers = await datebaseservice.getData(
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.coursesCollection,
+          subCollection: BackendEndpoints.subscribersSubCollection,
+          docId: courseID,
+        ),
+      );
+
+      return right(
+        subscribers
+            .map((e) => Subscripersidsmodel.fromJson(e).toEntity())
+            .toList(),
+      );
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
 }

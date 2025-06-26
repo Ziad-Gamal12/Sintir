@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestViewNavigationsRequirmentsEntity.dart';
+import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
-import 'package:sintir/Core/widgets/showSnackBar.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/ReviewTestResultView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CourseTestControlPanel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CourseTestQuestionsNavigation.dart';
@@ -48,9 +49,17 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
     return BlocConsumer<TestItemCubit, TestItemState>(
       listener: (context, state) {
         if (state is JoinToTestItemSuccess) {
-          showSnackBar(context, "تم الانضمام بنجاح");
+          ShowSnackBar(
+              context: context,
+              child: Text("تم الانضمام بنجاح",
+                  style: AppTextStyles.regular14.copyWith(color: Colors.black)),
+              backgroundColor: Colors.grey.shade200);
         } else if (state is JoinToTestItemFailure) {
-          showSnackBar(context, state.errMessage);
+          ShowSnackBar(
+              context: context,
+              child: Text(state.errMessage,
+                  style: AppTextStyles.regular14.copyWith(color: Colors.white)),
+              backgroundColor: Colors.red);
         } else if (state is AddTestResultSuccess) {
           successdialog(
               context: context,

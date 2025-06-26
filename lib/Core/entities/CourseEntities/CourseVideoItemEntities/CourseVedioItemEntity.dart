@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVideoviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVideoviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/displayCourseVedioVeiw.dart';
 
 class Coursevedioitementity {
@@ -14,7 +14,7 @@ class Coursevedioitementity {
   File? file;
   String? type;
   String preffixImage = Assets.assetsImagesVedioIcon;
-  ontap(
+  void ontap(
       {required BuildContext context,
       required Coursevideoviewnavigationsrequirmentsentity requires,
       required CourseEntity course}) {

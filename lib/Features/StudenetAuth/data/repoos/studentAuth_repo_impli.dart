@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
-import 'package:sintir/Core/services/DateBaseService.dart';
+import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
@@ -17,7 +17,7 @@ import 'package:sintir/Features/StudenetAuth/domain/repos/studentAuth_repo.dart'
 
 class StudentauthRepoImpli implements StudentauthRepo {
   final firebaseAuthService firebaseAuth;
-  final Datebaseservice datebaseservice;
+  final Databaseservice datebaseservice;
   StudentauthRepoImpli(
       {required this.firebaseAuth, required this.datebaseservice});
   @override

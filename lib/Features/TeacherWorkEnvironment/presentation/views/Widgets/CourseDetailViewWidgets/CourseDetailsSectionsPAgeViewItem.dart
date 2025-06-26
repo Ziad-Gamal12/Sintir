@@ -1,75 +1,75 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:sintir/Core/entities/CourseEntity.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
+import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionView.dart';
-import 'package:sintir/constant.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CustomAddNewCourseSectionButton.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CustomCourseDetailsBodyCourseSections_SliverList.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
-class Coursedetailssectionspageviewitem extends StatelessWidget {
+class Coursedetailssectionspageviewitem extends StatefulWidget {
   const Coursedetailssectionspageviewitem(
-      {super.key, required this.courseEntity});
+      {super.key, required this.courseEntity, required this.courseSections});
   final CourseEntity courseEntity;
+  final List<CourseSectionEntity> courseSections;
+  @override
+  State<Coursedetailssectionspageviewitem> createState() =>
+      _CoursedetailssectionspageviewitemState();
+}
+
+class _CoursedetailssectionspageviewitemState
+    extends State<Coursedetailssectionspageviewitem> {
+  @override
+  void initState() {
+    super.initState();
+    if (widget.courseSections.isEmpty) {
+      BlocProvider.of<CourseSectionsCubit>(context)
+          .getCourseSections(courseId: widget.courseEntity.id);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        CustomScrollView(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          slivers: [
-            const SliverToBoxAdapter(
-              child: SizedBox(
-                height: 20,
+    return BlocBuilder<CourseSectionsCubit, CourseSectionsState>(
+      builder: (context, state) {
+        return Skeletonizer(
+          enabled: state is GetCourseSectionsLoading,
+          child: Stack(
+            children: [
+              CustomScrollView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                slivers: [
+                  const SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: 20,
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: CustomListORGridTextHeader(
+                      text: "المحتوى",
+                    ),
+                  ),
+                  const SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: 10,
+                    ),
+                  ),
+                  if (widget.courseSections.isNotEmpty)
+                    CustomCourseDetailsBodyCourseSections_SliverList(
+                        courseSections: widget.courseSections,
+                        course: widget.courseEntity)
+                  else
+                    const SliverToBoxAdapter(child: CustomEmptyWidget())
+                ],
               ),
-            ),
-            SliverToBoxAdapter(
-              child: CustomListORGridTextHeader(
-                text: "المحتوى",
-              ),
-            ),
-            const SliverToBoxAdapter(
-              child: SizedBox(
-                height: 10,
-              ),
-            ),
-            // if (courseEntity.coursSectionsListItemEntity!.isNotEmpty)
-            //   SliverList.builder(
-            //     itemCount: courseEntity.coursSectionsListItemEntity!.length,
-            //     itemBuilder: (context, index) {
-            //       return Padding(
-            //         padding: const EdgeInsets.symmetric(vertical: 5),
-            //         child: CustomContentListViewitem(
-            //           sectionItem:
-            //               courseEntity.coursSectionsListItemEntity![index],
-            //         ),
-            //       );
-            //     },
-            //   )
-            // else
-            //   const SliverToBoxAdapter(child: CustomEmptyWidget())
-          ],
-        ),
-        Positioned(
-          bottom: 40,
-          left: 0,
-          right: 0,
-          child: InkWell(
-            onTap: () {
-              GoRouter.of(context)
-                  .push(Addcoursesectionview.routeName, extra: courseEntity);
-            },
-            child: const CircleAvatar(
-              backgroundColor: KMainColor,
-              radius: 35,
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-                size: 30,
-              ),
-            ),
+              CustomAddNewCourseSectionButton(course: widget.courseEntity)
+            ],
           ),
-        )
-      ],
+        );
+      },
     );
   }
 }

@@ -5,10 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/Managers/Cubits/video_item_cubit/video_item_cubit.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
+import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/Variables.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
-import 'package:sintir/Core/widgets/showSnackBar.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseVedioItemEntity.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/CustomAddCourseVideoSectionButton.dart';
@@ -116,11 +117,19 @@ class _AddcoursesectionvedioviewbodyState
     } else if (state is PickVideoFileSuccess) {
       coursevedioitementity.file = state.file;
     } else if (state is PickVideoFileFailure) {
-      showSnackBar(context, "لم يتم اختيار فيديو");
+      ShowSnackBar(
+          context: context,
+          child: Text("لم يتم اختيار الملف",
+              style: AppTextStyles.regular14.copyWith(color: Colors.white)),
+          backgroundColor: Colors.red);
     } else if (state is UploadVideoSuccess) {
       videoUploadingSuccess(context, state);
     } else if (state is UploadVideoFailure) {
-      showSnackBar(context, state.errMessage);
+      ShowSnackBar(
+          context: context,
+          child: Text(state.errMessage,
+              style: AppTextStyles.regular14.copyWith(color: Colors.white)),
+          backgroundColor: Colors.red);
     }
   }
 
