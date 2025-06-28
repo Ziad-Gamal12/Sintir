@@ -37,8 +37,9 @@ class CourseDetailView extends StatelessWidget {
               create: (context) => CourseFeedBacksCubit(
                   courseFeedBacksRepo: getIt<CourseFeedBacksRepo>())),
           BlocProvider(
-              create: (context) =>
-                  UpdateCourseCubit(coursesrepo: getIt<Coursesrepo>())),
+              create: (context) => UpdateCourseCubit(
+                  coursesrepo: getIt<Coursesrepo>(),
+                  assetspickerrepo: getIt<Assetspickerrepo>())),
           BlocProvider(
               create: (context) => CourseSubscribtionsCubit(
                   course: courseEntity,

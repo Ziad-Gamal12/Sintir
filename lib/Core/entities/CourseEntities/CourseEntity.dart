@@ -3,8 +3,8 @@
 import 'package:sintir/Core/entities/CourseEntities/ContentCreaterEntity.dart';
 
 class CourseEntity {
-  final String id, title, description, language, state;
-  final int price;
+  String id, title, description, language, state;
+  int price;
   String? posterUrl;
   final String postedDate;
   Contentcreaterentity? contentcreaterentity;

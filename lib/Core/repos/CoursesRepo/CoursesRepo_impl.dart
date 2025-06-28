@@ -149,12 +149,22 @@ class CoursesrepoImpl implements Coursesrepo {
   Future<Either<Failure, void>> updateCourse(
       {required CourseEntity courseEntity}) async {
     try {
-      await databaseservice.setData(
-        requirements: FireStoreRequirmentsEntity(
-            collection: BackendEndpoints.coursesCollection,
-            docId: courseEntity.id),
-        data: Coursemodel.fromEntity(courseEntity: courseEntity).toJson(),
-      );
+      await Future.wait([
+        databaseservice.setData(
+          requirements: FireStoreRequirmentsEntity(
+              collection: BackendEndpoints.coursesCollection,
+              docId: courseEntity.id),
+          data: Coursemodel.fromEntity(courseEntity: courseEntity).toJson(),
+        ),
+        databaseservice.setData(
+          requirements: FireStoreRequirmentsEntity(
+              collection: BackendEndpoints.teachersCollection,
+              docId: getUID(),
+              subCollection: BackendEndpoints.coursesCollection,
+              subDocId: courseEntity.id),
+          data: Coursemodel.fromEntity(courseEntity: courseEntity).toJson(),
+        ),
+      ]);
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));

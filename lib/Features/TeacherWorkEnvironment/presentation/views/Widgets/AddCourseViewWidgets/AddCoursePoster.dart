@@ -3,10 +3,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseCubit/add_course_cubit.dart';
 
 class Addcourseposter extends StatelessWidget {
   Addcourseposter(
@@ -20,7 +18,7 @@ class Addcourseposter extends StatelessWidget {
   final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
-    if (coursePosterImage != null && coursePosterUrl != null) {
+    if (coursePosterImage == null && coursePosterUrl == null) {
       return InkWell(
         onTap: () {
           onTap();
@@ -47,25 +45,35 @@ class Addcourseposter extends StatelessWidget {
           ),
         ),
       );
-    } else if (coursePosterImage != null && coursePosterUrl == null) {
-      return AspectRatio(
-        aspectRatio: 1 / .95,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Image.file(
-            context.read<AddCourseCubitCubit>().coursePosterImage!,
-            fit: BoxFit.cover,
+    } else if (coursePosterImage != null) {
+      return InkWell(
+        onTap: () {
+          onTap();
+        },
+        child: AspectRatio(
+          aspectRatio: 1 / .95,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.file(
+              coursePosterImage!,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
       );
     } else if (coursePosterImage == null && coursePosterUrl != null) {
-      return AspectRatio(
-        aspectRatio: 1 / .95,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Image.network(
-            coursePosterUrl!,
-            fit: BoxFit.cover,
+      return InkWell(
+        onTap: () {
+          onTap();
+        },
+        child: AspectRatio(
+          aspectRatio: 1 / .95,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.network(
+              coursePosterUrl!,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
       );
