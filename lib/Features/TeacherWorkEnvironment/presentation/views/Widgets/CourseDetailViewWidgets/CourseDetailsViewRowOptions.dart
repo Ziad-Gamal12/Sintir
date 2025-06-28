@@ -2,17 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/CoursedetailsviewOptionitemEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CustomCourseDetails_OptionItem.dart';
 
-class CourseDetailsViewRowOptions extends StatelessWidget {
+class CourseDetailsViewRowOptions extends StatefulWidget {
   const CourseDetailsViewRowOptions({
     super.key,
-    required this.courrentIndex,
-    required this.onChanged,
     required this.pageController,
   });
 
-  final int courrentIndex;
   final PageController pageController;
-  final ValueChanged<int> onChanged;
+
+  @override
+  State<CourseDetailsViewRowOptions> createState() =>
+      _CourseDetailsViewRowOptionsState();
+}
+
+class _CourseDetailsViewRowOptionsState
+    extends State<CourseDetailsViewRowOptions> {
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -29,8 +34,9 @@ class CourseDetailsViewRowOptions extends StatelessWidget {
           return Expanded(
             child: InkWell(
               onTap: () {
-                onChanged(e.key);
-                pageController.animateToPage(
+                currentIndex = e.key;
+                setState(() {});
+                widget.pageController.animateToPage(
                   e.key,
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeIn,
@@ -38,7 +44,7 @@ class CourseDetailsViewRowOptions extends StatelessWidget {
               },
               child: CustomcoursedetailsOptionitem(
                 item: e.value,
-                isSelected: e.key == courrentIndex,
+                isSelected: e.key == currentIndex,
               ),
             ),
           );

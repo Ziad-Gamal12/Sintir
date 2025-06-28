@@ -154,8 +154,8 @@ class App_router {
         path: CourseIntroductionView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return CourseIntroductionView(
-            bottomsheetnavigationrequirmentsentity:
-                state.extra as Bottomsheetnavigationrequirmentsentity,
+            bottomsheetnavigationrequirmentsentity: state.extra
+                as DisplayCourseBottomsheetNavigationRequirmentsEntity,
           );
         },
       ),
@@ -227,9 +227,9 @@ class App_router {
         },
       ),
       GoRoute(
-        path: Coursedetailview.routeName,
+        path: CourseDetailView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return Coursedetailview(
+          return CourseDetailView(
             courseEntity: state.extra as CourseEntity,
           );
         },

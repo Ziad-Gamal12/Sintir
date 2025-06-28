@@ -2,9 +2,9 @@
 
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 
-class Bottomsheetnavigationrequirmentsentity {
+class DisplayCourseBottomsheetNavigationRequirmentsEntity {
   final CourseEntity course;
   bool isSubscribed;
-  Bottomsheetnavigationrequirmentsentity(
+  DisplayCourseBottomsheetNavigationRequirmentsEntity(
       {required this.course, required this.isSubscribed});
 }

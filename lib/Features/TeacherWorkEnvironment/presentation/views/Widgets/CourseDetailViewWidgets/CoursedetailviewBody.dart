@@ -20,15 +20,15 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CustomCourseDetailsBodyCourse_Info.dart';
 import 'package:sintir/constant.dart';
 
-class CoursedetailviewBody extends StatefulWidget {
-  const CoursedetailviewBody({super.key, required this.courseEntity});
+class CourseDetailViewBody extends StatefulWidget {
+  const CourseDetailViewBody({super.key, required this.courseEntity});
   final CourseEntity courseEntity;
 
   @override
-  State<CoursedetailviewBody> createState() => _CoursedetailviewBodyState();
+  State<CourseDetailViewBody> createState() => _CourseDetailViewBodyState();
 }
 
-class _CoursedetailviewBodyState extends State<CoursedetailviewBody> {
+class _CourseDetailViewBodyState extends State<CourseDetailViewBody> {
   late PageController pageController;
   int currentIndex = 0;
 
@@ -116,36 +116,29 @@ class _CoursedetailviewBodyState extends State<CoursedetailviewBody> {
               ),
             ),
             CourseDetailsViewRowOptions(
-                pageController: pageController,
-                onChanged: (value) {
-                  currentIndex = value;
-                  setState(() {});
-                },
-                courrentIndex: currentIndex),
+              pageController: pageController,
+            ),
             SliverFillRemaining(
                 hasScrollBody: true,
                 child: PageView(
                     controller: pageController,
                     scrollDirection: Axis.horizontal,
+                    physics: const NeverScrollableScrollPhysics(),
                     children: [
                       Coursedetailssectionspageviewitem(
                         courseEntity: widget.courseEntity,
-                        courseSections: courseSections,
                         isFetchedCourseSections: isFechedCourseSectoins,
                       ),
                       Coursedetailsstudentspageviewitem(
-                        subscribers: courseSubscripers,
                         isFetchedCourseSubscribers: isFechedCourseSubscripers,
                       ),
                       CourseDetailsStudentsReviewsPageViewItem(
                         courseId: widget.courseEntity.id,
-                        feedBacks: courseFeedBacks,
                         isFetchedCourseFeedBacks: isFechedCourseFeedBacks,
                       ),
                       CourseDetailsCourseReportsPageViewItem(
                         courseId: widget.courseEntity.id,
                         isFetchedCourseReports: isFechedCourseReports,
-                        reports: courseReports,
                       ),
                     ]))
           ],

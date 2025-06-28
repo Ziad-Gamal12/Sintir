@@ -76,6 +76,7 @@ class _Homeview_BodyState extends State<Homeview_Body> {
                     height: 10,
                   ),
                   CustomSearchTextField(
+                    onSearchChanged: () {},
                     controller: homeSearchController,
                   ),
                 ])),

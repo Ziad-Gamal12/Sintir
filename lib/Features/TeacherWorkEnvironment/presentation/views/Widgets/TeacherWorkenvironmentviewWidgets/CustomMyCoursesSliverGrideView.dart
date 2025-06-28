@@ -21,7 +21,7 @@ class Custommycoursesslivergrideview extends StatelessWidget {
           return CustomCourseItem(
             ontap: () {
               GoRouter.of(context)
-                  .push(Coursedetailview.routeName, extra: courses[index]);
+                  .push(CourseDetailView.routeName, extra: courses[index]);
             },
             courseItem: courses[index],
           );

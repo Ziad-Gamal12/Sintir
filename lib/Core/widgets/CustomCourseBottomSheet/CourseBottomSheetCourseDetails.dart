@@ -13,8 +13,9 @@ class CourseBottomSheetCourseDetails extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    CourseEntity course =
-        context.read<Bottomsheetnavigationrequirmentsentity>().course;
+    CourseEntity course = context
+        .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
+        .course;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -33,7 +34,9 @@ class CourseBottomSheetCourseDetails extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        context.read<Bottomsheetnavigationrequirmentsentity>().isSubscribed ==
+        context
+                    .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
+                    .isSubscribed ==
                 true
             ? Container()
             : Text.rich(

@@ -18,7 +18,7 @@ class CustomCourseBottomSheetActionButtons extends StatelessWidget {
       left: 16,
       right: 16,
       child: context
-                  .read<Bottomsheetnavigationrequirmentsentity>()
+                  .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
                   .isSubscribed ==
               false
           ? const CourseBottomSheetUnSubscribedActionButtons()
@@ -29,8 +29,8 @@ class CustomCourseBottomSheetActionButtons extends StatelessWidget {
               side: const BorderSide(width: 1, color: Colors.black),
               onPressed: () {
                 GoRouter.of(context).push(CourseIntroductionView.routeName,
-                    extra:
-                        context.read<Bottomsheetnavigationrequirmentsentity>());
+                    extra: context.read<
+                        DisplayCourseBottomsheetNavigationRequirmentsEntity>());
               }),
     );
   }

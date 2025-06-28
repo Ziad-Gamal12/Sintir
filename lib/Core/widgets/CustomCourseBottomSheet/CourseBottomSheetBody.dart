@@ -75,8 +75,9 @@ class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
     } else if (state is SubscibeingToCourseFailure) {
       errordialog(context, state.errMessge).show();
     } else if (state is CheckIfSubscribedSuccess) {
-      context.read<Bottomsheetnavigationrequirmentsentity>().isSubscribed =
-          state.isSubscribed;
+      context
+          .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
+          .isSubscribed = state.isSubscribed;
     } else if (state is CheckIfSubscribedFailure) {
       ShowSnackBar(
           context: context,

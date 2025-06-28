@@ -11,8 +11,9 @@ class CoursIntroductionviewbodydescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CourseEntity course =
-        context.read<Bottomsheetnavigationrequirmentsentity>().course;
+    CourseEntity course = context
+        .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
+        .course;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

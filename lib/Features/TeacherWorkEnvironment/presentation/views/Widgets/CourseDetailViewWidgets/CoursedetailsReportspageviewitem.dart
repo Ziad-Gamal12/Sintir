@@ -12,10 +12,8 @@ class CourseDetailsCourseReportsPageViewItem extends StatefulWidget {
   const CourseDetailsCourseReportsPageViewItem(
       {super.key,
       required this.courseId,
-      required this.reports,
       required this.isFetchedCourseReports});
   final String courseId;
-  final List<Coursereportsitementity> reports;
   final bool isFetchedCourseReports;
 
   @override
@@ -37,7 +35,14 @@ class _CourseDetailsCourseReportsPageViewItemState
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CourseReportsCubit, CourseReportsState>(
+    return BlocSelector<CourseReportsCubit, CourseReportsState,
+        List<Coursereportsitementity>>(
+      selector: (state) {
+        if (state is CourseReportsGetReportSuccess) {
+          return state.reports;
+        }
+        return [];
+      },
       builder: (context, state) {
         return Skeletonizer(
           enabled: state is CourseReportsGetReportLoading,
@@ -46,9 +51,9 @@ class _CourseDetailsCourseReportsPageViewItemState
               const SizedBox(
                 height: 20,
               ),
-              if (widget.reports.isNotEmpty)
+              if (state.isNotEmpty)
                 Coursedetailsreportlistview(
-                  reports: widget.reports,
+                  reports: state,
                 )
               else
                 const CustomEmptyWidget()

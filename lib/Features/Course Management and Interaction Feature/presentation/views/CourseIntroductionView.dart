@@ -15,7 +15,7 @@ class CourseIntroductionView extends StatelessWidget {
   const CourseIntroductionView(
       {super.key, required this.bottomsheetnavigationrequirmentsentity});
   static const routeName = "/CourseIntroductionView";
-  final Bottomsheetnavigationrequirmentsentity
+  final DisplayCourseBottomsheetNavigationRequirmentsEntity
       bottomsheetnavigationrequirmentsentity;
   @override
   Widget build(BuildContext context) {

@@ -10,10 +10,8 @@ class CourseDetailsStudentsReviewsPageViewItem extends StatefulWidget {
   const CourseDetailsStudentsReviewsPageViewItem(
       {super.key,
       required this.courseId,
-      required this.feedBacks,
       required this.isFetchedCourseFeedBacks});
   final String courseId;
-  final List<CoursefeedbackItemEntity> feedBacks;
   final bool isFetchedCourseFeedBacks;
 
   @override
@@ -36,7 +34,14 @@ class _CourseDetailsStudentsReviewsPageViewItemState
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CourseFeedBacksCubit, CourseFeedBacksState>(
+    return BlocSelector<CourseFeedBacksCubit, CourseFeedBacksState,
+        List<CoursefeedbackItemEntity>>(
+      selector: (state) {
+        if (state is CourseFeedBacksGetFeedBackSuccess) {
+          return state.feedBacks;
+        }
+        return [];
+      },
       builder: (context, state) {
         return Skeletonizer(
           enabled: state is CourseFeedBacksGetFeedBackLoading,
@@ -45,9 +50,9 @@ class _CourseDetailsStudentsReviewsPageViewItemState
               const SizedBox(
                 height: 20,
               ),
-              if (widget.feedBacks.isNotEmpty)
+              if (state.isNotEmpty)
                 Coursedetailsstudentreviewslistview(
-                  reviews: widget.feedBacks,
+                  reviews: state,
                 )
               else
                 const CustomEmptyWidget()

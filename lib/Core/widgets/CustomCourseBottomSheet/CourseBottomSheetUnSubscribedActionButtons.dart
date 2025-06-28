@@ -26,8 +26,8 @@ class CourseBottomSheetUnSubscribedActionButtons extends StatelessWidget {
                 side: const BorderSide(width: 1, color: Colors.black),
                 onPressed: () {
                   GoRouter.of(context).push(CourseIntroductionView.routeName,
-                      extra: context
-                          .read<Bottomsheetnavigationrequirmentsentity>());
+                      extra: context.read<
+                          DisplayCourseBottomsheetNavigationRequirmentsEntity>());
                 }),
             const SizedBox(
               height: 10,

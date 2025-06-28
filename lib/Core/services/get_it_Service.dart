@@ -54,7 +54,7 @@ void setup_Getit() {
   getIt.registerSingleton<Databaseservice>(FirebaseFirestoreservice());
   getIt.registerSingleton<Sqfliteservices>(Sqfliteservices());
   getIt.registerSingleton<Coursesrepo>(CoursesrepoImpl(
-      datebaseservice: getIt<Databaseservice>(),
+      databaseservice: getIt<Databaseservice>(),
       storageService: getIt<StorageService>()));
   getIt.registerSingleton<Pickerassetsservice>(Pickerassetsservice());
   getIt.registerSingleton<StudentauthRepo>(StudentauthRepoImpli(

@@ -52,7 +52,6 @@ class _CustomCourseDetailsSectionsListViewitemState
               state.sectionId == widget.sectionItem.id) {
             setState(() {
               sectionLessons = state.items;
-              _controller.expanded = true;
             });
           } else if (state is GetSectionItemsFailure) {
             ShowSnackBar(
@@ -89,9 +88,8 @@ class _CustomCourseDetailsSectionsListViewitemState
                     sectionId: widget.sectionItem.id,
                     courseId: widget.course.id,
                   );
-                } else {
-                  _controller.toggle();
                 }
+                _controller.toggle();
               },
               child: Customlisttilewidget(
                 title: widget.sectionItem.title,

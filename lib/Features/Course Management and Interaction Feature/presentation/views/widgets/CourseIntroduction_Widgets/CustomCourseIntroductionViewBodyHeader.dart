@@ -16,7 +16,9 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var course = context.read<Bottomsheetnavigationrequirmentsentity>().course;
+    var course = context
+        .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
+        .course;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

@@ -3,7 +3,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/helper/ShowBottomSheet.dart';
+import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CustomCourseDetails_EditeCoureInfoWidget.dart';
 
 class CustomCourseDetailsBodyCourse_Info extends StatelessWidget {
   const CustomCourseDetailsBodyCourse_Info({
@@ -53,7 +56,15 @@ class CustomCourseDetailsBodyCourse_Info extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showCustomBottomSheet(
+                            scaffoldKey: Variables.courseDeatilsViewScaffoldKey,
+                            child: IntrinsicHeight(
+                                child: EditCourseInfoSection(
+                              course: courseEntity,
+                            )),
+                            context: context);
+                      },
                       icon: const Icon(
                         Icons.edit,
                         color: Colors.black,

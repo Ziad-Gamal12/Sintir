@@ -10,13 +10,12 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:skeletonizer/skeletonizer.dart';
 
 class Coursedetailssectionspageviewitem extends StatefulWidget {
-  const Coursedetailssectionspageviewitem(
-      {super.key,
-      required this.courseEntity,
-      required this.isFetchedCourseSections,
-      required this.courseSections});
+  const Coursedetailssectionspageviewitem({
+    super.key,
+    required this.courseEntity,
+    required this.isFetchedCourseSections,
+  });
   final CourseEntity courseEntity;
-  final List<CourseSectionEntity> courseSections;
   final bool isFetchedCourseSections;
   @override
   State<Coursedetailssectionspageviewitem> createState() =>
@@ -34,9 +33,18 @@ class _CoursedetailssectionspageviewitemState
     }
   }
 
+  List<CourseSectionEntity> sections = [];
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CourseSectionsCubit, CourseSectionsState>(
+    return BlocSelector<CourseSectionsCubit, CourseSectionsState,
+        List<CourseSectionEntity>>(
+      selector: (state) {
+        if (state is GetCourseSectionsSuccess) {
+          sections = state.sections;
+          return state.sections;
+        }
+        return [];
+      },
       builder: (context, state) {
         return Skeletonizer(
           enabled: state is GetCourseSectionsLoading,
@@ -61,10 +69,9 @@ class _CoursedetailssectionspageviewitemState
                       height: 10,
                     ),
                   ),
-                  if (widget.courseSections.isNotEmpty)
+                  if (sections.isNotEmpty)
                     CustomCourseDetailsBodyCourseSections_SliverList(
-                        courseSections: widget.courseSections,
-                        course: widget.courseEntity)
+                        courseSections: sections, course: widget.courseEntity)
                   else
                     const SliverToBoxAdapter(child: CustomEmptyWidget())
                 ],

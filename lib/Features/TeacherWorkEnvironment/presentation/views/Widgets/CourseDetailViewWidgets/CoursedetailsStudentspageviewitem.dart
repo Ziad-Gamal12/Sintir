@@ -13,10 +13,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 class Coursedetailsstudentspageviewitem extends StatefulWidget {
   const Coursedetailsstudentspageviewitem(
-      {super.key,
-      required this.subscribers,
-      required this.isFetchedCourseSubscribers});
-  final List<Subscriberentity> subscribers;
+      {super.key, required this.isFetchedCourseSubscribers});
   final bool isFetchedCourseSubscribers;
 
   @override
@@ -29,29 +26,21 @@ class _CoursedetailsstudentspageviewitemState
   TextEditingController controller = TextEditingController();
   List<Subscriberentity> searchedSubscribers = [];
   Timer? _debounce;
+
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.addListener(_onSearchChanged);
-      if (!widget.isFetchedCourseSubscribers) {
-        context.read<CourseSubscribtionsCubit>().getCoursSubscribers();
-      }
-    });
+    if (!widget.isFetchedCourseSubscribers) {
+      context.read<CourseSubscribtionsCubit>().getCoursSubscribers();
+    }
   }
 
-  void _onSearchChanged() {
-    if (_debounce?.isActive ?? false) _debounce?.cancel();
-    _debounce = Timer(const Duration(milliseconds: 500), () {
-      searchedSubscribers = getSearchedList();
-      setState(() {});
-    });
-  }
-
-  List<Subscriberentity> getSearchedList() {
+  List<Subscriberentity> getSearchedList({
+    required List<Subscriberentity> subscribers,
+  }) {
     List<Subscriberentity> searchedSubscribers = [];
     if (controller.text.isNotEmpty) {
-      for (Subscriberentity e in widget.subscribers) {
+      for (Subscriberentity e in subscribers) {
         if ((e.name.toLowerCase()).startsWith(controller.text.toLowerCase())) {
           searchedSubscribers.add(e);
         }
@@ -68,7 +57,14 @@ class _CoursedetailsstudentspageviewitemState
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CourseSubscribtionsCubit, CourseSubscribtionsState>(
+    return BlocSelector<CourseSubscribtionsCubit, CourseSubscribtionsState,
+        List<Subscriberentity>>(
+      selector: (state) {
+        if (state is GetCourseSubscribersSuccess) {
+          return state.subscribers;
+        }
+        return [];
+      },
       builder: (context, state) {
         return Skeletonizer(
           enabled: state is GetCourseSubscribersLoading,
@@ -77,15 +73,23 @@ class _CoursedetailsstudentspageviewitemState
               const SizedBox(
                 height: 20,
               ),
-              CustomSearchTextField(controller: controller),
+              CustomSearchTextField(
+                controller: controller,
+                onSearchChanged: () {
+                  if (_debounce?.isActive ?? false) _debounce?.cancel();
+                  _debounce = Timer(const Duration(milliseconds: 500), () {
+                    searchedSubscribers = getSearchedList(subscribers: state);
+                    setState(() {});
+                  });
+                },
+              ),
               const SizedBox(
                 height: 20,
               ),
-              if (widget.subscribers.isNotEmpty)
+              if (state.isNotEmpty)
                 CoursedetailsStudentsGridview(
-                  subscribers: searchedSubscribers.isEmpty
-                      ? widget.subscribers
-                      : searchedSubscribers,
+                  subscribers:
+                      searchedSubscribers.isEmpty ? state : searchedSubscribers,
                 )
               else
                 const CustomEmptyWidget()

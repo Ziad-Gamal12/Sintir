@@ -22,6 +22,7 @@ class LevelbooksviewBody extends StatelessWidget {
                   height: 10,
                 ),
                 CustomSearchTextField(
+                  onSearchChanged: () {},
                   controller: controller,
                 ),
                 const SizedBox(

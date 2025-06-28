@@ -32,22 +32,27 @@ class _CustomSectionListViewState extends State<CustomSectionListView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       BlocProvider.of<CourseSectionsCubit>(context).getSectionItems(
         sectionId: widget.section.id,
-        courseId:
-            context.read<Bottomsheetnavigationrequirmentsentity>().course.id,
+        courseId: context
+            .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
+            .course
+            .id,
       );
     });
   }
 
   Widget getChild(dynamic item, BuildContext context) {
-    bool isSubscribed =
-        context.read<Bottomsheetnavigationrequirmentsentity>().isSubscribed;
-    CourseEntity course =
-        context.read<Bottomsheetnavigationrequirmentsentity>().course;
+    bool isSubscribed = context
+        .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
+        .isSubscribed;
+    CourseEntity course = context
+        .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
+        .course;
     if (item is Coursevedioitementity) {
       return CustomVedioListViewItem(
         course: course,
-        isAvilabe:
-            context.read<Bottomsheetnavigationrequirmentsentity>().isSubscribed,
+        isAvilabe: context
+            .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
+            .isSubscribed,
         item: item,
         section: widget.section,
       );
@@ -56,8 +61,9 @@ class _CustomSectionListViewState extends State<CustomSectionListView> {
         course: course,
         item: item,
         section: widget.section,
-        isAvilabe:
-            context.read<Bottomsheetnavigationrequirmentsentity>().isSubscribed,
+        isAvilabe: context
+            .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
+            .isSubscribed,
       );
     } else {
       return Customfilelistviewitem(

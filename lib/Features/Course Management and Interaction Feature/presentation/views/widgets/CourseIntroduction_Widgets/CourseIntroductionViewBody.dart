@@ -21,8 +21,10 @@ class _CourseIntroductionViewBodyState
     super.initState();
     if (mounted) {
       context.read<CourseSectionsCubit>().getCourseSections(
-          courseId:
-              context.read<Bottomsheetnavigationrequirmentsentity>().course.id);
+          courseId: context
+              .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
+              .course
+              .id);
     }
   }
 

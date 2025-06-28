@@ -17,7 +17,7 @@ class CourseBottomSheetHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Contentcreaterentity courseContentCreater = context
-        .read<Bottomsheetnavigationrequirmentsentity>()
+        .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
         .course
         .contentcreaterentity!;
     return Row(

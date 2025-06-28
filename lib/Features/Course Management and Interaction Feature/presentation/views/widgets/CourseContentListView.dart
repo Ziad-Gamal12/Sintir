@@ -18,10 +18,9 @@ class CourseContentListView extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: CustomContentListViewitem(
-            courseId: context
-                .read<Bottomsheetnavigationrequirmentsentity>()
-                .course
-                .id,
+            course: context
+                .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
+                .course,
             sectionItem: courseSectionsEntity[index],
           ),
         );

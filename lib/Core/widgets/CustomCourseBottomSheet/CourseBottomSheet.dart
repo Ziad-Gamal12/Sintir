@@ -20,9 +20,9 @@ class CourseBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Bottomsheetnavigationrequirmentsentity
+    DisplayCourseBottomsheetNavigationRequirmentsEntity
         bottomsheetnavigationrequirmentsentity =
-        Bottomsheetnavigationrequirmentsentity(
+        DisplayCourseBottomsheetNavigationRequirmentsEntity(
             course: courseEntity, isSubscribed: false);
     return BlocProvider(
       create: (context) => CourseSubscribtionsCubit(
