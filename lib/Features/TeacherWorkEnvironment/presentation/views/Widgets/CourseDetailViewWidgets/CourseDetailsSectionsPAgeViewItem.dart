@@ -11,9 +11,13 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 class Coursedetailssectionspageviewitem extends StatefulWidget {
   const Coursedetailssectionspageviewitem(
-      {super.key, required this.courseEntity, required this.courseSections});
+      {super.key,
+      required this.courseEntity,
+      required this.isFetchedCourseSections,
+      required this.courseSections});
   final CourseEntity courseEntity;
   final List<CourseSectionEntity> courseSections;
+  final bool isFetchedCourseSections;
   @override
   State<Coursedetailssectionspageviewitem> createState() =>
       _CoursedetailssectionspageviewitemState();
@@ -24,7 +28,7 @@ class _CoursedetailssectionspageviewitemState
   @override
   void initState() {
     super.initState();
-    if (widget.courseSections.isEmpty) {
+    if (!widget.isFetchedCourseSections) {
       BlocProvider.of<CourseSectionsCubit>(context)
           .getCourseSections(courseId: widget.courseEntity.id);
     }

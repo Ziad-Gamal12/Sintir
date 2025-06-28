@@ -8,9 +8,14 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 class CourseDetailsStudentsReviewsPageViewItem extends StatefulWidget {
   const CourseDetailsStudentsReviewsPageViewItem(
-      {super.key, required this.courseId, required this.feedBacks});
+      {super.key,
+      required this.courseId,
+      required this.feedBacks,
+      required this.isFetchedCourseFeedBacks});
   final String courseId;
   final List<CoursefeedbackItemEntity> feedBacks;
+  final bool isFetchedCourseFeedBacks;
+
   @override
   State<CourseDetailsStudentsReviewsPageViewItem> createState() =>
       _CourseDetailsStudentsReviewsPageViewItemState();
@@ -22,7 +27,7 @@ class _CourseDetailsStudentsReviewsPageViewItemState
   void initState() {
     super.initState();
 
-    if (widget.feedBacks.isEmpty) {
+    if (!widget.isFetchedCourseFeedBacks) {
       context
           .read<CourseFeedBacksCubit>()
           .getCourseFeedBacks(courseId: widget.courseId);

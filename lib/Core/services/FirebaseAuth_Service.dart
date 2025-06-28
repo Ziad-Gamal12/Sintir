@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, camel_case_types
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:math' as math;
@@ -91,19 +92,34 @@ class firebaseAuthService {
   }
 
   Future<User> signinWithGoogle() async {
+    final googleSignIn = GoogleSignIn.instance;
+
     try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-      final UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-      return userCredential.user!;
+      await googleSignIn.initialize();
+
+      if (googleSignIn.supportsAuthenticate()) {
+        final googleUser = await googleSignIn.authenticate();
+
+        final authClient = googleUser.authorizationClient;
+
+        final auth = await authClient.authorizationForScopes([
+          'email',
+          'openid',
+          'https://www.googleapis.com/auth/userinfo.email',
+        ]);
+
+        final credential = GoogleAuthProvider.credential(
+          accessToken: auth!.accessToken,
+          idToken: googleUser.authentication.idToken,
+        );
+
+        final userCredential =
+            await FirebaseAuth.instance.signInWithCredential(credential);
+        return userCredential.user!;
+      } else {
+        throw CustomException(message: "تسجيل الدخول غير مدعوم على هذا النظام");
+      }
     } on FirebaseAuthException catch (e) {
-      log("Exception from FirebaseAuthService.signinWithGoogle in catch With Firebase Exception: ${e.toString()} and the Firebase Code is ${e.code}");
       if (e.code == "network-request-failed") {
         throw CustomException(message: "لا يوجد اتصال بالانترنت");
       } else if (e.code == "operation-not-allowed") {
@@ -127,7 +143,6 @@ class firebaseAuthService {
         throw CustomException(message: "حدث خطأ ما");
       }
     } catch (e) {
-      log("Exception from FirebaseAuthService.signInWithGoogle: ${e.toString()}");
       throw CustomException(message: "حدث خطأ ما");
     }
   }

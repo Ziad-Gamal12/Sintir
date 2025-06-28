@@ -8,7 +8,7 @@ part 'get_courses_state.dart';
 class GetCoursesCubit extends Cubit<GetCoursesState> {
   GetCoursesCubit({required this.coursesrepo}) : super(GetCoursesInitial());
   final Coursesrepo coursesrepo;
-  getRecentCourses() async {
+  Future<void> getRecentCourses() async {
     emit(GetCoursesLoading());
     final result = await coursesrepo.getRecentCourses();
     result.fold(
@@ -23,7 +23,7 @@ class GetCoursesCubit extends Cubit<GetCoursesState> {
     });
   }
 
-  getPopularCourses() async {
+  Future<void> getPopularCourses() async {
     emit(GetCoursesLoading());
     final result = await coursesrepo.getPopularCourses();
     result.fold(

@@ -26,9 +26,16 @@ class _Homeview_BodyState extends State<Homeview_Body> {
   TextEditingController homeSearchController = TextEditingController();
   @override
   void initState() {
-    context.read<GetCoursesCubit>().getRecentCourses();
-    context.read<GetCoursesCubit>().getPopularCourses();
+    homeInitFetchData();
     super.initState();
+  }
+
+  homeInitFetchData() async {
+    await Future.wait([
+      context.read<UserCubit>().getUserData(),
+      context.read<GetCoursesCubit>().getRecentCourses(),
+      context.read<GetCoursesCubit>().getPopularCourses(),
+    ]);
   }
 
   bool isLoading = false;

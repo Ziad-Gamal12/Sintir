@@ -56,6 +56,10 @@ class _CoursedetailviewBodyState extends State<CoursedetailviewBody> {
   List<Subscriberentity> courseSubscripers = [];
   List<CoursefeedbackItemEntity> courseFeedBacks = [];
   List<Coursereportsitementity> courseReports = [];
+  bool isFechedCourseSectoins = false;
+  bool isFechedCourseSubscripers = false;
+  bool isFechedCourseFeedBacks = false;
+  bool isFechedCourseReports = false;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +69,7 @@ class _CoursedetailviewBodyState extends State<CoursedetailviewBody> {
             listener: (context, state) {
           if (state is GetCourseSectionsSuccess) {
             courseSections = state.sections;
+            isFechedCourseSectoins = true;
           } else if (state is GetCourseSectionsFailure) {
             ShowErrorSnackBar(context: context, errMessage: state.errMessage);
           }
@@ -73,6 +78,7 @@ class _CoursedetailviewBodyState extends State<CoursedetailviewBody> {
             listener: (context, state) {
           if (state is GetCourseSubscribersSuccess) {
             courseSubscripers = state.subscribers;
+            isFechedCourseSubscripers = true;
           } else if (state is GetCourseSubscribersFailure) {
             ShowErrorSnackBar(context: context, errMessage: state.errMessage);
           }
@@ -81,6 +87,7 @@ class _CoursedetailviewBodyState extends State<CoursedetailviewBody> {
             listener: (context, state) {
           if (state is CourseFeedBacksGetFeedBackSuccess) {
             courseFeedBacks = state.feedBacks;
+            isFechedCourseFeedBacks = true;
           } else if (state is CourseFeedBacksGetFeedBackFailure) {
             ShowErrorSnackBar(context: context, errMessage: state.errMessage);
           }
@@ -89,6 +96,7 @@ class _CoursedetailviewBodyState extends State<CoursedetailviewBody> {
             listener: (context, state) {
           if (state is CourseReportsGetReportSuccess) {
             courseReports = state.reports;
+            isFechedCourseReports = true;
           } else if (state is CourseReportsGetReportFailure) {
             ShowErrorSnackBar(context: context, errMessage: state.errMessage);
           }
@@ -123,16 +131,20 @@ class _CoursedetailviewBodyState extends State<CoursedetailviewBody> {
                       Coursedetailssectionspageviewitem(
                         courseEntity: widget.courseEntity,
                         courseSections: courseSections,
+                        isFetchedCourseSections: isFechedCourseSectoins,
                       ),
                       Coursedetailsstudentspageviewitem(
                         subscribers: courseSubscripers,
+                        isFetchedCourseSubscribers: isFechedCourseSubscripers,
                       ),
                       CourseDetailsStudentsReviewsPageViewItem(
                         courseId: widget.courseEntity.id,
                         feedBacks: courseFeedBacks,
+                        isFetchedCourseFeedBacks: isFechedCourseFeedBacks,
                       ),
                       CourseDetailsCourseReportsPageViewItem(
                         courseId: widget.courseEntity.id,
+                        isFetchedCourseReports: isFechedCourseReports,
                         reports: courseReports,
                       ),
                     ]))

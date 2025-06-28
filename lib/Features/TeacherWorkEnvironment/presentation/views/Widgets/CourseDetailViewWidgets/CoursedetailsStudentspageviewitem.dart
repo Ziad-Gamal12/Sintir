@@ -13,8 +13,12 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 class Coursedetailsstudentspageviewitem extends StatefulWidget {
   const Coursedetailsstudentspageviewitem(
-      {super.key, required this.subscribers});
+      {super.key,
+      required this.subscribers,
+      required this.isFetchedCourseSubscribers});
   final List<Subscriberentity> subscribers;
+  final bool isFetchedCourseSubscribers;
+
   @override
   State<Coursedetailsstudentspageviewitem> createState() =>
       _CoursedetailsstudentspageviewitemState();
@@ -30,7 +34,7 @@ class _CoursedetailsstudentspageviewitemState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.addListener(_onSearchChanged);
-      if (widget.subscribers.isEmpty) {
+      if (!widget.isFetchedCourseSubscribers) {
         context.read<CourseSubscribtionsCubit>().getCoursSubscribers();
       }
     });
