@@ -3,8 +3,9 @@ import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseReportsItemEntity.dart';
 
-class Coursedetailsreportlistviewitem extends StatelessWidget {
-  const Coursedetailsreportlistviewitem({super.key, required this.report});
+class CourseDetailsCourseReportsListViewItem extends StatelessWidget {
+  const CourseDetailsCourseReportsListViewItem(
+      {super.key, required this.report});
   final Coursereportsitementity report;
   @override
   Widget build(BuildContext context) {

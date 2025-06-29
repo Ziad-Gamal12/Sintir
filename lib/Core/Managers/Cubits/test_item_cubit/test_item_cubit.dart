@@ -28,13 +28,13 @@ class TestItemCubit extends Cubit<TestItemState> {
   final SectionItemsActionsRepo sectionItemsActionsRepo;
   final Assetspickerrepo assetspickerrepo;
 
-  void addNewQuestion({required Coursetestentity coursetestentity}) {
+  void addNewQuestion({required CourseTestEntity coursetestentity}) {
     coursetestentity.addQuestion(null);
     emit(AddCourseSectionTestQuestionAdded());
   }
 
   void removeQuestion(
-      {required Coursetestentity coursetestentity,
+      {required CourseTestEntity coursetestentity,
       required Coursetestquestionentity question}) {
     coursetestentity.removeQuestion(question);
     emit(AddCourseSectionTestQuestionRemoved());
@@ -42,7 +42,7 @@ class TestItemCubit extends Cubit<TestItemState> {
 
   void removeSolutin(
       {required Coursetestquestionsolutionentity solution,
-      required Coursetestentity coursetestentity,
+      required CourseTestEntity coursetestentity,
       required Coursetestquestionentity question}) {
     if (question.solutions.length > 1) {
       question.removeSolution(solution);
@@ -68,7 +68,7 @@ class TestItemCubit extends Cubit<TestItemState> {
   }
 
   void uploadTestQuestionsImages({
-    required Coursetestentity test,
+    required CourseTestEntity test,
   }) async {
     emit(QuestionsImagesUploadedingLoading());
     var resulte =
@@ -83,7 +83,7 @@ class TestItemCubit extends Cubit<TestItemState> {
   void addTestItem({
     required String courseId,
     required String sectionId,
-    required Coursetestentity test,
+    required CourseTestEntity test,
   }) async {
     emit(AddTestItemLoading());
     final result = await sectionItemsActionsRepo.addSectionItem(
@@ -95,7 +95,7 @@ class TestItemCubit extends Cubit<TestItemState> {
     });
   }
 
-  int getResult({required Coursetestentity test}) {
+  int getResult({required CourseTestEntity test}) {
     int result = 0;
     for (var element in test.questions) {
       String selectedAnswer = element.selectedSolution ?? "null";
@@ -110,7 +110,7 @@ class TestItemCubit extends Cubit<TestItemState> {
   }
 
   List<ExamResultSolvedQuestionEntity> getSolvedQuestionsnums(
-      {required Coursetestentity test}) {
+      {required CourseTestEntity test}) {
     List<ExamResultSolvedQuestionEntity> numbers = [];
     for (var element in test.questions) {
       if (element.selectedSolution != null) {
@@ -135,7 +135,7 @@ class TestItemCubit extends Cubit<TestItemState> {
   }
 
   TestresulteEntity getTestResults(
-      {required BuildContext context, required Coursetestentity test}) {
+      {required BuildContext context, required CourseTestEntity test}) {
     return TestresulteEntity(
         joinedDate: DateTime.now(),
         serialNumber: "${DateTime.now().toString()}-Result",
@@ -147,7 +147,7 @@ class TestItemCubit extends Cubit<TestItemState> {
   }
 
   void addTestResults(
-      {required Coursetestentity test,
+      {required CourseTestEntity test,
       required String courseId,
       required String sectionId,
       required String sectionItemId,

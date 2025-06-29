@@ -27,7 +27,7 @@ class _CoursetestquestionsnavigationState
 
   @override
   Widget build(BuildContext context) {
-    Coursetestentity test =
+    CourseTestEntity test =
         context.read<Coursetestviewnavigationsrequirmentsentity>().test;
     return Wrap(
       children: test.questions.asMap().entries.map((e) {

@@ -6,7 +6,7 @@ import 'package:sintir/Core/widgets/Video%20Previewer%20Widgets/CustomDisplaying
 
 class VideoPreviewWidget extends StatelessWidget {
   final File videoFile;
-  final Coursevedioitementity coursevedioitementity;
+  final CourseVideoItemEntity coursevedioitementity;
 
   const VideoPreviewWidget(
       {required this.videoFile,

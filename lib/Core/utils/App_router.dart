@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVideoviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebView.dart';
 import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordView.dart';
@@ -12,6 +14,7 @@ import 'package:sintir/Features/Ai_Teacher/presentation/views/AiTeacherView.dart
 import 'package:sintir/Features/Books_Library/Presentation/Views/EducationLevelsBooksSectionsView.dart';
 import 'package:sintir/Features/Books_Library/Presentation/Views/LevelBooksView.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/ChoosingUserKindView.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFedBackView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFilePreviewer_View.dart';
@@ -41,8 +44,11 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCou
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/CourseDetailView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/FileConsequencesView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ReviewSqlTestSectionView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TestConsequencesView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/VideoConsequencesView.dart';
 import 'package:sintir/Features/tasks/presentation/views/TasksView.dart';
 
 class App_router {
@@ -291,6 +297,30 @@ class App_router {
         builder: (BuildContext context, GoRouterState state) {
           return Reviewtestresultview(
             resultEntity: state.extra as TestresulteEntity,
+          );
+        },
+      ),
+      GoRoute(
+        path: TestConsequencesView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return TestConsequencesView(
+            test: state.extra as CourseTestEntity,
+          );
+        },
+      ),
+      GoRoute(
+        path: VideoConsequencesView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return VideoConsequencesView(
+            video: state.extra as CourseVideoItemEntity,
+          );
+        },
+      ),
+      GoRoute(
+        path: FileConsequencesView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return FileConsequencesView(
+            file: state.extra as CourseFileEntity,
           );
         },
       ),

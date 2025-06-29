@@ -22,7 +22,7 @@ class CoursetestquestionItem extends StatefulWidget {
 class _CoursetestquestionItemState extends State<CoursetestquestionItem> {
   @override
   Widget build(BuildContext context) {
-    Coursetestentity test =
+    CourseTestEntity test =
         context.read<Coursetestviewnavigationsrequirmentsentity>().test;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

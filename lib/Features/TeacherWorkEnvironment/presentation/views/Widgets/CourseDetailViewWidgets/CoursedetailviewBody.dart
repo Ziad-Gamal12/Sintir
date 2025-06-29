@@ -12,12 +12,9 @@ import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseReportsItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsSectionsPAgeViewItem.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsViewRowOptions.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CoursedetailsReportspageviewitem.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CoursedetailsStudentReviewspageviewitem.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CoursedetailsStudentspageviewitem.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CustomCourseDetailsBodyCourse_Info.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseInfoSectionWidgets/CustomCourseDetailsBodyCourse_Info.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsRowOptionsSectionWidgets/CourseDetailsViewRowOptions.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CustomCourseDetialsPageView.dart';
 import 'package:sintir/constant.dart';
 
 class CourseDetailViewBody extends StatefulWidget {
@@ -120,27 +117,13 @@ class _CourseDetailViewBodyState extends State<CourseDetailViewBody> {
             ),
             SliverFillRemaining(
                 hasScrollBody: true,
-                child: PageView(
-                    controller: pageController,
-                    scrollDirection: Axis.horizontal,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      Coursedetailssectionspageviewitem(
-                        courseEntity: widget.courseEntity,
-                        isFetchedCourseSections: isFechedCourseSectoins,
-                      ),
-                      Coursedetailsstudentspageviewitem(
-                        isFetchedCourseSubscribers: isFechedCourseSubscripers,
-                      ),
-                      CourseDetailsStudentsReviewsPageViewItem(
-                        courseId: widget.courseEntity.id,
-                        isFetchedCourseFeedBacks: isFechedCourseFeedBacks,
-                      ),
-                      CourseDetailsCourseReportsPageViewItem(
-                        courseId: widget.courseEntity.id,
-                        isFetchedCourseReports: isFechedCourseReports,
-                      ),
-                    ]))
+                child: CustomCourseDetialsPageView(
+                    pageController: pageController,
+                    course: widget.courseEntity,
+                    isFechedCourseSectoins: isFechedCourseSectoins,
+                    isFechedCourseSubscripers: isFechedCourseSubscripers,
+                    isFechedCourseFeedBacks: isFechedCourseFeedBacks,
+                    isFechedCourseReports: isFechedCourseReports))
           ],
         ),
       ),

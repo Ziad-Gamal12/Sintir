@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 
-class CoursedetailsStudentsGridviewItem extends StatelessWidget {
-  const CoursedetailsStudentsGridviewItem(
+class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
+  const CourseDetailsSubscribersGridviewItem(
       {super.key, required this.subscriberentity});
   final Subscriberentity subscriberentity;
   @override

@@ -2,7 +2,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
 
 class Coursevideoviewnavigationsrequirmentsentity {
-  final Coursevedioitementity video;
+  final CourseVideoItemEntity video;
   final CourseEntity courseEntity;
   final String sectionId;
 

@@ -52,7 +52,7 @@ class FileItemCubit extends Cubit<FileItemState> {
   }
 
   void uploadFile({
-    required Coursefileentity coursefileEntity,
+    required CourseFileEntity coursefileEntity,
   }) async {
     emit(UplaodFileLoading());
     var result =
@@ -67,7 +67,7 @@ class FileItemCubit extends Cubit<FileItemState> {
   void addFileItem({
     required String courseId,
     required String sectionId,
-    required Coursefileentity file,
+    required CourseFileEntity file,
   }) async {
     emit(AddFileItemLoading());
     final result = await sectionItemsActionsRepo.addSectionItem(

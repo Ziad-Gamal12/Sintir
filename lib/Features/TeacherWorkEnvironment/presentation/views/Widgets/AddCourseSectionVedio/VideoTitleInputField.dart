@@ -4,7 +4,7 @@ import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 
 class VideoTitleInputField extends StatelessWidget {
   const VideoTitleInputField({super.key, required this.courseVedioItemEntity});
-  final Coursevedioitementity courseVedioItemEntity;
+  final CourseVideoItemEntity courseVedioItemEntity;
   @override
   Widget build(BuildContext context) {
     return Customteaxtfield(

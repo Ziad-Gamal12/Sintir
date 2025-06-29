@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseFeedBacksCubit/course_feed_backs_cubit.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/Coursedetailsstudentreviewslistview.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReviewsSectionWidgets/CourseDetailsSubscriberReviewsListView.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class CourseDetailsStudentsReviewsPageViewItem extends StatefulWidget {
-  const CourseDetailsStudentsReviewsPageViewItem(
+class CourseDetailsSubscripersReviewsPageViewItem extends StatefulWidget {
+  const CourseDetailsSubscripersReviewsPageViewItem(
       {super.key,
       required this.courseId,
       required this.isFetchedCourseFeedBacks});
@@ -15,12 +15,12 @@ class CourseDetailsStudentsReviewsPageViewItem extends StatefulWidget {
   final bool isFetchedCourseFeedBacks;
 
   @override
-  State<CourseDetailsStudentsReviewsPageViewItem> createState() =>
-      _CourseDetailsStudentsReviewsPageViewItemState();
+  State<CourseDetailsSubscripersReviewsPageViewItem> createState() =>
+      _CourseDetailsSubscripersReviewsPageViewItemState();
 }
 
-class _CourseDetailsStudentsReviewsPageViewItemState
-    extends State<CourseDetailsStudentsReviewsPageViewItem> {
+class _CourseDetailsSubscripersReviewsPageViewItemState
+    extends State<CourseDetailsSubscripersReviewsPageViewItem> {
   @override
   void initState() {
     super.initState();
@@ -51,7 +51,7 @@ class _CourseDetailsStudentsReviewsPageViewItemState
                 height: 20,
               ),
               if (state.isNotEmpty)
-                Coursedetailsstudentreviewslistview(
+                CourseDetailsSubscriberReviewsListView(
                   reviews: state,
                 )
               else

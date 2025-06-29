@@ -7,7 +7,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/Cour
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/displayCourseVedioVeiw.dart';
 
-class Coursevedioitementity {
+class CourseVideoItemEntity {
   String title, vedioUrl;
   int durationTime;
   String id;
@@ -22,7 +22,7 @@ class Coursevedioitementity {
         .push(Displaycoursevedioveiw.routeName, extra: requires);
   }
 
-  Coursevedioitementity(
+  CourseVideoItemEntity(
       {required this.title,
       required this.vedioUrl,
       required this.id,

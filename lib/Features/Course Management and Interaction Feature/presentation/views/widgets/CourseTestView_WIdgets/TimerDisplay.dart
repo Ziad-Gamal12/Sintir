@@ -45,7 +45,7 @@ class _TimerDisplayState extends State<TimerDisplay> {
 
   @override
   Widget build(BuildContext context) {
-    Coursetestentity test =
+    CourseTestEntity test =
         context.read<Coursetestviewnavigationsrequirmentsentity>().test;
     return SizedBox(
       height: 100,

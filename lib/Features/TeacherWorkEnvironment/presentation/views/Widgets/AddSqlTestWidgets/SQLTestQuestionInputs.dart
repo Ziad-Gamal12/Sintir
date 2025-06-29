@@ -14,7 +14,7 @@ class SQLTestQuestionInputs extends StatelessWidget {
     required this.coursetestquestionentity,
   });
   final Coursetestquestionentity coursetestquestionentity;
-  final Coursetestentity courseTestEntity;
+  final CourseTestEntity courseTestEntity;
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -4,7 +4,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 class Navigatesqlreviewrequirmentsentity {
   final CourseSectionEntity section;
   final String courseID;
-  final Coursetestentity coursetestentity;
+  final CourseTestEntity coursetestentity;
   final bool isNewSection;
   Navigatesqlreviewrequirmentsentity({
     required this.section,

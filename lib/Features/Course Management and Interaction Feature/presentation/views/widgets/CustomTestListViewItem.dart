@@ -16,7 +16,7 @@ class Customtestlistviewitem extends StatelessWidget {
     required this.isAvilabe,
     required this.course,
   });
-  final Coursetestentity item;
+  final CourseTestEntity item;
   final CourseSectionEntity section;
   final bool isAvilabe;
   final CourseEntity course;

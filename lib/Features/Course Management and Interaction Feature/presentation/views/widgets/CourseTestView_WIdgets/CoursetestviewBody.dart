@@ -43,7 +43,7 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
 
   @override
   Widget build(BuildContext context) {
-    Coursetestentity test = context
+    CourseTestEntity test = context
         .read<Coursetestviewnavigationsrequirmentsentity>()
         .test; //widget.coursetestentity>
     return BlocConsumer<TestItemCubit, TestItemState>(
@@ -148,7 +148,7 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
     );
   }
 
-  void intitStateMethod({required Coursetestentity test}) {
+  void intitStateMethod({required CourseTestEntity test}) {
     if (mounted) {
       context.read<TestItemCubit>().joinToTestItem(
             courseId: context

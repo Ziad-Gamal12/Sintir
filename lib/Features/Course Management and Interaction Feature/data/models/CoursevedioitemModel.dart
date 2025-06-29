@@ -20,14 +20,14 @@ class Coursevedioitemmodel {
         durationTime: json['durationTime'],
         type: json['type'],
       );
-  factory Coursevedioitemmodel.fromEntity(Coursevedioitementity entity) =>
+  factory Coursevedioitemmodel.fromEntity(CourseVideoItemEntity entity) =>
       Coursevedioitemmodel(
           id: entity.id,
           title: entity.title,
           vedioUrl: entity.vedioUrl,
           durationTime: entity.durationTime,
           type: entity.type);
-  Coursevedioitementity toEntity() => Coursevedioitementity(
+  CourseVideoItemEntity toEntity() => CourseVideoItemEntity(
       id: id,
       title: title,
       vedioUrl: vedioUrl,

@@ -6,6 +6,6 @@ import 'package:sintir/Core/errors/Failures.dart';
 
 abstract class VideoItemRepo {
   Future<Either<Failure, String>> uploadVideo({
-    required Coursevedioitementity coursevedioitementity,
+    required CourseVideoItemEntity coursevedioitementity,
   });
 }

@@ -11,7 +11,7 @@ class FileItemRepoImpli implements FileItemRepo {
 
   @override
   Future<Either<Failure, String>> uploadFile(
-      {required Coursefileentity coursefileEntity}) async {
+      {required CourseFileEntity coursefileEntity}) async {
     try {
       String url =
           await storageService.uploadFile(file: coursefileEntity.file!);

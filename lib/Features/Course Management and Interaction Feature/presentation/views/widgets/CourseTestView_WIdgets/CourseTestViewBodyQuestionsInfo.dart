@@ -13,7 +13,7 @@ class CourseTestViewBodyQuestionsInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Coursetestentity test = context
+    CourseTestEntity test = context
         .read<Coursetestviewnavigationsrequirmentsentity>()
         .test; //widget.coursetestentity>
 
@@ -57,7 +57,7 @@ class CourseTestViewBodyQuestionsInfo extends StatelessWidget {
 
   int solvedcount = 0;
 
-  Stream<Object>? getSolvedQuestions({required Coursetestentity test}) {
+  Stream<Object>? getSolvedQuestions({required CourseTestEntity test}) {
     for (var question in test.questions) {
       if (question.selectedSolution != "") {
         solvedcount++;
@@ -67,7 +67,7 @@ class CourseTestViewBodyQuestionsInfo extends StatelessWidget {
   }
 
   Stream<Object>? getUnSolvedQuestions(
-      {required Coursetestentity coursetestentity}) {
+      {required CourseTestEntity coursetestentity}) {
     int unsolvedcount = coursetestentity.questions.length - solvedcount;
     return Stream.value(unsolvedcount);
   }

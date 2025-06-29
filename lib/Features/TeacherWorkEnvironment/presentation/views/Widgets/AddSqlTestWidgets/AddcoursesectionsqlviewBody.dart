@@ -18,7 +18,7 @@ class AddcoursesectionsqlviewBody extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    Coursetestentity coursetestentity = Coursetestentity(
+    CourseTestEntity coursetestentity = CourseTestEntity(
       type: "Test",
       id: "${DateTime.now().toIso8601String()}-Test",
       questions: [

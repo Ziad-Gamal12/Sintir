@@ -7,7 +7,7 @@ import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFilePreviewer_View.dart';
 
-class Coursefileentity {
+class CourseFileEntity {
   String title;
   String fileUrl;
   String description;
@@ -16,7 +16,7 @@ class Coursefileentity {
   String? type;
   String preffixImage = Assets.assetsImagesCustomFileIcon;
 
-  Coursefileentity(
+  CourseFileEntity(
       {this.type = "File",
       required this.description,
       required this.title,

@@ -12,7 +12,7 @@ class CustomAddCourseSectionFileActionButton extends StatelessWidget {
     required this.formKey,
     required this.fileentity,
   });
-  final Coursefileentity fileentity;
+  final CourseFileEntity fileentity;
   final GlobalKey<FormState> formKey;
   @override
   Widget build(BuildContext context) {

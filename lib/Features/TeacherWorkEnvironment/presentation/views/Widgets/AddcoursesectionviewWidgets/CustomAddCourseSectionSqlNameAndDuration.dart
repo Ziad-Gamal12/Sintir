@@ -8,7 +8,7 @@ class CustomAddCourseSectionSqlNameAndDuration extends StatelessWidget {
     super.key,
     required this.coursetestentity,
   });
-  final Coursetestentity coursetestentity;
+  final CourseTestEntity coursetestentity;
   @override
   Widget build(BuildContext context) {
     return Row(

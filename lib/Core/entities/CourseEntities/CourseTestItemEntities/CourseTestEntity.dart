@@ -9,7 +9,7 @@ import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/courseTestView.dart';
 
-class Coursetestentity {
+class CourseTestEntity {
   int durationTime;
   String title;
   final List<Coursetestquestionentity> questions;
@@ -17,26 +17,26 @@ class Coursetestentity {
   String id;
   String preffixImage = Assets.assetsImagesExamIcon;
 
-  Coursetestentity(
+  CourseTestEntity(
       {required this.durationTime,
       required this.title,
       required this.questions,
       required this.id,
       this.type = "Test"});
-  static Coursetestentity empty() => Coursetestentity(
+  static CourseTestEntity empty() => CourseTestEntity(
         durationTime: 0,
         title: '',
         questions: [],
         id: '',
       );
-  Coursetestentity copyWith({
+  CourseTestEntity copyWith({
     int? durationTime,
     String? title,
     List<JoinedByEntity>? joinedBy,
     List<Coursetestquestionentity>? questions,
     List<TestresulteEntity>? results,
   }) {
-    return Coursetestentity(
+    return CourseTestEntity(
       id: id,
       durationTime: durationTime ?? this.durationTime,
       title: title ?? this.title,

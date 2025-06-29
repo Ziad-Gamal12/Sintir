@@ -26,7 +26,7 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
     required String sectionId,
   }) async {
     try {
-      if (sectionItem is Coursetestentity) {
+      if (sectionItem is CourseTestEntity) {
         Map<String, dynamic> json =
             Coursetestmodel.fromEntity(sectionItem).toJson();
         await datebaseservice.setData(
@@ -39,7 +39,7 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
                 sub2DocId: sectionItem.id),
             data: json);
         return right(null);
-      } else if (sectionItem is Coursevedioitementity) {
+      } else if (sectionItem is CourseVideoItemEntity) {
         Map<String, dynamic> json =
             Coursevedioitemmodel.fromEntity(sectionItem).toJson();
         await datebaseservice.setData(
@@ -52,7 +52,7 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
                 sub2DocId: sectionItem.id),
             data: json);
         return right(null);
-      } else if (sectionItem is Coursefileentity) {
+      } else if (sectionItem is CourseFileEntity) {
         Map<String, dynamic> json =
             Coursefilemodel.fromEntity(sectionItem).toJson();
         await datebaseservice.setData(

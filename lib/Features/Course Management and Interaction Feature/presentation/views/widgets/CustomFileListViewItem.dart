@@ -15,7 +15,7 @@ class Customfilelistviewitem extends StatelessWidget {
       required this.section,
       required this.isAvilabe,
       required this.course});
-  final Coursefileentity item;
+  final CourseFileEntity item;
   final CourseSectionEntity section;
   final bool isAvilabe;
   final CourseEntity course;

@@ -10,7 +10,7 @@ class VideoItemRepoImpli implements VideoItemRepo {
   VideoItemRepoImpli({required this.storageService});
   @override
   Future<Either<Failure, String>> uploadVideo(
-      {required Coursevedioitementity coursevedioitementity}) async {
+      {required CourseVideoItemEntity coursevedioitementity}) async {
     try {
       String url =
           await storageService.uploadFile(file: coursevedioitementity.file!);

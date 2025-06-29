@@ -16,7 +16,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 class Coursefilepreviewerviewbody extends StatefulWidget {
   const Coursefilepreviewerviewbody({super.key, required this.file});
-  final Coursefileentity file;
+  final CourseFileEntity file;
 
   @override
   State<Coursefilepreviewerviewbody> createState() =>

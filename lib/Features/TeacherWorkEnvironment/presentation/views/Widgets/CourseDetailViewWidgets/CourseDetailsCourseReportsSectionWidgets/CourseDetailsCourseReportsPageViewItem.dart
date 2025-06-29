@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseReportsCubit/course_reports_cubit.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseReportsItemEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/Coursedetailsreportlistview.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReportsSectionWidgets/CourseDetailsCourseReportsListView.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CourseDetailsCourseReportsPageViewItem extends StatefulWidget {
@@ -52,7 +52,7 @@ class _CourseDetailsCourseReportsPageViewItemState
                 height: 20,
               ),
               if (state.isNotEmpty)
-                Coursedetailsreportlistview(
+                CourseDetailsCourseReportsListView(
                   reports: state,
                 )
               else

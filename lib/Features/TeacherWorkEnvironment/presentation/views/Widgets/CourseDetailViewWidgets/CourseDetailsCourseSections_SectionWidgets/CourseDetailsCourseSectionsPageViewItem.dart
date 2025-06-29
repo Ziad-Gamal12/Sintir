@@ -5,12 +5,12 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CustomAddNewCourseSectionButton.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CustomCourseDetailsBodyCourseSections_SliverList.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomAddNewCourseSectionButton.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomCourseDetailsBodyCourseSections_SliverList.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class Coursedetailssectionspageviewitem extends StatefulWidget {
-  const Coursedetailssectionspageviewitem({
+class CourseDetailsCourseSectionsPageViewItem extends StatefulWidget {
+  const CourseDetailsCourseSectionsPageViewItem({
     super.key,
     required this.courseEntity,
     required this.isFetchedCourseSections,
@@ -18,32 +18,31 @@ class Coursedetailssectionspageviewitem extends StatefulWidget {
   final CourseEntity courseEntity;
   final bool isFetchedCourseSections;
   @override
-  State<Coursedetailssectionspageviewitem> createState() =>
-      _CoursedetailssectionspageviewitemState();
+  State<CourseDetailsCourseSectionsPageViewItem> createState() =>
+      _CourseDetailsCourseSectionsPageViewItemState();
 }
 
-class _CoursedetailssectionspageviewitemState
-    extends State<Coursedetailssectionspageviewitem> {
+class _CourseDetailsCourseSectionsPageViewItemState
+    extends State<CourseDetailsCourseSectionsPageViewItem> {
+  List<CourseSectionEntity> courseSections = [];
+
   @override
   void initState() {
     super.initState();
-    if (!widget.isFetchedCourseSections) {
+    //Edite this condition to fetch course sections one time
+    if (!widget.isFetchedCourseSections || courseSections.isEmpty) {
       BlocProvider.of<CourseSectionsCubit>(context)
           .getCourseSections(courseId: widget.courseEntity.id);
     }
   }
 
-  List<CourseSectionEntity> sections = [];
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<CourseSectionsCubit, CourseSectionsState,
-        List<CourseSectionEntity>>(
-      selector: (state) {
+    return BlocConsumer<CourseSectionsCubit, CourseSectionsState>(
+      listener: (context, state) {
         if (state is GetCourseSectionsSuccess) {
-          sections = state.sections;
-          return state.sections;
+          courseSections = state.sections;
         }
-        return [];
       },
       builder: (context, state) {
         return Skeletonizer(
@@ -69,9 +68,10 @@ class _CoursedetailssectionspageviewitemState
                       height: 10,
                     ),
                   ),
-                  if (sections.isNotEmpty)
+                  if (courseSections.isNotEmpty)
                     CustomCourseDetailsBodyCourseSections_SliverList(
-                        courseSections: sections, course: widget.courseEntity)
+                        courseSections: courseSections,
+                        course: widget.courseEntity)
                   else
                     const SliverToBoxAdapter(child: CustomEmptyWidget())
                 ],

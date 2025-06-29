@@ -25,7 +25,7 @@ class VideoItemCubit extends Cubit<VideoItemState> {
   void addVideoItem({
     required String courseId,
     required String sectionId,
-    required Coursevedioitementity video,
+    required CourseVideoItemEntity video,
   }) async {
     emit(AddVideoItemLoading());
     final result = await sectionItemsActionsRepo.addSectionItem(
@@ -38,7 +38,7 @@ class VideoItemCubit extends Cubit<VideoItemState> {
   }
 
   void pickVideoFile(
-      {required Coursevedioitementity coursevedioitementity}) async {
+      {required CourseVideoItemEntity coursevedioitementity}) async {
     final result = await assetspickerrepo.pickVideoFromGallery();
     result.fold((failure) {
       emit(PickVideoFileFailure(errMessage: failure.message));
@@ -49,7 +49,7 @@ class VideoItemCubit extends Cubit<VideoItemState> {
   }
 
   void uploadVideo({
-    required Coursevedioitementity coursevedioitementity,
+    required CourseVideoItemEntity coursevedioitementity,
   }) async {
     emit(UploadVideoLoading());
     var result = await videoItemRepo.uploadVideo(

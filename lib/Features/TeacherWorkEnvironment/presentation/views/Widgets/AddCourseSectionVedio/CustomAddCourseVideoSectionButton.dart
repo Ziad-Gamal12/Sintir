@@ -14,7 +14,7 @@ class CustomAddCourseVideoSectionButton extends StatelessWidget {
     super.key,
     required this.coursevedioitementity,
   });
-  final Coursevedioitementity coursevedioitementity;
+  final CourseVideoItemEntity coursevedioitementity;
 
   @override
   Widget build(BuildContext context) {

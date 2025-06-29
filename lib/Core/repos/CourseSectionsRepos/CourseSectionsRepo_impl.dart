@@ -78,9 +78,9 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
     required String sectionId,
   }) async {
     try {
-      if (sectionItem is Coursetestentity ||
-          sectionItem is Coursevedioitementity ||
-          sectionItem is Coursefileentity) {
+      if (sectionItem is CourseTestEntity ||
+          sectionItem is CourseVideoItemEntity ||
+          sectionItem is CourseFileEntity) {
         Map<String, dynamic> json =
             getSectionItemData(sectionItem: sectionItem);
 
@@ -130,15 +130,15 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
   }
 
   Map<String, dynamic> getSectionItemData({required dynamic sectionItem}) {
-    if (sectionItem is Coursetestentity) {
+    if (sectionItem is CourseTestEntity) {
       Map<String, dynamic> json =
           Coursetestmodel.fromEntity(sectionItem).toJson();
       return json;
-    } else if (sectionItem is Coursevedioitementity) {
+    } else if (sectionItem is CourseVideoItemEntity) {
       Map<String, dynamic> json =
           Coursevedioitemmodel.fromEntity(sectionItem).toJson();
       return json;
-    } else if (sectionItem is Coursefileentity) {
+    } else if (sectionItem is CourseFileEntity) {
       Map<String, dynamic> json =
           Coursefilemodel.fromEntity(sectionItem).toJson();
       return json;

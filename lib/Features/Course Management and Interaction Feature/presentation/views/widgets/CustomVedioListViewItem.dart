@@ -15,7 +15,7 @@ class CustomVedioListViewItem extends StatelessWidget {
       required this.course,
       required this.section,
       required this.isAvilabe});
-  final Coursevedioitementity item;
+  final CourseVideoItemEntity item;
   final CourseSectionEntity section;
   final bool isAvilabe;
   final CourseEntity course;

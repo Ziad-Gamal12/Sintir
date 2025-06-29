@@ -5,7 +5,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 class Addcoursesectionsqltestlistview extends StatelessWidget {
   const Addcoursesectionsqltestlistview(
       {super.key, required this.coursetestentity});
-  final Coursetestentity coursetestentity;
+  final CourseTestEntity coursetestentity;
   @override
   Widget build(BuildContext context) {
     return SliverList.builder(

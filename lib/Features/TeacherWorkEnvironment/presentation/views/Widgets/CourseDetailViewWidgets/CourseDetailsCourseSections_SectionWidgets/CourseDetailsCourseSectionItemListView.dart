@@ -5,10 +5,10 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomFileListViewItem.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomTestListViewItem.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomVedioListViewItem.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CustomAddNewCourseSectionItemButton.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomAddNewCourseSectionItemButton.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomCourseDetailsSectionListViewFileItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomCourseDetailsSectionListViewTestItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomCourseDetailsSectionListViewVideoItem.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CourseDetailsCourseSectionItemListView extends StatelessWidget {
@@ -53,25 +53,22 @@ class CourseDetailsCourseSectionItemListView extends StatelessWidget {
   }
 
   Widget getChild(dynamic item, BuildContext context) {
-    if (item is Coursevedioitementity) {
-      return CustomVedioListViewItem(
+    if (item is CourseVideoItemEntity) {
+      return CustomCourseDetailsSectionListViewVideoItem(
         course: course,
-        isAvilabe: true,
         item: item,
         section: section,
       );
-    } else if (item is Coursetestentity) {
-      return Customtestlistviewitem(
+    } else if (item is CourseTestEntity) {
+      return CustomCourseDetailsSectionListViewTestItem(
         course: course,
         item: item,
         section: section,
-        isAvilabe: true,
       );
     } else {
-      return Customfilelistviewitem(
+      return CustomCourseDetailsSectionListViewFileItem(
         section: section,
         item: item,
-        isAvilabe: true,
         course: course,
       );
     }

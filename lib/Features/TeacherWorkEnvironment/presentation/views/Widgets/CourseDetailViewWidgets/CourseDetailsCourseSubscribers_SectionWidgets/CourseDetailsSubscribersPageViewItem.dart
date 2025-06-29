@@ -8,21 +8,21 @@ import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubsc
 import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomSearchTextField.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CoursedetailsStudentsGridview.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersGridView.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class Coursedetailsstudentspageviewitem extends StatefulWidget {
-  const Coursedetailsstudentspageviewitem(
+class CourseDetailsSubscribersPageViewItem extends StatefulWidget {
+  const CourseDetailsSubscribersPageViewItem(
       {super.key, required this.isFetchedCourseSubscribers});
   final bool isFetchedCourseSubscribers;
 
   @override
-  State<Coursedetailsstudentspageviewitem> createState() =>
-      _CoursedetailsstudentspageviewitemState();
+  State<CourseDetailsSubscribersPageViewItem> createState() =>
+      _CourseDetailsSubscribersPageViewItemState();
 }
 
-class _CoursedetailsstudentspageviewitemState
-    extends State<Coursedetailsstudentspageviewitem> {
+class _CourseDetailsSubscribersPageViewItemState
+    extends State<CourseDetailsSubscribersPageViewItem> {
   TextEditingController controller = TextEditingController();
   List<Subscriberentity> searchedSubscribers = [];
   Timer? _debounce;
@@ -87,7 +87,7 @@ class _CoursedetailsstudentspageviewitemState
                 height: 20,
               ),
               if (state.isNotEmpty)
-                CoursedetailsStudentsGridview(
+                CourseDetailsSubscribersGridView(
                   subscribers:
                       searchedSubscribers.isEmpty ? state : searchedSubscribers,
                 )

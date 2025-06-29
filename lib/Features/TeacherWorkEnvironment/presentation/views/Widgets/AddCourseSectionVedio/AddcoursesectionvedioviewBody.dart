@@ -29,7 +29,7 @@ class Addcoursesectionvedioviewbody extends StatefulWidget {
 
 class _AddcoursesectionvedioviewbodyState
     extends State<Addcoursesectionvedioviewbody> {
-  Coursevedioitementity coursevedioitementity = Coursevedioitementity(
+  CourseVideoItemEntity coursevedioitementity = CourseVideoItemEntity(
       title: "",
       vedioUrl: "",
       durationTime: 0,

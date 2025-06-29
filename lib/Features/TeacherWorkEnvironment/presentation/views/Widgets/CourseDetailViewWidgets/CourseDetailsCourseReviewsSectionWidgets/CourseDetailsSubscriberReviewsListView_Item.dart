@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
 
-class Coursedetailsstudentreviewslistviewitem extends StatelessWidget {
-  const Coursedetailsstudentreviewslistviewitem(
+class CourseDetailsSubscriberReviewsListViewItem extends StatelessWidget {
+  const CourseDetailsSubscriberReviewsListViewItem(
       {super.key, required this.reviews});
   final CoursefeedbackItemEntity reviews;
   @override

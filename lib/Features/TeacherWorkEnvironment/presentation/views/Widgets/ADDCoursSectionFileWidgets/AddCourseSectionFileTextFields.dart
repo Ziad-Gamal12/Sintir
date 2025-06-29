@@ -7,7 +7,7 @@ class AddCourseSectionFileTextFields extends StatelessWidget {
     super.key,
     required this.coursefilEentity,
   });
-  final Coursefileentity coursefilEentity;
+  final CourseFileEntity coursefilEentity;
   @override
   Widget build(BuildContext context) {
     return Column(

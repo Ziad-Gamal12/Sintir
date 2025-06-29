@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CoursedetailsStudentsGridviewItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersGridviewItem.dart';
 
-class CoursedetailsStudentsGridview extends StatelessWidget {
-  const CoursedetailsStudentsGridview({super.key, required this.subscribers});
+class CourseDetailsSubscribersGridView extends StatelessWidget {
+  const CourseDetailsSubscribersGridView(
+      {super.key, required this.subscribers});
   final List<Subscriberentity> subscribers;
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class CoursedetailsStudentsGridview extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: subscribers.length,
-      itemBuilder: (context, index) => CoursedetailsStudentsGridviewItem(
+      itemBuilder: (context, index) => CourseDetailsSubscribersGridviewItem(
           subscriberentity: subscribers[index]),
     );
   }

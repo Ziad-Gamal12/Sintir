@@ -4,6 +4,6 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 
 abstract class FileItemRepo {
   Future<Either<Failure, String>> uploadFile({
-    required Coursefileentity coursefileEntity,
+    required CourseFileEntity coursefileEntity,
   });
 }

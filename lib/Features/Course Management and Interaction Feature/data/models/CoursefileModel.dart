@@ -22,7 +22,7 @@ class Coursefilemodel {
       type: json['type'],
     );
   }
-  factory Coursefilemodel.fromEntity(Coursefileentity coursefileentity) {
+  factory Coursefilemodel.fromEntity(CourseFileEntity coursefileentity) {
     return Coursefilemodel(
       id: coursefileentity.id,
       title: coursefileentity.title,
@@ -31,7 +31,7 @@ class Coursefilemodel {
       type: coursefileentity.type,
     );
   }
-  Coursefileentity toEnity() => Coursefileentity(
+  CourseFileEntity toEnity() => CourseFileEntity(
         id: id,
         title: title,
         fileUrl: filePath,

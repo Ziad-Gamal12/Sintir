@@ -46,7 +46,7 @@ class _DisplaycoursevedioveiwBodyState
 
   @override
   Widget build(BuildContext context) {
-    final Coursevedioitementity vedio =
+    final CourseVideoItemEntity vedio =
         context.read<Coursevideoviewnavigationsrequirmentsentity>().video;
     return BlocConsumer<VideoItemCubit, VideoItemState>(
       listener: (context, state) {

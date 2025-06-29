@@ -14,7 +14,7 @@ class AddCourseSectionSqlTestActionbuttons extends StatelessWidget {
     super.key,
     required this.courseTestEntity,
   });
-  final Coursetestentity courseTestEntity;
+  final CourseTestEntity courseTestEntity;
   @override
   Widget build(BuildContext context) {
     Optionnavigationrequirementsentity optionnavigationrequirementsentity =
@@ -58,7 +58,7 @@ class AddCourseSectionSqlTestActionbuttons extends StatelessWidget {
 
   void navigatetoReviewTestView(
       Optionnavigationrequirementsentity optionnavigationrequirementsentity,
-      Coursetestentity courseTestEntity,
+      CourseTestEntity courseTestEntity,
       BuildContext context) {
     if (Variables.AddCourseSectionSQLtestFormKey.currentState!.validate()) {
       Variables.AddCourseSectionSQLtestFormKey.currentState!.save();

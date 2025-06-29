@@ -2,7 +2,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 
 class Coursetestviewnavigationsrequirmentsentity {
-  final Coursetestentity test;
+  final CourseTestEntity test;
   final CourseEntity course;
   final String sectionId;
 

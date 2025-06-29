@@ -11,7 +11,7 @@ class CustomReviewSqlTestNameAndDuration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Coursetestentity coursetestentity =
+    CourseTestEntity coursetestentity =
         context.read<Navigatesqlreviewrequirmentsentity>().coursetestentity;
     return Row(
       children: [

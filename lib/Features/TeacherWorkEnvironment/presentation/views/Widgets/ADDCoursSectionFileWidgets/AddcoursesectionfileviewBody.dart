@@ -25,7 +25,7 @@ class AddcoursesectionfileviewBody extends StatefulWidget {
 
 class _AddcoursesectionfileviewBodyState
     extends State<AddcoursesectionfileviewBody> {
-  Coursefileentity coursefilEentity = Coursefileentity(
+  CourseFileEntity coursefilEentity = CourseFileEntity(
       title: "",
       description: "",
       fileUrl: "",

@@ -24,7 +24,7 @@ class Coursetestmodel {
         id: json["id"],
       );
 
-  factory Coursetestmodel.fromEntity(Coursetestentity coursetestentity,
+  factory Coursetestmodel.fromEntity(CourseTestEntity coursetestentity,
           {bool includeResults = true}) =>
       Coursetestmodel(
         id: coursetestentity.id,
@@ -34,8 +34,8 @@ class Coursetestmodel {
             .map((e) => Coursetestquestionmodel.fromEntity(e).toJson())
             .toList(),
       );
-  Coursetestentity toEntity() {
-    return Coursetestentity(
+  CourseTestEntity toEntity() {
+    return CourseTestEntity(
       id: id,
       durationTime: durationTime,
       title: title,
