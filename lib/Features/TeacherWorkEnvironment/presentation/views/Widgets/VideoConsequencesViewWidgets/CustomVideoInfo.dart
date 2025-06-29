@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 
-class CustomTestInfo extends StatelessWidget {
-  const CustomTestInfo({
+class CustomVideoInfo extends StatelessWidget {
+  const CustomVideoInfo({
     super.key,
-    required this.test,
+    required this.video,
   });
 
-  final CourseTestEntity test;
+  final CourseVideoItemEntity video;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class CustomTestInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
-          test.title,
+          video.title,
           textAlign: TextAlign.center,
           style: AppTextStyles.semiBold20.copyWith(color: Colors.black),
         ),
@@ -25,7 +25,7 @@ class CustomTestInfo extends StatelessWidget {
           height: 10,
         ),
         Text(
-          test.id,
+          video.id,
           textAlign: TextAlign.center,
           style: AppTextStyles.regular14.copyWith(color: Colors.grey),
         ),
