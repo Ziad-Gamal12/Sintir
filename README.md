@@ -84,15 +84,6 @@ lib/
 
 ---
 
-## 📥 Getting Started
-Clone the repo & run locally:  
-```bash
-git clone https://github.com/Ziad-Gamal12/Sintir.git
-cd Sinitr
-flutter pub get
-flutter run
-
-
 👨‍💻 Author
 Ziad Gamal
 
