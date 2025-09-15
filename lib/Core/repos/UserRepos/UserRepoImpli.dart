@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sintir/Core/entities/FireStorePaginateResponse.dart';
 import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/UserEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
@@ -23,22 +24,24 @@ class Userrepoimpli implements Userrepo {
   @override
   Future<Either<Failure, UserEntity>> getUserData() async {
     try {
-      Map<String, dynamic>? data = await datebaseservicel.getData(
+      FireStoreResponse data = await datebaseservicel.getData(
         requirements: FireStoreRequirmentsEntity(
           collection: getCollectionName(),
           docId: getDocId(),
         ),
       );
 
-      if (data == null) return left(ServerFailure(message: "لا يوجد مستخدم"));
+      if (data.docData == null)
+        return left(ServerFailure(message: "لا يوجد مستخدم"));
       if (shared_preferences_Services.stringGetter(
               key: BackendEndpoints.userKind) ==
           "teacher") {
-        teacherEntity? teacherentity = Teachermodel.fromMap(data).toEntity();
+        teacherEntity? teacherentity =
+            Teachermodel.fromMap(data.docData!).toEntity();
         return right(UserEntity(teacher: teacherentity));
       } else {
         Studententity? studentEntity =
-            StudentauthModel.fromJson(data: data).toEntity();
+            StudentauthModel.fromJson(data: data.docData!).toEntity();
         return right(UserEntity(student: studentEntity));
       }
     } catch (e) {

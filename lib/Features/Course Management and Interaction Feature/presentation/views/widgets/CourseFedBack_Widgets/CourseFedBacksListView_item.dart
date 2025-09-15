@@ -45,7 +45,7 @@ class CoursefedbackslistviewItem extends StatelessWidget {
                     width: 10,
                   ),
                   Text(
-                    item.likesCount,
+                    item.likesCount.toString(),
                     style:
                         AppTextStyles.semiBold12.copyWith(color: Colors.black),
                   )

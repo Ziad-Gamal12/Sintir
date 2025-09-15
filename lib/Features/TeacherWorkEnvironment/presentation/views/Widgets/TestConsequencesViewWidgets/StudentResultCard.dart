@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/StudentAvatarWithProgress.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/StudentAvatar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/StudentInfoTexts.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/StudentResultStatsRow.dart';
 
@@ -25,7 +25,7 @@ class StudentResultCard extends StatelessWidget {
       ),
       child: const Column(
         children: [
-          StudentAvatarWithProgress(),
+          StudentAvatar(),
           SizedBox(height: 20),
           StudentInfoTexts(),
           SizedBox(height: 10),

@@ -9,10 +9,11 @@ class CustomChatTextField extends StatefulWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator;
   List<TextInputFormatter>? inputFormatters;
-
+  final VoidCallback onPressed;
   CustomChatTextField(
       {super.key,
       this.inputFormatters,
+      required this.onPressed,
       required this.controller,
       required this.validator});
 
@@ -74,7 +75,9 @@ class _CustomChatTextFieldState extends State<CustomChatTextField> {
                     ? const Color(0xffAEAEB2)
                     : Colors.black,
               ),
-              onPressed: () {},
+              onPressed: () {
+                widget.onPressed();
+              },
             ),
             border: border,
             focusedBorder: border,

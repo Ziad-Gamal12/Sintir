@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:sintir/Core/entities/FireStorePaginateResponse.dart';
 import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
@@ -39,13 +40,16 @@ class CourseReportsRepoimpli implements CourseReportsRepo {
   Future<Either<Failure, List<Coursereportsitementity>>> getCourseReports(
       {required String courseId}) async {
     try {
-      List reports = await databaseservice.getData(
+      FireStoreResponse response = await databaseservice.getData(
           requirements: FireStoreRequirmentsEntity(
         collection: BackendEndpoints.coursesCollection,
         docId: courseId,
         subCollection: BackendEndpoints.reportsSubCollection,
       ));
-      List<Coursereportsitementity> courseReports = reports
+      if (response.listData == null)
+        return left(ServerFailure(message: "البيانات غير موجودة"));
+      if (response.listData!.isEmpty) return right([]);
+      List<Coursereportsitementity> courseReports = response.listData!
           .map((e) => CoursereportsitemModel.fromJson(e).toEntity())
           .toList();
       return right(courseReports);

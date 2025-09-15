@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
+import 'package:sintir/Core/entities/FireStorePaginateResponse.dart';
 import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
@@ -81,7 +82,7 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
       {required String courseId, required String sectionId}) async {
     try {
       List items = [];
-      List? data = await datebaseservice.getData(
+      FireStoreResponse data = await datebaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
           collection: BackendEndpoints.coursesCollection,
           docId: courseId,
@@ -90,13 +91,13 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
           subCollection2: BackendEndpoints.sectionItemsSubCollection,
         ),
       );
-      if (data == null) {
+      if (data.listData == null) {
         return left(ServerFailure(message: "البيانات غير موجودة"));
       }
-      if (data.isEmpty) {
+      if (data.listData!.isEmpty) {
         return right([]);
       }
-      for (var item in data) {
+      for (var item in data.listData!) {
         if (item["type"] == "Test") {
           items.add(Coursetestmodel.fromJson(item).toEntity());
         } else if (item["type"] == "Vedio") {

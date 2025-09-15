@@ -16,9 +16,8 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var course = context
-        .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
-        .course;
+    DisplayCourseBottomsheetNavigationRequirmentsEntity requirmentsEntity =
+        context.read<DisplayCourseBottomsheetNavigationRequirmentsEntity>();
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -33,7 +32,7 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
                     style:
                         AppTextStyles.regular10.copyWith(color: Colors.black)),
                 TextSpan(
-                    text: course.contentcreaterentity?.name,
+                    text: requirmentsEntity.course.contentcreaterentity?.name,
                     style: AppTextStyles.semiBold10
                         .copyWith(color: KSecondaryColor))
               ])),
@@ -41,7 +40,7 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
                 height: 10,
               ),
               Text(
-                "تاريخ اللنشر(${course.postedDate})",
+                "تاريخ اللنشر(${requirmentsEntity.course.postedDate})",
                 style: AppTextStyles.regular10
                     .copyWith(color: const Color(0xff818181)),
               ),
@@ -50,7 +49,7 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
               ),
               InfoRow(
                 icon: Icons.language,
-                label: course.language,
+                label: requirmentsEntity.course.language,
               ),
             ],
           ),
@@ -78,8 +77,8 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  GoRouter.of(context)
-                      .push(Coursefedbackview.routeName, extra: []);
+                  GoRouter.of(context).push(Coursefedbackview.routeName,
+                      extra: requirmentsEntity);
                 },
                 child: const InfoRow(
                   icon: FontAwesomeIcons.comment,

@@ -193,7 +193,8 @@ class App_router {
         path: Coursefedbackview.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return Coursefedbackview(
-            fedBacks: state.extra as List,
+            requirmentsEntity: state.extra
+                as DisplayCourseBottomsheetNavigationRequirmentsEntity,
           );
         },
       ),

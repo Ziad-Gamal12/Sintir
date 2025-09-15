@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/entities/FireStorePaginateResponse.dart';
 import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
@@ -75,7 +76,7 @@ class CoursesrepoImpl implements Coursesrepo {
   @override
   Future<Either<Failure, List<CourseEntity>>> getRecentCourses() async {
     try {
-      List? data = await databaseservice.getData(
+      FireStoreResponse data = await databaseservice.getData(
         query: {
           "state": BackendEndpoints.coursePublishedState,
           "orderBy": "postedDate"
@@ -84,9 +85,10 @@ class CoursesrepoImpl implements Coursesrepo {
           collection: BackendEndpoints.coursesCollection,
         ),
       );
-      if (data == null) return right([]);
-      List<CourseEntity> courses =
-          data.map((e) => Coursemodel.fromJson(e).toEntity()).toList();
+      if (data.listData == null) return right([]);
+      List<CourseEntity> courses = data.listData!
+          .map((e) => Coursemodel.fromJson(e).toEntity())
+          .toList();
       return right(courses);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
@@ -98,14 +100,17 @@ class CoursesrepoImpl implements Coursesrepo {
   @override
   Future<Either<Failure, List<CourseEntity>>> getPopularCourses() async {
     try {
-      List data = await databaseservice.getData(
+      FireStoreResponse data = await databaseservice.getData(
         query: {"state": BackendEndpoints.coursePublishedState, "limit": 10},
         requirements: FireStoreRequirmentsEntity(
           collection: BackendEndpoints.coursesCollection,
         ),
       );
-      List<CourseEntity> courses =
-          data.map((e) => Coursemodel.fromJson(e).toEntity()).toList();
+      if (data.listData == null) return right([]);
+
+      List<CourseEntity> courses = data.listData!
+          .map((e) => Coursemodel.fromJson(e).toEntity())
+          .toList();
       return right(courses);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
@@ -117,16 +122,19 @@ class CoursesrepoImpl implements Coursesrepo {
   @override
   Future<Either<Failure, List<CourseEntity>>> getMyCourses() async {
     try {
-      List data = await databaseservice.getData(
+      FireStoreResponse data = await databaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
             collection: getUsersCollectionName(),
             docId: getUID(),
             subCollection:
                 BackendEndpoints.getCoursesfromUserDocSubCollectioName),
       );
-      if (data.isEmpty) return right([]);
-      List<CourseEntity> courses =
-          data.map((e) => Coursemodel.fromJson(e).toEntity()).toList();
+      if (data.listData == null) return right([]);
+      if (data.listData!.isEmpty) return right([]);
+
+      List<CourseEntity> courses = data.listData!
+          .map((e) => Coursemodel.fromJson(e).toEntity())
+          .toList();
       return right(courses);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));

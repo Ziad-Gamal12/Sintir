@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
+import 'package:sintir/Core/entities/FireStorePaginateResponse.dart';
 import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/OrderDataEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/PaymentDataEntity.dart';
@@ -230,16 +231,21 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
   Future<Either<Failure, List<Subscriberentity>>> getSubscribers(
       {required String courseID}) async {
     try {
-      List subscribers = await datebaseservice.getData(
+      FireStoreResponse response = await datebaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
           collection: BackendEndpoints.coursesCollection,
           subCollection: BackendEndpoints.subscribersSubCollection,
           docId: courseID,
         ),
       );
-
+      if (response.listData == null) {
+        return left(ServerFailure(message: "البيانات غير موجودة"));
+      }
+      if (response.listData!.isEmpty) {
+        return right([]);
+      }
       return right(
-        subscribers
+        response.listData!
             .map((e) => Subscripersidsmodel.fromJson(e).toEntity())
             .toList(),
       );

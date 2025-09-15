@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sintir/Core/entities/FireStorePaginateResponse.dart';
 import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
@@ -45,7 +46,6 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
       DeleteUser(user);
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      log("Exception from teacherAuthRepos_Impli.createUserWithEmailAndPassword in catch With Firebase Exception: ${e.toString()}");
       DeleteUser(user);
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
@@ -123,7 +123,6 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
       await teacherSignout();
       return left(ServerFailure(message: e.toString()));
     } catch (e) {
-      log("Exception from teacherAuthRepos_Impli.signInWithEmailAndPassword in catch With Firebase Exception: ${e.toString()}");
       await teacherSignout();
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
@@ -135,14 +134,15 @@ class teacherAuthRepos_Impli implements TeacherAuthRepos {
 
   @override
   Future getTeacherData({required String docId}) async {
-    Map<String, dynamic>? data = await dataBaseService.getData(
+    FireStoreResponse? data = await dataBaseService.getData(
       requirements: FireStoreRequirmentsEntity(
         collection: BackendEndpoints.getTeacherDataCollectionName,
         docId: docId,
       ),
     );
-    if (data != null) {
-      teacherEntity teacherentity = Teachermodel.fromMap(data).toEntity();
+    if (data.docData != null) {
+      teacherEntity teacherentity =
+          Teachermodel.fromMap(data.docData!).toEntity();
       return teacherentity;
     } else {
       null;

@@ -2,12 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
 
 class Coursefeedbacksmodel {
-  final String userImage, name, fedBack, likesCount;
+  final String userImage, uid, name, fedBack;
+  final int likesCount;
   final DateTime datePosted;
 
   Coursefeedbacksmodel(
       {required this.userImage,
       required this.name,
+      required this.uid,
       required this.fedBack,
       required this.likesCount,
       required this.datePosted});
@@ -17,6 +19,7 @@ class Coursefeedbacksmodel {
     return Coursefeedbacksmodel(
       userImage: coursefedbackItemEntity.userImage,
       name: coursefedbackItemEntity.name,
+      uid: coursefedbackItemEntity.uid,
       fedBack: coursefedbackItemEntity.fedBack,
       likesCount: coursefedbackItemEntity.likesCount,
       datePosted: coursefedbackItemEntity.datePosted,
@@ -25,9 +28,10 @@ class Coursefeedbacksmodel {
   factory Coursefeedbacksmodel.fromJson(Map<String, dynamic> json) {
     return Coursefeedbacksmodel(
       userImage: json["userImage"],
+      uid: json["uid"],
       name: json["name"],
       fedBack: json["fedBack"],
-      likesCount: json["likesCount"],
+      likesCount: (json["likesCount"] as num).toInt(),
       datePosted: (json["datePosted"] as Timestamp).toDate(),
     );
   }
@@ -36,6 +40,7 @@ class Coursefeedbacksmodel {
         name: name,
         fedBack: fedBack,
         likesCount: likesCount,
+        uid: uid,
         datePosted: datePosted,
       );
   Map<String, dynamic> toJson() => {
@@ -43,6 +48,7 @@ class Coursefeedbacksmodel {
         "name": name,
         "fedBack": fedBack,
         "likesCount": likesCount,
+        "uid": uid,
         "datePosted": datePosted.toIso8601String(),
       };
 }
