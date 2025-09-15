@@ -2,9 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
-import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
-import 'package:sintir/Core/repos/UserRepos/userRepo.dart';
 import 'package:sintir/Core/services/BlocObserver.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
@@ -30,31 +27,27 @@ class Sintir extends StatelessWidget {
   const Sintir({super.key});
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => UserCubit(
-          userrepo: getIt<Userrepo>(), coursesrepo: getIt<Coursesrepo>()),
-      child: MaterialApp.router(
-        theme: ThemeData(
-            fontFamily: "Cairo",
-            primaryColor: KMainColor,
-            appBarTheme: const AppBarTheme(
-              backgroundColor: Colors.white,
-            ),
-            scaffoldBackgroundColor: Colors.white),
-        localizationsDelegates: const [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('en'),
-          Locale('ar'),
-        ],
-        locale: const Locale('ar'),
-        debugShowCheckedModeBanner: false,
-        routerConfig: App_router.router,
-      ),
+    return MaterialApp.router(
+      theme: ThemeData(
+          fontFamily: "Cairo",
+          primaryColor: KMainColor,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.white,
+          ),
+          scaffoldBackgroundColor: Colors.white),
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ar'),
+      ],
+      locale: const Locale('ar'),
+      debugShowCheckedModeBanner: false,
+      routerConfig: App_router.router,
     );
   }
 }

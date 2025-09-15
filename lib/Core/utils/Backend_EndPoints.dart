@@ -1,6 +1,15 @@
 // ignore_for_file: file_names
 
 class BackendEndpoints {
+  static String usersCollectionName = "Users";
+  static String storeUserLocaly = "UserData";
+  static String pendingStatus = "Pending";
+  static String activeStatus = "Active";
+  static String inActiveStatus = "InActive";
+  static String rejectedStatus = "Rejected";
+  static String blockedStatus = "Blocked";
+  static String studentRole = "Student";
+  static String teacherRole = "Teacher";
   static String addTeacherDataCollectionName = "Teachers";
   static String getTeacherDataCollectionName = "Teachers";
   static String addStudentDataCollectionName = "Students";

@@ -1,16 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomIDWidget.dart';
 import 'package:sintir/Core/widgets/CustomSettingsIcon.dart';
 import 'package:sintir/Core/widgets/CustomSupportWidget.dart';
-import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
 import 'package:sintir/Features/TeacherProfile/presentation/views/widgets/CustomTeacherLocation%20copy.dart';
 import 'package:sintir/Features/TeacherProfile/presentation/views/widgets/CustomTeacherLocation.dart';
 
 class TeacherprofileInfo extends StatelessWidget {
-  const TeacherprofileInfo({super.key, required this.teacherentity});
-  final teacherEntity teacherentity;
+  const TeacherprofileInfo({
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -22,8 +23,7 @@ class TeacherprofileInfo extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 1,
               child: CachedNetworkImage(
-                  imageUrl: teacherentity.profilePicurl ?? "",
-                  fit: BoxFit.cover),
+                  imageUrl: getUserData().profilePicurl, fit: BoxFit.cover),
             ),
           ),
         ),
@@ -36,7 +36,7 @@ class TeacherprofileInfo extends StatelessWidget {
           children: [
             Text.rich(TextSpan(children: [
               TextSpan(
-                  text: "${teacherentity.firstName} ${teacherentity.lastName}",
+                  text: "${getUserData().firstName} ${getUserData().lastName}",
                   style:
                       AppTextStyles.semiBold14.copyWith(color: Colors.black)),
               const TextSpan(
@@ -51,19 +51,19 @@ class TeacherprofileInfo extends StatelessWidget {
               height: 2,
             ),
             Customteacherlocation(
-              location: teacherentity.address,
+              location: getUserData().address,
             ),
             const SizedBox(
               height: 2,
             ),
             CustomteacherSubject(
-              subject: teacherentity.subject,
+              subject: getUserData().teacherExtraDataEntity?.subject ?? "",
             ),
             const SizedBox(
               height: 2,
             ),
             Customidwidget(
-              id: teacherentity.uid ?? "",
+              id: getUserData().uid,
             ),
           ],
         ),

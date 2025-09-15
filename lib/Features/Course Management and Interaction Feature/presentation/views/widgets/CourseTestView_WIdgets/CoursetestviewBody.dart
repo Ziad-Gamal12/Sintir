@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
-import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestViewNavigationsRequirmentsEntity.dart';
+import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/ReviewTestResultView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CourseTestControlPanel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CourseTestQuestionsNavigation.dart';
@@ -67,9 +68,8 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
               btnOkOnPress: () {
                 GoRouter.of(context).pushReplacement(
                     Reviewtestresultview.routeName,
-                    extra: context
-                        .read<TestItemCubit>()
-                        .getTestResults(context: context, test: test));
+                    extra: context.read<TestItemCubit>().getTestResults(
+                        context: context, test: test, user: getUserData()));
               }).show();
         } else if (state is AddTestResultFailure) {
           errordialog(context, state.errMessage).show();
@@ -162,7 +162,11 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
                 .read<Coursetestviewnavigationsrequirmentsentity>()
                 .test
                 .id,
-            joinedByEntity: context.read<UserCubit>().getJoinedByEntity(),
+            joinedByEntity: JoinedByEntity(
+                uid: getUserData().uid,
+                name: getUserData().fullName,
+                imageUrl: getUserData().profilePicurl,
+                joinedDate: DateTime.now()),
           );
     }
     test.questions[0].isOpened = true;

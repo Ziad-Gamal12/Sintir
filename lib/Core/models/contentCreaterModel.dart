@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:sintir/Core/entities/CourseEntities/ContentCreaterEntity.dart';
-import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
+import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 
 class Contentcreatermodel {
   final String name, profileImageUrl, id, title;
@@ -13,12 +13,12 @@ class Contentcreatermodel {
       required this.title});
 
   factory Contentcreatermodel.fromTeacherEntity(
-      {required teacherEntity teacherEntity}) {
+      {required UserEntity userEntity}) {
     return Contentcreatermodel(
-        name: "${teacherEntity.firstName} ${teacherEntity.lastName}",
-        profileImageUrl: teacherEntity.profilePicurl!,
-        id: teacherEntity.uid!,
-        title: " مدرس/ه${teacherEntity.subject}");
+        name: "${userEntity.firstName} ${userEntity.lastName}",
+        profileImageUrl: userEntity.profilePicurl,
+        id: userEntity.uid,
+        title: " مدرس/ه${userEntity.teacherExtraDataEntity?.subject}");
   }
   factory Contentcreatermodel.fromEntity(
       {required Contentcreaterentity entity}) {

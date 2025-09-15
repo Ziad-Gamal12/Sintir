@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
@@ -17,12 +16,6 @@ class Addcourseview extends StatefulWidget {
 }
 
 class _AddcourseviewState extends State<Addcourseview> {
-  @override
-  void initState() {
-    context.read<UserCubit>().getUserData();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

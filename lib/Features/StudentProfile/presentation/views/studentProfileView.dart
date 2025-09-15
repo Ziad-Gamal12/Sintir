@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/StudentProfile/presentation/views/widgets/StudentprofileviewBody.dart';
 
@@ -15,7 +13,7 @@ class Studentprofileview extends StatefulWidget {
 class _StudentprofileviewState extends State<Studentprofileview> {
   @override
   void initState() {
-    context.read<UserCubit>().getUsersCourses();
+    // context.read<UserCubit>().getUsersCourses();
     super.initState();
   }
 

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
-import 'package:sintir/Features/StudenetAuth/presentation/views/Student_Sign_In_View.dart';
+import 'package:sintir/Features/Auth/StudentPresentation/views/Student_Sign_In_View.dart';
 import 'package:sintir/constant.dart';
 
 class StudentOnboardingBody_CustomButton extends StatelessWidget {

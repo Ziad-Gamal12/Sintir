@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
+import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
@@ -25,7 +26,9 @@ class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
   @override
   void initState() {
     if (mounted) {
-      context.read<CourseSubscribtionsCubit>().checkIfSubscribed();
+      context
+          .read<CourseSubscribtionsCubit>()
+          .checkIfSubscribed(uid: getUserData().uid);
     }
     super.initState();
   }

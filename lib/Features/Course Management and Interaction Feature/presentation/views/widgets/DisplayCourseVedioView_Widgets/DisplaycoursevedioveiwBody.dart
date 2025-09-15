@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/Managers/Cubits/video_item_cubit/video_item_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVideoviewnavigationsrequirmentsentity.dart';
+import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/Video%20Previewer%20Widgets/CustomDisplayingVedioWidget.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/DisplayCourseVedioView_Widgets/CustomSendNoteText.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/addingJoinedByLoadingWidget.dart';
 import 'package:sintir/constant.dart';
@@ -38,7 +39,11 @@ class _DisplaycoursevedioveiwBodyState
                 .read<Coursevideoviewnavigationsrequirmentsentity>()
                 .video
                 .id,
-            joinedByEntity: context.read<UserCubit>().getJoinedByEntity(),
+            joinedByEntity: JoinedByEntity(
+                uid: getUserData().uid,
+                name: getUserData().fullName,
+                imageUrl: getUserData().profilePicurl,
+                joinedDate: DateTime.now()),
           );
     }
     super.initState();

@@ -4,7 +4,6 @@ import 'package:sintir/Core/Managers/Cubits/CourseFeedBacksCubit/course_feed_bac
 import 'package:sintir/Core/Managers/Cubits/CourseReportsCubit/course_reports_cubit.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
-import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/CourseFeedBacksRepo/CourseFeedBacksRepo.dart';
@@ -43,8 +42,6 @@ class CourseDetailView extends StatelessWidget {
           BlocProvider(
               create: (context) => CourseSubscribtionsCubit(
                   course: courseEntity,
-                  student: context.read<UserCubit>().studententity,
-                  teacher: context.read<UserCubit>().teacherentity,
                   subscribtionRepo: getIt<CourseSubscibtionsRepo>()))
         ],
         child: Scaffold(

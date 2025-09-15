@@ -16,16 +16,14 @@ import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo_impl.dart';
 import 'package:sintir/Core/repos/File-Item-Repo/FileItemRepo.dart';
 import 'package:sintir/Core/repos/File-Item-Repo/FileItemRepoImpli.dart';
+import 'package:sintir/Core/repos/ResetPaswordRepo/ResetPaswordRepo.dart';
+import 'package:sintir/Core/repos/ResetPaswordRepo/ResetPaswordRepoImp.dart';
 import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
 import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepoImpli.dart';
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo-Impli.dart';
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
-import 'package:sintir/Core/repos/UserRepos/UserRepoImpli.dart';
-import 'package:sintir/Core/repos/UserRepos/userRepo.dart';
 import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepo.dart';
 import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepoImpli.dart';
-import 'package:sintir/Core/repos/authRepos/authRepo_impli.dart';
-import 'package:sintir/Core/repos/authRepos/authrepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/FirebaseStorageService.dart';
@@ -38,10 +36,8 @@ import 'package:sintir/Core/services/elevenlabsApi.dart';
 import 'package:sintir/Core/services/sqfliteServices.dart';
 import 'package:sintir/Features/Ai_Teacher/data/repos_impli/AiTeacherRepo_Impli.dart';
 import 'package:sintir/Features/Ai_Teacher/domain/Repos/AITeacherRepo.dart';
-import 'package:sintir/Features/StudenetAuth/data/repoos/studentAuth_repo_impli.dart';
-import 'package:sintir/Features/StudenetAuth/domain/repos/studentAuth_repo.dart';
-import 'package:sintir/Features/TeacherAuth/Data/Repos_Impli/teacherAuthRepos_Impli.dart';
-import 'package:sintir/Features/TeacherAuth/Domain/Repos/repos.dart';
+import 'package:sintir/Features/Auth/Data/repos/AuthRepoImpl.dart';
+import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 
 final getIt = GetIt.instance;
 
@@ -57,17 +53,11 @@ void setup_Getit() {
       databaseservice: getIt<Databaseservice>(),
       storageService: getIt<StorageService>()));
   getIt.registerSingleton<Pickerassetsservice>(Pickerassetsservice());
-  getIt.registerSingleton<StudentauthRepo>(StudentauthRepoImpli(
-      firebaseAuth: getIt<firebaseAuthService>(),
-      datebaseservice: getIt<Databaseservice>()));
-  getIt.registerSingleton<Authrepo>(
-      AuthrepoImpli(authService: firebaseAuthService()));
-  getIt.registerSingleton<TeacherAuthRepos>(teacherAuthRepos_Impli(
-      dataBaseService: getIt<Databaseservice>(),
-      authService: getIt<firebaseAuthService>(),
-      storageService: getIt<StorageService>()));
-  getIt.registerSingleton<Userrepo>(
-      Userrepoimpli(datebaseservicel: getIt<Databaseservice>()));
+  getIt.registerSingleton<ResetPaswordRepo>(
+      ResetPaswordRepoImp(authService: firebaseAuthService()));
+  getIt.registerSingleton<AuthRepo>(AuthRepoImpl(
+      databaseservice: getIt<Databaseservice>(),
+      authService: getIt<firebaseAuthService>()));
   getIt.registerSingleton<CourseSectionsRepo>(CourseSectionsRepoImpl(
     datebaseservice: getIt<Databaseservice>(),
   ));

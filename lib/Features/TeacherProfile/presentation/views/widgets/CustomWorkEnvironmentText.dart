@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
 import 'package:sintir/constant.dart';
 
@@ -40,28 +38,11 @@ class CustomWorkEnvironmentText extends StatelessWidget {
     );
   }
 
-/*************  ✨ Windsurf Command ⭐  *************/
-  /// This function takes a list of courses and a buildContext as parameters,
-  /// and returns a new list containing only the courses that the teacher
-  /// who is currently logged in has created. The teacher is retrieved from
-  /// the context using the UserCubit. The function iterates over the list
-  /// of courses and checks if the course's content creator id matches the
-  /// teacher's uid. If it does, the course is added to the new list. The
-  /// function then returns the new list.
-  ///
-  /// [context] is the buildContext of the widget that calls this function.
-  ///
-  /// [myCourses] is the list of courses to be filtered.
-  ///
-  /// The function returns a list of CourseEntity objects that the teacher
-  /// has created.
-  /// *****  e6bba588-397b-4dab-a8d0-232e32cbb1fb  ******
-
   List<CourseEntity> getMyCreatedCourses({required BuildContext context}) {
     List<CourseEntity> myCreatedCourses = [];
-    teacherEntity teacher = context.read<UserCubit>().teacherentity!;
+
     for (var course in myCourses) {
-      if (course.contentcreaterentity!.id == teacher.uid) {
+      if (course.contentcreaterentity!.id == getUserData().uid) {
         myCreatedCourses.add(course);
       }
     }

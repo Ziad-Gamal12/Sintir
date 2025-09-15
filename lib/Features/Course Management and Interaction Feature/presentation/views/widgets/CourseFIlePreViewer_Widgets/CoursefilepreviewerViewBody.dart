@@ -5,11 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:pdfx/pdfx.dart';
 import 'package:sintir/Core/Managers/Cubits/file_item_cubit/file_item_cubit.dart';
-import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
+import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileviewnavigationsrequirmentsentity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseFIlePreViewer_Widgets/CourseFileOverView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/addingJoinedByLoadingWidget.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -75,7 +76,12 @@ class _CoursefilepreviewerviewbodyState
                 .read<Coursefileviewnavigationsrequirmentsentity>()
                 .file
                 .id,
-            joinedByEntity: context.read<UserCubit>().getJoinedByEntity(),
+            joinedByEntity: JoinedByEntity(
+              name: getUserData().fullName,
+              uid: getUserData().uid,
+              joinedDate: DateTime.now(),
+              imageUrl: getUserData().profilePicurl,
+            ),
           );
     }
     super.initState();

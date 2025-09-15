@@ -8,87 +8,72 @@ import 'package:sintir/Core/entities/PaymentEntities/BillingDataEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/OrderDataEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/PaymentDataEntity.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
-import 'package:sintir/Features/StudenetAuth/domain/entities/studentEntity.dart';
-import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
+import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 
 part 'CourseSubscribtionsState.dart';
 
 class CourseSubscribtionsCubit extends Cubit<CourseSubscribtionsState> {
-  CourseSubscribtionsCubit(
-      {required this.subscribtionRepo,
-      required this.course,
-      required this.student,
-      required this.teacher})
-      : super(SubscribeToCoursesInitial());
+  CourseSubscribtionsCubit({
+    required this.subscribtionRepo,
+    required this.course,
+  }) : super(SubscribeToCoursesInitial());
   final CourseSubscibtionsRepo subscribtionRepo;
   final CourseEntity course;
-  teacherEntity? teacher;
-  Studententity? student;
-  Orderdataentity getOrderEntity() {
+
+  Orderdataentity getOrderEntity({required String uid}) {
     Orderdataentity orderEntity = Orderdataentity(
       currency: "EGP",
       deliveryNeeded: false,
       priceCents: course.price * 100,
       items: [course],
-      merchantOrderId: getmerchantOrderId(),
+      merchantOrderId: getmerchantOrderId(
+        uid: uid,
+      ),
     );
     return orderEntity;
   }
 
-  Paymentdataentity getPaymentEntity() {
+  Paymentdataentity getPaymentEntity({required UserEntity user}) {
     Paymentdataentity paymententity = Paymentdataentity(
       currency: "EGP",
       priceCents: course.price * 100,
       expiration: 3600,
       integrationId: 5034306,
-      billingdataentity: getBillingEntity(),
+      billingdataentity: getBillingEntity(
+        user: user,
+      ),
     );
     return paymententity;
   }
 
-  Billingdataentity getBillingEntity() {
-    if (student != null) {
-      Billingdataentity billingdataentity = Billingdataentity(
-          apartment: "-",
-          building: "-",
-          city: "-",
-          country: "-",
-          email: student!.email,
-          floor: "-",
-          firstName: student!.firstName,
-          lastName: student!.lastName,
-          phoneNumber: student!.phoneNumber,
-          street: "-");
-      return billingdataentity;
-    } else {
-      Billingdataentity billingdataentity = Billingdataentity(
+  Billingdataentity getBillingEntity({required UserEntity user}) {
+    Billingdataentity billingdataentity = Billingdataentity(
         apartment: "-",
         building: "-",
         city: "-",
         country: "-",
-        email: teacher!.email,
+        email: user.email,
         floor: "-",
-        firstName: teacher!.firstName,
-        lastName: teacher!.lastName,
-        phoneNumber: teacher!.phoneNumber,
-        street: "-",
-      );
-      return billingdataentity;
-    }
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phoneNumber: user.phoneNumber,
+        street: "-");
+    return billingdataentity;
   }
 
-  String getmerchantOrderId() {
-    if (teacher != null) {
-      return "${teacher!.uid}-${DateTime.now().millisecondsSinceEpoch}";
-    } else {
-      return "${student!.uid}-${DateTime.now().millisecondsSinceEpoch}";
-    }
+  String getmerchantOrderId({required String uid}) {
+    return "$uid-${DateTime.now().millisecondsSinceEpoch}";
   }
 
-  void paywithFawry() async {
+  void paywithFawry({required UserEntity user}) async {
     emit(PaymentLoading());
     var result = await subscribtionRepo.payWithFawry(
-        orderEntity: getOrderEntity(), paymententity: getPaymentEntity());
+        orderEntity: getOrderEntity(
+          uid: user.uid,
+        ),
+        paymententity: getPaymentEntity(
+          user: user,
+        ));
     result.fold((failure) {
       emit(PaymentError(message: failure.message));
     }, (token) {
@@ -96,10 +81,10 @@ class CourseSubscribtionsCubit extends Cubit<CourseSubscribtionsState> {
     });
   }
 
-  void subscribeToCourse() async {
+  void subscribeToCourse({required UserEntity userEntity}) async {
     emit(SubscibeingToCourseLoading());
     var result = await subscribtionRepo.subscribeToCourse(
-        course: course, student: student, teacher: teacher);
+        course: course, userEntity: userEntity);
     result.fold((failure) {
       emit(SubscibeingToCourseFailure(errMessge: failure.message));
     }, (message) {
@@ -107,20 +92,10 @@ class CourseSubscribtionsCubit extends Cubit<CourseSubscribtionsState> {
     });
   }
 
-  String getUserUId() {
-    if (student != null) {
-      return student!.uid!;
-    } else if (teacher != null) {
-      return teacher!.uid!;
-    } else {
-      return "";
-    }
-  }
-
-  void checkIfSubscribed() async {
+  void checkIfSubscribed({required String uid}) async {
     emit(CheckIfSubscribedLoading());
     var result = await subscribtionRepo.checkIfSubscribed(
-        userID: getUserUId(), courseID: course.id);
+        userID: uid, courseID: course.id);
     result.fold((failure) {
       emit(CheckIfSubscribedFailure(errMessage: failure.message));
     }, (isSubscribed) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
@@ -31,26 +31,21 @@ class CustomAddCourseActionButton extends StatelessWidget {
             if (formKey.currentState!.validate()) {
               if (context.read<AddCourseCubitCubit>().coursePosterImage !=
                   null) {
-                if (context.read<UserCubit>().teacherentity != null) {
-                  CourseEntity course = CourseEntity(
-                    id: Variables.AddCourseCourseCodeController.text,
-                    state: BackendEndpoints.coursePendingState,
-                    title: Variables.AddCourseCourseNameController.text,
-                    description:
-                        Variables.AddCourseCourseDescriptionController.text,
-                    price: int.parse(
-                        Variables.AddCourseCoursePriceController.text),
-                    language: Variables.AddCourseCourseLanguageController.text,
-                    postedDate:
-                        "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}",
-                  );
-                  context.read<AddCourseCubitCubit>().addCourse(
-                      courseEntity: course,
-                      teacherentity: context.read<UserCubit>().teacherentity);
-                } else {
-                  errordialog(context, "حدث مشكلة فى جلب بياناتك!حاول مره أخرى")
-                      .show();
-                }
+                CourseEntity course = CourseEntity(
+                  id: Variables.AddCourseCourseCodeController.text,
+                  state: BackendEndpoints.coursePendingState,
+                  title: Variables.AddCourseCourseNameController.text,
+                  description:
+                      Variables.AddCourseCourseDescriptionController.text,
+                  price:
+                      int.parse(Variables.AddCourseCoursePriceController.text),
+                  language: Variables.AddCourseCourseLanguageController.text,
+                  postedDate:
+                      "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}",
+                );
+                context
+                    .read<AddCourseCubitCubit>()
+                    .addCourse(courseEntity: course, userEntity: getUserData());
               } else {
                 errordialog(context, "يرجى اضافة صورة للدورة").show();
               }

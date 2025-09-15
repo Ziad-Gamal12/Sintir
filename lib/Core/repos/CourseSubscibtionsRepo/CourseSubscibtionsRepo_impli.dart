@@ -18,10 +18,8 @@ import 'package:sintir/Core/models/subscripersIDSModel.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/PayMobService.dart';
-import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
-import 'package:sintir/Features/StudenetAuth/domain/entities/studentEntity.dart';
-import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
+import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 
 class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
   final PayMobService payMobService;
@@ -77,30 +75,32 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
 
   @override
   Future<Either<Failure, void>> subscribeToCourse(
-      {required CourseEntity course,
-      teacherEntity? teacher,
-      Studententity? student}) async {
+      {required CourseEntity course, required UserEntity userEntity}) async {
     try {
-      if ((teacher != null && student == null) ||
-          (teacher == null && student != null)) {
-        Subscriberentity subscriber = getSubscriberEntity(teacher, student);
-        await Future.wait([
-          addCourseToMyCourseList(teacher, course, student),
-          addNewSubscriber(
-              subscriber,
-              getFireStoreRequirmentsEntity(
-                courseId: course.id,
-              )),
-        ]);
-        return right(null);
-      } else {
-        return left(ServerFailure(message: "حدث خطاء في انشاء الطلبية"));
-      }
+      Subscriberentity subscriber = getSubscriberEntity(userEntity: userEntity);
+      await Future.wait([
+        addCourseToMyCourseList(
+          course: course,
+          userEntity: userEntity,
+        ),
+        addNewSubscriber(
+            subscriber,
+            getFireStoreRequirmentsEntity(
+              courseId: course.id,
+            )),
+      ]);
+      return right(null);
     } on CustomException catch (e) {
-      await deleteCourseFromMyCourseList(teacher, course, student);
+      await deleteCourseFromMyCourseList(
+        course: course,
+        userEntity: userEntity,
+      );
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      await deleteCourseFromMyCourseList(teacher, course, student);
+      await deleteCourseFromMyCourseList(
+        course: course,
+        userEntity: userEntity,
+      );
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
@@ -116,36 +116,16 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
     );
   }
 
-  Subscriberentity getSubscriberEntity(
-      teacherEntity? teacher, Studententity? student) {
-    if (teacher != null) {
-      return Subscriberentity(
-          id: getUID(),
-          name: teacher.firstName,
-          gender: teacher.gender,
-          phone: teacher.phoneNumber,
-          educationLevel: "",
-          imageUrl: teacher.profilePicurl!,
-          address: teacher.address);
-    } else if (student != null) {
-      return Subscriberentity(
-          id: getUID(),
-          name: student.firstName,
-          gender: student.gender,
-          phone: student.phoneNumber,
-          educationLevel: student.educationLevel,
-          imageUrl: student.imageUrl,
-          address: "");
-    } else {
-      return Subscriberentity(
-          id: "",
-          name: "",
-          gender: "",
-          phone: "",
-          educationLevel: "",
-          imageUrl: "",
-          address: "");
-    }
+  Subscriberentity getSubscriberEntity({required UserEntity userEntity}) {
+    return Subscriberentity(
+        id: getUID(),
+        name: userEntity.firstName,
+        gender: userEntity.gender,
+        phone: userEntity.phoneNumber,
+        educationLevel:
+            userEntity.studentExtraDataEntity?.educationLevel ?? " ",
+        imageUrl: userEntity.profilePicurl,
+        address: userEntity.address);
   }
 
   FireStoreRequirmentsEntity getFireStoreRequirmentsEntity({
@@ -158,43 +138,35 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
         subCollection: BackendEndpoints.subscribersSubCollection);
   }
 
-  Future<void> addCourseToMyCourseList(teacherEntity? teacher,
-      CourseEntity course, Studententity? student) async {
+  Future<void> addCourseToMyCourseList(
+      {required CourseEntity course, required UserEntity userEntity}) async {
     await datebaseservice.setData(
       requirements: FireStoreRequirmentsEntity(
-          collection: teacher == null
-              ? BackendEndpoints.studentsCollection
-              : BackendEndpoints.teachersCollection,
-          docId: teacher == null ? student!.uid : teacher.uid,
+          collection: BackendEndpoints.usersCollectionName,
+          docId: userEntity.uid,
           subDocId: course.id,
           subCollection: BackendEndpoints.subscribetoCourseCollection),
       data: Coursemodel.fromEntity(courseEntity: course).toJson(),
     );
   }
 
-  Future<void> updateSubscribersIdsList(CourseEntity course) async {}
-
-  Future<bool> checkIsCourseAddedToMyCourseList(teacherEntity? teacher,
-      CourseEntity course, Studententity? student) async {
+  Future<bool> checkIsCourseAddedToMyCourseList(
+      {required CourseEntity course, required UserEntity userEntity}) async {
     return await datebaseservice.isDataExists(
-        key: teacher == null
-            ? BackendEndpoints.studentsCollection
-            : BackendEndpoints.teachersCollection,
-        docId: teacher == null ? student!.uid ?? "" : teacher.uid ?? "",
+        key: BackendEndpoints.usersCollectionName,
+        docId: userEntity.uid,
         subDocId: course.id,
         subCollectionKey: BackendEndpoints.subscribetoCourseCollection);
   }
 
-  Future<void> deleteCourseFromMyCourseList(teacherEntity? teacher,
-      CourseEntity course, Studententity? student) async {
-    bool isAdded =
-        await checkIsCourseAddedToMyCourseList(teacher, course, student);
+  Future<void> deleteCourseFromMyCourseList(
+      {required CourseEntity course, required UserEntity userEntity}) async {
+    bool isAdded = await checkIsCourseAddedToMyCourseList(
+        course: course, userEntity: userEntity);
     if (isAdded) {
       await datebaseservice.deleteDoc(
-          collectionKey: teacher == null
-              ? BackendEndpoints.studentsCollection
-              : BackendEndpoints.teachersCollection,
-          docId: teacher == null ? student!.uid ?? "" : teacher.uid ?? "",
+          collectionKey: BackendEndpoints.usersCollectionName,
+          docId: userEntity.uid,
           subDocId: course.id,
           subCollectionKey: BackendEndpoints.subscribetoCourseCollection);
     }
@@ -205,7 +177,7 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
       {required String userID, required String courseID}) async {
     try {
       bool isSubscribed = await datebaseservice.isDataExists(
-        key: await getCheckIfSubscribedCollectionName(),
+        key: BackendEndpoints.usersCollectionName,
         subCollectionKey: BackendEndpoints.checkifSubscribedSubCollection,
         docId: userID,
         subDocId: courseID,
@@ -213,17 +185,6 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
       return right(isSubscribed);
     } catch (e) {
       return left(ServerFailure(message: "حدث خطأ ما"));
-    }
-  }
-
-  Future<String> getCheckIfSubscribedCollectionName() async {
-    String role = await shared_preferences_Services.stringGetter(
-        key: BackendEndpoints.userKind);
-
-    if (role == "teacher") {
-      return BackendEndpoints.getTeacherDataCollectionName;
-    } else {
-      return BackendEndpoints.getStudentDataCollectionName;
     }
   }
 

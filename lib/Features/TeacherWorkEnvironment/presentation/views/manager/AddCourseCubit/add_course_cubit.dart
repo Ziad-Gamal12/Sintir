@@ -8,7 +8,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/models/contentCreaterModel.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
-import 'package:sintir/Features/TeacherAuth/Domain/Entities/teacherEntity.dart';
+import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 
 part 'add_course_state.dart';
 
@@ -22,12 +22,12 @@ class AddCourseCubitCubit extends Cubit<AddCourseCubitState> {
   File? coursePosterImage;
   addCourse(
       {required CourseEntity courseEntity,
-      teacherEntity? teacherentity}) async {
+      required UserEntity userEntity}) async {
     emit(AddCourseCubitLoading());
     try {
-      courseEntity.contentcreaterentity = Contentcreatermodel.fromTeacherEntity(
-              teacherEntity: teacherentity ?? teacherentity!)
-          .toEntity();
+      courseEntity.contentcreaterentity =
+          Contentcreatermodel.fromTeacherEntity(userEntity: userEntity)
+              .toEntity();
       final posterResult =
           await coursesrepo.uplaodFile(file: coursePosterImage!);
       posterResult.fold((failure) {

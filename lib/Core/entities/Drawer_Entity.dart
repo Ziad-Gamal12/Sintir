@@ -2,10 +2,8 @@
 
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/Ai_Teacher/presentation/views/AiTeacherView.dart';
-import 'package:sintir/Features/Books_Library/Presentation/Views/EducationLevelsBooksSectionsView.dart';
 import 'package:sintir/Features/Favorites/presentation/views/FavoritesView.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
-import 'package:sintir/Features/tasks/presentation/views/TasksView.dart';
 
 class DrawerEntity {
   final String title;
@@ -25,20 +23,10 @@ class DrawerEntity {
           inActiveIcon: Assets.assetsImagesInActiveHomeIcon,
           routeName: Homeview.routeName),
       DrawerEntity(
-          title: "المهام",
-          activeIcon: Assets.assetsImagesActiveTasksIcon,
-          inActiveIcon: Assets.assetsImagesInActiveTasksIcon,
-          routeName: TasksView.routeName),
-      DrawerEntity(
           title: "المساعد الألي",
           activeIcon: Assets.assetsImagesInActiveAiChatIcon,
           inActiveIcon: Assets.assetsImagesInActiveAiChatIcon,
           routeName: AiTeacherview.routeName),
-      DrawerEntity(
-          title: "المكتبه",
-          activeIcon: Assets.assetsImagesActiveLibraryIcon,
-          inActiveIcon: Assets.assetsImagesInActiveLibraryIcon,
-          routeName: EducationLevelsBooksSectionsView.routeName),
       DrawerEntity(
           title: "المفضله",
           activeIcon: Assets.assetsImagesActiveFavouriteIcon,

@@ -5,14 +5,14 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
-import 'package:sintir/Core/repos/authRepos/authrepo.dart';
+import 'package:sintir/Core/repos/ResetPaswordRepo/ResetPaswordRepo.dart';
 
 part 'Custom_reset_password_state.dart';
 
 class CustomResetPasswordCubit extends Cubit<CustomResetPasswordState> {
   CustomResetPasswordCubit({required this.authrepo})
       : super(CustomResetPasswordInitial());
-  final Authrepo authrepo;
+  final ResetPaswordRepo authrepo;
   Future<void> sendResetPasswordEmail({required String email}) async {
     emit(CustomResetPasswordLoading());
     try {

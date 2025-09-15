@@ -3,17 +3,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionSolutionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/ExamResultSolvedQuestionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
+import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
+import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
 
 part 'test_item_state.dart';
@@ -135,11 +135,18 @@ class TestItemCubit extends Cubit<TestItemState> {
   }
 
   TestresulteEntity getTestResults(
-      {required BuildContext context, required CourseTestEntity test}) {
+      {required BuildContext context,
+      required CourseTestEntity test,
+      required UserEntity user}) {
     return TestresulteEntity(
         joinedDate: DateTime.now(),
         serialNumber: "${DateTime.now().toString()}-Result",
-        joinedbyentity: context.read<UserCubit>().getJoinedByEntity(),
+        joinedbyentity: JoinedByEntity(
+          uid: user.uid,
+          name: user.fullName,
+          imageUrl: user.profilePicurl,
+          joinedDate: DateTime.now(),
+        ),
         result: getResult(test: test),
         solvedQuestions: getSolvedQuestionsnums(test: test).length,
         totalQuestions: test.questions.length,
@@ -154,7 +161,8 @@ class TestItemCubit extends Cubit<TestItemState> {
       required BuildContext context}) async {
     emit(AddTestResultLoading());
     Either<Failure, void> result = await testitemrepo.addTestResult(
-        testResult: getTestResults(context: context, test: test),
+        testResult:
+            getTestResults(context: context, test: test, user: getUserData()),
         courseId: courseId,
         sectionId: sectionId,
         sectionItemId: sectionItemId);

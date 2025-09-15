@@ -11,8 +11,12 @@ import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/Cour
 import 'package:sintir/Core/widgets/WebViewer/WebView.dart';
 import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordView.dart';
 import 'package:sintir/Features/Ai_Teacher/presentation/views/AiTeacherView.dart';
-import 'package:sintir/Features/Books_Library/Presentation/Views/EducationLevelsBooksSectionsView.dart';
-import 'package:sintir/Features/Books_Library/Presentation/Views/LevelBooksView.dart';
+import 'package:sintir/Features/Auth/StudentPresentation/views/StudentTermsAndConditions_View.dart';
+import 'package:sintir/Features/Auth/StudentPresentation/views/Student_Sign_In_View.dart';
+import 'package:sintir/Features/Auth/StudentPresentation/views/Student_signUp_View.dart';
+import 'package:sintir/Features/Auth/TeacherPresentation/views/TeacherSignInView.dart';
+import 'package:sintir/Features/Auth/TeacherPresentation/views/TeacherSignUpView.dart';
+import 'package:sintir/Features/Auth/TeacherPresentation/views/teacherTermsAndConditionsView.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/ChoosingUserKindView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileviewnavigationsrequirmentsentity.dart';
@@ -26,15 +30,9 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Favorites/presentation/views/FavoritesView.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 import 'package:sintir/Features/Splash/Presentation/views/SplashView.dart';
-import 'package:sintir/Features/StudenetAuth/presentation/views/StudentTermsAndConditions_View.dart';
-import 'package:sintir/Features/StudenetAuth/presentation/views/Student_Sign_In_View.dart';
-import 'package:sintir/Features/StudenetAuth/presentation/views/Student_signUp_View.dart';
 import 'package:sintir/Features/StudentOnboarding/Presentation/Views/StudentOnboardingView.dart';
 import 'package:sintir/Features/StudentProfile/presentation/views/studentProfileView.dart';
 import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnboardingView.dart';
-import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignInView.dart';
-import 'package:sintir/Features/TeacherAuth/Presentation/views/TeacherSignUpView.dart';
-import 'package:sintir/Features/TeacherAuth/Presentation/views/teacherTermsAndConditionsView.dart';
 import 'package:sintir/Features/TeacherProfile/presentation/views/TeacherProfileView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
@@ -49,7 +47,6 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Review
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TestConsequencesView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/VideoConsequencesView.dart';
-import 'package:sintir/Features/tasks/presentation/views/TasksView.dart';
 
 class App_router {
   static GoRouter router = GoRouter(
@@ -127,27 +124,9 @@ class App_router {
         },
       ),
       GoRoute(
-        path: TasksView.routeName,
-        builder: (BuildContext context, GoRouterState state) {
-          return const TasksView();
-        },
-      ),
-      GoRoute(
         path: AiTeacherview.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const AiTeacherview();
-        },
-      ),
-      GoRoute(
-        path: EducationLevelsBooksSectionsView.routeName,
-        builder: (BuildContext context, GoRouterState state) {
-          return const EducationLevelsBooksSectionsView();
-        },
-      ),
-      GoRoute(
-        path: Levelbooksview.routeName,
-        builder: (BuildContext context, GoRouterState state) {
-          return const Levelbooksview();
         },
       ),
       GoRoute(

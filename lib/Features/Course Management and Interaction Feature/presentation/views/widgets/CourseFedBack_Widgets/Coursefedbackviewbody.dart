@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
+import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseFedBack_Widgets/CourseFedBacksListView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseFedBack_Widgets/CoursefedbackviewBodyActionButton.dart';
@@ -26,9 +25,9 @@ class _CoursefedbackviewbodyState extends State<Coursefedbackviewbody> {
         datePosted: DateTime.now(),
         fedBack: "",
         likesCount: 0,
-        name: context.read<UserCubit>().studententity?.firstName ?? "",
-        userImage: context.read<UserCubit>().studententity?.imageUrl ?? "",
-        uid: context.read<UserCubit>().studententity?.uid ?? "");
+        name: getUserData().fullName,
+        userImage: getUserData().profilePicurl,
+        uid: getUserData().uid);
     super.initState();
   }
 

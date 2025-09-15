@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/Managers/Cubits/user_cubit/user_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomSearchTextField.dart';
@@ -32,7 +31,6 @@ class _Homeview_BodyState extends State<Homeview_Body> {
 
   homeInitFetchData() async {
     await Future.wait([
-      context.read<UserCubit>().getUserData(),
       context.read<GetCoursesCubit>().getRecentCourses(),
       context.read<GetCoursesCubit>().getPopularCourses(),
     ]);
@@ -68,10 +66,7 @@ class _Homeview_BodyState extends State<Homeview_Body> {
                 ),
                 SliverToBoxAdapter(
                     child: Column(children: [
-                  HomeViewBodyAppBar(
-                    teacher: context.read<UserCubit>().teacherentity,
-                    student: context.read<UserCubit>().studententity,
-                  ),
+                  HomeViewBodyAppBar(),
                   const SizedBox(
                     height: 10,
                   ),

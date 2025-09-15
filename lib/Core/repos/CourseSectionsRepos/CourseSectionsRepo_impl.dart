@@ -61,8 +61,9 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
           subCollection: BackendEndpoints.sectionsSubCollection,
         ),
       );
-      if (response.listData == null)
+      if (response.listData == null) {
         return left(ServerFailure(message: "البيانات غير موجودة"));
+      }
       if (response.listData!.isEmpty) return right([]);
       List<CourseSectionEntity> courseSections = response.listData!
           .map((e) => CourseSectionModel.fromJson(e).toEntity())

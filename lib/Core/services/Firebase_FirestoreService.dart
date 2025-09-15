@@ -136,13 +136,11 @@ class FirebaseFirestoreservice implements Databaseservice {
           .doc(requirements.subDocId!)
           .collection(requirements.subCollection2!);
 
-      // sub2DocId
       if (requirements.sub2DocId == null) {
         await q2.add(data);
         return;
       }
 
-      // subCollection3
       if (requirements.subCollection3 == null) {
         await q2.doc(requirements.sub2DocId!).set(data);
         return;
@@ -169,39 +167,62 @@ class FirebaseFirestoreservice implements Databaseservice {
     Map<String, dynamic>? query,
   }) async {
     try {
-      final collectionName = requirements.collection;
-      if (collectionName == null) {
+      if (requirements.collection == null) {
         return FireStoreResponse();
       }
 
       CollectionReference<Map<String, dynamic>> currentCollection =
-          _collectionRef(collectionName);
+          _collectionRef(requirements.collection!);
+      DocumentReference<Map<String, dynamic>>? currentDoc;
+
+      final subLevels = [
+        {
+          "subCollection": requirements.subCollection,
+          "docId": requirements.subDocId
+        },
+        {
+          "subCollection": requirements.subCollection2,
+          "docId": requirements.sub2DocId
+        },
+        {
+          "subCollection": requirements.subCollection3,
+          "docId": requirements.sub3DocId
+        },
+        {
+          "subCollection": requirements.subCollection4,
+          "docId": requirements.sub4DocId
+        },
+      ];
 
       if (requirements.docId != null) {
-        final docRef = currentCollection.doc(requirements.docId!);
+        currentDoc = currentCollection.doc(requirements.docId!);
 
-        if (requirements.subCollection != null) {
-          currentCollection = docRef.collection(requirements.subCollection!);
+        for (final level in subLevels) {
+          if (level["subCollection"] != null) {
+            currentCollection =
+                currentDoc!.collection(level["subCollection"] as String);
 
-          if (requirements.subDocId != null) {
-            final subDocSnapshot =
-                await currentCollection.doc(requirements.subDocId!).get();
-            return FireStoreResponse(docData: subDocSnapshot.data());
+            if (level["docId"] != null) {
+              currentDoc = currentCollection.doc(level["docId"] as String);
+            } else {
+              Query<Map<String, dynamic>> queryData =
+                  _applyQueryOptions(currentCollection, query);
+              final snapshot = await queryData.get();
+              return FireStoreResponse(
+                hasMore: snapshot.docs.length == query?["limit"],
+                lastDocumentSnapshot:
+                    snapshot.docs.isNotEmpty ? snapshot.docs.last : null,
+                listData: snapshot.docs.map((e) => e.data()).toList(),
+              );
+            }
           }
-
-          final subSnapshot = await currentCollection.get();
-          return FireStoreResponse(
-            listData: subSnapshot.docs.map((e) => e.data()).toList(),
-          );
-        } else {
-          final docSnapshot = await docRef.get();
-          return FireStoreResponse(docData: docSnapshot.data());
         }
+
+        final finalDocSnap = await currentDoc!.get();
+        return FireStoreResponse(docData: finalDocSnap.data());
       }
-
-      Query<Map<String, dynamic>> queryData = currentCollection;
-      queryData = _applyQueryOptions(queryData, query);
-
+      Query<Map<String, dynamic>> queryData =
+          _applyQueryOptions(currentCollection, query);
       final querySnapshot = await queryData.get();
 
       return FireStoreResponse(
@@ -210,10 +231,10 @@ class FirebaseFirestoreservice implements Databaseservice {
             querySnapshot.docs.isNotEmpty ? querySnapshot.docs.last : null,
         listData: querySnapshot.docs.map((e) => e.data()).toList(),
       );
-    } on FirebaseException catch (e, s) {
+    } on FirebaseException catch (e) {
       throw _getFireStoreCustomException(e: e);
-    } catch (e, s) {
-      throw CustomException(message: "❌ حدث خطاء غير متوقع.");
+    } catch (e) {
+      throw CustomException(message: "❌ حدث خطأ غير متوقع.");
     }
   }
 
