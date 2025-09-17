@@ -25,7 +25,6 @@ class _AiTeacherViewBodyState extends State<AiTeacherViewBody> {
   @override
   void initState() {
     player = AudioPlayer();
-
     super.initState();
   }
 

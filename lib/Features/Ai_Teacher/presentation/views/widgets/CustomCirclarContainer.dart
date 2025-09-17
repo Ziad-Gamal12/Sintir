@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sintir/Features/Ai_Teacher/presentation/managers/ai_teacher_cubit/ai_teacher_cubit.dart';
 
 class CustomCirclarContainer extends StatefulWidget {
@@ -15,11 +15,6 @@ class _CustomCirclarContainerState extends State<CustomCirclarContainer> {
 
   @override
   Widget build(BuildContext context) {
-    List<Color> containerColors = [
-      Colors.white,
-      Colors.grey.shade200,
-    ];
-
     return BlocConsumer<AiTeacherCubit, AiTeacherState>(
       listener: (context, state) {
         if (state is AiTeacherTextToSpeechSuccess) {
@@ -29,23 +24,20 @@ class _CustomCirclarContainerState extends State<CustomCirclarContainer> {
         }
       },
       builder: (context, state) {
-        var container = Container(
-          height: 150,
-          width: 150,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: containerColors,
+        if (isTalking == false) {
+          return SizedBox(
+            width: MediaQuery.sizeOf(context).width * .4,
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: LottieBuilder.asset(
+                "assets/LottieFiles/thinkingBot.json",
+                fit: BoxFit.fill,
+              ),
             ),
-            shape: BoxShape.circle,
-          ),
-        );
-        return isTalking == true
-            ? container
-                .animate(
-                    onPlay: (controller) => controller.repeat(reverse: true))
-                .scaleXY(begin: 1, end: 1.15)
-                .fade(begin: 1, end: 0.85)
-            : container;
+          );
+        } else {
+          return LottieBuilder.asset("assets/LottieFiles/speakingBot.json");
+        }
       },
     );
   }

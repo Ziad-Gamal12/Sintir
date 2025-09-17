@@ -1,5 +1,6 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
-import 'package:sintir/constant.dart';
 
 class CustomAiTeacherBodyColourfulBackground extends StatelessWidget {
   CustomAiTeacherBodyColourfulBackground({
@@ -7,12 +8,9 @@ class CustomAiTeacherBodyColourfulBackground extends StatelessWidget {
   });
 
   List<Color> backGroundColors = [
-    KMainColor,
-    Colors.blue,
-    Colors.blueAccent,
-    Colors.lightBlue,
-    Colors.cyan,
-    Colors.cyanAccent,
+    const Color(0xFF0F2027),
+    const Color(0xFF203A43),
+    const Color(0xFF2C5364),
   ];
   @override
   Widget build(BuildContext context) {

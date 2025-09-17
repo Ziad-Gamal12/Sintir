@@ -22,21 +22,7 @@ abstract class Variables {
       GlobalKey<ScaffoldState>();
   static GlobalKey<FormState> AddCourseSectionSQLtestFormKey =
       GlobalKey<FormState>();
-  static TextEditingController TeacherSignUpFirstNameController =
-      TextEditingController();
-  static TextEditingController TeacherSignUpLastNameController =
-      TextEditingController();
-  static TextEditingController TeacherSignUpEmailController =
-      TextEditingController();
   static TextEditingController TeacherSignUpPasswordController =
-      TextEditingController();
-  static TextEditingController TeacherSignUpAdressController =
-      TextEditingController();
-  static TextEditingController TeacherSignUpPhoneNumberController =
-      TextEditingController();
-  static TextEditingController TeacherSignUpSubjectController =
-      TextEditingController();
-  static TextEditingController TeacherSignUpWorkExperienceController =
       TextEditingController();
   static TextEditingController TeacherLoginEmailController =
       TextEditingController();
@@ -48,21 +34,8 @@ abstract class Variables {
       TextEditingController();
   static TextEditingController ResetPasswordController =
       TextEditingController();
-  static TextEditingController studentSignUpEmailController =
-      TextEditingController();
-  static TextEditingController studentSignUpFirstNameController =
-      TextEditingController();
-  static TextEditingController studentSignUpLastNameController =
-      TextEditingController();
-  static TextEditingController studentSignUpBirthDateController =
-      TextEditingController();
-  static TextEditingController studentSignUpEducationLevelController =
-      TextEditingController();
-  static TextEditingController studentSignUpSchoolNameController =
-      TextEditingController();
+
   static TextEditingController studentSignUpPasswordController =
-      TextEditingController();
-  static TextEditingController studentSignUpPhoneNumberController =
       TextEditingController();
   static TextEditingController AddCourseCourseNameController =
       TextEditingController();
@@ -89,6 +62,7 @@ abstract class Variables {
   static TextEditingController AddsqlTestName = TextEditingController();
   static TextEditingController AddsqlTestDuration = TextEditingController();
   static CourseEntity courseEntity = CourseEntity(
+    studentsCount: 6,
     state: BackendEndpoints.coursePublishedState,
     id: "12345567",
     posterUrl:

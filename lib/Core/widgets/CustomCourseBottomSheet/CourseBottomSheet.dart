@@ -10,7 +10,7 @@ import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetBody.dart';
 
-class CourseBottomSheet extends StatelessWidget {
+class CourseBottomSheet extends StatefulWidget {
   const CourseBottomSheet({
     super.key,
     required this.courseEntity,
@@ -18,15 +18,21 @@ class CourseBottomSheet extends StatelessWidget {
   final CourseEntity courseEntity;
 
   @override
+  State<CourseBottomSheet> createState() => _CourseBottomSheetState();
+}
+
+class _CourseBottomSheetState extends State<CourseBottomSheet>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
     DisplayCourseBottomsheetNavigationRequirmentsEntity
         bottomsheetnavigationrequirmentsentity =
         DisplayCourseBottomsheetNavigationRequirmentsEntity(
-            course: courseEntity, isSubscribed: false);
+            course: widget.courseEntity, isSubscribed: false);
     return BlocProvider(
       create: (context) => CourseSubscribtionsCubit(
         subscribtionRepo: getIt<CourseSubscibtionsRepo>(),
-        course: courseEntity,
+        course: widget.courseEntity,
       ),
       child: Container(
         width: double.infinity,
@@ -46,4 +52,7 @@ class CourseBottomSheet extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

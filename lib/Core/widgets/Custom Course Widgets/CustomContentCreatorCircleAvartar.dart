@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/widgets/CustomCachedNetworkImage.dart';
 
 class CustomContentCreatorCircleAvartar extends StatelessWidget {
   const CustomContentCreatorCircleAvartar({
@@ -15,9 +15,8 @@ class CustomContentCreatorCircleAvartar extends StatelessWidget {
       radius: 15,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(45),
-        child: CachedNetworkImage(
+        child: CustomCachedNetworkImage(
           imageUrl: imagepath,
-          fit: BoxFit.cover,
         ),
       ),
     );

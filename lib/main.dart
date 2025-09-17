@@ -12,10 +12,13 @@ import 'package:sintir/generated/l10n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  await shared_preferences_Services.init();
+  await Future.wait([
+    Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    ),
+    shared_preferences_Services.init()
+  ]);
+
   setup_Getit();
   Bloc.observer = Custom_Blocobserver();
   runApp(

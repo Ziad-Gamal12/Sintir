@@ -32,6 +32,7 @@ class CustomAddCourseActionButton extends StatelessWidget {
               if (context.read<AddCourseCubitCubit>().coursePosterImage !=
                   null) {
                 CourseEntity course = CourseEntity(
+                  studentsCount: 0,
                   id: Variables.AddCourseCourseCodeController.text,
                   state: BackendEndpoints.coursePendingState,
                   title: Variables.AddCourseCourseNameController.text,

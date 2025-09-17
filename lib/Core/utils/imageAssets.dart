@@ -14,10 +14,6 @@ class Assets {
   /// assets/images/ActiveHomeIcon.png
   static const String assetsImagesActiveHomeIcon = "assets/images/ActiveHomeIcon.png";
 
-  /// Assets for assetsImagesActiveLibraryIcon
-  /// assets/images/ActiveLibraryIcon.png
-  static const String assetsImagesActiveLibraryIcon = "assets/images/ActiveLibraryIcon.png";
-
   /// Assets for assetsImagesActiveTasksIcon
   /// assets/images/ActiveTasksIcon.png
   static const String assetsImagesActiveTasksIcon = "assets/images/ActiveTasksIcon.png";
@@ -82,6 +78,14 @@ class Assets {
   /// assets/images/CustomFileIcon.svg
   static const String assetsImagesCustomFileIcon = "assets/images/CustomFileIcon.svg";
 
+  /// Assets for assetsImagesDrawerMycourses
+  /// assets/images/drawer-mycourses.png
+  static const String assetsImagesDrawerMycourses = "assets/images/drawer-mycourses.png";
+
+  /// Assets for assetsImagesDrawerStudentsClub
+  /// assets/images/drawer-students-club.png
+  static const String assetsImagesDrawerStudentsClub = "assets/images/drawer-students-club.png";
+
   /// Assets for assetsImagesEducationLevelSectionBooks
   /// assets/images/EducationLevelSectionBooks.png
   static const String assetsImagesEducationLevelSectionBooks = "assets/images/EducationLevelSectionBooks.png";
@@ -93,6 +97,10 @@ class Assets {
   /// Assets for assetsImagesError
   /// assets/images/error.png
   static const String assetsImagesError = "assets/images/error.png";
+
+  /// Assets for assetsImagesError404
+  /// assets/images/error404.png
+  static const String assetsImagesError404 = "assets/images/error404.png";
 
   /// Assets for assetsImagesErrorIcon
   /// assets/images/errorIcon.svg
@@ -153,6 +161,10 @@ class Assets {
   /// Assets for assetsImagesNotificationIcon
   /// assets/images/notification_icon.png
   static const String assetsImagesNotificationIcon = "assets/images/notification_icon.png";
+
+  /// Assets for assetsImagesSearch
+  /// assets/images/search.png
+  static const String assetsImagesSearch = "assets/images/search.png";
 
   /// Assets for assetsImagesSearchIcon
   /// assets/images/search-icon.svg
@@ -229,5 +241,17 @@ class Assets {
   /// Assets for assetsImagesWarning
   /// assets/images/warning.png
   static const String assetsImagesWarning = "assets/images/warning.png";
+
+  /// Assets for assetsLottieFilesSintirAnimatedLogo
+  /// assets/LottieFiles/SintirAnimatedLogo.json
+  static const String assetsLottieFilesSintirAnimatedLogo = "assets/LottieFiles/SintirAnimatedLogo.json";
+
+  /// Assets for assetsLottieFilesSpeakingBot
+  /// assets/LottieFiles/speakingBot.json
+  static const String assetsLottieFilesSpeakingBot = "assets/LottieFiles/speakingBot.json";
+
+  /// Assets for assetsLottieFilesThinkingBot
+  /// assets/LottieFiles/thinkingBot.json
+  static const String assetsLottieFilesThinkingBot = "assets/LottieFiles/thinkingBot.json";
 }
 

@@ -6,15 +6,19 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/entities/GetCourseResonseEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 
 abstract class Coursesrepo {
   Future<Either<Failure, void>> addCourse({required CourseEntity courseEntity});
-  Future<Either<Failure, List<CourseEntity>>> getRecentCourses();
-  Future<Either<Failure, List<CourseEntity>>> getPopularCourses();
+  Future<Either<Failure, GetCoursesResonseEntity>> getRecentCourses(
+      {required bool isPaginate});
+  Future<Either<Failure, GetCoursesResonseEntity>> getPopularCourses(
+      {required bool isPaginate});
 
   Future<Either<Failure, String>> uplaodFile({required File file});
-  Future<Either<Failure, List<CourseEntity>>> getMyCourses();
+  Future<Either<Failure, GetCoursesResonseEntity>> getMyCourses(
+      {required bool isPaginate});
   Future<Either<Failure, void>> updateCourse(
       {required CourseEntity courseEntity});
 }

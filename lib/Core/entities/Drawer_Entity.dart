@@ -23,6 +23,21 @@ class DrawerEntity {
           inActiveIcon: Assets.assetsImagesInActiveHomeIcon,
           routeName: Homeview.routeName),
       DrawerEntity(
+          title: "كورساتي",
+          activeIcon: Assets.assetsImagesDrawerMycourses,
+          inActiveIcon: Assets.assetsImagesDrawerMycourses,
+          routeName: ""),
+      DrawerEntity(
+          title: "البحث",
+          activeIcon: Assets.assetsImagesSearch,
+          inActiveIcon: Assets.assetsImagesSearch,
+          routeName: ""),
+      DrawerEntity(
+          title: "المنتدى",
+          activeIcon: Assets.assetsImagesDrawerStudentsClub,
+          inActiveIcon: Assets.assetsImagesDrawerStudentsClub,
+          routeName: ""),
+      DrawerEntity(
           title: "المساعد الألي",
           activeIcon: Assets.assetsImagesInActiveAiChatIcon,
           inActiveIcon: Assets.assetsImagesInActiveAiChatIcon,

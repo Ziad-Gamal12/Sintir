@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 
 class TeacherLoginEmailAdressTextFiled extends StatelessWidget {
@@ -15,7 +14,6 @@ class TeacherLoginEmailAdressTextFiled extends StatelessWidget {
         hintText: "البريد الالكتروني",
         prefixIcon: Icons.email_outlined,
         obscureText: false,
-        controller: Variables.TeacherLoginEmailController,
         textInputType: TextInputType.emailAddress,
         validator: (value) {
           if (value!.isEmpty) {

@@ -28,10 +28,13 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  _flutterfire_internals: ^1.3.61
+  avatar_glow: ^3.0.1
   awesome_dialog: ^3.2.1
   cached_network_image: ^3.4.1
   chewie: ^1.11.0
-  cloud_firestore: ^5.2.1
+  cloud_firestore: ^6.0.1
+  cloud_firestore_platform_interface: ^7.0.1
   crypto: ^3.0.3
   cupertino_icons: ^1.0.6
   dartz: ^0.10.1
@@ -39,9 +42,9 @@ dependencies:
   dropdown_model_list: ^2.1.3
   expandable: ^5.0.1
   file_picker: ^9.2.1
-  firebase_auth: ^5.1.2
-  firebase_core: ^3.4.0
-  firebase_storage: ^12.2.0
+  firebase_auth: ^6.0.2
+  firebase_core: ^4.1.0
+  firebase_storage: ^13.0.1
   flutter:
     sdk: flutter
   flutter_animate: ^4.5.2
@@ -103,7 +106,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-    - assets/Files/
     - assets/LottieFiles/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -146,6 +148,8 @@ flutter:
 flutter_intl:
   enabled: true
 flutter_assets:
-  assets_path: assets/images/
+  assets_path:
+    - assets/images/
+    - assets/LottieFiles/
   output_path: lib/Core/utils/
   filename: imageAssets.dart

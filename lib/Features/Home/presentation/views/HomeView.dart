@@ -25,7 +25,7 @@ class _HomeviewState extends State<Homeview> {
       child: Scaffold(
         key: Variables.HomeViewScaffoldKey,
         endDrawer: const Customdrawer(),
-        body: const SafeArea(child: Homeview_Body()),
+        body: const SafeArea(child: HomeViewBody()),
       ),
     );
   }
