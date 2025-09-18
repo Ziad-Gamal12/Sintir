@@ -31,6 +31,7 @@ class _AiTeacherViewBodyState extends State<AiTeacherViewBody> {
   @override
   void dispose() {
     player.dispose();
+    customAiChatController.dispose();
     super.dispose();
   }
 

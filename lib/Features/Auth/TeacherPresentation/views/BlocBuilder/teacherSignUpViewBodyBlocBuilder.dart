@@ -26,7 +26,21 @@ class teacherSignUpViewBodyBlocBuilder extends StatefulWidget {
 class _teacherSignUpViewBodyBlocBuilderState
     extends State<teacherSignUpViewBodyBlocBuilder> {
   bool isChecked = false;
-  GlobalKey<FormState> teacherSignUpFormKey = GlobalKey<FormState>();
+  late GlobalKey<FormState> teacherSignUpFormKey;
+  late TextEditingController teacherSignUpPasswordController;
+  @override
+  void initState() {
+    super.initState();
+    teacherSignUpPasswordController = TextEditingController();
+    teacherSignUpFormKey = GlobalKey<FormState>();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    teacherSignUpPasswordController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocSelector<TeacherSignUpCubit, TeacherSignUpState, bool>(
@@ -42,7 +56,10 @@ class _teacherSignUpViewBodyBlocBuilderState
                   horizontal: KHorizontalPadding, vertical: 24),
               child: Column(
                 children: [
-                  const TeacherSignUPTextFieldsSection(),
+                  TeacherSignUPTextFieldsSection(
+                    teacherSignUpPasswordController:
+                        teacherSignUpPasswordController,
+                  ),
                   const SizedBox(height: 20),
                   Customtermsandconditiona(textonpressed: () {
                     GoRouter.of(context)
@@ -57,6 +74,8 @@ class _teacherSignUpViewBodyBlocBuilderState
                   Custom_Loading_Widget(
                     isLoading: state,
                     child: teacherSignUpViewBodyCustomButton(
+                      teacherSignUpPasswordController:
+                          teacherSignUpPasswordController,
                       isChecked: isChecked,
                       formKey: teacherSignUpFormKey,
                     ),

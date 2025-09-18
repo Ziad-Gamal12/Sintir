@@ -2,11 +2,14 @@
 
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart'; // compute
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
 import 'package:sintir/Core/entities/FireStorePaginateResponse.dart';
 import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
+import 'package:sintir/Core/entities/GetCourseSubscribersEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/OrderDataEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/PaymentDataEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
@@ -21,87 +24,110 @@ import 'package:sintir/Core/services/PayMobService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 
+/// Implementation of Course Subscriptions repository.
+/// Note: kept original class name to avoid breaking existing references.
 class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
   final PayMobService payMobService;
   final Databaseservice datebaseservice;
 
-  CourseSubscibtionsRepoimpli(
-      {required this.datebaseservice, required this.payMobService});
+  CourseSubscibtionsRepoimpli({
+    required this.datebaseservice,
+    required this.payMobService,
+  });
 
+  /// ---------- Payment helpers ----------
   Future<int?> createPaymentOrder(
       {required Orderdataentity orderEntity}) async {
-    int? id = await payMobService.createPaymentOrder(orderEntity: orderEntity);
-    return id;
+    return await payMobService.createPaymentOrder(orderEntity: orderEntity);
   }
 
   Future<String?> getAuthToken() async {
-    String? token = await payMobService.getAuthToken();
-    return token;
+    return await payMobService.getAuthToken();
   }
 
   Future<String> getPaymentToken(
       {required Paymentdataentity paymententity}) async {
-    String token =
-        await payMobService.getPaymentToken(paymententity: paymententity);
-    return token;
+    return await payMobService.getPaymentToken(paymententity: paymententity);
   }
 
+  /// Pay with Fawry flow: get auth token -> create order -> get payment token
   @override
-  Future<Either<Failure, String>> payWithFawry(
-      {required Paymentdataentity paymententity,
-      required Orderdataentity orderEntity}) async {
+  Future<Either<Failure, String>> payWithFawry({
+    required Paymentdataentity paymententity,
+    required Orderdataentity orderEntity,
+  }) async {
     try {
-      String? authtoken = await getAuthToken();
-      if (authtoken == null) {
-        return Left(
+      final String? authToken = await getAuthToken();
+      if (authToken == null) {
+        return left(
             ServerFailure(message: "حدث خطأ أثناء الحصول على التوكن الخاص بك"));
-      } else {
-        orderEntity.authToken = authtoken;
-        paymententity.authToken = authtoken;
       }
-      int? paymentToken = await createPaymentOrder(orderEntity: orderEntity);
-      if (paymentToken == null) {
-        return Left(ServerFailure(message: "حدث خطاء في انشاء الطلبية"));
-      } else {
-        paymententity.orderId = paymentToken;
+
+      orderEntity.authToken = authToken;
+      paymententity.authToken = authToken;
+
+      final int? paymentOrderId =
+          await createPaymentOrder(orderEntity: orderEntity);
+      if (paymentOrderId == null) {
+        return left(ServerFailure(message: "حدث خطاء في انشاء الطلبية"));
       }
-      log(Paymentdatamodel.formEntity(paymententity).toJson().toString());
-      String token = await getPaymentToken(paymententity: paymententity);
+      paymententity.orderId = paymentOrderId;
+
+      try {
+        log(Paymentdatamodel.formEntity(paymententity).toJson().toString());
+      } catch (_) {}
+
+      final String token = await getPaymentToken(paymententity: paymententity);
       return right(token);
-    } catch (e) {
-      return Left(ServerFailure(message: e.toString()));
+    } catch (e, st) {
+      log('payWithFawry error: $e\n$st');
+      return left(ServerFailure(message: e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, void>> subscribeToCourse(
-      {required CourseEntity course, required UserEntity userEntity}) async {
+  Future<Either<Failure, void>> subscribeToCourse({
+    required CourseEntity course,
+    required UserEntity userEntity,
+  }) async {
     try {
-      Subscriberentity subscriber = getSubscriberEntity(userEntity: userEntity);
+      final Subscriberentity subscriber =
+          getSubscriberEntity(userEntity: userEntity);
+
       await Future.wait([
-        addCourseToMyCourseList(
-          course: course,
-          userEntity: userEntity,
-        ),
+        addCourseToMyCourseList(course: course, userEntity: userEntity),
         addNewSubscriber(
-            subscriber,
-            getFireStoreRequirmentsEntity(
-              courseId: course.id,
-            )),
+          subscriber,
+          getFireStoreRequirmentsEntity(courseId: course.id),
+        ),
+        updateSubscribersCount(courseId: course.id),
       ]);
+
       return right(null);
     } on CustomException catch (e) {
       await deleteCourseFromMyCourseList(
-        course: course,
-        userEntity: userEntity,
-      );
+          course: course, userEntity: userEntity);
       return left(ServerFailure(message: e.message));
     } catch (e) {
       await deleteCourseFromMyCourseList(
-        course: course,
-        userEntity: userEntity,
-      );
+          course: course, userEntity: userEntity);
       return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+
+  Future<void> updateSubscribersCount({
+    required String courseId,
+    int delta = 1,
+  }) async {
+    try {
+      await datebaseservice.updateData(
+        collectionKey: BackendEndpoints.coursesCollection,
+        field: "studentsCount",
+        doc: courseId,
+        data: FieldValue.increment(delta),
+      );
+    } catch (e) {
+      rethrow;
     }
   }
 
@@ -109,74 +135,94 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
     Subscriberentity subscriberentity,
     FireStoreRequirmentsEntity fireStoreRequirmentsEntity,
   ) async {
+    final Map<String, dynamic> json =
+        Subscripersidsmodel.fromEntit(subscriberentity: subscriberentity)
+            .toJson();
+
     await datebaseservice.setData(
-      data: Subscripersidsmodel.fromEntit(subscriberentity: subscriberentity)
-          .toJson(),
+      data: json,
       requirements: fireStoreRequirmentsEntity,
     );
   }
 
   Subscriberentity getSubscriberEntity({required UserEntity userEntity}) {
     return Subscriberentity(
-        id: getUID(),
-        name: userEntity.firstName,
-        gender: userEntity.gender,
-        phone: userEntity.phoneNumber,
-        educationLevel:
-            userEntity.studentExtraDataEntity?.educationLevel ?? " ",
-        imageUrl: userEntity.profilePicurl,
-        address: userEntity.address);
+      id: getUID(),
+      name: userEntity.firstName,
+      gender: userEntity.gender,
+      phone: userEntity.phoneNumber,
+      educationLevel: userEntity.studentExtraDataEntity?.educationLevel ?? " ",
+      imageUrl: userEntity.profilePicurl,
+      address: userEntity.address,
+    );
   }
 
   FireStoreRequirmentsEntity getFireStoreRequirmentsEntity({
     required String courseId,
   }) {
     return FireStoreRequirmentsEntity(
-        collection: BackendEndpoints.coursesCollection,
-        docId: courseId,
-        subDocId: getUID(),
-        subCollection: BackendEndpoints.subscribersSubCollection);
-  }
-
-  Future<void> addCourseToMyCourseList(
-      {required CourseEntity course, required UserEntity userEntity}) async {
-    await datebaseservice.setData(
-      requirements: FireStoreRequirmentsEntity(
-          collection: BackendEndpoints.usersCollectionName,
-          docId: userEntity.uid,
-          subDocId: course.id,
-          subCollection: BackendEndpoints.subscribetoCourseCollection),
-      data: Coursemodel.fromEntity(courseEntity: course).toJson(),
+      collection: BackendEndpoints.coursesCollection,
+      docId: courseId,
+      subDocId: getUID(),
+      subCollection: BackendEndpoints.subscribersSubCollection,
     );
   }
 
-  Future<bool> checkIsCourseAddedToMyCourseList(
-      {required CourseEntity course, required UserEntity userEntity}) async {
-    return await datebaseservice.isDataExists(
-        key: BackendEndpoints.usersCollectionName,
+  Future<void> addCourseToMyCourseList({
+    required CourseEntity course,
+    required UserEntity userEntity,
+  }) async {
+    final Map<String, dynamic> json =
+        Coursemodel.fromEntity(courseEntity: course).toJson();
+
+    await datebaseservice.setData(
+      requirements: FireStoreRequirmentsEntity(
+        collection: BackendEndpoints.usersCollectionName,
         docId: userEntity.uid,
         subDocId: course.id,
-        subCollectionKey: BackendEndpoints.subscribetoCourseCollection);
+        subCollection: BackendEndpoints.subscribetoCourseCollection,
+      ),
+      data: json,
+    );
   }
 
-  Future<void> deleteCourseFromMyCourseList(
-      {required CourseEntity course, required UserEntity userEntity}) async {
-    bool isAdded = await checkIsCourseAddedToMyCourseList(
-        course: course, userEntity: userEntity);
+  Future<bool> checkIsCourseAddedToMyCourseList({
+    required CourseEntity course,
+    required UserEntity userEntity,
+  }) async {
+    return await datebaseservice.isDataExists(
+      key: BackendEndpoints.usersCollectionName,
+      docId: userEntity.uid,
+      subDocId: course.id,
+      subCollectionKey: BackendEndpoints.subscribetoCourseCollection,
+    );
+  }
+
+  Future<void> deleteCourseFromMyCourseList({
+    required CourseEntity course,
+    required UserEntity userEntity,
+  }) async {
+    final bool isAdded = await checkIsCourseAddedToMyCourseList(
+      course: course,
+      userEntity: userEntity,
+    );
     if (isAdded) {
       await datebaseservice.deleteDoc(
-          collectionKey: BackendEndpoints.usersCollectionName,
-          docId: userEntity.uid,
-          subDocId: course.id,
-          subCollectionKey: BackendEndpoints.subscribetoCourseCollection);
+        collectionKey: BackendEndpoints.usersCollectionName,
+        docId: userEntity.uid,
+        subDocId: course.id,
+        subCollectionKey: BackendEndpoints.subscribetoCourseCollection,
+      );
     }
   }
 
   @override
-  Future<Either<Failure, bool>> checkIfSubscribed(
-      {required String userID, required String courseID}) async {
+  Future<Either<Failure, bool>> checkIfSubscribed({
+    required String userID,
+    required String courseID,
+  }) async {
     try {
-      bool isSubscribed = await datebaseservice.isDataExists(
+      final bool isSubscribed = await datebaseservice.isDataExists(
         key: BackendEndpoints.usersCollectionName,
         subCollectionKey: BackendEndpoints.checkifSubscribedSubCollection,
         docId: userID,
@@ -188,32 +234,63 @@ class CourseSubscibtionsRepoimpli implements CourseSubscibtionsRepo {
     }
   }
 
+  DocumentSnapshot? _getCourseSubscribersLastDoc;
+  final Map<String, dynamic> _baseGetCourseSubscribersQuery = {
+    "startAfter": null,
+    "limit": 10,
+  };
   @override
-  Future<Either<Failure, List<Subscriberentity>>> getSubscribers(
-      {required String courseID}) async {
+  Future<Either<Failure, GetCourseSubscribersEntity>> getSubscribers({
+    required String courseID,
+    required bool isPaginate,
+  }) async {
     try {
-      FireStoreResponse response = await datebaseservice.getData(
+      final Map<String, dynamic> query =
+          Map<String, dynamic>.from(_baseGetCourseSubscribersQuery);
+      query["startAfter"] = isPaginate ? _getCourseSubscribersLastDoc : null;
+
+      final FireStoreResponse response = await datebaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
           collection: BackendEndpoints.coursesCollection,
           subCollection: BackendEndpoints.subscribersSubCollection,
           docId: courseID,
         ),
+        query: query,
       );
+
       if (response.listData == null) {
         return left(ServerFailure(message: "البيانات غير موجودة"));
       }
+
       if (response.listData!.isEmpty) {
-        return right([]);
+        // no data
+        return right(GetCourseSubscribersEntity(
+            subscribers: [], hasMore: false, isPaginate: isPaginate));
       }
-      return right(
-        response.listData!
-            .map((e) => Subscripersidsmodel.fromJson(e).toEntity())
-            .toList(),
-      );
+
+      if (response.lastDocumentSnapshot != null) {
+        _getCourseSubscribersLastDoc = response.lastDocumentSnapshot;
+      }
+
+      final List<Subscriberentity> subscribers =
+          await compute<List<dynamic>, List<Subscriberentity>>(
+              _parseSubscribers, response.listData!);
+
+      final bool hasMore = response.hasMore ?? false;
+
+      return right(GetCourseSubscribersEntity(
+          subscribers: subscribers, hasMore: hasMore, isPaginate: isPaginate));
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e) {
+    } catch (e, st) {
+      log('getSubscribers error: $e\n$st');
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
+}
+
+List<Subscriberentity> _parseSubscribers(List<dynamic> rawList) {
+  return rawList
+      .map((e) => Subscripersidsmodel.fromJson(e).toEntity())
+      .toList();
 }

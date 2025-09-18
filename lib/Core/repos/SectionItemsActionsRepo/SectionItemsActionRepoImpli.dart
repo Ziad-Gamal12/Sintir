@@ -103,7 +103,7 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
         } else if (item["type"] == "Vedio") {
           items.add(Coursevedioitemmodel.fromJson(item).toEntity());
         } else {
-          items.add(Coursefilemodel.fromJson(item).toEnity());
+          items.add(Coursefilemodel.fromJson(item).toEntity());
         }
       }
       return right(items);

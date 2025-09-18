@@ -10,18 +10,12 @@ class CustomCourseDetialsPageView extends StatelessWidget {
     super.key,
     required this.pageController,
     required this.course,
-    required this.isFechedCourseSectoins,
-    required this.isFechedCourseSubscripers,
-    required this.isFechedCourseFeedBacks,
-    required this.isFechedCourseReports,
+    required this.scrollController,
   });
 
   final PageController pageController;
+  final ScrollController scrollController;
   final CourseEntity course;
-  final bool isFechedCourseSectoins;
-  final bool isFechedCourseSubscripers;
-  final bool isFechedCourseFeedBacks;
-  final bool isFechedCourseReports;
 
   @override
   Widget build(BuildContext context) {
@@ -32,18 +26,18 @@ class CustomCourseDetialsPageView extends StatelessWidget {
         children: [
           CourseDetailsCourseSectionsPageViewItem(
             courseEntity: course,
-            isFetchedCourseSections: isFechedCourseSectoins,
+            scrollController: scrollController,
           ),
           CourseDetailsSubscribersPageViewItem(
-            isFetchedCourseSubscribers: isFechedCourseSubscripers,
+            scrollController: scrollController,
           ),
-          CourseDetailsSubscripersReviewsPageViewItem(
+          CourseDetailsSubscribersReviewsPageViewItem(
             courseId: course.id,
-            isFetchedCourseFeedBacks: isFechedCourseFeedBacks,
+            scrollController: scrollController,
           ),
           CourseDetailsCourseReportsPageViewItem(
             courseId: course.id,
-            isFetchedCourseReports: isFechedCourseReports,
+            scrollController: scrollController,
           ),
         ]);
   }

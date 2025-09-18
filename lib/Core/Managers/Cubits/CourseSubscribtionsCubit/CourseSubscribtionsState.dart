@@ -46,8 +46,8 @@ final class CheckIfSubscribedFailure extends CourseSubscribtionsState {
 final class GetCourseSubscribersLoading extends CourseSubscribtionsState {}
 
 final class GetCourseSubscribersSuccess extends CourseSubscribtionsState {
-  final List<Subscriberentity> subscribers;
-  GetCourseSubscribersSuccess({required this.subscribers});
+  final GetCourseSubscribersEntity response;
+  GetCourseSubscribersSuccess({required this.response});
 }
 
 final class GetCourseSubscribersFailure extends CourseSubscribtionsState {

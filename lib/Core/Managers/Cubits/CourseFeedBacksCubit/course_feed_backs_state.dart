@@ -8,8 +8,8 @@ final class CourseFeedBacksInitial extends CourseFeedBacksState {}
 final class CourseFeedBacksGetFeedBackLoading extends CourseFeedBacksState {}
 
 final class CourseFeedBacksGetFeedBackSuccess extends CourseFeedBacksState {
-  final List<CoursefeedbackItemEntity> feedBacks;
-  CourseFeedBacksGetFeedBackSuccess({required this.feedBacks});
+  final GetCourseFeedBacksResponseEntity response;
+  CourseFeedBacksGetFeedBackSuccess({required this.response});
 }
 
 final class CourseFeedBacksGetFeedBackFailure extends CourseFeedBacksState {

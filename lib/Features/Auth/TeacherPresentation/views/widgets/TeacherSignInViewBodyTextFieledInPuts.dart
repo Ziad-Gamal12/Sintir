@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
-import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherLoginEmailAdressTextFiled.dart';
-import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherLoginPasswordTextField.dart';
+import 'package:sintir/Core/widgets/CustomTextFields/CustomEmailTextField.dart';
+import 'package:sintir/Core/widgets/CustomTextFields/CustomPasswordTextField.dart';
 
 class TeacherSignInViewBodyTextFieledInPuts extends StatelessWidget {
   const TeacherSignInViewBodyTextFieledInPuts({
     super.key,
+    required this.teacherSignInPasswordController,
+    required this.teacherSignInEmailController,
   });
-
+  final TextEditingController teacherSignInPasswordController;
+  final TextEditingController teacherSignInEmailController;
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        TeacherLoginEmailAdressTextFiled(),
-        Customsizedbox(width: 0, height: 10),
-        Teacherloginpasswordtextfield(),
+        CustomEmailTextField(
+          controller: teacherSignInEmailController,
+          isIconVisible: true,
+        ),
+        const Customsizedbox(width: 0, height: 10),
+        CustomPasswordTextField(
+          controller: teacherSignInPasswordController,
+        )
       ],
     );
   }

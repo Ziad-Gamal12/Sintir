@@ -6,11 +6,24 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/DisplayCourseVedioView_Widgets/CustomSendNoteWidget.dart';
 import 'package:sintir/constant.dart';
 
-class CustomSendNoteText extends StatelessWidget {
-  CustomSendNoteText({
+class CustomSendNoteText extends StatefulWidget {
+  const CustomSendNoteText({
     super.key,
   });
+
+  @override
+  State<CustomSendNoteText> createState() => _CustomSendNoteTextState();
+}
+
+class _CustomSendNoteTextState extends State<CustomSendNoteText> {
   TextEditingController controller = TextEditingController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(

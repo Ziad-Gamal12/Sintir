@@ -3,7 +3,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
-import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
+import 'package:sintir/Core/entities/GetCourseSubscribersEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/BillingDataEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/OrderDataEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/PaymentDataEntity.dart';
@@ -103,13 +103,14 @@ class CourseSubscribtionsCubit extends Cubit<CourseSubscribtionsState> {
     });
   }
 
-  Future<void> getCoursSubscribers() async {
+  Future<void> getCoursSubscribers({required bool isPaginate}) async {
     emit(GetCourseSubscribersLoading());
-    var result = await subscribtionRepo.getSubscribers(courseID: course.id);
+    var result = await subscribtionRepo.getSubscribers(
+        courseID: course.id, isPaginate: isPaginate);
     result.fold((failure) {
       emit(GetCourseSubscribersFailure(errMessage: failure.message));
-    }, (subscribers) {
-      emit(GetCourseSubscribersSuccess(subscribers: subscribers));
+    }, (response) {
+      emit(GetCourseSubscribersSuccess(response: response));
     });
   }
 }

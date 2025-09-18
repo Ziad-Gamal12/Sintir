@@ -1,8 +1,8 @@
-class Coursereportsitementity {
-  final String date;
-  final String type;
-  final String description;
+class CourseReportEntity {
+  final DateTime date;
+  String type;
+  String description;
 
-  Coursereportsitementity(
+  CourseReportEntity(
       {required this.date, required this.type, required this.description});
 }

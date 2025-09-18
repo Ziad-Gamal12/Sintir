@@ -1,20 +1,22 @@
 // ignore_for_file: must_be_immutable, file_names
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
+import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomSearchTextField.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersGridView.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CourseDetailsSubscribersPageViewItem extends StatefulWidget {
-  const CourseDetailsSubscribersPageViewItem(
-      {super.key, required this.isFetchedCourseSubscribers});
-  final bool isFetchedCourseSubscribers;
+  const CourseDetailsSubscribersPageViewItem({
+    super.key,
+    required this.scrollController,
+  });
+
+  final ScrollController scrollController;
 
   @override
   State<CourseDetailsSubscribersPageViewItem> createState() =>
@@ -23,30 +25,31 @@ class CourseDetailsSubscribersPageViewItem extends StatefulWidget {
 
 class _CourseDetailsSubscribersPageViewItemState
     extends State<CourseDetailsSubscribersPageViewItem> {
-  TextEditingController controller = TextEditingController();
-  List<Subscriberentity> searchedSubscribers = [];
-  Timer? _debounce;
+  final TextEditingController controller = TextEditingController();
+  final List<Subscriberentity> _subscribers = [];
+  bool hasMore = true;
 
   @override
   void initState() {
     super.initState();
-    if (!widget.isFetchedCourseSubscribers) {
-      context.read<CourseSubscribtionsCubit>().getCoursSubscribers();
-    }
+
+    context
+        .read<CourseSubscribtionsCubit>()
+        .getCoursSubscribers(isPaginate: false);
+
+    widget.scrollController.addListener(() {
+      final cubit = context.read<CourseSubscribtionsCubit>();
+      if (_shouldFetchMore(cubit)) {
+        cubit.getCoursSubscribers(isPaginate: true);
+      }
+    });
   }
 
-  List<Subscriberentity> getSearchedList({
-    required List<Subscriberentity> subscribers,
-  }) {
-    List<Subscriberentity> searchedSubscribers = [];
-    if (controller.text.isNotEmpty) {
-      for (Subscriberentity e in subscribers) {
-        if ((e.name.toLowerCase()).startsWith(controller.text.toLowerCase())) {
-          searchedSubscribers.add(e);
-        }
-      }
-    }
-    return searchedSubscribers;
+  bool _shouldFetchMore(CourseSubscribtionsCubit cubit) {
+    return widget.scrollController.position.pixels >=
+            widget.scrollController.position.maxScrollExtent - 200 &&
+        hasMore &&
+        cubit.state is! GetCourseSubscribersLoading;
   }
 
   @override
@@ -57,41 +60,41 @@ class _CourseDetailsSubscribersPageViewItemState
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<CourseSubscribtionsCubit, CourseSubscribtionsState,
-        List<Subscriberentity>>(
-      selector: (state) {
+    return BlocConsumer<CourseSubscribtionsCubit, CourseSubscribtionsState>(
+      listener: (context, state) {
         if (state is GetCourseSubscribersSuccess) {
-          return state.subscribers;
+          if (state.response.isPaginate) {
+            _subscribers.addAll(state.response.subscribers);
+          } else {
+            _subscribers.clear();
+            _subscribers.addAll(state.response.subscribers);
+          }
+          hasMore = state.response.hasMore;
+          setState(() {});
         }
-        return [];
       },
       builder: (context, state) {
+        if (state is GetCourseSubscribersFailure) {
+          return Center(
+            child: CustomErrorWidget(errormessage: state.errMessage),
+          );
+        }
+
         return Skeletonizer(
-          enabled: state is GetCourseSubscribersLoading,
+          enabled: state is GetCourseSubscribersLoading && _subscribers.isEmpty,
           child: Column(
             children: [
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               CustomSearchTextField(
                 controller: controller,
-                onSearchChanged: () {
-                  if (_debounce?.isActive ?? false) _debounce?.cancel();
-                  _debounce = Timer(const Duration(milliseconds: 500), () {
-                    searchedSubscribers = getSearchedList(subscribers: state);
-                    setState(() {});
-                  });
-                },
+                onSearchChanged: () {},
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              if (state.isNotEmpty)
+              const SizedBox(height: 20),
+              if (_subscribers.isNotEmpty)
                 CourseDetailsSubscribersGridView(
-                  subscribers:
-                      searchedSubscribers.isEmpty ? state : searchedSubscribers,
+                  subscribers: _subscribers,
                 )
-              else
+              else if (state is! GetCourseSubscribersLoading)
                 const CustomEmptyWidget()
             ],
           ),

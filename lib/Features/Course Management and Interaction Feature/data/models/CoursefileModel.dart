@@ -31,7 +31,7 @@ class Coursefilemodel {
       type: coursefileentity.type,
     );
   }
-  CourseFileEntity toEnity() => CourseFileEntity(
+  CourseFileEntity toEntity() => CourseFileEntity(
         id: id,
         title: title,
         fileUrl: filePath,

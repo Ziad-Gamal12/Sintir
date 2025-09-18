@@ -88,6 +88,12 @@ class _CoursefilepreviewerviewbodyState
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    pdfControllerPinch?.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (pdfControllerPinch == null) {
       return const Center(child: CircularProgressIndicator());

@@ -42,23 +42,23 @@ class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
       builder: (context, state) {
         return Skeletonizer(
           enabled: state is CheckIfSubscribedLoading,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 20),
-            child: Stack(
+          child: const Padding(
+            padding: EdgeInsets.only(left: 16, right: 16, bottom: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ListView(
-                  children: const [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    CourseBottomSheetHeader(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    CourseBottomSheetCourseDetails(),
-                  ],
+                SizedBox(
+                  height: 20,
                 ),
-                const CustomCourseBottomSheetActionButtons()
+                CourseBottomSheetHeader(),
+                SizedBox(
+                  height: 10,
+                ),
+                CourseBottomSheetCourseDetails(),
+                SizedBox(
+                  height: 40,
+                ),
+                CustomCourseBottomSheetActionButtons()
               ],
             ),
           ),

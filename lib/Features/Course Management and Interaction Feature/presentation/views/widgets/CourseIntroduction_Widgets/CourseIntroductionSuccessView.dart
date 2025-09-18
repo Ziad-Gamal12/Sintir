@@ -10,8 +10,9 @@ import 'package:sintir/constant.dart';
 
 class CourseIntroductionSuccessView extends StatelessWidget {
   final List<CourseSectionEntity> sections;
-
-  const CourseIntroductionSuccessView({super.key, required this.sections});
+  final ScrollController scrollController;
+  const CourseIntroductionSuccessView(
+      {super.key, required this.sections, required this.scrollController});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,7 @@ class CourseIntroductionSuccessView extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
           child: CustomScrollView(
+            controller: scrollController,
             slivers: [
               const SliverToBoxAdapter(child: CourseIntroductionStaticHeader()),
               const SliverToBoxAdapter(child: SizedBox(height: 100)),
@@ -32,9 +34,13 @@ class CourseIntroductionSuccessView extends StatelessWidget {
               if (sections.isEmpty)
                 SliverToBoxAdapter(
                   child: Center(
-                    child: Text(
-                      "سيتم اضافة المحتوى قريبا ⌛️",
-                      style: AppTextStyles.bold24.copyWith(color: Colors.black),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 100),
+                      child: Text(
+                        "سيتم اضافة المحتوى قريبا ⌛️",
+                        style:
+                            AppTextStyles.bold24.copyWith(color: Colors.black),
+                      ),
                     ),
                   ),
                 )
@@ -44,7 +50,7 @@ class CourseIntroductionSuccessView extends StatelessWidget {
           ),
         ),
         Positioned(
-            bottom: 0,
+            bottom: 30,
             left: 0,
             right: 0,
             child: CourseIntroductionSuccessViewSubscribeButton(

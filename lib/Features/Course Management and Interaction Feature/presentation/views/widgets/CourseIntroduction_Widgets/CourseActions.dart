@@ -17,7 +17,8 @@ class CourseActions extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            GoRouter.of(context).push(Sendcoursereportview.routeName);
+            GoRouter.of(context)
+                .push(Sendcoursereportview.routeName, extra: requirmentsEntity);
           },
           child: const InfoRow(
             icon: FontAwesomeIcons.circleExclamation,

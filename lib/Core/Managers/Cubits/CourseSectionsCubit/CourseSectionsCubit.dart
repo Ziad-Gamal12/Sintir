@@ -6,6 +6,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
+import 'package:sintir/Core/entities/GetCourseSectionsResonseEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
@@ -55,14 +56,16 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
     });
   }
 
-  Future<void> getCourseSections({required String courseId}) async {
+  Future<void> getCourseSections(
+      {required String courseId, required bool isPaginate}) async {
     emit(GetCourseSectionsLoading());
-    Either<Failure, List<CourseSectionEntity>> result =
-        await coursesectionrepo.getCourseSections(courseId: courseId);
+    Either<Failure, GetCourseSectionsResonseEntity> result =
+        await coursesectionrepo.getCourseSections(
+            courseId: courseId, isPaginate: isPaginate);
     result.fold((failure) {
       emit(GetCourseSectionsFailure(errMessage: failure.message));
     }, (sections) {
-      emit(GetCourseSectionsSuccess(sections: sections));
+      emit(GetCourseSectionsSuccess(response: sections));
     });
   }
 

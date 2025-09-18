@@ -17,8 +17,8 @@ final class CourseReportsAddReportFailure extends CourseReportsState {
 final class CourseReportsGetReportLoading extends CourseReportsState {}
 
 final class CourseReportsGetReportSuccess extends CourseReportsState {
-  final List<Coursereportsitementity> reports;
-  CourseReportsGetReportSuccess({required this.reports});
+  final GetCourseReportsResponseEntity response;
+  CourseReportsGetReportSuccess({required this.response});
 }
 
 final class CourseReportsGetReportFailure extends CourseReportsState {

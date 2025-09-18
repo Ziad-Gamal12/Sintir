@@ -14,25 +14,30 @@ class CustomstudentsignupSchoollevel extends StatefulWidget {
       CustomstudentsignupSchoollevelState();
 }
 
-OptionItem? optionItemSelected;
-TextEditingController controller = TextEditingController();
-var dropListModel = DropListModel([
-  OptionItem(id: "1", title: "الصف الأول الأبتدائى"),
-  OptionItem(id: "2", title: "الصف الثانى الأبتدائى"),
-  OptionItem(id: "3", title: "الصف الثالث الأبتدائى"),
-  OptionItem(id: "4", title: "الصف الرابع الأبتدائى"),
-  OptionItem(id: "5", title: "الصف الخامس الأبتدائى"),
-  OptionItem(id: "6", title: "الصف السادس الأبتدائى"),
-  OptionItem(id: "7", title: "الصف الأول الأعدادى"),
-  OptionItem(id: "9", title: "الصف الثانى الأعدادى"),
-  OptionItem(id: "10", title: "الصف الثالث الأعدادى"),
-  OptionItem(id: "11", title: "الصف الأول الثانوى"),
-  OptionItem(id: "12", title: "الصف الثانى الثانوى"),
-  OptionItem(id: "13", title: "الصف الثالث الثانوى"),
-]);
-
 class CustomstudentsignupSchoollevelState
     extends State<CustomstudentsignupSchoollevel> {
+  OptionItem? optionItemSelected;
+  TextEditingController controller = TextEditingController();
+  var dropListModel = DropListModel([
+    OptionItem(id: "1", title: "الصف الأول الأبتدائى"),
+    OptionItem(id: "2", title: "الصف الثانى الأبتدائى"),
+    OptionItem(id: "3", title: "الصف الثالث الأبتدائى"),
+    OptionItem(id: "4", title: "الصف الرابع الأبتدائى"),
+    OptionItem(id: "5", title: "الصف الخامس الأبتدائى"),
+    OptionItem(id: "6", title: "الصف السادس الأبتدائى"),
+    OptionItem(id: "7", title: "الصف الأول الأعدادى"),
+    OptionItem(id: "9", title: "الصف الثانى الأعدادى"),
+    OptionItem(id: "10", title: "الصف الثالث الأعدادى"),
+    OptionItem(id: "11", title: "الصف الأول الثانوى"),
+    OptionItem(id: "12", title: "الصف الثانى الثانوى"),
+    OptionItem(id: "13", title: "الصف الثالث الثانوى"),
+  ]);
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SearchDropList(

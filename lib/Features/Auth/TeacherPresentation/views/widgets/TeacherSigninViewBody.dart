@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomLoginViewBodyDonotHaveAccountText.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
@@ -24,6 +23,24 @@ class TeacherSigninViewBody extends StatefulWidget {
 
 class _TeacherSigninViewBodyState extends State<TeacherSigninViewBody> {
   bool obscureText = true;
+  late TextEditingController teacherSignInPasswordController;
+  late TextEditingController teacherSignInEmailController;
+  late GlobalKey<FormState> teacherLoginFormKey;
+
+  @override
+  void initState() {
+    super.initState();
+    teacherSignInPasswordController = TextEditingController();
+    teacherSignInEmailController = TextEditingController();
+    teacherLoginFormKey = GlobalKey<FormState>();
+  }
+
+  @override
+  void dispose() {
+    teacherSignInPasswordController.dispose();
+    teacherSignInEmailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,19 +51,30 @@ class _TeacherSigninViewBodyState extends State<TeacherSigninViewBody> {
       builder: (context, state) {
         return SingleChildScrollView(
           child: Form(
-              key: Variables.TeacherLoginFormKey,
+              key: teacherLoginFormKey,
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: KHorizontalPadding, vertical: 24),
                 child: Column(
                   children: [
-                    const TeacherSignInViewBodyTextFieledInPuts(),
+                    TeacherSignInViewBodyTextFieledInPuts(
+                      teacherSignInPasswordController:
+                          teacherSignInPasswordController,
+                      teacherSignInEmailController:
+                          teacherSignInEmailController,
+                    ),
                     const Customsizedbox(width: 0, height: 16),
                     const TeacherLoginViewBodyForgetPasswordText(),
                     const Customsizedbox(width: 0, height: 30),
                     Custom_Loading_Widget(
                         isLoading: state is TeacherSignInLoading,
-                        child: const TeacherSignInViewBodyCustomButton()),
+                        child: TeacherSignInViewBodyCustomButton(
+                          teacherLoginFormKey: teacherLoginFormKey,
+                          teacherSignInPasswordController:
+                              teacherSignInPasswordController,
+                          teacherSignInEmailController:
+                              teacherSignInEmailController,
+                        )),
                     const Customsizedbox(width: 0, height: 30),
                     CustomLoginViewBodyDonotHaveAccountText(
                       onTap: () {

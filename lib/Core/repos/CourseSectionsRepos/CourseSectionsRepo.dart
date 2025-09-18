@@ -2,6 +2,7 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
+import 'package:sintir/Core/entities/GetCourseSectionsResonseEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 
 abstract class CourseSectionsRepo {
@@ -10,8 +11,8 @@ abstract class CourseSectionsRepo {
     required String courseId,
   });
 
-  Future<Either<Failure, List<CourseSectionEntity>>> getCourseSections(
-      {required String courseId});
+  Future<Either<Failure, GetCourseSectionsResonseEntity>> getCourseSections(
+      {required String courseId, required bool isPaginate});
   // SectionItemsActionsRepo
   Future<Either<Failure, void>> addSectionItem({
     required sectionItem,

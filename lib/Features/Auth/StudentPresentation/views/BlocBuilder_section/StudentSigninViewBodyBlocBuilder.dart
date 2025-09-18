@@ -15,10 +15,35 @@ import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/Student_S
 import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/student_SigninTextfiledsection.dart';
 import 'package:sintir/constant.dart';
 
-class StudentSigninViewBodyBlocBuilder extends StatelessWidget {
+class StudentSigninViewBodyBlocBuilder extends StatefulWidget {
   const StudentSigninViewBodyBlocBuilder({
     super.key,
   });
+
+  @override
+  State<StudentSigninViewBodyBlocBuilder> createState() =>
+      _StudentSigninViewBodyBlocBuilderState();
+}
+
+class _StudentSigninViewBodyBlocBuilderState
+    extends State<StudentSigninViewBodyBlocBuilder> {
+  late TextEditingController studentSignInEmailController;
+  late TextEditingController studentSignInPasswordController;
+  late GlobalKey<FormState> studentSignInFormKey;
+  @override
+  void initState() {
+    super.initState();
+    studentSignInEmailController = TextEditingController();
+    studentSignInPasswordController = TextEditingController();
+    studentSignInFormKey = GlobalKey<FormState>();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    studentSignInEmailController.dispose();
+    studentSignInPasswordController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,28 +59,40 @@ class StudentSigninViewBodyBlocBuilder extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const Customsizedbox(width: 0, height: 12),
-                const student_SigninTextfiledsection(),
-                const Customsizedbox(width: 0, height: 16),
-                const StudentSignInForgetPasswordTextWidget(),
-                const Customsizedbox(width: 0, height: 30),
-                Custom_Loading_Widget(
-                  isLoading: state,
-                  child: const StudentSignInCustomButton(),
-                ),
-                const Customsizedbox(width: 0, height: 30),
-                CustomLoginViewBodyDonotHaveAccountText(onTap: () {
-                  GoRouter.of(context).push(StudentSignupView.routeName);
-                }),
-                const Customsizedbox(width: 0, height: 55),
-                const Customsepratedwidget(
-                  centerTitle: "او",
-                ),
-                const Customsizedbox(width: 0, height: 30),
-                const Student_SigninSocialbuttonssection()
-              ],
+            child: Form(
+              key: studentSignInFormKey,
+              child: Column(
+                children: [
+                  const Customsizedbox(width: 0, height: 12),
+                  student_SigninTextfiledsection(
+                    studentSignInEmailController: studentSignInEmailController,
+                    studentSignInPasswordController:
+                        studentSignInPasswordController,
+                  ),
+                  const Customsizedbox(width: 0, height: 16),
+                  const StudentSignInForgetPasswordTextWidget(),
+                  const Customsizedbox(width: 0, height: 30),
+                  Custom_Loading_Widget(
+                    isLoading: state,
+                    child: StudentSignInCustomButton(
+                        studetSignInFormKey: studentSignInFormKey,
+                        studentSignInEmailController:
+                            studentSignInEmailController,
+                        studentSignInPasswordController:
+                            studentSignInPasswordController),
+                  ),
+                  const Customsizedbox(width: 0, height: 30),
+                  CustomLoginViewBodyDonotHaveAccountText(onTap: () {
+                    GoRouter.of(context).push(StudentSignupView.routeName);
+                  }),
+                  const Customsizedbox(width: 0, height: 55),
+                  const Customsepratedwidget(
+                    centerTitle: "او",
+                  ),
+                  const Customsizedbox(width: 0, height: 30),
+                  const Student_SigninSocialbuttonssection()
+                ],
+              ),
             ),
           ),
         );

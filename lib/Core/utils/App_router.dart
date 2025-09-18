@@ -165,7 +165,10 @@ class App_router {
       GoRoute(
         path: Sendcoursereportview.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return const Sendcoursereportview();
+          return Sendcoursereportview(
+            requirmentsEntity: state.extra
+                as DisplayCourseBottomsheetNavigationRequirmentsEntity,
+          );
         },
       ),
       GoRoute(

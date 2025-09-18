@@ -1,72 +1,66 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/Custom_reset_password_cubit/Custom_reset_password_cubit.dart';
-import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
-import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
+import 'package:sintir/Core/widgets/CustomTextFields/CustomEmailTextField.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
+import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordViewBodyActionButton.dart';
+import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordViewBodyDescription.dart';
 import 'package:sintir/constant.dart';
 
-class CustomResetPasswordViewBodyBlocBuilder extends StatelessWidget {
+class CustomResetPasswordViewBodyBlocBuilder extends StatefulWidget {
   const CustomResetPasswordViewBodyBlocBuilder({
     super.key,
     required this.state,
   });
   final CustomResetPasswordState state;
+
+  @override
+  State<CustomResetPasswordViewBodyBlocBuilder> createState() =>
+      _CustomResetPasswordViewBodyBlocBuilderState();
+}
+
+class _CustomResetPasswordViewBodyBlocBuilderState
+    extends State<CustomResetPasswordViewBodyBlocBuilder> {
+  late GlobalKey<FormState> resetPasswordFormKey;
+  late TextEditingController emailController;
+  @override
+  void initState() {
+    super.initState();
+    emailController = TextEditingController();
+    resetPasswordFormKey = GlobalKey<FormState>();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: Variables.TeacherResetPasswordFormKey,
+      key: resetPasswordFormKey,
       child: Padding(
         padding: const EdgeInsets.symmetric(
             horizontal: KHorizontalPadding, vertical: KVerticalPadding),
         child: Column(
           children: [
-            SizedBox(
-              width: double.infinity,
-              child: Text(
-                "إذا كنت قد نسيت كلمة المرور الخاصة بك، لا داعي للقلق. نحن هنا لمساعدتك! يرجى إدخال عنوان بريدك الإلكتروني المسجل في الحقل أدناه. بعد ذلك، سنرسل لك رسالة تحتوي على تعليمات مفصلة لإعادة تعيين كلمة المرور الخاصة بك. تأكد من التحقق من صندوق الوارد والبريد غير الهام (سبام) الخاص بك. إذا لم تصلك الرسالة خلال بضع دقائق، يمكنك إعادة المحاولة.",
-                style:
-                    AppTextStyles.semiBold13Auto.copyWith(color: Colors.grey),
-                textAlign: TextAlign.center,
-              ),
+            const CustomResetPasswordViewBodyDescription(),
+            const Customsizedbox(width: 0, height: 20),
+            CustomEmailTextField(
+              controller: emailController,
+              isIconVisible: true,
             ),
             const Customsizedbox(width: 0, height: 20),
-            Customteaxtfield(
-                hintText: "البريد الإلكتروني",
-                prefixIcon: Icons.email,
-                obscureText: false,
-                controller: Variables.ResetPasswordController,
-                textInputType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "ادخل البريد الإلكتروني";
-                  } else if (!value.contains("@")) {
-                    return "ادخل البريد الإلكتروني صحيح";
-                  } else {
-                    return null;
-                  }
-                }),
-            const Customsizedbox(width: 0, height: 20),
             Custom_Loading_Widget(
-              isLoading: state is CustomResetPasswordLoading ? true : false,
-              child: Custombutton(
-                  text: "نسيت كلمة المرور",
-                  color: KMainColor,
-                  textColor: Colors.white,
-                  onPressed: () {
-                    if (Variables.TeacherResetPasswordFormKey.currentState!
-                        .validate()) {
-                      context
-                          .read<CustomResetPasswordCubit>()
-                          .sendResetPasswordEmail(
-                              email: Variables.ResetPasswordController.text);
-                    }
-                  }),
+              isLoading:
+                  widget.state is CustomResetPasswordLoading ? true : false,
+              child: CustomResetPasswordViewBodyActionButton(
+                  resetPasswordFormKey: resetPasswordFormKey,
+                  emailController: emailController),
             ),
             const Spacer(),
             Text(

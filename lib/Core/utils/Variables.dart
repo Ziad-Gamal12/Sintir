@@ -6,37 +6,17 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 
 abstract class Variables {
-  static GlobalKey<FormState> TeacherSignUpFormKey = GlobalKey<FormState>();
   static GlobalKey<ScaffoldState> courseDeatilsViewScaffoldKey =
       GlobalKey<ScaffoldState>();
-  static GlobalKey<FormState> StudnetSignUpFormKey = GlobalKey<FormState>();
-  static GlobalKey<FormState> TeacherLoginFormKey = GlobalKey<FormState>();
   static GlobalKey<FormState> AddCourseSectionVideoItemFormKey =
       GlobalKey<FormState>();
   static GlobalKey<FormState> AddCourseSectionFormKey = GlobalKey<FormState>();
-  static GlobalKey<FormState> TeacherResetPasswordFormKey =
-      GlobalKey<FormState>();
   static GlobalKey<ScaffoldState> HomeViewScaffoldKey =
       GlobalKey<ScaffoldState>();
   static GlobalKey<ScaffoldState> DisplaycoursevedioveiwScaffoldKey =
       GlobalKey<ScaffoldState>();
   static GlobalKey<FormState> AddCourseSectionSQLtestFormKey =
       GlobalKey<FormState>();
-  static TextEditingController TeacherSignUpPasswordController =
-      TextEditingController();
-  static TextEditingController TeacherLoginEmailController =
-      TextEditingController();
-  static TextEditingController TeacherLoginPasswordController =
-      TextEditingController();
-  static TextEditingController StudentSigninEmailController =
-      TextEditingController();
-  static TextEditingController StudentSigninPasswordController =
-      TextEditingController();
-  static TextEditingController ResetPasswordController =
-      TextEditingController();
-
-  static TextEditingController studentSignUpPasswordController =
-      TextEditingController();
   static TextEditingController AddCourseCourseNameController =
       TextEditingController();
   static TextEditingController AddCourseCourseDescriptionController =

@@ -6,9 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/ContentCreaterEntity.dart';
-import 'package:sintir/Core/widgets/customListTileWidget.dart';
-
-import '../../utils/imageAssets.dart';
+import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseContentCreatorListTile.dart';
 
 class CourseBottomSheetHeader extends StatelessWidget {
   const CourseBottomSheetHeader({
@@ -23,10 +21,10 @@ class CourseBottomSheetHeader extends StatelessWidget {
     return Row(
       children: [
         IntrinsicWidth(
-          child: Customlisttilewidget(
+          child: CourseContentCreatorListTile(
               title: courseContentCreater.name,
               subtitle: courseContentCreater.title,
-              image: Assets.assetsImagesUserAvatar),
+              image: courseContentCreater.profileImageUrl),
         ),
         const Spacer(),
         IconButton(

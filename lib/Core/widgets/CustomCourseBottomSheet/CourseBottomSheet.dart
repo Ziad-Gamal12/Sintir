@@ -25,6 +25,7 @@ class _CourseBottomSheetState extends State<CourseBottomSheet>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     DisplayCourseBottomsheetNavigationRequirmentsEntity
         bottomsheetnavigationrequirmentsentity =
         DisplayCourseBottomsheetNavigationRequirmentsEntity(
@@ -34,19 +35,21 @@ class _CourseBottomSheetState extends State<CourseBottomSheet>
         subscribtionRepo: getIt<CourseSubscibtionsRepo>(),
         course: widget.courseEntity,
       ),
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
+      child: IntrinsicHeight(
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+              border: Border.all(color: Colors.black, width: 1)),
+          child: SafeArea(
+            child: Provider.value(
+              value: bottomsheetnavigationrequirmentsentity,
+              child: const CourseBottomSheetBody(),
             ),
-            border: Border.all(color: Colors.black, width: 1)),
-        child: SafeArea(
-          child: Provider.value(
-            value: bottomsheetnavigationrequirmentsentity,
-            child: const CourseBottomSheetBody(),
           ),
         ),
       ),

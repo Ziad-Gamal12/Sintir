@@ -36,6 +36,7 @@ class _CustomDisplayingVideoWidgetState
   @override
   void dispose() {
     videoPlayerController.dispose();
+    chewieController.dispose();
     super.dispose();
   }
 

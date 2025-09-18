@@ -4,7 +4,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 
 class CourseDetailsCourseReportsListView extends StatelessWidget {
   const CourseDetailsCourseReportsListView({super.key, required this.reports});
-  final List<Coursereportsitementity> reports;
+  final List<CourseReportEntity> reports;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

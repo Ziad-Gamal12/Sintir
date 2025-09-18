@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
@@ -11,11 +10,14 @@ import 'package:sintir/constant.dart';
 
 class teacherSignUpViewBodyCustomButton extends StatelessWidget {
   const teacherSignUpViewBodyCustomButton(
-      {super.key, required this.isChecked, required this.formKey});
+      {super.key,
+      required this.isChecked,
+      required this.teacherSignUpPasswordController,
+      required this.formKey});
 
   final bool isChecked;
   final GlobalKey<FormState> formKey;
-
+  final TextEditingController teacherSignUpPasswordController;
   @override
   Widget build(BuildContext context) {
     return Custombutton(
@@ -31,7 +33,7 @@ class teacherSignUpViewBodyCustomButton extends StatelessWidget {
               BlocProvider.of<TeacherSignUpCubit>(context)
                   .createUserWithEmailAndPassword(
                 userentity: context.read<UserEntity>(),
-                password: Variables.TeacherSignUpPasswordController.text,
+                password: teacherSignUpPasswordController.text,
               );
             } else {
               errordialog(context, "قم بقبول الشروط والاحكام").show();

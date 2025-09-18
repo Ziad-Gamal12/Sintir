@@ -10,35 +10,28 @@ import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherSi
 import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherSignUpPhoneNumberFiled.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherSigninPasswordTextField.dart';
 
-class TeacherSignUPTextFieldsSection extends StatefulWidget {
+class TeacherSignUPTextFieldsSection extends StatelessWidget {
   const TeacherSignUPTextFieldsSection({
     super.key,
+    required this.teacherSignUpPasswordController,
   });
+  final TextEditingController teacherSignUpPasswordController;
 
   @override
-  State<TeacherSignUPTextFieldsSection> createState() =>
-      _TeacherSignUPTextFieldsSectionState();
-}
-
-class _TeacherSignUPTextFieldsSectionState
-    extends State<TeacherSignUPTextFieldsSection> {
-  @override
-  Widget build(
-    BuildContext context,
-  ) {
-    return const Column(
+  Widget build(BuildContext context) {
+    return Column(
       children: [
-        TeacherSignFirstAndLastNameField(),
-        SizedBox(height: 10),
-        TeacherSignUpEmailAddressFiled(),
-        SizedBox(height: 10),
-        TeacherSignUpAddressFiled(),
-        SizedBox(height: 10),
-        TeacherSignUpPhoneNumberFiled(),
-        SizedBox(height: 10),
-        TeacherSignUSubjectFiled(),
-        SizedBox(height: 10),
-        SizedBox(
+        const TeacherSignFirstAndLastNameField(),
+        const SizedBox(height: 10),
+        const TeacherSignUpEmailAddressFiled(),
+        const SizedBox(height: 10),
+        const TeacherSignUpAddressFiled(),
+        const SizedBox(height: 10),
+        const TeacherSignUpPhoneNumberFiled(),
+        const SizedBox(height: 10),
+        const TeacherSignUSubjectFiled(),
+        const SizedBox(height: 10),
+        const SizedBox(
           width: double.infinity,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -48,8 +41,10 @@ class _TeacherSignUPTextFieldsSectionState
             ],
           ),
         ),
-        SizedBox(height: 10),
-        TeacherSigninPasswordTextField()
+        const SizedBox(height: 10),
+        TeacherSignUpPasswordTextField(
+          teacherSignUpPasswordController: teacherSignUpPasswordController,
+        )
       ],
     );
   }

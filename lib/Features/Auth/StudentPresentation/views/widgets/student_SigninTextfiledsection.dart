@@ -1,74 +1,30 @@
 // ignore_for_file: file_names, camel_case_types
 
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
-import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
+import 'package:sintir/Core/widgets/CustomTextFields/CustomEmailTextField.dart';
+import 'package:sintir/Core/widgets/CustomTextFields/CustomPasswordTextField.dart';
 
-class student_SigninTextfiledsection extends StatefulWidget {
-  const student_SigninTextfiledsection({super.key});
+class student_SigninTextfiledsection extends StatelessWidget {
+  const student_SigninTextfiledsection(
+      {super.key,
+      required this.studentSignInEmailController,
+      required this.studentSignInPasswordController});
+  final TextEditingController studentSignInEmailController;
+  final TextEditingController studentSignInPasswordController;
 
-  @override
-  State<student_SigninTextfiledsection> createState() =>
-      _SigninTextfiledsectionState();
-}
-
-bool _obscureText = true;
-
-class _SigninTextfiledsectionState
-    extends State<student_SigninTextfiledsection> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Customteaxtfield(
-            hintText: "البريد الالكتروني",
-            prefixIcon: Icons.email_outlined,
-            obscureText: false,
-            controller: Variables.StudentSigninEmailController,
-            textInputType: TextInputType.emailAddress,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return "ادخل البريد الالكتروني";
-              } else if (!value.contains("@")) {
-                return "ادخل البريد الالكتروني صحيح";
-              } else if (!RegExp(
-                      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-                  .hasMatch(value)) {
-                return "ادخل البريد الأكتروني الصحيح";
-              }
-              return null;
-            }),
+        CustomEmailTextField(
+          controller: studentSignInEmailController,
+          isIconVisible: true,
+        ),
         const Customsizedbox(width: 0, height: 10),
-        Customteaxtfield(
-            suffixIcon: IconButton(
-                onPressed: () {
-                  setState(() {
-                    _obscureText = !_obscureText;
-                  });
-                },
-                icon: _obscureText
-                    ? const Icon(
-                        Icons.visibility_off_outlined,
-                        size: 24,
-                        color: Color(0xffAEAEB2),
-                      )
-                    : const Icon(
-                        Icons.visibility_outlined,
-                        size: 24,
-                        color: Color(0xffAEAEB2),
-                      )),
-            hintText: "كلمة المرور",
-            prefixIcon: Icons.lock_outline,
-            obscureText: _obscureText,
-            controller: Variables.StudentSigninPasswordController,
-            textInputType: TextInputType.visiblePassword,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return "ادخل كلمة المرور";
-              }
-              return null;
-            })
+        CustomPasswordTextField(
+          controller: studentSignInPasswordController,
+        )
       ],
     );
   }

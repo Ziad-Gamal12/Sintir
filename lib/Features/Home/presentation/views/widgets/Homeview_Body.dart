@@ -33,6 +33,12 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    homeSearchController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Customrefreshwidget(
       onRefresh: () async {

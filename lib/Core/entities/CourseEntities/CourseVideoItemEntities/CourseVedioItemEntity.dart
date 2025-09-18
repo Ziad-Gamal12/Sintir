@@ -28,5 +28,5 @@ class CourseVideoItemEntity {
       required this.id,
       required this.durationTime,
       this.file,
-      this.type = "Vedio"});
+      this.type = "Video"});
 }

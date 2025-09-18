@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
@@ -14,9 +13,11 @@ class StudentSignUpViewBodyBlocBuilder_button extends StatelessWidget {
     super.key,
     required this.isTermsAndConditionChecked,
     required this.stundentSignUpFormKey,
+    required this.studentSignUpPasswordController,
   });
   final GlobalKey<FormState> stundentSignUpFormKey;
   final bool isTermsAndConditionChecked;
+  final TextEditingController studentSignUpPasswordController;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class StudentSignUpViewBodyBlocBuilder_button extends StatelessWidget {
               BlocProvider.of<StudentSignUpCubit>(context)
                   .createUserWithEmailAndPassword(
                 userEntity: context.read<UserEntity>(),
-                password: Variables.studentSignUpPasswordController.text,
+                password: studentSignUpPasswordController.text,
               );
             } else {
               errordialog(context, "قم بقبول الشروط والاحكام").show();

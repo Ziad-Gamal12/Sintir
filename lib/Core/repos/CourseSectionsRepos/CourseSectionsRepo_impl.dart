@@ -1,11 +1,15 @@
 // ignore_for_file: file_names
 
+import 'dart:isolate';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
-import 'package:sintir/Core/entities/FireStorePaginateResponse.dart';
 import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
+import 'package:sintir/Core/entities/GetCourseSectionsResonseEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
@@ -29,51 +33,83 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
     required CourseSectionEntity section,
   }) async {
     try {
-      Map<String, dynamic> json =
-          CourseSectionModel.fromEntity(coursSectionsListItemEntity: section)
-              .toJson();
+      final json = CourseSectionModel.fromEntity(
+        coursSectionsListItemEntity: section,
+      ).toJson();
 
       await datebaseservice.setData(
         data: json,
         requirements: FireStoreRequirmentsEntity(
-            collection: BackendEndpoints.coursesCollection,
-            docId: courseId,
-            subCollection: BackendEndpoints.sectionsSubCollection,
-            subDocId: section.id),
+          collection: BackendEndpoints.coursesCollection,
+          docId: courseId,
+          subCollection: BackendEndpoints.sectionsSubCollection,
+          subDocId: section.id,
+        ),
       );
 
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e) {
+    } catch (_) {
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
 
+  DocumentSnapshot? getCourseSectionsLastDoc;
+  final Map<String, dynamic> _baseQuery = {
+    "startAfter": null,
+    "limit": 10,
+  };
+
   @override
-  Future<Either<Failure, List<CourseSectionEntity>>> getCourseSections(
-      {required String courseId}) async {
+  Future<Either<Failure, GetCourseSectionsResonseEntity>> getCourseSections({
+    required String courseId,
+    required bool isPaginate,
+  }) async {
     try {
-      FireStoreResponse response = await datebaseservice.getData(
+      final query = Map<String, dynamic>.from(_baseQuery);
+      query["startAfter"] = isPaginate ? getCourseSectionsLastDoc : null;
+      final response = await datebaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
           collection: BackendEndpoints.coursesCollection,
           docId: courseId,
           subCollection: BackendEndpoints.sectionsSubCollection,
         ),
+        query: query,
       );
+
       if (response.listData == null) {
         return left(ServerFailure(message: "البيانات غير موجودة"));
       }
-      if (response.listData!.isEmpty) return right([]);
-      List<CourseSectionEntity> courseSections = response.listData!
-          .map((e) => CourseSectionModel.fromJson(e).toEntity())
-          .toList();
-      return right(courseSections);
+      if (response.listData!.isEmpty) {
+        return right(GetCourseSectionsResonseEntity(
+          isPaginate: isPaginate,
+          sections: [],
+          hasMore: false,
+        ));
+      }
+
+      if (response.lastDocumentSnapshot != null) {
+        getCourseSectionsLastDoc = response.lastDocumentSnapshot;
+      }
+
+      final courseSections =
+          await compute(_parseCourseSections, response.listData!);
+
+      return right(GetCourseSectionsResonseEntity(
+        isPaginate: isPaginate,
+        sections: courseSections,
+        hasMore: response.hasMore ?? false,
+      ));
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e) {
+    } catch (_) {
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
+  }
+
+  static List<CourseSectionEntity> _parseCourseSections(List<dynamic> data) {
+    return data.map((e) => CourseSectionModel.fromJson(e).toEntity()).toList();
   }
 
   @override
@@ -83,32 +119,42 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
     required String sectionId,
   }) async {
     try {
-      if (sectionItem is CourseTestEntity ||
-          sectionItem is CourseVideoItemEntity ||
-          sectionItem is CourseFileEntity) {
-        Map<String, dynamic> json =
-            getSectionItemData(sectionItem: sectionItem);
-
-        datebaseservice.setData(
-            data: json,
-            requirements: getAddingSectionItemRequirments(
-              rootCollection: BackendEndpoints.coursesCollection,
-              rootDocId: courseId,
-              subCollection: BackendEndpoints.sectionsSubCollection,
-              subDocId: sectionId,
-              subCollection2: BackendEndpoints.sectionItemsSubCollection,
-              sub2DocId: sectionItem.id as String,
-            ));
-
-        return right(null);
-      } else {
+      if (sectionItem is! CourseTestEntity &&
+          sectionItem is! CourseVideoItemEntity &&
+          sectionItem is! CourseFileEntity) {
         return left(
             ServerFailure(message: "العنصر غير معرف, يرجى المحاولة مرة أخرى"));
       }
+      final json = await Isolate.run(() => _getSectionItemData(sectionItem));
+      await datebaseservice.setData(
+        data: json,
+        requirements: getAddingSectionItemRequirments(
+          rootCollection: BackendEndpoints.coursesCollection,
+          rootDocId: courseId,
+          subCollection: BackendEndpoints.sectionsSubCollection,
+          subDocId: sectionId,
+          subCollection2: BackendEndpoints.sectionItemsSubCollection,
+          sub2DocId: (sectionItem.id) as String,
+        ),
+      );
+
+      return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e) {
+    } catch (_) {
       return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+
+  static Map<String, dynamic> _getSectionItemData(dynamic sectionItem) {
+    if (sectionItem is CourseTestEntity) {
+      return Coursetestmodel.fromEntity(sectionItem).toJson();
+    } else if (sectionItem is CourseVideoItemEntity) {
+      return Coursevedioitemmodel.fromEntity(sectionItem).toJson();
+    } else if (sectionItem is CourseFileEntity) {
+      return Coursefilemodel.fromEntity(sectionItem).toJson();
+    } else {
+      return {};
     }
   }
 
@@ -134,30 +180,13 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
     );
   }
 
-  Map<String, dynamic> getSectionItemData({required dynamic sectionItem}) {
-    if (sectionItem is CourseTestEntity) {
-      Map<String, dynamic> json =
-          Coursetestmodel.fromEntity(sectionItem).toJson();
-      return json;
-    } else if (sectionItem is CourseVideoItemEntity) {
-      Map<String, dynamic> json =
-          Coursevedioitemmodel.fromEntity(sectionItem).toJson();
-      return json;
-    } else if (sectionItem is CourseFileEntity) {
-      Map<String, dynamic> json =
-          Coursefilemodel.fromEntity(sectionItem).toJson();
-      return json;
-    } else {
-      return {};
-    }
-  }
-
   @override
-  Future<Either<Failure, List>> getSectionsItems(
-      {required String courseId, required String sectionId}) async {
+  Future<Either<Failure, List>> getSectionsItems({
+    required String courseId,
+    required String sectionId,
+  }) async {
     try {
-      List items = [];
-      FireStoreResponse data = await datebaseservice.getData(
+      final data = await datebaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
           collection: BackendEndpoints.coursesCollection,
           docId: courseId,
@@ -166,26 +195,35 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
           subCollection2: BackendEndpoints.sectionItemsSubCollection,
         ),
       );
+
       if (data.listData == null) {
         return left(ServerFailure(message: "البيانات غير موجودة"));
       }
       if (data.listData!.isEmpty) {
         return right([]);
       }
-      for (var item in data.listData!) {
-        if (item["type"] == "Test") {
-          items.add(Coursetestmodel.fromJson(item).toEntity());
-        } else if (item["type"] == "Vedio") {
-          items.add(Coursevedioitemmodel.fromJson(item).toEntity());
-        } else {
-          items.add(Coursefilemodel.fromJson(item).toEnity());
-        }
-      }
+
+      final items = await compute(_parseSectionItems, data.listData!);
+
       return right(items);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e) {
+    } catch (_) {
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
+  }
+
+  static List _parseSectionItems(List<dynamic> listData) {
+    final items = [];
+    for (var item in listData) {
+      if (item["type"] == "Test") {
+        items.add(Coursetestmodel.fromJson(item).toEntity());
+      } else if (item["type"] == "Video") {
+        items.add(Coursevedioitemmodel.fromJson(item).toEntity());
+      } else {
+        items.add(Coursefilemodel.fromJson(item).toEntity());
+      }
+    }
+    return items;
   }
 }

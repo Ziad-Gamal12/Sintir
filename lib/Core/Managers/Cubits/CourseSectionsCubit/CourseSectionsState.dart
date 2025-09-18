@@ -36,9 +36,9 @@ final class FileUploadedingLoading extends CourseSectionsState {}
 final class GetCourseSectionsLoading extends CourseSectionsState {}
 
 final class GetCourseSectionsSuccess extends CourseSectionsState {
-  final List<CourseSectionEntity> sections;
+  final GetCourseSectionsResonseEntity response;
 
-  GetCourseSectionsSuccess({required this.sections});
+  GetCourseSectionsSuccess({required this.response});
 }
 
 final class GetCourseSectionsFailure extends CourseSectionsState {
