@@ -18,7 +18,7 @@ class Testitemrepoimpli implements Testitemrepo {
       {required this.storageService, required this.datebaseservice});
   @override
   Future<Either<Failure, void>> uploadTestQuestionsImages(
-      {required List<Coursetestquestionentity> questions}) async {
+      {required List<CourseTestQuestionEntity> questions}) async {
     try {
       for (var question in questions) {
         if (question.imageFile != null) {

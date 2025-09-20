@@ -27,7 +27,7 @@ class EditCourseSaveButton extends StatelessWidget {
           }
         } else {
           ShowErrorSnackBar(
-              context: context, errMessage: "لم يتم تعديل المعلومات");
+              context: context, message: "لم يتم تعديل المعلومات");
         }
       },
     );

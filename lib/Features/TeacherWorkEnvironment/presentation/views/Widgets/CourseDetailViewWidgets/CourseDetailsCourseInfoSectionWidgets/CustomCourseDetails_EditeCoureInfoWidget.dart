@@ -31,11 +31,11 @@ class EditCourseInfoSection extends StatelessWidget {
                         AppTextStyles.regular14.copyWith(color: Colors.white)),
                 backgroundColor: Colors.green);
           } else if (state is UpdateCourseFailure) {
-            ShowErrorSnackBar(context: context, errMessage: state.errmessage);
+            ShowErrorSnackBar(context: context, message: state.errmessage);
           } else if (state is UpdateCourseCubitAssetPicked) {
             coursePoster = state.file;
           } else if (state is UpdateCourseCubitAssetFailure) {
-            ShowErrorSnackBar(context: context, errMessage: state.errmessage);
+            ShowErrorSnackBar(context: context, message: state.errmessage);
           }
         },
         child: Provider.value(

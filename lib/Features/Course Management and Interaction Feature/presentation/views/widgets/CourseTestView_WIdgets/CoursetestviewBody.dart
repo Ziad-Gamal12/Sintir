@@ -87,7 +87,6 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
                       stopWatchTimer: stopWatchTimer, widget: widget),
                   Coursetestquestionsnavigation(
                     currentQuestionIndex: currentQuestionIndex,
-                    widget: widget,
                     selectQuestionAction: (value) {
                       currentQuestionIndex = value;
                       setState(() {});

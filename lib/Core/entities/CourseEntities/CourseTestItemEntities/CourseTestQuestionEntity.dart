@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionSolutionEntity.dart';
 
-class Coursetestquestionentity {
+class CourseTestQuestionEntity {
   String? questionTitle;
   List<Coursetestquestionsolutionentity> solutions;
   TextEditingController questionController;
@@ -14,7 +14,7 @@ class Coursetestquestionentity {
   String? selectedSolution;
   File? imageFile;
 
-  Coursetestquestionentity(
+  CourseTestQuestionEntity(
       {required this.questionTitle,
       required this.solutions,
       required this.isOpened,

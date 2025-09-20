@@ -15,7 +15,7 @@ class Addcoursesqladdquestionlistitem extends StatefulWidget {
     required this.coursetestquestionentity,
     required this.coursetestentity,
   });
-  final Coursetestquestionentity coursetestquestionentity;
+  final CourseTestQuestionEntity coursetestquestionentity;
   final CourseTestEntity coursetestentity;
   @override
   State<Addcoursesqladdquestionlistitem> createState() =>

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestViewNavigationsRequirmentsEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CoursetestviewBody.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CustomCountWidget.dart';
+import 'package:sintir/constant.dart';
 
 class Coursetestquestionsnavigation extends StatefulWidget {
   const Coursetestquestionsnavigation({
     super.key,
-    required this.widget,
     required this.selectQuestionAction,
     required this.currentQuestionIndex,
   });
-  final CoursetestviewBody widget;
   final ValueChanged<int> selectQuestionAction;
   final int currentQuestionIndex;
 
@@ -43,18 +42,24 @@ class _CoursetestquestionsnavigationState
             child: SizedBox(
               width: 40,
               child: CustomCountWidget(
-                countColor: e.key == widget.currentQuestionIndex
-                    ? Colors.red.shade500
-                    : Colors.grey.shade300,
+                countColor: getCountColor(e.value),
                 count: "${e.key + 1}",
-                countTextColor: e.key == widget.currentQuestionIndex
-                    ? Colors.white
-                    : Colors.black,
+                countTextColor: Colors.black,
               ),
             ),
           ),
         );
       }).toList(),
     );
+  }
+
+  Color getCountColor(CourseTestQuestionEntity question) {
+    if (question.isOpened && question.selectedSolution == null) {
+      return Colors.red.shade500;
+    } else if (question.isOpened && question.selectedSolution != null) {
+      return KMainColor;
+    } else {
+      return Colors.grey.shade300;
+    }
   }
 }

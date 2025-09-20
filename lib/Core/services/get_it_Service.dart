@@ -74,6 +74,7 @@ void setup_Getit() {
       SectionItemsActionsRepoImpli(datebaseservice: getIt<Databaseservice>()));
   getIt.registerSingleton<VideoItemRepo>(VideoItemRepoImpli(
     storageService: getIt<StorageService>(),
+    databaseservice: getIt<Databaseservice>(),
   ));
   getIt.registerSingleton<FileItemRepo>(FileItemRepoImpli(
     storageService: getIt<StorageService>(),

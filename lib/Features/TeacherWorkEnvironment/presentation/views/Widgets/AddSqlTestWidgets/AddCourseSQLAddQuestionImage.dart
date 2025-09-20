@@ -12,7 +12,7 @@ class Addcoursesqladdquestionimage extends StatefulWidget {
       required this.pickerassetsservice,
       required this.coursetestquestionentity});
   final Pickerassetsservice pickerassetsservice;
-  final Coursetestquestionentity coursetestquestionentity;
+  final CourseTestQuestionEntity coursetestquestionentity;
   @override
   State<Addcoursesqladdquestionimage> createState() =>
       _AddcoursesqladdquestionimageState();

@@ -89,7 +89,7 @@ class _DisplaycoursevedioveiwBodyState
                           const SizedBox(
                             height: 25,
                           ),
-                          CustomSendNoteText(),
+                          const CustomSendNoteText(),
                         ],
                       ),
                     ),

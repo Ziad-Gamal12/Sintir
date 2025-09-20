@@ -1,59 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Core/widgets/CustomButton.dart';
-import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
-import 'package:sintir/constant.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:sintir/Core/Managers/Cubits/video_item_cubit/video_item_cubit.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVideoviewnavigationsrequirmentsentity.dart';
+import 'package:sintir/Core/helper/GetUserData.dart';
+import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
+import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart'
+    show SectionItemsActionsRepo;
+import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepo.dart';
+import 'package:sintir/Core/services/get_it_Service.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/VideoNoteEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/DisplayCourseVedioView_Widgets/CustomSendNoteWidgetBody.dart';
 
-class CustomSendNoteWidget extends StatelessWidget {
+class CustomSendNoteWidget extends StatefulWidget {
   const CustomSendNoteWidget({
     super.key,
-    required this.controller,
+    required this.coursevideoviewnavigationsrequirmentsentity,
   });
 
-  final TextEditingController controller;
+  final Coursevideoviewnavigationsrequirmentsentity
+      coursevideoviewnavigationsrequirmentsentity;
+  @override
+  State<CustomSendNoteWidget> createState() => _CustomSendNoteWidgetState();
+}
+
+class _CustomSendNoteWidgetState extends State<CustomSendNoteWidget> {
+  late VideoNoteEntity note;
+
+  @override
+  void initState() {
+    super.initState();
+    note = VideoNoteEntity(
+        user: getUserData(), dateTime: DateTime.now(), note: "");
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-          horizontal: KHorizontalPadding, vertical: 20),
-      height: MediaQuery.sizeOf(context).height * .35,
-      width: double.infinity,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-          border: Border.all(color: Colors.black, width: 1)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "ارسال ملاحظه",
-            style: AppTextStyles.bold20Auto.copyWith(
-              color: Colors.black,
-            ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          Customteaxtfield(
-              maxLines: 4,
-              hintText: "اكتب ملاحظتك هنا",
-              obscureText: false,
-              controller: controller,
-              textInputType: TextInputType.text,
-              validator: (value) {
-                return null;
-              }),
-          const Spacer(),
-          Custombutton(
-              text: "ارسال",
-              color: KSecondaryColor,
-              textColor: Colors.white,
-              onPressed: () {})
-        ],
+    return BlocProvider(
+      create: (context) => VideoItemCubit(
+        videoItemRepo: getIt<VideoItemRepo>(),
+        assetspickerrepo: getIt<Assetspickerrepo>(),
+        sectionItemsActionsRepo: getIt<SectionItemsActionsRepo>(),
+      ),
+      child: Provider.value(
+        value: note,
+        child: CustomSendNoteWidgetBody(
+          coursevideoviewnavigationsrequirmentsentity:
+              widget.coursevideoviewnavigationsrequirmentsentity,
+        ),
       ),
     );
   }

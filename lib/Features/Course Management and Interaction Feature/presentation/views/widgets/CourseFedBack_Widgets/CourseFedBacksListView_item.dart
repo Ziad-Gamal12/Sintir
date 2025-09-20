@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Core/widgets/CustomCachedNetworkImage.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
-import 'package:svg_flutter/svg_flutter.dart';
 
 class CoursefedbackslistviewItem extends StatelessWidget {
   const CoursefedbackslistviewItem({super.key, required this.item});
@@ -11,9 +11,9 @@ class CoursefedbackslistviewItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: const Color(0xffF2F2F7),
+        color: Colors.grey.shade100,
         borderRadius: BorderRadius.circular(10),
       ),
       child: ListTile(
@@ -31,7 +31,12 @@ class CoursefedbackslistviewItem extends StatelessWidget {
             style: AppTextStyles.light14.copyWith(color: Colors.black),
           ),
         ),
-        leading: SvgPicture.asset(item.userImage),
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(50),
+          child: CustomCachedNetworkImage(
+            imageUrl: item.userImage,
+          ),
+        ),
         trailing: IntrinsicWidth(
           child: Column(
             children: [

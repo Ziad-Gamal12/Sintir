@@ -9,6 +9,7 @@ import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
 import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepo.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/VideoNoteEntity.dart';
 
 part 'video_item_state.dart';
 
@@ -77,6 +78,21 @@ class VideoItemCubit extends Cubit<VideoItemState> {
       emit(JoinToVideoItemFailure(errMessage: failure.message));
     }, (sucUpdateCourseSectionsFailurecess) {
       emit(JoinToVideoItemSuccess());
+    });
+  }
+
+  Future<void> addVideoNote(
+      {required String coursId,
+      required String sectionId,
+      required String videoId,
+      required VideoNoteEntity note}) async {
+    emit(AddVideoNoteLoading());
+    final result = await videoItemRepo.addVideoNote(
+        coursId: coursId, sectionId: sectionId, videoId: videoId, note: note);
+    result.fold((failure) {
+      emit(AddVideoNoteFailure(errMessage: failure.message));
+    }, (sucUpdateCourseSectionsFailurecess) {
+      emit(AddVideoNoteSuccess());
     });
   }
 }

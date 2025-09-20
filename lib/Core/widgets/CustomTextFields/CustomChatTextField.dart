@@ -4,16 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/constant.dart';
 
 class CustomChatTextField extends StatefulWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator;
   List<TextInputFormatter>? inputFormatters;
   final VoidCallback onPressed;
+  bool? isLoading;
   CustomChatTextField(
       {super.key,
       this.inputFormatters,
       required this.onPressed,
+      this.isLoading,
       required this.controller,
       required this.validator});
 
@@ -33,7 +36,9 @@ class _CustomChatTextFieldState extends State<CustomChatTextField> {
 
   @override
   void initState() {
-    getisChatTextFieldEmpty();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getisChatTextFieldEmpty();
+    });
     super.initState();
   }
 
@@ -60,25 +65,22 @@ class _CustomChatTextFieldState extends State<CustomChatTextField> {
             hintText: "أكتب رسالتك هنا...",
             hintStyle:
                 AppTextStyles.bold13.copyWith(color: Colors.grey.shade500),
-            prefixIcon: IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  FontAwesomeIcons.paperclip,
-                  size: 24,
-                  color: Color(0xffAEAEB2),
-                )),
-            suffixIcon: IconButton(
-              icon: Icon(
-                FontAwesomeIcons.paperPlane,
-                size: 24,
-                color: isChatTextFieldEmpty == true
-                    ? const Color(0xffAEAEB2)
-                    : Colors.black,
-              ),
-              onPressed: () {
-                widget.onPressed();
-              },
-            ),
+            suffixIcon: widget.isLoading == true
+                ? const CircularProgressIndicator(
+                    color: KMainColor,
+                  )
+                : IconButton(
+                    icon: Icon(
+                      FontAwesomeIcons.paperPlane,
+                      size: 24,
+                      color: isChatTextFieldEmpty == true
+                          ? const Color(0xffAEAEB2)
+                          : Colors.black,
+                    ),
+                    onPressed: () {
+                      widget.onPressed();
+                    },
+                  ),
             border: border,
             focusedBorder: border,
             enabledBorder: border,

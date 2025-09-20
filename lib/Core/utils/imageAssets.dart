@@ -234,9 +234,9 @@ class Assets {
   /// assets/images/userAvatar.svg
   static const String assetsImagesUserAvatar = "assets/images/userAvatar.svg";
 
-  /// Assets for assetsImagesVedioIcon
-  /// assets/images/VedioIcon.svg
-  static const String assetsImagesVedioIcon = "assets/images/VedioIcon.svg";
+  /// Assets for assetsImagesVideoIcon
+  /// assets/images/VideoIcon.svg
+  static const String assetsImagesVideoIcon = "assets/images/VideoIcon.svg";
 
   /// Assets for assetsImagesWarning
   /// assets/images/warning.png

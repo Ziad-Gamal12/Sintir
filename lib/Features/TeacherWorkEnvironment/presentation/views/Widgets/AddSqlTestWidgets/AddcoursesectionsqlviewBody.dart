@@ -22,7 +22,7 @@ class AddcoursesectionsqlviewBody extends StatelessWidget {
       type: "Test",
       id: "${DateTime.now().toIso8601String()}-Test",
       questions: [
-        Coursetestquestionentity(
+        CourseTestQuestionEntity(
             isOpened: false,
             questionTitle: "",
             solutions: [

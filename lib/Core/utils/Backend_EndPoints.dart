@@ -10,6 +10,8 @@ class BackendEndpoints {
   static String blockedStatus = "Blocked";
   static String studentRole = "Student";
   static String teacherRole = "Teacher";
+  static String courseSectionItemsCollectionName = "Items";
+  static String videoNotesSubCollection = "VideoNotes";
   static String addTeacherDataCollectionName = "Teachers";
   static String getTeacherDataCollectionName = "Teachers";
   static String addStudentDataCollectionName = "Students";
@@ -53,24 +55,5 @@ class BackendEndpoints {
   static String getStudentDataCollectionName = "Students";
   static String chieckIsStudentPhoneNumberExistCollectionName = "Students";
   static String isLogined = "isLogined";
-  static String saveUserData = "userData";
-  static String emailKey = "email";
-  static String passwordKey = "password";
-  static String uidKey = "uid";
-  static String nameKey = "name";
-  static String firstNameKey = "firstName";
-  static String lastNameKey = "lastName";
-  static String addressKey = "address";
-  static String phoneNumberKey = "phoneNumber";
-  static String subjectKey = "subject";
-  static String workExperienceKey = "workExperience";
-  static String genderKey = "gender";
-  static String profilePicurlKey = "profilePicurl";
-  static String steteKey = "stete";
-  static String waiting = "Waiting";
-  static String agreed = "Agreed";
-  static String rejected = "Rejected";
-  static String socialLinksKey = "socialLinks";
-  static String kindKey = "kind";
   static String joinedDateKey = "joinedDate";
 }

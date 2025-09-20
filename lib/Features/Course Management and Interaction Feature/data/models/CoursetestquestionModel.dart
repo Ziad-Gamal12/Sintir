@@ -25,7 +25,7 @@ class Coursetestquestionmodel {
           imageUrl: json["imageUrl"],
           selectedSolution: json["selectedSolution"]);
   factory Coursetestquestionmodel.fromEntity(
-          Coursetestquestionentity courseTestQuestionModel) =>
+          CourseTestQuestionEntity courseTestQuestionModel) =>
       Coursetestquestionmodel(
           questionTitle: courseTestQuestionModel.questionTitle,
           solutions: courseTestQuestionModel.solutions
@@ -37,7 +37,7 @@ class Coursetestquestionmodel {
           imageUrl: courseTestQuestionModel.imageUrl,
           selectedSolution: courseTestQuestionModel.selectedSolution);
 
-  Coursetestquestionentity toEntity() => Coursetestquestionentity(
+  CourseTestQuestionEntity toEntity() => CourseTestQuestionEntity(
       questionTitle: questionTitle,
       solutions: solutions
           .map((e) => Coursetestquestionsolutionmodel.fromJson(e).toEntity())

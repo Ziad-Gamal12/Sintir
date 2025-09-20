@@ -44,3 +44,12 @@ final class JoinToVideoItemFailure extends VideoItemState {
   final String errMessage;
   JoinToVideoItemFailure({required this.errMessage});
 }
+
+final class AddVideoNoteLoading extends VideoItemState {}
+
+final class AddVideoNoteSuccess extends VideoItemState {}
+
+final class AddVideoNoteFailure extends VideoItemState {
+  final String errMessage;
+  AddVideoNoteFailure({required this.errMessage});
+}

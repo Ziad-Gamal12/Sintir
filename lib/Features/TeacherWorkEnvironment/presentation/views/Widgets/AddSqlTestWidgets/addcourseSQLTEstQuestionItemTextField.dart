@@ -8,7 +8,7 @@ class AddcourseSQLTEstQuestionItemTextField extends StatelessWidget {
     super.key,
     required this.coursetestquestionentity,
   });
-  final Coursetestquestionentity coursetestquestionentity;
+  final CourseTestQuestionEntity coursetestquestionentity;
   @override
   Widget build(BuildContext context) {
     return Customteaxtfield(

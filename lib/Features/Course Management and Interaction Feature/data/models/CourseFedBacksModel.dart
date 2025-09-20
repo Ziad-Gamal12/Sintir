@@ -49,6 +49,6 @@ class Coursefeedbacksmodel {
         "fedBack": fedBack,
         "likesCount": likesCount,
         "uid": uid,
-        "datePosted": datePosted.toIso8601String(),
+        "datePosted": datePosted,
       };
 }

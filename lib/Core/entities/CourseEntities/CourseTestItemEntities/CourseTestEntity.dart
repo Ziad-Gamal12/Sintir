@@ -12,9 +12,10 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 class CourseTestEntity {
   int durationTime;
   String title;
-  final List<Coursetestquestionentity> questions;
+  final List<CourseTestQuestionEntity> questions;
   String? type;
   String id;
+  bool? isOpened;
   String preffixImage = Assets.assetsImagesExamIcon;
 
   CourseTestEntity(
@@ -33,7 +34,7 @@ class CourseTestEntity {
     int? durationTime,
     String? title,
     List<JoinedByEntity>? joinedBy,
-    List<Coursetestquestionentity>? questions,
+    List<CourseTestQuestionEntity>? questions,
     List<TestresulteEntity>? results,
   }) {
     return CourseTestEntity(
@@ -51,8 +52,8 @@ class CourseTestEntity {
     GoRouter.of(context).push(Coursetestview.routename, extra: item);
   }
 
-  void addQuestion(Coursetestquestionentity? question) {
-    question ??= Coursetestquestionentity(
+  void addQuestion(CourseTestQuestionEntity? question) {
+    question ??= CourseTestQuestionEntity(
       isOpened: false,
       questionTitle: "",
       solutions: [
@@ -62,7 +63,7 @@ class CourseTestEntity {
     questions.add(question);
   }
 
-  void removeQuestion(Coursetestquestionentity question) {
+  void removeQuestion(CourseTestQuestionEntity question) {
     question.questionController.dispose();
     questions.remove(question);
   }

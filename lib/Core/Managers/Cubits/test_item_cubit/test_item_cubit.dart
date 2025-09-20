@@ -35,7 +35,7 @@ class TestItemCubit extends Cubit<TestItemState> {
 
   void removeQuestion(
       {required CourseTestEntity coursetestentity,
-      required Coursetestquestionentity question}) {
+      required CourseTestQuestionEntity question}) {
     coursetestentity.removeQuestion(question);
     emit(AddCourseSectionTestQuestionRemoved());
   }
@@ -43,7 +43,7 @@ class TestItemCubit extends Cubit<TestItemState> {
   void removeSolutin(
       {required Coursetestquestionsolutionentity solution,
       required CourseTestEntity coursetestentity,
-      required Coursetestquestionentity question}) {
+      required CourseTestQuestionEntity question}) {
     if (question.solutions.length > 1) {
       question.removeSolution(solution);
     } else {
@@ -52,13 +52,13 @@ class TestItemCubit extends Cubit<TestItemState> {
     emit(AddCourseSectionTestSolutionRemoved());
   }
 
-  void addSolution({required Coursetestquestionentity question}) {
+  void addSolution({required CourseTestQuestionEntity question}) {
     question.addSolution(null);
     emit(AddCourseSectionTestSolutionAdded());
   }
 
   void changeSelectedSolution(
-      {required Coursetestquestionentity question, required int index}) {
+      {required CourseTestQuestionEntity question, required int index}) {
     for (var solution in question.solutions) {
       solution.isCorrect = false;
     }

@@ -15,7 +15,7 @@ class CustomQuestionSolutionsList extends StatefulWidget {
     required this.question,
   });
   final CourseTestEntity coursetestentity;
-  final Coursetestquestionentity question;
+  final CourseTestQuestionEntity question;
   @override
   State<CustomQuestionSolutionsList> createState() =>
       _CustomQuestionSolutionsListState();

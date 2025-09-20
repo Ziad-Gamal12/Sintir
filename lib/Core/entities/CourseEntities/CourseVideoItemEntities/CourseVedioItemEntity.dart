@@ -13,7 +13,7 @@ class CourseVideoItemEntity {
   String id;
   File? file;
   String? type;
-  String preffixImage = Assets.assetsImagesVedioIcon;
+  String preffixImage = Assets.assetsImagesVideoIcon;
   void ontap(
       {required BuildContext context,
       required Coursevideoviewnavigationsrequirmentsentity requires,

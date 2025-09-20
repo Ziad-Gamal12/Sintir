@@ -9,7 +9,7 @@ class CustomReviewSqlQuestionListItem extends StatelessWidget {
     super.key,
     required this.question,
   });
-  final Coursetestquestionentity question;
+  final CourseTestQuestionEntity question;
   @override
   Widget build(BuildContext context) {
     return Container(

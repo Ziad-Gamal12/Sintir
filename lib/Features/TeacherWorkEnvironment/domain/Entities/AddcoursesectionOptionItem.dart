@@ -6,7 +6,7 @@ class Addcoursesectionoptionitem {
   static List<Addcoursesectionoptionitem> toList() {
     return [
       Addcoursesectionoptionitem(
-          title: "فديو", icon: Assets.assetsImagesVedioIcon),
+          title: "فديو", icon: Assets.assetsImagesVideoIcon),
       Addcoursesectionoptionitem(
           title: "SQL", icon: Assets.assetsImagesExamIcon),
       Addcoursesectionoptionitem(

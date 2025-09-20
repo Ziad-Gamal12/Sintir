@@ -10,7 +10,7 @@ class Customreviewsqlquestionssliverlist extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    List<Coursetestquestionentity> questions = context
+    List<CourseTestQuestionEntity> questions = context
         .read<Navigatesqlreviewrequirmentsentity>()
         .coursetestentity
         .questions;

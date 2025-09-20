@@ -1,5 +1,5 @@
 class CoursefeedbackItemEntity {
-  final String userImage, uid, name, fedBack;
+  String userImage, uid, name, fedBack;
   final int likesCount;
   final DateTime datePosted;
 
