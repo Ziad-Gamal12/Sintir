@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
-import 'package:sintir/Core/widgets/CustomContentListViewitem.dart';
+import 'package:sintir/Core/widgets/CustomCourseSectionItem/CustomContentListViewitem.dart';
 
 class CourseContentListView extends StatelessWidget {
   const CourseContentListView({

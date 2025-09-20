@@ -5,10 +5,10 @@ import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCu
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Core/widgets/customListTileWidget.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomSectionListView.dart';
+import 'package:sintir/Core/widgets/CustomCourseSectionItem/ContentContainer.dart';
+import 'package:sintir/Core/widgets/CustomCourseSectionItem/SectionExpanded.dart';
+import 'package:sintir/Core/widgets/CustomCourseSectionItem/SectionHeader.dart';
 
 class CustomContentListViewitem extends StatefulWidget {
   const CustomContentListViewitem({
@@ -45,7 +45,7 @@ class _CustomContentListViewitemState extends State<CustomContentListViewitem> {
   Widget build(BuildContext context) {
     return ExpandableNotifier(
       controller: _controller,
-      child: BlocListener<CourseSectionsCubit, CourseSectionsState>(
+      child: BlocConsumer<CourseSectionsCubit, CourseSectionsState>(
         listener: (context, state) {
           if (state is GetSectionItemsSuccess &&
               state.sectionId == widget.sectionItem.id) {
@@ -63,50 +63,21 @@ class _CustomContentListViewitemState extends State<CustomContentListViewitem> {
             );
           }
         },
-        child: Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.shade100,
-                blurRadius: 7,
-                spreadRadius: 1,
-              ),
-            ],
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Colors.black, width: .5),
-            color: Colors.grey.shade100,
-          ),
+        builder: (context, state) => ContentContainer(
           child: ExpandablePanel(
             controller: _controller,
             theme: const ExpandableThemeData(hasIcon: false),
-            header: GestureDetector(
-              onTap: () {
-                if (sectionLessons.isEmpty) {
-                  BlocProvider.of<CourseSectionsCubit>(context).getSectionItems(
-                    sectionId: widget.sectionItem.id,
-                    courseId: widget.course.id,
-                  );
-                }
-                _controller.toggle();
-              },
-              child: Customlisttilewidget(
-                title: widget.sectionItem.title,
-                image: Assets.assetsImagesSectionIcon,
-                subtitle: widget.sectionItem.subtitle,
-              ),
+            header: SectionHeader(
+              sectionItem: widget.sectionItem,
+              course: widget.course,
+              controller: _controller,
+              sectionLessons: sectionLessons,
             ),
             collapsed: const SizedBox(),
-            expanded: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: CustomSectionListView(
-                section: widget.sectionItem,
-                items: sectionLessons,
-              ),
+            expanded: SectionExpanded(
+              sectionItem: widget.sectionItem,
+              sectionLessons: sectionLessons,
+              state: state,
             ),
           ),
         ),
