@@ -31,12 +31,12 @@ class Customlisttilewidget extends StatelessWidget {
         width: 40,
         child: Align(
             alignment: Alignment.centerRight,
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: SvgPicture.asset(
-                  image,
-                  fit: BoxFit.fill,
-                ))),
+            child: SvgPicture.asset(
+              image,
+              fit: BoxFit.fill,
+              height: 30,
+              width: 30,
+            )),
       ),
       subtitle: subtitle != null
           ? Text(

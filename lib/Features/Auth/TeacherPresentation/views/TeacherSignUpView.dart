@@ -7,6 +7,7 @@ import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherExtraDataEntity.dart';
+import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/manager/TeacherSignUP/teacher_sign_up_cubit.dart';
@@ -31,8 +32,19 @@ class _TeacherSignUpViewState extends State<TeacherSignUpView> {
         email: "",
         address: "",
         phoneNumber: "",
-        teacherExtraDataEntity:
-            TeacherExtraDataEntity(subject: "", workExperience: ""),
+        teacherExtraDataEntity: TeacherExtraDataEntity(
+            subject: "",
+            workExperience: "",
+            wallet: TeacherWalletEntity(
+                walletId: DateTime.now().microsecondsSinceEpoch,
+                teacherId: "",
+                balance: 0,
+                totalEarned: 0,
+                payoutPending: 0,
+                currency: "EGP",
+                status: BackendEndpoints.walletSuspended,
+                createdAt: DateTime.now().toIso8601String(),
+                updatedAt: DateTime.now().toIso8601String())),
         gender: "",
         profilePicurl: "https://cdn-icons-png.flaticon.com/128/149/149071.png",
         status: BackendEndpoints.pendingStatus,

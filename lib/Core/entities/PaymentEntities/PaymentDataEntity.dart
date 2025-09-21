@@ -6,8 +6,8 @@ class Paymentdataentity {
   final String currency;
   final Billingdataentity billingdataentity;
   final int priceCents, expiration, integrationId;
-  int? orderId;
-  String? authToken;
+
+  String? authToken, orderId;
 
   Paymentdataentity(
       {this.authToken,

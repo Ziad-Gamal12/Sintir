@@ -8,6 +8,9 @@ class BackendEndpoints {
   static String inActiveStatus = "InActive";
   static String rejectedStatus = "Rejected";
   static String blockedStatus = "Blocked";
+  static String walletActive = "active";
+  static String walletSuspended = "suspended";
+  static String walletClosed = "closed";
   static String studentRole = "Student";
   static String teacherRole = "Teacher";
   static String courseSectionItemsCollectionName = "Items";

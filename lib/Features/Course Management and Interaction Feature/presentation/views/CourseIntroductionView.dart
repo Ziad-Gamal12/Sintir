@@ -9,6 +9,7 @@ import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
+import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/CourseIntroductionViewBody.dart';
@@ -31,6 +32,7 @@ class CourseIntroductionView extends StatelessWidget {
         ),
         BlocProvider(
             create: (context) => CourseSubscribtionsCubit(
+                paymobRepo: getIt<PaymobRepo>(),
                 course: bottomsheetnavigationrequirmentsentity.course,
                 subscribtionRepo: getIt<CourseSubscibtionsRepo>()))
       ],

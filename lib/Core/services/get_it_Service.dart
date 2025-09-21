@@ -16,6 +16,8 @@ import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo_impl.dart';
 import 'package:sintir/Core/repos/File-Item-Repo/FileItemRepo.dart';
 import 'package:sintir/Core/repos/File-Item-Repo/FileItemRepoImpli.dart';
+import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
+import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepoImp.dart';
 import 'package:sintir/Core/repos/ResetPaswordRepo/ResetPaswordRepo.dart';
 import 'package:sintir/Core/repos/ResetPaswordRepo/ResetPaswordRepoImp.dart';
 import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
@@ -63,9 +65,8 @@ void setup_Getit() {
   ));
   getIt.registerSingleton<Assetspickerrepo>(
       Assetspickerrepoimpli(pickerassetsservice: getIt<Pickerassetsservice>()));
-  getIt.registerSingleton<CourseSubscibtionsRepo>(CourseSubscibtionsRepoimpli(
-      payMobService: PayMobService(),
-      datebaseservice: getIt<Databaseservice>()));
+  getIt.registerSingleton<CourseSubscibtionsRepo>(
+      CourseSubscriptionsRepoImpl(databaseService: getIt<Databaseservice>()));
 
   getIt.registerSingleton<Testitemrepo>(Testitemrepoimpli(
       storageService: getIt<StorageService>(),
@@ -88,4 +89,6 @@ void setup_Getit() {
       CourseReportsRepoimpli(databaseservice: getIt<Databaseservice>()));
   getIt.registerSingleton<CourseFeedBacksRepo>(
       CourseFeedBacksRepoImpli(databaseservice: getIt<Databaseservice>()));
+  getIt.registerSingleton<PaymobRepo>(
+      PaymobRepoImp(payMobService: PayMobService()));
 }

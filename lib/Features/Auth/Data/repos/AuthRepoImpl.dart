@@ -45,7 +45,6 @@ class AuthRepoImpl implements AuthRepo {
         }
       }
     } on CustomException catch (e) {
-      log(e.message);
       return Left(ServerFailure(message: e.message));
     } catch (e) {
       return Left(ServerFailure(message: "حدث خطأ ما"));
@@ -65,6 +64,9 @@ class AuthRepoImpl implements AuthRepo {
         "${userEntity.firstName} ${userEntity.lastName}",
       );
       userEntity.uid = user.uid;
+      if (userEntity.teacherExtraDataEntity != null) {
+        userEntity.teacherExtraDataEntity!.wallet.teacherId = user.uid;
+      }
       final userModel = UserModel.fromEntity(userEntity);
 
       return await storeUserDataInFireStore(
@@ -130,7 +132,8 @@ class AuthRepoImpl implements AuthRepo {
     } on CustomException catch (e) {
       authService.signout();
       return Left(ServerFailure(message: e.message));
-    } catch (e) {
+    } catch (e, s) {
+      log(e.toString(), stackTrace: s);
       authService.signout();
       return Left(ServerFailure(message: "حدث خطأ ما"));
     }

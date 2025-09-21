@@ -34,7 +34,8 @@ class CourseBottomSheetUnSubscribedActionButtons extends StatelessWidget {
               height: 10,
             ),
             Custom_Loading_Widget(
-              isLoading: state is SubscibeingToCourseLoading,
+              isLoading: state is SubscibeingToCourseLoading ||
+                  state is PayWithWalletLoading,
               child: Custombutton(
                   text: "أشترك الأن",
                   color: KSecondaryColor,
@@ -42,7 +43,7 @@ class CourseBottomSheetUnSubscribedActionButtons extends StatelessWidget {
                   onPressed: () {
                     context
                         .read<CourseSubscribtionsCubit>()
-                        .subscribeToCourse(userEntity: getUserData());
+                        .payWithWallet(userEntity: getUserData());
                   }),
             ),
           ],

@@ -25,6 +25,10 @@ class PayMobService {
   Future<int?> createPaymentOrder(
       {required Orderdataentity orderEntity}) async {
     Response response = await dio.post("${baseUrl}ecommerce/orders",
+        options: Options(headers: {
+          "Content-Type": "application/json",
+          "Authorization": orderEntity.authToken
+        }),
         data: Orderdatamodel.fromEntity(orderEntity).toJson());
     return response.data["id"];
   }
@@ -32,7 +36,20 @@ class PayMobService {
   Future<String> getPaymentToken(
       {required Paymentdataentity paymententity}) async {
     Response response = await dio.post("${baseUrl}acceptance/payment_keys",
+        options: Options(headers: {
+          "Content-Type": "application/json",
+          "Authorization": paymententity.authToken
+        }),
         data: Paymentdatamodel.formEntity(paymententity).toJson());
     return response.data["token"];
+  }
+
+  Future<String> payWithWallet({required Map<String, dynamic> body}) async {
+    Response response = await dio.post("${baseUrl}acceptance/payments/pay",
+        options: Options(headers: {
+          "Content-Type": "application/json",
+        }),
+        data: body);
+    return response.data["iframe_redirection_url"];
   }
 }

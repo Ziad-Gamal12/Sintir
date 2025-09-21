@@ -11,6 +11,7 @@ import 'package:sintir/Core/repos/CourseReportsRepo/CourseReportsRepo.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
+import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
@@ -41,6 +42,7 @@ class CourseDetailView extends StatelessWidget {
                   assetspickerrepo: getIt<Assetspickerrepo>())),
           BlocProvider(
               create: (context) => CourseSubscribtionsCubit(
+                  paymobRepo: getIt<PaymobRepo>(),
                   course: courseEntity,
                   subscribtionRepo: getIt<CourseSubscibtionsRepo>()))
         ],

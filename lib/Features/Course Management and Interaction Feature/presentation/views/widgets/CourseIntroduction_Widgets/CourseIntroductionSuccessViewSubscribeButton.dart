@@ -3,12 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
-import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/constant.dart';
 
-class CourseIntroductionSuccessViewSubscribeButton extends StatelessWidget {
+class CourseIntroductionSuccessViewSubscribeButton extends StatefulWidget {
   const CourseIntroductionSuccessViewSubscribeButton({
     super.key,
     required this.isSubscribed,
@@ -17,6 +16,13 @@ class CourseIntroductionSuccessViewSubscribeButton extends StatelessWidget {
   final bool isSubscribed;
 
   @override
+  State<CourseIntroductionSuccessViewSubscribeButton> createState() =>
+      _CourseIntroductionSuccessViewSubscribeButtonState();
+}
+
+class _CourseIntroductionSuccessViewSubscribeButtonState
+    extends State<CourseIntroductionSuccessViewSubscribeButton> {
+  @override
   Widget build(BuildContext context) {
     CourseEntity course = context
         .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
@@ -24,9 +30,11 @@ class CourseIntroductionSuccessViewSubscribeButton extends StatelessWidget {
     return BlocConsumer<CourseSubscribtionsCubit, CourseSubscribtionsState>(
       listener: (context, state) {
         if (state is SubscibeingToCourseSuccess) {
-          context
-              .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
-              .isSubscribed = true;
+          setState(() {
+            context
+                .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
+                .isSubscribed = true;
+          });
         }
       },
       builder: (context, state) {
@@ -49,10 +57,11 @@ class CourseIntroductionSuccessViewSubscribeButton extends StatelessWidget {
           ));
         }
         return Visibility(
-          visible: !isSubscribed,
+          visible: !widget.isSubscribed,
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
-            height: 80,
+            padding: const EdgeInsets.symmetric(
+                horizontal: KHorizontalPadding, vertical: 20),
+            height: 100,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -74,9 +83,9 @@ class CourseIntroductionSuccessViewSubscribeButton extends StatelessWidget {
                       color: KSecondaryColor,
                       textColor: Colors.white,
                       onPressed: () {
-                        context
-                            .read<CourseSubscribtionsCubit>()
-                            .subscribeToCourse(userEntity: getUserData());
+                        // context
+                        //     .read<CourseSubscribtionsCubit>()
+                        //     .subscribeToCourse(userEntity: getUserData());
                       }),
                 ),
                 const SizedBox(

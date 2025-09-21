@@ -40,8 +40,7 @@ class Orderdatamodel {
             .map((e) => Orderitemmodel.fromCourseEntity(e).toJson())
             .toList(),
       );
-  toJson() => {
-        "auth_token": authToken,
+  Map<String, dynamic> toJson() => {
         "delivery_needed": deliveryNeeded,
         "amount_cents": priceCents,
         "currency": currency,

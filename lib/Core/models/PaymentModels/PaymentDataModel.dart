@@ -4,9 +4,9 @@ import 'package:sintir/Core/entities/PaymentEntities/PaymentDataEntity.dart';
 import 'package:sintir/Core/models/PaymentModels/BillingDataModel.dart';
 
 class Paymentdatamodel {
-  final String authToken, currency;
+  final String authToken, orderId, currency;
   final Map<String, dynamic> billingdataentity;
-  final int priceCents, expiration, orderId, integrationId;
+  final int priceCents, expiration, integrationId;
 
   Paymentdatamodel(
       {required this.authToken,
@@ -55,7 +55,6 @@ class Paymentdatamodel {
   }
 
   Map<String, dynamic> toJson() => {
-        'auth_token': authToken,
         'currency': currency,
         'billing_data': billingdataentity,
         'amount_cents': priceCents,

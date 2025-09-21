@@ -8,6 +8,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVideoviewnavigationsrequirmentsentity.dart';
+import 'package:sintir/Core/entities/PayMobResponse.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebView.dart';
 import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordView.dart';
 import 'package:sintir/Features/Ai_Teacher/presentation/views/AiTeacherView.dart';
@@ -271,7 +272,7 @@ class App_router {
         path: Webviewer.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return Webviewer(
-            url: state.extra as String,
+            response: state.extra as PayMobResponse,
           );
         },
       ),

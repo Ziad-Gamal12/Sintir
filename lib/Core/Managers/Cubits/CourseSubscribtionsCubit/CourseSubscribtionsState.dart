@@ -54,3 +54,16 @@ final class GetCourseSubscribersFailure extends CourseSubscribtionsState {
   final String errMessage;
   GetCourseSubscribersFailure({required this.errMessage});
 }
+//Paywith wallet
+
+final class PayWithWalletLoading extends CourseSubscribtionsState {}
+
+final class PayWithWalletSuccess extends CourseSubscribtionsState {
+  final PayMobResponse response;
+  PayWithWalletSuccess({required this.response});
+}
+
+final class PayWithWalletFailure extends CourseSubscribtionsState {
+  final String errMessage;
+  PayWithWalletFailure({required this.errMessage});
+}

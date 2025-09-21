@@ -11,7 +11,11 @@ AwesomeDialog errordialog(context, String? error) {
       title: 'خطأ',
       btnOkText: 'حسنا',
       desc: error,
-      btnOkOnPress: () {},
+      btnOkOnPress: () {
+       
+          Navigator.of(context).pop();
+        
+      },
       btnOkColor: Colors.red);
 }
 

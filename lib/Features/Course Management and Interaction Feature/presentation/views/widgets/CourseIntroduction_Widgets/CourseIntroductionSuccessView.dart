@@ -50,7 +50,7 @@ class CourseIntroductionSuccessView extends StatelessWidget {
           ),
         ),
         Positioned(
-            bottom: 30,
+            bottom: 0,
             left: 0,
             right: 0,
             child: CourseIntroductionSuccessViewSubscribeButton(

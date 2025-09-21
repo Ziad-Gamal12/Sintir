@@ -7,6 +7,7 @@ import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubsc
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
+import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetBody.dart';
 
@@ -32,6 +33,7 @@ class _CourseBottomSheetState extends State<CourseBottomSheet>
             course: widget.courseEntity, isSubscribed: false);
     return BlocProvider(
       create: (context) => CourseSubscribtionsCubit(
+        paymobRepo: getIt<PaymobRepo>(),
         subscribtionRepo: getIt<CourseSubscibtionsRepo>(),
         course: widget.courseEntity,
       ),
