@@ -13,7 +13,7 @@ class CourseSectionTextFields extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Customteaxtfield(
+        CustomTextField(
           hintText: "يرجى كتابه اسم المحاضرة هنا ...",
           obscureText: false,
           controller: Variables.AddCoursesectionNameController,
@@ -30,7 +30,7 @@ class CourseSectionTextFields extends StatelessWidget {
           },
         ),
         const SizedBox(height: 10),
-        Customteaxtfield(
+        CustomTextField(
             hintText: "يرجى كتابه وصف المحاضرة هنا ...",
             obscureText: false,
             controller: Variables.AddCoursesesectionDescriptionController,

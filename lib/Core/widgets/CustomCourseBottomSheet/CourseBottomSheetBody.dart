@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
@@ -12,7 +11,6 @@ import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetCourseDetails.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetHeader.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CustomCourseBottomSheetActionButtons.dart';
-import 'package:sintir/Core/widgets/WebViewer/WebView.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CourseBottomSheetBody extends StatefulWidget {
@@ -71,11 +69,7 @@ class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
 
   void courseBottomSheetBlocListener(
       CourseSubscribtionsState state, BuildContext context) {
-    if (state is PayWithWalletSuccess) {
-      GoRouter.of(context).push(Webviewer.routeName, extra: state.response);
-    } else if (state is PayWithWalletFailure) {
-      ShowErrorSnackBar(context: context, message: state.errMessage);
-    } else if (state is SubscibeingToCourseSuccess) {
+    if (state is SubscibeingToCourseSuccess) {
       successdialog(
           context: context, SuccessMessage: "تم الاشتراك", btnOkOnPress: () {});
     } else if (state is SubscibeingToCourseFailure) {

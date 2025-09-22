@@ -9,7 +9,6 @@ import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/Cour
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomFileListViewItem.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomTestListViewItem.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomVedioListViewItem.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class CustomSectionListView extends StatefulWidget {
   const CustomSectionListView(
@@ -60,19 +59,16 @@ class _CustomSectionListViewState extends State<CustomSectionListView> {
   Widget build(BuildContext context) {
     return BlocBuilder<CourseSectionsCubit, CourseSectionsState>(
       builder: (context, state) {
-        return Skeletonizer(
-          enabled: state is GetSectionItemsLoading,
-          child: ListView.builder(
-            itemCount: widget.items.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: getChild(widget.items[index], context),
-              );
-            },
-          ),
+        return ListView.builder(
+          itemCount: widget.items.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: getChild(widget.items[index], context),
+            );
+          },
         );
       },
     );

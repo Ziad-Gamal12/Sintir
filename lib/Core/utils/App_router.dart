@@ -33,6 +33,7 @@ import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 import 'package:sintir/Features/Splash/Presentation/views/SplashView.dart';
 import 'package:sintir/Features/StudentOnboarding/Presentation/Views/StudentOnboardingView.dart';
 import 'package:sintir/Features/StudentProfile/presentation/views/studentProfileView.dart';
+import 'package:sintir/Features/Subscribtion/Presentation/View/SubscribtionView.dart';
 import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnboardingView.dart';
 import 'package:sintir/Features/TeacherProfile/presentation/views/TeacherProfileView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
@@ -305,6 +306,15 @@ class App_router {
         builder: (BuildContext context, GoRouterState state) {
           return FileConsequencesView(
             file: state.extra as CourseFileEntity,
+          );
+        },
+      ),
+      GoRoute(
+        path: SubscribtionView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return SubscribtionView(
+            requirmentsEntity: state.extra
+                as DisplayCourseBottomsheetNavigationRequirmentsEntity,
           );
         },
       ),

@@ -55,7 +55,10 @@ final class AddCourseSectionItemSuccess extends CourseSectionsState {}
 
 final class AddCourseSectionItemLoading extends CourseSectionsState {}
 
-final class GetSectionItemsLoading extends CourseSectionsState {}
+final class GetSectionItemsLoading extends CourseSectionsState {
+  final String sectionId;
+  GetSectionItemsLoading({required this.sectionId});
+}
 
 final class GetSectionItemsSuccess extends CourseSectionsState {
   final List items;

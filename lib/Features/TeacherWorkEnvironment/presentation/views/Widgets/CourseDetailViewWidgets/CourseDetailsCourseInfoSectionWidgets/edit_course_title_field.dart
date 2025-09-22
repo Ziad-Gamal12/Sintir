@@ -10,7 +10,7 @@ class EditCourseTitleField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CourseEntity course = context.read<CourseEntity>();
-    return Customteaxtfield(
+    return CustomTextField(
       hintText: "يرجى كتابه أسم الدورة هنا ...",
       obscureText: false,
       controller: TextEditingController(text: course.title),

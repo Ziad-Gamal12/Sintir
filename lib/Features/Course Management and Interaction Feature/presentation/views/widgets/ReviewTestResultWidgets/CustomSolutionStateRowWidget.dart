@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/customSolutionStateCheckBoxWidget.dart';
 
-class Customsolutionstaterowwidget extends StatelessWidget {
-  const Customsolutionstaterowwidget(
+class CustomSolutionStateRowWidget extends StatelessWidget {
+  const CustomSolutionStateRowWidget(
       {super.key, required this.isCorrect, required this.title});
   final bool isCorrect;
   final String title;
@@ -14,7 +14,7 @@ class Customsolutionstaterowwidget extends StatelessWidget {
         isCorrect: isCorrect,
       ),
       const SizedBox(
-        width: 4,
+        width: 5,
       ),
       Text(
         title,

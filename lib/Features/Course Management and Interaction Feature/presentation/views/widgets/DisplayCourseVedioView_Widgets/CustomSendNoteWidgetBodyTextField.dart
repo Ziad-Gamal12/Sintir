@@ -10,7 +10,7 @@ class CustomSendNoteWidgetBodyTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Customteaxtfield(
+    return CustomTextField(
         maxLines: 4,
         hintText: "اكتب ملاحظتك هنا",
         obscureText: false,

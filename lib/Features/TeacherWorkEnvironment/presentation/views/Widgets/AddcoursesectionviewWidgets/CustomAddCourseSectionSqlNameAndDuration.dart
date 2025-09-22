@@ -15,7 +15,7 @@ class CustomAddCourseSectionSqlNameAndDuration extends StatelessWidget {
       children: [
         Expanded(
             flex: 3,
-            child: Customteaxtfield(
+            child: CustomTextField(
                 hintText: "يرجى كتابه الأسم هنا ...",
                 obscureText: false,
                 onSaved: (value) {
@@ -34,7 +34,7 @@ class CustomAddCourseSectionSqlNameAndDuration extends StatelessWidget {
         ),
         Expanded(
             flex: 2,
-            child: Customteaxtfield(
+            child: CustomTextField(
                 onSaved: (value) {
                   coursetestentity.durationTime = int.tryParse(value!) ?? 0;
                 },

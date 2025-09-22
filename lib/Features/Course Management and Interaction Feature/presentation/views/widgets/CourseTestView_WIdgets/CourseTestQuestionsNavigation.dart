@@ -44,7 +44,7 @@ class _CoursetestquestionsnavigationState
               child: CustomCountWidget(
                 countColor: getCountColor(e.value),
                 count: "${e.key + 1}",
-                countTextColor: Colors.black,
+                countTextColor: getTextColor(e.value),
               ),
             ),
           ),
@@ -54,12 +54,30 @@ class _CoursetestquestionsnavigationState
   }
 
   Color getCountColor(CourseTestQuestionEntity question) {
-    if (question.isOpened && question.selectedSolution == null) {
+    if (question.isOpened &&
+        (question.selectedSolution == null ||
+            question.selectedSolution == "")) {
       return Colors.red.shade500;
-    } else if (question.isOpened && question.selectedSolution != null) {
+    } else if (question.isOpened &&
+        (question.selectedSolution != null &&
+            question.selectedSolution != "")) {
       return KMainColor;
     } else {
       return Colors.grey.shade300;
+    }
+  }
+
+  Color getTextColor(CourseTestQuestionEntity question) {
+    if (question.isOpened &&
+        (question.selectedSolution == null ||
+            question.selectedSolution == "")) {
+      return Colors.white;
+    } else if (question.isOpened &&
+        (question.selectedSolution != null &&
+            question.selectedSolution != "")) {
+      return Colors.white;
+    } else {
+      return Colors.black;
     }
   }
 }

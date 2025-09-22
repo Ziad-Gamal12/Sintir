@@ -9,15 +9,17 @@ class Customsolvedquestionsliverlist extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<ExamResultSolvedQuestionEntity> questions =
+    List<ExamResultSolvedQuestionEntity> examResult =
         context.read<TestresulteEntity>().questionsSolvedListEntity;
     return SliverList.builder(
-        itemCount: questions.length,
+        itemCount: examResult.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: CustomSolvedQuestionListItem(
-              examResultSolvedQuestionEntity: questions[index],
+              index: index,
+              length: examResult.length,
+              examResultSolvedQuestionEntity: examResult[index],
             ),
           );
         });

@@ -11,7 +11,7 @@ class AddcourseSQLTEstQuestionItemTextField extends StatelessWidget {
   final CourseTestQuestionEntity coursetestquestionentity;
   @override
   Widget build(BuildContext context) {
-    return Customteaxtfield(
+    return CustomTextField(
         controller: coursetestquestionentity.questionController,
         hintText: "يرجى كتابه السؤال هنا ...",
         obscureText: false,

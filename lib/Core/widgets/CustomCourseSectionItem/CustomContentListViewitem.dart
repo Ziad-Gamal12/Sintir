@@ -77,7 +77,6 @@ class _CustomContentListViewitemState extends State<CustomContentListViewitem> {
             expanded: SectionExpanded(
               sectionItem: widget.sectionItem,
               sectionLessons: sectionLessons,
-              state: state,
             ),
           ),
         ),

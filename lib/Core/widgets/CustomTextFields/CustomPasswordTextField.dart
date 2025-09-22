@@ -18,7 +18,7 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Customteaxtfield(
+    return CustomTextField(
       suffixIcon: Custompasswordvisibleicon(
         visibilityChanged: (isVisible) {
           setState(() {

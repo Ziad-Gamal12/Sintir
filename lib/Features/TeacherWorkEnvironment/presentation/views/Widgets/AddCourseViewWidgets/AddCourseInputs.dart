@@ -16,7 +16,7 @@ class AddCourseInputs extends StatelessWidget {
     return BlocBuilder<AddCourseCubitCubit, AddCourseCubitState>(
       builder: (context, state) => Column(
         children: [
-          Customteaxtfield(
+          CustomTextField(
               hintText: "يرجى كتابه أسم الدورة هنا ...",
               obscureText: false,
               controller: Variables.AddCourseCourseNameController,
@@ -30,7 +30,7 @@ class AddCourseInputs extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Customteaxtfield(
+          CustomTextField(
               hintText: "يرجى كتابه كود الدورة هنا ...",
               obscureText: false,
               controller: Variables.AddCourseCourseCodeController,
@@ -44,7 +44,7 @@ class AddCourseInputs extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Customteaxtfield(
+          CustomTextField(
               hintText: "يرجى تقديم وصف مختصر للأهداف الرئيسية للدورة..",
               obscureText: false,
               controller: Variables.AddCourseCourseDescriptionController,
@@ -59,7 +59,7 @@ class AddCourseInputs extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Customteaxtfield(
+          CustomTextField(
               hintText: "المرحلة الدراسيه",
               obscureText: false,
               controller: Variables.AddCourseCourseLevelController,
@@ -78,7 +78,7 @@ class AddCourseInputs extends StatelessWidget {
               Expanded(
                 child: Column(
                   children: [
-                    Customteaxtfield(
+                    CustomTextField(
                         hintText: "المادة",
                         obscureText: false,
                         controller: Variables.AddCourseCourseSubjectController,
@@ -92,7 +92,7 @@ class AddCourseInputs extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    Customteaxtfield(
+                    CustomTextField(
                         hintText: "اللغة",
                         obscureText: false,
                         controller: Variables.AddCourseCourseLanguageController,
@@ -106,7 +106,7 @@ class AddCourseInputs extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    Customteaxtfield(
+                    CustomTextField(
                         hintText: "السعر بالجنية المصرى",
                         obscureText: false,
                         controller: Variables.AddCourseCoursePriceController,
@@ -142,7 +142,7 @@ class AddCourseInputs extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Customteaxtfield(
+          CustomTextField(
               hintText: "رقم فودافون كاش ",
               obscureText: false,
               controller: Variables.AddCourseCoursePhoneController,

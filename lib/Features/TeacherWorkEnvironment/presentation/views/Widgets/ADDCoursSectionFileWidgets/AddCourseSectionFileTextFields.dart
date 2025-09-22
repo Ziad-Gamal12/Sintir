@@ -12,7 +12,7 @@ class AddCourseSectionFileTextFields extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Customteaxtfield(
+        CustomTextField(
             hintText: "يرجى كتابه اسم الملف هنا ...",
             obscureText: false,
             textInputType: TextInputType.text,
@@ -28,7 +28,7 @@ class AddCourseSectionFileTextFields extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        Customteaxtfield(
+        CustomTextField(
             maxLines: 4,
             hintText: "يرجى كتابه وصف الملف هنا ...",
             obscureText: false,

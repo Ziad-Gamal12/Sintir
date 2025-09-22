@@ -12,7 +12,7 @@ class TeacherSignUSubjectFiled extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Customteaxtfield(
+    return CustomTextField(
         hintText: "المادة الدراسية",
         prefixIcon: Icons.menu_book_rounded,
         obscureText: false,

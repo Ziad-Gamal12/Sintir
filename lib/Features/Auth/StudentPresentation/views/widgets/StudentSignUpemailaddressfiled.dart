@@ -11,7 +11,7 @@ class StudentSignUpemailaddressfiled extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return Customteaxtfield(
+    return CustomTextField(
         hintText: "البريد الأكتروني",
         prefixIcon: Icons.email_outlined,
         obscureText: false,

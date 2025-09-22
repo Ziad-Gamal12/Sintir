@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 
-class Customteaxtfield extends StatelessWidget {
+class CustomTextField extends StatelessWidget {
   final String hintText;
   IconData? prefixIcon;
   Widget? suffixIcon;
@@ -15,7 +15,7 @@ class Customteaxtfield extends StatelessWidget {
   List<TextInputFormatter>? inputFormatters;
   Function(String?)? onSaved;
   int maxLines;
-  Customteaxtfield(
+  CustomTextField(
       {super.key,
       this.inputFormatters,
       required this.hintText,

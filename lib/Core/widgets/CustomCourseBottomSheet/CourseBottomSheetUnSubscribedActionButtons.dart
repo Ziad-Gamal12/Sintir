@@ -3,10 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
-import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
-import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseIntroductionView.dart';
+import 'package:sintir/Features/Subscribtion/Presentation/View/SubscribtionView.dart';
 import 'package:sintir/constant.dart';
 
 class CourseBottomSheetUnSubscribedActionButtons extends StatelessWidget {
@@ -33,19 +32,15 @@ class CourseBottomSheetUnSubscribedActionButtons extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Custom_Loading_Widget(
-              isLoading: state is SubscibeingToCourseLoading ||
-                  state is PayWithWalletLoading,
-              child: Custombutton(
-                  text: "أشترك الأن",
-                  color: KSecondaryColor,
-                  textColor: Colors.white,
-                  onPressed: () {
-                    context
-                        .read<CourseSubscribtionsCubit>()
-                        .payWithWallet(userEntity: getUserData());
-                  }),
-            ),
+            Custombutton(
+                text: "أشترك الأن",
+                color: KSecondaryColor,
+                textColor: Colors.white,
+                onPressed: () {
+                  GoRouter.of(context).push(SubscribtionView.routeName,
+                      extra: context.read<
+                          DisplayCourseBottomsheetNavigationRequirmentsEntity>());
+                }),
           ],
         );
       },

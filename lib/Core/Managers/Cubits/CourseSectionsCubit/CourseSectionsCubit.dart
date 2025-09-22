@@ -71,7 +71,9 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
 
   void getSectionItems(
       {required String sectionId, required String courseId}) async {
-    emit(GetSectionItemsLoading());
+    emit(GetSectionItemsLoading(
+      sectionId: sectionId,
+    ));
     Either<Failure, List> result = await coursesectionrepo.getSectionsItems(
         courseId: courseId, sectionId: sectionId);
     result.fold((failure) {

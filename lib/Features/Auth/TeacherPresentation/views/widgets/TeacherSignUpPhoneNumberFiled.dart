@@ -12,7 +12,7 @@ class TeacherSignUpPhoneNumberFiled extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Customteaxtfield(
+    return CustomTextField(
         hintText: "رقم التليفون",
         prefixIcon: Icons.phone_outlined,
         obscureText: false,

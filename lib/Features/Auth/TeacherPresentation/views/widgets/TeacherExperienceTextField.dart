@@ -12,7 +12,7 @@ class TeacherExperienceTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Customteaxtfield(
+    return CustomTextField(
         hintText: "عدد سنين الخبرة",
         prefixIcon: Icons.work_history_outlined,
         obscureText: false,

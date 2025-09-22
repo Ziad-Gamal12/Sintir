@@ -5,10 +5,9 @@ import 'package:sintir/Core/entities/PaymentEntities/OrderDataEntity.dart';
 import 'package:sintir/Core/entities/PaymentEntities/PaymentDataEntity.dart';
 import 'package:sintir/Core/models/PaymentModels/OrderDataModel.dart';
 import 'package:sintir/Core/models/PaymentModels/PaymentDataModel.dart';
+import 'package:sintir/constant.dart';
 
 class PayMobService {
-  static String apiKey =
-      'ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TVRBek5EVTRPU3dpYm1GdFpTSTZJbWx1YVhScFlXd2lmUS5SNW9iQlI3Y0JDRWdFOWhvZXFfNnJBZVdHWnU4WnZfS0VEUWo3RDNYeVNvT0x1YnlFZ3UtdDJfMlJpYUhWdjl4WVh4LW1lRW4yaEJGNE9USWoxWXpGUQ==';
   final Dio dio = Dio();
   static String baseUrl = "https://accept.paymob.com/api/";
 
@@ -16,7 +15,7 @@ class PayMobService {
     Response response = await dio.post(
       "${baseUrl}auth/tokens",
       data: {
-        "api_key": apiKey,
+        "api_key": PaymobApiKey,
       },
     );
     return response.data["token"];

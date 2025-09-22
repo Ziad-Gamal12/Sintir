@@ -10,12 +10,11 @@ class Customsolutionstatecheckboxwidget extends StatelessWidget {
       width: 30,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        border:
-            Border.all(color: isCorrect ? Colors.green : Colors.red, width: 2),
+        color: isCorrect ? Colors.green : Colors.red,
       ),
       child: Icon(
         isCorrect ? Icons.check : Icons.close,
-        color: isCorrect ? Colors.green : Colors.red,
+        color: Colors.white,
         size: 25,
       ),
     );

@@ -13,20 +13,22 @@ class CustomCourseBottomSheetActionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return context
-                .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
-                .isSubscribed ==
-            false
-        ? const CourseBottomSheetUnSubscribedActionButtons()
-        : Custombutton(
-            text: "الدخول للكورس",
-            color: Colors.white,
-            textColor: Colors.black,
-            side: const BorderSide(width: 1, color: Colors.black),
-            onPressed: () {
-              GoRouter.of(context).push(CourseIntroductionView.routeName,
-                  extra: context.read<
-                      DisplayCourseBottomsheetNavigationRequirmentsEntity>());
-            });
+    bool isSubscribed = context
+        .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
+        .isSubscribed;
+    if (isSubscribed == true) {
+      return Custombutton(
+          text: "الدخول للكورس",
+          color: Colors.white,
+          textColor: Colors.black,
+          side: const BorderSide(width: 1, color: Colors.black),
+          onPressed: () {
+            GoRouter.of(context).push(CourseIntroductionView.routeName,
+                extra: context.read<
+                    DisplayCourseBottomsheetNavigationRequirmentsEntity>());
+          });
+    } else {
+      return const CourseBottomSheetUnSubscribedActionButtons();
+    }
   }
 }

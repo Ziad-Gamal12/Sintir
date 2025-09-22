@@ -11,7 +11,7 @@ class EditCourseDescriptionField extends StatelessWidget {
   Widget build(BuildContext context) {
     CourseEntity course = context.read<CourseEntity>();
 
-    return Customteaxtfield(
+    return CustomTextField(
       hintText: "يرجى تقديم وصف مختصر للأهداف الرئيسية للدورة..",
       obscureText: false,
       controller: TextEditingController(

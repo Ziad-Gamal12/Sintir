@@ -18,7 +18,7 @@ class TeacherSignFirstAndLastNameField extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: Customteaxtfield(
+            child: CustomTextField(
                 hintText: "الأسم الأول",
                 prefixIcon: Icons.person_2_outlined,
                 obscureText: false,
@@ -36,7 +36,7 @@ class TeacherSignFirstAndLastNameField extends StatelessWidget {
           ),
           const Customsizedbox(width: 10, height: 0),
           Expanded(
-            child: Customteaxtfield(
+            child: CustomTextField(
                 hintText: "الأسم الأخير",
                 prefixIcon: Icons.person_2_outlined,
                 obscureText: false,

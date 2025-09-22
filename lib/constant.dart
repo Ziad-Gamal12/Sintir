@@ -12,3 +12,5 @@ const ElevenlabsApiKey2 = "sk_78b506b7d508afe5b55b45239eb8ee22648ca2ad2e6dbcac";
 const ElevenlabsVoiceId = "IES4nrmZdUBHByLBde0P";
 const PaymobWalletsIntegrationID = 5303637;
 const PaymobWalletsIframe = 910959;
+const String PaymobApiKey =
+    'ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TVRBek5EVTRPU3dpYm1GdFpTSTZJbWx1YVhScFlXd2lmUS5SNW9iQlI3Y0JDRWdFOWhvZXFfNnJBZVdHWnU4WnZfS0VEUWo3RDNYeVNvT0x1YnlFZ3UtdDJfMlJpYUhWdjl4WVh4LW1lRW4yaEJGNE9USWoxWXpGUQ==';

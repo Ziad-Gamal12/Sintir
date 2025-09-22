@@ -12,16 +12,16 @@ class Customsolutionstatewidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isCorrect) {
-      return Customsolutionstaterowwidget(
+      return CustomSolutionStateRowWidget(
           isCorrect: isCorrect, title: selectedAnswer);
     } else {
       return Column(
         children: [
-          Customsolutionstaterowwidget(isCorrect: true, title: rightAnswer),
+          CustomSolutionStateRowWidget(isCorrect: true, title: rightAnswer),
           const SizedBox(
-            height: 10,
+            height: 20,
           ),
-          Customsolutionstaterowwidget(isCorrect: false, title: selectedAnswer),
+          CustomSolutionStateRowWidget(isCorrect: false, title: selectedAnswer),
         ],
       );
     }

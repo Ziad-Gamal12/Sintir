@@ -35,10 +35,7 @@ class PaymobRepoImp implements PaymobRepo {
               user: user,
               course: course));
       String paymentUrl = await payMobService.payWithWallet(body: {
-        "source": {
-          "identifier": PaymobWalletsIntegrationID,
-          "subtype": "WALLET"
-        },
+        "source": {"identifier": "01010101010", "subtype": "WALLET"},
         "payment_token": paymentToken
       });
       return right(PayMobResponse(url: paymentUrl, paymentid: paymentToken));

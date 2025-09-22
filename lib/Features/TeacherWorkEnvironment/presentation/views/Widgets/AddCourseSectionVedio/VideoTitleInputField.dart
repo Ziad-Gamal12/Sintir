@@ -7,7 +7,7 @@ class VideoTitleInputField extends StatelessWidget {
   final CourseVideoItemEntity courseVedioItemEntity;
   @override
   Widget build(BuildContext context) {
-    return Customteaxtfield(
+    return CustomTextField(
       hintText: "يرجى كتابة اسم الفيديو هنا ...",
       obscureText: false,
       textInputType: TextInputType.text,

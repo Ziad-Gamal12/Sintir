@@ -15,7 +15,7 @@ class CustomEmailTextField extends StatelessWidget {
   bool isIconVisible;
   @override
   Widget build(BuildContext context) {
-    return Customteaxtfield(
+    return CustomTextField(
         controller: controller,
         hintText: "البريد الإلكتروني",
         prefixIcon: isIconVisible ? FontAwesomeIcons.envelope : null,

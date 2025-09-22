@@ -12,7 +12,7 @@ class TeacherSignUpAddressFiled extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Customteaxtfield(
+    return CustomTextField(
         hintText: "العنوان",
         prefixIcon: Icons.location_on_outlined,
         obscureText: false,

@@ -10,7 +10,7 @@ class TeacherLoginEmailAdressTextFiled extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Customteaxtfield(
+    return CustomTextField(
         hintText: "البريد الالكتروني",
         prefixIcon: Icons.email_outlined,
         obscureText: false,
