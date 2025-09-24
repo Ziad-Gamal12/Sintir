@@ -1,0 +1,2 @@
+H:/flutter projects/sintir/android/app/.cxx/RelWithDebInfo/6kg2x342/x86_64/CMakeFiles/edit_cache.dir
+H:/flutter projects/sintir/android/app/.cxx/RelWithDebInfo/6kg2x342/x86_64/CMakeFiles/rebuild_cache.dir
