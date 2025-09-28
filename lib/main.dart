@@ -20,7 +20,6 @@ void main() async {
     dotenv.load(fileName: ".env"),
     shared_preferences_Services.init()
   ]);
-
   setup_Getit();
   Bloc.observer = Custom_Blocobserver();
   runApp(

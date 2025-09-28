@@ -162,6 +162,10 @@ class Assets {
   /// assets/images/notification_icon.png
   static const String assetsImagesNotificationIcon = "assets/images/notification_icon.png";
 
+  /// Assets for assetsImagesProfileBackGround
+  /// assets/images/ProfileBackGround.svg
+  static const String assetsImagesProfileBackGround = "assets/images/ProfileBackGround.svg";
+
   /// Assets for assetsImagesSearch
   /// assets/images/search.png
   static const String assetsImagesSearch = "assets/images/search.png";

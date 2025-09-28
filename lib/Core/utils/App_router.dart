@@ -30,6 +30,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/displayCourseVedioVeiw.dart';
 import 'package:sintir/Features/Favorites/presentation/views/FavoritesView.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
+import 'package:sintir/Features/Profile/Presentation/Views/ProfileView.dart';
 import 'package:sintir/Features/Splash/Presentation/views/SplashView.dart';
 import 'package:sintir/Features/StudentOnboarding/Presentation/Views/StudentOnboardingView.dart';
 import 'package:sintir/Features/StudentProfile/presentation/views/studentProfileView.dart';
@@ -316,6 +317,12 @@ class App_router {
             requirmentsEntity: state.extra
                 as DisplayCourseBottomsheetNavigationRequirmentsEntity,
           );
+        },
+      ),
+      GoRoute(
+        path: ProfileView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const ProfileView();
         },
       ),
     ],
