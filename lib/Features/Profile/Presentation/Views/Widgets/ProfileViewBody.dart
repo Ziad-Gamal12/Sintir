@@ -76,7 +76,8 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                   ),
                   const UserInfoSectionPersonalDetailsHeader(),
                   const SizedBox(height: 10),
-                  WorkEnvironmentNavigationButton(role: getUserData().role),
+                  WorkEnvironmentNavigationButton(
+                      myCourses: fetchedMyCourses, role: getUserData().role),
                   Divider(
                     thickness: 2,
                     height: 40,
