@@ -33,10 +33,8 @@ import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/ProfileView.dart';
 import 'package:sintir/Features/Splash/Presentation/views/SplashView.dart';
 import 'package:sintir/Features/StudentOnboarding/Presentation/Views/StudentOnboardingView.dart';
-import 'package:sintir/Features/StudentProfile/presentation/views/studentProfileView.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/SubscribtionView.dart';
 import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnboardingView.dart';
-import 'package:sintir/Features/TeacherProfile/presentation/views/TeacherProfileView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionFileView.dart';
@@ -190,18 +188,6 @@ class App_router {
             coursefileviewnavigationsrequirmentsentity:
                 state.extra as Coursefileviewnavigationsrequirmentsentity,
           );
-        },
-      ),
-      GoRoute(
-        path: Studentprofileview.routeName,
-        builder: (BuildContext context, GoRouterState state) {
-          return const Studentprofileview();
-        },
-      ),
-      GoRoute(
-        path: Teacherprofileview.routeName,
-        builder: (BuildContext context, GoRouterState state) {
-          return const Teacherprofileview();
         },
       ),
       GoRoute(
