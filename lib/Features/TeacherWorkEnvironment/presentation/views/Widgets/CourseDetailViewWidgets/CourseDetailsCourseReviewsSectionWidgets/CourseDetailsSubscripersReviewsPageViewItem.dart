@@ -31,16 +31,18 @@ class _CourseDetailsSubscribersReviewsPageViewItemState
   void initState() {
     super.initState();
 
-    context
-        .read<CourseFeedBacksCubit>()
-        .getCourseFeedBacks(courseId: widget.courseId, isPaginate: false);
+    if (mounted) {
+      context
+          .read<CourseFeedBacksCubit>()
+          .getCourseFeedBacks(courseId: widget.courseId, isPaginate: false);
 
-    widget.scrollController.addListener(() {
-      final cubit = context.read<CourseFeedBacksCubit>();
-      if (_shouldFetchMore(cubit)) {
-        cubit.getCourseFeedBacks(courseId: widget.courseId, isPaginate: true);
-      }
-    });
+      widget.scrollController.addListener(() {
+        final cubit = context.read<CourseFeedBacksCubit>();
+        if (_shouldFetchMore(cubit)) {
+          cubit.getCourseFeedBacks(courseId: widget.courseId, isPaginate: true);
+        }
+      });
+    }
   }
 
   bool _shouldFetchMore(CourseFeedBacksCubit cubit) {

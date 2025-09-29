@@ -6,7 +6,9 @@ import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomDrawerWidgets/CustomDrawer.dart';
+import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_courses_cubit/get_courses_cubit.dart';
+import 'package:sintir/Features/Home/presentation/manager/get_user_data_cubit/get_user_data_cubit.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/Homeview_Body.dart';
 
 class Homeview extends StatefulWidget {
@@ -20,8 +22,14 @@ class Homeview extends StatefulWidget {
 class _HomeviewState extends State<Homeview> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => GetCoursesCubit(coursesrepo: getIt<Coursesrepo>()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) =>
+                GetCoursesCubit(coursesrepo: getIt<Coursesrepo>())),
+        BlocProvider(
+            create: (context) => GetUserDataCubit(authRepo: getIt<AuthRepo>()))
+      ],
       child: Scaffold(
         key: Variables.HomeViewScaffoldKey,
         endDrawer: const Customdrawer(),

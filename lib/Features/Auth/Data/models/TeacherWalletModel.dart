@@ -10,7 +10,7 @@ class TeacherWalletModel {
   final String status;
   final String createdAt;
   final String updatedAt;
-  final int? lastTransactionId;
+  final String? lastTransactionId;
 
   TeacherWalletModel(
       {required this.walletId,

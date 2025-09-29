@@ -33,17 +33,19 @@ class _CourseDetailsCourseReportsPageViewItemState
   void initState() {
     super.initState();
     // أول تحميل
-    context
-        .read<CourseReportsCubit>()
-        .getCourseReports(courseId: widget.courseId, isPaginate: false);
+    if (mounted) {
+      context
+          .read<CourseReportsCubit>()
+          .getCourseReports(courseId: widget.courseId, isPaginate: false);
 
-    // إضافة listener للـ ScrollController
-    widget.scrollController.addListener(() {
-      final cubit = context.read<CourseReportsCubit>();
-      if (_shouldFetchMoreReports(cubit)) {
-        cubit.getCourseReports(courseId: widget.courseId, isPaginate: true);
-      }
-    });
+      // إضافة listener للـ ScrollController
+      widget.scrollController.addListener(() {
+        final cubit = context.read<CourseReportsCubit>();
+        if (_shouldFetchMoreReports(cubit)) {
+          cubit.getCourseReports(courseId: widget.courseId, isPaginate: true);
+        }
+      });
+    }
   }
 
   bool _shouldFetchMoreReports(CourseReportsCubit cubit) {

@@ -1,12 +1,13 @@
 // user_info_section_personal_details_header.dart
 import 'package:expansion_widget/expansion_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:sintir/Features/Profile/Presentation/Views/Widgets/PersonalDetailsHeaderTitleRow.dart';
-import 'package:sintir/Features/Profile/Presentation/Views/Widgets/UserInfoSectionPersonalDetails.dart';
+import 'package:sintir/Core/widgets/CustomExpansionWIdget/CustomExpansionHeaderTitleRow.dart';
 
-class UserInfoSectionPersonalDetailsHeader extends StatelessWidget {
-  const UserInfoSectionPersonalDetailsHeader({super.key});
-
+class CustomExpansionWidget extends StatelessWidget {
+  const CustomExpansionWidget(
+      {super.key, required this.content, required this.title});
+  final Widget content;
+  final String title;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -16,12 +17,13 @@ class UserInfoSectionPersonalDetailsHeader extends StatelessWidget {
         child: ExpansionWidget(
           initiallyExpanded: false,
           titleBuilder: (_, __, bool isExpanded, toggleFunction) {
-            return HeaderTitleRow(
+            return CustomExpansionHeaderTitleRow(
+              title: title,
               isExpanded: isExpanded,
               onTap: () => toggleFunction(animated: true),
             );
           },
-          content: const UserInfoSectionPersonalDetails(),
+          content: content,
         ),
       ),
     );

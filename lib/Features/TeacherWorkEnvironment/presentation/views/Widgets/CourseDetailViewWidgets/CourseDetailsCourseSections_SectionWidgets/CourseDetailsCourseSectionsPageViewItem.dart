@@ -33,17 +33,18 @@ class _CourseDetailsCourseSectionsPageViewItemState
   @override
   void initState() {
     super.initState();
-    context
-        .read<CourseSectionsCubit>()
-        .getCourseSections(isPaginate: false, courseId: widget.courseEntity.id);
+    if (mounted) {
+      context.read<CourseSectionsCubit>().getCourseSections(
+          isPaginate: false, courseId: widget.courseEntity.id);
 
-    widget.scrollController.addListener(() {
-      final cubit = context.read<CourseSectionsCubit>();
-      if (_shouldFetchMoreSections(cubit)) {
-        cubit.getCourseSections(
-            isPaginate: true, courseId: widget.courseEntity.id);
-      }
-    });
+      widget.scrollController.addListener(() {
+        final cubit = context.read<CourseSectionsCubit>();
+        if (_shouldFetchMoreSections(cubit)) {
+          cubit.getCourseSections(
+              isPaginate: true, courseId: widget.courseEntity.id);
+        }
+      });
+    }
   }
 
   bool _shouldFetchMoreSections(CourseSectionsCubit cubit) {

@@ -36,7 +36,9 @@ class AuthRepoImpl implements AuthRepo {
             message:
                 "📩 بعتنالك رسالة تأكيد على إيميلك، لو مش لاقيها في الـ Inbox بص في الـ Spam."));
       } else {
-        final result = await fetchUserAndStoreLocally(user.uid);
+        final result = await fetchUserAndStoreLocally(
+          uid: user.uid,
+        );
         if (result.isLeft()) {
           authService.signout();
           return result;
@@ -100,7 +102,9 @@ class AuthRepoImpl implements AuthRepo {
     );
   }
 
-  Future<Either<Failure, void>> fetchUserAndStoreLocally(String uid) async {
+  @override
+  Future<Either<Failure, void>> fetchUserAndStoreLocally(
+      {required String uid}) async {
     try {
       FireStoreResponse json = await databaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
@@ -150,7 +154,9 @@ class AuthRepoImpl implements AuthRepo {
         docId: user.uid,
       );
       if (isExists) {
-        return await fetchUserAndStoreLocally(user.uid);
+        return await fetchUserAndStoreLocally(
+          uid: user.uid,
+        );
       } else {
         return await storeUserDataInFireStore(
           signOut: false,
@@ -203,7 +209,9 @@ class AuthRepoImpl implements AuthRepo {
         docId: user.uid,
       );
       if (isExists) {
-        return await fetchUserAndStoreLocally(user.uid);
+        return await fetchUserAndStoreLocally(
+          uid: user.uid,
+        );
       } else {
         return await storeUserDataInFireStore(
           signOut: false,

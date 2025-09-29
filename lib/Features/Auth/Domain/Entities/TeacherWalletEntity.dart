@@ -8,7 +8,7 @@ class TeacherWalletEntity {
   final String status;
   final String createdAt;
   final String updatedAt;
-  final int? lastTransactionId;
+  final String? lastTransactionId;
 
   TeacherWalletEntity({
     required this.walletId,

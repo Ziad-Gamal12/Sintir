@@ -33,16 +33,18 @@ class _CourseDetailsSubscribersPageViewItemState
   void initState() {
     super.initState();
 
-    context
-        .read<CourseSubscribtionsCubit>()
-        .getCoursSubscribers(isPaginate: false);
+    if (mounted) {
+      context
+          .read<CourseSubscribtionsCubit>()
+          .getCoursSubscribers(isPaginate: false);
 
-    widget.scrollController.addListener(() {
-      final cubit = context.read<CourseSubscribtionsCubit>();
-      if (_shouldFetchMore(cubit)) {
-        cubit.getCoursSubscribers(isPaginate: true);
-      }
-    });
+      widget.scrollController.addListener(() {
+        final cubit = context.read<CourseSubscribtionsCubit>();
+        if (_shouldFetchMore(cubit)) {
+          cubit.getCoursSubscribers(isPaginate: true);
+        }
+      });
+    }
   }
 
   bool _shouldFetchMore(CourseSubscribtionsCubit cubit) {

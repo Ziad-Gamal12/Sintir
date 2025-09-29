@@ -1,16 +1,17 @@
 // header_title_row.dart
 import 'package:flutter/material.dart';
-import 'package:sintir/Features/Profile/Presentation/Views/Widgets/PersonalDetailsHeaderExpandCollapseIcon.dart';
+import 'package:sintir/Core/widgets/CustomExpansionWIdget/CustomExpansionHeaderTitleCollapesIcon.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/PersonalHeaderTitleText.dart';
 
-class HeaderTitleRow extends StatelessWidget {
+class CustomExpansionHeaderTitleRow extends StatelessWidget {
   final bool isExpanded;
   final VoidCallback onTap;
-
-  const HeaderTitleRow({
+  final String title;
+  const CustomExpansionHeaderTitleRow({
     super.key,
     required this.isExpanded,
     required this.onTap,
+    required this.title,
   });
 
   @override
@@ -22,8 +23,10 @@ class HeaderTitleRow extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const PersonalHeaderTitleText(),
-            PersonalDetailsHeaderExpandCollapseIcon(isExpanded: isExpanded),
+            PersonalHeaderTitleText(
+              title: title,
+            ),
+            CustomExpansionHeaderTitleCollapesIcon(isExpanded: isExpanded),
           ],
         ),
       ),

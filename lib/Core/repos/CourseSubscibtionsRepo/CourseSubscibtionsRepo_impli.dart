@@ -107,6 +107,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       "teacherExtraData.wallet.balance": FieldValue.increment(netAmount),
       "teacherExtraData.wallet.last_transaction_id": transactionId,
       "teacherExtraData.wallet.updated_at": DateTime.now().toIso8601String(),
+      "teacherExtraData.wallet.total_earned": FieldValue.increment(netAmount),
     };
 
     for (final entry in updates.entries) {

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
+import 'package:sintir/Core/widgets/CustomExpansionWIdget/CustomExpansionWidget.dart';
 import 'package:sintir/Features/Profile/Presentation/Manager/ProfileCubit/ProfileCubit.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/MyCoursesHeader.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/ProfileViewBodyMyCoursesSliverGrid.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/UserInfoSection.dart';
-import 'package:sintir/Features/Profile/Presentation/Views/Widgets/UserInfoSectionPersonalDetailsHeader.dart';
+import 'package:sintir/Features/Profile/Presentation/Views/Widgets/UserInfoSectionPersonalDetails.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/WorkEnvironmentNavigationButton.dart';
 import 'package:sintir/constant.dart';
 
@@ -74,7 +75,10 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const UserInfoSectionPersonalDetailsHeader(),
+                   const CustomExpansionWidget(
+                    title: "البيانات الشخصية",
+                       content: UserInfoSectionPersonalDetails(),
+                  ),
                   const SizedBox(height: 10),
                   WorkEnvironmentNavigationButton(
                       myCourses: fetchedMyCourses, role: getUserData().role),

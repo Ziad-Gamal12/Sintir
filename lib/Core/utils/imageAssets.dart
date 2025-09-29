@@ -106,6 +106,10 @@ class Assets {
   /// assets/images/errorIcon.svg
   static const String assetsImagesErrorIcon = "assets/images/errorIcon.svg";
 
+  /// Assets for assetsImagesEtisalatCash
+  /// assets/images/EtisalatCash.svg
+  static const String assetsImagesEtisalatCash = "assets/images/EtisalatCash.svg";
+
   /// Assets for assetsImagesExamIcon
   /// assets/images/ExamIcon.svg
   static const String assetsImagesExamIcon = "assets/images/ExamIcon.svg";
@@ -161,6 +165,10 @@ class Assets {
   /// Assets for assetsImagesNotificationIcon
   /// assets/images/notification_icon.png
   static const String assetsImagesNotificationIcon = "assets/images/notification_icon.png";
+
+  /// Assets for assetsImagesOrangeMoneyLogo500x336
+  /// assets/images/Orange-Money-logo-500x336.svg
+  static const String assetsImagesOrangeMoneyLogo500x336 = "assets/images/Orange-Money-logo-500x336.svg";
 
   /// Assets for assetsImagesProfileBackGround
   /// assets/images/ProfileBackGround.svg
@@ -242,9 +250,21 @@ class Assets {
   /// assets/images/VideoIcon.svg
   static const String assetsImagesVideoIcon = "assets/images/VideoIcon.svg";
 
+  /// Assets for assetsImagesVodafone
+  /// assets/images/Vodafone.svg
+  static const String assetsImagesVodafone = "assets/images/Vodafone.svg";
+
+  /// Assets for assetsImagesWalletsCashe
+  /// assets/images/WalletsCashe.png
+  static const String assetsImagesWalletsCashe = "assets/images/WalletsCashe.png";
+
   /// Assets for assetsImagesWarning
   /// assets/images/warning.png
   static const String assetsImagesWarning = "assets/images/warning.png";
+
+  /// Assets for assetsImagesWeLogoSvg
+  /// assets/images/We_logo.svg.svg
+  static const String assetsImagesWeLogoSvg = "assets/images/We_logo.svg.svg";
 
   /// Assets for assetsLottieFilesSintirAnimatedLogo
   /// assets/LottieFiles/SintirAnimatedLogo.json

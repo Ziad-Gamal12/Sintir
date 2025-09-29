@@ -21,4 +21,5 @@ abstract class AuthRepo {
     required String currentPassword,
   });
   Future<Either<Failure, void>> resetPassword({required String email});
+  Future<Either<Failure, void>> fetchUserAndStoreLocally({required String uid});
 }

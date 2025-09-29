@@ -15,7 +15,8 @@ class CourseDetailViewBody extends StatefulWidget {
   State<CourseDetailViewBody> createState() => _CourseDetailViewBodyState();
 }
 
-class _CourseDetailViewBodyState extends State<CourseDetailViewBody> {
+class _CourseDetailViewBodyState extends State<CourseDetailViewBody>
+    with AutomaticKeepAliveClientMixin {
   late PageController pageController;
   late ScrollController scrollController;
 
@@ -49,6 +50,7 @@ class _CourseDetailViewBodyState extends State<CourseDetailViewBody> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
       child: CustomScrollView(
@@ -73,4 +75,7 @@ class _CourseDetailViewBodyState extends State<CourseDetailViewBody> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

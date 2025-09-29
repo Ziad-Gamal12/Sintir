@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PersonalDetailsHeaderExpandCollapseIcon extends StatelessWidget {
-  const PersonalDetailsHeaderExpandCollapseIcon(
+class CustomExpansionHeaderTitleCollapesIcon extends StatelessWidget {
+  const CustomExpansionHeaderTitleCollapesIcon(
       {super.key, required this.isExpanded});
   final bool isExpanded;
   @override
