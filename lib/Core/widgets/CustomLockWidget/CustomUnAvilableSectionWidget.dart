@@ -38,7 +38,8 @@ class CustomUnAvilableSectionWidget extends StatelessWidget {
                   ),
                   Text(
                     "هذا المحتوى مغلق",
-                    style: AppTextStyles.semiBold16
+                    style: AppTextStyles(context)
+                        .semiBold16
                         .copyWith(color: Colors.red.shade700),
                   ),
                 ],

@@ -42,7 +42,8 @@ void teacherSignUpViewBodyUplaodPicListener(
           ),
           title: Text(
             "تم تحميل الصورة بنجاح",
-            style: AppTextStyles.semiBold13Auto.copyWith(color: Colors.white),
+            style:
+                AppTextStyles(context).semiBold13.copyWith(color: Colors.white),
           ),
         ),
         backgroundColor: Colors.green);

@@ -14,7 +14,7 @@ class Custominactivedraweritem extends StatelessWidget {
     return ListTile(
       title: Text(
         drawerEntity.title,
-        style: AppTextStyles.regular16.copyWith(color: Colors.black),
+        style: AppTextStyles(context).regular16.copyWith(color: Colors.black),
       ),
       leading: Image.asset(
         drawerEntity.inActiveIcon,

@@ -33,7 +33,8 @@ class addingJoinedByLoadingWidget extends StatelessWidget {
           ),
           Text(
             "جارى تسجيل دخولك",
-            style: AppTextStyles.semiBold16.copyWith(color: KMainColor),
+            style:
+                AppTextStyles(context).semiBold16.copyWith(color: KMainColor),
           )
         ],
       ),

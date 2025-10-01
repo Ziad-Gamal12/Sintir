@@ -22,13 +22,14 @@ class CoursefedbackslistviewItem extends StatelessWidget {
         minLeadingWidth: 60,
         title: Text(
           item.name,
-          style: AppTextStyles.semiBold16.copyWith(color: Colors.black),
+          style:
+              AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
         ),
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 5),
           child: Text(
             item.fedBack,
-            style: AppTextStyles.light14.copyWith(color: Colors.black),
+            style: AppTextStyles(context).light14.copyWith(color: Colors.black),
           ),
         ),
         leading: ClipRRect(
@@ -51,8 +52,9 @@ class CoursefedbackslistviewItem extends StatelessWidget {
                   ),
                   Text(
                     item.likesCount.toString(),
-                    style:
-                        AppTextStyles.semiBold12.copyWith(color: Colors.black),
+                    style: AppTextStyles(context)
+                        .semiBold12
+                        .copyWith(color: Colors.black),
                   )
                 ],
               ),
@@ -61,7 +63,8 @@ class CoursefedbackslistviewItem extends StatelessWidget {
               ),
               Text(
                 "${item.datePosted.year}/${item.datePosted.month}/${item.datePosted.day}",
-                style: AppTextStyles.regular14
+                style: AppTextStyles(context)
+                    .regular14
                     .copyWith(color: const Color(0xff818181)),
               )
             ],

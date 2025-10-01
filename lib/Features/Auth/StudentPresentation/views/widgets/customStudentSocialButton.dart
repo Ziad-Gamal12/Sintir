@@ -37,7 +37,8 @@ class Customstudentsocialbutton extends StatelessWidget {
             ),
             Text(
               text,
-              style: AppTextStyles.semiBold16
+              style: AppTextStyles(context)
+                  .semiBold16
                   .copyWith(color: const Color(0xff0C0D0D)),
             )
           ],

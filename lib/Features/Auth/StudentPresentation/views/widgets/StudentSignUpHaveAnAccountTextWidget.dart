@@ -17,11 +17,13 @@ class StudentSignUpHaveAnAccountTextWidget extends StatelessWidget {
       child: Text.rich(TextSpan(children: [
         TextSpan(
             text: "تمتلك حساب بالفعل ؟ ",
-            style: AppTextStyles.semiBold16
+            style: AppTextStyles(context)
+                .semiBold16
                 .copyWith(color: const Color(0xff949D9E))),
         TextSpan(
             text: "تسجيل الدخول",
-            style: AppTextStyles.semiBold16.copyWith(color: KMainColor))
+            style:
+                AppTextStyles(context).semiBold16.copyWith(color: KMainColor))
       ])),
     );
   }

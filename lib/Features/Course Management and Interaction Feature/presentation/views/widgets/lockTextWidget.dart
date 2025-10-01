@@ -8,7 +8,9 @@ class LockText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       "هذا المحتوى مغلق",
-      style: AppTextStyles.semiBold16.copyWith(color: Colors.red.shade700),
+      style: AppTextStyles(context)
+          .semiBold16
+          .copyWith(color: Colors.red.shade700),
     );
   }
 }

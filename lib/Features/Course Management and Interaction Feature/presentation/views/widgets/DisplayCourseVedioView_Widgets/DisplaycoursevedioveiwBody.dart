@@ -59,13 +59,17 @@ class _DisplaycoursevedioveiwBodyState
           ShowSnackBar(
               context: context,
               child: Text("تم الانضمام بنجاح",
-                  style: AppTextStyles.regular14.copyWith(color: Colors.black)),
+                  style: AppTextStyles(context)
+                      .regular14
+                      .copyWith(color: Colors.black)),
               backgroundColor: Colors.grey.shade200);
         } else if (state is JoinToVideoItemFailure) {
           ShowSnackBar(
               context: context,
               child: Text(state.errMessage,
-                  style: AppTextStyles.regular14.copyWith(color: Colors.white)),
+                  style: AppTextStyles(context)
+                      .regular14
+                      .copyWith(color: Colors.white)),
               backgroundColor: Colors.red);
         }
       },

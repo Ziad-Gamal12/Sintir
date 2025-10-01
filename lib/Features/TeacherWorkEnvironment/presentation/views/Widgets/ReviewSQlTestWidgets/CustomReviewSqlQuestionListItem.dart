@@ -24,7 +24,8 @@ class CustomReviewSqlQuestionListItem extends StatelessWidget {
         children: [
           Text(
             "*${question.questionTitle}؟",
-            style: AppTextStyles.semiBold20.copyWith(color: Colors.black),
+            style:
+                AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
           ),
           const SizedBox(
             height: 10,

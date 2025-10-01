@@ -13,7 +13,7 @@ class CustomSolvedQuestionListItemQuestionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       questionTitle.isEmpty ? "لم يتم العثور على السؤال" : questionTitle,
-      style: AppTextStyles.semiBold20.copyWith(color: Colors.black),
+      style: AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
     );
   }
 }

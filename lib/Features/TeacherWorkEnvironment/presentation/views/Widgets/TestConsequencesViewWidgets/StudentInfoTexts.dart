@@ -8,16 +8,16 @@ class StudentInfoTexts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Text("محمد علي", style: AppTextStyles.semiBold20),
+        Text("محمد علي", style: AppTextStyles(context).semiBold20),
         const SizedBox(height: 2),
         Text(
           "142635671231",
-          style: AppTextStyles.regular14.copyWith(color: Colors.grey),
+          style: AppTextStyles(context).regular14.copyWith(color: Colors.grey),
         ),
         const SizedBox(height: 4),
         Text(
           "12/4/2023",
-          style: AppTextStyles.regular14.copyWith(color: Colors.grey),
+          style: AppTextStyles(context).regular14.copyWith(color: Colors.grey),
         ),
       ],
     );

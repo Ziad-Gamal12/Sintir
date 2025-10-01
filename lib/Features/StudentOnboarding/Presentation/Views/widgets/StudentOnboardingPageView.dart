@@ -10,12 +10,13 @@ class StudentOnboardingPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
-        itemCount: Customonboardingpageviewentity.studentToList().length,
+        itemCount: Customonboardingpageviewentity.studentToList(context).length,
         controller: pageController,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return CustomOnboardingPageViewItem(
-            entity: Customonboardingpageviewentity.studentToList()[index],
+            entity:
+                Customonboardingpageviewentity.studentToList(context)[index],
           );
         });
   }

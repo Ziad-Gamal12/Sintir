@@ -48,8 +48,9 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
           filled: true,
           fillColor: Colors.white,
           hintText: 'ابحث عن.......',
-          hintStyle:
-              AppTextStyles.regular13.copyWith(color: const Color(0xff949D9E)),
+          hintStyle: AppTextStyles(context)
+              .regular13
+              .copyWith(color: const Color(0xff949D9E)),
           prefixIcon: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 14),
             child: SvgPicture.asset(

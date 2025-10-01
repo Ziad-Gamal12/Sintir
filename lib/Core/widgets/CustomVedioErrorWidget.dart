@@ -17,7 +17,8 @@ class CustomVedioErrorWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(12)),
         child: Text(
           errorMessage ?? "حدث خطأ ما! يرجى اعادة المحاولة",
-          style: AppTextStyles.semiBold16.copyWith(color: Colors.black),
+          style:
+              AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
         ));
   }
 }

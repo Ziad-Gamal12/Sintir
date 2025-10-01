@@ -53,13 +53,17 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
           ShowSnackBar(
               context: context,
               child: Text("تم الانضمام بنجاح",
-                  style: AppTextStyles.regular14.copyWith(color: Colors.black)),
+                  style: AppTextStyles(context)
+                      .regular14
+                      .copyWith(color: Colors.black)),
               backgroundColor: Colors.grey.shade200);
         } else if (state is JoinToTestItemFailure) {
           ShowSnackBar(
               context: context,
               child: Text(state.errMessage,
-                  style: AppTextStyles.regular14.copyWith(color: Colors.white)),
+                  style: AppTextStyles(context)
+                      .regular14
+                      .copyWith(color: Colors.white)),
               backgroundColor: Colors.red);
         } else if (state is AddTestResultSuccess) {
           successdialog(

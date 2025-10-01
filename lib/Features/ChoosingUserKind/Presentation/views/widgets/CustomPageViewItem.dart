@@ -29,13 +29,14 @@ class Custompageviewitem extends StatelessWidget {
           ),
           Text(
             pageViewItemEntity.title,
-            style: AppTextStyles.bold32Auto,
+            style: AppTextStyles(context).bold32,
           ),
           const Customsizedbox(width: 0, height: 10),
           Text(
             pageViewItemEntity.description,
             textAlign: TextAlign.center,
-            style: AppTextStyles.regular16
+            style: AppTextStyles(context)
+                .regular16
                 .copyWith(color: const Color(0xff818181)),
           ),
         ],

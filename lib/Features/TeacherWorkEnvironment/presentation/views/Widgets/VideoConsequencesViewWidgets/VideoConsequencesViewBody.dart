@@ -20,9 +20,10 @@ class VideoConsequencesViewBody extends StatelessWidget {
               height: 30,
             ),
           ),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: Text("ملاحظات الفيديو",
-                textAlign: TextAlign.center, style: AppTextStyles.bold20Auto),
+                textAlign: TextAlign.center,
+                style: AppTextStyles(context).bold20),
           ),
           const SliverToBoxAdapter(
             child: SizedBox(

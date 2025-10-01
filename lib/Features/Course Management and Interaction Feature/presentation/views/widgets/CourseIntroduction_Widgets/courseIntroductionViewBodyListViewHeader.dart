@@ -20,7 +20,8 @@ class courseIntroductionViewBodyListViewHeader extends StatelessWidget {
         ),
         Text(
           "محتوى الكورس",
-          style: AppTextStyles.semiBold20.copyWith(color: Colors.black),
+          style:
+              AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
           textAlign: TextAlign.start,
         ),
       ],

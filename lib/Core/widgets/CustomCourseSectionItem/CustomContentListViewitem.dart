@@ -57,7 +57,9 @@ class _CustomContentListViewitemState extends State<CustomContentListViewitem> {
               context: context,
               child: Text(
                 state.errMessage,
-                style: AppTextStyles.regular14.copyWith(color: Colors.white),
+                style: AppTextStyles(context)
+                    .regular14
+                    .copyWith(color: Colors.white),
               ),
               backgroundColor: Colors.red,
             );

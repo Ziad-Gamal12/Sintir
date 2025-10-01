@@ -83,7 +83,9 @@ class ReviewSqlTestSectionViewBody extends StatelessWidget {
       ShowSnackBar(
           context: context,
           child: Text(state.errMessage,
-              style: AppTextStyles.regular14.copyWith(color: Colors.white)),
+              style: AppTextStyles(context)
+                  .regular14
+                  .copyWith(color: Colors.white)),
           backgroundColor: Colors.red);
     } else if (state is AddTestItemFailure) {
       errordialog(context, state.errMessage).show();

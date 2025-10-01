@@ -29,7 +29,8 @@ class _CoursetestquestionItemState extends State<CoursetestquestionItem> {
       children: [
         Text(
           "${widget.currentQuestionIndex + 1}-  ${test.questions[widget.currentQuestionIndex].questionTitle}",
-          style: AppTextStyles.semiBold16.copyWith(color: Colors.black),
+          style:
+              AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
           textAlign: TextAlign.right,
         ),
         const SizedBox(

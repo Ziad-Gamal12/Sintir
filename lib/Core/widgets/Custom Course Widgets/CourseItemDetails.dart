@@ -19,7 +19,8 @@ class CourseItemDetails extends StatelessWidget {
             textAlign: TextAlign.right,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.semiBold11.copyWith(color: Colors.black),
+            style:
+                AppTextStyles(context).semiBold11.copyWith(color: Colors.black),
           ),
           const SizedBox(height: 3),
           Row(
@@ -33,7 +34,8 @@ class CourseItemDetails extends StatelessWidget {
                 courseItem.contentcreaterentity?.name ?? "",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.regular10
+                style: AppTextStyles(context)
+                    .regular10
                     .copyWith(color: const Color(0xff818181)),
               ),
             ],

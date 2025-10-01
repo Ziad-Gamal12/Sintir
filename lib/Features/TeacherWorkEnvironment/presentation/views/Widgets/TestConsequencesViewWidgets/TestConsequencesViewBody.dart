@@ -32,7 +32,8 @@ class TestConsequencesViewBody extends StatelessWidget {
             child: Text(
               "نتايج الاختبار",
               textAlign: TextAlign.center,
-              style: AppTextStyles.bold24.copyWith(color: Colors.black),
+              style:
+                  AppTextStyles(context).bold24.copyWith(color: Colors.black),
             ),
           ),
           const SliverToBoxAdapter(

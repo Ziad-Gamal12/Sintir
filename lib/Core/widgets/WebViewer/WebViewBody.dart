@@ -71,7 +71,7 @@ class _WebviewbodyState extends State<Webviewbody> {
           return Center(
               child: Text(
             state.errMessge,
-            style: AppTextStyles.bold24.copyWith(color: Colors.red),
+            style: AppTextStyles(context).bold24.copyWith(color: Colors.red),
           ));
         } else if (state is SubscibeingToCourseSuccess) {
           return Center(
@@ -87,7 +87,9 @@ class _WebviewbodyState extends State<Webviewbody> {
                 const SizedBox(height: 10),
                 Text(
                   "تم الاشتراك",
-                  style: AppTextStyles.bold24.copyWith(color: Colors.green),
+                  style: AppTextStyles(context)
+                      .bold24
+                      .copyWith(color: Colors.green),
                 ),
               ],
             ),

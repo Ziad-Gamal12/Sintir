@@ -13,16 +13,21 @@ class Customonboardingpageviewentity {
   Customonboardingpageviewentity(
       {required this.image, required this.title, required this.description});
 
-  static List<Customonboardingpageviewentity> studentToList() => [
+  static List<Customonboardingpageviewentity> studentToList(
+          BuildContext context) =>
+      [
         Customonboardingpageviewentity(
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(" مرحبًا بك في ",
-                  style: AppTextStyles.bold23
+                  style: AppTextStyles(context)
+                      .bold23
                       .copyWith(color: const Color(0xff000000))),
               Text("SINTIR",
-                  style: AppTextStyles.bold23.copyWith(color: KSecondaryColor)),
+                  style: AppTextStyles(context)
+                      .bold23
+                      .copyWith(color: KSecondaryColor)),
             ],
           ),
           image: Assets.assetsImagesStudentOnboardingone,
@@ -31,7 +36,8 @@ class Customonboardingpageviewentity {
         ),
         Customonboardingpageviewentity(
           title: Text(" تعلم بسهولة وأمان",
-              style: AppTextStyles.bold23
+              style: AppTextStyles(context)
+                  .bold23
                   .copyWith(color: const Color(0xff000000))),
           image: Assets.assetsImagesStudentOnboardingTwo,
           description:
@@ -42,12 +48,15 @@ class Customonboardingpageviewentity {
               "ابدأ رحلتك التعليمية مع سنتر. انضم الآن واكتشف كيف يمكن لتعليمك أن يصبح أكثر تفاعلاً وإثارة. اختر مسارك وابدأ التعلم اليوم!",
           image: Assets.assetsImagesStudentOnboardingThree,
           title: Text("ابدأ رحلتك التعليمية",
-              style: AppTextStyles.bold23
+              style: AppTextStyles(context)
+                  .bold23
                   .copyWith(color: const Color(0xff000000))),
         ),
       ];
 
-  static List<Customonboardingpageviewentity> teacherToList() => [
+  static List<Customonboardingpageviewentity> teacherToList(
+          BuildContext context) =>
+      [
         Customonboardingpageviewentity(
           description:
               "استعد لاستكشاف مجموعة من الأدوات المصممة لدعم تجربتك العلمية",
@@ -56,10 +65,13 @@ class Customonboardingpageviewentity {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(" مرحبًا بك في ",
-                  style: AppTextStyles.bold23
+                  style: AppTextStyles(context)
+                      .bold23
                       .copyWith(color: const Color(0xff000000))),
               Text("SINTIR",
-                  style: AppTextStyles.bold23.copyWith(color: KSecondaryColor)),
+                  style: AppTextStyles(context)
+                      .bold23
+                      .copyWith(color: KSecondaryColor)),
             ],
           ),
         ),
@@ -68,7 +80,8 @@ class Customonboardingpageviewentity {
               "من خطط الدروس الديناميكية إلى التعليقات الفورية، اكتشف الميزات التي ستساعدك على جذب وتحفيز طلابك.",
           image: Assets.assetsImagesTeacherOnboarding2,
           title: Text("تفاعل مع طلابك",
-              style: AppTextStyles.bold23
+              style: AppTextStyles(context)
+                  .bold23
                   .copyWith(color: const Color(0xff000000))),
         ),
         Customonboardingpageviewentity(
@@ -76,7 +89,8 @@ class Customonboardingpageviewentity {
               "ابدأ رحلتك الآن وارتبط بشبكة من المعلمين. دعنا نعمل معًا لإحداث فرق في التعليم!",
           image: Assets.assetsImagesTeacherOnboarding3,
           title: Text("ابدأ اليوم",
-              style: AppTextStyles.bold23
+              style: AppTextStyles(context)
+                  .bold23
                   .copyWith(color: const Color(0xff000000))),
         ),
       ];

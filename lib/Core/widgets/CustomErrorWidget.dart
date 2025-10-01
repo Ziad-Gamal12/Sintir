@@ -18,7 +18,8 @@ class CustomErrorWidget extends StatelessWidget {
         ),
         Text(errormessage,
             textAlign: TextAlign.center,
-            style: AppTextStyles.semiBold16.copyWith(color: Colors.black))
+            style:
+                AppTextStyles(context).semiBold16.copyWith(color: Colors.black))
       ],
     );
   }

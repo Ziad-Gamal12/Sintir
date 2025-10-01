@@ -49,7 +49,9 @@ class _CoursefilepreviewerviewbodyState
           ShowSnackBar(
               context: context,
               child: Text("حدث خطأ في تحميل الملف",
-                  style: AppTextStyles.regular14.copyWith(color: Colors.white)),
+                  style: AppTextStyles(context)
+                      .regular14
+                      .copyWith(color: Colors.white)),
               backgroundColor: Colors.red);
         }
       }
@@ -104,15 +106,17 @@ class _CoursefilepreviewerviewbodyState
             ShowSnackBar(
                 context: context,
                 child: Text("تم الإنضمام بنجاح",
-                    style:
-                        AppTextStyles.regular14.copyWith(color: Colors.white)),
+                    style: AppTextStyles(context)
+                        .regular14
+                        .copyWith(color: Colors.white)),
                 backgroundColor: Colors.green);
           } else if (state is JoinToFileITemFailure) {
             ShowSnackBar(
                 context: context,
                 child: Text(state.errMessage,
-                    style:
-                        AppTextStyles.regular14.copyWith(color: Colors.white)),
+                    style: AppTextStyles(context)
+                        .regular14
+                        .copyWith(color: Colors.white)),
                 backgroundColor: Colors.red);
           }
         },

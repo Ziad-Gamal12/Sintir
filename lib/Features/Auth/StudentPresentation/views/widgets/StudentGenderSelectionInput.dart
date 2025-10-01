@@ -41,7 +41,8 @@ class _StudentGenderSelectionInputState
               const Customsizedbox(width: 20, height: 0),
               Text(
                 "ذكر",
-                style: AppTextStyles.bold14Auto
+                style: AppTextStyles(context)
+                    .bold14
                     .copyWith(color: const Color(0xff818181)),
               ),
             ],
@@ -61,7 +62,8 @@ class _StudentGenderSelectionInputState
               const Customsizedbox(width: 20, height: 0),
               Text(
                 "أنثى",
-                style: AppTextStyles.bold14Auto
+                style: AppTextStyles(context)
+                    .bold14
                     .copyWith(color: const Color(0xff818181)),
               ),
             ],

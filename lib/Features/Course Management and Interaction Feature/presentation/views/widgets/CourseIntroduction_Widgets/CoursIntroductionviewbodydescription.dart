@@ -41,15 +41,17 @@ class _CourseInfoCardCourseDescriptionState
             child: Text(
               isEllipsis ? "عرض المزيد" : "عرض أقل",
               textAlign: TextAlign.left,
-              style: AppTextStyles.semiBold10.copyWith(color: KMainColor),
+              style:
+                  AppTextStyles(context).semiBold10.copyWith(color: KMainColor),
             ),
           ),
         ),
         const SizedBox(height: 10),
         Text(
           courseEntity.description,
-          style:
-              AppTextStyles.regular10.copyWith(color: const Color(0xff818181)),
+          style: AppTextStyles(context)
+              .regular10
+              .copyWith(color: const Color(0xff818181)),
           textAlign: TextAlign.start,
           maxLines: isEllipsis ? 2 : null,
           overflow: isEllipsis ? TextOverflow.ellipsis : null,

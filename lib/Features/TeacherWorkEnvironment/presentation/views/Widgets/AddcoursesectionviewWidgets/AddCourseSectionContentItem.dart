@@ -20,7 +20,8 @@ class Addcoursesectioncontentitem extends StatelessWidget {
         ),
         Text(
           item.title,
-          style: AppTextStyles.semiBold16.copyWith(color: Colors.black),
+          style:
+              AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
         )
       ],
     );

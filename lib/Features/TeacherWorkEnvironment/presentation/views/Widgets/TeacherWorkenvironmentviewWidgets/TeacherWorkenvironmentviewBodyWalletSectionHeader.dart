@@ -22,7 +22,7 @@ class TeacherWorkenvironmentviewBodyWalletSectionHeader
         ),
         Text(
           "المحفظة",
-          style: AppTextStyles.bold20Auto.copyWith(color: Colors.black),
+          style: AppTextStyles(context).bold20.copyWith(color: Colors.black),
         ),
       ],
     );

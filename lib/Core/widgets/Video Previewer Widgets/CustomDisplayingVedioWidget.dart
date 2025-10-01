@@ -51,7 +51,9 @@ class _CustomDisplayingVideoWidgetState
         ShowSnackBar(
             context: context,
             child: Text("حدث خطأ فى العنصر",
-                style: AppTextStyles.regular14.copyWith(color: Colors.white)),
+                style: AppTextStyles(context)
+                    .regular14
+                    .copyWith(color: Colors.white)),
             backgroundColor: Colors.red);
         return;
       }

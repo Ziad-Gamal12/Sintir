@@ -35,7 +35,8 @@ class Testresultdetailsrow extends StatelessWidget {
               Expanded(
                 child: Text(
                   headline,
-                  style: AppTextStyles.semiBold16.copyWith(color: color),
+                  style:
+                      AppTextStyles(context).semiBold16.copyWith(color: color),
                 ),
               ),
             ],
@@ -43,7 +44,7 @@ class Testresultdetailsrow extends StatelessWidget {
           const Spacer(),
           Text(
             value,
-            style: AppTextStyles.bold32Auto.copyWith(color: color),
+            style: AppTextStyles(context).bold32.copyWith(color: color),
           ),
           const Spacer(),
         ],

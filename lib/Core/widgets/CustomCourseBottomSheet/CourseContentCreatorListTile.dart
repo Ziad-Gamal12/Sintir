@@ -24,7 +24,8 @@ class CourseContentCreatorListTile extends StatelessWidget {
           title,
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
-          style: AppTextStyles.semiBold16.copyWith(color: Colors.black),
+          style:
+              AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
         ),
         leading: SizedBox(
           width: 40,
@@ -38,8 +39,9 @@ class CourseContentCreatorListTile extends StatelessWidget {
         ),
         subtitle: Text(
           subtitle,
-          style:
-              AppTextStyles.regular13.copyWith(color: const Color(0xffAAAAAA)),
+          style: AppTextStyles(context)
+              .regular13
+              .copyWith(color: const Color(0xffAAAAAA)),
         ));
   }
 }

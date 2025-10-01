@@ -28,10 +28,13 @@ class CustomSendNoteText extends StatelessWidget {
       child: Text.rich(TextSpan(children: [
         TextSpan(
             text: " لقد واجهنى بعض المشاكل؟  ",
-            style: AppTextStyles.regular11.copyWith(color: Colors.black)),
+            style:
+                AppTextStyles(context).regular11.copyWith(color: Colors.black)),
         TextSpan(
             text: "أرسال ملاحظة",
-            style: AppTextStyles.regular11.copyWith(color: KSecondaryColor))
+            style: AppTextStyles(context)
+                .regular11
+                .copyWith(color: KSecondaryColor))
       ])),
     );
   }

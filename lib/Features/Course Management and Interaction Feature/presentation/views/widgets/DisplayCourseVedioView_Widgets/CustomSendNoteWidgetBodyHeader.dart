@@ -10,9 +10,9 @@ class CustomSendNoteWidgetBodyHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       "ارسال ملاحظه",
-      style: AppTextStyles.bold20Auto.copyWith(
-        color: Colors.black,
-      ),
+      style: AppTextStyles(context).bold20.copyWith(
+            color: Colors.black,
+          ),
     );
   }
 }

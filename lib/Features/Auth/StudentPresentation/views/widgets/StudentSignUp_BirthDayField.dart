@@ -49,7 +49,7 @@ class _StudentsignupBirthdayfieldState
             pickedDate == null
                 ? "تاريخ الميلاد"
                 : "${pickedDate!.day}/${pickedDate!.month}/${pickedDate!.year}",
-            style: AppTextStyles.bold14Auto.copyWith(
+            style: AppTextStyles(context).bold14.copyWith(
                 color: pickedDate == null
                     ? const Color(0xffAEAEB2)
                     : Colors.grey.shade700),

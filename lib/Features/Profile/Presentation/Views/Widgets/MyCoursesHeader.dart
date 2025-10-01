@@ -9,6 +9,6 @@ class MyCoursesHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text("كورساتي",
-        style: AppTextStyles.semiBold20.copyWith(color: Colors.black));
+        style: AppTextStyles(context).semiBold20.copyWith(color: Colors.black));
   }
 }

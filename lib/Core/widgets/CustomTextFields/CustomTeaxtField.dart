@@ -41,8 +41,9 @@ class CustomTextField extends StatelessWidget {
       maxLines: maxLines,
       decoration: InputDecoration(
           hintText: hintText,
-          hintStyle:
-              AppTextStyles.bold13.copyWith(color: const Color(0xffAEAEB2)),
+          hintStyle: AppTextStyles(context)
+              .bold13
+              .copyWith(color: const Color(0xffAEAEB2)),
           prefixIcon: Icon(
             prefixIcon,
             size: 24,

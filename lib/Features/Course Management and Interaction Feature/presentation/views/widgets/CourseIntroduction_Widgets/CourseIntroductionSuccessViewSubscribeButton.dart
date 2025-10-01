@@ -47,13 +47,14 @@ class _CourseIntroductionSuccessViewSubscribeButtonState
           return Center(
               child: Text(
             state.errMessge,
-            style: AppTextStyles.regular14.copyWith(color: Colors.red),
+            style: AppTextStyles(context).regular14.copyWith(color: Colors.red),
           ));
         } else if (state is SubscibeingToCourseSuccess) {
           return Center(
               child: Text(
             "تم الأشتراك بالكورس بنجاح",
-            style: AppTextStyles.regular14.copyWith(color: Colors.green),
+            style:
+                AppTextStyles(context).regular14.copyWith(color: Colors.green),
           ));
         }
         return Visibility(
@@ -92,7 +93,9 @@ class _CourseIntroductionSuccessViewSubscribeButtonState
                   width: 20,
                 ),
                 Text("${course.price} جنيه",
-                    style: AppTextStyles.semiBold20.copyWith(color: Colors.red))
+                    style: AppTextStyles(context)
+                        .semiBold20
+                        .copyWith(color: Colors.red))
               ],
             ),
           ),

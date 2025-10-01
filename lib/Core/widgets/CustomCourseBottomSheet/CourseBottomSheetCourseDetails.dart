@@ -22,14 +22,16 @@ class CourseBottomSheetCourseDetails extends StatelessWidget {
         Text.rich(TextSpan(children: [
           TextSpan(
               text: course.title,
-              style: AppTextStyles.semiBold20.copyWith(color: Colors.black)),
+              style: AppTextStyles(context)
+                  .semiBold20
+                  .copyWith(color: Colors.black)),
         ])),
         const SizedBox(
           height: 10,
         ),
         Text(
           course.description,
-          style: AppTextStyles.regular10.copyWith(color: Colors.black),
+          style: AppTextStyles(context).regular10.copyWith(color: Colors.black),
         ),
         const SizedBox(
           height: 20,
@@ -43,11 +45,13 @@ class CourseBottomSheetCourseDetails extends StatelessWidget {
                 TextSpan(children: [
                   TextSpan(
                       text: "المبلغ :    ",
-                      style: AppTextStyles.semiBold20
+                      style: AppTextStyles(context)
+                          .semiBold20
                           .copyWith(color: Colors.black)),
                   TextSpan(
                       text: " ${course.price}\$ (شهرى)",
-                      style: AppTextStyles.bold20Auto
+                      style: AppTextStyles(context)
+                          .bold20
                           .copyWith(color: KSecondaryColor))
                 ]),
               ),

@@ -18,12 +18,12 @@ class AverageScoreCard extends StatelessWidget {
         children: [
           Text(
             "6.0",
-            style: AppTextStyles.bold24.copyWith(color: KMainColor),
+            style: AppTextStyles(context).bold24.copyWith(color: KMainColor),
           ),
           const SizedBox(height: 10),
-          const Text(
+          Text(
             "معدل النتائج",
-            style: AppTextStyles.bold16Auto,
+            style: AppTextStyles(context).bold16,
           ),
         ],
       ),

@@ -21,13 +21,17 @@ class InfoRow extends StatelessWidget {
             ? Icon(icon, color: const Color(0xff818181), size: 18)
             : Text(
                 headline!,
-                style: AppTextStyles.semiBold12.copyWith(color: Colors.black),
+                style: AppTextStyles(context)
+                    .semiBold12
+                    .copyWith(color: Colors.black),
               ),
         const SizedBox(width: 5),
         Text(
           label,
           style: textStyle ??
-              AppTextStyles.regular10.copyWith(color: const Color(0xff818181)),
+              AppTextStyles(context)
+                  .regular10
+                  .copyWith(color: const Color(0xff818181)),
         ),
       ],
     );

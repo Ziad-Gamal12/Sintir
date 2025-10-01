@@ -109,7 +109,9 @@ class _AddcoursesectionfileviewBodyState
       ShowSnackBar(
           context: context,
           child: Text("لم يتم اختيار الملف",
-              style: AppTextStyles.regular14.copyWith(color: Colors.white)),
+              style: AppTextStyles(context)
+                  .regular14
+                  .copyWith(color: Colors.white)),
           backgroundColor: Colors.red);
     } else if (state is UplaodFileSuccess) {
       fileUploadedSuccessState(context, state);
@@ -117,7 +119,9 @@ class _AddcoursesectionfileviewBodyState
       ShowSnackBar(
           context: context,
           child: Text(state.errMessage,
-              style: AppTextStyles.regular14.copyWith(color: Colors.white)),
+              style: AppTextStyles(context)
+                  .regular14
+                  .copyWith(color: Colors.white)),
           backgroundColor: Colors.red);
     }
   }

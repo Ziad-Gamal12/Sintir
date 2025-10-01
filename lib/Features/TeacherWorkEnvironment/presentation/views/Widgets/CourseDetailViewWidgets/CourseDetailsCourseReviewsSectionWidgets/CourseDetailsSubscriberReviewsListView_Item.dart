@@ -30,15 +30,17 @@ class CourseDetailsSubscriberReviewsListViewItem extends StatelessWidget {
           ),
           title: Text(
             reviews.name,
-            style: AppTextStyles.bold16Auto.copyWith(color: Colors.black),
+            style: AppTextStyles(context).bold16.copyWith(color: Colors.black),
           ),
           subtitle: Text(
             reviews.fedBack,
-            style: AppTextStyles.semiBold16.copyWith(color: Colors.black),
+            style:
+                AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
           ),
           trailing: Text(
             "${reviews.datePosted.day}/${reviews.datePosted.month}/${reviews.datePosted.year}",
-            style: AppTextStyles.regular13.copyWith(color: Colors.grey),
+            style:
+                AppTextStyles(context).regular13.copyWith(color: Colors.grey),
           )),
     );
   }

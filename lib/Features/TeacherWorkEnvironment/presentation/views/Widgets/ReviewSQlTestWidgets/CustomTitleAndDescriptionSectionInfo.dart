@@ -19,21 +19,25 @@ class CustomTitleAndDescriptionSectionInfo extends StatelessWidget {
         Text.rich(TextSpan(children: [
           TextSpan(
             text: "عنوان المحاضره: ",
-            style: AppTextStyles.semiBold20.copyWith(color: Colors.black),
+            style:
+                AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
           ),
           TextSpan(
             text: courseSectionEntity.title,
-            style: AppTextStyles.regular16.copyWith(color: Colors.grey),
+            style:
+                AppTextStyles(context).regular16.copyWith(color: Colors.grey),
           ),
         ])),
         Text.rich(TextSpan(children: [
           TextSpan(
             text: "وصف المحاضره: ",
-            style: AppTextStyles.semiBold20.copyWith(color: Colors.black),
+            style:
+                AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
           ),
           TextSpan(
             text: courseSectionEntity.subtitle,
-            style: AppTextStyles.regular16.copyWith(color: Colors.grey),
+            style:
+                AppTextStyles(context).regular16.copyWith(color: Colors.grey),
           ),
         ]))
       ],

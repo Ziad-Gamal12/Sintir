@@ -38,7 +38,8 @@ class Addcourseposter extends StatelessWidget {
               ),
               Text(
                 "الصورة المصغرة للدورة",
-                style: AppTextStyles.bold13
+                style: AppTextStyles(context)
+                    .bold13
                     .copyWith(color: const Color(0xffAEAEB2)),
               )
             ],

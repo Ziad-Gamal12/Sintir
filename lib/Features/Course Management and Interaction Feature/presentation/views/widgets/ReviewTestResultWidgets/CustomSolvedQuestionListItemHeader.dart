@@ -26,7 +26,8 @@ class CustomSolvedQuestionListItemHeader extends StatelessWidget {
           ),
           child: Text(
             "السؤال رقم ${index + 1}/ $length",
-            style: AppTextStyles.semiBold16.copyWith(color: Colors.black),
+            style:
+                AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
           ),
         ),
         Container(
@@ -37,7 +38,8 @@ class CustomSolvedQuestionListItemHeader extends StatelessWidget {
           ),
           child: Text(
             isCorrect ? "اجابة صحيحة" : "اجابة خاطئة",
-            style: AppTextStyles.semiBold16.copyWith(color: Colors.white),
+            style:
+                AppTextStyles(context).semiBold16.copyWith(color: Colors.white),
           ),
         ),
       ],

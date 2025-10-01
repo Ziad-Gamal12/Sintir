@@ -22,7 +22,9 @@ class CustomPersonalDetailsRowItem extends StatelessWidget {
           Icon(icon, color: Colors.black, size: 20),
           const SizedBox(width: 10),
           Text(text,
-              style: AppTextStyles.regular16.copyWith(color: Colors.black))
+              style: AppTextStyles(context)
+                  .regular16
+                  .copyWith(color: Colors.black))
         ]),
       ),
     );

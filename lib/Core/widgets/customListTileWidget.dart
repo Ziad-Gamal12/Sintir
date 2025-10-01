@@ -25,7 +25,7 @@ class Customlisttilewidget extends StatelessWidget {
         title,
         overflow: TextOverflow.ellipsis,
         maxLines: 1,
-        style: AppTextStyles.semiBold16.copyWith(color: Colors.black),
+        style: AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
       ),
       leading: SizedBox(
         width: 40,
@@ -41,7 +41,8 @@ class Customlisttilewidget extends StatelessWidget {
       subtitle: subtitle != null
           ? Text(
               subtitle!,
-              style: AppTextStyles.regular13
+              style: AppTextStyles(context)
+                  .regular13
                   .copyWith(color: const Color(0xffAAAAAA)),
             )
           : null,

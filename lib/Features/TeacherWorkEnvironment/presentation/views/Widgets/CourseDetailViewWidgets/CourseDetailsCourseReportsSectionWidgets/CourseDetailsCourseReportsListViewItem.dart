@@ -25,13 +25,15 @@ class CourseDetailsCourseReportsListViewItem extends StatelessWidget {
                   Text.rich(TextSpan(children: [
                     TextSpan(
                       text: "ابلاغ منذ:",
-                      style: AppTextStyles.semiBold16
+                      style: AppTextStyles(context)
+                          .semiBold16
                           .copyWith(color: Colors.black),
                     ),
                     TextSpan(
                       text: " ${report.date}",
-                      style:
-                          AppTextStyles.regular14.copyWith(color: Colors.grey),
+                      style: AppTextStyles(context)
+                          .regular14
+                          .copyWith(color: Colors.grey),
                     ),
                   ])),
                   const SizedBox(
@@ -40,13 +42,15 @@ class CourseDetailsCourseReportsListViewItem extends StatelessWidget {
                   Text.rich(TextSpan(children: [
                     TextSpan(
                       text: "النوع:",
-                      style:
-                          AppTextStyles.regular14.copyWith(color: Colors.black),
+                      style: AppTextStyles(context)
+                          .regular14
+                          .copyWith(color: Colors.black),
                     ),
                     TextSpan(
                       text: " ${report.type}",
-                      style:
-                          AppTextStyles.regular14.copyWith(color: Colors.black),
+                      style: AppTextStyles(context)
+                          .regular14
+                          .copyWith(color: Colors.black),
                     ),
                   ])),
                   const SizedBox(
@@ -57,12 +61,14 @@ class CourseDetailsCourseReportsListViewItem extends StatelessWidget {
                       TextSpan(children: [
                         TextSpan(
                           text: "المحتوى:",
-                          style: AppTextStyles.regular16
+                          style: AppTextStyles(context)
+                              .regular16
                               .copyWith(color: Colors.black),
                         ),
                         TextSpan(
                           text: " ${report.description}",
-                          style: AppTextStyles.regular14
+                          style: AppTextStyles(context)
+                              .regular14
                               .copyWith(color: Colors.black),
                         ),
                       ])),

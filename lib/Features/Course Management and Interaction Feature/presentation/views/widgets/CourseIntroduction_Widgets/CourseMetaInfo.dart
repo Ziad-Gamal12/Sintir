@@ -17,19 +17,24 @@ class CourseMetaInfo extends StatelessWidget {
           TextSpan(children: [
             TextSpan(
               text: "تم انشاء بواسطة , ",
-              style: AppTextStyles.regular10.copyWith(color: Colors.black),
+              style: AppTextStyles(context)
+                  .regular10
+                  .copyWith(color: Colors.black),
             ),
             TextSpan(
               text: requirmentsEntity.course.contentcreaterentity?.name,
-              style: AppTextStyles.semiBold10.copyWith(color: KSecondaryColor),
+              style: AppTextStyles(context)
+                  .semiBold10
+                  .copyWith(color: KSecondaryColor),
             ),
           ]),
         ),
         const SizedBox(height: 10),
         Text(
           "تاريخ النشر (${requirmentsEntity.course.postedDate})",
-          style:
-              AppTextStyles.regular10.copyWith(color: const Color(0xff818181)),
+          style: AppTextStyles(context)
+              .regular10
+              .copyWith(color: const Color(0xff818181)),
         ),
         const SizedBox(height: 10),
         InfoRow(

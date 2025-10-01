@@ -32,14 +32,17 @@ class CustomTeacherWalletDetailsItem extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: AppTextStyles.bold20Auto.copyWith(color: Colors.black),
+                style:
+                    AppTextStyles(context).bold20.copyWith(color: Colors.black),
               ),
               const SizedBox(
                 height: 5,
               ),
               Text(
                 subtitle,
-                style: AppTextStyles.regular16.copyWith(color: Colors.black),
+                style: AppTextStyles(context)
+                    .regular16
+                    .copyWith(color: Colors.black),
               ),
             ],
           ),

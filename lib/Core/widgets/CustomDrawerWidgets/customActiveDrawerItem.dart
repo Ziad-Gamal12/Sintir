@@ -11,7 +11,7 @@ class Customactivedraweritem extends StatelessWidget {
     return ListTile(
       title: Text(
         drawerEntity.title,
-        style: AppTextStyles.bold16Auto.copyWith(color: KMainColor),
+        style: AppTextStyles(context).bold16.copyWith(color: KMainColor),
       ),
       leading: Image.asset(
         drawerEntity.activeIcon,

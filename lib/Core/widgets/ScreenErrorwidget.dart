@@ -22,7 +22,8 @@ class ScreenErrorwidget extends StatelessWidget {
         errMessage != null
             ? Text(errMessage!,
                 textAlign: TextAlign.center,
-                style: AppTextStyles.bold32Auto.copyWith(color: Colors.black))
+                style:
+                    AppTextStyles(context).bold32.copyWith(color: Colors.black))
             : const SizedBox()
       ],
     );

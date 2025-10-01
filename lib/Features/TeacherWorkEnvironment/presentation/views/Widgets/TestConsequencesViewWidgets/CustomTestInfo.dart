@@ -19,7 +19,8 @@ class CustomTestInfo extends StatelessWidget {
         Text(
           test.title,
           textAlign: TextAlign.center,
-          style: AppTextStyles.semiBold20.copyWith(color: Colors.black),
+          style:
+              AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
         ),
         const SizedBox(
           height: 10,
@@ -27,7 +28,7 @@ class CustomTestInfo extends StatelessWidget {
         Text(
           test.id,
           textAlign: TextAlign.center,
-          style: AppTextStyles.regular14.copyWith(color: Colors.grey),
+          style: AppTextStyles(context).regular14.copyWith(color: Colors.grey),
         ),
       ],
     );

@@ -27,8 +27,9 @@ class EditCourseInfoSection extends StatelessWidget {
             ShowSnackBar(
                 context: context,
                 child: Text("تم التعديل بنجاح",
-                    style:
-                        AppTextStyles.regular14.copyWith(color: Colors.white)),
+                    style: AppTextStyles(context)
+                        .regular14
+                        .copyWith(color: Colors.white)),
                 backgroundColor: Colors.green);
           } else if (state is UpdateCourseFailure) {
             ShowErrorSnackBar(context: context, message: state.errmessage);
@@ -54,7 +55,8 @@ class EditCourseInfoSection extends StatelessWidget {
                       ),
                       Text(
                         "تعديل بيانات الدورة",
-                        style: AppTextStyles.bold20Auto
+                        style: AppTextStyles(context)
+                            .bold20
                             .copyWith(color: Colors.black),
                       ),
                       const Spacer(),

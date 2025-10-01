@@ -22,7 +22,8 @@ class TeacherLoginViewBodyForgetPasswordText extends StatelessWidget {
           },
           child: Text(
             "نسيت كلمة المرور؟",
-            style: AppTextStyles.semiBold13Auto.copyWith(color: KMainColor),
+            style:
+                AppTextStyles(context).semiBold13.copyWith(color: KMainColor),
           ),
         ),
       ],

@@ -65,7 +65,8 @@ class _CustomResetPasswordViewBodyBlocBuilderState
             const Spacer(),
             Text(
               "تسجيل الدخول؟",
-              style: AppTextStyles.semiBold16.copyWith(color: KMainColor),
+              style:
+                  AppTextStyles(context).semiBold16.copyWith(color: KMainColor),
             ),
           ],
         ),

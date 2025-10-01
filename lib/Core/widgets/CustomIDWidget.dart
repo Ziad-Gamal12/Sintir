@@ -10,8 +10,9 @@ class Customidwidget extends StatelessWidget {
       children: [
         Text(
           id,
-          style:
-              AppTextStyles.regular10.copyWith(color: const Color(0xff818181)),
+          style: AppTextStyles(context)
+              .regular10
+              .copyWith(color: const Color(0xff818181)),
         ),
         const Icon(
           Icons.copy_outlined,

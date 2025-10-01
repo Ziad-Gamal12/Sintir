@@ -38,8 +38,9 @@ class CourseIntroductionSuccessView extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 100),
                       child: Text(
                         "سيتم اضافة المحتوى قريبا ⌛️",
-                        style:
-                            AppTextStyles.bold24.copyWith(color: Colors.black),
+                        style: AppTextStyles(context)
+                            .bold24
+                            .copyWith(color: Colors.black),
                       ),
                     ),
                   ),

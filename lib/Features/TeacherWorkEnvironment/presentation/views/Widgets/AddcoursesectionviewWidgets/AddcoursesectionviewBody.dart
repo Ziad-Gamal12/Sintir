@@ -30,7 +30,8 @@ class Addcoursesectionviewbody extends StatelessWidget {
             ),
             Text(
               "المحتوى",
-              style: AppTextStyles.bold20Auto.copyWith(color: Colors.black),
+              style:
+                  AppTextStyles(context).bold20.copyWith(color: Colors.black),
             ),
             const SizedBox(
               height: 20,

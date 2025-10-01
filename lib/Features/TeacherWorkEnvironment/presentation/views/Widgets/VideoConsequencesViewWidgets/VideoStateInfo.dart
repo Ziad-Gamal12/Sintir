@@ -12,9 +12,9 @@ class VideoStateInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildStatColumn("عدد الطلاب الكلى:", "100"),
+            _buildStatColumn("عدد الطلاب الكلى:", "100", context),
             verticalDivider(),
-            _buildStatColumn("عدد المشاهدات:", "80"),
+            _buildStatColumn("عدد المشاهدات:", "80", context),
           ],
         ),
         horizontalDivider(),
@@ -22,23 +22,28 @@ class VideoStateInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildStatColumn("عدد الطلاب الحاضرين:", "60", color: Colors.green),
+            _buildStatColumn("عدد الطلاب الحاضرين:", "60", context,
+                color: Colors.green),
             verticalDivider(),
-            _buildStatColumn("عدد الطلاب الغائبين:", "40", color: Colors.red),
+            _buildStatColumn("عدد الطلاب الغائبين:", "40", context,
+                color: Colors.red),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildStatColumn(String label, String value,
+  Widget _buildStatColumn(String label, String value, BuildContext context,
       {Color color = Colors.black}) {
     return Column(
       children: [
         Text(label,
-            style: AppTextStyles.semiBold14.copyWith(color: Colors.black)),
+            style: AppTextStyles(context)
+                .semiBold14
+                .copyWith(color: Colors.black)),
         const SizedBox(height: 10),
-        Text(value, style: AppTextStyles.regular14.copyWith(color: color)),
+        Text(value,
+            style: AppTextStyles(context).regular14.copyWith(color: color)),
       ],
     );
   }

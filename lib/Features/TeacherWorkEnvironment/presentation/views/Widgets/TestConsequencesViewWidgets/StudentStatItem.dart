@@ -25,7 +25,7 @@ class StudentStatItem extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-        Text(value, style: AppTextStyles.semiBold20),
+        Text(value, style: AppTextStyles(context).semiBold20),
       ],
     );
   }

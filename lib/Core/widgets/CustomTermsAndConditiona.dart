@@ -25,12 +25,14 @@ class Customtermsandconditiona extends StatelessWidget {
               child: Text.rich(TextSpan(children: [
                 TextSpan(
                     text: "من خلال إنشاء حساب ، فإنك توافق على",
-                    style: AppTextStyles.semiBold13Auto
+                    style: AppTextStyles(context)
+                        .semiBold13
                         .copyWith(color: const Color(0xff949D9E))),
                 const TextSpan(text: " "),
                 TextSpan(
                     text: "الشروط والأحكام الخاصة بنا ",
-                    style: AppTextStyles.semiBold13Auto
+                    style: AppTextStyles(context)
+                        .semiBold13
                         .copyWith(color: KSecondaryColor))
               ])),
             ),

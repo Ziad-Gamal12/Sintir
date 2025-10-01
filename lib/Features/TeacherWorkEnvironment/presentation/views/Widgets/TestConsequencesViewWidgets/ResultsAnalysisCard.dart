@@ -9,14 +9,14 @@ class ResultsAnalysisCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const CustomCard(
+    return CustomCard(
       child: Column(
         children: [
-          Text("تحليل النتائج", style: AppTextStyles.bold24),
-          SizedBox(height: 20),
-          AverageScoreCard(),
-          SizedBox(height: 20),
-          Row(
+          Text("تحليل النتائج", style: AppTextStyles(context).bold24),
+          const SizedBox(height: 20),
+          const AverageScoreCard(),
+          const SizedBox(height: 20),
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ScoreStatCard(

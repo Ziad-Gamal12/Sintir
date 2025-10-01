@@ -24,7 +24,7 @@ class _CustomDropdownButtonState extends State<CustomDropdownButton> {
         value: currentvalue,
         dropdownColor: Colors.white,
         hint: Text(widget.hintText),
-        style: AppTextStyles.semiBold12.copyWith(color: Colors.black),
+        style: AppTextStyles(context).semiBold12.copyWith(color: Colors.black),
         borderRadius: BorderRadius.circular(10),
         alignment: AlignmentDirectional.center,
         elevation: 3,

@@ -63,8 +63,9 @@ class _CustomChatTextFieldState extends State<CustomChatTextField> {
         validator: widget.validator,
         decoration: InputDecoration(
             hintText: "أكتب رسالتك هنا...",
-            hintStyle:
-                AppTextStyles.bold13.copyWith(color: Colors.grey.shade500),
+            hintStyle: AppTextStyles(context)
+                .bold13
+                .copyWith(color: Colors.grey.shade500),
             suffixIcon: widget.isLoading == true
                 ? const CircularProgressIndicator(
                     color: KMainColor,

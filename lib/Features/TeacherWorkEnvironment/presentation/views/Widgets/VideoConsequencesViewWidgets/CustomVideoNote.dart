@@ -21,20 +21,20 @@ class CustomVideoNote extends StatelessWidget {
                   backgroundColor: Colors.transparent,
                   child: SvgPicture.asset(Assets.assetsImagesUserAvatar)),
             ),
-            title: const Text(
+            title: Text(
               "محمد ابراهيم",
-              style: AppTextStyles.semiBold16,
+              style: AppTextStyles(context).semiBold16,
             ),
-            subtitle: const Text(
+            subtitle: Text(
               "12/4/2025",
-              style: AppTextStyles.regular13,
+              style: AppTextStyles(context).regular13,
             )),
         const SizedBox(
           height: 5,
         ),
-        const Text(
+        Text(
           "اواجه صعوبيه فى فهم هذا الدرس اتمنى المساعده فى الفهم و شرحه مره اخرى بطريقة مبسطه مه الحل",
-          style: AppTextStyles.regular14,
+          style: AppTextStyles(context).regular14,
         )
       ],
     ));

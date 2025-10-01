@@ -26,9 +26,9 @@ class CustomTeacherCardItem extends StatelessWidget {
       cardType: CardType.otherBrand,
       isHolderNameVisible: true,
       height: 175,
-      textStyle: AppTextStyles.semiBold14.copyWith(
-        color: Colors.white,
-      ),
+      textStyle: AppTextStyles(context).semiBold14.copyWith(
+            color: Colors.white,
+          ),
       width: MediaQuery.of(context).size.width,
       isChipVisible: true,
       isSwipeGestureEnabled: true,

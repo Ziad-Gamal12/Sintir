@@ -37,7 +37,7 @@ class Custombutton extends StatelessWidget {
       child: child ??
           Text(text,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.bold16Auto.copyWith(color: textColor)),
+              style: AppTextStyles(context).bold16.copyWith(color: textColor)),
     );
   }
 }

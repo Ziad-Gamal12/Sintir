@@ -18,7 +18,7 @@ class CustomSolutionStateRowWidget extends StatelessWidget {
       ),
       Text(
         title,
-        style: AppTextStyles.semiBold16.copyWith(color: Colors.black),
+        style: AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
       )
     ]);
   }

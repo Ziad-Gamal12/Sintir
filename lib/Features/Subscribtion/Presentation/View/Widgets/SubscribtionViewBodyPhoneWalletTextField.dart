@@ -15,7 +15,8 @@ class SubscribtionViewBodyPhoneWalletTextField extends StatelessWidget {
       children: [
         Text(
           "رقم المحفظه الخاصه بك",
-          style: AppTextStyles.semiBold20.copyWith(color: Colors.black),
+          style:
+              AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
         ),
         const SizedBox(
           height: 20,
@@ -36,7 +37,7 @@ class SubscribtionViewBodyPhoneWalletTextField extends StatelessWidget {
         ),
         Text(
           "(01*********) الصيغة المناسبة للمحفظة الرقمية",
-          style: AppTextStyles.semiBold13Auto.copyWith(color: Colors.grey),
+          style: AppTextStyles(context).semiBold13.copyWith(color: Colors.grey),
         ),
       ],
     );

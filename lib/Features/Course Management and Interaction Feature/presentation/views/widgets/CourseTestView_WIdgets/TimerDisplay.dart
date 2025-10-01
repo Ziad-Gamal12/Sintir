@@ -66,7 +66,9 @@ class _TimerDisplayState extends State<TimerDisplay> {
                     second: false);
                 return Text(
                   displayTime,
-                  style: AppTextStyles.bold24.copyWith(color: Colors.black),
+                  style: AppTextStyles(context)
+                      .bold24
+                      .copyWith(color: Colors.black),
                 );
               },
             ),

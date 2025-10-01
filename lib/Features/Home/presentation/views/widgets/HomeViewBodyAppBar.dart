@@ -37,11 +37,11 @@ class HomeViewBodyAppBar extends StatelessWidget {
       title: Text.rich(TextSpan(children: [
         TextSpan(
           text: "مرحبا بعودتك , ",
-          style: AppTextStyles.bold20Auto.copyWith(color: Colors.black),
+          style: AppTextStyles(context).bold20.copyWith(color: Colors.black),
         ),
         TextSpan(
           text: getUserData().firstName,
-          style: AppTextStyles.bold20Auto.copyWith(color: KSecondaryColor),
+          style: AppTextStyles(context).bold20.copyWith(color: KSecondaryColor),
         ),
       ])),
       trailing: SizedBox(

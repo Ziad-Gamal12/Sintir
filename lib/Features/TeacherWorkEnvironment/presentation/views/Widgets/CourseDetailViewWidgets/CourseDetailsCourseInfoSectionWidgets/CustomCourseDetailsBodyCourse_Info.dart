@@ -50,7 +50,8 @@ class CustomCourseDetailsBodyCourse_Info extends StatelessWidget {
                       child: Text(
                         courseEntity.title,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyles.semiBold20
+                        style: AppTextStyles(context)
+                            .semiBold20
                             .copyWith(color: Colors.black),
                       ),
                     ),
@@ -73,19 +74,22 @@ class CustomCourseDetailsBodyCourse_Info extends StatelessWidget {
               ),
               Text(
                 "تاريخ اللنشر  (${courseEntity.postedDate})",
-                style: AppTextStyles.regular10
+                style: AppTextStyles(context)
+                    .regular10
                     .copyWith(color: const Color(0xff818181)),
               ),
               Text(
                 "الوصف:",
-                style: AppTextStyles.semiBold12
+                style: AppTextStyles(context)
+                    .semiBold12
                     .copyWith(color: const Color(0xff818181)),
               ),
               Text(
                 courseEntity.description,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 6,
-                style: AppTextStyles.regular10
+                style: AppTextStyles(context)
+                    .regular10
                     .copyWith(color: const Color(0xff818181)),
               ),
             ],

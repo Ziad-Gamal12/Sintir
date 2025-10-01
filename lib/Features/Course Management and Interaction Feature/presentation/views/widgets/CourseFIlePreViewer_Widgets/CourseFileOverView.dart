@@ -28,7 +28,9 @@ class CourseFileOverView extends StatelessWidget {
       child: Row(
         children: [
           Text("مجموع الصفحات : $totalPages",
-              style: AppTextStyles.semiBold14.copyWith(color: Colors.white)),
+              style: AppTextStyles(context)
+                  .semiBold14
+                  .copyWith(color: Colors.white)),
           const Spacer(),
           SizedBox(
             child: Row(
@@ -46,7 +48,9 @@ class CourseFileOverView extends StatelessWidget {
                 ),
                 Text(
                   currentPage.toString(),
-                  style: AppTextStyles.semiBold14.copyWith(color: Colors.white),
+                  style: AppTextStyles(context)
+                      .semiBold14
+                      .copyWith(color: Colors.white),
                 ),
                 const SizedBox(
                   width: 10,

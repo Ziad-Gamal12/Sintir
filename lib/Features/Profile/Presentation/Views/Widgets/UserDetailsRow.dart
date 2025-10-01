@@ -25,10 +25,12 @@ class UserDetails extends StatelessWidget {
               Column(
                 children: [
                   Text(user.studentExtraDataEntity!.educationLevel,
-                      style: AppTextStyles.semiBold16
+                      style: AppTextStyles(context)
+                          .semiBold16
                           .copyWith(color: Colors.black)),
                   Text(user.studentExtraDataEntity!.birthDate,
-                      style: AppTextStyles.semiBold16
+                      style: AppTextStyles(context)
+                          .semiBold16
                           .copyWith(color: Colors.black)),
                 ],
               )
@@ -36,11 +38,13 @@ class UserDetails extends StatelessWidget {
               Column(
                 children: [
                   Text("مادة ${user.teacherExtraDataEntity!.subject}",
-                      style: AppTextStyles.semiBold16
+                      style: AppTextStyles(context)
+                          .semiBold16
                           .copyWith(color: Colors.black)),
                   Text(
                       "خبره ${user.teacherExtraDataEntity!.workExperience} سنه",
-                      style: AppTextStyles.semiBold16
+                      style: AppTextStyles(context)
+                          .semiBold16
                           .copyWith(color: Colors.black)),
                 ],
               )
@@ -64,7 +68,7 @@ class _UserName extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       "$firstName $lastName",
-      style: AppTextStyles.semiBold20.copyWith(color: Colors.black),
+      style: AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
     );
   }
 }
@@ -77,7 +81,7 @@ class _UserRole extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       roleText(role),
-      style: AppTextStyles.semiBold16.copyWith(color: Colors.black),
+      style: AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
     );
   }
 }
@@ -96,7 +100,7 @@ class _UserStatusBadge extends StatelessWidget {
       ),
       child: Text(
         statusBadgeText(status),
-        style: AppTextStyles.semiBold16.copyWith(color: Colors.white),
+        style: AppTextStyles(context).semiBold16.copyWith(color: Colors.white),
       ),
     );
   }

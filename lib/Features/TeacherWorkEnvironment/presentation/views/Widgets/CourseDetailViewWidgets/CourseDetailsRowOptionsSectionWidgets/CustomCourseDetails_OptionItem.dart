@@ -18,9 +18,9 @@ class CustomcoursedetailsOptionitem extends StatelessWidget {
         ),
         Text(
           item.title,
-          style: AppTextStyles.regular10.copyWith(
-            color: isSelected ? KMainColor : Colors.black,
-          ),
+          style: AppTextStyles(context).regular10.copyWith(
+                color: isSelected ? KMainColor : Colors.black,
+              ),
         )
       ],
     );

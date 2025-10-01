@@ -33,7 +33,8 @@ class CustomOnboardingPageViewItem extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 37),
           child: Text(entity.description,
               textAlign: TextAlign.center,
-              style: AppTextStyles.regular13
+              style: AppTextStyles(context)
+                  .regular13
                   .copyWith(color: const Color(0xff4E5556))),
         ),
       ],

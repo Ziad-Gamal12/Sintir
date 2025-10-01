@@ -28,17 +28,17 @@ class ScoreStatCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text("$total/", style: AppTextStyles.semiBold16),
+              Text("$total/", style: AppTextStyles(context).semiBold16),
               Text(
                 value,
-                style: AppTextStyles.semiBold16.copyWith(color: color),
+                style: AppTextStyles(context).semiBold16.copyWith(color: color),
               ),
             ],
           ),
           const SizedBox(height: 10),
           Text(
             label,
-            style: AppTextStyles.bold16Auto,
+            style: AppTextStyles(context).bold16,
           ),
         ],
       ),

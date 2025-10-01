@@ -20,11 +20,14 @@ class CustomReviewSqlTestNameAndDuration extends StatelessWidget {
           child: Text.rich(TextSpan(children: [
             TextSpan(
               text: "عنوان الامتحان: ",
-              style: AppTextStyles.semiBold20.copyWith(color: Colors.black),
+              style: AppTextStyles(context)
+                  .semiBold20
+                  .copyWith(color: Colors.black),
             ),
             TextSpan(
               text: coursetestentity.title,
-              style: AppTextStyles.regular16.copyWith(color: Colors.grey),
+              style:
+                  AppTextStyles(context).regular16.copyWith(color: Colors.grey),
             ),
           ])),
         ),
@@ -37,11 +40,14 @@ class CustomReviewSqlTestNameAndDuration extends StatelessWidget {
           child: Text.rich(TextSpan(children: [
             TextSpan(
               text: "مده الامتحان: ",
-              style: AppTextStyles.semiBold20.copyWith(color: Colors.black),
+              style: AppTextStyles(context)
+                  .semiBold20
+                  .copyWith(color: Colors.black),
             ),
             TextSpan(
               text: "${coursetestentity.durationTime.toString()} دقيقة",
-              style: AppTextStyles.regular16.copyWith(color: Colors.grey),
+              style:
+                  AppTextStyles(context).regular16.copyWith(color: Colors.grey),
             ),
           ])),
         )

@@ -32,7 +32,7 @@ class CustomReviewQuestionSolutionListitem extends StatelessWidget {
         ),
         Text(
           solution.answer,
-          style: AppTextStyles.regular14.copyWith(color: Colors.black),
+          style: AppTextStyles(context).regular14.copyWith(color: Colors.black),
         ),
       ],
     );

@@ -44,28 +44,32 @@ class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
             TextSpan(children: [
               TextSpan(
                   text: subscriberentity.name,
-                  style:
-                      AppTextStyles.bold20Auto.copyWith(color: Colors.black)),
+                  style: AppTextStyles(context)
+                      .bold20
+                      .copyWith(color: Colors.black)),
               const TextSpan(
                 text: " ",
               ),
               TextSpan(
                   text: "(${subscriberentity.gender})",
-                  style: AppTextStyles.regular10
+                  style: AppTextStyles(context)
+                      .regular10
                       .copyWith(color: const Color(0xff818181)))
             ]),
             textAlign: TextAlign.center,
           ),
           Text(
             subscriberentity.educationLevel,
-            style: AppTextStyles.semiBold16
+            style: AppTextStyles(context)
+                .semiBold16
                 .copyWith(color: const Color(0xff818181)),
           ),
           Expanded(
             child: SizedBox(
               child: Text(
                 "ID:${subscriberentity.id}",
-                style: AppTextStyles.regular13
+                style: AppTextStyles(context)
+                    .regular13
                     .copyWith(color: const Color(0xff818181)),
               ),
             ),

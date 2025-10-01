@@ -24,11 +24,14 @@ class SubscribtionViewBodyPriceRow extends StatelessWidget {
             children: [
               TextSpan(
                 text: label,
-                style: AppTextStyles.semiBold20.copyWith(color: Colors.grey),
+                style: AppTextStyles(context)
+                    .semiBold20
+                    .copyWith(color: Colors.grey),
               ),
               TextSpan(
                 text: value,
-                style: AppTextStyles.semiBold20
+                style: AppTextStyles(context)
+                    .semiBold20
                     .copyWith(color: Colors.red.shade700),
               ),
             ],

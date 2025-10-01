@@ -38,7 +38,8 @@ class CustomVedioListViewItem extends StatelessWidget {
             image: item.preffixImage,
             trailing: Text(
               "${item.durationTime} دقائق",
-              style: AppTextStyles.regular11
+              style: AppTextStyles(context)
+                  .regular11
                   .copyWith(color: const Color(0xff818181)),
             ),
           )),

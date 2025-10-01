@@ -22,7 +22,7 @@ class CustomCountWidget extends StatelessWidget {
           color: countColor, borderRadius: BorderRadius.circular(8)),
       child: Text(
         count,
-        style: AppTextStyles.regular16.copyWith(color: countTextColor),
+        style: AppTextStyles(context).regular16.copyWith(color: countTextColor),
       ),
     );
   }
