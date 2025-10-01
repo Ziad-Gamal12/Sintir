@@ -9,6 +9,6 @@ class StudentOnboardingView extends StatelessWidget {
   const StudentOnboardingView({super.key});
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: SafeArea(child: StudentOnboardingViewBody()));
+    return const Scaffold(body: StudentOnboardingViewBody());
   }
 }

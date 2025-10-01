@@ -1,12 +1,12 @@
 import 'package:circular_progress_button/circular_progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sintir/Features/Auth/StudentPresentation/views/Student_Sign_In_View.dart';
+import 'package:sintir/Features/Auth/TeacherPresentation/views/TeacherSignInView.dart';
 import 'package:sintir/Features/StudentOnboarding/Presentation/Views/widgets/student_onboarding_button_icon.dart';
 import 'package:sintir/constant.dart';
 
-class StudentOnboardingButton extends StatelessWidget {
-  const StudentOnboardingButton({
+class TeacherOnBoardingButton extends StatelessWidget {
+  const TeacherOnBoardingButton({
     super.key,
     required this.currentPageNotifier,
     required this.pageController,
@@ -39,7 +39,7 @@ class StudentOnboardingButton extends StatelessWidget {
                 curve: Curves.easeIn,
               ),
               onComplete: () {
-                GoRouter.of(context).push(StudentSignInView.routeName);
+                GoRouter.of(context).push(TeacherSignInView.routeName);
               },
               animationDuration: const Duration(milliseconds: 500),
             );

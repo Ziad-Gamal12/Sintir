@@ -15,16 +15,20 @@ class ChoosingUserKindButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isStudent = currentPage == 0;
+    final buttonText = "أبدا ك${isStudent ? "طالب" : "معلم"}";
+
     return Custombutton(
-        text: "أبدا ك${currentPage == 0 ? "طالب" : "معلم"}",
-        color: KMainColor,
-        textColor: Colors.white,
-        onPressed: () {
-          if (currentPage == 0) {
-            GoRouter.of(context).push(StudentOnboardingView.routeName);
-          } else {
-            GoRouter.of(context).push(TeacherOnboardingView.routeName);
-          }
-        });
+      text: buttonText,
+      color: KMainColor,
+      textColor: Colors.white,
+      onPressed: () {
+        final route = isStudent
+            ? StudentOnboardingView.routeName
+            : TeacherOnboardingView.routeName;
+
+        GoRouter.of(context).push(route);
+      },
+    );
   }
 }

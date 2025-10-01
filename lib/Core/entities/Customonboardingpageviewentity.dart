@@ -5,18 +5,18 @@ import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
 
-class Customonboardingpageviewentity {
+class CustomOnBoardingPageViewEntity {
   final String image;
   final Widget title;
   final String description;
 
-  Customonboardingpageviewentity(
+  CustomOnBoardingPageViewEntity(
       {required this.image, required this.title, required this.description});
 
-  static List<Customonboardingpageviewentity> studentToList(
+  static List<CustomOnBoardingPageViewEntity> studentToList(
           BuildContext context) =>
       [
-        Customonboardingpageviewentity(
+        CustomOnBoardingPageViewEntity(
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -34,7 +34,7 @@ class Customonboardingpageviewentity {
           description:
               "اكتشف عالماً جديداً من المعرفة والتعليم مع تطبيقنا. استعد لتجربة تعليمية تفاعلية وشاملة.",
         ),
-        Customonboardingpageviewentity(
+        CustomOnBoardingPageViewEntity(
           title: Text(" تعلم بسهولة وأمان",
               style: AppTextStyles(context)
                   .bold23
@@ -43,7 +43,7 @@ class Customonboardingpageviewentity {
           description:
               " خصص تجربتك التعليمية مع توصياتنا الشخصية. اعثر على الدروس والمقالات والموارد التي تتناسب مع اهتماماتك ومستوى تعليمك.",
         ),
-        Customonboardingpageviewentity(
+        CustomOnBoardingPageViewEntity(
           description:
               "ابدأ رحلتك التعليمية مع سنتر. انضم الآن واكتشف كيف يمكن لتعليمك أن يصبح أكثر تفاعلاً وإثارة. اختر مسارك وابدأ التعلم اليوم!",
           image: Assets.assetsImagesStudentOnboardingThree,
@@ -54,10 +54,10 @@ class Customonboardingpageviewentity {
         ),
       ];
 
-  static List<Customonboardingpageviewentity> teacherToList(
+  static List<CustomOnBoardingPageViewEntity> teacherToList(
           BuildContext context) =>
       [
-        Customonboardingpageviewentity(
+        CustomOnBoardingPageViewEntity(
           description:
               "استعد لاستكشاف مجموعة من الأدوات المصممة لدعم تجربتك العلمية",
           image: Assets.assetsImagesTeacherOnboarding1,
@@ -75,7 +75,7 @@ class Customonboardingpageviewentity {
             ],
           ),
         ),
-        Customonboardingpageviewentity(
+        CustomOnBoardingPageViewEntity(
           description:
               "من خطط الدروس الديناميكية إلى التعليقات الفورية، اكتشف الميزات التي ستساعدك على جذب وتحفيز طلابك.",
           image: Assets.assetsImagesTeacherOnboarding2,
@@ -84,7 +84,7 @@ class Customonboardingpageviewentity {
                   .bold23
                   .copyWith(color: const Color(0xff000000))),
         ),
-        Customonboardingpageviewentity(
+        CustomOnBoardingPageViewEntity(
           description:
               "ابدأ رحلتك الآن وارتبط بشبكة من المعلمين. دعنا نعمل معًا لإحداث فرق في التعليم!",
           image: Assets.assetsImagesTeacherOnboarding3,

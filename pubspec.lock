@@ -129,6 +129,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.13.0"
+  circular_progress_button:
+    dependency: "direct main"
+    description:
+      name: circular_progress_button
+      sha256: "79bfe88aab36a1e6bbc0a879fdad1c14364a6dab60e0fbb5db22034ece887bc3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.5"
   cli_util:
     dependency: transitive
     description:

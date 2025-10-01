@@ -5,18 +5,22 @@ import 'package:sintir/Core/entities/Customonboardingpageviewentity.dart';
 import 'package:sintir/Core/widgets/CustomOnboardingPageViewItem.dart';
 
 class TeacherOnboardingPageView extends StatelessWidget {
-  const TeacherOnboardingPageView({super.key, required this.pageController});
+  const TeacherOnboardingPageView(
+      {super.key, required this.pageController, required this.onPageChanged});
   final PageController pageController;
+  final ValueChanged<int> onPageChanged;
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
-        itemCount: Customonboardingpageviewentity.teacherToList(context).length,
+        onPageChanged: onPageChanged,
+        itemCount: CustomOnBoardingPageViewEntity.teacherToList(context).length,
         controller: pageController,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return CustomOnboardingPageViewItem(
-            entity:
-                Customonboardingpageviewentity.teacherToList(context)[index],
+            svgImage:
+                CustomOnBoardingPageViewEntity.teacherToList(context)[index]
+                    .image,
           );
         });
   }

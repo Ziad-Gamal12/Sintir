@@ -15,7 +15,7 @@ class CustomChoosingUserKindSmoothPageIndicator extends StatelessWidget {
     return SmoothPageIndicator(
       controller: pageController,
       count: 2,
-      effect: const WormEffect(
+      effect: const ExpandingDotsEffect(
           dotHeight: 9,
           dotWidth: 9,
           dotColor: Color(0xff87CEFA),

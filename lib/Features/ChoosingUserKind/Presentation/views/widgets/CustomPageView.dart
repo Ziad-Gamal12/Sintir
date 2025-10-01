@@ -6,11 +6,14 @@ import 'package:sintir/Features/ChoosingUserKind/Presentation/views/widgets/Cust
 
 class Custompageview extends StatelessWidget {
   final PageController controller;
-  const Custompageview({super.key, required this.controller});
+  final ValueChanged<int> onPageChanged;
+  const Custompageview(
+      {super.key, required this.controller, required this.onPageChanged});
 
   @override
   Widget build(BuildContext context) {
     return PageView(
+        onPageChanged: onPageChanged,
         controller: controller,
         scrollDirection: Axis.horizontal,
         children: ChoosingUserKindpageViewItemEntity.toList()

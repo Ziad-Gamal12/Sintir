@@ -1,8 +1,6 @@
-// ignore_for_file: file_names, must_be_immutable
-
 import 'package:flutter/material.dart';
-import 'package:sintir/Features/ChoosingUserKind/Presentation/views/widgets/ChoosingUserKindButton.dart';
-import 'package:sintir/Features/ChoosingUserKind/Presentation/views/widgets/CustomChoosingUserKindSmoothPageIndicator.dart';
+import 'package:sintir/Features/ChoosingUserKind/Presentation/views/domain/ChoosingUserKindpageViewItemEntity.dart';
+import 'package:sintir/Features/ChoosingUserKind/Presentation/views/widgets/ChoosingUserKindInfoCard.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/widgets/CustomPageView.dart';
 import 'package:sintir/constant.dart';
 
@@ -14,20 +12,21 @@ class ChoosingUserKindBody extends StatefulWidget {
 }
 
 class _ChoosingUserKindBodyState extends State<ChoosingUserKindBody> {
-  PageController pageController = PageController();
-  int currentPage = 0;
+  late final PageController pageController;
+  final ValueNotifier<int> currentPageNotifier = ValueNotifier(0);
+  late final List<ChoosingUserKindpageViewItemEntity> pages;
+
   @override
   void initState() {
-    pageController.addListener(() {
-      currentPage = pageController.page!.round();
-      setState(() {});
-    });
     super.initState();
+    pageController = PageController(initialPage: 0);
+    pages = ChoosingUserKindpageViewItemEntity.toList();
   }
 
   @override
   void dispose() {
     pageController.dispose();
+    currentPageNotifier.dispose();
     super.dispose();
   }
 
@@ -35,21 +34,26 @@ class _ChoosingUserKindBodyState extends State<ChoosingUserKindBody> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-          vertical: 30, horizontal: KHorizontalPadding),
+        vertical: 30,
+        horizontal: KHorizontalPadding,
+      ),
       child: Column(
         children: [
           Expanded(
-              flex: 8,
-              child: Custompageview(
-                controller: pageController,
-              )),
-          const Spacer(),
-          CustomChoosingUserKindSmoothPageIndicator(
-              pageController: pageController),
-          const SizedBox(
-            height: 30,
+            flex: 6,
+            child: Custompageview(
+              controller: pageController,
+              onPageChanged: (index) => currentPageNotifier.value = index,
+            ),
           ),
-          ChoosingUserKindButton(currentPage: currentPage)
+          Expanded(
+            flex: 4,
+            child: ChoosingUserKindInfoCard(
+              pages: pages,
+              currentPageNotifier: currentPageNotifier,
+              pageController: pageController,
+            ),
+          ),
         ],
       ),
     );

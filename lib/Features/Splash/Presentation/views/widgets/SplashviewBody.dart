@@ -45,9 +45,9 @@ class _SplashviewBodyState extends State<SplashviewBody> {
     bool isLoggedin = await firebaseAuthService().isLoggedIn();
     await Future.delayed(const Duration(seconds: 3), () {
       if (isLoggedin == true) {
-        GoRouter.of(context).pushReplacement(Homeview.routeName);
+        GoRouter.of(context).go(Homeview.routeName);
       } else {
-        GoRouter.of(context).pushReplacement(ChoosingUserKindView.routeName);
+        GoRouter.of(context).go(ChoosingUserKindView.routeName);
       }
     });
   }

@@ -16,6 +16,12 @@ class Custompageviewitem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    return SizedBox(
+      width: double.infinity,
+      child: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: SvgPicture.asset(pageViewItemEntity.image)),
+    );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 25),
       child: Column(
@@ -23,9 +29,8 @@ class Custompageviewitem extends StatelessWidget {
           SizedBox(
               height: height * 0.3,
               child: SvgPicture.asset(pageViewItemEntity.image)),
-          const Customsizedbox(
+          const SizedBox(
             height: 35,
-            width: 0,
           ),
           Text(
             pageViewItemEntity.title,

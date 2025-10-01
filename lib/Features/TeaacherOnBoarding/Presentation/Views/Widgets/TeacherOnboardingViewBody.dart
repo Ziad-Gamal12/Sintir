@@ -1,9 +1,8 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/widgets/CustomDotsIndicator.dart';
-import 'package:sintir/Core/widgets/CustomSizedBox.dart';
-import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/Widgets/TeachehrOnboardingBody_CustomButton.dart';
+import 'package:sintir/Core/entities/Customonboardingpageviewentity.dart';
+import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/Widgets/TeacherOnboardingInfoCard.dart';
 import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/Widgets/TeacherOnboardingPageView.dart';
 
 class TeacherOnboardingViewBody extends StatefulWidget {
@@ -15,39 +14,43 @@ class TeacherOnboardingViewBody extends StatefulWidget {
 }
 
 class _TeacherOnboardingViewBodyState extends State<TeacherOnboardingViewBody> {
-  late PageController pageController;
-  int currentPage = 0;
+  late final PageController pageController;
+  final ValueNotifier<int> currentPageNotifier = ValueNotifier(0);
+
   @override
   void initState() {
-    pageController = PageController();
-    pageController.addListener(() {
-      currentPage = pageController.page!.round();
-      setState(() {});
-    });
     super.initState();
+    pageController = PageController();
   }
 
   @override
   void dispose() {
     pageController.dispose();
+    currentPageNotifier.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final pages = CustomOnBoardingPageViewEntity.teacherToList(context);
+
     return Column(
       children: [
         Expanded(
-            flex: 2,
-            child: TeacherOnboardingPageView(
-              pageController: pageController,
-            )),
-        const Spacer(),
-        CustomDotsIndicator(pageController: pageController),
-        const Customsizedbox(width: 0, height: 20),
-        TeachehrOnboardingBody_CustomButton(
-            currentPage: currentPage, pageController: pageController),
-        const Customsizedbox(width: 0, height: 20),
+          flex: 2,
+          child: TeacherOnboardingPageView(
+            pageController: pageController,
+            onPageChanged: (index) => currentPageNotifier.value = index,
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: TeacherOnboardingInfoCard(
+            pages: pages,
+            currentPageNotifier: currentPageNotifier,
+            pageController: pageController,
+          ),
+        ),
       ],
     );
   }

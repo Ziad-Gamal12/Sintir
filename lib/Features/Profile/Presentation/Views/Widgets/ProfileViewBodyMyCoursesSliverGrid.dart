@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/GridHelper.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseIntroductionView.dart';
 import 'package:sintir/Features/Profile/Presentation/Manager/ProfileCubit/ProfileCubit.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -56,7 +59,12 @@ class ProfileViewBodyMyCoursesSliverGrid extends StatelessWidget {
             itemBuilder: (context, index) {
               return CustomCourseItem(
                 courseItem: myCourses[index],
-                ontap: () {},
+                ontap: () {
+                  GoRouter.of(context).push(CourseIntroductionView.routeName,
+                      extra:
+                          DisplayCourseBottomsheetNavigationRequirmentsEntity(
+                              course: myCourses[index], isSubscribed: true));
+                },
               );
             });
       }

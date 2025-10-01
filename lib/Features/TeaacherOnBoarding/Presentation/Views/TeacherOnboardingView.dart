@@ -10,7 +10,7 @@ class TeacherOnboardingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: SafeArea(child: TeacherOnboardingViewBody()),
+      body: TeacherOnboardingViewBody(),
     );
   }
 }
