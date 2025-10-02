@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:circular_progress_button/circular_progress_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -5,7 +7,7 @@ import 'package:sintir/Features/Auth/StudentPresentation/views/Student_Sign_In_V
 import 'package:sintir/Features/StudentOnboarding/Presentation/Views/widgets/student_onboarding_button_icon.dart';
 import 'package:sintir/constant.dart';
 
-class StudentOnboardingButton extends StatelessWidget {
+class StudentOnboardingButton extends StatefulWidget {
   const StudentOnboardingButton({
     super.key,
     required this.currentPageNotifier,
@@ -16,11 +18,17 @@ class StudentOnboardingButton extends StatelessWidget {
   final PageController pageController;
 
   @override
+  State<StudentOnboardingButton> createState() =>
+      _StudentOnboardingButtonState();
+}
+
+class _StudentOnboardingButtonState extends State<StudentOnboardingButton> {
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
       child: ValueListenableBuilder(
-          valueListenable: currentPageNotifier,
+          valueListenable: widget.currentPageNotifier,
           builder: (context, currentPage, _) {
             return CircularProgressButton(
               currentStep: currentPage,
@@ -34,10 +42,20 @@ class StudentOnboardingButton extends StatelessWidget {
                 icon: Icons.arrow_forward,
                 iconWidget: const StudentOnboardingButtonIcon(),
               ),
-              onTap: () => pageController.nextPage(
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeIn,
-              ),
+              onTap: () {
+                if (currentPage == 2) {
+                  Future.delayed(const Duration(milliseconds: 500))
+                      .then((value) {
+                    if (!mounted) return;
+                    GoRouter.of(context).push(StudentSignInView.routeName);
+                  });
+                } else {
+                  widget.pageController.nextPage(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeIn,
+                  );
+                }
+              },
               onComplete: () {
                 GoRouter.of(context).push(StudentSignInView.routeName);
               },

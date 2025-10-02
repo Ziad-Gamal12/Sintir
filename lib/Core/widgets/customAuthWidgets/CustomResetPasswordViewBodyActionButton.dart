@@ -17,7 +17,7 @@ class CustomResetPasswordViewBodyActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Custombutton(
-        text: "نسيت كلمة المرور",
+        text: "استعادة كلمة المرور",
         color: KMainColor,
         textColor: Colors.white,
         onPressed: () {

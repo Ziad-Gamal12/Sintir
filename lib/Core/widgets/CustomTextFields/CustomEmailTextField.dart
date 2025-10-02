@@ -9,7 +9,7 @@ class CustomEmailTextField extends StatelessWidget {
       {super.key,
       required this.controller,
       this.onSaved,
-      this.isIconVisible = false});
+      this.isIconVisible = true});
   final TextEditingController controller;
   ValueChanged<String?>? onSaved;
   bool isIconVisible;

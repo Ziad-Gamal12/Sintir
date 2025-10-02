@@ -202,6 +202,10 @@ class Assets {
   /// assets/images/BookImageTest.png
   static const String assetsImagesBookImageTest = "assets/images/BookImageTest.png";
 
+  /// Assets for assetsImagesSVGImagesForgetPasswordWelcomeImage
+  /// assets/images/SVG_Images/ForgetPasswordWelcomeImage.svg
+  static const String assetsImagesSVGImagesForgetPasswordWelcomeImage = "assets/images/SVG_Images/ForgetPasswordWelcomeImage.svg";
+
   /// Assets for assetsImagesSVGImagesLoginWelcomeImage
   /// assets/images/SVG_Images/LoginWelcomeImage.svg
   static const String assetsImagesSVGImagesLoginWelcomeImage = "assets/images/SVG_Images/LoginWelcomeImage.svg";

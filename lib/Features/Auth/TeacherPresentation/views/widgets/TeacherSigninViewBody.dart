@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/widgets/CustomLoginViewBodyDonotHaveAccountText.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/manager/teacher_sign_in/teacher_sign_in_cubit.dart';
@@ -12,8 +11,8 @@ import 'package:sintir/Features/Auth/TeacherPresentation/views/TeacherSignUpView
 import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherLoginViewBodyForgetPasswordText.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherSignInViewBodyCustomButton.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherSignInViewBodyTextFieledInPuts.dart';
+import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherSigninViewBodyWelcomeSection.dart';
 import 'package:sintir/constant.dart';
-import 'package:svg_flutter/svg_flutter.dart';
 
 class TeacherSigninViewBody extends StatefulWidget {
   const TeacherSigninViewBody({super.key});
@@ -57,13 +56,9 @@ class _TeacherSigninViewBodyState extends State<TeacherSigninViewBody> {
                     horizontal: KHorizontalPadding, vertical: 24),
                 child: Column(
                   children: [
-                    SizedBox(
-                      width: double.infinity,
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        child: SvgPicture.asset(
-                            Assets.assetsImagesSVGImagesLoginWelcomeImage),
-                      ),
+                    const TeacherSigninViewBodyWelcomeSection(),
+                    const SizedBox(
+                      height: 40,
                     ),
                     TeacherSignInViewBodyTextFieledInPuts(
                       teacherSignInPasswordController:

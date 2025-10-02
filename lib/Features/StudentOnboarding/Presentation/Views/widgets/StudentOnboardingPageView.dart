@@ -13,6 +13,7 @@ class StudentOnboardingPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageView.builder(
         onPageChanged: onPageChanged,
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: CustomOnBoardingPageViewEntity.studentToList(context).length,
         controller: pageController,
         scrollDirection: Axis.horizontal,

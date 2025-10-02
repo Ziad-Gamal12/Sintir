@@ -26,9 +26,7 @@ class CustomResetPasswordViewBody extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return CustomResetPasswordViewBodyBlocBuilder(
-          state: state,
-        );
+        return const CustomResetPasswordViewBodyBlocBuilder();
       },
     );
   }
