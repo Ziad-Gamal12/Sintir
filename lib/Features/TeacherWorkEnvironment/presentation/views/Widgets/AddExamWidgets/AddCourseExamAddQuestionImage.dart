@@ -6,20 +6,20 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 
-class Addcoursesqladdquestionimage extends StatefulWidget {
-  const Addcoursesqladdquestionimage(
+class AddCourseExamAddQuestionImage extends StatefulWidget {
+  const AddCourseExamAddQuestionImage(
       {super.key,
       required this.pickerassetsservice,
       required this.coursetestquestionentity});
   final Pickerassetsservice pickerassetsservice;
   final CourseTestQuestionEntity coursetestquestionentity;
   @override
-  State<Addcoursesqladdquestionimage> createState() =>
-      _AddcoursesqladdquestionimageState();
+  State<AddCourseExamAddQuestionImage> createState() =>
+      _AddCourseExamAddQuestionImageState();
 }
 
-class _AddcoursesqladdquestionimageState
-    extends State<Addcoursesqladdquestionimage> {
+class _AddCourseExamAddQuestionImageState
+    extends State<AddCourseExamAddQuestionImage> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -45,7 +45,7 @@ class _AddcoursesqladdquestionimageState
                 fit: BoxFit.cover,
               )
             : Image.asset(
-                Assets.assetsImagesAddImageIcon,
+                Assets.assetsIconsAddImageIcon,
                 height: 50,
                 width: 50,
               ),

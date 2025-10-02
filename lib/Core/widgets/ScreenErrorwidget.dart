@@ -15,7 +15,7 @@ class ScreenErrorwidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SvgPicture.asset(
-          Assets.assetsImagesErrorIcon,
+          Assets.assetsIconsSVGIconsErrorIcon,
           height: 200,
           width: 200,
         ),

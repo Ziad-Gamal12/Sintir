@@ -10,13 +10,13 @@ class CoursedetailsviewOptionitemEntity {
   static List<CoursedetailsviewOptionitemEntity> toList() {
     return [
       CoursedetailsviewOptionitemEntity(
-          title: "المحتوى", imageurl: Assets.assetsImagesContentManagement),
+          title: "المحتوى", imageurl: Assets.assetsIconsContentManagement),
       CoursedetailsviewOptionitemEntity(
           title: "الطلاب", imageurl: Assets.assetsImagesStudents),
       CoursedetailsviewOptionitemEntity(
-          title: "أراء الطلاب", imageurl: Assets.assetsImagesFeedback),
+          title: "أراء الطلاب", imageurl: Assets.assetsIconsFeedback),
       CoursedetailsviewOptionitemEntity(
-          title: "الأبلاغات", imageurl: Assets.assetsImagesComplain),
+          title: "الأبلاغات", imageurl: Assets.assetsIconsComplain),
     ];
   }
 }

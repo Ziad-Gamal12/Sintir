@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewSQlTestWidgets/CustomReviewQuestionImage.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewSQlTestWidgets/CustomReviewQuestionSolutionList.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewQuestionImage.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewQuestionSolutionList.dart';
 
-class CustomReviewSqlQuestionListItem extends StatelessWidget {
-  const CustomReviewSqlQuestionListItem({
+class CustomReviewExamQuestionListItem extends StatelessWidget {
+  const CustomReviewExamQuestionListItem({
     super.key,
     required this.question,
   });

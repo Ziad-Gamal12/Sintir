@@ -10,20 +10,20 @@ import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/AddcoursesectionsqlviewBody.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseSectionExamViewBody.dart';
 
-class Addcoursesectionsqlview extends StatefulWidget {
-  const Addcoursesectionsqlview(
+class AddcourseSectionExamview extends StatefulWidget {
+  const AddcourseSectionExamview(
       {super.key, required this.optionnavigationrequirementsentity});
-  static const routeName = '/Addcoursesectionsqlview';
-  final Optionnavigationrequirementsentity optionnavigationrequirementsentity;
+  static const routeName = '/AddCourseSectionExamView';
+  final OptionNavigationRequirementsEntity optionnavigationrequirementsentity;
 
   @override
-  State<Addcoursesectionsqlview> createState() =>
-      _AddcoursesectionsqlviewState();
+  State<AddcourseSectionExamview> createState() =>
+      _AddcourseSectionExamviewState();
 }
 
-class _AddcoursesectionsqlviewState extends State<Addcoursesectionsqlview>
+class _AddcourseSectionExamviewState extends State<AddcourseSectionExamview>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
@@ -37,10 +37,10 @@ class _AddcoursesectionsqlviewState extends State<Addcoursesectionsqlview>
           testitemrepo: getIt<Testitemrepo>(),
           assetspickerrepo: getIt<Assetspickerrepo>()),
       child: Scaffold(
-        appBar: const CustomAppBar(appBartitle: "SQL"),
+        appBar: const CustomAppBar(appBartitle: "اضافة امتحان"),
         body: Provider.value(
           value: widget.optionnavigationrequirementsentity,
-          child: const AddcoursesectionsqlviewBody(),
+          child: const AddCourseSectionExamViewBody(),
         ),
       ),
     );

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/AddCourseSQLAddQuestionListItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseExamAddQuestionListViewItem.dart';
 
-class Addcoursesectionsqltestlistview extends StatelessWidget {
-  const Addcoursesectionsqltestlistview(
+class AddCourseSectionExamListview extends StatelessWidget {
+  const AddCourseSectionExamListview(
       {super.key, required this.coursetestentity});
   final CourseTestEntity coursetestentity;
   @override
@@ -12,7 +12,7 @@ class Addcoursesectionsqltestlistview extends StatelessWidget {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
-            child: Addcoursesqladdquestionlistitem(
+            child: AddCourseExamAddQuestionListViewItem(
               coursetestquestionentity: coursetestentity.questions[index],
               coursetestentity: coursetestentity,
             ),

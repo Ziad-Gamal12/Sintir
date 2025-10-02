@@ -29,14 +29,14 @@ class _DisplaycoursevedioveiwBodyState
     if (mounted) {
       context.read<VideoItemCubit>().joinToVideoItem(
             courseId: context
-                .read<Coursevideoviewnavigationsrequirmentsentity>()
+                .read<CourseVideoViewNavigationsRequirmentsEntity>()
                 .courseEntity
                 .id,
             sectionId: context
-                .read<Coursevideoviewnavigationsrequirmentsentity>()
+                .read<CourseVideoViewNavigationsRequirmentsEntity>()
                 .sectionId,
             sectionItemId: context
-                .read<Coursevideoviewnavigationsrequirmentsentity>()
+                .read<CourseVideoViewNavigationsRequirmentsEntity>()
                 .video
                 .id,
             joinedByEntity: JoinedByEntity(
@@ -52,7 +52,7 @@ class _DisplaycoursevedioveiwBodyState
   @override
   Widget build(BuildContext context) {
     final CourseVideoItemEntity vedio =
-        context.read<Coursevideoviewnavigationsrequirmentsentity>().video;
+        context.read<CourseVideoViewNavigationsRequirmentsEntity>().video;
     return BlocConsumer<VideoItemCubit, VideoItemState>(
       listener: (context, state) {
         if (state is JoinToVideoItemSuccess) {

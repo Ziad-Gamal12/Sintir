@@ -34,7 +34,7 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
     if (mounted) {
       intitStateMethod(
           test:
-              context.read<Coursetestviewnavigationsrequirmentsentity>().test);
+              context.read<CourseExamViewNavigationsRequirmentsEntity>().test);
     }
     super.initState();
   }
@@ -45,7 +45,7 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
   @override
   Widget build(BuildContext context) {
     CourseTestEntity test = context
-        .read<Coursetestviewnavigationsrequirmentsentity>()
+        .read<CourseExamViewNavigationsRequirmentsEntity>()
         .test; //widget.coursetestentity>
     return BlocConsumer<TestItemCubit, TestItemState>(
       listener: (context, state) {
@@ -155,14 +155,14 @@ class _CoursetestviewBodyState extends State<CoursetestviewBody> {
     if (mounted) {
       context.read<TestItemCubit>().joinToTestItem(
             courseId: context
-                .read<Coursetestviewnavigationsrequirmentsentity>()
+                .read<CourseExamViewNavigationsRequirmentsEntity>()
                 .course
                 .id,
             sectionId: context
-                .read<Coursetestviewnavigationsrequirmentsentity>()
+                .read<CourseExamViewNavigationsRequirmentsEntity>()
                 .sectionId,
             sectionItemId: context
-                .read<Coursetestviewnavigationsrequirmentsentity>()
+                .read<CourseExamViewNavigationsRequirmentsEntity>()
                 .test
                 .id,
             joinedByEntity: JoinedByEntity(

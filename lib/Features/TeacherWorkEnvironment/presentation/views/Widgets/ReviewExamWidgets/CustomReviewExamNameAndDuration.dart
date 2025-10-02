@@ -4,15 +4,15 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
 
-class CustomReviewSqlTestNameAndDuration extends StatelessWidget {
-  const CustomReviewSqlTestNameAndDuration({
+class CustomReviewExamNameAndDuration extends StatelessWidget {
+  const CustomReviewExamNameAndDuration({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     CourseTestEntity coursetestentity =
-        context.read<Navigatesqlreviewrequirmentsentity>().coursetestentity;
+        context.read<NavigateExamReviewRequirmentsEntity>().coursetestentity;
     return Row(
       children: [
         Expanded(

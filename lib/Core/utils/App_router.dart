@@ -37,16 +37,16 @@ import 'package:sintir/Features/Subscribtion/Presentation/View/SubscribtionView.
 import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnboardingView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionExamView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionFileView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionSQLView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionVedioView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/CourseDetailView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ExamConsequencesView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/FileConsequencesView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ReviewSqlTestSectionView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ReviewExamSectionView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TestConsequencesView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/VideoConsequencesView.dart';
 
 class App_router {
@@ -150,7 +150,7 @@ class App_router {
         builder: (BuildContext context, GoRouterState state) {
           return Displaycoursevedioveiw(
             coursevideoviewnavigationsrequirmentsentity:
-                state.extra as Coursevideoviewnavigationsrequirmentsentity,
+                state.extra as CourseVideoViewNavigationsRequirmentsEntity,
           );
         },
       ),
@@ -159,7 +159,7 @@ class App_router {
         builder: (BuildContext context, GoRouterState state) {
           return Coursetestview(
             coursetestviewnavigationsrequirmentsentity:
-                state.extra as Coursetestviewnavigationsrequirmentsentity,
+                state.extra as CourseExamViewNavigationsRequirmentsEntity,
           );
         },
       ),
@@ -221,20 +221,20 @@ class App_router {
         },
       ),
       GoRoute(
-        path: Addcoursesectionsqlview.routeName,
+        path: AddcourseSectionExamview.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return Addcoursesectionsqlview(
+          return AddcourseSectionExamview(
             optionnavigationrequirementsentity:
-                state.extra as Optionnavigationrequirementsentity,
+                state.extra as OptionNavigationRequirementsEntity,
           );
         },
       ),
       GoRoute(
-        path: ReviewSqlTestSectionView.routeName,
+        path: ReviewExamSectionView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return ReviewSqlTestSectionView(
-            navigatesqlreviewrequirmentsentity:
-                state.extra as Navigatesqlreviewrequirmentsentity,
+          return ReviewExamSectionView(
+            navigateExamReviewRequirmentsEntity:
+                state.extra as NavigateExamReviewRequirmentsEntity,
           );
         },
       ),
@@ -243,7 +243,7 @@ class App_router {
         builder: (BuildContext context, GoRouterState state) {
           return Addcoursesectionvedioview(
             optionnavigationrequirementsentity:
-                state.extra as Optionnavigationrequirementsentity,
+                state.extra as OptionNavigationRequirementsEntity,
           );
         },
       ),
@@ -252,7 +252,7 @@ class App_router {
         builder: (BuildContext context, GoRouterState state) {
           return Addcoursesectionfileview(
             optionnavigationrequirementsentity:
-                state.extra as Optionnavigationrequirementsentity,
+                state.extra as OptionNavigationRequirementsEntity,
           );
         },
       ),

@@ -6,19 +6,19 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ReviewSqlTestSectionView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ReviewExamSectionView.dart';
 import 'package:sintir/constant.dart';
 
-class AddCourseSectionSqlTestActionbuttons extends StatelessWidget {
-  const AddCourseSectionSqlTestActionbuttons({
+class AddCourseSectionExamActionButtons extends StatelessWidget {
+  const AddCourseSectionExamActionButtons({
     super.key,
     required this.courseTestEntity,
   });
   final CourseTestEntity courseTestEntity;
   @override
   Widget build(BuildContext context) {
-    Optionnavigationrequirementsentity optionnavigationrequirementsentity =
-        Provider.of<Optionnavigationrequirementsentity>(context);
+    OptionNavigationRequirementsEntity optionnavigationrequirementsentity =
+        Provider.of<OptionNavigationRequirementsEntity>(context);
     return Positioned(
         bottom: 40,
         right: 0,
@@ -57,13 +57,13 @@ class AddCourseSectionSqlTestActionbuttons extends StatelessWidget {
   }
 
   void navigatetoReviewTestView(
-      Optionnavigationrequirementsentity optionnavigationrequirementsentity,
+      OptionNavigationRequirementsEntity optionnavigationrequirementsentity,
       CourseTestEntity courseTestEntity,
       BuildContext context) {
-    if (Variables.AddCourseSectionSQLtestFormKey.currentState!.validate()) {
-      Variables.AddCourseSectionSQLtestFormKey.currentState!.save();
-      GoRouter.of(context).push(ReviewSqlTestSectionView.routeName,
-          extra: Navigatesqlreviewrequirmentsentity(
+    if (Variables.AddCourseSectionExamFormKey.currentState!.validate()) {
+      Variables.AddCourseSectionExamFormKey.currentState!.save();
+      GoRouter.of(context).push(ReviewExamSectionView.routeName,
+          extra: NavigateExamReviewRequirmentsEntity(
               isNewSection: optionnavigationrequirementsentity.isNewSection,
               coursetestentity: courseTestEntity,
               section: optionnavigationrequirementsentity.section,

@@ -14,7 +14,7 @@ class CourseFileEntity {
   String id;
   File? file;
   String? type;
-  String preffixImage = Assets.assetsImagesCustomFileIcon;
+  String preffixImage = Assets.assetsIconsSVGIconsCustomFileIcon;
 
   CourseFileEntity(
       {this.type = "File",

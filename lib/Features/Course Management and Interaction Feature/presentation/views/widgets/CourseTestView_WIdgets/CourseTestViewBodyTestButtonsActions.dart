@@ -14,8 +14,8 @@ class CourseTestViewBodyTestButtonsActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Coursetestviewnavigationsrequirmentsentity requirements =
-        context.read<Coursetestviewnavigationsrequirmentsentity>();
+    CourseExamViewNavigationsRequirmentsEntity requirements =
+        context.read<CourseExamViewNavigationsRequirmentsEntity>();
     return BlocBuilder<TestItemCubit, TestItemState>(
       builder: (context, state) {
         return Custom_Loading_Widget(

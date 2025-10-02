@@ -6,11 +6,11 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/AddCourseSQLAddQuestionImage.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/SQLTestQuestionInputs.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseExamAddQuestionImage.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ExamQuestionInputs.dart';
 
-class Addcoursesqladdquestionlistitem extends StatefulWidget {
-  const Addcoursesqladdquestionlistitem({
+class AddCourseExamAddQuestionListViewItem extends StatefulWidget {
+  const AddCourseExamAddQuestionListViewItem({
     super.key,
     required this.coursetestquestionentity,
     required this.coursetestentity,
@@ -18,12 +18,12 @@ class Addcoursesqladdquestionlistitem extends StatefulWidget {
   final CourseTestQuestionEntity coursetestquestionentity;
   final CourseTestEntity coursetestentity;
   @override
-  State<Addcoursesqladdquestionlistitem> createState() =>
-      _AddcoursesqladdquestionlistitemState();
+  State<AddCourseExamAddQuestionListViewItem> createState() =>
+      _AddCourseExamAddQuestionListViewItemState();
 }
 
-class _AddcoursesqladdquestionlistitemState
-    extends State<Addcoursesqladdquestionlistitem> {
+class _AddCourseExamAddQuestionListViewItemState
+    extends State<AddCourseExamAddQuestionListViewItem> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -32,14 +32,14 @@ class _AddcoursesqladdquestionlistitemState
       },
       child: Column(
         children: [
-          SQLTestQuestionInputs(
+          ExamQuestionInputs(
             coursetestquestionentity: widget.coursetestquestionentity,
             courseTestEntity: widget.coursetestentity,
           ),
           const SizedBox(
             height: 5,
           ),
-          Addcoursesqladdquestionimage(
+          AddCourseExamAddQuestionImage(
             coursetestquestionentity: widget.coursetestquestionentity,
             pickerassetsservice: getIt<Pickerassetsservice>(),
           )

@@ -128,8 +128,8 @@ class _AddcoursesectionfileviewBodyState
 
   void fileUploadedSuccessState(BuildContext context, UplaodFileSuccess state) {
     formKey.currentState!.save();
-    Optionnavigationrequirementsentity optionnavigationrequirementsentity =
-        context.read<Optionnavigationrequirementsentity>();
+    OptionNavigationRequirementsEntity optionnavigationrequirementsentity =
+        context.read<OptionNavigationRequirementsEntity>();
     coursefilEentity.fileUrl = state.url;
     if (optionnavigationrequirementsentity.isNewSection) {
       context.read<CourseSectionsCubit>().addCourseSection(

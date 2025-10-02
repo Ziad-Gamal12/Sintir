@@ -139,8 +139,8 @@ class _AddcoursesectionvedioviewbodyState
 
   void videoUploadingSuccess(BuildContext context, UploadVideoSuccess state) {
     Variables.AddCourseSectionVideoItemFormKey.currentState!.save();
-    Optionnavigationrequirementsentity optionnavigationrequirementsentity =
-        context.read<Optionnavigationrequirementsentity>();
+    OptionNavigationRequirementsEntity optionnavigationrequirementsentity =
+        context.read<OptionNavigationRequirementsEntity>();
     coursevedioitementity.vedioUrl = state.url;
     if (optionnavigationrequirementsentity.isNewSection) {
       context.read<CourseSectionsCubit>().addCourseSection(

@@ -16,7 +16,7 @@ class Addcoursesectionfileview extends StatelessWidget {
   const Addcoursesectionfileview(
       {super.key, required this.optionnavigationrequirementsentity});
   static const routeName = '/Addcoursesectionfileview';
-  final Optionnavigationrequirementsentity optionnavigationrequirementsentity;
+  final OptionNavigationRequirementsEntity optionnavigationrequirementsentity;
 
   @override
   Widget build(BuildContext context) {

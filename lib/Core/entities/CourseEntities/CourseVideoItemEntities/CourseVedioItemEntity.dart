@@ -13,10 +13,10 @@ class CourseVideoItemEntity {
   String id;
   File? file;
   String? type;
-  String preffixImage = Assets.assetsImagesVideoIcon;
+  String preffixImage = Assets.assetsIconsSVGIconsVideoIcon;
   void ontap(
       {required BuildContext context,
-      required Coursevideoviewnavigationsrequirmentsentity requires,
+      required CourseVideoViewNavigationsRequirmentsEntity requires,
       required CourseEntity course}) {
     GoRouter.of(context)
         .push(Displaycoursevedioveiw.routeName, extra: requires);

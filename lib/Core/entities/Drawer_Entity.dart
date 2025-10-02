@@ -19,33 +19,33 @@ class DrawerEntity {
     return [
       DrawerEntity(
           title: "الرئيسية",
-          activeIcon: Assets.assetsImagesActiveHomeIcon,
-          inActiveIcon: Assets.assetsImagesInActiveHomeIcon,
+          activeIcon: Assets.assetsIconsActiveHomeIcon,
+          inActiveIcon: Assets.assetsIconsInActiveHomeIcon,
           routeName: Homeview.routeName),
       DrawerEntity(
           title: "كورساتي",
-          activeIcon: Assets.assetsImagesDrawerMycourses,
-          inActiveIcon: Assets.assetsImagesDrawerMycourses,
+          activeIcon: Assets.assetsIconsDrawerMycourses,
+          inActiveIcon: Assets.assetsIconsDrawerMycourses,
           routeName: ""),
       DrawerEntity(
           title: "البحث",
-          activeIcon: Assets.assetsImagesSearch,
-          inActiveIcon: Assets.assetsImagesSearch,
+          activeIcon: Assets.assetsIconsSearch,
+          inActiveIcon: Assets.assetsIconsSearch,
           routeName: ""),
       DrawerEntity(
           title: "المنتدى",
-          activeIcon: Assets.assetsImagesDrawerStudentsClub,
-          inActiveIcon: Assets.assetsImagesDrawerStudentsClub,
+          activeIcon: Assets.assetsIconsDrawerStudentsClub,
+          inActiveIcon: Assets.assetsIconsDrawerStudentsClub,
           routeName: ""),
       DrawerEntity(
           title: "المساعد الألي",
-          activeIcon: Assets.assetsImagesInActiveAiChatIcon,
-          inActiveIcon: Assets.assetsImagesInActiveAiChatIcon,
+          activeIcon: Assets.assetsIconsActiveAiChatIcon,
+          inActiveIcon: Assets.assetsIconsInActiveAiChatIcon,
           routeName: AiTeacherview.routeName),
       DrawerEntity(
           title: "المفضله",
-          activeIcon: Assets.assetsImagesActiveFavouriteIcon,
-          inActiveIcon: Assets.assetsImagesInActiveFavouriteIcon,
+          activeIcon: Assets.assetsIconsActiveFavouriteIcon,
+          inActiveIcon: Assets.assetsIconsInActiveFavouriteIcon,
           routeName: Favoritesview.routeName),
     ];
   }

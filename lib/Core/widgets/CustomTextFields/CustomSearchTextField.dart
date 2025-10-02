@@ -54,7 +54,7 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
           prefixIcon: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 14),
             child: SvgPicture.asset(
-              Assets.assetsImagesSearchIcon,
+              Assets.assetsIconsSVGIconsSearchIcon,
               fit: BoxFit.fill,
             ),
           ),

@@ -78,7 +78,7 @@ class CourseDetailsCourseReportsListViewItem extends StatelessWidget {
             const Spacer(
               flex: 1,
             ),
-            Image.asset(Assets.assetsImagesWarning)
+            Image.asset(Assets.assetsIconsWarning)
           ],
         ));
   }

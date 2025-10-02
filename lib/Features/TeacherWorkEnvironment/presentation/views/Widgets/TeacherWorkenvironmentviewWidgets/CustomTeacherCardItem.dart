@@ -50,7 +50,7 @@ class CustomTeacherCardItem extends StatelessWidget {
       customCardTypeIcons: [
         CustomCardTypeIcon(
           cardType: CardType.otherBrand,
-          cardImage: SvgPicture.asset(Assets.assetsImagesSintirLogo,
+          cardImage: SvgPicture.asset(Assets.assetsImagesSVGImagesSintirLogo,
               height: 50, width: 50),
         ),
       ],

@@ -95,7 +95,7 @@ class _CustomCourseDetailsSectionsListViewitemState
               },
               child: Customlisttilewidget(
                 title: widget.sectionItem.title,
-                image: Assets.assetsImagesSectionIcon,
+                image: Assets.assetsIconsSVGIconsSectionIcon,
                 subtitle: widget.sectionItem.subtitle,
               ),
             ),

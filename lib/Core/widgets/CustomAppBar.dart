@@ -26,7 +26,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             GoRouter.of(context).pop();
           },
           child: SvgPicture.asset(
-            Assets.assetsImagesArrowLeftBack,
+            Assets.assetsIconsSVGIconsArrowLeftBack,
             height: 20,
             width: 20,
           ),

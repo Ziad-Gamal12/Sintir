@@ -3,8 +3,8 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 
-class CustomAddCourseSectionSqlNameAndDuration extends StatelessWidget {
-  const CustomAddCourseSectionSqlNameAndDuration({
+class CustomAddCourseSectionExamNameAndDuration extends StatelessWidget {
+  const CustomAddCourseSectionExamNameAndDuration({
     super.key,
     required this.coursetestentity,
   });
@@ -21,7 +21,7 @@ class CustomAddCourseSectionSqlNameAndDuration extends StatelessWidget {
                 onSaved: (value) {
                   coursetestentity.title = value!;
                 },
-                controller: Variables.AddsqlTestName,
+                controller: Variables.AddExamName,
                 textInputType: TextInputType.text,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -40,7 +40,7 @@ class CustomAddCourseSectionSqlNameAndDuration extends StatelessWidget {
                 },
                 hintText: "مده الأختبار",
                 obscureText: false,
-                controller: Variables.AddsqlTestDuration,
+                controller: Variables.AddExamDuration,
                 textInputType: TextInputType.number,
                 validator: (value) {
                   if (value!.isEmpty) {

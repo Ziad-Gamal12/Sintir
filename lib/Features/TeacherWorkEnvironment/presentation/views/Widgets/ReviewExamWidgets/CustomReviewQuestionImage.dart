@@ -16,7 +16,7 @@ class CustomReviewQuestionImage extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 1,
       child: imageFile == null
-          ? Image.asset(Assets.assetsImagesAddImageIcon)
+          ? Image.asset(Assets.assetsIconsAddImageIcon)
           : Image.file(imageFile!),
     );
   }

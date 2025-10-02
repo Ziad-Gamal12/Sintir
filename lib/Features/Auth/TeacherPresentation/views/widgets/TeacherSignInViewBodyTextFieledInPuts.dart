@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomEmailTextField.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomPasswordTextField.dart';
 
@@ -19,7 +18,7 @@ class TeacherSignInViewBodyTextFieledInPuts extends StatelessWidget {
           controller: teacherSignInEmailController,
           isIconVisible: true,
         ),
-        const Customsizedbox(width: 0, height: 10),
+        const SizedBox(height: 10),
         CustomPasswordTextField(
           controller: teacherSignInPasswordController,
         )

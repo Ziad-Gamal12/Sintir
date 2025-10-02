@@ -12,7 +12,7 @@ class CustomTitleAndDescriptionSectionInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CourseSectionEntity courseSectionEntity =
-        context.read<Navigatesqlreviewrequirmentsentity>().section;
+        context.read<NavigateExamReviewRequirmentsEntity>().section;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

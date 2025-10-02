@@ -26,7 +26,7 @@ class CustomVedioListViewItem extends StatelessWidget {
       onTap: () => isAvilabe
           ? item.ontap(
               context: context,
-              requires: Coursevideoviewnavigationsrequirmentsentity(
+              requires: CourseVideoViewNavigationsRequirmentsEntity(
                   sectionId: section.id, courseEntity: course, video: item),
               course: course)
           : null,

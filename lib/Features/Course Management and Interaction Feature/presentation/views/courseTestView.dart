@@ -14,7 +14,7 @@ class Coursetestview extends StatelessWidget {
   const Coursetestview(
       {super.key, required this.coursetestviewnavigationsrequirmentsentity});
   static const routename = "/Coursetestview";
-  final Coursetestviewnavigationsrequirmentsentity
+  final CourseExamViewNavigationsRequirmentsEntity
       coursetestviewnavigationsrequirmentsentity;
   @override
   Widget build(BuildContext context) {

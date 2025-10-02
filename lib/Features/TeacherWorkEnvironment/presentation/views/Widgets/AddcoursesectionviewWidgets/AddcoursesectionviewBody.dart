@@ -41,7 +41,7 @@ class Addcoursesectionviewbody extends StatelessWidget {
                 Variables.AddCourseSectionFormKey.currentState!.save();
               },
               optionRequirementsEntity:
-                  context.read<Optionnavigationrequirementsentity>(),
+                  context.read<OptionNavigationRequirementsEntity>(),
             )
           ],
         ),

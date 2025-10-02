@@ -30,6 +30,7 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
       obscureText: !ispasswordVisible,
       controller: widget.controller,
       textInputType: TextInputType.visiblePassword,
+      prefixIcon: Icons.lock_outlined,
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'رجاء إدخال كلمة المرور';

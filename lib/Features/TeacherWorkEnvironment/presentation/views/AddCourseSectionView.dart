@@ -19,8 +19,8 @@ class Addcoursesectionview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Optionnavigationrequirementsentity optionnavigationrequirementsentity =
-        Optionnavigationrequirementsentity(
+    OptionNavigationRequirementsEntity optionnavigationrequirementsentity =
+        OptionNavigationRequirementsEntity(
       isNewSection: true,
       courseID: course.id,
       section: CourseSectionEntity(

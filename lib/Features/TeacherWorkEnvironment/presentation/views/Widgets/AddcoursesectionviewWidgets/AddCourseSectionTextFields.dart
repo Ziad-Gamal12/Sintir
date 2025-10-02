@@ -19,7 +19,7 @@ class CourseSectionTextFields extends StatelessWidget {
           controller: Variables.AddCoursesectionNameController,
           textInputType: TextInputType.text,
           onSaved: (value) {
-            context.read<Optionnavigationrequirementsentity>().section.title =
+            context.read<OptionNavigationRequirementsEntity>().section.title =
                 value!;
           },
           validator: (value) {
@@ -43,7 +43,7 @@ class CourseSectionTextFields extends StatelessWidget {
             },
             onSaved: (value) {
               context
-                  .read<Optionnavigationrequirementsentity>()
+                  .read<OptionNavigationRequirementsEntity>()
                   .section
                   .subtitle = value!;
             }),

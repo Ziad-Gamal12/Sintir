@@ -4,11 +4,11 @@ import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/CustomQuestionSolutionsList.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/addcourseSQLTEstQuestionItemTextField.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddcourseExamQuestionItemTextField.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/CustomQuestionSolutionsList.dart';
 
-class SQLTestQuestionInputs extends StatelessWidget {
-  const SQLTestQuestionInputs({
+class ExamQuestionInputs extends StatelessWidget {
+  const ExamQuestionInputs({
     super.key,
     required this.courseTestEntity,
     required this.coursetestquestionentity,
@@ -28,7 +28,7 @@ class SQLTestQuestionInputs extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          AddcourseSQLTEstQuestionItemTextField(
+          AddcourseExamQuestionItemTextField(
             coursetestquestionentity: coursetestquestionentity,
           ),
           const SizedBox(

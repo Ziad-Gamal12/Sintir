@@ -15,7 +15,7 @@ abstract class Variables {
       GlobalKey<ScaffoldState>();
   static GlobalKey<ScaffoldState> DisplaycoursevedioveiwScaffoldKey =
       GlobalKey<ScaffoldState>();
-  static GlobalKey<FormState> AddCourseSectionSQLtestFormKey =
+  static GlobalKey<FormState> AddCourseSectionExamFormKey =
       GlobalKey<FormState>();
   static TextEditingController AddCourseCourseNameController =
       TextEditingController();
@@ -39,8 +39,8 @@ abstract class Variables {
       TextEditingController();
   static TextEditingController AddCoursesesectionDescriptionController =
       TextEditingController();
-  static TextEditingController AddsqlTestName = TextEditingController();
-  static TextEditingController AddsqlTestDuration = TextEditingController();
+  static TextEditingController AddExamName = TextEditingController();
+  static TextEditingController AddExamDuration = TextEditingController();
   static CourseEntity courseEntity = CourseEntity(
     studentsCount: 6,
     state: BackendEndpoints.coursePublishedState,

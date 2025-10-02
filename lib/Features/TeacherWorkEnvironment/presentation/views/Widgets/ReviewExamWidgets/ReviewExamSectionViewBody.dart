@@ -8,14 +8,14 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewSQlTestWidgets/CustomReviewSQlTestButtonAction.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewSQlTestWidgets/CustomReviewSqlQuestionsSLiverList.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewSQlTestWidgets/CustomReviewSqlTestNameAndDuration.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewSQlTestWidgets/CustomTitleAndDescriptionSectionInfo.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewExamButtonAction.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewExamNameAndDuration.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewExamQuestionsSliverList.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomTitleAndDescriptionSectionInfo.dart';
 import 'package:sintir/constant.dart';
 
-class ReviewSqlTestSectionViewBody extends StatelessWidget {
-  const ReviewSqlTestSectionViewBody({
+class ReviewExamSectionViewBody extends StatelessWidget {
+  const ReviewExamSectionViewBody({
     super.key,
   });
   @override
@@ -54,21 +54,21 @@ class ReviewSqlTestSectionViewBody extends StatelessWidget {
                       ),
                     ),
                     SliverToBoxAdapter(
-                      child: CustomReviewSqlTestNameAndDuration(),
+                      child: CustomReviewExamNameAndDuration(),
                     ),
                     SliverToBoxAdapter(
                       child: SizedBox(
                         height: 10,
                       ),
                     ),
-                    Customreviewsqlquestionssliverlist(),
+                    CustomReviewExamQuestionsSliverList(),
                   ],
                 ),
                 Positioned(
                   bottom: 20,
                   left: 0,
                   right: 0,
-                  child: CustomReviewSQlTestButtonAction(),
+                  child: CustomReviewExamButtonAction(),
                 )
               ],
             ),
@@ -117,8 +117,8 @@ class ReviewSqlTestSectionViewBody extends StatelessWidget {
   }
 
   void questionsImagesUploadedSuccessState(BuildContext context) {
-    Navigatesqlreviewrequirmentsentity navigatesqlreviewrequirmentsentity =
-        context.read<Navigatesqlreviewrequirmentsentity>();
+    NavigateExamReviewRequirmentsEntity navigatesqlreviewrequirmentsentity =
+        context.read<NavigateExamReviewRequirmentsEntity>();
     if (navigatesqlreviewrequirmentsentity.isNewSection) {
       context.read<CourseSectionsCubit>().addCourseSection(
           sectionItem: navigatesqlreviewrequirmentsentity.coursetestentity,

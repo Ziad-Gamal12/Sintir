@@ -19,7 +19,7 @@ class Student_SigninSocialbuttonssection extends StatelessWidget {
           onPressed: () {
             BlocProvider.of<StudentSignInCubit>(context).signInWithGoogle();
           },
-          iconpath: Assets.assetsImagesGoogle,
+          iconpath: Assets.assetsIconsSVGIconsGoogle,
         ),
         const Customsizedbox(width: 0, height: 16),
         Customstudentsocialbutton(
@@ -27,7 +27,7 @@ class Student_SigninSocialbuttonssection extends StatelessWidget {
           onPressed: () {
             BlocProvider.of<StudentSignInCubit>(context).signInWithFacebook();
           },
-          iconpath: Assets.assetsImagesFaceBookIcons,
+          iconpath: Assets.assetsIconsSVGIconsFaceBookIcons,
         ),
       ],
     );

@@ -5,8 +5,8 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 import 'package:sintir/Core/widgets/CustomRadioWidget.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 
-class AddCourseSQlAddSolutionItem extends StatefulWidget {
-  const AddCourseSQlAddSolutionItem({
+class AddCourseExamAddSolutionItem extends StatefulWidget {
+  const AddCourseExamAddSolutionItem({
     super.key,
     required this.coursetestquestionsolutionentity,
     required this.groupValue,
@@ -17,12 +17,12 @@ class AddCourseSQlAddSolutionItem extends StatefulWidget {
   final ValueChanged<String?> onChange;
 
   @override
-  State<AddCourseSQlAddSolutionItem> createState() =>
-      _AddCourseSQlAddSolutionItemState();
+  State<AddCourseExamAddSolutionItem> createState() =>
+      _AddCourseExamAddSolutionItemState();
 }
 
-class _AddCourseSQlAddSolutionItemState
-    extends State<AddCourseSQlAddSolutionItem> {
+class _AddCourseExamAddSolutionItemState
+    extends State<AddCourseExamAddSolutionItem> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TestItemCubit, TestItemState>(

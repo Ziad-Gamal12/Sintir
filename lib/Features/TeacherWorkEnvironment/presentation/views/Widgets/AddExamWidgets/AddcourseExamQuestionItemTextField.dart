@@ -3,8 +3,8 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 
 // ignore: must_be_immutable
-class AddcourseSQLTEstQuestionItemTextField extends StatelessWidget {
-  const AddcourseSQLTEstQuestionItemTextField({
+class AddcourseExamQuestionItemTextField extends StatelessWidget {
+  const AddcourseExamQuestionItemTextField({
     super.key,
     required this.coursetestquestionentity,
   });

@@ -32,7 +32,7 @@ class _CustomdrawerState extends State<Customdrawer> {
                   child: Customlisttilewidget(
                       title: "Lekan Okeowo",
                       subtitle: "demo@gmail.com",
-                      image: Assets.assetsImagesUserAvatar),
+                      image: Assets.assetsIconsSVGIconsUserAvatar),
                 ),
               ),
               const SliverToBoxAdapter(

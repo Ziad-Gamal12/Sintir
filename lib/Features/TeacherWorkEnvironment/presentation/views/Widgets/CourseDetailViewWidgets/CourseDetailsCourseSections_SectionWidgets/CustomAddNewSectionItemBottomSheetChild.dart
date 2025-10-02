@@ -23,7 +23,7 @@ class CustomAddNewSectionItemBottomSheetChild extends StatelessWidget {
               topLeft: Radius.circular(8), topRight: Radius.circular(8)),
           color: Colors.transparent),
       child: AddCourseSectionContentOptions(
-        optionRequirementsEntity: Optionnavigationrequirementsentity(
+        optionRequirementsEntity: OptionNavigationRequirementsEntity(
             isNewSection: false, section: section, courseID: courseId),
       ),
     );

@@ -35,7 +35,7 @@ class SectionHeader extends StatelessWidget {
       },
       child: Customlisttilewidget(
         title: sectionItem.title,
-        image: Assets.assetsImagesSectionIcon,
+        image: Assets.assetsIconsSVGIconsSectionIcon,
         subtitle: sectionItem.subtitle,
       ),
     );

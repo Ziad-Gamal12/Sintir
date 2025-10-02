@@ -13,7 +13,7 @@ class CustomSendNoteWidgetBodyActionButton extends StatelessWidget {
     required this.coursevideoviewnavigationsrequirmentsentity,
   });
   final GlobalKey<FormState> formKey;
-  final Coursevideoviewnavigationsrequirmentsentity
+  final CourseVideoViewNavigationsRequirmentsEntity
       coursevideoviewnavigationsrequirmentsentity;
 
   @override

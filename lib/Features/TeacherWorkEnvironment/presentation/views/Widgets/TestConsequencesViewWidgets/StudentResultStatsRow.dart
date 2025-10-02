@@ -11,7 +11,7 @@ class StudentResultStatsRow extends StatelessWidget {
       children: [
         Expanded(
           child: StudentStatItem(
-            icon: Assets.assetsImagesGraphBar,
+            icon: Assets.assetsIconsGraphBar,
             value: "75%",
             backgroundColor: Colors.lightBlue.shade100,
           ),
@@ -25,7 +25,7 @@ class StudentResultStatsRow extends StatelessWidget {
             )),
         Expanded(
           child: StudentStatItem(
-            icon: Assets.assetsImagesMisionIcon,
+            icon: Assets.assetsIconsMisionIcon,
             value: "15/20",
             backgroundColor: Colors.lightBlue.shade100,
           ),

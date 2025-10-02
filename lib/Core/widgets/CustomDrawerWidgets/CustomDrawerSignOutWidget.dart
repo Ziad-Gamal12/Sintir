@@ -23,8 +23,8 @@ class CustomDrawerSignOutWidget extends StatelessWidget {
       child: Custominactivedraweritem(
         drawerEntity: DrawerEntity(
             title: "تسجيل الخروج",
-            inActiveIcon: Assets.assetsImagesLogout,
-            activeIcon: Assets.assetsImagesLogout,
+            inActiveIcon: Assets.assetsIconsLogout,
+            activeIcon: Assets.assetsIconsLogout,
             routeName: ChoosingUserKindView.routeName),
         iconColor: Colors.red,
       ),

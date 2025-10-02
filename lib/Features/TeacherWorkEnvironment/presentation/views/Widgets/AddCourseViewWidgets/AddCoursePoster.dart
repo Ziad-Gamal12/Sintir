@@ -32,7 +32,7 @@ class Addcourseposter extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Image.asset(Assets.assetsImagesAddImageIcon),
+              Image.asset(Assets.assetsIconsAddImageIcon),
               const SizedBox(
                 height: 20,
               ),

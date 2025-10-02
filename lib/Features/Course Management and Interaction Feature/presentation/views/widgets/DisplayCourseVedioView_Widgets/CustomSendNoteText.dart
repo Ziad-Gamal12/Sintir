@@ -21,7 +21,7 @@ class CustomSendNoteText extends StatelessWidget {
             .showBottomSheet((context1) {
           return CustomSendNoteWidget(
             coursevideoviewnavigationsrequirmentsentity:
-                context.read<Coursevideoviewnavigationsrequirmentsentity>(),
+                context.read<CourseVideoViewNavigationsRequirmentsEntity>(),
           );
         });
       },

@@ -6,11 +6,11 @@ class Addcoursesectionoptionitem {
   static List<Addcoursesectionoptionitem> toList() {
     return [
       Addcoursesectionoptionitem(
-          title: "فديو", icon: Assets.assetsImagesVideoIcon),
+          title: "فديو", icon: Assets.assetsIconsSVGIconsVideoIcon),
       Addcoursesectionoptionitem(
-          title: "SQL", icon: Assets.assetsImagesExamIcon),
+          title: "أمتحان", icon: Assets.assetsIconsSVGIconsExamIcon),
       Addcoursesectionoptionitem(
-          title: "ملف", icon: Assets.assetsImagesCustomFileIcon)
+          title: "ملف", icon: Assets.assetsIconsSVGIconsCustomFileIcon),
     ];
   }
 }

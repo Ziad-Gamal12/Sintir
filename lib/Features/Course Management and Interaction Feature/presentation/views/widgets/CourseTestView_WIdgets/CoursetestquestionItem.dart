@@ -23,7 +23,7 @@ class _CoursetestquestionItemState extends State<CoursetestquestionItem> {
   @override
   Widget build(BuildContext context) {
     CourseTestEntity test =
-        context.read<Coursetestviewnavigationsrequirmentsentity>().test;
+        context.read<CourseExamViewNavigationsRequirmentsEntity>().test;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

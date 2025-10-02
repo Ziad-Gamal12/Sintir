@@ -14,8 +14,8 @@ class CustomDrawerSettingsWidget extends StatelessWidget {
       child: Custominactivedraweritem(
         drawerEntity: DrawerEntity(
           title: "اعدادات النظام",
-          activeIcon: Assets.assetsImagesSetting,
-          inActiveIcon: Assets.assetsImagesSetting,
+          activeIcon: Assets.assetsIconsSetting,
+          inActiveIcon: Assets.assetsIconsSetting,
           routeName: "",
         ),
       ),

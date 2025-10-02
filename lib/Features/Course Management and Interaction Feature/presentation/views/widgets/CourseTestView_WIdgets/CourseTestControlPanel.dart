@@ -21,7 +21,7 @@ class CourseTestControlPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CourseTestEntity test = context
-        .read<Coursetestviewnavigationsrequirmentsentity>()
+        .read<CourseExamViewNavigationsRequirmentsEntity>()
         .test; //widget.coursetestentity>
 
     return Container(

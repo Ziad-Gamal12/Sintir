@@ -16,7 +16,7 @@ class CourseTestEntity {
   String? type;
   String id;
   bool? isOpened;
-  String preffixImage = Assets.assetsImagesExamIcon;
+  String preffixImage = Assets.assetsIconsSVGIconsExamIcon;
 
   CourseTestEntity(
       {required this.durationTime,
@@ -47,7 +47,7 @@ class CourseTestEntity {
 
   void ontap(
       {required BuildContext context,
-      required Coursetestviewnavigationsrequirmentsentity item,
+      required CourseExamViewNavigationsRequirmentsEntity item,
       required CourseEntity course}) {
     GoRouter.of(context).push(Coursetestview.routename, extra: item);
   }

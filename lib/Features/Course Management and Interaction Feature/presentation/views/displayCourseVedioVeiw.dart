@@ -17,7 +17,7 @@ class Displaycoursevedioveiw extends StatelessWidget {
     required this.coursevideoviewnavigationsrequirmentsentity,
   });
   static const routeName = '/Displaycoursevedioveiw';
-  final Coursevideoviewnavigationsrequirmentsentity
+  final CourseVideoViewNavigationsRequirmentsEntity
       coursevideoviewnavigationsrequirmentsentity;
 
   @override

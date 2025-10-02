@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/AddCourseSQlAddSolutionItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseExamAddSolutionItem.dart';
 
 class CustomQuestionSolutionsList extends StatefulWidget {
   const CustomQuestionSolutionsList({
@@ -35,7 +35,7 @@ class _CustomQuestionSolutionsListState
               child: Row(
                 children: [
                   Expanded(
-                    child: AddCourseSQlAddSolutionItem(
+                    child: AddCourseExamAddSolutionItem(
                       coursetestquestionsolutionentity: e.value,
                       groupValue: widget.question.solutions
                           .indexWhere((s) => s.isCorrect)

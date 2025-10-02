@@ -10,13 +10,13 @@ import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewSQlTestWidgets/ReviewSqlTestSectionViewBody.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/ReviewExamSectionViewBody.dart';
 
-class ReviewSqlTestSectionView extends StatelessWidget {
-  const ReviewSqlTestSectionView(
-      {super.key, required this.navigatesqlreviewrequirmentsentity});
+class ReviewExamSectionView extends StatelessWidget {
+  const ReviewExamSectionView(
+      {super.key, required this.navigateExamReviewRequirmentsEntity});
   static const routeName = '/reviewsqlexamview';
-  final Navigatesqlreviewrequirmentsentity navigatesqlreviewrequirmentsentity;
+  final NavigateExamReviewRequirmentsEntity navigateExamReviewRequirmentsEntity;
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -34,10 +34,10 @@ class ReviewSqlTestSectionView extends StatelessWidget {
         )
       ],
       child: Provider.value(
-        value: navigatesqlreviewrequirmentsentity,
+        value: navigateExamReviewRequirmentsEntity,
         child: const Scaffold(
           appBar: CustomAppBar(appBartitle: "مراجعه"),
-          body: ReviewSqlTestSectionViewBody(),
+          body: ReviewExamSectionViewBody(),
         ),
       ),
     );

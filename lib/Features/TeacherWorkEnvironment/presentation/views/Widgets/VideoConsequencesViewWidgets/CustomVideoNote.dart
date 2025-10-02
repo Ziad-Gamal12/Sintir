@@ -19,7 +19,8 @@ class CustomVideoNote extends StatelessWidget {
               borderRadius: BorderRadiusGeometry.circular(40),
               child: CircleAvatar(
                   backgroundColor: Colors.transparent,
-                  child: SvgPicture.asset(Assets.assetsImagesUserAvatar)),
+                  child:
+                      SvgPicture.asset(Assets.assetsIconsSVGIconsUserAvatar)),
             ),
             title: Text(
               "محمد ابراهيم",

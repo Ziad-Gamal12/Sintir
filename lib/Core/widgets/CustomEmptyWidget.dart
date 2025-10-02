@@ -12,7 +12,7 @@ class CustomEmptyWidget extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          Image.asset(Assets.assetsImagesEmptyBox),
+          Image.asset(Assets.assetsIconsEmptyBox),
           const SizedBox(
             height: 10,
           ),

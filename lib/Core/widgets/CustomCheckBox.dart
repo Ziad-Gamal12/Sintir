@@ -40,7 +40,7 @@ class _CustomcheckboxState extends State<Customcheckbox> {
         ),
         child: isChecked
             ? SvgPicture.asset(
-                Assets.assetsImagesCheckedIcon,
+                Assets.assetsIconsSVGIconsCheckedIcon,
               )
             : const SizedBox(),
       ),

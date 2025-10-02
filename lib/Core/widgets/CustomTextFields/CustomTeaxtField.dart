@@ -30,7 +30,9 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var border = const OutlineInputBorder(borderSide: BorderSide.none);
+    var border = const OutlineInputBorder(
+        borderSide: BorderSide.none,
+        borderRadius: BorderRadius.all(Radius.circular(16)));
     return TextFormField(
       onSaved: onSaved,
       inputFormatters: inputFormatters,
@@ -47,7 +49,7 @@ class CustomTextField extends StatelessWidget {
           prefixIcon: Icon(
             prefixIcon,
             size: 24,
-            color: const Color(0xffAEAEB2),
+            color: Colors.grey,
           ),
           suffixIcon: suffixIcon,
           border: border,

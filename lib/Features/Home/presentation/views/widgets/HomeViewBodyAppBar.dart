@@ -52,7 +52,7 @@ class HomeViewBodyAppBar extends StatelessWidget {
             InkWell(
               onTap: () {},
               child: Image.asset(
-                Assets.assetsImagesNotificationIcon,
+                Assets.assetsIconsNotificationIcon,
                 height: 25,
                 width: 25,
               ),

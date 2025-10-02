@@ -18,7 +18,7 @@ class Addcoursesectionvedioview extends StatelessWidget {
   const Addcoursesectionvedioview(
       {super.key, required this.optionnavigationrequirementsentity});
   static const routeName = '/Addcoursesectionvedioview';
-  final Optionnavigationrequirementsentity optionnavigationrequirementsentity;
+  final OptionNavigationRequirementsEntity optionnavigationrequirementsentity;
 
   @override
   Widget build(BuildContext context) {

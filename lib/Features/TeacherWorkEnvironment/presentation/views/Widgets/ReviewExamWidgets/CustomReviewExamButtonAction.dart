@@ -6,15 +6,15 @@ import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
 import 'package:sintir/constant.dart';
 
-class CustomReviewSQlTestButtonAction extends StatelessWidget {
-  const CustomReviewSQlTestButtonAction({
+class CustomReviewExamButtonAction extends StatelessWidget {
+  const CustomReviewExamButtonAction({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    Navigatesqlreviewrequirmentsentity navigatesqlreviewrequirmentsentity =
-        context.read<Navigatesqlreviewrequirmentsentity>();
+    NavigateExamReviewRequirmentsEntity navigatesqlreviewrequirmentsentity =
+        context.read<NavigateExamReviewRequirmentsEntity>();
     return BlocBuilder<TestItemCubit, TestItemState>(
       builder: (context, state) {
         return Custom_Loading_Widget(

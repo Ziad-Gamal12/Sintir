@@ -18,7 +18,7 @@ class CustomSendNoteWidget extends StatefulWidget {
     required this.coursevideoviewnavigationsrequirmentsentity,
   });
 
-  final Coursevideoviewnavigationsrequirmentsentity
+  final CourseVideoViewNavigationsRequirmentsEntity
       coursevideoviewnavigationsrequirmentsentity;
   @override
   State<CustomSendNoteWidget> createState() => _CustomSendNoteWidgetState();

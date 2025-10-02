@@ -7,13 +7,13 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionSolutionEntity.dart';
 import 'package:sintir/Core/utils/Variables.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/AddCourseSectionSQlTestListView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddSqlTestWidgets/AddCourseSectionSqlTestAddQuestionsActionbutton.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/CustomAddCourseSectionSqlNameAndDuration.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseSectionExamActionButtons.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseSectionExamListview.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/CustomAddCourseSectionExamNameAndDuration.dart';
 import 'package:sintir/constant.dart';
 
-class AddcoursesectionsqlviewBody extends StatelessWidget {
-  const AddcoursesectionsqlviewBody({
+class AddCourseSectionExamViewBody extends StatelessWidget {
+  const AddCourseSectionExamViewBody({
     super.key,
   });
   @override
@@ -29,13 +29,13 @@ class AddcoursesectionsqlviewBody extends StatelessWidget {
               Coursetestquestionsolutionentity(answer: "0", isCorrect: false)
             ])
       ],
-      title: Variables.AddsqlTestName.text,
-      durationTime: int.tryParse(Variables.AddsqlTestDuration.text) ?? 0,
+      title: Variables.AddExamName.text,
+      durationTime: int.tryParse(Variables.AddExamDuration.text) ?? 0,
     );
     return BlocBuilder<TestItemCubit, TestItemState>(
       builder: (context, state) {
         return Form(
-          key: Variables.AddCourseSectionSQLtestFormKey,
+          key: Variables.AddCourseSectionExamFormKey,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
             child: Stack(
@@ -43,7 +43,7 @@ class AddcoursesectionsqlviewBody extends StatelessWidget {
                 CustomScrollView(
                   slivers: [
                     SliverToBoxAdapter(
-                      child: CustomAddCourseSectionSqlNameAndDuration(
+                      child: CustomAddCourseSectionExamNameAndDuration(
                         coursetestentity: coursetestentity,
                       ),
                     ),
@@ -52,12 +52,12 @@ class AddcoursesectionsqlviewBody extends StatelessWidget {
                         height: 10,
                       ),
                     ),
-                    Addcoursesectionsqltestlistview(
+                    AddCourseSectionExamListview(
                       coursetestentity: coursetestentity,
                     )
                   ],
                 ),
-                AddCourseSectionSqlTestActionbuttons(
+                AddCourseSectionExamActionButtons(
                   courseTestEntity: coursetestentity,
                 ),
               ],

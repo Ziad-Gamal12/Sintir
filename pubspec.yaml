@@ -112,7 +112,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/images/SVG_Images/
     - assets/LottieFiles/
+    - assets/Icons/
+    - assets/Icons/SVG_Icons/
     - .env
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -157,6 +160,9 @@ flutter_intl:
 flutter_assets:
   assets_path:
     - assets/images/
+    - assets/images/SVG_Images/
     - assets/LottieFiles/
+    - assets/Icons/SVG_Icons/
+    - assets/Icons/
   output_path: lib/Core/utils/
   filename: imageAssets.dart
