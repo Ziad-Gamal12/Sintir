@@ -28,8 +28,6 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  _flutterfire_internals: ^1.3.61
-  avatar_glow: ^3.0.1
   awesome_dialog: ^3.2.1
   awesome_snackbar_content: ^0.1.8
   bloc: ^9.0.1
@@ -37,9 +35,7 @@ dependencies:
   chewie: ^1.11.0
   circular_progress_button: ^0.0.5
   cloud_firestore: ^6.0.2
-  cloud_firestore_platform_interface: ^7.0.2
   crypto: ^3.0.3
-  cupertino_icons: ^1.0.6
   dartz: ^0.10.1
   dio: ^5.8.0+1
   dropdown_model_list: ^2.1.3
@@ -84,8 +80,6 @@ dependencies:
   stop_watch_timer: ^3.2.1
   svg_flutter: ^0.0.1
   syncfusion_flutter_pdf: ^29.2.11
-  url_launcher: ^6.3.1
-  url_launcher_android: ^6.3.22
   video_player: ^2.10.0
   webview_flutter: ^4.10.0
 dev_dependencies:

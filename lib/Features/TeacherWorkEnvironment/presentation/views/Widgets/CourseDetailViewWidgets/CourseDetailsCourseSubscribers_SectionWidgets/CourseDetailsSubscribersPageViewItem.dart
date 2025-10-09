@@ -97,7 +97,9 @@ class _CourseDetailsSubscribersPageViewItemState
                   subscribers: _subscribers,
                 )
               else if (state is! GetCourseSubscribersLoading)
-                const CustomEmptyWidget()
+                CustomEmptyWidget(
+                  text: "لا يوجد اشخاص مشتركين في هذا الدورة",
+                )
             ],
           ),
         );

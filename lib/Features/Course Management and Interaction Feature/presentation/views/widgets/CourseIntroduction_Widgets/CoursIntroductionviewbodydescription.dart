@@ -24,6 +24,7 @@ class _CourseInfoCardCourseDescriptionState
         .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
         .course;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Align(
           alignment: Alignment.centerLeft,

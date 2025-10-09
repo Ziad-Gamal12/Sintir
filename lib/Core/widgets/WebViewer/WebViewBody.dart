@@ -4,6 +4,7 @@ import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubsc
 import 'package:sintir/Core/entities/PayMobResponse.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Core/widgets/WebViewer/WebviewbodyPaymentSuccessWidget.dart';
 import 'package:sintir/constant.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -74,26 +75,7 @@ class _WebviewbodyState extends State<Webviewbody> {
             style: AppTextStyles(context).bold24.copyWith(color: Colors.red),
           ));
         } else if (state is SubscibeingToCourseSuccess) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.check_circle_outline,
-                  color: Colors.green,
-                  size: 100,
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  "تم الاشتراك",
-                  style: AppTextStyles(context)
-                      .bold24
-                      .copyWith(color: Colors.green),
-                ),
-              ],
-            ),
-          );
+          return const WebviewbodyPaymentSuccessWidget();
         }
         return WebViewWidget(controller: controller);
       },

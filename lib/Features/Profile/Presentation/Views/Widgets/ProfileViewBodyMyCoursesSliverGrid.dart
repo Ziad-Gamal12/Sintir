@@ -5,6 +5,7 @@ import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/GridHelper.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
+import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseIntroductionView.dart';
 import 'package:sintir/Features/Profile/Presentation/Manager/ProfileCubit/ProfileCubit.dart';
@@ -44,6 +45,13 @@ class ProfileViewBodyMyCoursesSliverGrid extends StatelessWidget {
                       courseItem: getFakeLoadingList()[index],
                     ));
               }),
+        );
+      } else if (state is GetMyCoursesSuccess && myCourses.isEmpty) {
+        return SliverToBoxAdapter(
+          child: Center(
+              child: CustomEmptyWidget(
+            text: "لا يوجد لديك أي كورسات حتى الآن",
+          )),
         );
       } else {
         return SliverGrid.builder(

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
+import 'package:sintir/Features/Subscribtion/Presentation/View/SubscribtionView.dart';
 import 'package:sintir/constant.dart';
 
 class CourseIntroductionSuccessViewSubscribeButton extends StatefulWidget {
@@ -84,9 +86,9 @@ class _CourseIntroductionSuccessViewSubscribeButtonState
                       color: KSecondaryColor,
                       textColor: Colors.white,
                       onPressed: () {
-                        // context
-                        //     .read<CourseSubscribtionsCubit>()
-                        //     .subscribeToCourse(userEntity: getUserData());
+                        GoRouter.of(context).push(SubscribtionView.routeName,
+                            extra: context.read<
+                                DisplayCourseBottomsheetNavigationRequirmentsEntity>());
                       }),
                 ),
                 const SizedBox(

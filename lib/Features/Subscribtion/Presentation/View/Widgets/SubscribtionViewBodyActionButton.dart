@@ -18,7 +18,7 @@ class SubscribtionViewBodyActionButton extends StatelessWidget {
         isLoading: state,
         child: Custombutton(
           text: "اشترك الان",
-          color: KMainColor,
+          color: KSecondaryColor,
           textColor: Colors.white,
           onPressed: () {
             context

@@ -28,7 +28,7 @@ class Orderitemmodel {
   }
   Map<String, dynamic> toJson() => {
         'name': name,
-        'amount_cents': amountcents,
+        'amount': amountcents,
         'quantity': quantity,
         'description': description,
       };

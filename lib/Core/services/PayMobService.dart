@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/constant.dart';
@@ -26,6 +28,7 @@ class PayMobService {
     required String currency,
     required int integrationId,
     required Map<String, dynamic> billingData,
+    required List<Map<String, dynamic>> items, // List of items>
   }) async {
     try {
       final response = await dio.post(
@@ -33,18 +36,20 @@ class PayMobService {
         data: {
           "amount": amountCents,
           "currency": currency,
+          "items": items,
           "payment_methods": [integrationId],
           "billing_data": billingData,
         },
         options: Options(
           headers: {
-            "Authorization": "Token $PayMobSecretKey", // Secret Key (Test Mode)
+            "Authorization": "Token $PayMobSecretKey",
           },
         ),
       );
 
       return response.data;
     } on DioException catch (e) {
+      log(e.response.toString());
       throw CustomException(
           message: e.response?.data?["message"] ?? "Payment intention error");
     } catch (e) {

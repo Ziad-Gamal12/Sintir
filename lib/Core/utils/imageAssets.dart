@@ -254,6 +254,10 @@ class Assets {
   /// assets/LottieFiles/speakingBot.json
   static const String assetsLottieFilesSpeakingBot = "assets/LottieFiles/speakingBot.json";
 
+  /// Assets for assetsLottieFilesSuccessanimation
+  /// assets/LottieFiles/Successanimation.json
+  static const String assetsLottieFilesSuccessanimation = "assets/LottieFiles/Successanimation.json";
+
   /// Assets for assetsLottieFilesThinkingBot
   /// assets/LottieFiles/thinkingBot.json
   static const String assetsLottieFilesThinkingBot = "assets/LottieFiles/thinkingBot.json";

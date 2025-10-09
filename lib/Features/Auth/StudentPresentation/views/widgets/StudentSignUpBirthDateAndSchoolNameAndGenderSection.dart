@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/widgets/CustomSizedBox.dart';
+import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/CustomStudentSignUP_SchoolLevel.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/StudentGenderSelectionInput.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/StudentSignUp_BirthDayField.dart';
 
@@ -15,9 +15,15 @@ class StudentSignUpBirthDateAndSchoolNameAndGenderSection
       children: [
         Expanded(
           flex: 1,
-          child: StudentsignupBirthdayfield(),
+          child: Column(
+            children: [
+              StudentsignupBirthdayfield(),
+              SizedBox(height: 10),
+              CustomstudentsignupSchoollevel(),
+            ],
+          ),
         ),
-        Customsizedbox(width: 0, height: 10),
+        SizedBox(height: 10),
         StudentGenderSelectionInput()
       ],
     );

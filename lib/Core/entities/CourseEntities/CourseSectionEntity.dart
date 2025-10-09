@@ -8,4 +8,6 @@ class CourseSectionEntity {
       required this.subtitle,
       this.items,
       required this.id});
+  static CourseSectionEntity empty() => CourseSectionEntity(
+      title: "جاري التحميل ...", subtitle: "جاري التحميل ...", id: "    ");
 }

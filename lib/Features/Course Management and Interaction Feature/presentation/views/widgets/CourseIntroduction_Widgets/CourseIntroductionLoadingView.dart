@@ -16,7 +16,7 @@ class CourseIntroductionLoadingView extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(child: CourseIntroductionStaticHeader()),
-            SliverToBoxAdapter(child: SizedBox(height: 10)),
+            SliverToBoxAdapter(child: SizedBox(height: 100)),
             SliverToBoxAdapter(child: CourseIntroductionStaticListViewHeader()),
             SliverToBoxAdapter(child: SizedBox(height: 15)),
             CourseContentListView(courseSectionsEntity: []),

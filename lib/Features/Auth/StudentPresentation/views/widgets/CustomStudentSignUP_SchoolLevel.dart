@@ -2,13 +2,15 @@
 
 import 'package:dropdown_model_list/drop_down/model.dart';
 import 'package:dropdown_model_list/drop_down/search_drop_list.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 
 class CustomstudentsignupSchoollevel extends StatefulWidget {
-  const CustomstudentsignupSchoollevel(
-      {super.key, required this.selectedOption});
-  final ValueChanged<OptionItem> selectedOption;
+  const CustomstudentsignupSchoollevel({
+    super.key,
+  });
   @override
   State<CustomstudentsignupSchoollevel> createState() =>
       CustomstudentsignupSchoollevelState();
@@ -18,7 +20,7 @@ class CustomstudentsignupSchoollevelState
     extends State<CustomstudentsignupSchoollevel> {
   OptionItem? optionItemSelected;
   TextEditingController controller = TextEditingController();
-  var dropListModel = DropListModel([
+  DropListModel dropListModel = DropListModel([
     OptionItem(id: "1", title: "الصف الأول الأبتدائى"),
     OptionItem(id: "2", title: "الصف الثانى الأبتدائى"),
     OptionItem(id: "3", title: "الصف الثالث الأبتدائى"),
@@ -44,27 +46,35 @@ class CustomstudentsignupSchoollevelState
       paddingLeft: 0,
       paddingRight: 0,
       paddingBottom: 0,
+      paddingTop: 0,
       itemSelected: optionItemSelected ?? OptionItem(title: "المرحلة الدراسية"),
       dropListModel: dropListModel,
       showIcon: true,
       showArrowIcon: true,
-      showBorder: true,
+      showBorder: false,
       icon: const Icon(
-        Icons.approval,
+        FontAwesomeIcons.userGraduate,
         color: Colors.grey,
       ),
       textEditingController: controller,
-      paddingTop: 0,
       suffixIcon: Icons.arrow_drop_down,
       containerPadding: const EdgeInsets.all(10),
       onOptionSelected: (optionItem) {
         optionItemSelected = optionItem;
-        widget.selectedOption(optionItemSelected!);
-        if (kDebugMode) {
-          print(optionItemSelected!.id);
-        }
+        context.read<UserEntity>().studentExtraDataEntity?.educationLevel =
+            optionItemSelected?.title ?? "";
         setState(() {});
       },
+      containerDecoration: BoxDecoration(
+        color: Colors.grey.shade50,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      containerDecorationSearch: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      dropboxColor: Colors.grey.shade50,
+      dropboxborderColor: Colors.grey.shade100,
     );
   }
 }

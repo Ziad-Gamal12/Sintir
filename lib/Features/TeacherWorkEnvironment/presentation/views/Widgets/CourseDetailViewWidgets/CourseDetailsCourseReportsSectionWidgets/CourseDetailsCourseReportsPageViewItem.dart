@@ -94,7 +94,9 @@ class _CourseDetailsCourseReportsPageViewItemState
               if (reports.isNotEmpty)
                 CourseDetailsCourseReportsListView(reports: reports)
               else if (state is! CourseReportsGetReportLoading)
-                const CustomEmptyWidget(),
+                CustomEmptyWidget(
+                  text: 'لا يوجد أبلاغات حتى الان',
+                ),
 
               // loader للـ pagination
               if (state is CourseReportsGetReportLoading && reports.isNotEmpty)

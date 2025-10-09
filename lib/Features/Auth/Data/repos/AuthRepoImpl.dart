@@ -14,6 +14,7 @@ import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Auth/Data/models/UserModel.dart';
+import 'package:sintir/Features/Auth/Domain/Entities/StudentExtraDataEntity.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 
@@ -163,20 +164,23 @@ class AuthRepoImpl implements AuthRepo {
           user: user,
           userjson: UserModel.fromEntity(
             UserEntity(
-                uid: user.uid,
-                phoneNumber: user.phoneNumber ?? "",
-                firstName: user.displayName ?? "",
-                fullName: user.displayName ?? "",
-                joinedDate: DateTime.now().toString(),
-                profilePicurl:
-                    "https://cdn-icons-png.flaticon.com/128/149/149071.png",
-                role: BackendEndpoints.studentRole,
-                lastName: "",
-                email: user.email ?? "",
-                status: BackendEndpoints.activeStatus,
-                address: "",
-                gender: "غير محدد",
-                teacherExtraDataEntity: null),
+              uid: user.uid,
+              phoneNumber: user.phoneNumber ?? "",
+              firstName: user.displayName ?? "",
+              fullName: user.displayName ?? "",
+              joinedDate: DateTime.now().toString(),
+              profilePicurl:
+                  "https://cdn-icons-png.flaticon.com/128/149/149071.png",
+              role: BackendEndpoints.studentRole,
+              lastName: "",
+              email: user.email ?? "",
+              status: BackendEndpoints.activeStatus,
+              address: "",
+              gender: "غير محدد",
+              teacherExtraDataEntity: null,
+              studentExtraDataEntity:
+                  StudentExtraDataEntity(birthDate: "", educationLevel: ""),
+            ),
           ).toMap(),
           uid: user.uid,
         );

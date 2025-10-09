@@ -14,6 +14,7 @@ class CourseItemImage extends StatelessWidget {
       ),
       child: SizedBox(
         width: double.infinity,
+        height: double.infinity,
         child: CustomCachedNetworkImage(imageUrl: imageUrl),
       ),
     );

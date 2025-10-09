@@ -16,7 +16,7 @@ class _CourseInfoCardState extends State<CourseInfoCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: const [
@@ -27,6 +27,8 @@ class _CourseInfoCardState extends State<CourseInfoCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const CourseInfoCardCourseDescription(),
+          const SizedBox(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -36,8 +38,6 @@ class _CourseInfoCardState extends State<CourseInfoCard> {
               Expanded(flex: 2, child: CourseActions(widget.requirmentsEntity)),
             ],
           ),
-          const CourseInfoCardCourseDescription(),
-          const SizedBox(height: 10),
         ],
       ),
     );

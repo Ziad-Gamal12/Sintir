@@ -96,7 +96,10 @@ class _CourseDetailsCourseSectionsPageViewItemState
                       course: widget.courseEntity,
                     )
                   else if (state is! GetCourseSectionsLoading)
-                    const SliverToBoxAdapter(child: CustomEmptyWidget()),
+                    SliverToBoxAdapter(
+                        child: CustomEmptyWidget(
+                      text: "لا يوجد محتوى في هذا الدورة",
+                    )),
                 ],
               ),
               CustomAddNewCourseSectionButton(course: widget.courseEntity),

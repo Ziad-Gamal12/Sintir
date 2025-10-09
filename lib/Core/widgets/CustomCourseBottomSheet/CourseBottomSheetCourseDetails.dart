@@ -49,7 +49,7 @@ class CourseBottomSheetCourseDetails extends StatelessWidget {
                           .semiBold20
                           .copyWith(color: Colors.black)),
                   TextSpan(
-                      text: " ${course.price}\$ (شهرى)",
+                      text: " ${course.price} جنيه ",
                       style: AppTextStyles(context)
                           .bold20
                           .copyWith(color: KSecondaryColor))

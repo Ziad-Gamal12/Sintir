@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/PayMobResponse.dart';
 import 'package:sintir/Core/entities/PaymentEntities/BillingDataEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/models/PaymentModels/BillingDataModel.dart';
+import 'package:sintir/Core/models/PaymentModels/OrderItemModel.dart';
 import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
 import 'package:sintir/Core/services/PayMobService.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
@@ -23,15 +26,17 @@ class PaymobRepoImp implements PaymobRepo {
       final billingData =
           Billingdatamodel.fromEntity(entity: getBillingEntity(user: user))
               .toJson();
+      final items = Orderitemmodel.fromCourseEntity(course).toJson();
 
       /// 2. Create Intention
       final response = await payMobService.createPaymentIntention(
         amountCents: course.price * 100,
         currency: "EGP",
-        integrationId: PaymobWalletsIntegrationID, // test ID from Paymob
+        items: [items],
+        integrationId: PaymobWalletsIntegrationID,
         billingData: billingData,
       );
-
+      log(response.toString());
       final clientSecret = response["client_secret"];
       if (clientSecret == null) {
         return left(ServerFailure(message: "لم يتم إنشاء client_secret"));
@@ -39,7 +44,6 @@ class PaymobRepoImp implements PaymobRepo {
 
       final checkoutUrl =
           payMobService.buildCheckoutUrl(clientSecret: clientSecret);
-
       return right(PayMobResponse(
         url: checkoutUrl,
         paymentid: clientSecret,
@@ -54,7 +58,7 @@ class PaymobRepoImp implements PaymobRepo {
     return Billingdataentity(
       apartment: "NA",
       building: "NA",
-      city: "Cairo",
+      city: user.address,
       country: "EG",
       email: user.email,
       floor: "NA",

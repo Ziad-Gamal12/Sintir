@@ -27,8 +27,10 @@ class RecentCoursesSection extends StatelessWidget {
                 courses: state.resonseEntity.courses);
           } else if (state is GetRecentCoursesSuccess &&
               state.resonseEntity.courses.isEmpty) {
-            return const SliverToBoxAdapter(
-              child: CustomEmptyWidget(),
+            return SliverToBoxAdapter(
+              child: CustomEmptyWidget(
+                text: "لا يوجد دورات حديثة",
+              ),
             );
           } else {
             return const SliverToBoxAdapter(

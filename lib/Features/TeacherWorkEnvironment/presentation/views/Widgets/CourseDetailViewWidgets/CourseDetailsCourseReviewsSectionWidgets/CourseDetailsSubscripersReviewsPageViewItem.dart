@@ -90,7 +90,9 @@ class _CourseDetailsSubscribersReviewsPageViewItemState
               if (feedbacks.isNotEmpty)
                 CourseDetailsSubscriberReviewsListView(reviews: feedbacks)
               else if (state is! CourseFeedBacksGetFeedBackLoading)
-                const CustomEmptyWidget(),
+                CustomEmptyWidget(
+                  text: "لا يوجد تعليقات",
+                ),
               if (state is CourseFeedBacksGetFeedBackLoading &&
                   feedbacks.isNotEmpty)
                 const Padding(
