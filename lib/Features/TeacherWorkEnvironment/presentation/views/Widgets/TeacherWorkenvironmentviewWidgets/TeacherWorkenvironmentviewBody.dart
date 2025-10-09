@@ -9,7 +9,6 @@ import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/CustomMyCoursesSliverGrideView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/CustomTeacherCardItem.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/CustomTeacherWalletDetailsSection.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/TeacherWorkenvironmentviewBodyWalletSectionHeader.dart';
 import 'package:sintir/constant.dart';
 
@@ -63,8 +62,6 @@ class _TeacherWorkenvironmentviewBodyState
               height: 10,
             ),
           ),
-          SliverToBoxAdapter(
-              child: CustomTeacherWalletDetailsSection(user: user)),
           const SliverToBoxAdapter(
             child: Divider(
               height: 40,

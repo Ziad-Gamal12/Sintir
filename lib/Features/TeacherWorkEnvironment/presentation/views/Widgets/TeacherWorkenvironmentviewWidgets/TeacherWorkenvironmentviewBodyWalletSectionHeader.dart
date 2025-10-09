@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWalletDetailsView.dart';
 
 class TeacherWorkenvironmentviewBodyWalletSectionHeader
     extends StatelessWidget {
@@ -24,6 +26,13 @@ class TeacherWorkenvironmentviewBodyWalletSectionHeader
           "المحفظة",
           style: AppTextStyles(context).bold20.copyWith(color: Colors.black),
         ),
+        const Spacer(),
+        InkWell(
+            onTap: () {
+              GoRouter.of(context).push(TeacherWalletDetailsView.routeName);
+            },
+            child:
+                Text("عرض التفاصيل", style: AppTextStyles(context).regular16)),
       ],
     );
   }

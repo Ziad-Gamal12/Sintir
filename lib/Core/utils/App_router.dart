@@ -46,6 +46,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Course
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ExamConsequencesView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/FileConsequencesView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ReviewExamSectionView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWalletDetailsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/VideoConsequencesView.dart';
 
@@ -309,6 +310,12 @@ class App_router {
         path: ProfileView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const ProfileView();
+        },
+      ),
+      GoRoute(
+        path: TeacherWalletDetailsView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const TeacherWalletDetailsView();
         },
       ),
     ],

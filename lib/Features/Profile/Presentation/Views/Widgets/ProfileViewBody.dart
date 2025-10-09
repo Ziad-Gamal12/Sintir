@@ -75,13 +75,14 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                   const SizedBox(
                     height: 10,
                   ),
-                   const CustomExpansionWidget(
+                  const CustomExpansionWidget(
                     title: "البيانات الشخصية",
-                       content: UserInfoSectionPersonalDetails(),
+                    content: UserInfoSectionPersonalDetails(),
                   ),
                   const SizedBox(height: 10),
                   WorkEnvironmentNavigationButton(
-                      myCourses: fetchedMyCourses, role: getUserData().role),
+                      myCourses: getTeacherWorkEnvironmentCourses(),
+                      role: getUserData().role),
                   Divider(
                     thickness: 2,
                     height: 40,
@@ -101,5 +102,12 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
         ),
       ),
     );
+  }
+
+  List<CourseEntity> getTeacherWorkEnvironmentCourses() {
+    return fetchedMyCourses
+        .where(
+            (element) => element.contentcreaterentity?.id == getUserData().uid)
+        .toList();
   }
 }
