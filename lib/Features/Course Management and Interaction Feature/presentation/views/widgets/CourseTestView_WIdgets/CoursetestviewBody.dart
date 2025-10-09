@@ -27,14 +27,18 @@ class CoursetestviewBody extends StatefulWidget {
 }
 
 class _CoursetestviewBodyState extends State<CoursetestviewBody> {
-  final stopWatchTimer = StopWatchTimer(mode: StopWatchMode.countDown);
+  late StopWatchTimer stopWatchTimer;
 
   @override
   void initState() {
+    final test =
+        context.read<CourseExamViewNavigationsRequirmentsEntity>().test;
+    stopWatchTimer = StopWatchTimer(
+      mode: StopWatchMode.countDown,
+      presetMillisecond: test.durationTime * 60 * 1000,
+    );
     if (mounted) {
-      intitStateMethod(
-          test:
-              context.read<CourseExamViewNavigationsRequirmentsEntity>().test);
+      intitStateMethod(test: test);
     }
     super.initState();
   }

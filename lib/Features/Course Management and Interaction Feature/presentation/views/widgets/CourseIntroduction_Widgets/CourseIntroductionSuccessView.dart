@@ -47,6 +47,9 @@ class CourseIntroductionSuccessView extends StatelessWidget {
                 )
               else
                 CourseContentListView(courseSectionsEntity: sections),
+              isSubscribed
+                  ? const SliverToBoxAdapter(child: SizedBox())
+                  : const SliverToBoxAdapter(child: SizedBox(height: 100)),
             ],
           ),
         ),
