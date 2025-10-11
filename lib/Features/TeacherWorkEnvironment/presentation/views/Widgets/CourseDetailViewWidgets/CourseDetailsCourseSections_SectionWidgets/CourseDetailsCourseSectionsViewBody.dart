@@ -5,57 +5,69 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
-import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomAddNewCourseSectionButton.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomCourseDetailsBodyCourseSections_LoadingSliverList.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomCourseDetailsBodyCourseSections_SliverList.dart';
-import 'package:skeletonizer/skeletonizer.dart';
+import 'package:sintir/constant.dart';
 
-class CourseDetailsCourseSectionsPageViewItem extends StatefulWidget {
-  const CourseDetailsCourseSectionsPageViewItem({
+class CourseDetailsCourseSectionsViewBody extends StatefulWidget {
+  const CourseDetailsCourseSectionsViewBody({
     super.key,
     required this.courseEntity,
-    required this.scrollController,
   });
 
   final CourseEntity courseEntity;
-  final ScrollController scrollController;
-
   @override
-  State<CourseDetailsCourseSectionsPageViewItem> createState() =>
-      _CourseDetailsCourseSectionsPageViewItemState();
+  State<CourseDetailsCourseSectionsViewBody> createState() =>
+      _CourseDetailsCourseSectionsViewBodyState();
 }
 
-class _CourseDetailsCourseSectionsPageViewItemState
-    extends State<CourseDetailsCourseSectionsPageViewItem> {
+class _CourseDetailsCourseSectionsViewBodyState
+    extends State<CourseDetailsCourseSectionsViewBody>
+    with AutomaticKeepAliveClientMixin {
   List<CourseSectionEntity> courseSections = [];
+  late ScrollController scrollController;
   bool hasMore = true;
+  VoidCallback? _scrollListener;
 
   @override
   void initState() {
     super.initState();
-    if (mounted) {
-      context.read<CourseSectionsCubit>().getCourseSections(
-          isPaginate: false, courseId: widget.courseEntity.id);
+    scrollController = ScrollController();
+    final cubit = context.read<CourseSectionsCubit>();
+    cubit.getCourseSections(
+        isPaginate: false, courseId: widget.courseEntity.id);
 
-      widget.scrollController.addListener(() {
-        final cubit = context.read<CourseSectionsCubit>();
-        if (_shouldFetchMoreSections(cubit)) {
-          cubit.getCourseSections(
-              isPaginate: true, courseId: widget.courseEntity.id);
-        }
-      });
-    }
+    _scrollListener = () {
+      if (!mounted) return;
+      if (_shouldFetchMoreSections(cubit)) {
+        cubit.getCourseSections(
+            isPaginate: true, courseId: widget.courseEntity.id);
+      }
+    };
+
+    scrollController.addListener(_scrollListener!);
   }
 
   bool _shouldFetchMoreSections(CourseSectionsCubit cubit) {
-    return widget.scrollController.position.pixels >=
-            widget.scrollController.position.maxScrollExtent - 200 &&
+    return scrollController.position.pixels >=
+            scrollController.position.maxScrollExtent - 200 &&
         hasMore &&
         cubit.state is! GetCourseSectionsLoading;
   }
 
   @override
+  void dispose() {
+    if (_scrollListener != null) {
+      scrollController.removeListener(_scrollListener!);
+    }
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocConsumer<CourseSectionsCubit, CourseSectionsState>(
       listener: (context, state) {
         if (state is GetCourseSectionsSuccess) {
@@ -77,20 +89,22 @@ class _CourseDetailsCourseSectionsPageViewItemState
             child: CustomErrorWidget(errormessage: state.errMessage),
           );
         }
-        return Skeletonizer(
-          enabled: state is GetCourseSectionsLoading && courseSections.isEmpty,
-          child: Stack(
-            children: [
-              CustomScrollView(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+        return Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: KHorizontalPadding,
+                vertical: KVerticalPadding,
+              ),
+              child: CustomScrollView(
+                controller: scrollController,
                 slivers: [
-                  const SliverToBoxAdapter(child: SizedBox(height: 20)),
-                  SliverToBoxAdapter(
-                    child: CustomListORGridTextHeader(text: "المحتوى"),
-                  ),
-                  const SliverToBoxAdapter(child: SizedBox(height: 10)),
-                  if (courseSections.isNotEmpty)
+                  if (state is GetCourseSectionsLoading &&
+                      courseSections.isEmpty)
+                    CustomCourseDetailsBodyCourseSectionsLoadingSliverList(
+                      course: widget.courseEntity,
+                    )
+                  else if (courseSections.isNotEmpty)
                     CustomCourseDetailsBodyCourseSections_SliverList(
                       courseSections: courseSections,
                       course: widget.courseEntity,
@@ -102,11 +116,14 @@ class _CourseDetailsCourseSectionsPageViewItemState
                     )),
                 ],
               ),
-              CustomAddNewCourseSectionButton(course: widget.courseEntity),
-            ],
-          ),
+            ),
+            CustomAddNewCourseSectionButton(course: widget.courseEntity),
+          ],
         );
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

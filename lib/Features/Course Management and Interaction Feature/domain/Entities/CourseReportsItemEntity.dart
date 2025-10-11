@@ -5,4 +5,9 @@ class CourseReportEntity {
 
   CourseReportEntity(
       {required this.date, required this.type, required this.description});
+  static CourseReportEntity empty() => CourseReportEntity(
+        date: DateTime.now(),
+        type: "",
+        description: "",
+      );
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
+import 'package:sintir/Core/helper/GridHelper.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersGridviewItem.dart';
 
 class CourseDetailsSubscribersGridView extends StatelessWidget {
@@ -9,11 +10,12 @@ class CourseDetailsSubscribersGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          childAspectRatio: 1),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount:
+              GridHelper.getCrossAxisCount(MediaQuery.of(context).size.width),
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20,
+          childAspectRatio: 1 / 1.2),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: subscribers.length,

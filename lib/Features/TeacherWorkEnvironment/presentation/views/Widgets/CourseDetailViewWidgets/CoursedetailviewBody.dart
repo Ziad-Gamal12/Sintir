@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseInfoSectionWidgets/CustomCourseDetailsBodyCourse_Info.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsRowOptionsSectionWidgets/CourseDetailsViewRowOptions.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CustomCourseDetialsPageView.dart';
 import 'package:sintir/constant.dart';
 
 class CourseDetailViewBody extends StatefulWidget {
@@ -15,12 +16,8 @@ class CourseDetailViewBody extends StatefulWidget {
   State<CourseDetailViewBody> createState() => _CourseDetailViewBodyState();
 }
 
-class _CourseDetailViewBodyState extends State<CourseDetailViewBody>
-    with AutomaticKeepAliveClientMixin {
-  late PageController pageController;
+class _CourseDetailViewBodyState extends State<CourseDetailViewBody> {
   late ScrollController scrollController;
-
-  int currentIndex = 0;
 
   @override
   void initState() {
@@ -29,53 +26,51 @@ class _CourseDetailViewBodyState extends State<CourseDetailViewBody>
   }
 
   void _initControllers() {
-    pageController = PageController();
-    pageController.addListener(() {
-      final newIndex = pageController.page?.toInt() ?? 0;
-      if (currentIndex != newIndex) {
-        setState(() {
-          currentIndex = newIndex;
-        });
-      }
-    });
     scrollController = ScrollController();
   }
 
   @override
   void dispose() {
-    pageController.dispose();
     scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
       child: CustomScrollView(
         controller: scrollController,
         slivers: [
           SliverToBoxAdapter(
-            child: CustomCourseDetailsBodyCourse_Info(
+            child: CustomCourseDetailsBodyCourseInfo(
               courseEntity: widget.courseEntity,
             ),
           ),
-          const SliverToBoxAdapter(child: SizedBox(height: 20)),
-          CourseDetailsViewRowOptions(pageController: pageController),
-          SliverFillRemaining(
-            hasScrollBody: true,
-            child: CustomCourseDetialsPageView(
-              pageController: pageController,
-              course: widget.courseEntity,
-              scrollController: scrollController,
-            ),
+          SliverToBoxAdapter(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+              Text(
+                'التقاصيل',
+                style: AppTextStyles(context).bold20,
+              ),
+              const SizedBox(height: 20),
+            ],
+          )),
+          CourseDetailsViewRowOptions(
+            course: widget.courseEntity,
           ),
+          SliverToBoxAdapter(
+            child: Custombutton(
+                text: "حذف",
+                color: Colors.red,
+                textColor: Colors.white,
+                onPressed: () {}),
+          )
         ],
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

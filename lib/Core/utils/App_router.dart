@@ -49,6 +49,10 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Review
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWalletDetailsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/VideoConsequencesView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReportsSectionWidgets/CourseDetailsCourseReportsView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReviewsSectionWidgets/CourseDetailsSubscribersReviewsView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersView.dart';
 
 class App_router {
   static GoRouter router = GoRouter(
@@ -316,6 +320,38 @@ class App_router {
         path: TeacherWalletDetailsView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const TeacherWalletDetailsView();
+        },
+      ),
+      GoRoute(
+        path: CourseDetailsCourseReportsView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return CourseDetailsCourseReportsView(
+            courseId: state.extra as String,
+          );
+        },
+      ),
+      GoRoute(
+        path: CourseDetailsCourseSectionsView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return CourseDetailsCourseSectionsView(
+            courseEntity: state.extra as CourseEntity,
+          );
+        },
+      ),
+      GoRoute(
+        path: CourseDetailsSubscribersView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return CourseDetailsSubscribersView(
+            courseEntity: state.extra as CourseEntity,
+          );
+        },
+      ),
+      GoRoute(
+        path: CourseDetailsSubscribersReviewsView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return CourseDetailsSubscribersReviewsView(
+            courseId: state.extra as String,
+          );
         },
       ),
     ],

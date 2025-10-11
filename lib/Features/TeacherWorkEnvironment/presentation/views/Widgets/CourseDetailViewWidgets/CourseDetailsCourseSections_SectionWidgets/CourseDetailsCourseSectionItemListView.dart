@@ -9,7 +9,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomCourseDetailsSectionListViewFileItem.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomCourseDetailsSectionListViewTestItem.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomCourseDetailsSectionListViewVideoItem.dart';
-import 'package:skeletonizer/skeletonizer.dart';
+import 'package:sintir/constant.dart';
 
 class CourseDetailsCourseSectionItemListView extends StatelessWidget {
   const CourseDetailsCourseSectionItemListView(
@@ -33,20 +33,21 @@ class CourseDetailsCourseSectionItemListView extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Skeletonizer(
-            enabled: state is GetSectionItemsLoading,
-            child: ListView.builder(
-              itemCount: items.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: getChild(items[index], context),
-                );
-              },
-            ),
-          )
+          state is GetSectionItemsLoading
+              ? const CircularProgressIndicator(
+                  color: KMainColor,
+                )
+              : ListView.builder(
+                  itemCount: items.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      child: getChild(items[index], context),
+                    );
+                  },
+                )
         ],
       );
     });

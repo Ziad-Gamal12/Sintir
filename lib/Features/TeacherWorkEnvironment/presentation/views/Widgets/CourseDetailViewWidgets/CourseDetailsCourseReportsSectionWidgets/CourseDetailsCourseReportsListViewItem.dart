@@ -12,8 +12,9 @@ class CourseDetailsCourseReportsListViewItem extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-            color: const Color(0xffF2F2F7),
-            borderRadius: BorderRadius.circular(8)),
+            color: Colors.grey.shade50,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Colors.grey.shade300)),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -30,7 +31,8 @@ class CourseDetailsCourseReportsListViewItem extends StatelessWidget {
                           .copyWith(color: Colors.black),
                     ),
                     TextSpan(
-                      text: " ${report.date}",
+                      text:
+                          " ${report.date.day} / ${report.date.month} / ${report.date.year}",
                       style: AppTextStyles(context)
                           .regular14
                           .copyWith(color: Colors.grey),
@@ -43,7 +45,7 @@ class CourseDetailsCourseReportsListViewItem extends StatelessWidget {
                     TextSpan(
                       text: "النوع:",
                       style: AppTextStyles(context)
-                          .regular14
+                          .bold14
                           .copyWith(color: Colors.black),
                     ),
                     TextSpan(
@@ -62,14 +64,14 @@ class CourseDetailsCourseReportsListViewItem extends StatelessWidget {
                         TextSpan(
                           text: "المحتوى:",
                           style: AppTextStyles(context)
-                              .regular16
+                              .bold14
                               .copyWith(color: Colors.black),
                         ),
                         TextSpan(
                           text: " ${report.description}",
                           style: AppTextStyles(context)
                               .regular14
-                              .copyWith(color: Colors.black),
+                              .copyWith(color: Colors.red.shade700),
                         ),
                       ])),
                 ],

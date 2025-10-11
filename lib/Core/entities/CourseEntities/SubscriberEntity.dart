@@ -12,4 +12,13 @@ class Subscriberentity {
       required this.educationLevel,
       required this.imageUrl,
       required this.address});
+  static Subscriberentity empty() => Subscriberentity(
+        id: 'loading',
+        name: 'loading',
+        gender: 'loading',
+        phone: 'loading',
+        educationLevel: 'loading',
+        imageUrl: 'loading',
+        address: 'loading',
+      );
 }

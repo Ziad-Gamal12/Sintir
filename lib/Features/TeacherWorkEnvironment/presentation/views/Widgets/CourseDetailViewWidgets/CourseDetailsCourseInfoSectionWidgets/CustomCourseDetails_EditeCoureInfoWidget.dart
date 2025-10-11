@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, file_names
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -6,7 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseInfoSectionWidgets/EditCourseInfoSectionHeader.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseInfoSectionWidgets/edit_course_description_field.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseInfoSectionWidgets/edit_course_poster.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseInfoSectionWidgets/edit_course_save_button.dart';
@@ -24,13 +26,8 @@ class EditCourseInfoSection extends StatelessWidget {
         listener: (context, state) {
           if (state is UpdateCourseSuccess) {
             GoRouter.of(context).pop();
-            ShowSnackBar(
-                context: context,
-                child: Text("تم التعديل بنجاح",
-                    style: AppTextStyles(context)
-                        .regular14
-                        .copyWith(color: Colors.white)),
-                backgroundColor: Colors.green);
+            showSuccessSnackBar(
+                context: context, message: "تم تعديل البيانات بنجاح");
           } else if (state is UpdateCourseFailure) {
             ShowErrorSnackBar(context: context, message: state.errmessage);
           } else if (state is UpdateCourseCubitAssetPicked) {
@@ -47,31 +44,7 @@ class EditCourseInfoSection extends StatelessWidget {
               key: formKey,
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      const Spacer(),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      Text(
-                        "تعديل بيانات الدورة",
-                        style: AppTextStyles(context)
-                            .bold20
-                            .copyWith(color: Colors.black),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.close,
-                          color: Colors.red,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  ),
+                  const EditCourseInfoSectionHeader(),
                   const SizedBox(height: 20),
                   const EditCourseTitleField(),
                   const SizedBox(height: 10),

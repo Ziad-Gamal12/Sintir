@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/AddcoursesectionOptionItem.dart';
@@ -21,7 +23,7 @@ class AddCourseSectionContentOptions extends StatelessWidget {
         return Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4),
-            child: InkWell(
+            child: GestureDetector(
               onTap: () {
                 onSave;
                 if (e.key == 1) {

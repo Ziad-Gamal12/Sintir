@@ -31,9 +31,6 @@ class _TimerDisplayState extends State<TimerDisplay> {
 
     _rawTimeStream.listen((rawTime) {
       final remainingSeconds = rawTime / 1000;
-
-      debugPrint('remainingSeconds: $remainingSeconds');
-
       if (remainingSeconds <= 0 && !_resultSent) {
         _resultSent = true;
 
@@ -68,6 +65,13 @@ class _TimerDisplayState extends State<TimerDisplay> {
     } else {
       return KMainColor;
     }
+  }
+
+  @override
+  void dispose() {
+    _rawTimeStream.drain();
+
+    super.dispose();
   }
 
   @override

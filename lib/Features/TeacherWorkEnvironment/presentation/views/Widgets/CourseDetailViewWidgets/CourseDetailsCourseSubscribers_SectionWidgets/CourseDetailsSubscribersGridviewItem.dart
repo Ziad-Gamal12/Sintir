@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Core/widgets/CustomCachedNetworkImage.dart';
 
 class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
   const CourseDetailsSubscribersGridviewItem(
@@ -12,8 +12,17 @@ class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade100,
+            blurRadius: 7,
+            spreadRadius: 1,
+            offset: const Offset(0, 3),
+          ),
+        ],
+        border: Border.all(color: Colors.grey.shade300, width: .5),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -21,18 +30,11 @@ class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
         children: [
           SizedBox(
             width: 80,
+            height: 80,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(80),
-              child: CachedNetworkImage(
+              child: CustomCachedNetworkImage(
                 imageUrl: subscriberentity.imageUrl,
-                errorWidget: (context, url, error) {
-                  return const Icon(
-                    Icons.person,
-                    size: 80,
-                  );
-                },
-                height: 80,
-                width: 80,
                 fit: BoxFit.cover,
               ),
             ),
@@ -40,39 +42,76 @@ class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Text.rich(
-            TextSpan(children: [
-              TextSpan(
-                  text: subscriberentity.name,
-                  style: AppTextStyles(context)
-                      .bold20
-                      .copyWith(color: Colors.black)),
-              const TextSpan(
-                text: " ",
-              ),
-              TextSpan(
-                  text: "(${subscriberentity.gender})",
-                  style: AppTextStyles(context)
-                      .regular10
-                      .copyWith(color: const Color(0xff818181)))
-            ]),
-            textAlign: TextAlign.center,
-          ),
           Text(
-            subscriberentity.educationLevel,
-            style: AppTextStyles(context)
-                .semiBold16
-                .copyWith(color: const Color(0xff818181)),
+            subscriberentity.name,
+            style: AppTextStyles(context).semiBold20,
           ),
-          Expanded(
-            child: SizedBox(
-              child: Text(
-                "ID:${subscriberentity.id}",
-                style: AppTextStyles(context)
-                    .regular13
-                    .copyWith(color: const Color(0xff818181)),
+          const Spacer(),
+          Row(
+            children: [
+              const Icon(
+                Icons.phone,
+                color: Colors.black,
               ),
-            ),
+              const SizedBox(
+                width: 5,
+              ),
+              Expanded(
+                child: Text(
+                  subscriberentity.phone,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles(context)
+                      .regular16
+                      .copyWith(color: Colors.black),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Row(
+            children: [
+              const Icon(
+                Icons.school_rounded,
+                color: Colors.black,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Expanded(
+                child: Text(
+                  subscriberentity.educationLevel,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles(context)
+                      .regular16
+                      .copyWith(color: Colors.black),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Row(
+            children: [
+              const Icon(
+                Icons.location_on,
+                color: Colors.black,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Expanded(
+                child: Text(
+                  subscriberentity.address,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles(context)
+                      .regular16
+                      .copyWith(color: Colors.black),
+                ),
+              ),
+            ],
           ),
         ],
       ),

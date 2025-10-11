@@ -13,7 +13,12 @@ class Addcoursesectioncontentitem extends StatelessWidget {
         CircleAvatar(
           radius: 35,
           backgroundColor: const Color(0xffF3F2F7),
-          child: SvgPicture.asset(item.icon),
+          child: SvgPicture.asset(
+            item.icon,
+            color: Colors.black,
+            height: 25,
+            width: 25,
+          ),
         ),
         const SizedBox(
           height: 10,

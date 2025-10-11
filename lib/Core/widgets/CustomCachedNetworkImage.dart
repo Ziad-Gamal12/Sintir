@@ -17,13 +17,14 @@ class CustomCachedNetworkImage extends StatelessWidget {
       imageUrl: imageUrl,
       placeholder: (context, url) {
         return const Skeletonizer(
+            enabled: true,
             child: SizedBox(
-          height: double.infinity,
-          width: double.infinity,
-        ));
+              height: double.infinity,
+              width: double.infinity,
+            ));
       },
       errorWidget: (context, url, error) {
-        return const Icon(Icons.error);
+        return const Icon(Icons.error, color: Colors.red, size: 30);
       },
       fit: fit ?? BoxFit.cover,
     );

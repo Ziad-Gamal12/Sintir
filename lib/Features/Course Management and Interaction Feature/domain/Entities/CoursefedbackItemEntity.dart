@@ -10,4 +10,11 @@ class CoursefeedbackItemEntity {
       required this.fedBack,
       required this.likesCount,
       required this.datePosted});
+  static CoursefeedbackItemEntity empty() => CoursefeedbackItemEntity(
+      userImage: "https://cdn-icons-png.flaticon.com/128/6356/6356630.png",
+      name: "loading",
+      uid: "loading",
+      fedBack: "loading",
+      likesCount: 0,
+      datePosted: DateTime.now());
 }
