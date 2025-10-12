@@ -26,6 +26,7 @@ class BackendEndpoints {
   static String updateCourseSectionCollection = "Courses";
   static String reportsSubCollection = "Reports";
   static String feedBacksSubCollection = "Feedbacks";
+  static String couponsSubCollection = "Coupons";
   static String sectionsSubCollection = "Sections";
   static String subscribersSubCollection = "Subscribers";
   static String getCourseSectionsSubCollection = "Sections";

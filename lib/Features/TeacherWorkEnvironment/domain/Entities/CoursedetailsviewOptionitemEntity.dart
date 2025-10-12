@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseDetailsCouponsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReportsSectionWidgets/CourseDetailsCourseReportsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReviewsSectionWidgets/CourseDetailsSubscribersReviewsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
@@ -51,6 +52,15 @@ class CoursedetailsviewOptionitemEntity {
           },
           title: "أراء الطلاب",
           image: Assets.assetsIconsFeedback),
+      CoursedetailsviewOptionitemEntity(
+          description:
+              "استعرض كوبونات الكورس وفعّل الخصومات الخاصة بالطلاب بسهولة.",
+          onTap: () {
+            GoRouter.of(context)
+                .push(CourseDetailsCouponsView.routeName, extra: course.id);
+          },
+          title: "الخصومات",
+          image: Assets.assetsIconsCoupon),
       CoursedetailsviewOptionitemEntity(
           description:
               "راقب أداء الكورس من خلال تقارير مفصلة توضح التقدم والتفاعل والنتائج.",

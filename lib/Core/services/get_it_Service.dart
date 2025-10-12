@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepoImpli.dart';
+import 'package:sintir/Core/repos/CourseCouponsRepo/CourseCouponsRepo.dart';
+import 'package:sintir/Core/repos/CourseCouponsRepo/CourseCouponsRepoImp.dart';
 import 'package:sintir/Core/repos/CourseFeedBacksRepo/CourseFeedBacksRepo.dart';
 import 'package:sintir/Core/repos/CourseFeedBacksRepo/CourseFeedBacksRepoImpli.dart';
 import 'package:sintir/Core/repos/CourseReportsRepo/CourseReportsRepo.dart';
@@ -91,4 +93,7 @@ void setup_Getit() {
       CourseFeedBacksRepoImpli(databaseservice: getIt<Databaseservice>()));
   getIt.registerSingleton<PaymobRepo>(
       PaymobRepoImp(payMobService: PayMobService()));
+
+  getIt.registerSingleton<CourseCouponsRepo>(
+      CourseCouponsRepoImp(databaseservice: getIt<Databaseservice>()));
 }

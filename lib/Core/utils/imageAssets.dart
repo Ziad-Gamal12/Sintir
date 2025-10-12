@@ -42,6 +42,10 @@ class Assets {
   /// assets/Icons/content-management.png
   static const String assetsIconsContentManagement = "assets/Icons/content-management.png";
 
+  /// Assets for assetsIconsCoupon
+  /// assets/Icons/Coupon.png
+  static const String assetsIconsCoupon = "assets/Icons/Coupon.png";
+
   /// Assets for assetsIconsDrawerMycourses
   /// assets/Icons/drawer-mycourses.png
   static const String assetsIconsDrawerMycourses = "assets/Icons/drawer-mycourses.png";

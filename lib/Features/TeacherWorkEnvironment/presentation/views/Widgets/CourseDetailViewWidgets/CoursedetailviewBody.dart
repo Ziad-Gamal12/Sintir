@@ -38,7 +38,8 @@ class _CourseDetailViewBodyState extends State<CourseDetailViewBody> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+      padding: const EdgeInsets.symmetric(
+          horizontal: KHorizontalPadding, vertical: KVerticalPadding),
       child: CustomScrollView(
         controller: scrollController,
         slivers: [
