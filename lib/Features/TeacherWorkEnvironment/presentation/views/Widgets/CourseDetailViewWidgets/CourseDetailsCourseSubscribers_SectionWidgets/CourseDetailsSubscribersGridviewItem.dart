@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Core/widgets/CustomCachedNetworkImage.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersGridviewItemAddress.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersGridviewItemAvatar.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersGridviewItemPhoneNumber.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersGridviewItemSchoolLevel.dart';
 
 class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
   const CourseDetailsSubscribersGridviewItem(
@@ -28,17 +31,8 @@ class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            width: 80,
-            height: 80,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(80),
-              child: CustomCachedNetworkImage(
-                imageUrl: subscriberentity.imageUrl,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+          CourseDetailsSubscribersGridviewItemAvatar(
+              imageUrl: subscriberentity.imageUrl),
           const SizedBox(
             height: 10,
           ),
@@ -47,72 +41,18 @@ class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
             style: AppTextStyles(context).semiBold20,
           ),
           const Spacer(),
-          Row(
-            children: [
-              const Icon(
-                Icons.phone,
-                color: Colors.black,
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Expanded(
-                child: Text(
-                  subscriberentity.phone,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles(context)
-                      .regular16
-                      .copyWith(color: Colors.black),
-                ),
-              ),
-            ],
-          ),
+          CourseDetailsSubscribersGridviewItemPhoneNumber(
+              phone: subscriberentity.phone),
           const SizedBox(
             height: 5,
           ),
-          Row(
-            children: [
-              const Icon(
-                Icons.school_rounded,
-                color: Colors.black,
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Expanded(
-                child: Text(
-                  subscriberentity.educationLevel,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles(context)
-                      .regular16
-                      .copyWith(color: Colors.black),
-                ),
-              ),
-            ],
-          ),
+          CourseDetailsSubscribersGridviewItemSchoolLevel(
+              schoolLevel: subscriberentity.educationLevel),
           const SizedBox(
             height: 5,
           ),
-          Row(
-            children: [
-              const Icon(
-                Icons.location_on,
-                color: Colors.black,
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Expanded(
-                child: Text(
-                  subscriberentity.address,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles(context)
-                      .regular16
-                      .copyWith(color: Colors.black),
-                ),
-              ),
-            ],
-          ),
+          CourseDetailsSubscribersGridviewItemAddress(
+              address: subscriberentity.address),
         ],
       ),
     );
