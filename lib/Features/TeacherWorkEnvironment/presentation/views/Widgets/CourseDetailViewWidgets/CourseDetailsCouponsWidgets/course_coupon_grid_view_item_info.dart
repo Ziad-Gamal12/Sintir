@@ -5,8 +5,10 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/course_coupon_grid_view_item_expiry.dart';
 
 class CourseCouponGridViewItemInfo extends StatelessWidget {
-  const CourseCouponGridViewItemInfo({super.key, required this.couponEntity});
+  const CourseCouponGridViewItemInfo(
+      {super.key, required this.couponEntity, required this.courseId});
   final CourseCouponEntity couponEntity;
+  final String courseId;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,8 @@ class CourseCouponGridViewItemInfo extends StatelessWidget {
         const SizedBox(height: 10),
         CourseCouponGridViewItemCode(couponEntity: couponEntity),
         const Spacer(),
-        CourseCouponGridViewItemExpiry(couponEntity: couponEntity),
+        CourseCouponGridViewItemExpiry(
+            couponEntity: couponEntity, courseId: courseId),
       ],
     );
   }

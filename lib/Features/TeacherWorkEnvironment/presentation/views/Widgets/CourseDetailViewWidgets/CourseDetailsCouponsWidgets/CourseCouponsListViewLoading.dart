@@ -23,6 +23,7 @@ class CourseCouponsListViewLoading extends StatelessWidget {
                     vertical: 10,
                   ),
                   child: CourseCouponGridViewItem(
+                      courseId: "",
                       couponEntity: getFakeLoadingCoupons()[index]),
                 ),
               ));

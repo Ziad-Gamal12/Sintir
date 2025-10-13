@@ -20,7 +20,7 @@ class CourseDetailsCourseSectionsView extends StatelessWidget {
       create: (context) => CourseSectionsCubit(
           getIt<CourseSectionsRepo>(), getIt<Assetspickerrepo>()),
       child: Scaffold(
-        key: Variables.courseDeatilsViewScaffoldKey,
+        key: Variables.courseSectionsViewScaffoldKey,
         appBar: const CustomAppBar(appBartitle: "المحتوى"),
         body: CourseDetailsCourseSectionsViewBody(
           courseEntity: courseEntity,

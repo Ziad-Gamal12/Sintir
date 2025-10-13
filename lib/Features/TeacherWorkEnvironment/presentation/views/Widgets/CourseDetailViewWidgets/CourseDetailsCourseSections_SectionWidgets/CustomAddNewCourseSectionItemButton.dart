@@ -28,7 +28,7 @@ class CustomAddNewCourseSectionItemButton extends StatelessWidget {
                 child: CustomAddNewSectionItemBottomSheetChild(
                     section: section, courseId: courseId),
               ),
-              scaffoldKey: Variables.courseDeatilsViewScaffoldKey);
+              scaffoldKey: Variables.courseSectionsViewScaffoldKey);
         });
   }
 }

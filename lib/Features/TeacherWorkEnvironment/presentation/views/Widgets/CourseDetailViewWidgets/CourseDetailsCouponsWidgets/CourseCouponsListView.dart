@@ -5,9 +5,13 @@ import 'package:sintir/constant.dart';
 
 class CourseCouponsListView extends StatelessWidget {
   const CourseCouponsListView(
-      {super.key, required this.coupons, required this.scrollController});
+      {super.key,
+      required this.coupons,
+      required this.scrollController,
+      required this.courseId});
   final List<CourseCouponEntity> coupons;
   final ScrollController scrollController;
+  final String courseId;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -22,7 +26,8 @@ class CourseCouponsListView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(
                 vertical: 10,
               ),
-              child: CourseCouponGridViewItem(couponEntity: coupons[index]),
+              child: CourseCouponGridViewItem(
+                  couponEntity: coupons[index], courseId: courseId),
             ),
           );
         });

@@ -47,7 +47,7 @@ class _StudentsignupBirthdayfieldState
         child: ListTile(
           title: Text(
             pickedDate == null
-                ? "تاريخ الميلاد"
+                ? "تاريخ الأنتهاء"
                 : "${pickedDate!.day}/${pickedDate!.month}/${pickedDate!.year}",
             style: AppTextStyles(context).bold14.copyWith(
                 color: pickedDate == null

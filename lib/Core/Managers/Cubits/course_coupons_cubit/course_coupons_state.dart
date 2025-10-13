@@ -28,7 +28,10 @@ final class AddCourseCouponFailure extends CourseCouponsState {
 
 final class DeleteCourseCouponLoading extends CourseCouponsState {}
 
-final class DeleteCourseCouponSuccess extends CourseCouponsState {}
+final class DeleteCourseCouponSuccess extends CourseCouponsState {
+  final String couponId;
+  DeleteCourseCouponSuccess({required this.couponId});
+}
 
 final class DeleteCourseCouponFailure extends CourseCouponsState {
   final String errmessage;

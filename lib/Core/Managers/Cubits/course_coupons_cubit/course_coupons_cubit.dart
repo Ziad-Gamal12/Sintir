@@ -39,7 +39,9 @@ class CourseCouponsCubit extends Cubit<CourseCouponsState> {
     result.fold(
         (failure) =>
             emit(DeleteCourseCouponFailure(errmessage: failure.message)),
-        (success) => emit(DeleteCourseCouponSuccess()));
+        (success) => emit(DeleteCourseCouponSuccess(
+              couponId: couponID,
+            )));
   }
 
   Future<void> updateCourseCoupon(

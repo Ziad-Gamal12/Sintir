@@ -1,11 +1,11 @@
 // ignore_for_file: file_names
 
 class CourseCouponEntity {
-  final String code;
-  final double discountPercentage;
-  final DateTime expiryDate;
+  String code;
+  double discountPercentage;
+  DateTime expiryDate;
   bool isActive;
-  final int usageLimit;
+  int usageLimit;
   final int usedCount;
 
   CourseCouponEntity({

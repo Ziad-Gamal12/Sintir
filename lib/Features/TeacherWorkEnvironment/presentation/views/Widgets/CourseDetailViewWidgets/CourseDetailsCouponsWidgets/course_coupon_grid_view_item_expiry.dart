@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sintir/Core/Managers/Cubits/course_coupons_cubit/course_coupons_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 
 class CourseCouponGridViewItemExpiry extends StatelessWidget {
-  const CourseCouponGridViewItemExpiry({super.key, required this.couponEntity});
+  const CourseCouponGridViewItemExpiry(
+      {super.key, required this.couponEntity, required this.courseId});
   final CourseCouponEntity couponEntity;
+  final String courseId;
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +22,28 @@ class CourseCouponGridViewItemExpiry extends StatelessWidget {
           style: AppTextStyles(context).regular14.copyWith(color: Colors.black),
           overflow: TextOverflow.ellipsis,
         ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            FontAwesomeIcons.trash,
-            color: Colors.red,
-            size: 20,
-          ),
+        BlocSelector<CourseCouponsCubit, CourseCouponsState, bool>(
+          selector: (state) {
+            return state is DeleteCourseCouponLoading;
+          },
+          builder: (context, state) {
+            if (state) {
+              return const CircularProgressIndicator(
+                color: Colors.red,
+              );
+            }
+            return IconButton(
+              onPressed: () {
+                context.read<CourseCouponsCubit>().deleteCourseCoupon(
+                    couponID: couponEntity.code, courseID: courseId);
+              },
+              icon: const Icon(
+                FontAwesomeIcons.trash,
+                color: Colors.red,
+                size: 20,
+              ),
+            );
+          },
         ),
       ],
     );

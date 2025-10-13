@@ -5,7 +5,7 @@ import 'package:sintir/Core/repos/CourseCouponsRepo/CourseCouponsRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseDetailsCouponsViewBody.dart';
-import 'package:sintir/constant.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseDetailsCouponsViewFloatingButton.dart';
 
 class CourseDetailsCouponsView extends StatelessWidget {
   const CourseDetailsCouponsView({super.key, required this.courseId});
@@ -21,15 +21,8 @@ class CourseDetailsCouponsView extends StatelessWidget {
         appBar: const CustomAppBar(appBartitle: "الخصومات"),
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: KMainColor,
-          child: const Icon(
-            Icons.add,
-            color: Colors.white,
-            size: 30,
-          ),
-          onPressed: () {},
-        ),
+        floatingActionButton:
+            CourseDetailsCouponsViewFloatingButton(courseId: courseId),
         body: CourseDetailsCouponsViewBody(
           courseId: courseId,
         ),

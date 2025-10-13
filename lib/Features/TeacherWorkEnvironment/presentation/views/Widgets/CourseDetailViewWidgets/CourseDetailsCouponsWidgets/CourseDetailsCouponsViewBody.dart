@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/course_coupons_cubit/course_coupons_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
+import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseCouponsListView.dart';
@@ -65,6 +66,13 @@ class _CourseDetailsCouponsViewBodyState
             });
           }
           hasMore = state.response.hasMore;
+        } else if (state is DeleteCourseCouponSuccess) {
+          coupons.removeWhere((element) => element.code == state.couponId);
+          showSuccessSnackBar(
+              context: context, message: "تم حذف الكوبون بنجاح");
+          setState(() {});
+        } else if (state is DeleteCourseCouponFailure) {
+          ShowErrorSnackBar(context: context, message: state.errmessage);
         }
       },
       builder: (context, state) {
@@ -76,7 +84,9 @@ class _CourseDetailsCouponsViewBodyState
           return const CourseCouponsListViewLoading();
         } else if (coupons.isNotEmpty) {
           return CourseCouponsListView(
-              scrollController: scrollController, coupons: coupons);
+              courseId: widget.courseId,
+              scrollController: scrollController,
+              coupons: coupons);
         } else if (state is! GetCourseCouponsLoading) {
           return CustomEmptyWidget(
             text: 'لا يوجد كوبونات حتى الان',
