@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/PayMobResponse.dart';
@@ -20,23 +18,25 @@ class PaymobRepoImp implements PaymobRepo {
   Future<Either<Failure, PayMobResponse>> payWithWallet({
     required UserEntity user,
     required CourseEntity course,
+    required double amount,
   }) async {
     try {
       /// 1. Build Billing Data
       final billingData =
           Billingdatamodel.fromEntity(entity: getBillingEntity(user: user))
               .toJson();
-      final items = Orderitemmodel.fromCourseEntity(course).toJson();
+      final items =
+          Orderitemmodel.fromCourseEntity(course, amount.toInt()).toJson();
 
       /// 2. Create Intention
       final response = await payMobService.createPaymentIntention(
-        amountCents: course.price * 100,
+        amountCents: (amount.toInt() * 100).toInt(),
         currency: "EGP",
         items: [items],
         integrationId: PaymobWalletsIntegrationID,
         billingData: billingData,
       );
-      log(response.toString());
+
       final clientSecret = response["client_secret"];
       if (clientSecret == null) {
         return left(ServerFailure(message: "لم يتم إنشاء client_secret"));
@@ -47,6 +47,7 @@ class PaymobRepoImp implements PaymobRepo {
       return right(PayMobResponse(
         url: checkoutUrl,
         paymentid: clientSecret,
+        amount: amount,
       ));
     } catch (e) {
       return left(ServerFailure(message: "حدث خطأ ما أثناء عملية الدفع"));

@@ -46,3 +46,26 @@ final class UpdateCourseCouponFailure extends CourseCouponsState {
   final String errmessage;
   UpdateCourseCouponFailure({required this.errmessage});
 }
+
+//is CouponExist
+final class IsCouponExistLoading extends CourseCouponsState {}
+
+final class IsCouponExistSuccess extends CourseCouponsState {
+  final CourseCouponEntity coupon;
+  IsCouponExistSuccess({required this.coupon});
+}
+
+final class IsCouponExistFailure extends CourseCouponsState {
+  final String errmessage;
+  IsCouponExistFailure({required this.errmessage});
+}
+// use Coupon
+
+final class UseCouponLoading extends CourseCouponsState {}
+
+final class UseCouponSuccess extends CourseCouponsState {}
+
+final class UseCouponFailure extends CourseCouponsState {
+  final String errmessage;
+  UseCouponFailure({required this.errmessage});
+}

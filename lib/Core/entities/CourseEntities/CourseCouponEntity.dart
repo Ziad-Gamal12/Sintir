@@ -6,7 +6,7 @@ class CourseCouponEntity {
   DateTime expiryDate;
   bool isActive;
   int usageLimit;
-  final int usedCount;
+  int usedCount;
 
   CourseCouponEntity({
     required this.code,

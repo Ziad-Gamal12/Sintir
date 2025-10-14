@@ -54,4 +54,24 @@ class CourseCouponsCubit extends Cubit<CourseCouponsState> {
             emit(UpdateCourseCouponFailure(errmessage: failure.message)),
         (success) => emit(UpdateCourseCouponSuccess()));
   }
+
+  Future<void> useCoupon(
+      {required CourseCouponEntity coupon, required String courseID}) async {
+    emit(UseCouponLoading());
+    final result =
+        await courseCouponsRepo.useCoupon(coupon: coupon, courseID: courseID);
+    result.fold(
+        (failure) => emit(UseCouponFailure(errmessage: failure.message)),
+        (success) => emit(UseCouponSuccess()));
+  }
+
+  Future<void> isCouponExists(
+      {required String couponCode, required String courseID}) async {
+    emit(IsCouponExistLoading());
+    final result = await courseCouponsRepo.isCouponExists(
+        couponCode: couponCode, courseID: courseID);
+    result.fold(
+        (failure) => emit(IsCouponExistFailure(errmessage: failure.message)),
+        (success) => emit(IsCouponExistSuccess(coupon: success)));
+  }
 }

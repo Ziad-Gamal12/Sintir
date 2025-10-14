@@ -18,10 +18,10 @@ class Orderitemmodel {
       description: json['description'],
     );
   }
-  factory Orderitemmodel.fromCourseEntity(CourseEntity entity) {
+  factory Orderitemmodel.fromCourseEntity(CourseEntity entity, int amount) {
     return Orderitemmodel(
       name: entity.title,
-      amountcents: (entity.price * 100).toString(),
+      amountcents: (amount * 100).toString(),
       quantity: "1",
       description: entity.description,
     );

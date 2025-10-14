@@ -16,7 +16,7 @@ class Custommycoursesslivergrideview extends StatelessWidget {
             childAspectRatio: 155 / 198,
             crossAxisCount: 2,
             mainAxisSpacing: 10,
-            crossAxisSpacing: 40),
+            crossAxisSpacing: 10),
         itemBuilder: (context, index) {
           return CustomCourseItem(
             ontap: () {

@@ -29,7 +29,8 @@ class CourseCouponGridViewItem extends StatelessWidget {
       ),
       child: Column(
         children: [
-          CourseCouponGridViewItemHeader(couponEntity: couponEntity),
+          CourseCouponGridViewItemHeader(
+              courseID: courseId, couponEntity: couponEntity),
           Expanded(
               flex: 4,
               child: CourseCouponGridViewItemInfo(

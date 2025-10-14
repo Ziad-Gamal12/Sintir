@@ -22,10 +22,15 @@ class CourseSubscribtionsCubit extends Cubit<CourseSubscribtionsState> {
   final CourseEntity course;
 
   void subscribeToCourse(
-      {required UserEntity userEntity, required String transactionId}) async {
+      {required UserEntity userEntity,
+      required String transactionId,
+      required double amount}) async {
     emit(SubscibeingToCourseLoading());
     var result = await subscribtionRepo.subscribeToCourse(
-        transactionId: transactionId, course: course, userEntity: userEntity);
+        amount: amount,
+        transactionId: transactionId,
+        course: course,
+        userEntity: userEntity);
     result.fold((failure) {
       emit(SubscibeingToCourseFailure(errMessge: failure.message));
     }, (message) {
@@ -33,10 +38,13 @@ class CourseSubscribtionsCubit extends Cubit<CourseSubscribtionsState> {
     });
   }
 
-  Future<void> payWithWallet({required UserEntity userEntity}) async {
+  Future<void> payWithWallet({
+    required UserEntity userEntity,
+    required double amount,
+  }) async {
     emit(PayWithWalletLoading());
-    var result =
-        await paymobRepo.payWithWallet(user: userEntity, course: course);
+    var result = await paymobRepo.payWithWallet(
+        user: userEntity, course: course, amount: amount);
     result.fold((failure) {
       emit(PayWithWalletFailure(errMessage: failure.message));
     }, (response) {

@@ -8,9 +8,11 @@ class CourseCouponGridViewItemHeader extends StatelessWidget {
   const CourseCouponGridViewItemHeader({
     super.key,
     required this.couponEntity,
+    required this.courseID,
   });
 
   final CourseCouponEntity couponEntity;
+  final String courseID;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,8 @@ class CourseCouponGridViewItemHeader extends StatelessWidget {
                 .semiBold24
                 .copyWith(color: Colors.black)),
         const Spacer(),
-        CourseCouponGridViewItemHeaderSwitcher(couponEntity: couponEntity),
+        CourseCouponGridViewItemHeaderSwitcher(
+            courseID: courseID, couponEntity: couponEntity),
       ],
     );
   }

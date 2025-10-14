@@ -9,6 +9,7 @@ import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 abstract class CourseSubscibtionsRepo {
   Future<Either<Failure, void>> subscribeToCourse(
       {required CourseEntity course,
+      required double amount,
       required UserEntity userEntity,
       required String transactionId});
   Future<Either<Failure, bool>> checkIfSubscribed(

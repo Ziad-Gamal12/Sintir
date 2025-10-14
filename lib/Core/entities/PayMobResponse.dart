@@ -1,4 +1,6 @@
 class PayMobResponse {
   String url, paymentid;
-  PayMobResponse({required this.url, required this.paymentid});
+  double amount;
+  PayMobResponse(
+      {required this.url, required this.paymentid, required this.amount});
 }

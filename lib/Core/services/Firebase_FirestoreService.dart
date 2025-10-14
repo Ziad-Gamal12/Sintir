@@ -224,7 +224,6 @@ class FirebaseFirestoreservice implements Databaseservice {
       Query<Map<String, dynamic>> queryData =
           _applyQueryOptions(currentCollection, query);
       final querySnapshot = await queryData.get();
-
       return FireStoreResponse(
         hasMore: querySnapshot.docs.length == query?["limit"],
         lastDocumentSnapshot:

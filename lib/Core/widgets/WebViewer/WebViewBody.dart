@@ -33,6 +33,7 @@ class _WebviewbodyState extends State<Webviewbody> {
             if (url.contains("success=true") && !handledSuccess) {
               handledSuccess = true; // قفلنا العلم
               context.read<CourseSubscribtionsCubit>().subscribeToCourse(
+                    amount: widget.response.amount,
                     userEntity: getUserData(),
                     transactionId: widget.response.paymentid,
                   );

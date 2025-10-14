@@ -22,4 +22,12 @@ abstract class CourseCouponsRepo {
     required String courseID,
     required CourseCouponEntity coupon,
   });
+  Future<Either<Failure,CourseCouponEntity >> isCouponExists({
+    required String couponCode,
+    required String courseID,
+  });
+  Future<Either<Failure, void>> useCoupon({
+    required CourseCouponEntity coupon,
+    required String courseID,
+  });
 }

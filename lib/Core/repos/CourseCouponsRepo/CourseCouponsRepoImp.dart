@@ -39,6 +39,7 @@ class CourseCouponsRepoImp implements CourseCouponsRepo {
           collection: BackendEndpoints.coursesCollection,
           docId: courseID,
           subCollection: BackendEndpoints.couponsSubCollection,
+          subDocId: coupon.code,
         ),
       );
       return right(null);
@@ -151,6 +152,45 @@ class CourseCouponsRepoImp implements CourseCouponsRepo {
     } catch (e, s) {
       log(e.toString(), stackTrace: s);
       return left(ServerFailure(message: "حدث خطأ أثناء جلب الكوبونات"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, CourseCouponEntity>> isCouponExists(
+      {required String couponCode, required String courseID}) async {
+    try {
+      final response = await databaseservice.getData(
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.coursesCollection,
+          docId: courseID,
+          subCollection: BackendEndpoints.couponsSubCollection,
+          subDocId: couponCode,
+        ),
+      );
+      if (response.docData != null) {
+        return right(CourseCouponModel.fromJson(response.docData!).toEntity());
+      } else {
+        return left(ServerFailure(message: "الكوبون غير موجود"));
+      }
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: "حدث خطاء"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> useCoupon(
+      {required CourseCouponEntity coupon, required String courseID}) async {
+    try {
+      coupon.usageLimit -= 1;
+      coupon.usedCount += 1;
+      return updateCourseCoupon(courseID: courseID, coupon: coupon);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e, s) {
+      log(e.toString(), stackTrace: s);
+      return left(ServerFailure(message: "حدث خطاء"));
     }
   }
 }

@@ -5,6 +5,9 @@ import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 
 abstract class PaymobRepo {
-  Future<Either<Failure, PayMobResponse>> payWithWallet(
-      {required UserEntity user, required CourseEntity course});
+  Future<Either<Failure, PayMobResponse>> payWithWallet({
+    required UserEntity user,
+    required CourseEntity course,
+    required double amount,
+  });
 }

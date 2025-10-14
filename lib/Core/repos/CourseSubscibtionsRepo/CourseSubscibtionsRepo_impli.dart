@@ -29,11 +29,11 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
   /// 3. Update course subscriber count.
   /// 4. Update teacher wallet (balance, transactionId, lastUpdated).
   @override
-  Future<Either<Failure, void>> subscribeToCourse({
-    required CourseEntity course,
-    required UserEntity userEntity,
-    required String transactionId,
-  }) async {
+  Future<Either<Failure, void>> subscribeToCourse(
+      {required CourseEntity course,
+      required UserEntity userEntity,
+      required String transactionId,
+      required double amount}) async {
     try {
       final subscriber = _buildSubscriberEntity(userEntity);
 
@@ -44,7 +44,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
         _updateCourseSubscriberCount(courseId: course.id),
         _updateTeacherWalletBatch(
           teacherId: course.contentcreaterentity?.id ?? "",
-          amount: course.price.toDouble(),
+          amount: amount,
           transactionId: transactionId,
         ),
       ]);
