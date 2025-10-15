@@ -9,24 +9,30 @@ class TestStatsInfo extends StatelessWidget {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildStatColumn("عدد الطلاب الكلى:", "100", context),
+            Expanded(
+                child: _buildStatColumn("عدد الطلاب الكلى:", "100", context)),
             verticalDivider(),
-            _buildStatColumn("عدد الطلاب الحاضرين:", "80", context),
+            Expanded(
+                child: _buildStatColumn("عدد الطلاب الحاضرين:", "80", context)),
           ],
         ),
         horizontalDivider(),
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildStatColumn("عدد الطلاب النجاح:", "60", context,
-                color: Colors.green),
+            Expanded(
+              child: _buildStatColumn("عدد الطلاب النجاح:", "60", context,
+                  color: Colors.green),
+            ),
             verticalDivider(),
-            _buildStatColumn("عدد الطلاب الرسوب:", "40", context,
-                color: Colors.red),
+            Expanded(
+              child: _buildStatColumn("عدد الطلاب الرسوب:", "40", context,
+                  color: Colors.red),
+            ),
           ],
         ),
       ],
@@ -43,7 +49,7 @@ class TestStatsInfo extends StatelessWidget {
                 .copyWith(color: Colors.black)),
         const SizedBox(height: 10),
         Text(value,
-            style: AppTextStyles(context).regular14.copyWith(color: color)),
+            style: AppTextStyles(context).bold14.copyWith(color: color)),
       ],
     );
   }

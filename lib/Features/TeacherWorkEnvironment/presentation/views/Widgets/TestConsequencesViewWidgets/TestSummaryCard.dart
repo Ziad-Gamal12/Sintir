@@ -18,12 +18,12 @@ class TestSummaryCard extends StatelessWidget {
         children: [
           CustomTestInfo(test: test),
           const SizedBox(height: 20),
-          const Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          const Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(flex: 3, child: TestStatsInfo()),
-              SizedBox(width: 20),
-              Expanded(flex: 1, child: TestAttendancePresentage()),
+              TestAttendancePresentage(),
+              SizedBox(height: 20),
+              TestStatsInfo(),
             ],
           )
         ],

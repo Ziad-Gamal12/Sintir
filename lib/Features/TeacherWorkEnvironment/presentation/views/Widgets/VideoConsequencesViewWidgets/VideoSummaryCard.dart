@@ -18,12 +18,12 @@ class VideoSummaryCard extends StatelessWidget {
         children: [
           CustomVideoInfo(video: video),
           const SizedBox(height: 20),
-          const Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          const Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(flex: 3, child: VideoStateInfo()),
-              SizedBox(width: 20),
-              Expanded(flex: 1, child: VideoAttendancePresentage()),
+              VideoAttendancePresentage(),
+              SizedBox(height: 20),
+              VideoStateInfo(),
             ],
           )
         ],
