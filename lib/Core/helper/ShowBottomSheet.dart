@@ -7,7 +7,7 @@ showCustomBottomSheet(
   scaffoldKey.currentState?.showBottomSheet(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
-          side: const BorderSide(color: Colors.black)),
-      backgroundColor: Colors.grey.shade200,
+          side: const BorderSide(color: Colors.grey)),
+      backgroundColor: Colors.white,
       (context) => child);
 }

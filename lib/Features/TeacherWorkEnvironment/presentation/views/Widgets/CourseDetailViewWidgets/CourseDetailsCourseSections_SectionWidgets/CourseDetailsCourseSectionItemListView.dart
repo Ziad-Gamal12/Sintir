@@ -33,7 +33,7 @@ class CourseDetailsCourseSectionItemListView extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          state is GetSectionItemsLoading
+          state is GetSectionItemsLoading && state.sectionId == section.id
               ? const CircularProgressIndicator(
                   color: KMainColor,
                 )

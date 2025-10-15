@@ -13,6 +13,7 @@ class AddCourseSectionExamListview extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: AddCourseExamAddQuestionListViewItem(
+              index: index,
               coursetestquestionentity: coursetestentity.questions[index],
               coursetestentity: coursetestentity,
             ),

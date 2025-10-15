@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
 
 class AddCourseExamAddQuestionImage extends StatefulWidget {
   const AddCourseExamAddQuestionImage(
@@ -35,19 +36,35 @@ class _AddCourseExamAddQuestionImageState
         width: double.infinity,
         padding:
             const EdgeInsets.only(top: 20, left: 27, right: 27, bottom: 29),
-        decoration: BoxDecoration(
-          color: const Color(0xffF9FAFA),
-          borderRadius: BorderRadius.circular(10),
+        decoration: const BoxDecoration(
+          color: Color(0xffF2F2F7),
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10),
+          ),
         ),
         child: widget.coursetestquestionentity.imageFile != null
             ? Image.file(
                 widget.coursetestquestionentity.imageFile!,
                 fit: BoxFit.cover,
               )
-            : Image.asset(
-                Assets.assetsIconsAddImageIcon,
-                height: 50,
-                width: 50,
+            : Column(
+                children: [
+                  Image.asset(
+                    Assets.assetsIconsAddImageIcon,
+                    height: 50,
+                    width: 50,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "الصورة المصغرة للسؤال",
+                    style: AppTextStyles(context)
+                        .bold13
+                        .copyWith(color: Colors.black),
+                  )
+                ],
               ),
       ),
     );

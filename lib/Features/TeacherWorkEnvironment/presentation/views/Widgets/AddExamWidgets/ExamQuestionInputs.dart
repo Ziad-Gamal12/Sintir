@@ -6,15 +6,18 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddcourseExamQuestionItemTextField.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/CustomQuestionSolutionsList.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ExamQuestionInputsQuestionHeader.dart';
 
 class ExamQuestionInputs extends StatelessWidget {
   const ExamQuestionInputs({
     super.key,
     required this.courseTestEntity,
     required this.coursetestquestionentity,
+    required this.index,
   });
   final CourseTestQuestionEntity coursetestquestionentity;
   final CourseTestEntity courseTestEntity;
+  final int index;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,7 +27,13 @@ class ExamQuestionInputs extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(
+            height: 10,
+          ),
+          ExamQuestionInputsQuestionHeader(
+              index: index, totalQuestions: courseTestEntity.questions.length),
           const SizedBox(
             height: 20,
           ),
@@ -45,10 +54,10 @@ class ExamQuestionInputs extends StatelessWidget {
                 height: 10,
               ),
               Custombutton(
-                  text: "اضافه جواب",
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(0),
-                  textColor: Colors.black,
+                  text: "اضافه أجابة",
+                  color: Colors.red.shade400,
+                  borderRadius: BorderRadius.circular(8),
+                  textColor: Colors.white,
                   onPressed: () {
                     context.read<TestItemCubit>().addSolution(
                           question: coursetestquestionentity,

@@ -9,6 +9,8 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseSectionExamActionButtons.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseSectionExamListview.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseSectionExamListviewHeader.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/CustomAddCourseSectionExamNameAndDurationHeader.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/CustomAddCourseSectionExamNameAndDuration.dart';
 import 'package:sintir/constant.dart';
 
@@ -36,32 +38,40 @@ class AddCourseSectionExamViewBody extends StatelessWidget {
       builder: (context, state) {
         return Form(
           key: Variables.AddCourseSectionExamFormKey,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
-            child: Stack(
-              children: [
-                CustomScrollView(
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: KHorizontalPadding,
+                  vertical: 10,
+                ),
+                child: CustomScrollView(
                   slivers: [
+                    const SliverToBoxAdapter(
+                      child: CustomAddCourseSectionExamNameAndDurationHeader(),
+                    ),
                     SliverToBoxAdapter(
                       child: CustomAddCourseSectionExamNameAndDuration(
                         coursetestentity: coursetestentity,
                       ),
                     ),
                     const SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: 10,
-                      ),
-                    ),
+                        child: AddCourseSectionExamListviewHeader()),
                     AddCourseSectionExamListview(
                       coursetestentity: coursetestentity,
-                    )
+                    ),
+                    const SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: 180,
+                      ),
+                    ),
                   ],
                 ),
-                AddCourseSectionExamActionButtons(
-                  courseTestEntity: coursetestentity,
-                ),
-              ],
-            ),
+              ),
+              AddCourseSectionExamActionButtons(
+                courseTestEntity: coursetestentity,
+              ),
+            ],
           ),
         );
       },

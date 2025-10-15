@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/utils/Variables.dart';
+import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ReviewExamSectionView.dart';
@@ -20,39 +21,50 @@ class AddCourseSectionExamActionButtons extends StatelessWidget {
     OptionNavigationRequirementsEntity optionnavigationrequirementsentity =
         Provider.of<OptionNavigationRequirementsEntity>(context);
     return Positioned(
-        bottom: 40,
+        bottom: 0,
         right: 0,
         left: 0,
-        child: Row(
-          children: [
-            InkWell(
-              onTap: () {
-                navigatetoReviewTestView(optionnavigationrequirementsentity,
-                    courseTestEntity, context);
-              },
-              child: CircleAvatar(
-                radius: 35,
-                backgroundColor: KMainColor,
-                child: Transform.rotate(
-                    angle: -25,
-                    child: const Icon(Icons.arrow_back_ios_new_rounded,
-                        color: Colors.white)),
-              ),
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
             ),
-            const Spacer(),
-            InkWell(
-              onTap: () {
-                context
-                    .read<TestItemCubit>()
-                    .addNewQuestion(coursetestentity: courseTestEntity);
-              },
-              child: const CircleAvatar(
-                radius: 35,
-                backgroundColor: KSecondaryColor,
-                child: Icon(Icons.add, color: Colors.white),
-              ),
-            ),
-          ],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade100,
+                blurRadius: 30,
+                spreadRadius: 10,
+                offset: const Offset(5, -15),
+              )
+            ],
+            border: Border.all(color: Colors.grey),
+          ),
+          child: Column(
+            children: [
+              Custombutton(
+                  text: "اضافة سؤال",
+                  color: KSecondaryColor,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    context
+                        .read<TestItemCubit>()
+                        .addNewQuestion(coursetestentity: courseTestEntity);
+                  }),
+              const SizedBox(height: 20),
+              Custombutton(
+                  text: "حفظ",
+                  color: KMainColor,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    navigatetoReviewTestView(optionnavigationrequirementsentity,
+                        courseTestEntity, context);
+                  }),
+            ],
+          ),
         ));
   }
 
