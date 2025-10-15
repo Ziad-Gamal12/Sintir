@@ -13,7 +13,7 @@ class Customreviewquestionsolutionlist extends StatelessWidget {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 4),
-            child: CustomReviewQuestionSolutionListitem(
+            child: CustomReviewQuestionSolutionListItem(
               solution: solutions[index],
             ),
           );

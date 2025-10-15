@@ -18,8 +18,10 @@ class CustomReviewExamQuestionsSliverList extends StatelessWidget {
         itemCount: questions.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4),
+            padding: const EdgeInsets.symmetric(vertical: 10),
             child: CustomReviewExamQuestionListItem(
+              index: index,
+              totalQuestions: questions.length,
               question: questions[index],
             ),
           );

@@ -8,10 +8,11 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewExamButtonAction.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewExamNameAndDuration.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewExamDetails.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewExamQuestionsHeader.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewExamQuestionsSliverList.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomTitleAndDescriptionSectionInfo.dart';
 import 'package:sintir/constant.dart';
 
 class ReviewExamSectionViewBody extends StatelessWidget {
@@ -40,28 +41,24 @@ class ReviewExamSectionViewBody extends StatelessWidget {
                 CustomScrollView(
                   slivers: [
                     SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: 20,
-                      ),
-                    ),
-                    SliverToBoxAdapter(
-                      child: CustomTitleAndDescriptionSectionInfo(),
+                      child: CustomReviewExamDetails(),
                     ),
                     SliverToBoxAdapter(
                       child: Divider(
-                        color: Colors.black,
+                        thickness: 1,
                         height: 40,
+                        color: Colors.grey,
                       ),
                     ),
                     SliverToBoxAdapter(
-                      child: CustomReviewExamNameAndDuration(),
-                    ),
-                    SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: 10,
-                      ),
+                      child: CustomReviewExamQuestionsHeader(),
                     ),
                     CustomReviewExamQuestionsSliverList(),
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                        height: 100,
+                      ),
+                    ),
                   ],
                 ),
                 Positioned(
@@ -110,7 +107,7 @@ class ReviewExamSectionViewBody extends StatelessWidget {
           SuccessMessage: "تم اضافة الملف بنجاح",
           btnOkOnPress: () {
             context.go(
-              Homeview.routeName,
+              CourseDetailsCourseSectionsView.routeName,
             );
           }).show();
     }
