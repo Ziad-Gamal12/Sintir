@@ -14,8 +14,6 @@ class ResultsAnalysisCard extends StatelessWidget {
         children: [
           Text("تحليل النتائج", style: AppTextStyles(context).bold24),
           const SizedBox(height: 20),
-          const AverageScoreCard(),
-          const SizedBox(height: 20),
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -25,6 +23,7 @@ class ResultsAnalysisCard extends StatelessWidget {
                 total: "25",
                 color: Colors.green,
               ),
+              AverageScoreCard(),
               ScoreStatCard(
                 label: "أقل درجة",
                 value: "15",

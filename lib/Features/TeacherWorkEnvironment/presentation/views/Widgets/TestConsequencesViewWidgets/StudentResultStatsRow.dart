@@ -13,6 +13,7 @@ class StudentResultStatsRow extends StatelessWidget {
           child: StudentStatItem(
             icon: Assets.assetsIconsGraphBar,
             value: "75%",
+            title: "نسبة التقييم",
             backgroundColor: Colors.lightBlue.shade100,
           ),
         ),
@@ -27,6 +28,7 @@ class StudentResultStatsRow extends StatelessWidget {
           child: StudentStatItem(
             icon: Assets.assetsIconsMisionIcon,
             value: "15/20",
+            title: "درجة الطالب",
             backgroundColor: Colors.lightBlue.shade100,
           ),
         ),

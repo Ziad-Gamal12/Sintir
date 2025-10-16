@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/ResultsAnalysisCard.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/TestResultsSliverGridView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/TestResultsSliverListView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/TestSummaryCard.dart';
 import 'package:sintir/constant.dart';
 
@@ -38,10 +38,10 @@ class TestConsequencesViewBody extends StatelessWidget {
           ),
           const SliverToBoxAdapter(
             child: SizedBox(
-              height: 10,
+              height: 20,
             ),
           ),
-          const TestResultsSliverGridView()
+          const TestResultsSliverListView()
         ],
       ),
     );
