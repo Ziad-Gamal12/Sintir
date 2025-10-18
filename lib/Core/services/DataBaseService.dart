@@ -31,4 +31,8 @@ abstract class Databaseservice {
       required String docId,
       String? subCollectionKey,
       String? subDocId});
+  Future<int> getCollectionItemsCount({
+    required FireStoreRequirmentsEntity requirements,
+    Map<String, dynamic>? query,
+  });
 }

@@ -10,12 +10,15 @@ class Testresultemodel {
   final int solvedQuestions;
   final Map<String, dynamic> joinedby;
   final int result;
+  final bool isPassed;
+
   final List<Map<String, dynamic>> questionsSolvedList;
 
   Testresultemodel({
     required this.serialNumber,
     required this.joinedDate,
     required this.totalQuestions,
+    required this.isPassed,
     required this.solvedQuestions,
     required this.joinedby,
     required this.result,
@@ -27,6 +30,7 @@ class Testresultemodel {
       serialNumber: json['serialNumber'],
       joinedDate: (json['joinedDate'] as Timestamp).toDate(),
       totalQuestions: json['totalQuestions'],
+      isPassed: json['isPassed'],
       solvedQuestions: json['solvedQuestions'],
       joinedby: json['joinedby'],
       result: json['result'],
@@ -36,11 +40,12 @@ class Testresultemodel {
     );
   }
 
-  factory Testresultemodel.fromEntity(TestresulteEntity entity,
+  factory Testresultemodel.fromEntity(TestResultEntity entity,
       {bool includeCourseTest = true}) {
     return Testresultemodel(
       serialNumber: entity.serialNumber,
       joinedDate: entity.joinedDate,
+      isPassed: entity.isPassed,
       totalQuestions: entity.totalQuestions,
       solvedQuestions: entity.solvedQuestions,
       joinedby: JoinedbyModel.fromEntity(entity.joinedbyentity).toJson(),
@@ -51,10 +56,11 @@ class Testresultemodel {
     );
   }
 
-  TestresulteEntity toEntity() {
-    return TestresulteEntity(
+  TestResultEntity toEntity() {
+    return TestResultEntity(
       serialNumber: serialNumber,
       joinedDate: joinedDate,
+      isPassed: isPassed,
       totalQuestions: totalQuestions,
       solvedQuestions: solvedQuestions,
       joinedbyentity: JoinedbyModel.fromJson(joinedby).toEntity(),
@@ -71,6 +77,7 @@ class Testresultemodel {
         "totalQuestions": totalQuestions,
         "solvedQuestions": solvedQuestions,
         "joinedby": joinedby,
+        "isPassed": isPassed,
         "result": result,
         "questionsSolvedList": questionsSolvedList,
       };

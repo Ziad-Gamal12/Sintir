@@ -9,7 +9,7 @@ class ResultDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TestresulteEntity testresulteEntity = context.read<TestresulteEntity>();
+    TestResultEntity testresulteEntity = context.read<TestResultEntity>();
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
-import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
@@ -36,6 +35,7 @@ import 'package:sintir/Features/StudentOnboarding/Presentation/Views/StudentOnbo
 import 'package:sintir/Features/Subscribtion/Presentation/View/SubscribtionView.dart';
 import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnboardingView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TestConsequencesViewRequirements.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionExamView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionFileView.dart';
@@ -275,7 +275,7 @@ class App_router {
         path: Reviewtestresultview.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return Reviewtestresultview(
-            resultEntity: state.extra as TestresulteEntity,
+            resultEntity: state.extra as TestResultEntity,
           );
         },
       ),
@@ -283,7 +283,7 @@ class App_router {
         path: TestConsequencesView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return TestConsequencesView(
-            test: state.extra as CourseTestEntity,
+            requirements: state.extra as TestConsequencesViewRequirements,
           );
         },
       ),

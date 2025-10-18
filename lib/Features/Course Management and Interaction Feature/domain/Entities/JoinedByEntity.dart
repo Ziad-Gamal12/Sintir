@@ -6,4 +6,11 @@ class JoinedByEntity {
       required this.name,
       required this.imageUrl,
       required this.joinedDate});
+ static JoinedByEntity empty() {
+    return JoinedByEntity(
+        uid: "loading",
+        name: "loading",
+        imageUrl: "https://cdn-icons-png.flaticon.com/128/149/149071.png",
+        joinedDate: DateTime.now());
+  }
 }

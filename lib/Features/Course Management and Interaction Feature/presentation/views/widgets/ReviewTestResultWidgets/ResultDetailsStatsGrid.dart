@@ -6,7 +6,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 
 class ResultDetailsStatsGrid extends StatelessWidget {
   const ResultDetailsStatsGrid({super.key, required this.testresulteEntity});
-  final TestresulteEntity testresulteEntity;
+  final TestResultEntity testresulteEntity;
 
   @override
   Widget build(BuildContext context) {

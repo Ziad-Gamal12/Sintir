@@ -236,9 +236,27 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
+
+  @override
+  Future<Either<Failure, int>> getSubscribersCount(
+      {required String courseID}) async {
+    try {
+      final response = await databaseService.getCollectionItemsCount(
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.coursesCollection,
+          docId: courseID,
+          subCollection: BackendEndpoints.subscribersSubCollection,
+        ),
+      );
+      return right(response);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: "حدث خطاء"));
+    }
+  }
 }
 
-/// Parse Firestore raw list to subscriber entities
 List<Subscriberentity> _parseSubscribers(List<dynamic> rawList) {
   return rawList
       .map((e) => Subscripersidsmodel.fromJson(e).toEntity())

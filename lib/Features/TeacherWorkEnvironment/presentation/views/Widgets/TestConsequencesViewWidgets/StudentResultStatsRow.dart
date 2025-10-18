@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/ResultDetailsHelper.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/StudentStatItem.dart';
 
 class StudentResultStatsRow extends StatelessWidget {
-  const StudentResultStatsRow({super.key});
-
+  const StudentResultStatsRow({super.key, required this.testResultEntity});
+  final TestResultEntity testResultEntity;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -12,7 +14,8 @@ class StudentResultStatsRow extends StatelessWidget {
         Expanded(
           child: StudentStatItem(
             icon: Assets.assetsIconsGraphBar,
-            value: "75%",
+            value:
+                "${ResultDetailsHelper.getResultPercent(testResultEntity).toStringAsFixed(2)} %",
             title: "نسبة التقييم",
             backgroundColor: Colors.lightBlue.shade100,
           ),
@@ -27,12 +30,20 @@ class StudentResultStatsRow extends StatelessWidget {
         Expanded(
           child: StudentStatItem(
             icon: Assets.assetsIconsMisionIcon,
-            value: "15/20",
+            value:
+                "${ResultDetailsHelper.getSuccessQuestions(testResultEntity).length}/${testResultEntity.totalQuestions}",
             title: "درجة الطالب",
             backgroundColor: Colors.lightBlue.shade100,
           ),
         ),
       ],
     );
+  }
+
+  double getResultPercentage(int correctAnswers, int totalQuestions) {
+    if (totalQuestions == 0) {
+      return 0.0;
+    }
+    return (correctAnswers / totalQuestions) * 100;
   }
 }

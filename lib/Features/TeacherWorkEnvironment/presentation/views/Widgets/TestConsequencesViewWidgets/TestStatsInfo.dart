@@ -1,8 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TestConsequencesViewRequirements.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/TestAttendancePresentage.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/TestStatsInfoAttendedStudentCount.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/TestStatsInfoFailedCount.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/TestStatsInfoSuccessedCount.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/test_consequences_cubit/test_consequences_cubit.dart';
 
-class TestStatsInfo extends StatelessWidget {
-  const TestStatsInfo({super.key});
+class TestStatsInfo extends StatefulWidget {
+  const TestStatsInfo({super.key, required this.requirements});
+  final TestConsequencesViewRequirements requirements;
+
+  @override
+  State<TestStatsInfo> createState() => _TestStatsInfoState();
+}
+
+class _TestStatsInfoState extends State<TestStatsInfo> {
+  @override
+  void initState() {
+    super.initState();
+    final cubit = context.read<TestConsequencesCubit>();
+    cubit.getSuccessedStudentsCount(
+        courseId: widget.requirements.courseID,
+        sectionId: widget.requirements.sectionID,
+        testId: widget.requirements.test.id);
+    cubit.getFailedStudentsCount(
+        courseId: widget.requirements.courseID,
+        sectionId: widget.requirements.sectionID,
+        testId: widget.requirements.test.id);
+    cubit.getAttendedCount(
+        courseId: widget.requirements.courseID,
+        sectionId: widget.requirements.sectionID,
+        testId: widget.requirements.test.id);
+    cubit.getTotalStudentsCount(courseId: widget.requirements.courseID);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -10,13 +41,13 @@ class TestStatsInfo extends StatelessWidget {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Expanded(
-                child: _buildStatColumn("عدد الطلاب الكلى:", "100", context)),
+            const TestStatsInfoAttendedStudentCount(),
             verticalDivider(),
-            Expanded(
-                child: _buildStatColumn("عدد الطلاب الحاضرين:", "80", context)),
+            const Expanded(
+              child: TestAttendancePresentage(),
+            ),
           ],
         ),
         horizontalDivider(),
@@ -24,32 +55,11 @@ class TestStatsInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: _buildStatColumn("عدد الطلاب النجاح:", "60", context,
-                  color: Colors.green),
-            ),
+            const TestStatsInfoSuccessedCount(),
             verticalDivider(),
-            Expanded(
-              child: _buildStatColumn("عدد الطلاب الرسوب:", "40", context,
-                  color: Colors.red),
-            ),
+            const TestStatsInfoFailedCount(),
           ],
         ),
-      ],
-    );
-  }
-
-  Widget _buildStatColumn(String label, String value, BuildContext context,
-      {Color color = Colors.black}) {
-    return Column(
-      children: [
-        Text(label,
-            style: AppTextStyles(context)
-                .semiBold14
-                .copyWith(color: Colors.black)),
-        const SizedBox(height: 10),
-        Text(value,
-            style: AppTextStyles(context).bold14.copyWith(color: color)),
       ],
     );
   }
@@ -62,7 +72,7 @@ class TestStatsInfo extends StatelessWidget {
       );
 
   Widget horizontalDivider() => Container(
-        margin: const EdgeInsets.symmetric(vertical: 10),
+        margin: const EdgeInsets.symmetric(vertical: 20),
         height: 1,
         color: Colors.black,
       );

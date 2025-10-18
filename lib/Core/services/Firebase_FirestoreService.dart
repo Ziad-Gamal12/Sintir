@@ -331,4 +331,72 @@ class FirebaseFirestoreservice implements Databaseservice {
       throw CustomException(message: "حدث خطأ ما");
     }
   }
+
+  @override
+  Future<int> getCollectionItemsCount({
+    required FireStoreRequirmentsEntity requirements,
+    Map<String, dynamic>? query,
+  }) async {
+    try {
+      if (requirements.collection == null) {
+        return 0;
+      }
+      List<Map<String, String?>> levels = [
+        {
+          "subCollection": requirements.subCollection,
+          "docId": requirements.subDocId
+        },
+        {
+          "subCollection": requirements.subCollection2,
+          "docId": requirements.sub2DocId
+        },
+        {
+          "subCollection": requirements.subCollection3,
+          "docId": requirements.sub3DocId
+        },
+        {
+          "subCollection": requirements.subCollection4,
+          "docId": requirements.sub4DocId
+        },
+      ];
+      CollectionReference<Map<String, dynamic>> currentCollection =
+          _collectionRef(requirements.collection!);
+      if (requirements.docId == null && query != null) {
+        Query<Map<String, dynamic>> queryResult =
+            _applyQueryOptions(currentCollection, query);
+        final querySnapshot = await queryResult.get();
+        return querySnapshot.docs.length;
+      } else if (requirements.docId == null && query == null) {
+        final querySnapshot = await currentCollection.get();
+        return querySnapshot.docs.length;
+      }
+      DocumentReference<Map<String, dynamic>> currentDoc =
+          currentCollection.doc(requirements.docId!);
+
+      for (Map<String, String?> level in levels) {
+        if (level["subCollection"] != null) {
+          currentCollection =
+              currentDoc.collection(level["subCollection"] as String);
+          if (level["docId"] != null) {
+            currentDoc = currentCollection.doc(level["docId"] as String);
+          }
+        } else {
+          break;
+        }
+      }
+      if (query != null) {
+        Query<Map<String, dynamic>> queryResult =
+            _applyQueryOptions(currentCollection, query);
+        final querySnapshot = await queryResult.get();
+        return querySnapshot.docs.length;
+      } else {
+        final querySnapshot = await currentCollection.get();
+        return querySnapshot.docs.length;
+      }
+    } on FirebaseException catch (e) {
+      throw _getFireStoreCustomException(e: e);
+    } catch (e) {
+      throw CustomException(message: "حدث خطأ ما");
+    }
+  }
 }

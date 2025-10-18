@@ -6,6 +6,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 import 'package:sintir/Core/widgets/CustomTrashIcon.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomContainerSectionItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TestConsequencesViewRequirements.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ExamConsequencesView.dart';
 
 class CustomCourseDetailsSectionListViewTestItem extends StatelessWidget {
@@ -24,7 +25,11 @@ class CustomCourseDetailsSectionListViewTestItem extends StatelessWidget {
       onTap: () {
         GoRouter.of(context).push(
           TestConsequencesView.routeName,
-          extra: item,
+          extra: TestConsequencesViewRequirements(
+              totalStundets: course.studentsCount,
+              courseID: course.id,
+              sectionID: section.id,
+              test: item),
         );
       },
       child: Customcontainersectionitem(

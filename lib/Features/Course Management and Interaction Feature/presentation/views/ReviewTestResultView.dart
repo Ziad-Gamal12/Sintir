@@ -7,7 +7,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 class Reviewtestresultview extends StatelessWidget {
   const Reviewtestresultview({super.key, required this.resultEntity});
   static const routeName = '/Reviewtestresultview';
-  final TestresulteEntity resultEntity;
+  final TestResultEntity resultEntity;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

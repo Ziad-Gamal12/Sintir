@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/StudentAvatar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/StudentInfoTexts.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/StudentResultCardDisplayFullResultWIdget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/StudentResultStatsRow.dart';
-import 'package:sintir/constant.dart';
 
 class StudentResultCard extends StatelessWidget {
-  const StudentResultCard({super.key});
-
+  const StudentResultCard({super.key, required this.testResultEntity});
+  final TestResultEntity testResultEntity;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,26 +30,26 @@ class StudentResultCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const StudentAvatar(),
+              StudentAvatar(
+                url: testResultEntity.joinedbyentity.imageUrl,
+              ),
               const SizedBox(width: 20),
-              const StudentInfoTexts(),
+              Expanded(
+                flex: 2,
+                child: StudentInfoTexts(
+                  testResult: testResultEntity,
+                ),
+              ),
               const Spacer(),
-              Row(
-                children: [
-                  const Icon(Icons.visibility, color: KMainColor),
-                  const SizedBox(width: 5),
-                  Text(
-                    "عرض النتيجة",
-                    style: AppTextStyles(context)
-                        .regular16
-                        .copyWith(color: KMainColor),
-                  ),
-                ],
+              StudentResultCardDisplayFullResultWIdget(
+                testResultEntity: testResultEntity,
               )
             ],
           ),
           const Spacer(),
-          const StudentResultStatsRow(),
+          StudentResultStatsRow(
+            testResultEntity: testResultEntity,
+          ),
         ],
       ),
     );

@@ -70,9 +70,9 @@ void setup_Getit() {
   getIt.registerSingleton<CourseSubscibtionsRepo>(
       CourseSubscriptionsRepoImpl(databaseService: getIt<Databaseservice>()));
 
-  getIt.registerSingleton<Testitemrepo>(Testitemrepoimpli(
+  getIt.registerSingleton<Testitemrepo>(TestItemRepoImpli(
       storageService: getIt<StorageService>(),
-      datebaseservice: getIt<Databaseservice>()));
+      databaseservice: getIt<Databaseservice>()));
   getIt.registerSingleton<SectionItemsActionsRepo>(
       SectionItemsActionsRepoImpli(datebaseservice: getIt<Databaseservice>()));
   getIt.registerSingleton<VideoItemRepo>(VideoItemRepoImpli(

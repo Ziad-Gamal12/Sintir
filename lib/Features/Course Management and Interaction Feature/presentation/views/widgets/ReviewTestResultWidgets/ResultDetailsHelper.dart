@@ -4,20 +4,20 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestR
 
 class ResultDetailsHelper {
   static List<ExamResultSolvedQuestionEntity> getSuccessQuestions(
-      TestresulteEntity testresulteEntity) {
+      TestResultEntity testresulteEntity) {
     return testresulteEntity.questionsSolvedListEntity
         .where((element) => element.isCorrect == true)
         .toList();
   }
 
-  static double getResultPercent(TestresulteEntity testresulteEntity) {
+  static double getResultPercent(TestResultEntity testresulteEntity) {
     return ((getSuccessQuestions(testresulteEntity).length /
                 testresulteEntity.totalQuestions) *
             100)
         .toDouble();
   }
 
-  static Color getProgressColor(TestresulteEntity testresulteEntity) {
+  static Color getProgressColor(TestResultEntity testresulteEntity) {
     double percent = getResultPercent(testresulteEntity);
     if (percent < 50) {
       return Colors.red;

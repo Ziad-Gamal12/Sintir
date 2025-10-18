@@ -35,7 +35,7 @@ class CourseTestEntity {
     String? title,
     List<JoinedByEntity>? joinedBy,
     List<CourseTestQuestionEntity>? questions,
-    List<TestresulteEntity>? results,
+    List<TestResultEntity>? results,
   }) {
     return CourseTestEntity(
       id: id,

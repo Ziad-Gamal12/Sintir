@@ -134,11 +134,12 @@ class TestItemCubit extends Cubit<TestItemState> {
     return numbers;
   }
 
-  TestresulteEntity getTestResults(
+  TestResultEntity getTestResults(
       {required BuildContext context,
       required CourseTestEntity test,
       required UserEntity user}) {
-    return TestresulteEntity(
+    return TestResultEntity(
+        isPassed: getResult(test: test) >= (test.questions.length / 2),
         joinedDate: DateTime.now(),
         serialNumber: "${DateTime.now().toString()}-Result",
         joinedbyentity: JoinedByEntity(
