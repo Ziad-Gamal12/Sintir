@@ -1,22 +1,70 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/video_consequences_cubit/video_consequences_cubit.dart';
 import 'package:sintir/constant.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
-class VideoAttendancePresentage extends StatelessWidget {
-  const VideoAttendancePresentage({super.key});
+class VideoAttendancePresentage extends StatefulWidget {
+  const VideoAttendancePresentage({super.key, required this.percentage});
+  final double percentage;
+
+  @override
+  State<VideoAttendancePresentage> createState() =>
+      _VideoAttendancePresentageState();
+}
+
+class _VideoAttendancePresentageState extends State<VideoAttendancePresentage> {
   @override
   Widget build(BuildContext context) {
-    return CircularPercentIndicator(
-      radius: 50,
-      lineWidth: 13.0,
-      animation: true,
-      percent: 0.6,
-      center: const Text(
-        "60%",
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-      ),
-      progressColor: KMainColor,
-      circularStrokeCap: CircularStrokeCap.round,
+    return Column(
+      children: [
+        BlocBuilder<VideoConsequencesCubit, VideoConsequencesState>(
+          buildWhen: (previous, current) =>
+              current is VideoConsequencesGetVideoAttendedCountSuccess ||
+              current is VideoConsequencesGetVideoAttendedCountLoading ||
+              current is VideoConsequencesGetVideoAttendedCountFailure ||
+              current is VideoConsequencesGetTotalStudentsCountSuccess ||
+              current is VideoConsequencesGetTotalStudentsCountLoading ||
+              current is VideoConsequencesGetTotalStudentsCountFailure,
+          builder: (context, state) {
+            if (state is VideoConsequencesGetVideoAttendedCountFailure) {
+              return Text(state.errMessage,
+                  style: AppTextStyles(context)
+                      .regular14
+                      .copyWith(color: Colors.red));
+            } else if (state is VideoConsequencesGetTotalStudentsCountFailure) {
+              return Text(state.errMessage,
+                  style: AppTextStyles(context)
+                      .regular14
+                      .copyWith(color: Colors.red));
+            }
+            return Skeletonizer(
+              enabled: state is VideoConsequencesGetVideoAttendedCountLoading ||
+                  state is VideoConsequencesGetTotalStudentsCountLoading,
+              child: CircularPercentIndicator(
+                radius: 45,
+                lineWidth: 10.0,
+                animation: true,
+                percent: widget.percentage / 100,
+                center: Text(
+                  "${widget.percentage.toStringAsFixed(2)} %",
+                  style: AppTextStyles(context)
+                      .semiBold16
+                      .copyWith(color: Colors.black),
+                ),
+                progressColor: KMainColor,
+                circularStrokeCap: CircularStrokeCap.round,
+              ),
+            );
+          },
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Text("نسبة الحضور", style: AppTextStyles(context).semiBold16)
+      ],
     );
   }
 }

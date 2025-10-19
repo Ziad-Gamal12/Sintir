@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateExamReviewRequirmentsEntity.dart';
 
 class CustomTitleAndDescriptionSectionInfo extends StatelessWidget {
   const CustomTitleAndDescriptionSectionInfo({

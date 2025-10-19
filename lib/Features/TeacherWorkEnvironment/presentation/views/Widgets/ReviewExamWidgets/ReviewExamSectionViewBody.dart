@@ -7,7 +7,7 @@ import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateExamReviewRequirmentsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewExamButtonAction.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewExamDetails.dart';

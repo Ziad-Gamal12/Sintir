@@ -6,6 +6,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/Cour
 import 'package:sintir/Core/widgets/CustomTrashIcon.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomContainerSectionItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/VideoConsequencesViewRequirements.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/VideoConsequencesView.dart';
 
 class CustomCourseDetailsSectionListViewVideoItem extends StatelessWidget {
@@ -25,7 +26,11 @@ class CustomCourseDetailsSectionListViewVideoItem extends StatelessWidget {
       onTap: () {
         GoRouter.of(context).push(
           VideoConsequencesView.routeName,
-          extra: item,
+          extra: VideoConsequencesViewRequirements(
+            courseID: course.id,
+            sectionID: section.id,
+            video: item,
+          ),
         );
       },
       child: Customcontainersectionitem(

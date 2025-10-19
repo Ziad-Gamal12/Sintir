@@ -32,4 +32,17 @@ class UserEntity {
       required this.fullName,
       this.studentExtraDataEntity,
       this.teacherExtraDataEntity});
+  static UserEntity empty() => UserEntity(
+      uid: "empty",
+      firstName: "empty",
+      lastName: "empty",
+      email: "empty",
+      address: "empty",
+      phoneNumber: "empty",
+      gender: "empty",
+      profilePicurl: "https://cdn-icons-png.flaticon.com/128/149/149071.png",
+      status: "empty",
+      role: "empty",
+      joinedDate: "empty",
+      fullName: "empty");
 }

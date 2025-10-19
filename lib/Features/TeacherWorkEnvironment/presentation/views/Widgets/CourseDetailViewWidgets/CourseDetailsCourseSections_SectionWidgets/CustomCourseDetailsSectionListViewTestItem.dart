@@ -26,10 +26,7 @@ class CustomCourseDetailsSectionListViewTestItem extends StatelessWidget {
         GoRouter.of(context).push(
           TestConsequencesView.routeName,
           extra: TestConsequencesViewRequirements(
-              totalStundets: course.studentsCount,
-              courseID: course.id,
-              sectionID: section.id,
-              test: item),
+              courseID: course.id, sectionID: section.id, test: item),
         );
       },
       child: Customcontainersectionitem(

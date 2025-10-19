@@ -5,7 +5,6 @@ import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
-import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVideoviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Core/entities/PayMobWebViewRequirmentsEntity.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebView.dart';
@@ -36,7 +35,8 @@ import 'package:sintir/Features/Subscribtion/Presentation/View/SubscribtionView.
 import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnboardingView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TestConsequencesViewRequirements.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/VideoConsequencesViewRequirements.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateExamReviewRequirmentsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionExamView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionFileView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionVedioView.dart';
@@ -291,7 +291,7 @@ class App_router {
         path: VideoConsequencesView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return VideoConsequencesView(
-            video: state.extra as CourseVideoItemEntity,
+            requirements: state.extra as VideoConsequencesViewRequirements,
           );
         },
       ),

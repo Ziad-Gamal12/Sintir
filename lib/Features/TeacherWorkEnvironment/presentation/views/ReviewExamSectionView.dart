@@ -9,7 +9,7 @@ import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateExamReviewRequirmentsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/ReviewExamSectionViewBody.dart';
 
 class ReviewExamSectionView extends StatelessWidget {

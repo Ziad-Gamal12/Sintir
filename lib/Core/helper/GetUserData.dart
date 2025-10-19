@@ -11,19 +11,7 @@ UserEntity getUserData() {
   String userJsonString = shared_preferences_Services.stringGetter(
       key: BackendEndpoints.storeUserLocaly);
   if (userJsonString == " ") {
-    return UserEntity(
-        uid: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        address: "",
-        phoneNumber: "",
-        gender: "",
-        profilePicurl: "",
-        status: BackendEndpoints.blockedStatus,
-        role: "",
-        joinedDate: DateTime.now().toString(),
-        fullName: "");
+    return UserEntity.empty();
   } else {
     Map<String, dynamic> userJson = jsonDecode(userJsonString);
     UserEntity userEntity = UserModel.fromJson(userJson).toEntity();

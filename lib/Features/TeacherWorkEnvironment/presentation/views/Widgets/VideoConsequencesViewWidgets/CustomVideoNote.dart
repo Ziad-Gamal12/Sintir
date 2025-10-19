@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Core/widgets/CustomCachedNetworkImage.dart';
 import 'package:sintir/Core/widgets/CustomCard.dart';
-import 'package:svg_flutter/svg.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/VideoNoteEntity.dart';
 
 class CustomVideoNote extends StatelessWidget {
-  const CustomVideoNote({super.key});
-
+  const CustomVideoNote({super.key, required this.note});
+  final VideoNoteEntity note;
   @override
   Widget build(BuildContext context) {
     return CustomCard(
@@ -19,22 +19,25 @@ class CustomVideoNote extends StatelessWidget {
               borderRadius: BorderRadiusGeometry.circular(40),
               child: CircleAvatar(
                   backgroundColor: Colors.transparent,
-                  child:
-                      SvgPicture.asset(Assets.assetsIconsSVGIconsUserAvatar)),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: CustomCachedNetworkImage(
+                        imageUrl: note.user.profilePicurl),
+                  )),
             ),
             title: Text(
-              "محمد ابراهيم",
+              "${note.user.firstName} ${note.user.lastName}",
               style: AppTextStyles(context).semiBold16,
             ),
             subtitle: Text(
-              "12/4/2025",
+              "${note.dateTime.day}/${note.dateTime.month}/${note.dateTime.year}",
               style: AppTextStyles(context).regular13,
             )),
         const SizedBox(
           height: 5,
         ),
         Text(
-          "اواجه صعوبيه فى فهم هذا الدرس اتمنى المساعده فى الفهم و شرحه مره اخرى بطريقة مبسطه مه الحل",
+          note.note,
           style: AppTextStyles(context).regular14,
         )
       ],

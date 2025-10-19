@@ -9,4 +9,6 @@ class VideoNoteEntity {
     required this.dateTime,
     required this.note,
   });
+  static VideoNoteEntity empty() => VideoNoteEntity(
+      user: UserEntity.empty(), dateTime: DateTime.now(), note: 'loading');
 }

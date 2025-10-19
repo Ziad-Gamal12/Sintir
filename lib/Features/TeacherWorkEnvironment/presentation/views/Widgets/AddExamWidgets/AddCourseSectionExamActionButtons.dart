@@ -6,7 +6,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateExamReviewRequirmentsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ReviewExamSectionView.dart';
 import 'package:sintir/constant.dart';
 

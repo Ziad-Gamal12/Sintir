@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateSQlReviewRequirmentsEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateExamReviewRequirmentsEntity.dart';
 import 'package:sintir/constant.dart';
 
 class CustomReviewExamButtonAction extends StatelessWidget {
