@@ -6,26 +6,7 @@ sealed class VideoConsequencesState {}
 final class VideoConsequencesInitial extends VideoConsequencesState {}
 // getVideoNotes States
 
-final class VideoConsequencesGetVideoNotesLoading
-    extends VideoConsequencesState {
-  final bool isPaginate;
 
-  VideoConsequencesGetVideoNotesLoading({required this.isPaginate});
-}
-
-final class VideoConsequencesGetVideoNotesFailure
-    extends VideoConsequencesState {
-  final String errmessage;
-
-  VideoConsequencesGetVideoNotesFailure({required this.errmessage});
-}
-
-final class VideoConsequencesGetVideoNotesSuccess
-    extends VideoConsequencesState {
-  final GetVideoItemNotesResponseEntity response;
-
-  VideoConsequencesGetVideoNotesSuccess({required this.response});
-}
 
 // getVideo Attended Count States
 final class VideoConsequencesGetVideoAttendedCountLoading

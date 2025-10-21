@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/VideoNoteEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/VideoConsequencesViewWidgets/CustomVideoNote.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/video_consequences_cubit/video_consequences_cubit.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/get_video_notes_cubit/get_video_notes_cubit.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class VideoNotesSliverList extends StatefulWidget {
@@ -19,25 +17,15 @@ class VideoNotesSliverList extends StatefulWidget {
 class _VideoNotesSliverListState extends State<VideoNotesSliverList> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VideoConsequencesCubit, VideoConsequencesState>(
-      buildWhen: (previous, current) {
-        log("STATE TYPE => ${current.runtimeType}");
-        if (current is VideoConsequencesGetVideoNotesSuccess ||
-            current is VideoConsequencesGetVideoNotesLoading ||
-            current is VideoConsequencesGetVideoNotesFailure) {
-          return true;
-        }
-        return false;
-      },
+    return BlocBuilder<GetVideoNotesCubit, GetVideoNotesState>(
       builder: (context, state) {
-        if (state is VideoConsequencesGetVideoNotesFailure) {
+        if (state is GetVideoNotesFailure) {
           return SliverToBoxAdapter(
             child: Center(
               child: CustomErrorWidget(errormessage: state.errmessage),
             ),
           );
-        } else if (state is VideoConsequencesGetVideoNotesLoading &&
-            state.isPaginate == false) {
+        } else if (state is GetVideoNotesLoading && state.isPaginate == false) {
           return SliverToBoxAdapter(
             child: ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
@@ -55,8 +43,7 @@ class _VideoNotesSliverListState extends State<VideoNotesSliverList> {
                   );
                 }),
           );
-        } else if (widget.notes.isEmpty &&
-            state is VideoConsequencesGetVideoNotesSuccess) {
+        } else if (widget.notes.isEmpty && state is GetVideoNotesSuccess) {
           return SliverToBoxAdapter(
             child: Center(
               child: CustomEmptyWidget(text: "لا يوجد ملاحظات"),

@@ -5,7 +5,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/VideoConsequencesViewRequirements.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/VideoConsequencesViewWidgets/VideoNotesSliverList.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/VideoConsequencesViewWidgets/VideoSummaryCard.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/video_consequences_cubit/video_consequences_cubit.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/get_video_notes_cubit/get_video_notes_cubit.dart';
 import 'package:sintir/constant.dart';
 
 class VideoConsequencesViewBody extends StatefulWidget {
@@ -26,7 +26,7 @@ class _VideoConsequencesViewBodyState extends State<VideoConsequencesViewBody> {
   void initState() {
     super.initState();
     scrollController = ScrollController();
-    final cubit = context.read<VideoConsequencesCubit>();
+    final cubit = context.read<GetVideoNotesCubit>();
     cubit.getVideoItemNotes(
         videoId: widget.requirements.video.id,
         isPaginate: false,
@@ -44,11 +44,11 @@ class _VideoConsequencesViewBodyState extends State<VideoConsequencesViewBody> {
     scrollController.addListener(_scrollListener!);
   }
 
-  bool _shouldFetchMore({required VideoConsequencesCubit cubit}) {
+  bool _shouldFetchMore({required GetVideoNotesCubit cubit}) {
     return scrollController.position.pixels >=
             scrollController.position.maxScrollExtent - 200 &&
         hasMore &&
-        cubit.state is! VideoConsequencesGetVideoNotesLoading;
+        cubit.state is! GetVideoNotesLoading;
   }
 
   @override
@@ -60,13 +60,9 @@ class _VideoConsequencesViewBodyState extends State<VideoConsequencesViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<VideoConsequencesCubit, VideoConsequencesState>(
-      listenWhen: (previous, current) {
-        return current is VideoConsequencesGetVideoNotesSuccess ||
-            current is VideoConsequencesGetVideoNotesFailure;
-      },
+    return BlocConsumer<GetVideoNotesCubit, GetVideoNotesState>(
       listener: (context, state) {
-        if (state is VideoConsequencesGetVideoNotesSuccess) {
+        if (state is GetVideoNotesSuccess) {
           if (state.response.isPaginate) {
             setState(() {
               fetchedNotes.addAll(state.response.notes);
@@ -111,8 +107,7 @@ class _VideoConsequencesViewBodyState extends State<VideoConsequencesViewBody> {
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: state is VideoConsequencesGetVideoNotesLoading &&
-                              state.isPaginate
+                      child: state is GetVideoNotesLoading && state.isPaginate
                           ? const CircularProgressIndicator(
                               color: KMainColor,
                             )

@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:sintir/Core/entities/GetVideoItemNotesResponseEntity.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
 import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepo.dart';
 
@@ -12,23 +11,6 @@ class VideoConsequencesCubit extends Cubit<VideoConsequencesState> {
       : super(VideoConsequencesInitial());
   final CourseSubscibtionsRepo subscibtionsRepo;
   final VideoItemRepo videoItemRepo;
-  Future<void> getVideoItemNotes(
-      {required String courseId,
-      required String sectionId,
-      required String videoId,
-      required bool isPaginate}) async {
-    emit(VideoConsequencesGetVideoNotesLoading(isPaginate: isPaginate));
-    final result = await videoItemRepo.getVideoItemNotes(
-        courseId: courseId,
-        sectionId: sectionId,
-        videoId: videoId,
-        isPaginate: isPaginate);
-    result.fold((failure) {
-      emit(VideoConsequencesGetVideoNotesFailure(errmessage: failure.message));
-    }, (success) {
-      emit(VideoConsequencesGetVideoNotesSuccess(response: success));
-    });
-  }
 
   Future<void> getTotalStudentsCount({
     required String courseId,
