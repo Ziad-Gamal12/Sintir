@@ -37,7 +37,7 @@ class TeacherWalletBalanceDetailsCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            "${wallet?.balance ?? 0} جنيه",
+            "${wallet?.balance.toStringAsFixed(2) ?? 0} جنيه",
             style: AppTextStyles(context).bold32.copyWith(color: KMainColor),
           ),
         ],

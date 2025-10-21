@@ -10,6 +10,7 @@ import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseSectionExamActionButtons.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseSectionExamListview.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseSectionExamListviewHeader.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddQuestionButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/CustomAddCourseSectionExamNameAndDurationHeader.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/CustomAddCourseSectionExamNameAndDuration.dart';
 import 'package:sintir/constant.dart';
@@ -60,11 +61,10 @@ class AddCourseSectionExamViewBody extends StatelessWidget {
                     AddCourseSectionExamListview(
                       coursetestentity: coursetestentity,
                     ),
-                    const SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: 180,
-                      ),
-                    ),
+                    SliverToBoxAdapter(
+                      child:
+                          AddQuestionButton(coursetestentity: coursetestentity),
+                    )
                   ],
                 ),
               ),

@@ -55,7 +55,7 @@ class ExamQuestionInputs extends StatelessWidget {
               ),
               Custombutton(
                   text: "اضافه أجابة",
-                  color: Colors.red.shade400,
+                  color: Colors.lightBlue,
                   borderRadius: BorderRadius.circular(8),
                   textColor: Colors.white,
                   onPressed: () {

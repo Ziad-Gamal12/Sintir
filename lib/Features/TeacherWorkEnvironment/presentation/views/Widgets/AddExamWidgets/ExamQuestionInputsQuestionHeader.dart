@@ -16,7 +16,7 @@ class ExamQuestionInputsQuestionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Icon(FontAwesomeIcons.circleInfo, color: Colors.red, size: 25),
+        const Icon(FontAwesomeIcons.circleInfo, color: Colors.blue, size: 25),
         const SizedBox(
           width: 10,
         ),
@@ -30,8 +30,7 @@ class ExamQuestionInputsQuestionHeader extends StatelessWidget {
             ),
             TextSpan(
               text: "${index + 1}",
-              style:
-                  AppTextStyles(context).semiBold16.copyWith(color: Colors.red),
+              style: AppTextStyles(context).bold16.copyWith(color: Colors.blue),
             ),
             TextSpan(
               text: " من ",
@@ -41,8 +40,7 @@ class ExamQuestionInputsQuestionHeader extends StatelessWidget {
             ),
             TextSpan(
               text: "$totalQuestions",
-              style:
-                  AppTextStyles(context).semiBold16.copyWith(color: Colors.red),
+              style: AppTextStyles(context).bold16.copyWith(color: Colors.red),
             ),
           ]),
         ),

@@ -15,7 +15,8 @@ class CourseDetailsSubscribersGridView extends StatelessWidget {
               GridHelper.getCrossAxisCount(MediaQuery.of(context).size.width),
           crossAxisSpacing: 20,
           mainAxisSpacing: 20,
-          childAspectRatio: 1 / 1.2),
+          childAspectRatio: GridHelper.getAspectRatio(
+              maxWidth: MediaQuery.of(context).size.width)),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: subscribers.length,

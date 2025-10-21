@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
+import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/CourseDetailView.dart';
 
 class Custommycoursesslivergrideview extends StatelessWidget {
@@ -10,6 +11,12 @@ class Custommycoursesslivergrideview extends StatelessWidget {
   final List<CourseEntity> courses;
   @override
   Widget build(BuildContext context) {
+    if (courses.isEmpty) {
+      return SliverToBoxAdapter(
+          child: CustomEmptyWidget(
+        text: "لا يوجد دورات",
+      ));
+    }
     return SliverGrid.builder(
         itemCount: courses.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

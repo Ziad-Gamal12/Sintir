@@ -24,13 +24,13 @@ class TeacherWalletBalanceDetailsBottom extends StatelessWidget {
           TeacherWalletBalanceDetailsRow(
             icon: Icons.show_chart_outlined,
             title: "الرصيد الكلى",
-            value: "${wallet?.totalEarned ?? 0} EGP",
+            value: "${wallet?.totalEarned.toStringAsFixed(2) ?? 0} EGP",
           ),
           Divider(color: Colors.grey.shade300, height: 20),
           TeacherWalletBalanceDetailsRow(
             icon: FontAwesomeIcons.clock,
             title: "الرصيد المعلق",
-            value: "${wallet?.payoutPending ?? 0} EGP",
+            value: "${wallet?.payoutPending.toStringAsFixed(2) ?? 0} EGP",
           ),
           Divider(color: Colors.grey.shade300, height: 20),
           TeacherWalletBalanceDetailsRow(

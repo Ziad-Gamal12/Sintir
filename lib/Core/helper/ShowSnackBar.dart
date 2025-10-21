@@ -71,3 +71,21 @@ void showSuccessSnackBar({
     ),
   );
 }
+
+void showInfoSnackBar({
+  required BuildContext context,
+  required String message,
+}) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      elevation: 0,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      content: AwesomeSnackbarContent(
+        title: "معلومات",
+        message: message,
+        contentType: ContentType.help,
+      ),
+    ),
+  );
+}
