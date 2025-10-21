@@ -17,7 +17,6 @@ import 'package:sintir/Features/Auth/TeacherPresentation/views/TeacherSignInView
 import 'package:sintir/Features/Auth/TeacherPresentation/views/TeacherSignUpView.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/views/teacherTermsAndConditionsView.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/ChoosingUserKindView.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFedBackView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFilePreviewer_View.dart';
@@ -292,14 +291,6 @@ class App_router {
         builder: (BuildContext context, GoRouterState state) {
           return VideoConsequencesView(
             requirements: state.extra as VideoConsequencesViewRequirements,
-          );
-        },
-      ),
-      GoRoute(
-        path: FileConsequencesView.routeName,
-        builder: (BuildContext context, GoRouterState state) {
-          return FileConsequencesView(
-            file: state.extra as CourseFileEntity,
           );
         },
       ),
