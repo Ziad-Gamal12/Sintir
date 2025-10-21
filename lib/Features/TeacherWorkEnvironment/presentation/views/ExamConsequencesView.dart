@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
+import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TestConsequencesViewRequirements.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/TestConsequencesViewBody.dart';
@@ -28,6 +29,7 @@ class TestConsequencesView extends StatelessWidget {
                 testRepo: getIt<Testitemrepo>()))
       ],
       child: Scaffold(
+        key: Variables.testConsequencesViewScaffoldKey,
         appBar: const CustomAppBar(appBartitle: "التقارير الخاصة بالاختبار"),
         body: TestConsequencesViewBody(
           requirements: requirements,

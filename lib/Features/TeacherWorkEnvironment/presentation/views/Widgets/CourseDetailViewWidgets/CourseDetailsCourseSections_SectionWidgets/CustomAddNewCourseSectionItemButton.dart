@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/helper/ShowBottomSheet.dart';
-import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomAddNewSectionItemBottomSheetChild.dart';
 
@@ -23,12 +22,12 @@ class CustomAddNewCourseSectionItemButton extends StatelessWidget {
         side: BorderSide(color: Colors.blue.shade300),
         onPressed: () {
           showCustomBottomSheet(
-              context: context,
-              child: IntrinsicHeight(
-                child: CustomAddNewSectionItemBottomSheetChild(
-                    section: section, courseId: courseId),
-              ),
-              scaffoldKey: Variables.courseSectionsViewScaffoldKey);
+            context: context,
+            child: IntrinsicHeight(
+              child: CustomAddNewSectionItemBottomSheetChild(
+                  section: section, courseId: courseId),
+            ),
+          );
         });
   }
 }

@@ -8,6 +8,8 @@ import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 abstract class Variables {
   static GlobalKey<ScaffoldState> courseDeatilsViewScaffoldKey =
       GlobalKey<ScaffoldState>();
+  static GlobalKey<ScaffoldState> testConsequencesViewScaffoldKey =
+      GlobalKey<ScaffoldState>();
   static GlobalKey<ScaffoldState> courseSectionsViewScaffoldKey =
       GlobalKey<ScaffoldState>();
   static GlobalKey<FormState> AddCourseSectionVideoItemFormKey =

@@ -41,7 +41,9 @@ class _ResultsAnalysisCardState extends State<ResultsAnalysisCard> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               ResultsAnalysisCardHighestScoreCard(),
+              SizedBox(width: 10),
               AverageScoreCard(),
+              SizedBox(width: 10),
               ResultsAnalysisCardLowestScoreCard()
             ],
           ),
