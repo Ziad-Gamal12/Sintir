@@ -10,6 +10,7 @@ import 'package:sintir/Core/entities/PayMobWebViewRequirmentsEntity.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebView.dart';
 import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordView.dart';
 import 'package:sintir/Features/Ai_Teacher/presentation/views/AiTeacherView.dart';
+import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/views/StudentTermsAndConditions_View.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/views/Student_Sign_In_View.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/views/Student_signUp_View.dart';
@@ -43,6 +44,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCou
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/CourseDetailView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ExamConsequencesView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/PayOutBalance.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ReviewExamSectionView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWalletDetailsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
@@ -359,6 +361,14 @@ class App_router {
         builder: (BuildContext context, GoRouterState state) {
           return AddCourseCouponView(
             courseId: state.extra as String,
+          );
+        },
+      ),
+      GoRoute(
+        path: PayOutBalance.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return PayOutBalance(
+            walletEntity: state.extra as TeacherWalletEntity,
           );
         },
       ),

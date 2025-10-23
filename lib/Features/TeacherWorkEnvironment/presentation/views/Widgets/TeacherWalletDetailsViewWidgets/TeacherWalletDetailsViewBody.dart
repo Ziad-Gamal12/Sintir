@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/PayOutBalance.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWalletBalanceDeatils.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWalletDetailsViewBodyWalletCardHeader.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/teacher_wallet_balance_details_row.dart';
@@ -56,7 +58,10 @@ class TeacherWalletDetailsViewBody extends StatelessWidget {
               text: "سحب رصيد",
               color: KMainColor,
               textColor: Colors.white,
-              onPressed: () {})
+              onPressed: () {
+                GoRouter.of(context).push(PayOutBalance.routeName,
+                    extra: user.teacherExtraDataEntity?.wallet);
+              })
         ],
       ),
     );

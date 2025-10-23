@@ -18,6 +18,8 @@ import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo_impl.dart';
 import 'package:sintir/Core/repos/File-Item-Repo/FileItemRepo.dart';
 import 'package:sintir/Core/repos/File-Item-Repo/FileItemRepoImpli.dart';
+import 'package:sintir/Core/repos/PaymobPayoutRepo/PaymobPayoutRepo.dart';
+import 'package:sintir/Core/repos/PaymobPayoutRepo/PaymobPayoutRepoImpl.dart';
 import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
 import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepoImp.dart';
 import 'package:sintir/Core/repos/ResetPaswordRepo/ResetPaswordRepo.dart';
@@ -34,6 +36,7 @@ import 'package:sintir/Core/services/FirebaseStorageService.dart';
 import 'package:sintir/Core/services/Firebase_FirestoreService.dart';
 import 'package:sintir/Core/services/GeminiAPiService.dart';
 import 'package:sintir/Core/services/PayMobService.dart';
+import 'package:sintir/Core/services/PaymobPayoutService.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/services/elevenlabsApi.dart';
@@ -96,4 +99,7 @@ void setup_Getit() {
 
   getIt.registerSingleton<CourseCouponsRepo>(
       CourseCouponsRepoImp(databaseservice: getIt<Databaseservice>()));
+  getIt.registerSingleton<PaymobPayoutRepo>(
+    PaymobPayoutRepoImpl(service: PaymobPayoutService()),
+  );
 }
