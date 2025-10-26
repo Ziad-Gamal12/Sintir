@@ -39,4 +39,10 @@ abstract class Testitemrepo {
       {required String courseId,
       required String sectionId,
       required String testId});
+  Future<Either<Failure, List<TestResultEntity>>> getUserResultsOfExam({
+    required String courseId,
+    required String sectionId,
+    required String examId,
+    required String userId,
+  });
 }

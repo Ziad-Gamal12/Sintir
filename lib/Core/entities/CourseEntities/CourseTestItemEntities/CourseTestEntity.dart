@@ -7,7 +7,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/courseTestView.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseTestOverviewView.dart';
 
 class CourseTestEntity {
   int durationTime;
@@ -49,7 +49,7 @@ class CourseTestEntity {
       {required BuildContext context,
       required CourseExamViewNavigationsRequirmentsEntity item,
       required CourseEntity course}) {
-    GoRouter.of(context).push(Coursetestview.routename, extra: item);
+    GoRouter.of(context).push(CourseTestOverViewView.routeName, extra: item);
   }
 
   void addQuestion(CourseTestQuestionEntity? question) {

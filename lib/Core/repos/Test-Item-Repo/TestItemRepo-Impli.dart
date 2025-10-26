@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
@@ -266,6 +268,48 @@ class TestItemRepoImpli implements Testitemrepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
+      return left(ServerFailure(message: "حدث خطاء"));
+    }
+  }
+
+  Map<String, dynamic> getUserResultsOfExamQuery = {
+    "filters": [
+      {"field": "joinedby.uid", "operator": "==", "value": null}
+    ],
+    "orderBy": "joinedDate",
+    "descending": true,
+  };
+  @override
+  Future<Either<Failure, List<TestResultEntity>>> getUserResultsOfExam(
+      {required String courseId,
+      required String sectionId,
+      required String examId,
+      required String userId}) async {
+    try {
+      getUserResultsOfExamQuery["filters"][0]["value"] = userId;
+      final response = await databaseservice.getData(
+          requirements: FireStoreRequirmentsEntity(
+            collection: BackendEndpoints.coursesCollection,
+            docId: courseId,
+            subCollection: BackendEndpoints.sectionsSubCollection,
+            subDocId: sectionId,
+            subCollection2: BackendEndpoints.sectionItemsSubCollection,
+            sub2DocId: examId,
+            subCollection3: BackendEndpoints.testResultsSubCollection,
+          ),
+          query: getUserResultsOfExamQuery);
+      if (response.listData == null) {
+        return left(ServerFailure(message: "البيانات غير موجودة"));
+      }
+      if (response.listData!.isEmpty) {
+        return right([]);
+      }
+      return right(
+          _parseTestResults(response.listData! as List<Map<String, dynamic>>));
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e, s) {
+      log("error in user results of exam $e", stackTrace: s);
       return left(ServerFailure(message: "حدث خطاء"));
     }
   }

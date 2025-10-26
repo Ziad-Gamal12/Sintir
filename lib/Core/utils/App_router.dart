@@ -22,6 +22,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFedBackView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFilePreviewer_View.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseIntroductionView.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseTestOverviewView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/ReviewTestResultView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/SendCourseReportView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/courseTestView.dart';
@@ -369,6 +370,15 @@ class App_router {
         builder: (BuildContext context, GoRouterState state) {
           return PayOutBalance(
             walletEntity: state.extra as TeacherWalletEntity,
+          );
+        },
+      ),
+      GoRoute(
+        path: CourseTestOverViewView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return CourseTestOverViewView(
+            coursetestviewnavigationsrequirmentsentity:
+                state.extra as CourseExamViewNavigationsRequirmentsEntity,
           );
         },
       ),
