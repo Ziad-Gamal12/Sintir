@@ -42,9 +42,9 @@ class PayOutBalanceBodButton extends StatelessWidget {
               ShowErrorSnackBar(
                   context: context, message: "لا يوجد مبلغ كافي في المحفظه");
             }
+          } else {
+            ShowErrorSnackBar(context: context, message: "المحفظه غير مفعلة");
           }
-        } else {
-          ShowErrorSnackBar(context: context, message: "المحفظه غير مفعلة");
         }
       },
     );

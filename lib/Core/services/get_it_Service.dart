@@ -45,6 +45,8 @@ import 'package:sintir/Features/Ai_Teacher/data/repos_impli/AiTeacherRepo_Impli.
 import 'package:sintir/Features/Ai_Teacher/domain/Repos/AITeacherRepo.dart';
 import 'package:sintir/Features/Auth/Data/repos/AuthRepoImpl.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/TeacherWalletRepoImpl.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/TeacherWalletRepo.dart';
 
 final getIt = GetIt.instance;
 
@@ -101,5 +103,10 @@ void setup_Getit() {
       CourseCouponsRepoImp(databaseservice: getIt<Databaseservice>()));
   getIt.registerSingleton<PaymobPayoutRepo>(
     PaymobPayoutRepoImpl(service: PaymobPayoutService()),
+  );
+  getIt.registerLazySingleton<TeacherWalletRepo>(
+    () => TeacherWalletRepoImpl(
+      databaseservice: getIt<Databaseservice>(),
+    ),
   );
 }

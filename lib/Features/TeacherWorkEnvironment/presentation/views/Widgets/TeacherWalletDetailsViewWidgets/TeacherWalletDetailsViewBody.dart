@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
+import 'package:sintir/Core/helper/ShowBottomSheet.dart';
+import 'package:sintir/Core/repos/PaymobPayoutRepo/PaymobPayoutRepo.dart';
+import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/PayOutBalance.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/TeacherWalletRepo.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/PayOutBalanceWidgets/PayOutBalanceBody.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWalletBalanceDeatils.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWalletDetailsViewBodyWalletCardHeader.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/teacher_wallet_balance_details_row.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/CustomTeacherCardItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/payout_cubit/payout_cubit.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/update_teacher_wallet_cubit/update_teacher_wallet_cubit.dart';
 import 'package:sintir/constant.dart';
 
 class TeacherWalletDetailsViewBody extends StatelessWidget {
@@ -59,8 +65,27 @@ class TeacherWalletDetailsViewBody extends StatelessWidget {
               color: KMainColor,
               textColor: Colors.white,
               onPressed: () {
-                GoRouter.of(context).push(PayOutBalance.routeName,
-                    extra: user.teacherExtraDataEntity?.wallet);
+                showCustomBottomSheet(
+                    child: IntrinsicHeight(
+                      child: MultiBlocProvider(
+                        providers: [
+                          BlocProvider(
+                            create: (context) => PayoutCubit(
+                              payoutRepo: getIt<PaymobPayoutRepo>(),
+                            ),
+                          ),
+                          BlocProvider(
+                            create: (context) => UpdateTeacherWalletCubit(
+                              teacherWalletRepo: getIt<TeacherWalletRepo>(),
+                            ),
+                          ),
+                        ],
+                        child: PayOutBalanceBody(
+                          walletEntity: user.teacherExtraDataEntity!.wallet,
+                        ),
+                      ),
+                    ),
+                    context: context);
               })
         ],
       ),

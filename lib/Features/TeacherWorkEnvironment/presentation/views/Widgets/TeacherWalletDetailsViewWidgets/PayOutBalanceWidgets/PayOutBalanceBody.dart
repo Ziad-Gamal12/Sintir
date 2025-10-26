@@ -7,10 +7,12 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/PayOutBalanceWidgets/PayOutBalanceBodyTextFields.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/PayOutBalanceWidgets/SelecteIssuerDropDownButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/payout_cubit/payout_cubit.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/update_teacher_wallet_cubit/update_teacher_wallet_cubit.dart';
 import 'package:sintir/constant.dart';
 
 class PayOutBalanceBody extends StatefulWidget {
   const PayOutBalanceBody({super.key, required this.walletEntity});
+
   final TeacherWalletEntity walletEntity;
 
   @override
@@ -21,8 +23,10 @@ class _PayOutBalanceBodyState extends State<PayOutBalanceBody> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController amountController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  String transactionId = "";
+
   String issuer = "vodafone";
+  String transactionId = "";
+  bool isLoading = false;
 
   @override
   void dispose() {
@@ -31,53 +35,101 @@ class _PayOutBalanceBodyState extends State<PayOutBalanceBody> {
     super.dispose();
   }
 
+  // --------------------- Bloc Listeners ---------------------
+
+  void _handlePayoutState(BuildContext context, PayoutState state) {
+    if (state is PayoutLoading) {
+      _setLoading(true);
+    } else if (state is PayoutSuccess) {
+      transactionId = state.transactionId;
+      _updateWalletBalance(context);
+    } else if (state is PayoutFailure) {
+      _setLoading(false);
+      ShowErrorSnackBar(context: context, message: state.message);
+    }
+  }
+
+  void _handleUpdateWalletState(
+      BuildContext context, UpdateTeacherWalletState state) {
+    if (state is UpdateTeacherWalletLoading) {
+      _setLoading(true);
+    } else if (state is UpdateTeacherWalletSuccess) {
+      _setLoading(false);
+      showSuccessSnackBar(context: context, message: "تم التحويل بنجاح");
+    } else if (state is UpdateTeacherWalletFailure) {
+      _setLoading(false);
+      ShowErrorSnackBar(context: context, message: state.errMessage);
+    }
+  }
+
+  void _updateWalletBalance(BuildContext context) {
+    context.read<UpdateTeacherWalletCubit>().updateTeacherWalletBalance(
+          teacherId: widget.walletEntity.teacherId,
+          balance:
+              widget.walletEntity.balance - double.parse(amountController.text),
+        );
+  }
+
+  void _setLoading(bool value) => setState(() => isLoading = value);
+
+  // --------------------- UI ---------------------
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<PayoutCubit, PayoutState>(
-      listener: (context, state) {
-        if (state is PayoutSuccess) {
-          transactionId = state.transactionId;
-          showSuccessSnackBar(context: context, message: state.transactionId);
-        } else if (state is PayoutFailure) {
-          ShowErrorSnackBar(context: context, message: state.message);
-        }
-      },
-      builder: (context, state) {
-        return Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: KHorizontalPadding,
-              vertical: KVerticalPadding,
-            ),
-            child: Form(
-              key: formKey,
-              child: Column(
-                children: [
-                  PayOutBalanceBodyTextFields(
-                      phoneController: phoneController,
-                      amountController: amountController),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SelecteIssuerDropDownButton(
-                    onSelected: (value) {
-                      issuer = value ?? "";
-                      setState(() {});
-                    },
-                  ),
-                  const Spacer(),
-                  Custom_Loading_Widget(
-                    isLoading: state is PayoutLoading,
-                    child: PayOutBalanceBodButton(
-                        formKey: formKey,
-                        issuer: issuer,
-                        walletEntity: widget.walletEntity,
-                        amountController: amountController,
-                        phoneController: phoneController),
-                  ),
-                ],
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<PayoutCubit, PayoutState>(listener: _handlePayoutState),
+        BlocListener<UpdateTeacherWalletCubit, UpdateTeacherWalletState>(
+          listener: _handleUpdateWalletState,
+        ),
+      ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: KHorizontalPadding,
+          vertical: KVerticalPadding,
+        ),
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              const Divider(
+                thickness: 1,
+                indent: 80,
+                endIndent: 80,
+                color: Colors.black,
               ),
-            ));
-      },
+              const SizedBox(height: 20),
+
+              /// Text Fields
+              PayOutBalanceBodyTextFields(
+                phoneController: phoneController,
+                amountController: amountController,
+              ),
+
+              const SizedBox(height: 20),
+
+              /// Issuer Dropdown
+              SelecteIssuerDropDownButton(
+                onSelected: (value) => setState(() => issuer = value ?? ""),
+              ),
+
+              const SizedBox(height: 80),
+
+              /// Submit Button + Loading
+              Custom_Loading_Widget(
+                isLoading: isLoading,
+                child: PayOutBalanceBodButton(
+                  formKey: formKey,
+                  issuer: issuer,
+                  walletEntity: widget.walletEntity,
+                  amountController: amountController,
+                  phoneController: phoneController,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

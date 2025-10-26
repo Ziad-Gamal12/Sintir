@@ -42,6 +42,10 @@ class _SelecteIssuerDropDownButtonState
         borderRadius: BorderRadius.circular(10),
         padding: const EdgeInsets.all(10),
         autofocus: true,
+        hint: Text(
+          "اختر المصدر",
+          style: AppTextStyles(context).regular14,
+        ),
         underline: Container(),
         focusColor: Colors.grey.shade200,
         items: [

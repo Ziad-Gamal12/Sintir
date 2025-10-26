@@ -20,7 +20,7 @@ class PayOutBalanceBodyTextFields extends StatelessWidget {
           child: CustomTextField(
             hintText: "رقم المحفظه",
             controller: phoneController,
-            prefixIcon: Icons.phone,
+            prefixIcon: Icons.wallet,
             obscureText: false,
             validator: (value) {
               if (value!.isEmpty) {
