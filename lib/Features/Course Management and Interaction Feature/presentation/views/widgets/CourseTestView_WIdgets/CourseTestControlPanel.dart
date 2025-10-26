@@ -1,40 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CourseTestViewBodyQuestionsInfo.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CourseTestViewBodyTestButtonsActions.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CoursetestviewBody.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/TimerDisplay.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/question_stats_row.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/test_timer_and_actions_row.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class CourseTestControlPanel extends StatelessWidget {
   const CourseTestControlPanel({
     super.key,
     required this.stopWatchTimer,
-    required this.widget,
+    required this.exam,
   });
 
   final StopWatchTimer stopWatchTimer;
-  final CoursetestviewBody widget;
+  final CourseTestEntity exam;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(12),
-      color: Colors.grey.shade100,
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade50,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade200,
+            blurRadius: 50,
+            spreadRadius: 1,
+            offset: const Offset(5, 15),
+          )
+        ],
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          TimerDisplay(
-            stopWatchTimer: stopWatchTimer,
-            timerStream: stopWatchTimer.rawTime,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const CourseTestViewBodyTestButtonsActions(),
-          const SizedBox(
-            height: 20,
-          ),
-          CourseTestViewBodyQuestionsInfo(),
+          /// Displays question stats (total, answered, unanswered)
+          QuestionStatsRow(exam: exam),
+
+          const SizedBox(height: 10),
+
+          /// Displays timer + test action buttons
+          TestTimerAndActionsRow(stopWatchTimer: stopWatchTimer),
         ],
       ),
     );

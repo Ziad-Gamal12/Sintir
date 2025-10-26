@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
@@ -7,13 +9,13 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/constant.dart';
 
 class Coursetestquestionsnavigation extends StatefulWidget {
-  const Coursetestquestionsnavigation({
+  Coursetestquestionsnavigation({
     super.key,
     required this.selectQuestionAction,
     required this.currentQuestionIndex,
   });
   final ValueChanged<int> selectQuestionAction;
-  final int currentQuestionIndex;
+  int currentQuestionIndex;
 
   @override
   State<Coursetestquestionsnavigation> createState() =>
@@ -22,8 +24,6 @@ class Coursetestquestionsnavigation extends StatefulWidget {
 
 class _CoursetestquestionsnavigationState
     extends State<Coursetestquestionsnavigation> {
-  int currentQuestionIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     CourseTestEntity test =
@@ -32,8 +32,8 @@ class _CoursetestquestionsnavigationState
       children: test.questions.asMap().entries.map((e) {
         return InkWell(
           onTap: () {
-            currentQuestionIndex = e.key;
-            widget.selectQuestionAction(currentQuestionIndex);
+            widget.currentQuestionIndex = e.key;
+            widget.selectQuestionAction(widget.currentQuestionIndex);
             e.value.isOpened = true;
             setState(() {});
           },

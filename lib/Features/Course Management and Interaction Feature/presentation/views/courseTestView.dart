@@ -30,7 +30,7 @@ class Coursetestview extends StatelessWidget {
           appBar: CustomAppBar(
               appBartitle:
                   coursetestviewnavigationsrequirmentsentity.test.title),
-          body: const CoursetestviewBody(),
+          body: const CourseTestViewBody(),
         ),
       ),
     );

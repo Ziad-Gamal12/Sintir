@@ -20,22 +20,18 @@ class CourseTestViewBodyTestButtonsActions extends StatelessWidget {
       builder: (context, state) {
         return Custom_Loading_Widget(
           isLoading: state is AddTestResultLoading,
-          child: Column(
-            children: [
-              Custombutton(
-                  text: "تسليم الأمتحان",
-                  color: Colors.red,
-                  textColor: Colors.white,
-                  onPressed: () {
-                    context.read<TestItemCubit>().addTestResults(
-                        context: context,
-                        test: requirements.test,
-                        sectionId: requirements.sectionId,
-                        sectionItemId: requirements.test.id,
-                        courseId: requirements.course.id);
-                  }),
-            ],
-          ),
+          child: Custombutton(
+              text: "تسليم الأمتحان",
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                context.read<TestItemCubit>().addTestResults(
+                    context: context,
+                    test: requirements.test,
+                    sectionId: requirements.sectionId,
+                    sectionItemId: requirements.test.id,
+                    courseId: requirements.course.id);
+              }),
         );
       },
     );

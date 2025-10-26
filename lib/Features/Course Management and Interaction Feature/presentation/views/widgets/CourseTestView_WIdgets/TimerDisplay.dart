@@ -80,13 +80,13 @@ class _TimerDisplayState extends State<TimerDisplay> {
         context.read<CourseExamViewNavigationsRequirmentsEntity>().test;
 
     return SizedBox(
-      height: 100,
-      width: 100,
+      height: MediaQuery.of(context).size.width * .16,
+      width: MediaQuery.of(context).size.width * .16,
       child: Stack(
         fit: StackFit.expand,
         children: [
           CircleAvatar(
-            radius: 60,
+            radius: MediaQuery.of(context).size.width * .09,
             backgroundColor: Colors.white,
             child: StreamBuilder<int>(
               stream: widget.timerStream,
@@ -102,7 +102,7 @@ class _TimerDisplayState extends State<TimerDisplay> {
                 return Text(
                   displayTime,
                   style: AppTextStyles(context)
-                      .semiBold20
+                      .regular13
                       .copyWith(color: Colors.black),
                 );
               },

@@ -1,74 +1,52 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestViewNavigationsRequirmentsEntity.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Core/widgets/CustomRadioWidget.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/QuestionTitleWidget.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/question_image_widget.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/question_options_list.dart';
 
-class CoursetestquestionItem extends StatefulWidget {
-  const CoursetestquestionItem(
-      {super.key,
-      required this.currentQuestionIndex,
-      required this.answerChange,
-      required this.selectedAnswer});
+class CourseTestQuestionItem extends StatelessWidget {
+  const CourseTestQuestionItem({
+    super.key,
+    required this.currentQuestionIndex,
+    required this.answerChange,
+    required this.selectedAnswer,
+  });
+
   final int currentQuestionIndex;
   final ValueChanged<String?> answerChange;
   final String selectedAnswer;
-  @override
-  State<CoursetestquestionItem> createState() => _CoursetestquestionItemState();
-}
 
-class _CoursetestquestionItemState extends State<CoursetestquestionItem> {
   @override
   Widget build(BuildContext context) {
-    CourseTestEntity test =
+    final CourseTestEntity test =
         context.read<CourseExamViewNavigationsRequirmentsEntity>().test;
+    final question = test.questions[currentQuestionIndex];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "${widget.currentQuestionIndex + 1}-  ${test.questions[widget.currentQuestionIndex].questionTitle}",
-          style:
-              AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
-          textAlign: TextAlign.right,
+        QuestionTitleWidget(
+          index: currentQuestionIndex,
+          title: question.questionTitle ?? "",
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         Row(
           children: [
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: test.questions[widget.currentQuestionIndex].solutions
-                    .asMap()
-                    .entries
-                    .map((e) {
-                  return Row(
-                    children: [
-                      CustomRadioWidget(
-                          value: e.value.answer,
-                          groupValue: widget.selectedAnswer,
-                          onchange: widget.answerChange),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(test.questions[widget.currentQuestionIndex]
-                          .solutions[e.key].answer)
-                    ],
-                  );
-                }).toList(),
+              flex: 2,
+              child: QuestionOptionsList(
+                solutions: question.solutions,
+                selectedAnswer: selectedAnswer,
+                onChanged: answerChange,
               ),
             ),
+            const SizedBox(width: 10),
             Expanded(
-                child:
-                    test.questions[widget.currentQuestionIndex].imageUrl != null
-                        ? CachedNetworkImage(
-                            imageUrl: test
-                                .questions[widget.currentQuestionIndex]
-                                .imageUrl!)
-                        : const SizedBox())
+              flex: 1,
+              child: QuestionImageWidget(imageUrl: question.imageUrl),
+            ),
           ],
         ),
       ],
