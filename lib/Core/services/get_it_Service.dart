@@ -107,6 +107,7 @@ void setup_Getit() {
   getIt.registerLazySingleton<TeacherWalletRepo>(
     () => TeacherWalletRepoImpl(
       databaseservice: getIt<Databaseservice>(),
+      authRepo: getIt<AuthRepo>(),
     ),
   );
 }

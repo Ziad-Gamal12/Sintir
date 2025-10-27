@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomMyCoursesGridHeader.dart';
-import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomSearchTextField.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/CustomMyCoursesSliverGrideView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/CustomTeacherCardItem.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/TeacherWorkenvironmentviewBodyWalletSectionHeader.dart';
@@ -68,23 +65,8 @@ class _TeacherWorkenvironmentviewBodyState
               color: Color(0xffE5E5EA),
             ),
           ),
-          SliverToBoxAdapter(
-            child: Row(
-              children: [
-                const Custommycoursesgridheader(),
-                const Spacer(),
-                Expanded(
-                  child: Custombutton(
-                      text: "اضافة كورس",
-                      color: Colors.grey.shade50,
-                      textColor: Colors.black,
-                      borderRadius: BorderRadius.circular(8),
-                      onPressed: () {
-                        GoRouter.of(context).push(Addcourseview.routeName);
-                      }),
-                ),
-              ],
-            ),
+          const SliverToBoxAdapter(
+            child: Custommycoursesgridheader(),
           ),
           const SliverToBoxAdapter(
             child: SizedBox(

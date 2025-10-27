@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/AddCourseFloatingActionButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/TeacherWorkenvironmentviewBody.dart';
 
 class TeacherWorkenvironmentview extends StatelessWidget {
@@ -11,6 +12,9 @@ class TeacherWorkenvironmentview extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(appBartitle: "بيئة العمل"),
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: const AddCourseFloatingActionButton(),
       body: TeacherWorkenvironmentviewBody(myCourses: myCourses),
     );
   }

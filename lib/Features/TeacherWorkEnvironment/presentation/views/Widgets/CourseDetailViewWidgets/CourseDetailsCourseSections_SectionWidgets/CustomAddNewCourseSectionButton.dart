@@ -14,16 +14,14 @@ class CustomAddNewCourseSectionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 40,
-      left: 0,
-      right: 0,
-      child: InkWell(
-        onTap: () {
-          GoRouter.of(context)
-              .push(Addcoursesectionview.routeName, extra: course);
-        },
-        child: const CircleAvatar(
+    return InkWell(
+      onTap: () {
+        GoRouter.of(context)
+            .push(Addcoursesectionview.routeName, extra: course);
+      },
+      child: const Tooltip(
+        message: "اضافة قسم جديد",
+        child: CircleAvatar(
           backgroundColor: KMainColor,
           radius: 35,
           child: Icon(

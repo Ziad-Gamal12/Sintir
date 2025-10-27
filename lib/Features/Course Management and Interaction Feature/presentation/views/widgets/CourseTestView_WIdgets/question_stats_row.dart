@@ -12,7 +12,7 @@ class QuestionStatsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final total = exam.questions.length;
     final answered =
-        exam.questions.where((e) => e.selectedSolution != null).length;
+        exam.questions.where((e) => e.selectedSolution != "").length;
     final unanswered = total - answered;
 
     return Row(

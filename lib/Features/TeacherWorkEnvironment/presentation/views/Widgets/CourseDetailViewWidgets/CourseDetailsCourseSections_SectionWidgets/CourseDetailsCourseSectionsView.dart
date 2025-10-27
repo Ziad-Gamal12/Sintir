@@ -8,6 +8,7 @@ import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsViewBody.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomAddNewCourseSectionButton.dart';
 
 class CourseDetailsCourseSectionsView extends StatelessWidget {
   const CourseDetailsCourseSectionsView(
@@ -22,6 +23,10 @@ class CourseDetailsCourseSectionsView extends StatelessWidget {
       child: Scaffold(
         key: Variables.courseSectionsViewScaffoldKey,
         appBar: const CustomAppBar(appBartitle: "المحتوى"),
+        floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton:
+            CustomAddNewCourseSectionButton(course: courseEntity),
         body: CourseDetailsCourseSectionsViewBody(
           courseEntity: courseEntity,
         ),

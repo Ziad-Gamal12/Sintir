@@ -5,7 +5,6 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomAddNewCourseSectionButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomCourseDetailsBodyCourseSections_LoadingSliverList.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomCourseDetailsBodyCourseSections_SliverList.dart';
 import 'package:sintir/constant.dart';
@@ -89,14 +88,14 @@ class _CourseDetailsCourseSectionsViewBodyState
             child: CustomErrorWidget(errormessage: state.errMessage),
           );
         }
-        return Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: KHorizontalPadding,
-                vertical: KVerticalPadding,
-              ),
-              child: CustomScrollView(
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: KHorizontalPadding,
+            vertical: KVerticalPadding,
+          ),
+          child: Stack(
+            children: [
+              CustomScrollView(
                 controller: scrollController,
                 slivers: [
                   if (state is GetCourseSectionsLoading &&
@@ -116,9 +115,8 @@ class _CourseDetailsCourseSectionsViewBodyState
                     )),
                 ],
               ),
-            ),
-            CustomAddNewCourseSectionButton(course: widget.courseEntity),
-          ],
+            ],
+          ),
         );
       },
     );
