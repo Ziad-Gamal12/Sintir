@@ -79,3 +79,24 @@ final class AddJoinedByFailure extends CourseSectionsState {
 final class AddJoinedBySuccess extends CourseSectionsState {}
 
 final class AddJoinedByLoading extends CourseSectionsState {}
+
+//delete section
+
+final class DeleteSectionFailure extends CourseSectionsState {
+  final String errMessage;
+  DeleteSectionFailure({required this.errMessage});
+}
+
+final class DeleteSectionSuccess extends CourseSectionsState {}
+
+final class DeleteSectionLoading extends CourseSectionsState {}
+// delete section item
+
+final class DeleteSectionItemFailure extends CourseSectionsState {
+  final String errMessage;
+  DeleteSectionItemFailure({required this.errMessage});
+}
+
+final class DeleteSectionItemSuccess extends CourseSectionsState {}
+
+final class DeleteSectionItemLoading extends CourseSectionsState {}

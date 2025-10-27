@@ -82,4 +82,33 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
       emit(GetSectionItemsSuccess(items: items, sectionId: sectionId));
     });
   }
+
+  Future<void> deleteSectionItem({
+    required String courseId,
+    required String sectionId,
+    required String sectionItemId,
+  }) async {
+    emit(DeleteSectionItemLoading());
+    final result = await coursesectionrepo.deleteSectionItem(
+        courseId: courseId, sectionId: sectionId, sectionItemId: sectionItemId);
+    result.fold((failure) {
+      emit(DeleteSectionItemFailure(errMessage: failure.message));
+    }, (success) {
+      emit(DeleteSectionItemSuccess());
+    });
+  }
+
+  Future<void> deleteSection({
+    required String courseId,
+    required String sectionId,
+  }) async {
+    emit(DeleteSectionLoading());
+    final result = await coursesectionrepo.deleteSection(
+        courseId: courseId, sectionId: sectionId);
+    result.fold((failure) {
+      emit(DeleteSectionFailure(errMessage: failure.message));
+    }, (success) {
+      emit(DeleteSectionSuccess());
+    });
+  }
 }
