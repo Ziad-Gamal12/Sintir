@@ -18,7 +18,7 @@ class CustomCourseDetailsBodyCourseSectionsLoadingSliverList
           padding: const EdgeInsets.symmetric(vertical: 5),
           child: Skeletonizer(
             enabled: true,
-            child: CustomCourseDetailsSectionsListViewitem(
+            child: CustomCourseDetailsSectionsListViewItem(
               course: course,
               sectionItem: gateFakLoadingCourseSections()[index],
             ),

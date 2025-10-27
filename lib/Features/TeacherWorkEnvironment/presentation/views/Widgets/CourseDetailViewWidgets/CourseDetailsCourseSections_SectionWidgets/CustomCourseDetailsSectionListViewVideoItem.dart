@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
@@ -33,17 +35,32 @@ class CustomCourseDetailsSectionListViewVideoItem extends StatelessWidget {
           ),
         );
       },
-      child: Customcontainersectionitem(
-          child: Customlisttilewidget(
-              subtitle: "${item.durationTime} دقائق",
-              title: item.title,
-              image: item.preffixImage,
-              trailing: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: CustomTrashIcon(
-                  onpressed: () {},
-                ),
-              ))),
+      child: BlocSelector<CourseSectionsCubit, CourseSectionsState, bool>(
+        selector: (state) {
+          return state is DeleteSectionItemLoading &&
+              state.sectionItemId == item.id;
+        },
+        builder: (context, state) {
+          return Customcontainersectionitem(
+              child: Customlisttilewidget(
+                  subtitle: "${item.durationTime} دقائق",
+                  title: item.title,
+                  image: item.preffixImage,
+                  trailing: Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: CustomTrashIcon(
+                      isLoading: state,
+                      onpressed: () {
+                        context.read<CourseSectionsCubit>().deleteSectionItem(
+                              courseId: course.id,
+                              sectionId: section.id,
+                              sectionItemId: item.id,
+                            );
+                      },
+                    ),
+                  )));
+        },
+      ),
     );
   }
 }

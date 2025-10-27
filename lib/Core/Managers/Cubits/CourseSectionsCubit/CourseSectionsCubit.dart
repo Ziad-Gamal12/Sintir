@@ -88,7 +88,9 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
     required String sectionId,
     required String sectionItemId,
   }) async {
-    emit(DeleteSectionItemLoading());
+    emit(DeleteSectionItemLoading(
+      sectionItemId: sectionId,
+    ));
     final result = await coursesectionrepo.deleteSectionItem(
         courseId: courseId, sectionId: sectionId, sectionItemId: sectionItemId);
     result.fold((failure) {
@@ -102,7 +104,9 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
     required String courseId,
     required String sectionId,
   }) async {
-    emit(DeleteSectionLoading());
+    emit(DeleteSectionLoading(
+      sectionId: sectionId,
+    ));
     final result = await coursesectionrepo.deleteSection(
         courseId: courseId, sectionId: sectionId);
     result.fold((failure) {

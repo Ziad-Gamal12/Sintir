@@ -68,6 +68,15 @@ class _CourseDetailsCourseSectionsViewBodyState
   Widget build(BuildContext context) {
     super.build(context);
     return BlocConsumer<CourseSectionsCubit, CourseSectionsState>(
+      buildWhen: (previous, current) {
+        return current is GetCourseSectionsSuccess ||
+            current is GetCourseSectionsFailure ||
+            current is GetCourseSectionsLoading;
+      },
+      listenWhen: (previous, current) {
+        return current is GetCourseSectionsSuccess ||
+            current is GetCourseSectionsFailure;
+      },
       listener: (context, state) {
         if (state is GetCourseSectionsSuccess) {
           if (state.response.isPaginate) {
@@ -93,28 +102,23 @@ class _CourseDetailsCourseSectionsViewBodyState
             horizontal: KHorizontalPadding,
             vertical: KVerticalPadding,
           ),
-          child: Stack(
-            children: [
-              CustomScrollView(
-                controller: scrollController,
-                slivers: [
-                  if (state is GetCourseSectionsLoading &&
-                      courseSections.isEmpty)
-                    CustomCourseDetailsBodyCourseSectionsLoadingSliverList(
-                      course: widget.courseEntity,
-                    )
-                  else if (courseSections.isNotEmpty)
-                    CustomCourseDetailsBodyCourseSections_SliverList(
-                      courseSections: courseSections,
-                      course: widget.courseEntity,
-                    )
-                  else if (state is! GetCourseSectionsLoading)
-                    SliverToBoxAdapter(
-                        child: CustomEmptyWidget(
-                      text: "لا يوجد محتوى في هذا الدورة",
-                    )),
-                ],
-              ),
+          child: CustomScrollView(
+            controller: scrollController,
+            slivers: [
+              if (state is GetCourseSectionsLoading && courseSections.isEmpty)
+                CustomCourseDetailsBodyCourseSectionsLoadingSliverList(
+                  course: widget.courseEntity,
+                )
+              else if (courseSections.isNotEmpty)
+                CustomCourseDetailsBodyCourseSections_SliverList(
+                  courseSections: courseSections,
+                  course: widget.courseEntity,
+                )
+              else if (state is! GetCourseSectionsLoading)
+                SliverToBoxAdapter(
+                    child: CustomEmptyWidget(
+                  text: "لا يوجد محتوى في هذا الدورة",
+                )),
             ],
           ),
         );

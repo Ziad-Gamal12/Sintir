@@ -89,7 +89,10 @@ final class DeleteSectionFailure extends CourseSectionsState {
 
 final class DeleteSectionSuccess extends CourseSectionsState {}
 
-final class DeleteSectionLoading extends CourseSectionsState {}
+final class DeleteSectionLoading extends CourseSectionsState {
+  final String sectionId;
+  DeleteSectionLoading({required this.sectionId});
+}
 // delete section item
 
 final class DeleteSectionItemFailure extends CourseSectionsState {
@@ -99,4 +102,7 @@ final class DeleteSectionItemFailure extends CourseSectionsState {
 
 final class DeleteSectionItemSuccess extends CourseSectionsState {}
 
-final class DeleteSectionItemLoading extends CourseSectionsState {}
+final class DeleteSectionItemLoading extends CourseSectionsState {
+  final String sectionItemId;
+  DeleteSectionItemLoading({required this.sectionItemId});
+}

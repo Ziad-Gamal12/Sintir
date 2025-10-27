@@ -3,75 +3,55 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
-import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
-import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
+import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomAddNewCourseSectionItemButton.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomCourseDetailsSectionListViewFileItem.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomCourseDetailsSectionListViewTestItem.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomCourseDetailsSectionListViewVideoItem.dart';
-import 'package:sintir/constant.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/course_section_items_builder.dart.dart';
 
-class CourseDetailsCourseSectionItemListView extends StatelessWidget {
-  const CourseDetailsCourseSectionItemListView(
-      {super.key,
-      required this.section,
-      required this.course,
-      required this.items});
+class CourseSectionItemList extends StatelessWidget {
+  const CourseSectionItemList({
+    super.key,
+    required this.section,
+    required this.course,
+    required this.items,
+  });
+
   final CourseSectionEntity section;
   final CourseEntity course;
   final List<dynamic> items;
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CourseSectionsCubit, CourseSectionsState>(
-        builder: (context, state) {
-      return Column(
-        children: [
-          CustomAddNewCourseSectionItemButton(
-            courseId: course.id,
-            section: section,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          state is GetSectionItemsLoading && state.sectionId == section.id
-              ? const CircularProgressIndicator(
-                  color: KMainColor,
-                )
-              : ListView.builder(
-                  itemCount: items.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      child: getChild(items[index], context),
-                    );
-                  },
-                )
-        ],
-      );
-    });
-  }
-
-  Widget getChild(dynamic item, BuildContext context) {
-    if (item is CourseVideoItemEntity) {
-      return CustomCourseDetailsSectionListViewVideoItem(
-        course: course,
-        item: item,
-        section: section,
-      );
-    } else if (item is CourseTestEntity) {
-      return CustomCourseDetailsSectionListViewTestItem(
-        course: course,
-        item: item,
-        section: section,
-      );
-    } else {
-      return CustomCourseDetailsSectionListViewFileItem(
-        section: section,
-        item: item,
-        course: course,
-      );
-    }
+    return BlocConsumer<CourseSectionsCubit, CourseSectionsState>(
+      buildWhen: (previous, current) =>
+          current is GetSectionItemsSuccess ||
+          current is GetSectionItemsFailure ||
+          current is GetSectionItemsLoading,
+      listener: (context, state) {
+        if (state is DeleteSectionItemSuccess) {
+          showSuccessSnackBar(
+            context: context,
+            message: "تم حذف العنصر بنجاح",
+          );
+        } else if (state is GetSectionItemsFailure) {
+          ShowErrorSnackBar(context: context, message: state.errMessage);
+        }
+      },
+      builder: (context, state) {
+        return Column(
+          children: [
+            CustomAddNewCourseSectionItemButton(
+              courseId: course.id,
+              section: section,
+            ),
+            const SizedBox(height: 10),
+            CourseSectionItemsBuilder(
+              items: items,
+              course: course,
+              section: section,
+            ),
+          ],
+        );
+      },
+    );
   }
 }

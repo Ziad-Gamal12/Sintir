@@ -16,10 +16,10 @@ class CustomAddNewCourseSectionItemButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Custombutton(
         text: "أضافة قسم جديد",
-        color: Colors.blue.shade50,
+        color: Colors.grey.shade50,
         textColor: Colors.black,
         borderRadius: BorderRadius.circular(8),
-        side: BorderSide(color: Colors.blue.shade300),
+        side: BorderSide(color: Colors.grey.shade300),
         onPressed: () {
           showCustomBottomSheet(
             context: context,
