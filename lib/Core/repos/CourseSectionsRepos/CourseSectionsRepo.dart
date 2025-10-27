@@ -22,4 +22,13 @@ abstract class CourseSectionsRepo {
   // SectionItemsActionsRepo
   Future<Either<Failure, List>> getSectionsItems(
       {required String courseId, required String sectionId});
+  Future<Either<Failure, void>> deleteSection({
+    required String courseId,
+    required String sectionId,
+  });
+  Future<Either<Failure, void>> deleteSectionItem({
+    required String courseId,
+    required String sectionId,
+    required String sectionItemId,
+  });
 }

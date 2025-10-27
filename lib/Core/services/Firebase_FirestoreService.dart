@@ -313,15 +313,28 @@ class FirebaseFirestoreservice implements Databaseservice {
       {required String collectionKey,
       required String docId,
       String? subCollectionKey,
+      String? subCollectionKey2,
+      String? subDocId2,
       String? subDocId}) async {
     try {
       if (subCollectionKey != null) {
-        await firestore
-            .collection(collectionKey)
-            .doc(docId)
-            .collection(subCollectionKey)
-            .doc(subDocId)
-            .delete();
+        if (subCollectionKey2 != null) {
+          await firestore
+              .collection(collectionKey)
+              .doc(docId)
+              .collection(subCollectionKey)
+              .doc(subDocId)
+              .collection(subCollectionKey2)
+              .doc(subDocId2)
+              .delete();
+        } else {
+          await firestore
+              .collection(collectionKey)
+              .doc(docId)
+              .collection(subCollectionKey)
+              .doc(subDocId)
+              .delete();
+        }
       } else {
         await firestore.collection(collectionKey).doc(docId).delete();
       }

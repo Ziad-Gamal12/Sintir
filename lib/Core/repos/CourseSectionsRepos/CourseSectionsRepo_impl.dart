@@ -226,4 +226,44 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
     }
     return items;
   }
+
+  @override
+  Future<Either<Failure, void>> deleteSection(
+      {required String courseId, required String sectionId}) async {
+    try {
+      await datebaseservice.deleteDoc(
+        collectionKey: BackendEndpoints.coursesCollection,
+        docId: courseId,
+        subCollectionKey: BackendEndpoints.sectionsSubCollection,
+        subDocId: sectionId,
+      );
+      return right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (_) {
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteSectionItem(
+      {required String courseId,
+      required String sectionId,
+      required String sectionItemId}) async {
+    try {
+      await datebaseservice.deleteDoc(
+        collectionKey: BackendEndpoints.coursesCollection,
+        docId: courseId,
+        subCollectionKey: BackendEndpoints.sectionsSubCollection,
+        subDocId: sectionId,
+        subCollectionKey2: BackendEndpoints.sectionItemsSubCollection,
+        subDocId2: sectionItemId,
+      );
+      return right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (_) {
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
 }
