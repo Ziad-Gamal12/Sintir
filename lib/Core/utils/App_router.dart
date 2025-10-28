@@ -30,6 +30,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Favorites/presentation/views/FavoritesView.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/ProfileView.dart';
+import 'package:sintir/Features/Search/Presentation/Views/SearchView.dart';
 import 'package:sintir/Features/Splash/Presentation/views/SplashView.dart';
 import 'package:sintir/Features/StudentOnboarding/Presentation/Views/StudentOnboardingView.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/SubscribtionView.dart';
@@ -380,6 +381,12 @@ class App_router {
             coursetestviewnavigationsrequirmentsentity:
                 state.extra as CourseExamViewNavigationsRequirmentsEntity,
           );
+        },
+      ),
+      GoRoute(
+        path: SearchView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const SearchView();
         },
       ),
     ],

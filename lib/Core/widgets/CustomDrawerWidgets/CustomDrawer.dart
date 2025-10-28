@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/Drawer_Entity.dart';
+import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/utils/Variables.dart';
-import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/widgets/CustomDrawerWidgets/CustomDrawerSettingsWidget.dart';
 import 'package:sintir/Core/widgets/CustomDrawerWidgets/CustomDrawerSignOutWidget.dart';
+import 'package:sintir/Core/widgets/CustomDrawerWidgets/CustomdrawerUserListTile.dart';
 import 'package:sintir/Core/widgets/CustomDrawerWidgets/Draweritem.dart';
-import 'package:sintir/Core/widgets/customListTileWidget.dart';
+import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 
 class Customdrawer extends StatefulWidget {
   const Customdrawer({super.key});
@@ -16,6 +17,7 @@ class Customdrawer extends StatefulWidget {
 }
 
 class _CustomdrawerState extends State<Customdrawer> {
+  UserEntity user = getUserData();
   int currentdraweritemIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -29,10 +31,7 @@ class _CustomdrawerState extends State<Customdrawer> {
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.all(10),
-                  child: Customlisttilewidget(
-                      title: "Lekan Okeowo",
-                      subtitle: "demo@gmail.com",
-                      image: Assets.assetsIconsSVGIconsUserAvatar),
+                  child: CustomdrawerUserListTile(user: user),
                 ),
               ),
               const SliverToBoxAdapter(

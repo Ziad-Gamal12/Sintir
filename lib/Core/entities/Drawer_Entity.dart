@@ -4,6 +4,7 @@ import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/Ai_Teacher/presentation/views/AiTeacherView.dart';
 import 'package:sintir/Features/Favorites/presentation/views/FavoritesView.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
+import 'package:sintir/Features/Search/Presentation/Views/SearchView.dart';
 
 class DrawerEntity {
   final String title;
@@ -31,7 +32,7 @@ class DrawerEntity {
           title: "البحث",
           activeIcon: Assets.assetsIconsSearch,
           inActiveIcon: Assets.assetsIconsSearch,
-          routeName: ""),
+          routeName: SearchView.routeName),
       DrawerEntity(
           title: "المنتدى",
           activeIcon: Assets.assetsIconsDrawerStudentsClub,

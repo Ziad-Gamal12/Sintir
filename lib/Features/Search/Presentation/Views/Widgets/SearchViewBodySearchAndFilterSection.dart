@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sintir/Core/helper/ShowBottomSheet.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomSearchTextField.dart';
+import 'package:sintir/Features/Search/Presentation/Views/Widgets/CustomFilterBottomSheetWidgets/CustomFilterBottomSheet.dart';
 
 class SearchViewBodySearchAndFilterSection extends StatelessWidget {
   const SearchViewBodySearchAndFilterSection({
@@ -22,9 +24,12 @@ class SearchViewBodySearchAndFilterSection extends StatelessWidget {
           width: 20,
         ),
         IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showCustomBottomSheet(
+                  child: const CustomFilterBottomSheet(), context: context);
+            },
             icon: const Icon(
-              FontAwesomeIcons.filter,
+              FontAwesomeIcons.barsStaggered,
               size: 25,
             ))
       ],
