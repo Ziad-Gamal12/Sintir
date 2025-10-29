@@ -8,4 +8,11 @@ class Contentcreaterentity {
       required this.profileImageUrl,
       required this.id,
       required this.title});
+  static Contentcreaterentity empty() => Contentcreaterentity(
+        name: 'loading',
+        profileImageUrl:
+            'https://cdn-icons-png.flaticon.com/128/149/149071.png',
+        id: 'loading',
+        title: 'loading',
+      );
 }

@@ -75,7 +75,8 @@ class _TeacherWorkenvironmentviewBodyState
           ),
           SliverToBoxAdapter(
             child: CustomSearchTextField(
-                controller: searchController, onSearchChanged: () {}),
+              controller: searchController,
+            ),
           ),
           const SliverToBoxAdapter(
             child: SizedBox(

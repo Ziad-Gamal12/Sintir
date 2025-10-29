@@ -30,10 +30,17 @@ class Contentcreatermodel {
   }
   factory Contentcreatermodel.fromJson({required Map data}) {
     return Contentcreatermodel(
-        name: data["name"],
+        name: data["name"] ?? "unknown",
         profileImageUrl: data["profileImageUrl"],
         id: data["id"],
         title: data["title"]);
+  }
+  factory Contentcreatermodel.fromTeacherJson({required Map data}) {
+    return Contentcreatermodel(
+        name: data["fullName"] ?? "unknown",
+        profileImageUrl: data["profilePicurl"],
+        id: data["uid"],
+        title: data["teacherExtraData"]["subject"]);
   }
   Contentcreaterentity toEntity() {
     return Contentcreaterentity(

@@ -14,7 +14,6 @@ class HomeHeader extends StatelessWidget {
         const SizedBox(height: 10),
         CustomSearchTextField(
           controller: controller,
-          onSearchChanged: () {},
         ),
       ],
     );

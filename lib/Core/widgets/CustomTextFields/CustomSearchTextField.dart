@@ -5,24 +5,12 @@ import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:svg_flutter/svg.dart';
 
-class CustomSearchTextField extends StatefulWidget {
-  const CustomSearchTextField(
-      {super.key, required this.controller, required this.onSearchChanged});
+class CustomSearchTextField extends StatelessWidget {
+  const CustomSearchTextField({
+    super.key,
+    required this.controller,
+  });
   final TextEditingController controller;
-  final void Function() onSearchChanged;
-  @override
-  State<CustomSearchTextField> createState() => _CustomSearchTextFieldState();
-}
-
-class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.controller.addListener(widget.onSearchChanged);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,7 +27,7 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
         ],
       ),
       child: TextField(
-        controller: widget.controller,
+        controller: controller,
         decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.only(top: 8, bottom: 7, right: 14, left: 16),

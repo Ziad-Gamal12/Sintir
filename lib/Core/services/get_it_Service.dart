@@ -45,69 +45,73 @@ import 'package:sintir/Features/Ai_Teacher/data/repos_impli/AiTeacherRepo_Impli.
 import 'package:sintir/Features/Ai_Teacher/domain/Repos/AITeacherRepo.dart';
 import 'package:sintir/Features/Auth/Data/repos/AuthRepoImpl.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
+import 'package:sintir/Features/Search/Data/Repos/SearchRepoImpl.dart';
+import 'package:sintir/Features/Search/Domain/Repos/SearchRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/TeacherWalletRepoImpl.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/TeacherWalletRepo.dart';
 
 final getIt = GetIt.instance;
 
 void setup_Getit() {
-  getIt.registerSingleton<firebaseAuthService>(firebaseAuthService());
-  getIt.registerSingleton<firebasestorageservice>(
-      firebasestorageservice(pickerassetsservice: Pickerassetsservice()));
-  getIt.registerSingleton<StorageService>(getIt<firebasestorageservice>());
-  getIt.registerSingleton<Dio>(Dio());
-  getIt.registerSingleton<Databaseservice>(FirebaseFirestoreservice());
-  getIt.registerSingleton<Sqfliteservices>(Sqfliteservices());
-  getIt.registerSingleton<Coursesrepo>(CoursesrepoImpl(
-      databaseservice: getIt<Databaseservice>(),
-      storageService: getIt<StorageService>()));
-  getIt.registerSingleton<Pickerassetsservice>(Pickerassetsservice());
-  getIt.registerSingleton<ResetPaswordRepo>(
-      ResetPaswordRepoImp(authService: firebaseAuthService()));
-  getIt.registerSingleton<AuthRepo>(AuthRepoImpl(
-      databaseservice: getIt<Databaseservice>(),
-      authService: getIt<firebaseAuthService>()));
-  getIt.registerSingleton<CourseSectionsRepo>(CourseSectionsRepoImpl(
-    datebaseservice: getIt<Databaseservice>(),
-  ));
-  getIt.registerSingleton<Assetspickerrepo>(
-      Assetspickerrepoimpli(pickerassetsservice: getIt<Pickerassetsservice>()));
-  getIt.registerSingleton<CourseSubscibtionsRepo>(
-      CourseSubscriptionsRepoImpl(databaseService: getIt<Databaseservice>()));
+  getIt.registerLazySingleton<Dio>(() => Dio());
+  getIt.registerLazySingleton<firebaseAuthService>(() => firebaseAuthService());
+  getIt.registerLazySingleton<Pickerassetsservice>(() => Pickerassetsservice());
+  getIt
+      .registerLazySingleton<Databaseservice>(() => FirebaseFirestoreservice());
+  getIt.registerLazySingleton<firebasestorageservice>(
+      () => firebasestorageservice(pickerassetsservice: getIt()));
+  getIt.registerLazySingleton<StorageService>(
+      () => getIt<firebasestorageservice>());
+  getIt.registerLazySingleton<Sqfliteservices>(() => Sqfliteservices());
 
-  getIt.registerSingleton<Testitemrepo>(TestItemRepoImpli(
-      storageService: getIt<StorageService>(),
-      databaseservice: getIt<Databaseservice>()));
-  getIt.registerSingleton<SectionItemsActionsRepo>(
-      SectionItemsActionsRepoImpli(datebaseservice: getIt<Databaseservice>()));
-  getIt.registerSingleton<VideoItemRepo>(VideoItemRepoImpli(
-    storageService: getIt<StorageService>(),
-    databaseservice: getIt<Databaseservice>(),
-  ));
-  getIt.registerSingleton<FileItemRepo>(FileItemRepoImpli(
-    storageService: getIt<StorageService>(),
-  ));
-  getIt.registerSingleton<AiTeacherRepo>(AiTeacherRepoImpli(
-    pickerassetsservice: getIt<Pickerassetsservice>(),
-    geminiApiService: GeminiApiService(dio: getIt<Dio>()),
-    elevenlabsApi: ElevenlabsApi(dio: getIt<Dio>()),
-  ));
-  getIt.registerSingleton<CourseReportsRepo>(
-      CourseReportsRepoimpli(databaseservice: getIt<Databaseservice>()));
-  getIt.registerSingleton<CourseFeedBacksRepo>(
-      CourseFeedBacksRepoImpli(databaseservice: getIt<Databaseservice>()));
-  getIt.registerSingleton<PaymobRepo>(
-      PaymobRepoImp(payMobService: PayMobService()));
+  getIt.registerLazySingleton<Coursesrepo>(() => CoursesrepoImpl(
+        databaseservice: getIt(),
+        storageService: getIt(),
+      ));
+  getIt.registerLazySingleton<CourseSectionsRepo>(
+      () => CourseSectionsRepoImpl(datebaseservice: getIt()));
+  getIt.registerLazySingleton<SectionItemsActionsRepo>(
+      () => SectionItemsActionsRepoImpli(datebaseservice: getIt()));
+  getIt.registerLazySingleton<VideoItemRepo>(() =>
+      VideoItemRepoImpli(storageService: getIt(), databaseservice: getIt()));
+  getIt.registerLazySingleton<FileItemRepo>(
+      () => FileItemRepoImpli(storageService: getIt()));
+  getIt.registerLazySingleton<Testitemrepo>(() =>
+      TestItemRepoImpli(storageService: getIt(), databaseservice: getIt()));
+  getIt.registerLazySingleton<Assetspickerrepo>(
+      () => Assetspickerrepoimpli(pickerassetsservice: getIt()));
+  getIt.registerLazySingleton<CourseSubscibtionsRepo>(
+      () => CourseSubscriptionsRepoImpl(databaseService: getIt()));
+  getIt.registerLazySingleton<CourseReportsRepo>(
+      () => CourseReportsRepoimpli(databaseservice: getIt()));
+  getIt.registerLazySingleton<CourseFeedBacksRepo>(
+      () => CourseFeedBacksRepoImpli(databaseservice: getIt()));
+  getIt.registerLazySingleton<CourseCouponsRepo>(
+      () => CourseCouponsRepoImp(databaseservice: getIt()));
 
-  getIt.registerSingleton<CourseCouponsRepo>(
-      CourseCouponsRepoImp(databaseservice: getIt<Databaseservice>()));
-  getIt.registerSingleton<PaymobPayoutRepo>(
-    PaymobPayoutRepoImpl(service: PaymobPayoutService()),
-  );
-  getIt.registerLazySingleton<TeacherWalletRepo>(
-    () => TeacherWalletRepoImpl(
-      databaseservice: getIt<Databaseservice>(),
-      authRepo: getIt<AuthRepo>(),
-    ),
-  );
+  getIt.registerLazySingleton<PaymobRepo>(
+      () => PaymobRepoImp(payMobService: PayMobService()));
+  getIt.registerLazySingleton<PaymobPayoutRepo>(
+      () => PaymobPayoutRepoImpl(service: PaymobPayoutService()));
+
+  getIt.registerLazySingleton<ResetPaswordRepo>(
+      () => ResetPaswordRepoImp(authService: getIt<firebaseAuthService>()));
+  getIt.registerLazySingleton<AuthRepo>(() => AuthRepoImpl(
+        databaseservice: getIt(),
+        authService: getIt(),
+      ));
+
+  getIt.registerLazySingleton<AiTeacherRepo>(() => AiTeacherRepoImpli(
+        pickerassetsservice: getIt(),
+        geminiApiService: GeminiApiService(dio: getIt()),
+        elevenlabsApi: ElevenlabsApi(dio: getIt()),
+      ));
+
+  getIt.registerLazySingleton<SearchRepo>(
+      () => SearchRepoImpl(databaseservice: getIt()));
+
+  getIt.registerLazySingleton<TeacherWalletRepo>(() => TeacherWalletRepoImpl(
+        databaseservice: getIt(),
+        authRepo: getIt(),
+      ));
 }

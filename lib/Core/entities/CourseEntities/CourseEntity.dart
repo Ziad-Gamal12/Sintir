@@ -23,13 +23,13 @@ class CourseEntity {
     this.contentcreaterentity,
   });
   factory CourseEntity.empty() => CourseEntity(
-      id: ' ',
-      state: ' ',
-      title: ' ',
-      description: ' ',
+      id: 'loading',
+      state: 'loading',
+      title: 'loading',
+      description: 'loading',
       price: 0,
-      language: ' ',
-      postedDate: ' ',
+      language: 'loading',
+      postedDate: 'loading',
       studentsCount: 0);
   static List<CourseEntity> fakeCourses =
       List.generate(10, (index) => CourseEntity.empty());

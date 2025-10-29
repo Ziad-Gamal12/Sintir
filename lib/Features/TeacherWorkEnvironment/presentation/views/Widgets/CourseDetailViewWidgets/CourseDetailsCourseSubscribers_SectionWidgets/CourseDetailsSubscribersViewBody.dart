@@ -92,7 +92,6 @@ class _CourseDetailsSubscribersViewBodyState
             const SizedBox(height: 20),
             CustomSearchTextField(
               controller: controller,
-              onSearchChanged: () {},
             ),
             const SizedBox(height: 20),
             if (state is GetCourseSubscribersLoading && _subscribers.isEmpty)

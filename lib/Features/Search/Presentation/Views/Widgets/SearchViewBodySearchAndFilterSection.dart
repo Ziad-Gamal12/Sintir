@@ -18,7 +18,8 @@ class SearchViewBodySearchAndFilterSection extends StatelessWidget {
       children: [
         Expanded(
           child: CustomSearchTextField(
-              controller: controller, onSearchChanged: () {}),
+            controller: controller,
+          ),
         ),
         const SizedBox(
           width: 20,

@@ -1,27 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
-import 'package:sintir/Core/helper/GridHelper.dart';
-import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
+import 'package:sintir/Features/Search/Presentation/Managers/cubit/search_cubit.dart';
+import 'package:sintir/Features/Search/Presentation/Views/Widgets/earch_courses_empty_widget.dart';
 
-class SearchViewBodyCoursesSliverGridView extends StatelessWidget {
-  const SearchViewBodyCoursesSliverGridView({super.key});
+import 'search_courses_error_widget.dart';
+import 'search_courses_grid.dart';
+import 'search_courses_loading_grid.dart';
+
+class SearchCoursesSliverGridView extends StatelessWidget {
+  const SearchCoursesSliverGridView({super.key, required this.courses});
+
+  final List<CourseEntity> courses;
 
   @override
   Widget build(BuildContext context) {
-    return SliverGrid.builder(
-      itemCount: 10,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount:
-            GridHelper.getCrossAxisCount(MediaQuery.of(context).size.width),
-        childAspectRatio: GridHelper.getAspectRatio(
-            maxWidth: MediaQuery.of(context).size.width),
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-      ),
-      itemBuilder: (context, index) => CustomCourseItem(
-        courseItem: CourseEntity.empty(),
-        ontap: () {},
-      ),
+    return BlocBuilder<SearchCubit, SearchState>(
+      buildWhen: (previous, current) =>
+          current is GetDefaultCoursesSuccess ||
+          current is GetDefaultCoursesFailure ||
+          current is GetDefaultCoursesLoading ||
+          current is SearchLoading ||
+          current is SearchFailure ||
+          current is SearchSuccess,
+      builder: (context, state) {
+        if (state is GetDefaultCoursesFailure) {
+          return SearchCoursesErrorWidget(errorMessage: state.errorMessage);
+        } else if (state is SearchFailure) {
+          return SearchCoursesErrorWidget(errorMessage: state.errorMessage);
+        } else if (state is GetDefaultCoursesLoading ||
+            state is SearchLoading) {
+          return const SearchCoursesLoadingGrid();
+        } else if (state is GetDefaultCoursesSuccess ||
+            state is SearchSuccess && courses.isEmpty) {
+          return const SearchCoursesEmptyWidget();
+        }
+        return SearchCoursesGrid(courses: courses);
+      },
     );
   }
 }
