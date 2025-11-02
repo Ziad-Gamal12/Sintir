@@ -40,7 +40,7 @@ class CourseSectionItemList extends StatelessWidget {
         return Column(
           children: [
             CustomAddNewCourseSectionItemButton(
-              courseId: course.id,
+              courseEntity: course,
               section: section,
             ),
             const SizedBox(height: 10),

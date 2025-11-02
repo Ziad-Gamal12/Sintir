@@ -31,8 +31,9 @@ class SearchTeachersListView extends StatelessWidget {
           return SearchTeachersErrorWidget(errorMessage: state.errorMessage);
         } else if (state is SearchFailure) {
           return SearchTeachersErrorWidget(errorMessage: state.errorMessage);
-        } else if (state is GetDefaultTeachersSuccess ||
-            state is SearchSuccess && teachersList.isEmpty) {
+        } else if ((state is GetDefaultTeachersSuccess ||
+                state is SearchSuccess) &&
+            teachersList.isEmpty) {
           return const SearchTeachersEmptyWidget();
         } else if (state is GetDefaultTeachersLoading ||
             state is SearchLoading) {

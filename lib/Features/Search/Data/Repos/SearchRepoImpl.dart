@@ -11,6 +11,7 @@ import 'package:sintir/Core/models/CourseModel.dart';
 import 'package:sintir/Core/models/contentCreaterModel.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
+import 'package:sintir/Features/Search/Domain/Entities/CustomFilterEntity.dart';
 import 'package:sintir/Features/Search/Domain/Entities/SearchResponse.dart';
 import 'package:sintir/Features/Search/Domain/Repos/SearchRepo.dart';
 
@@ -19,20 +20,18 @@ class SearchRepoImpl implements SearchRepo {
   SearchRepoImpl({required this.databaseservice});
 
   @override
-  Future<Either<Failure, SearchResponse>> search({
-    required String keyword,
-  }) async {
+  Future<Either<Failure, SearchResponse>> search(
+      {required String keyword,
+      required CourseFilterEntity? filters,
+      required String? userId}) async {
     try {
       final results = await Future.wait([
-        searchCourses(
-          keyword: keyword,
-        ),
+        searchCourses(keyword: keyword, filters: filters, userId: userId),
         searchTeachers(
           keyword: keyword,
         ),
         searchCoursesByContentCreatorName(
-          keyword: keyword,
-        ),
+            keyword: keyword, filters: filters, userId: userId),
       ]);
       final searchCoursesResponse = results[0];
       final searchTeachersResponse = results[1];
@@ -64,8 +63,10 @@ class SearchRepoImpl implements SearchRepo {
         ),
       );
     } on CustomException catch (e) {
+      log(e.toString());
       return Left(ServerFailure(message: e.message));
     } catch (e) {
+      log(e.toString());
       return Left(
           ServerFailure(message: "حدث خطأ ما يرجى المحاولة في وقت لاحق"));
     }
@@ -87,15 +88,37 @@ class SearchRepoImpl implements SearchRepo {
   };
 
   @override
-  Future<SearchResponse> searchCourses({
-    required String? keyword,
-  }) async {
+  Future<SearchResponse> searchCourses(
+      {required String? keyword,
+      required CourseFilterEntity? filters,
+      required String? userId}) async {
+    if (filters != null) {
+      final filterMap = applyFilters(filters: filters);
+      if (filterMap["filters"] != null) {
+        (searchCoursesQuery["filters"] as List)
+            .addAll(filterMap["filters"] as List);
+      }
+      if (filterMap["orderBy"] != null) {
+        searchCoursesQuery["orderBy"] = filterMap["orderBy"];
+      }
+    }
     searchCoursesQuery["searchValue"] = keyword;
-
-    final response = await databaseservice.getData(
-      requirements: FireStoreRequirmentsEntity(
+    FireStoreRequirmentsEntity requirmentsEntity;
+    if (filters != null &&
+        filters.showSubscribedCourses == true &&
+        userId != null) {
+      requirmentsEntity = FireStoreRequirmentsEntity(
+        collection: BackendEndpoints.usersCollectionName,
+        docId: userId,
+        subCollection: BackendEndpoints.subscribetoCourseCollection,
+      );
+    } else {
+      requirmentsEntity = FireStoreRequirmentsEntity(
         collection: BackendEndpoints.coursesCollection,
-      ),
+      );
+    }
+    final response = await databaseservice.getData(
+      requirements: requirmentsEntity,
       query: searchCoursesQuery,
     );
 
@@ -187,15 +210,38 @@ class SearchRepoImpl implements SearchRepo {
   };
 
   @override
-  Future<SearchResponse> searchCoursesByContentCreatorName({
-    required String keyword,
-  }) async {
+  Future<SearchResponse> searchCoursesByContentCreatorName(
+      {required String keyword,
+      required CourseFilterEntity? filters,
+      required String? userId}) async {
+    if (filters != null) {
+      final filterMap = applyFilters(filters: filters);
+      if (filterMap["filters"] != null) {
+        (searchCoursesQuery["filters"] as List)
+            .addAll(filterMap["filters"] as List);
+      }
+      if (filterMap["orderBy"] != null) {
+        searchCoursesQuery["orderBy"] = filterMap["orderBy"];
+      }
+    }
     searchCoursesByContentCreatorQuery["searchValue"] = keyword;
+    FireStoreRequirmentsEntity requirmentsEntity;
+    if (filters != null &&
+        filters.showSubscribedCourses == true &&
+        userId != null) {
+      requirmentsEntity = FireStoreRequirmentsEntity(
+        collection: BackendEndpoints.usersCollectionName,
+        docId: userId,
+        subCollection: BackendEndpoints.subscribetoCourseCollection,
+      );
+    } else {
+      requirmentsEntity = FireStoreRequirmentsEntity(
+        collection: BackendEndpoints.coursesCollection,
+      );
+    }
 
     final response = await databaseservice.getData(
-      requirements: FireStoreRequirmentsEntity(
-        collection: BackendEndpoints.coursesCollection,
-      ),
+      requirements: requirmentsEntity,
       query: searchCoursesByContentCreatorQuery,
     );
 
@@ -221,15 +267,17 @@ class SearchRepoImpl implements SearchRepo {
   }
 
   @override
-  Future<Either<Failure, SearchResponse>> getDefaultCourses() async {
+  Future<Either<Failure, SearchResponse>> getDefaultCourses(
+      {required CourseFilterEntity? filters, required String? userId}) async {
     try {
-      final response = await searchCourses(
-        keyword: null,
-      );
+      final response =
+          await searchCourses(keyword: null, filters: filters, userId: userId);
       return right(response);
-    } on CustomException catch (e) {
+    } on CustomException catch (e, s) {
+      log(e.toString(), stackTrace: s);
       return left(ServerFailure(message: e.message));
-    } catch (e) {
+    } catch (e, s) {
+      log(e.toString(), stackTrace: s);
       return left(ServerFailure(message: "حدث خطاء"));
     }
   }
@@ -247,6 +295,53 @@ class SearchRepoImpl implements SearchRepo {
       log(e.toString(), stackTrace: s);
       return left(ServerFailure(message: "حدث خطاء"));
     }
+  }
+
+  Map<String, dynamic> applyFilters({required CourseFilterEntity filters}) {
+    Map<String, dynamic> query = {"filters": [], "orderBy": []};
+    if (filters.showPaidCourses != null && filters.showPaidCourses == true) {
+      query["filters"].add({"field": "price", "operator": ">", "value": 0});
+    }
+    if (filters.showFreeCourses != null && filters.showFreeCourses == true) {
+      (query["filters"]).add({"field": "price", "operator": "==", "value": 0});
+    }
+    if (filters.maxPrice != null && filters.maxPrice != 0) {
+      (query["filters"])
+          .add({"field": "price", "operator": "<=", "value": filters.maxPrice});
+    }
+    if (filters.minPrice != null && filters.minPrice != 0) {
+      (query["filters"])
+          .add({"field": "price", "operator": ">=", "value": filters.minPrice});
+    }
+    if (filters.sortByHighestPrice != null &&
+        filters.sortByHighestPrice == true) {
+      (query["orderBy"]).add({
+        "field": "price",
+        "descending": true,
+      });
+    }
+    if (filters.sortByLowestPrice != null &&
+        filters.sortByLowestPrice == true) {
+      (query["orderBy"]).add({
+        "field": "price",
+        "descending": false,
+      });
+    }
+
+    if (filters.sortByNewest != null && filters.sortByNewest == true) {
+      (query["orderBy"]).add({
+        "field": "postedDate",
+        "descending": true,
+      });
+    }
+    if (filters.sortByPopularity != null && filters.sortByPopularity == true) {
+      (query["orderBy"]).add({
+        "field": "studentsCount",
+        "descending": true,
+      });
+    }
+
+    return query;
   }
 }
 

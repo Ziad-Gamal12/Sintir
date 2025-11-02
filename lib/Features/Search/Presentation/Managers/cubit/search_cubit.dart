@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:sintir/Features/Search/Domain/Entities/CustomFilterEntity.dart';
 import 'package:sintir/Features/Search/Domain/Entities/SearchResponse.dart';
 import 'package:sintir/Features/Search/Domain/Repos/SearchRepo.dart';
 
@@ -11,13 +12,13 @@ class SearchCubit extends Cubit<SearchState> {
   }) : super(SearchInitial());
   final SearchRepo searchRepo;
 
-  Future<void> search({
-    required String keyword,
-  }) async {
+  Future<void> search(
+      {required String keyword,
+      required String? userId,
+      required CourseFilterEntity? filters}) async {
     emit(SearchLoading());
     final result = await searchRepo.search(
-      keyword: keyword,
-    );
+        keyword: keyword, filters: filters, userId: userId);
 
     result.fold(
       (failure) => emit(SearchFailure(errorMessage: failure.message)),
@@ -25,9 +26,11 @@ class SearchCubit extends Cubit<SearchState> {
     );
   }
 
-  Future<void> getDefaultCourses() async {
+  Future<void> getDefaultCourses(
+      {required CourseFilterEntity? filters, required String? userId}) async {
     emit(GetDefaultCoursesLoading());
-    final result = await searchRepo.getDefaultCourses();
+    final result =
+        await searchRepo.getDefaultCourses(filters: filters, userId: userId);
     result.fold(
       (failure) =>
           emit(GetDefaultCoursesFailure(errorMessage: failure.message)),

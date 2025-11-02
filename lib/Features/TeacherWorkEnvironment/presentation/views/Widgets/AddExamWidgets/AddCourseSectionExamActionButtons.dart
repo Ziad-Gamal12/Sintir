@@ -68,7 +68,7 @@ class AddCourseSectionExamActionButtons extends StatelessWidget {
               isNewSection: optionnavigationrequirementsentity.isNewSection,
               coursetestentity: courseTestEntity,
               section: optionnavigationrequirementsentity.section,
-              courseID: optionnavigationrequirementsentity.courseID));
+              courseEntity: optionnavigationrequirementsentity.courseEntity));
     }
   }
 }

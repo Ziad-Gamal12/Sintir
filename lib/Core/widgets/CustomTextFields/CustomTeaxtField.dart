@@ -30,8 +30,8 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var border = const OutlineInputBorder(
-        borderSide: BorderSide.none,
+    OutlineInputBorder border = const OutlineInputBorder(
+        borderSide: BorderSide(color: Color(0xffDDDFDF), width: 1),
         borderRadius: BorderRadius.all(Radius.circular(14)));
     return TextFormField(
       onSaved: onSaved,

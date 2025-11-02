@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:sintir/Features/Search/Domain/Entities/CustomFilterEntity.dart';
 import 'package:sintir/Features/Search/Presentation/Views/Widgets/CustomFilterBottomSheetWidgets/ApplyButtonRow.dart';
 import 'package:sintir/Features/Search/Presentation/Views/Widgets/CustomFilterBottomSheetWidgets/CustomFilterPriceSection.dart';
 import 'package:sintir/Features/Search/Presentation/Views/Widgets/CustomFilterBottomSheetWidgets/CustomFilterSortByPriceSection.dart';
@@ -11,7 +12,8 @@ import 'package:sintir/Features/Search/Presentation/Views/Widgets/CustomFilterBo
 import 'package:sintir/constant.dart';
 
 class CustomFilterBottomSheetBody extends StatefulWidget {
-  const CustomFilterBottomSheetBody({super.key});
+  const CustomFilterBottomSheetBody({super.key, required this.onFilterChanged});
+  final ValueChanged<CourseFilterEntity?> onFilterChanged;
 
   @override
   State<CustomFilterBottomSheetBody> createState() =>
@@ -36,30 +38,32 @@ class _CustomFilterBottomSheetBodyState
             child: ListView(
               shrinkWrap: true,
               physics: const BouncingScrollPhysics(),
-              children: const [
-                SizedBox(height: 6),
-                FilterSectionCard(
+              children: [
+                const SizedBox(height: 6),
+                const FilterSectionCard(
                   title: "السعر",
                   child: CustomFilterPriceSection(),
                 ),
-                SizedBox(height: 12),
-                FilterSectionCard(
+                const SizedBox(height: 12),
+                const FilterSectionCard(
                   title: "الأشتراك",
                   child: CustomFilterSubscribtionSection(),
                 ),
-                SizedBox(height: 12),
-                FilterSectionCard(
+                const SizedBox(height: 12),
+                const FilterSectionCard(
                   title: "ترتيب حسب السعر",
                   child: CustomFilterSortByPriceSection(),
                 ),
-                SizedBox(height: 12),
-                FilterSectionCard(
+                const SizedBox(height: 12),
+                const FilterSectionCard(
                   title: "ترتيب أضافي",
                   child: CustomFilterSortPopularityAndNewestSection(),
                 ),
-                SizedBox(height: 22),
-                ApplyButtonRow(),
-                SizedBox(height: 8),
+                const SizedBox(height: 22),
+                ApplyButtonRow(
+                  onFilterChanged: widget.onFilterChanged,
+                ),
+                const SizedBox(height: 8),
               ],
             ),
           ),

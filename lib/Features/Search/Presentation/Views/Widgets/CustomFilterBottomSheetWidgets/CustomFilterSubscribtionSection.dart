@@ -24,6 +24,7 @@ class _CustomFilterSubscribtionSectionState
             onchange: (value) {
               setState(() => subscribtiongroupValue = value ?? "-1");
               context.read<CourseFilterEntity>().showSubscribedCourses = true;
+              context.read<CourseFilterEntity>().showUnsubscribedCourses = true;
             },
             value: "subscribed",
             title: "مشترك"),
@@ -32,6 +33,7 @@ class _CustomFilterSubscribtionSectionState
             onchange: (value) {
               setState(() => subscribtiongroupValue = value ?? "0");
               context.read<CourseFilterEntity>().showUnsubscribedCourses = true;
+              context.read<CourseFilterEntity>().showSubscribedCourses = false;
             },
             value: "unsubscribed",
             title: "غير مشترك"),

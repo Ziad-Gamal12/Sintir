@@ -17,7 +17,7 @@ class CourseCouponsListViewLoading extends StatelessWidget {
           return Skeletonizer(
               enabled: true,
               child: AspectRatio(
-                aspectRatio: 2 / 1.3,
+                aspectRatio: 2 / 1.4,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 10,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/AddCourseSectionContentOptions.dart';
@@ -7,11 +8,11 @@ class CustomAddNewSectionItemBottomSheetChild extends StatelessWidget {
   const CustomAddNewSectionItemBottomSheetChild({
     super.key,
     required this.section,
-    required this.courseId,
+    required this.courseEntity,
   });
 
   final CourseSectionEntity section;
-  final String courseId;
+  final CourseEntity courseEntity;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class CustomAddNewSectionItemBottomSheetChild extends StatelessWidget {
           color: Colors.transparent),
       child: AddCourseSectionContentOptions(
         optionRequirementsEntity: OptionNavigationRequirementsEntity(
-            isNewSection: false, section: section, courseID: courseId),
+            isNewSection: false, section: section, courseEntity: courseEntity),
       ),
     );
   }

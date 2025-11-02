@@ -22,7 +22,7 @@ class Addcoursesectionview extends StatelessWidget {
     OptionNavigationRequirementsEntity optionnavigationrequirementsentity =
         OptionNavigationRequirementsEntity(
       isNewSection: true,
-      courseID: course.id,
+      courseEntity: course,
       section: CourseSectionEntity(
         title: "",
         subtitle: "",

@@ -25,6 +25,7 @@ class _CustomFilterSortByPriceSectionState
             onchange: (value) {
               setState(() => sortByPricegroupValue = value ?? "");
               context.read<CourseFilterEntity>().sortByLowestPrice = true;
+              context.read<CourseFilterEntity>().sortByHighestPrice = false;
             },
             value: "asc",
             title: "الأقل للأعلى"),
@@ -33,6 +34,7 @@ class _CustomFilterSortByPriceSectionState
             onchange: (value) {
               setState(() => sortByPricegroupValue = value ?? "");
               context.read<CourseFilterEntity>().sortByHighestPrice = true;
+              context.read<CourseFilterEntity>().sortByLowestPrice = false;
             },
             value: "desc",
             title: "الأعلى للأقل"),

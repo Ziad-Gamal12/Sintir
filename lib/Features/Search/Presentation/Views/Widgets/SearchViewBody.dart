@@ -28,7 +28,7 @@ class _SearchViewBodyState extends State<SearchViewBody> {
   @override
   void initState() {
     super.initState();
-    _controller.init(context);
+    _controller.init(context, filters: null, userId: null);
   }
 
   @override
@@ -52,7 +52,6 @@ class _SearchViewBodyState extends State<SearchViewBody> {
       },
       builder: (context, state) {
         final bool isSearching = _controller.isSearching;
-
         return Padding(
           padding: const EdgeInsets.symmetric(
               horizontal: KHorizontalPadding, vertical: KVerticalPadding),
@@ -60,12 +59,14 @@ class _SearchViewBodyState extends State<SearchViewBody> {
             slivers: [
               SliverToBoxAdapter(
                 child: SearchViewBodySearchAndFilterSection(
+                    isSearching: isSearching,
                     controller: _controller.textController),
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 20)),
               SliverToBoxAdapter(
                 child: SearchTeachersSection(
-                  teachers: isSearching ? searchedTeachers : defaultTeachers,
+                  teachers:
+                      isSearching == true ? searchedTeachers : defaultTeachers,
                 ),
               ),
               const SliverToBoxAdapter(
@@ -77,7 +78,8 @@ class _SearchViewBodyState extends State<SearchViewBody> {
                 child: SizedBox(height: 10),
               ),
               SearchCoursesSliverGridView(
-                  courses: isSearching ? searchedCourses : defaultCourses),
+                  courses:
+                      isSearching == true ? searchedCourses : defaultCourses),
             ],
           ),
         );

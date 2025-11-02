@@ -7,7 +7,9 @@ class CourseEntity {
   int price;
   final int studentsCount;
   String? posterUrl;
-  final String postedDate;
+  final DateTime postedDate;
+  final String subject;
+  final String level;
   Contentcreaterentity? contentcreaterentity;
 
   CourseEntity({
@@ -15,6 +17,8 @@ class CourseEntity {
     required this.state,
     this.posterUrl,
     required this.studentsCount,
+    required this.subject,
+    required this.level,
     required this.title,
     required this.description,
     required this.price,
@@ -29,7 +33,9 @@ class CourseEntity {
       description: 'loading',
       price: 0,
       language: 'loading',
-      postedDate: 'loading',
+      subject: 'loading',
+      level: 'loading',
+      postedDate: DateTime.now(),
       studentsCount: 0);
   static List<CourseEntity> fakeCourses =
       List.generate(10, (index) => CourseEntity.empty());

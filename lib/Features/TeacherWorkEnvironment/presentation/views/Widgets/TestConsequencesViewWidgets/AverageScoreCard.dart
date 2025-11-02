@@ -28,14 +28,22 @@ class _AverageScoreCardState extends State<AverageScoreCard> {
       },
       builder: (context, state) {
         if (state is TestConsequencesGetLowestScorFailure) {
-          return Text(
-            state.errMessage,
-            style: AppTextStyles(context).regular14.copyWith(color: Colors.red),
+          return Expanded(
+            child: Text(
+              state.errMessage,
+              overflow: TextOverflow.ellipsis,
+              style:
+                  AppTextStyles(context).regular14.copyWith(color: Colors.red),
+            ),
           );
         } else if (state is TestConsequencesGetHighestScorFailure) {
-          return Text(
-            state.errMessage,
-            style: AppTextStyles(context).regular14.copyWith(color: Colors.red),
+          return Expanded(
+            child: Text(
+              state.errMessage,
+              overflow: TextOverflow.ellipsis,
+              style:
+                  AppTextStyles(context).regular14.copyWith(color: Colors.red),
+            ),
           );
         }
         return Skeletonizer(

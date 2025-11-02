@@ -52,11 +52,13 @@ abstract class Variables {
     posterUrl:
         "https://img.freepik.com/free-psd/e-learning-online-courses-poster-template_23-2149109793.jpg",
     title: "أساسيات دمج الصور",
+    level: "",
+    subject: "",
     description:
         "في كريتيڤز إكس بنحقق معادلة صعبة، معادلة إنك تستمتع و في نفس الوقت تستفيد .",
     price: 120,
     language: "العربيه",
-    postedDate: "2022-12-12",
+    postedDate: DateTime.now(),
     contentcreaterentity: Contentcreaterentity(
         name: "Adel Gamal",
         profileImageUrl:

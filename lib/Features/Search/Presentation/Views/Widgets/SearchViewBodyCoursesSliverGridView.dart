@@ -31,8 +31,9 @@ class SearchCoursesSliverGridView extends StatelessWidget {
         } else if (state is GetDefaultCoursesLoading ||
             state is SearchLoading) {
           return const SearchCoursesLoadingGrid();
-        } else if (state is GetDefaultCoursesSuccess ||
-            state is SearchSuccess && courses.isEmpty) {
+        } else if ((state is GetDefaultCoursesSuccess ||
+                state is SearchSuccess) &&
+            courses.isEmpty) {
           return const SearchCoursesEmptyWidget();
         }
         return SearchCoursesGrid(courses: courses);

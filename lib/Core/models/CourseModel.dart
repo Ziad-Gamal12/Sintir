@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/models/contentCreaterModel.dart';
 
@@ -7,8 +8,9 @@ class Coursemodel {
   final String id, posterUrl, title, description, language, state;
   final int price;
   final int studentsCount;
-
-  final String postedDate;
+  final String subject;
+  final String level;
+  final DateTime postedDate;
   final Map contentcreaterentity;
 
   Coursemodel({
@@ -19,6 +21,8 @@ class Coursemodel {
     required this.description,
     required this.price,
     required this.language,
+    required this.subject,
+    required this.level,
     required this.state,
     required this.postedDate,
     required this.contentcreaterentity,
@@ -28,6 +32,8 @@ class Coursemodel {
     return Coursemodel(
       id: courseEntity.id,
       posterUrl: courseEntity.posterUrl ?? "",
+      subject: courseEntity.subject,
+      level: courseEntity.level,
       title: courseEntity.title,
       description: courseEntity.description,
       price: courseEntity.price,
@@ -50,9 +56,11 @@ class Coursemodel {
       description: json['description'],
       studentsCount: (json['studentsCount'] as num).toInt(),
       price: json['price'],
+      subject: json['subject'],
+      level: json['level'],
       language: json['language'],
       state: json['state'],
-      postedDate: json['postedDate'],
+      postedDate: (json['postedDate'] as Timestamp).toDate(),
       contentcreaterentity: json['contentcreaterentity'],
     );
   }
@@ -65,6 +73,8 @@ class Coursemodel {
       studentsCount: studentsCount,
       price: price,
       language: language,
+      subject: subject,
+      level: level,
       state: state,
       postedDate: postedDate,
       contentcreaterentity:
@@ -82,6 +92,8 @@ class Coursemodel {
       'contentcreaterentity': contentcreaterentity,
       'price': price,
       'language': language,
+      'subject': subject,
+      'level': level,
       'state': state,
       'postedDate': postedDate,
     };

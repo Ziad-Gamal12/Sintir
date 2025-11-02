@@ -26,6 +26,7 @@ class _CustomFilterPriceSectionState extends State<CustomFilterPriceSection> {
                 groupValue: pricegroupValue,
                 onchange: (value) {
                   context.read<CourseFilterEntity>().showPaidCourses = true;
+                  context.read<CourseFilterEntity>().showFreeCourses = false;
                   setState(() => pricegroupValue = value ?? "paid");
                 },
                 value: "paid",
@@ -34,6 +35,7 @@ class _CustomFilterPriceSectionState extends State<CustomFilterPriceSection> {
                 groupValue: pricegroupValue,
                 onchange: (value) {
                   context.read<CourseFilterEntity>().showFreeCourses = true;
+                  context.read<CourseFilterEntity>().showPaidCourses = false;
                   setState(() => pricegroupValue = value ?? "free");
                 },
                 value: "free",

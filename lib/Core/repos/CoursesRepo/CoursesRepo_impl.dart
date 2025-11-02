@@ -10,7 +10,6 @@ import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/GetCourseResonseEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
-import 'package:sintir/Core/helper/GetUID.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/models/CourseModel.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
@@ -54,7 +53,7 @@ class CoursesrepoImpl implements Coursesrepo {
         databaseservice.setData(
           data: data,
           requirements: FireStoreRequirmentsEntity(
-            collection: BackendEndpoints.teachersCollection,
+            collection: BackendEndpoints.usersCollectionName,
             docId: courseEntity.contentcreaterentity!.id,
             subCollection: BackendEndpoints.coursesCollection,
             subDocId: courseEntity.id,
@@ -77,13 +76,6 @@ class CoursesrepoImpl implements Coursesrepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     }
-  }
-
-  List<CourseEntity> _parseCourses(List<dynamic> listData) {
-    return listData
-        .map((e) =>
-            Coursemodel.fromJson(Map<String, dynamic>.from(e)).toEntity())
-        .toList();
   }
 
   DocumentSnapshot? _recentLastDoc;
@@ -139,7 +131,7 @@ class CoursesrepoImpl implements Coursesrepo {
           }
         ],
         "orderBy": "postedDate",
-        "descending": false,
+        "descending": true,
         "limit": 10,
       },
       requirements: FireStoreRequirmentsEntity(
@@ -209,8 +201,8 @@ class CoursesrepoImpl implements Coursesrepo {
         ),
         databaseservice.setData(
           requirements: FireStoreRequirmentsEntity(
-            collection: BackendEndpoints.teachersCollection,
-            docId: getUID(),
+            collection: BackendEndpoints.usersCollectionName,
+            docId: courseEntity.contentcreaterentity!.id,
             subCollection: BackendEndpoints.coursesCollection,
             subDocId: courseEntity.id,
           ),
@@ -224,4 +216,10 @@ class CoursesrepoImpl implements Coursesrepo {
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
+}
+
+List<CourseEntity> _parseCourses(List<dynamic> listData) {
+  return listData
+      .map((e) => Coursemodel.fromJson(Map<String, dynamic>.from(e)).toEntity())
+      .toList();
 }

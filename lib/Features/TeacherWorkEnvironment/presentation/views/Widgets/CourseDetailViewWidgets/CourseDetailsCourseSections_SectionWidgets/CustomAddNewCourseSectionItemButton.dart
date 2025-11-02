@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/helper/ShowBottomSheet.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
@@ -7,10 +8,10 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 class CustomAddNewCourseSectionItemButton extends StatelessWidget {
   const CustomAddNewCourseSectionItemButton({
     super.key,
-    required this.courseId,
+    required this.courseEntity,
     required this.section,
   });
-  final String courseId;
+  final CourseEntity courseEntity;
   final CourseSectionEntity section;
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class CustomAddNewCourseSectionItemButton extends StatelessWidget {
             context: context,
             child: IntrinsicHeight(
               child: CustomAddNewSectionItemBottomSheetChild(
-                  section: section, courseId: courseId),
+                  section: section, courseEntity: courseEntity),
             ),
           );
         });

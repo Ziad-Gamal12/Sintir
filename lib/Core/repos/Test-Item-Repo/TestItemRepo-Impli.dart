@@ -138,7 +138,7 @@ class TestItemRepoImpli implements Testitemrepo {
         return left(ServerFailure(message: "البيانات غير موجودة"));
       }
       if (response.listData!.isEmpty) {
-        return left(ServerFailure(message: "لم يتم العثور على النتيجه"));
+        return right(TestResultEntity.empty());
       }
       TestResultEntity result =
           Testresultemodel.fromJson(response.listData![0]).toEntity();
@@ -176,7 +176,7 @@ class TestItemRepoImpli implements Testitemrepo {
         return left(ServerFailure(message: "البيانات غير موجودة"));
       }
       if (response.listData!.isEmpty) {
-        return left(ServerFailure(message: "لم يتم العثور على النتيجه"));
+        return right(TestResultEntity.empty());
       }
       TestResultEntity result =
           Testresultemodel.fromJson(response.listData![0]).toEntity();

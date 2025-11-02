@@ -6,7 +6,6 @@ import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
-import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateExamReviewRequirmentsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewExamButtonAction.dart';
@@ -91,9 +90,10 @@ class ReviewExamSectionViewBody extends StatelessWidget {
           context: context,
           SuccessMessage: "تم اضافة الملف بنجاح",
           btnOkOnPress: () {
-            context.go(
-              Homeview.routeName,
-            );
+            context.go(CourseDetailsCourseSectionsView.routeName,
+                extra: context
+                    .read<NavigateExamReviewRequirmentsEntity>()
+                    .coursetestentity);
           }).show();
     }
   }
@@ -106,9 +106,10 @@ class ReviewExamSectionViewBody extends StatelessWidget {
           context: context,
           SuccessMessage: "تم اضافة الملف بنجاح",
           btnOkOnPress: () {
-            context.go(
-              CourseDetailsCourseSectionsView.routeName,
-            );
+            context.go(CourseDetailsCourseSectionsView.routeName,
+                extra: context
+                    .read<NavigateExamReviewRequirmentsEntity>()
+                    .coursetestentity);
           }).show();
     }
   }
@@ -119,11 +120,11 @@ class ReviewExamSectionViewBody extends StatelessWidget {
     if (navigatesqlreviewrequirmentsentity.isNewSection) {
       context.read<CourseSectionsCubit>().addCourseSection(
           sectionItem: navigatesqlreviewrequirmentsentity.coursetestentity,
-          courseId: navigatesqlreviewrequirmentsentity.courseID,
+          courseId: navigatesqlreviewrequirmentsentity.courseEntity.id,
           section: navigatesqlreviewrequirmentsentity.section);
     } else {
       context.read<TestItemCubit>().addTestItem(
-          courseId: navigatesqlreviewrequirmentsentity.courseID,
+          courseId: navigatesqlreviewrequirmentsentity.courseEntity.id,
           sectionId: navigatesqlreviewrequirmentsentity.section.id,
           test: navigatesqlreviewrequirmentsentity.coursetestentity);
     }

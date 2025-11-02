@@ -25,7 +25,7 @@ class AddCourseSectionContentOptions extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: GestureDetector(
               onTap: () {
-                onSave;
+                if (onSave != null) onSave!();
                 if (e.key == 1) {
                   GoRouter.of(context).push(AddcourseSectionExamview.routeName,
                       extra: optionRequirementsEntity);

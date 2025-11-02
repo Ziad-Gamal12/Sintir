@@ -5,81 +5,93 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Core/widgets/CustomCachedNetworkImage.dart';
 
 class Addcourseposter extends StatelessWidget {
-  Addcourseposter(
-      {super.key,
-      this.coursePosterImage,
-      required this.onTap,
-      this.coursePosterUrl});
-  File? coursePosterImage;
-  String? coursePosterUrl;
+  const Addcourseposter({
+    super.key,
+    this.coursePosterImage,
+    this.coursePosterUrl,
+    required this.onTap,
+  });
 
+  final File? coursePosterImage;
+  final String? coursePosterUrl;
   final VoidCallback onTap;
+
+  bool get _hasImage => coursePosterImage != null || coursePosterUrl != null;
+
   @override
   Widget build(BuildContext context) {
-    if (coursePosterImage == null && coursePosterUrl == null) {
-      return InkWell(
-        onTap: () {
-          onTap();
-        },
-        child: Container(
-          padding:
-              const EdgeInsets.only(top: 20, left: 27, right: 27, bottom: 29),
-          decoration: BoxDecoration(
-            color: const Color(0xffF9FAFA),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Column(
-            children: [
-              Image.asset(Assets.assetsIconsAddImageIcon),
-              const SizedBox(
-                height: 20,
+    return InkWell(
+      onTap: onTap,
+      child: _hasImage ? _buildImageView() : _buildPlaceholder(context),
+    );
+  }
+
+  Widget _buildPlaceholder(BuildContext context) {
+    return Card(
+      elevation: 0,
+      color: const Color(0xffF9FAFA),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 28, horizontal: 30),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedScale(
+              scale: 1,
+              duration: const Duration(milliseconds: 300),
+              child: Image.asset(
+                Assets.assetsIconsAddImageIcon,
+                height: 48,
               ),
-              Text(
-                "الصورة المصغرة للدورة",
-                style: AppTextStyles(context)
-                    .bold13
-                    .copyWith(color: const Color(0xffAEAEB2)),
-              )
-            ],
-          ),
-        ),
-      );
-    } else if (coursePosterImage != null) {
-      return InkWell(
-        onTap: () {
-          onTap();
-        },
-        child: AspectRatio(
-          aspectRatio: 1 / .95,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.file(
-              coursePosterImage!,
-              fit: BoxFit.cover,
             ),
-          ),
-        ),
-      );
-    } else if (coursePosterImage == null && coursePosterUrl != null) {
-      return InkWell(
-        onTap: () {
-          onTap();
-        },
-        child: AspectRatio(
-          aspectRatio: 1 / .95,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.network(
-              coursePosterUrl!,
-              fit: BoxFit.cover,
+            const SizedBox(height: 22),
+            Text(
+              "الصورة المصغرة للدورة",
+              textAlign: TextAlign.center,
+              style: AppTextStyles(context)
+                  .bold13
+                  .copyWith(color: const Color(0xffAEAEB2)),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildImageView() {
+    return Hero(
+      tag: "coursePosterPreview",
+      child: AspectRatio(
+        aspectRatio: 1 / .95,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            child: _buildImage(),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildImage() {
+    if (coursePosterImage != null) {
+      return Image.file(
+        coursePosterImage!,
+        key: ValueKey(coursePosterImage),
+        fit: BoxFit.cover,
       );
-    } else {
-      return const SizedBox();
     }
+    return CustomCachedNetworkImage(
+      imageUrl: coursePosterUrl!,
+      key: ValueKey(coursePosterUrl),
+      fit: BoxFit.cover,
+    );
   }
 }

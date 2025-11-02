@@ -20,6 +20,7 @@ class FirebaseFirestoreservice implements Databaseservice {
 
     if (options == null) return query;
 
+    // 🔹 Apply filters
     if (options["filters"] is List<Map<String, dynamic>>) {
       for (final Map<String, dynamic> f in options["filters"]) {
         final field = f["field"];
@@ -42,6 +43,8 @@ class FirebaseFirestoreservice implements Databaseservice {
         }
       }
     }
+
+    // 🔹 Apply search filter (startAt / endAt for prefix search)
     if (options["searchField"] is String && options["searchValue"] != null) {
       query = query.where(
         options["searchField"],
@@ -50,15 +53,29 @@ class FirebaseFirestoreservice implements Databaseservice {
       );
     }
 
+    // 🔹 Apply ordering (supports one OR multiple)
     if (options["orderBy"] != null) {
-      query = query.orderBy(
-        options["orderBy"],
-        descending: options["descending"] ?? true,
-      );
+      final orderBy = options["orderBy"];
+      final descending = options["descending"];
+
+      if (orderBy is List<Map<String, dynamic>>) {
+        // Multiple fields sorting
+        for (int i = 0; i < orderBy.length; i++) {
+          final field = orderBy[i]["field"];
+          final isDesc = orderBy[i]["descending"] ?? true;
+          query = query.orderBy(field, descending: isDesc);
+        }
+      } else if (orderBy is String) {
+        // Single field sorting
+        query = query.orderBy(orderBy, descending: descending ?? true);
+      }
+
+      // Optional startAt / endAt
       if (options["startAt"] != null) query = query.startAt(options["startAt"]);
       if (options["endAt"] != null) query = query.endAt(options["endAt"]);
     }
 
+    // 🔹 Apply limit and pagination
     if (options["limit"] != null) query = query.limit(options["limit"]);
     if (options["startAfter"] != null) {
       query = query.startAfterDocument(options["startAfter"]);

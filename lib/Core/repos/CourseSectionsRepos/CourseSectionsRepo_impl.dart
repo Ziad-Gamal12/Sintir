@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'dart:developer';
 import 'dart:isolate';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -50,7 +51,8 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (_) {
+    } catch (e, s) {
+      log("add course section error $e $s");
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
