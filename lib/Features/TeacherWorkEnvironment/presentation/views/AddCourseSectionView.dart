@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
-import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/Variables.dart';
@@ -31,7 +30,8 @@ class Addcoursesectionview extends StatelessWidget {
     );
     return BlocProvider(
       create: (context) => CourseSectionsCubit(
-          getIt<CourseSectionsRepo>(), getIt<Assetspickerrepo>()),
+        getIt<CourseSectionsRepo>(),
+      ),
       child: Scaffold(
         appBar: const CustomAppBar(appBartitle: "اضافة محاضرة"),
         body: Provider.value(

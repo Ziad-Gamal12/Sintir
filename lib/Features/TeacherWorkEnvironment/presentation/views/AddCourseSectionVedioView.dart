@@ -26,7 +26,8 @@ class Addcoursesectionvedioview extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context1) => CourseSectionsCubit(
-              getIt<CourseSectionsRepo>(), getIt<Assetspickerrepo>()),
+            getIt<CourseSectionsRepo>(),
+          ),
         ),
         BlocProvider(
           create: (context1) => VideoItemCubit(

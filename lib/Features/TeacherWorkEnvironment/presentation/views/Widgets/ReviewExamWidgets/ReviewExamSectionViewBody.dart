@@ -4,10 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateExamReviewRequirmentsEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewExamButtonAction.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewExamDetails.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewExamQuestionsHeader.dart';
@@ -76,41 +74,20 @@ class ReviewExamSectionViewBody extends StatelessWidget {
     if (state is QuestionsImagesUploadedingSuccuss) {
       questionsImagesUploadedSuccessState(context);
     } else if (state is QuestionsImagesUploadedingFailure) {
-      ShowSnackBar(
-          context: context,
-          child: Text(state.errMessage,
-              style: AppTextStyles(context)
-                  .regular14
-                  .copyWith(color: Colors.white)),
-          backgroundColor: Colors.red);
+      ShowErrorSnackBar(context: context, message: state.errMessage);
     } else if (state is AddTestItemFailure) {
       errordialog(context, state.errMessage).show();
     } else if (state is AddTestItemSuccess) {
-      successdialog(
-          context: context,
-          SuccessMessage: "تم اضافة الملف بنجاح",
-          btnOkOnPress: () {
-            context.go(CourseDetailsCourseSectionsView.routeName,
-                extra: context
-                    .read<NavigateExamReviewRequirmentsEntity>()
-                    .coursetestentity);
-          }).show();
+      showSuccessSnackBar(context: context, message: "تم اضافة الأختبار بنجاح");
     }
   }
 
   void courseSectionListener(CourseSectionsState state, BuildContext context) {
     if (state is AddCourseSectionFailure) {
-      errordialog(context, state.errMessage).show();
+      ShowErrorSnackBar(context: context, message: state.errMessage);
     } else if (state is AddCourseSectionSuccess) {
-      successdialog(
-          context: context,
-          SuccessMessage: "تم اضافة الملف بنجاح",
-          btnOkOnPress: () {
-            context.go(CourseDetailsCourseSectionsView.routeName,
-                extra: context
-                    .read<NavigateExamReviewRequirmentsEntity>()
-                    .coursetestentity);
-          }).show();
+      showSuccessSnackBar(context: context, message: "تمت الإضافة بنجاح");
+      GoRouter.of(context).pop();
     }
   }
 

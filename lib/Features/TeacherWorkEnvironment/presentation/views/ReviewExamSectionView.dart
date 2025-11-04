@@ -30,7 +30,8 @@ class ReviewExamSectionView extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => CourseSectionsCubit(
-              getIt<CourseSectionsRepo>(), getIt<Assetspickerrepo>()),
+            getIt<CourseSectionsRepo>(),
+          ),
         )
       ],
       child: Provider.value(

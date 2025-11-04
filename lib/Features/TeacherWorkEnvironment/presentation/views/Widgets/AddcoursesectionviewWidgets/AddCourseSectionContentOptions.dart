@@ -27,15 +27,16 @@ class AddCourseSectionContentOptions extends StatelessWidget {
               onTap: () {
                 if (onSave != null) onSave!();
                 if (e.key == 1) {
-                  GoRouter.of(context).push(AddcourseSectionExamview.routeName,
+                  GoRouter.of(context).pushReplacement(
+                      AddcourseSectionExamview.routeName,
                       extra: optionRequirementsEntity);
                 } else if (e.key == 0) {
-                  GoRouter.of(context).push(
+                  GoRouter.of(context).pushReplacement(
                     Addcoursesectionvedioview.routeName,
                     extra: optionRequirementsEntity,
                   );
-                } else {
-                  GoRouter.of(context).push(
+                } else if (e.key == 2) {
+                  GoRouter.of(context).pushReplacement(
                     Addcoursesectionfileview.routeName,
                     extra: optionRequirementsEntity,
                   );

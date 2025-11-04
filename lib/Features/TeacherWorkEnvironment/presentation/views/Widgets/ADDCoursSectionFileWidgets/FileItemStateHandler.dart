@@ -5,10 +5,8 @@ import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCu
 import 'package:sintir/Core/Managers/Cubits/file_item_cubit/file_item_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
 
 class FileItemStateHandler {
   final BuildContext context;
@@ -26,17 +24,11 @@ class FileItemStateHandler {
   void handle(FileItemState state) {
     switch (state) {
       case AddFileItemFailure(:final errMessage):
-        errordialog(context, errMessage).show();
+        ShowErrorSnackBar(context: context, message: errMessage);
         break;
-
       case AddFileItemSuccess():
-        successdialog(
-          context: context,
-          SuccessMessage: "تم اضافة الملف بنجاح",
-          btnOkOnPress: () => context.go(
-              CourseDetailsCourseSectionsView.routeName,
-              extra: courseEntity),
-        ).show();
+        showSuccessSnackBar(context: context, message: "تم اضافة الملف بنجاح");
+        GoRouter.of(context).pop();
         break;
 
       case PickFileSuccess(:final file):

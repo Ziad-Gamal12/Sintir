@@ -21,11 +21,11 @@ class SearchTeachersListView extends StatelessWidget {
     return BlocBuilder<SearchCubit, SearchState>(
       buildWhen: (previous, current) =>
           current is GetDefaultTeachersSuccess ||
+          current is SearchSuccess ||
           current is GetDefaultTeachersFailure ||
-          current is GetDefaultTeachersLoading ||
-          current is SearchLoading ||
           current is SearchFailure ||
-          current is SearchSuccess,
+          current is GetDefaultTeachersLoading ||
+          current is SearchLoading,
       builder: (context, state) {
         if (state is GetDefaultTeachersFailure) {
           return SearchTeachersErrorWidget(errorMessage: state.errorMessage);
@@ -39,7 +39,6 @@ class SearchTeachersListView extends StatelessWidget {
             state is SearchLoading) {
           return const SearchTeachersLoadingList();
         }
-
         return SearchTeachersList(teachersList: teachersList);
       },
     );

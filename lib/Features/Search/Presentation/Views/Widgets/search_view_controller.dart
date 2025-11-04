@@ -24,34 +24,22 @@ class SearchViewController {
   void _setupTextListener(BuildContext context, SearchCubit cubit,
       CourseFilterEntity? filters, String? userId) {
     textController.addListener(() {
-      final text = textController.text.trim();
+      setupTextListenerHandler(cubit, filters, userId);
+    });
+  }
 
-      _debounce?.cancel();
-
-      if (text.isEmpty) {
-        isSearching = false;
-        cubit.getDefaultCourses(filters: filters, userId: userId);
-        return;
-      }
-
+  void setupTextListenerHandler(
+      SearchCubit cubit, CourseFilterEntity? filters, String? userId) {
+    final text = textController.text.trim();
+    _debounce?.cancel();
+    if (text.isEmpty) {
+      isSearching = false;
+      cubit.getDefaultCourses(filters: filters, userId: userId);
+    } else {
       isSearching = true;
       _debounce = Timer(const Duration(milliseconds: 800), () {
         cubit.search(keyword: text, filters: filters, userId: userId);
       });
-    });
-  }
-
-  void getCoursesWithFilters(BuildContext context,
-      {required String? userId, required CourseFilterEntity? filters}) {
-    final cubit = context.read<SearchCubit>();
-    if (!isSearching) {
-      cubit.getDefaultCourses(filters: filters, userId: userId);
-    } else {
-      cubit.search(
-        keyword: textController.text,
-        filters: filters,
-        userId: userId,
-      );
     }
   }
 

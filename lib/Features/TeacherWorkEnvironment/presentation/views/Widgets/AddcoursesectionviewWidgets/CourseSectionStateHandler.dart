@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
-import 'package:sintir/Core/widgets/AwesomeDialog.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
+import 'package:sintir/Core/helper/ShowSnackBar.dart';
 
 class CourseSectionStateHandler {
   final BuildContext context;
@@ -14,17 +13,13 @@ class CourseSectionStateHandler {
   void handle(CourseSectionsState state) {
     switch (state) {
       case AddCourseSectionFailure(:final errMessage):
-        errordialog(context, errMessage).show();
+        ShowErrorSnackBar(context: context, message: errMessage);
         break;
 
       case AddCourseSectionSuccess():
-        successdialog(
-          context: context,
-          SuccessMessage: "تمت الإضافة بنجاح",
-          btnOkOnPress: () => context.go(
-              CourseDetailsCourseSectionsView.routeName,
-              extra: courseEntity),
-        ).show();
+        showSuccessSnackBar(context: context, message: "تمت الإضافة بنجاح");
+        GoRouter.of(context).pop();
+
         break;
 
       default:

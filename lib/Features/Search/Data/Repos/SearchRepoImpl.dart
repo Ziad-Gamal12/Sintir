@@ -74,32 +74,33 @@ class SearchRepoImpl implements SearchRepo {
 
   // ---------------------- SEARCH COURSES ----------------------
 
-  Map<String, dynamic> searchCoursesQuery = {
-    "limit": 10,
-    "searchField": "title",
-    "searchValue": "",
-    "filters": [
-      {
-        "field": "state",
-        "operator": "==",
-        "value": BackendEndpoints.coursePublishedState,
-      },
-    ],
-  };
-
   @override
   Future<SearchResponse> searchCourses(
       {required String? keyword,
       required CourseFilterEntity? filters,
       required String? userId}) async {
+    Map<String, dynamic> searchCoursesQuery = {
+      "limit": 10,
+      "searchField": "title",
+      "searchValue": "",
+      "orderBy": null,
+      "filters": <Map<String, dynamic>>[
+        {
+          "field": "state",
+          "operator": "==",
+          "value": BackendEndpoints.coursePublishedState,
+        },
+      ],
+    };
     if (filters != null) {
       final filterMap = applyFilters(filters: filters);
       if (filterMap["filters"] != null) {
-        (searchCoursesQuery["filters"] as List)
-            .addAll(filterMap["filters"] as List);
+        (searchCoursesQuery["filters"] as List<Map<String, dynamic>>)
+            .addAll((filterMap["filters"] as List<Map<String, dynamic>>));
       }
       if (filterMap["orderBy"] != null) {
-        searchCoursesQuery["orderBy"] = filterMap["orderBy"];
+        searchCoursesQuery["orderBy"] =
+            filterMap["orderBy"] as List<Map<String, dynamic>>;
       }
     }
     searchCoursesQuery["searchValue"] = keyword;
@@ -147,28 +148,27 @@ class SearchRepoImpl implements SearchRepo {
 
   // ---------------------- SEARCH TEACHERS ----------------------
 
-  Map<String, dynamic> searchTeachersQuery = {
-    "limit": 10,
-    "searchField": "fullName",
-    "searchValue": "",
-    "filters": [
-      {
-        "field": "status",
-        "operator": "==",
-        "value": BackendEndpoints.activeStatus,
-      },
-      {
-        "field": "role",
-        "operator": "==",
-        "value": BackendEndpoints.teacherRole,
-      },
-    ],
-  };
-
   @override
   Future<SearchResponse> searchTeachers({
     required String? keyword,
   }) async {
+    Map<String, dynamic> searchTeachersQuery = {
+      "limit": 10,
+      "searchField": "fullName",
+      "searchValue": "",
+      "filters": <Map<String, dynamic>>[
+        {
+          "field": "status",
+          "operator": "==",
+          "value": BackendEndpoints.activeStatus,
+        },
+        {
+          "field": "role",
+          "operator": "==",
+          "value": BackendEndpoints.teacherRole,
+        },
+      ],
+    };
     searchTeachersQuery["searchValue"] = keyword;
 
     final response = await databaseservice.getData(
@@ -196,32 +196,32 @@ class SearchRepoImpl implements SearchRepo {
 
   // ---------------------- SEARCH COURSES BY CONTENT CREATOR ----------------------
 
-  Map<String, dynamic> searchCoursesByContentCreatorQuery = {
-    "limit": 10,
-    "searchField": "contentcreaterentity.name",
-    "searchValue": "",
-    "filters": [
-      {
-        "field": "state",
-        "operator": "==",
-        "value": BackendEndpoints.coursePublishedState,
-      },
-    ],
-  };
-
   @override
   Future<SearchResponse> searchCoursesByContentCreatorName(
       {required String keyword,
       required CourseFilterEntity? filters,
       required String? userId}) async {
+    Map<String, dynamic> searchCoursesByContentCreatorQuery = {
+      "limit": 10,
+      "searchField": "contentcreaterentity.name",
+      "searchValue": "",
+      "filters": <Map<String, dynamic>>[
+        {
+          "field": "state",
+          "operator": "==",
+          "value": BackendEndpoints.coursePublishedState,
+        },
+      ],
+    };
     if (filters != null) {
       final filterMap = applyFilters(filters: filters);
       if (filterMap["filters"] != null) {
-        (searchCoursesQuery["filters"] as List)
-            .addAll(filterMap["filters"] as List);
+        (searchCoursesByContentCreatorQuery["filters"]
+                as List<Map<String, dynamic>>)
+            .addAll(filterMap["filters"] as List<Map<String, dynamic>>);
       }
       if (filterMap["orderBy"] != null) {
-        searchCoursesQuery["orderBy"] = filterMap["orderBy"];
+        searchCoursesByContentCreatorQuery["orderBy"] = filterMap["orderBy"];
       }
     }
     searchCoursesByContentCreatorQuery["searchValue"] = keyword;
@@ -272,7 +272,25 @@ class SearchRepoImpl implements SearchRepo {
     try {
       final response =
           await searchCourses(keyword: null, filters: filters, userId: userId);
-      return right(response);
+
+      final allCoursesMap = {
+        for (CourseEntity course in [...response.fetchedTeachersCoursesList])
+          course.id: course,
+      };
+      final allTeachersMap = {
+        for (Contentcreaterentity contentCreator in [
+          ...response.fetchedTeachersList
+        ])
+          contentCreator.id: contentCreator,
+      };
+      List<Contentcreaterentity> fetchedTeachers =
+          allTeachersMap.values.toList();
+      List<CourseEntity> fetchedCourses = allCoursesMap.values.toList();
+      SearchResponse searchResponse = SearchResponse(
+          fetchedTeachersCoursesList: fetchedCourses,
+          fetchedTeachersList: fetchedTeachers);
+
+      return right(searchResponse);
     } on CustomException catch (e, s) {
       log(e.toString(), stackTrace: s);
       return left(ServerFailure(message: e.message));
@@ -288,7 +306,17 @@ class SearchRepoImpl implements SearchRepo {
       final response = await searchTeachers(
         keyword: null,
       );
-      return right(response);
+      final allTeachersMap = {
+        for (Contentcreaterentity contentCreator in [
+          ...response.fetchedTeachersList
+        ])
+          contentCreator.id: contentCreator,
+      };
+      List<Contentcreaterentity> fetchedTeachers =
+          allTeachersMap.values.toList();
+      SearchResponse searchResponse = SearchResponse(
+          fetchedTeachersCoursesList: [], fetchedTeachersList: fetchedTeachers);
+      return right(searchResponse);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
@@ -298,48 +326,61 @@ class SearchRepoImpl implements SearchRepo {
   }
 
   Map<String, dynamic> applyFilters({required CourseFilterEntity filters}) {
-    Map<String, dynamic> query = {"filters": [], "orderBy": []};
+    List<Map<String, dynamic>> filtersList = [];
+    List<Map<String, dynamic>> orderByList = [];
+    if (filters.educaionLevel != null && filters.educaionLevel!.isNotEmpty) {
+      filtersList.add(
+          {"field": "level", "operator": "==", "value": filters.educaionLevel});
+    }
+    if (filters.subject != null && filters.subject!.isNotEmpty) {
+      filtersList.add(
+          {"field": "subject", "operator": "==", "value": filters.subject});
+    }
     if (filters.showPaidCourses != null && filters.showPaidCourses == true) {
-      query["filters"].add({"field": "price", "operator": ">", "value": 0});
+      filtersList.add({"field": "price", "operator": ">", "value": 0});
     }
     if (filters.showFreeCourses != null && filters.showFreeCourses == true) {
-      (query["filters"]).add({"field": "price", "operator": "==", "value": 0});
+      filtersList.add({"field": "price", "operator": "==", "value": 0});
     }
     if (filters.maxPrice != null && filters.maxPrice != 0) {
-      (query["filters"])
+      filtersList
           .add({"field": "price", "operator": "<=", "value": filters.maxPrice});
     }
     if (filters.minPrice != null && filters.minPrice != 0) {
-      (query["filters"])
+      filtersList
           .add({"field": "price", "operator": ">=", "value": filters.minPrice});
     }
     if (filters.sortByHighestPrice != null &&
         filters.sortByHighestPrice == true) {
-      (query["orderBy"]).add({
+      orderByList.add({
         "field": "price",
         "descending": true,
       });
     }
     if (filters.sortByLowestPrice != null &&
         filters.sortByLowestPrice == true) {
-      (query["orderBy"]).add({
+      orderByList.add({
         "field": "price",
         "descending": false,
       });
     }
 
     if (filters.sortByNewest != null && filters.sortByNewest == true) {
-      (query["orderBy"]).add({
+      orderByList.add({
         "field": "postedDate",
         "descending": true,
       });
     }
     if (filters.sortByPopularity != null && filters.sortByPopularity == true) {
-      (query["orderBy"]).add({
+      orderByList.add({
         "field": "studentsCount",
         "descending": true,
       });
     }
+    Map<String, dynamic> query = {
+      "filters": filtersList,
+      "orderBy": orderByList
+    };
 
     return query;
   }

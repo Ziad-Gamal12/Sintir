@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sintir/Core/entities/FireStorePaginateResponse.dart';
 import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
@@ -249,7 +251,8 @@ class FirebaseFirestoreservice implements Databaseservice {
       );
     } on FirebaseException catch (e) {
       throw _getFireStoreCustomException(e: e);
-    } catch (e) {
+    } catch (e, s) {
+      log(e.toString(), stackTrace: s);
       throw CustomException(message: "❌ حدث خطأ غير متوقع.");
     }
   }

@@ -2,32 +2,49 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Features/Search/Domain/Entities/CustomFilterEntity.dart';
 import 'package:sintir/Features/Search/Presentation/Views/Widgets/CustomFilterBottomSheetWidgets/CustomFilterCheckedBoxItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseViewWidgets/CustomEducationLevelDropdownButton.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseViewWidgets/CustomSubjectDropdownButton.dart';
 
-class CustomFilterSortPopularityAndNewestSection extends StatefulWidget {
-  const CustomFilterSortPopularityAndNewestSection({super.key});
+class CustomFilterMoreFilters extends StatefulWidget {
+  const CustomFilterMoreFilters({super.key});
 
   @override
-  State<CustomFilterSortPopularityAndNewestSection> createState() =>
-      _CustomFilterSortPopularityAndNewestSectionState();
+  State<CustomFilterMoreFilters> createState() =>
+      _CustomFilterMoreFiltersState();
 }
 
-class _CustomFilterSortPopularityAndNewestSectionState
-    extends State<CustomFilterSortPopularityAndNewestSection> {
+class _CustomFilterMoreFiltersState extends State<CustomFilterMoreFilters> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Column(
       children: [
-        CustomFilterCheckedBoxItem(
-            onChanged: (value) {
-              context.read<CourseFilterEntity>().sortByPopularity = true;
-            },
-            title: "الشعبية"),
-        CustomFilterCheckedBoxItem(
-            onChanged: (value) {
-              context.read<CourseFilterEntity>().sortByNewest = true;
-            },
-            title: "الجديدة")
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            CustomFilterCheckedBoxItem(
+                onChanged: (value) {
+                  context.read<CourseFilterEntity>().sortByPopularity = true;
+                },
+                title: "الشعبية"),
+            CustomFilterCheckedBoxItem(
+                onChanged: (value) {
+                  context.read<CourseFilterEntity>().sortByNewest = true;
+                },
+                title: "الجديدة")
+          ],
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+        CustomEducationLevelDropdownButton(onValueChange: (value) {
+          context.read<CourseFilterEntity>().educaionLevel = value;
+        }),
+        const SizedBox(
+          height: 10,
+        ),
+        CustomSubjectDropdownButton(onValueChange: (value) {
+          context.read<CourseFilterEntity>().subject = value;
+        }),
       ],
     );
   }

@@ -4,6 +4,9 @@ class CourseFilterEntity {
   bool? showPaidCourses;
   double? minPrice;
   double? maxPrice;
+//
+  String? educaionLevel;
+  String? subject;
 
   // 👥 Subscription filters
   bool? showSubscribedCourses;

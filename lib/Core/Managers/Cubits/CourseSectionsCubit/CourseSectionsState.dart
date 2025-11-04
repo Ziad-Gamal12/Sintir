@@ -7,6 +7,8 @@ sealed class CourseSectionsState {}
 
 final class AddCourseSectionInitial extends CourseSectionsState {}
 
+final class AddCourseSectionLoading extends CourseSectionsState {}
+
 final class AddCourseSectionSuccess extends CourseSectionsState {}
 
 final class AddCourseSectionFailure extends CourseSectionsState {

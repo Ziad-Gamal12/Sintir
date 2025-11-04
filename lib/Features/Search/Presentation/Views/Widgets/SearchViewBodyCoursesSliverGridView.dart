@@ -16,13 +16,22 @@ class SearchCoursesSliverGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SearchCubit, SearchState>(
-      buildWhen: (previous, current) =>
-          current is GetDefaultCoursesSuccess ||
-          current is GetDefaultCoursesFailure ||
-          current is GetDefaultCoursesLoading ||
-          current is SearchLoading ||
-          current is SearchFailure ||
-          current is SearchSuccess,
+      buildWhen: (previous, current) {
+        if (current is GetDefaultCoursesSuccess) {
+          return true;
+        } else if (current is SearchSuccess) {
+          return true;
+        } else if (current is GetDefaultCoursesFailure) {
+          return true;
+        } else if (current is SearchFailure) {
+          return true;
+        } else if (current is GetDefaultCoursesLoading) {
+          return true;
+        } else if (current is SearchLoading) {
+          return true;
+        }
+        return false;
+      },
       builder: (context, state) {
         if (state is GetDefaultCoursesFailure) {
           return SearchCoursesErrorWidget(errorMessage: state.errorMessage);

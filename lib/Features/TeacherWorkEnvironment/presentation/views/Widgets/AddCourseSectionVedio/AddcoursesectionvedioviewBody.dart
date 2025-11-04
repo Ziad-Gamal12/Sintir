@@ -55,7 +55,14 @@ class _AddcoursesectionvedioviewbodyState
         builder: (context, state) => Stack(
           children: [
             _buildForm(),
-            _buildButton(),
+            Positioned(
+              left: 16,
+              right: 16,
+              bottom: 32,
+              child: CustomAddCourseVideoSectionButton(
+                coursevedioitementity: courseVideoItemEntity,
+              ),
+            )
           ],
         ),
       ),
@@ -74,24 +81,21 @@ class _AddcoursesectionvedioviewbodyState
           children: [
             VideoTitleInputField(courseVedioItemEntity: courseVideoItemEntity),
             const SizedBox(height: 10),
-            if (courseVideoItemEntity.file != null)
-              VideoPreviewWidget(
-                videoFile: courseVideoItemEntity.file!,
-                coursevedioitementity: courseVideoItemEntity,
-              ),
+            BlocBuilder<VideoItemCubit, VideoItemState>(
+              buildWhen: (prev, curr) =>
+                  curr is PickVideoFileFailure || curr is PickVideoFileSuccess,
+              builder: (context, state) {
+                if (courseVideoItemEntity.file != null) {
+                  return VideoPreviewWidget(
+                    videoFile: courseVideoItemEntity.file!,
+                    coursevedioitementity: courseVideoItemEntity,
+                  );
+                }
+                return const SizedBox();
+              },
+            ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildButton() {
-    return Positioned(
-      left: 16,
-      right: 16,
-      bottom: 32,
-      child: CustomAddCourseVideoSectionButton(
-        coursevedioitementity: courseVideoItemEntity,
       ),
     );
   }

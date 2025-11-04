@@ -1,7 +1,6 @@
-// ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/Managers/Cubits/video_item_cubit/video_item_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
 import 'package:sintir/Core/utils/Variables.dart';
@@ -14,35 +13,39 @@ class CustomAddCourseVideoSectionButton extends StatelessWidget {
     super.key,
     required this.coursevedioitementity,
   });
+
   final CourseVideoItemEntity coursevedioitementity;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<VideoItemCubit, VideoItemState>(
       builder: (context, state) {
+        final isLoading =
+            state is UploadVideoLoading || state is AddCourseSectionItemLoading;
+
         return Custom_Loading_Widget(
-          isLoading:
-              state is UploadVideoLoading || state is AddVideoItemLoading,
+          isLoading: isLoading,
           child: Custombutton(
-              text: coursevedioitementity.file == null
-                  ? "تحديد فديو"
-                  : "أضافةالفديو",
-              color: coursevedioitementity.file == null
-                  ? KSecondaryColor
-                  : Colors.green,
-              textColor: Colors.white,
-              onPressed: () {
-                if (coursevedioitementity.file == null) {
-                  context.read<VideoItemCubit>().pickVideoFile(
+            text: coursevedioitementity.file == null
+                ? "تحديد فديو"
+                : "إضافة الفديو",
+            color: coursevedioitementity.file == null
+                ? KSecondaryColor
+                : Colors.green,
+            textColor: Colors.white,
+            onPressed: () {
+              if (coursevedioitementity.file == null) {
+                context.read<VideoItemCubit>().pickVideoFile(
+                    coursevedioitementity: coursevedioitementity);
+              } else {
+                if (Variables.AddCourseSectionVideoItemFormKey.currentState!
+                    .validate()) {
+                  context.read<VideoItemCubit>().uploadVideo(
                       coursevedioitementity: coursevedioitementity);
-                } else {
-                  if (Variables.AddCourseSectionVideoItemFormKey.currentState!
-                      .validate()) {
-                    context.read<VideoItemCubit>().uploadVideo(
-                        coursevedioitementity: coursevedioitementity);
-                  }
                 }
-              }),
+              }
+            },
+          ),
         );
       },
     );

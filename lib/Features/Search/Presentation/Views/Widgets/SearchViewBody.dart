@@ -59,8 +59,8 @@ class _SearchViewBodyState extends State<SearchViewBody> {
             slivers: [
               SliverToBoxAdapter(
                 child: SearchViewBodySearchAndFilterSection(
-                    isSearching: isSearching,
-                    controller: _controller.textController),
+                  controller: _controller,
+                ),
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 20)),
               SliverToBoxAdapter(

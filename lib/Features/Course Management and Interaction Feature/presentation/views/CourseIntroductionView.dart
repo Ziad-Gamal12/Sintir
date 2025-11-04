@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
-import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
 import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
@@ -27,7 +26,6 @@ class CourseIntroductionView extends StatelessWidget {
         BlocProvider(
           create: (context) => CourseSectionsCubit(
             getIt<CourseSectionsRepo>(),
-            getIt<Assetspickerrepo>(),
           ),
         ),
         BlocProvider(

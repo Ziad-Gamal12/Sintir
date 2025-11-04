@@ -56,8 +56,8 @@ class _CustomFilterBottomSheetBodyState
                 ),
                 const SizedBox(height: 12),
                 const FilterSectionCard(
-                  title: "ترتيب أضافي",
-                  child: CustomFilterSortPopularityAndNewestSection(),
+                  title: "أضافي",
+                  child: CustomFilterMoreFilters(),
                 ),
                 const SizedBox(height: 22),
                 ApplyButtonRow(

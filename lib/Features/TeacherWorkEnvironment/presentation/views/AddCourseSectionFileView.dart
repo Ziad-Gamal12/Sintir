@@ -24,7 +24,8 @@ class Addcoursesectionfileview extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => CourseSectionsCubit(
-              getIt<CourseSectionsRepo>(), getIt<Assetspickerrepo>()),
+            getIt<CourseSectionsRepo>(),
+          ),
         ),
         BlocProvider(
             create: (context) => FileItemCubit(
