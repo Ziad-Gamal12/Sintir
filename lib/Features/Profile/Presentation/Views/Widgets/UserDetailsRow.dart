@@ -17,43 +17,25 @@ class UserDetails extends StatelessWidget {
       children: [
         UserAvatar(imageUrl: user.profilePicurl),
         const SizedBox(width: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _UserName(firstName: user.firstName, lastName: user.lastName),
-            if (user.studentExtraDataEntity != null)
-              Column(
-                children: [
-                  Text(user.studentExtraDataEntity!.educationLevel,
-                      style: AppTextStyles(context)
-                          .semiBold16
-                          .copyWith(color: Colors.black)),
-                  Text(user.studentExtraDataEntity!.birthDate,
-                      style: AppTextStyles(context)
-                          .semiBold16
-                          .copyWith(color: Colors.black)),
-                ],
-              )
-            else if (user.teacherExtraDataEntity != null)
-              Column(
-                children: [
-                  Text("مادة ${user.teacherExtraDataEntity!.subject}",
-                      style: AppTextStyles(context)
-                          .semiBold16
-                          .copyWith(color: Colors.black)),
-                  Text(
-                      "خبره ${user.teacherExtraDataEntity!.workExperience} سنه",
-                      style: AppTextStyles(context)
-                          .semiBold16
-                          .copyWith(color: Colors.black)),
-                ],
-              )
-            else
-              const SizedBox(),
-            const SizedBox(height: 10),
-            _UserStatusBadge(status: user.status),
-          ],
+        Expanded(
+          flex: 8,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _UserName(firstName: user.firstName, lastName: user.lastName),
+              Text(user.email,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles(context).regular14),
+              const SizedBox(height: 5),
+              Text(user.uid,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles(context).regular14),
+              const SizedBox(height: 5),
+            ],
+          ),
         ),
+        const Spacer(),
+        _UserStatusBadge(status: user.status),
       ],
     );
   }

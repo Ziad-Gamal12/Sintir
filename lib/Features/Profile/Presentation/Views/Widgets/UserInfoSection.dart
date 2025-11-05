@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
-import 'package:sintir/Features/Profile/Presentation/Views/Widgets/UserActionsColumn.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/UserDetailsRow.dart';
 
 class UserInfoSection extends StatelessWidget {
@@ -9,22 +8,17 @@ class UserInfoSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = getUserData();
-
-    return SizedBox(
+    return Container(
       width: double.infinity,
-      child: Card(
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(child: UserDetails(user: user)),
-              const UserActionsColumn(),
-            ],
-          ),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+          color: Colors.grey.shade100,
+          blurRadius: 10,
+          spreadRadius: 4,
         ),
-      ),
+      ], color: Colors.grey.shade50, borderRadius: BorderRadius.circular(10)),
+      child: UserDetails(user: user),
     );
   }
 }

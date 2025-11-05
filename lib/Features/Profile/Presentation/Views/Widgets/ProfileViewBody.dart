@@ -1,113 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
-import 'package:sintir/Core/helper/GetUserData.dart';
-import 'package:sintir/Core/widgets/CustomExpansionWIdget/CustomExpansionWidget.dart';
-import 'package:sintir/Features/Profile/Presentation/Manager/ProfileCubit/ProfileCubit.dart';
-import 'package:sintir/Features/Profile/Presentation/Views/Widgets/MyCoursesHeader.dart';
-import 'package:sintir/Features/Profile/Presentation/Views/Widgets/ProfileViewBodyMyCoursesSliverGrid.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/Profile/Presentation/Views/Widgets/ProfileItemActionsButtons.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/UserInfoSection.dart';
-import 'package:sintir/Features/Profile/Presentation/Views/Widgets/UserInfoSectionPersonalDetails.dart';
-import 'package:sintir/Features/Profile/Presentation/Views/Widgets/WorkEnvironmentNavigationButton.dart';
 import 'package:sintir/constant.dart';
 
-class ProfileViewBody extends StatefulWidget {
+class ProfileViewBody extends StatelessWidget {
   const ProfileViewBody({super.key});
 
   @override
-  State<ProfileViewBody> createState() => _ProfileViewBodyState();
-}
-
-class _ProfileViewBodyState extends State<ProfileViewBody> {
-  late ScrollController controller;
-  bool hasMore = true;
-  List<CourseEntity> fetchedMyCourses = [];
-  @override
-  void initState() {
-    super.initState();
-    controller = ScrollController();
-    final cubit = context.read<ProfileCubit>();
-    cubit.getMyCourses(isPaginate: false);
-    controller.addListener(
-      () {
-        if (controller.position.pixels >=
-                controller.position.maxScrollExtent - 200 &&
-            hasMore &&
-            cubit.state is! GetMyCoursesLoading) {
-          cubit.getMyCourses(isPaginate: true);
-        }
-      },
-    );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    controller.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocListener<ProfileCubit, ProfileState>(
-      listener: (context, state) {
-        if (state is GetMyCoursesSuccess) {
-          if (state.isPaginate == true) {
-            fetchedMyCourses.addAll(state.response.courses);
-          } else {
-            fetchedMyCourses = state.response.courses;
-          }
-          hasMore = state.response.hasMore;
-          setState(() {});
-        }
-      },
-      child: Padding(
-        padding: const EdgeInsetsGeometry.symmetric(
-            horizontal: KHorizontalPadding, vertical: KVerticalPadding),
-        child: CustomScrollView(
-          controller: controller,
-          slivers: [
-            const SliverToBoxAdapter(child: UserInfoSection()),
-            SliverToBoxAdapter(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const CustomExpansionWidget(
-                    title: "البيانات الشخصية",
-                    content: UserInfoSectionPersonalDetails(),
-                  ),
-                  const SizedBox(height: 10),
-                  WorkEnvironmentNavigationButton(
-                      myCourses: getTeacherWorkEnvironmentCourses(),
-                      role: getUserData().role),
-                  Divider(
-                    thickness: 2,
-                    height: 40,
-                    color: Colors.grey.shade300,
-                  ),
-                  const MyCoursesHeader(),
-                ],
-              ),
-            ),
-            const SliverToBoxAdapter(
-              child: SizedBox(
-                height: 10,
-              ),
-            ),
-            ProfileViewBodyMyCoursesSliverGrid(myCourses: fetchedMyCourses),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsetsGeometry.symmetric(
+          horizontal: KHorizontalPadding, vertical: KVerticalPadding),
+      child: CustomScrollView(
+        slivers: [
+          const SliverToBoxAdapter(child: UserInfoSection()),
+          const SliverToBoxAdapter(child: SizedBox(height: 20)),
+          SliverToBoxAdapter(
+              child: Text("حسابي", style: AppTextStyles(context).semiBold20)),
+          const SliverToBoxAdapter(child: SizedBox(height: 20)),
+          const SliverToBoxAdapter(
+            child: ProfileItemActionsButtons(),
+          ),
+        ],
       ),
     );
-  }
-
-  List<CourseEntity> getTeacherWorkEnvironmentCourses() {
-    return fetchedMyCourses
-        .where(
-            (element) => element.contentcreaterentity?.id == getUserData().uid)
-        .toList();
   }
 }

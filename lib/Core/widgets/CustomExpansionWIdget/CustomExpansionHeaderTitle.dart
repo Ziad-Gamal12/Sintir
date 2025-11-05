@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 
-class PersonalHeaderTitleText extends StatelessWidget {
-  const PersonalHeaderTitleText({super.key, required this.title});
+class CustomExpansionHeaderTitle extends StatelessWidget {
+  const CustomExpansionHeaderTitle({super.key, required this.title});
   final String title;
   @override
   Widget build(BuildContext context) {
