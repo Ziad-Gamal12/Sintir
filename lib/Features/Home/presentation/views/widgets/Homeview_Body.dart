@@ -28,6 +28,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
 
   void _initFetchData() async {
     final getUserDataCubit = context.read<GetUserDataCubit>();
+    if (getUserDataCubit.isUserDataFetched) return;
     getUserDataCubit.getUserData();
   }
 

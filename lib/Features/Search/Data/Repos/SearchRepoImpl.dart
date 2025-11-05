@@ -273,22 +273,9 @@ class SearchRepoImpl implements SearchRepo {
       final response =
           await searchCourses(keyword: null, filters: filters, userId: userId);
 
-      final allCoursesMap = {
-        for (CourseEntity course in [...response.fetchedTeachersCoursesList])
-          course.id: course,
-      };
-      final allTeachersMap = {
-        for (Contentcreaterentity contentCreator in [
-          ...response.fetchedTeachersList
-        ])
-          contentCreator.id: contentCreator,
-      };
-      List<Contentcreaterentity> fetchedTeachers =
-          allTeachersMap.values.toList();
-      List<CourseEntity> fetchedCourses = allCoursesMap.values.toList();
       SearchResponse searchResponse = SearchResponse(
-          fetchedTeachersCoursesList: fetchedCourses,
-          fetchedTeachersList: fetchedTeachers);
+          fetchedTeachersCoursesList: response.fetchedTeachersCoursesList,
+          fetchedTeachersList: response.fetchedTeachersList);
 
       return right(searchResponse);
     } on CustomException catch (e, s) {

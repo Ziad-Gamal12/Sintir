@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/ProfileItemActionsButtons.dart';
-import 'package:sintir/Features/Profile/Presentation/Views/Widgets/UserInfoSection.dart';
 import 'package:sintir/constant.dart';
 
 class ProfileViewBody extends StatelessWidget {
@@ -14,13 +13,17 @@ class ProfileViewBody extends StatelessWidget {
           horizontal: KHorizontalPadding, vertical: KVerticalPadding),
       child: CustomScrollView(
         slivers: [
-          const SliverToBoxAdapter(child: UserInfoSection()),
-          const SliverToBoxAdapter(child: SizedBox(height: 20)),
-          SliverToBoxAdapter(
-              child: Text("حسابي", style: AppTextStyles(context).semiBold20)),
-          const SliverToBoxAdapter(child: SizedBox(height: 20)),
           const SliverToBoxAdapter(
             child: ProfileItemActionsButtons(),
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 40)),
+          SliverToBoxAdapter(
+            child: Custombutton(
+              text: "تسجيل الخروج",
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {},
+            ),
           ),
         ],
       ),

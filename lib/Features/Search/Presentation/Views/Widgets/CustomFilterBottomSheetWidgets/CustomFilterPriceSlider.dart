@@ -13,23 +13,12 @@ class CustomFilterPriceSlider extends StatefulWidget {
 }
 
 class _CustomFilterPriceSliderState extends State<CustomFilterPriceSlider> {
-  double sliderValue = 100;
-
-  @override
-  void initState() {
-    super.initState();
-    // initialize with provider value if exists (non-breaking)
-    final maxPrice = context.read<CourseFilterEntity>().maxPrice;
-    if (maxPrice != null) {
-      sliderValue = maxPrice;
-    }
-  }
+  double sliderValue = 0;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // value label row
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

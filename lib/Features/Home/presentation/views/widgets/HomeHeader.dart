@@ -4,6 +4,7 @@ import 'package:sintir/Features/Home/presentation/views/widgets/HomeViewBodyAppB
 
 class HomeHeader extends StatelessWidget {
   final TextEditingController controller;
+
   const HomeHeader({super.key, required this.controller});
 
   @override

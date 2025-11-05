@@ -8,6 +8,7 @@ part 'get_user_data_state.dart';
 class GetUserDataCubit extends Cubit<GetUserDataState> {
   GetUserDataCubit({required this.authRepo}) : super(GetUserDataInitial());
   final AuthRepo authRepo;
+  bool isUserDataFetched = false;
 
   Future<void> getUserData() async {
     emit(GetUserDataLoading());
@@ -17,7 +18,10 @@ class GetUserDataCubit extends Cubit<GetUserDataState> {
       final userData = await authRepo.fetchUserAndStoreLocally(
           uid: FirebaseAuth.instance.currentUser!.uid);
       userData.fold((l) => emit(GetUserDataFailure(errmessage: l.message)),
-          (r) => emit(GetUserDataSuccess()));
+          (r) {
+        isUserDataFetched = true;
+        emit(GetUserDataSuccess());
+      });
     }
   }
 }

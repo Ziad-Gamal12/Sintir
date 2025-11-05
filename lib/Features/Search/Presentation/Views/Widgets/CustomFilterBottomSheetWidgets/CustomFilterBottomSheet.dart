@@ -12,7 +12,7 @@ class CustomFilterBottomSheet extends StatefulWidget {
 }
 
 class _CustomFilterBottomSheetState extends State<CustomFilterBottomSheet> {
-  CourseFilterEntity courseFilterEntity = CourseFilterEntity(maxPrice: 100);
+  CourseFilterEntity courseFilterEntity = CourseFilterEntity();
 
   @override
   Widget build(BuildContext context) {

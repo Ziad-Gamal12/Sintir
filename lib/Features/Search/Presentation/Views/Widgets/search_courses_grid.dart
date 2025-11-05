@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/GridHelper.dart';
+import 'package:sintir/Core/helper/ShowBottomSheet.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
+import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheet.dart';
 
 class SearchCoursesGrid extends StatelessWidget {
   const SearchCoursesGrid({super.key, required this.courses});
@@ -21,7 +23,13 @@ class SearchCoursesGrid extends StatelessWidget {
       ),
       itemBuilder: (context, index) => CustomCourseItem(
         courseItem: courses[index],
-        ontap: () {},
+        ontap: () {
+          showCustomBottomSheet(
+              child: CourseBottomSheet(
+                courseEntity: courses[index],
+              ),
+              context: context);
+        },
       ),
     );
   }

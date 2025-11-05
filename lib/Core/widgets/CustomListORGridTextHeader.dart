@@ -16,7 +16,8 @@ class CustomListORGridTextHeader extends StatelessWidget {
       children: [
         Text(
           text,
-          style: AppTextStyles(context).bold20.copyWith(color: Colors.black),
+          style:
+              AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
         ),
         const Spacer(),
         trailing != null ? trailing! : const SizedBox(),
