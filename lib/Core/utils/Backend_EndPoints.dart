@@ -30,6 +30,8 @@ class BackendEndpoints {
   static String getCourseSectionsSubCollection = "Sections";
   static String joinedBySubCollection = "JoinedBy";
   static String testResultsSubCollection = "Results";
+  static String myResultsSubCollection = "MyResults";
+  static String myMistakesSubCollection = "MyMistakes";
   static String getCourseSectionsCollection = "Courses";
   static String addCourseSectionCollectionToTeacherSubCollection = "Sections";
   static String addCourseToCoursesCollection = "Courses";

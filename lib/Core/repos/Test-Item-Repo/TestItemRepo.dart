@@ -12,6 +12,7 @@ abstract class Testitemrepo {
   Future<Either<Failure, void>> addTestResult(
       {required TestResultEntity testResult,
       required String courseId,
+      required String userUID,
       required String sectionId,
       required String sectionItemId});
   Future<Either<Failure, GetExamResultsReponseEntity>> getTestResults(
@@ -44,5 +45,9 @@ abstract class Testitemrepo {
     required String sectionId,
     required String examId,
     required String userId,
+  });
+  Future<Either<Failure, void>> storeMyMistakes({
+    required TestResultEntity testResult,
+    required String userUID,
   });
 }

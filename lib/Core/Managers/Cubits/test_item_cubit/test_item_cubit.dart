@@ -159,9 +159,11 @@ class TestItemCubit extends Cubit<TestItemState> {
       required String courseId,
       required String sectionId,
       required String sectionItemId,
+      required String userId,
       required BuildContext context}) async {
     emit(AddTestResultLoading());
     Either<Failure, void> result = await testitemrepo.addTestResult(
+        userUID: userId,
         testResult:
             getTestResults(context: context, test: test, user: getUserData()),
         courseId: courseId,

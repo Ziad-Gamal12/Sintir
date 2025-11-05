@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestViewNavigationsRequirmentsEntity.dart';
+import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
@@ -43,6 +44,7 @@ class _TimerDisplayState extends State<TimerDisplay> {
           context.read<TestItemCubit>().addTestResults(
                 context: context,
                 test: requirements.test,
+                userId: getUserData().uid,
                 sectionId: requirements.sectionId,
                 sectionItemId: requirements.test.id,
                 courseId: requirements.course.id,
