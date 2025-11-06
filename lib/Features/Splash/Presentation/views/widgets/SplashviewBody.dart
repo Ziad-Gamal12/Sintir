@@ -1,7 +1,7 @@
 // ignore_for_file: file_names, non_constant_identifier_names, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
+import 'package:sintir/Core/services/FireBase/FirebaseAuth_Service.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/ChoosingUserKindView.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 import 'package:sintir/Features/Splash/Presentation/views/widgets/CenterTextAndLogo.dart';

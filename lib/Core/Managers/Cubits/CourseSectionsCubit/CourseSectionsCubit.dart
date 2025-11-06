@@ -6,7 +6,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
-import 'package:sintir/Core/entities/GetCourseSectionsResonseEntity.dart';
+import 'package:sintir/Core/entities/FetchDataResponses/GetCourseSectionsResonseEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
 

@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
 // Core
 import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
 import 'package:sintir/Core/Managers/Cubits/course_coupons_cubit/course_coupons_cubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
-import 'package:sintir/Core/entities/PayMobWebViewRequirmentsEntity.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebView.dart';
-
+import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobWebViewRequirmentsEntity.dart';
 // Features
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/SubscribtionViewBodyActionButton.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/SubscribtionViewBodyCouponTextField.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/SubscribtionViewBodyCourseDetailsTitle.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/SubscribtionViewBodyDiscountDetailsSection.dart';
-
 // Constants
 import 'package:sintir/constant.dart';
 

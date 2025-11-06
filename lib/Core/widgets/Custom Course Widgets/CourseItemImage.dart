@@ -9,8 +9,8 @@ class CourseItemImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(16),
-        topRight: Radius.circular(16),
+        topLeft: Radius.circular(12),
+        topRight: Radius.circular(12),
       ),
       child: SizedBox(
         width: double.infinity,

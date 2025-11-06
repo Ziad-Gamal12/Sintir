@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:sintir/Core/entities/BottomNavBarEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/Home/Domain/Entities/BottomNavBarEntity.dart';
 import 'package:sintir/constant.dart';
 
 class BottomNavBar extends StatefulWidget {

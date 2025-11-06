@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:sintir/Core/entities/gemini/GeminiContent.dart';
-import 'package:sintir/Core/entities/gemini/GeminiContentPart.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
+import 'package:sintir/Features/Ai_Teacher/domain/entities/gemini/GeminiContent.dart';
+import 'package:sintir/Features/Ai_Teacher/domain/entities/gemini/GeminiContentPart.dart';
 import 'package:sintir/Features/Ai_Teacher/presentation/managers/ai_teacher_cubit/ai_teacher_cubit.dart';
 import 'package:sintir/Features/Ai_Teacher/presentation/views/widgets/CustomAiTeacherBodyColourfulBackground.dart';
 import 'package:sintir/Features/Ai_Teacher/presentation/views/widgets/CustomAiTeacherStatesActionsWidget.dart';

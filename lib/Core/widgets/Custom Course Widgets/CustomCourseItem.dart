@@ -24,16 +24,23 @@ class CustomCourseItem extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey, width: 1),
-          borderRadius: BorderRadius.circular(16),
-          color: Colors.grey[30],
+          border: Border.all(color: Colors.grey.shade300, width: 1),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10,
+              spreadRadius: 1,
+            ),
+          ],
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.white,
         ),
         child: Stack(
           children: [
             Column(
               children: [
                 Expanded(
-                  flex: 9,
+                  flex: 3,
                   child: CourseItemImage(imageUrl: courseItem.posterUrl ?? ""),
                 ),
                 const SizedBox(height: 8),

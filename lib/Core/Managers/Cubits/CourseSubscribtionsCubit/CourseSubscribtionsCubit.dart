@@ -3,11 +3,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
-import 'package:sintir/Core/entities/GetCourseSubscribersEntity.dart';
-import 'package:sintir/Core/entities/PayMobResponse.dart';
+import 'package:sintir/Core/entities/FetchDataResponses/GetCourseSubscribersEntity.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
 import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
+import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobResponse.dart';
 
 part 'CourseSubscribtionsState.dart';
 

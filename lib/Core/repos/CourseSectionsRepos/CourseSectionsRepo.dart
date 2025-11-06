@@ -2,7 +2,7 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
-import 'package:sintir/Core/entities/GetCourseSectionsResonseEntity.dart';
+import 'package:sintir/Core/entities/FetchDataResponses/GetCourseSectionsResonseEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 
 abstract class CourseSectionsRepo {

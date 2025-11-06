@@ -48,7 +48,8 @@ class _HomeviewState extends State<Homeview> {
             setState(() {});
           },
         ),
-        body: SafeArea(child: screens[currentIndex]),
+        body: SafeArea(
+            child: IndexedStack(index: currentIndex, children: screens)),
       ),
     );
   }

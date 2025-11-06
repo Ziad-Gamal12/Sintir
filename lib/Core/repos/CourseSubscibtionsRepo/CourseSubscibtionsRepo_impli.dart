@@ -7,8 +7,8 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart'; // for compute
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
-import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
-import 'package:sintir/Core/entities/GetCourseSubscribersEntity.dart';
+import 'package:sintir/Core/entities/FetchDataResponses/GetCourseSubscribersEntity.dart';
+import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/models/CourseModel.dart';

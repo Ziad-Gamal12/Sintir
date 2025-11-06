@@ -6,7 +6,6 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVideoviewnavigationsrequirmentsentity.dart';
-import 'package:sintir/Core/entities/PayMobWebViewRequirmentsEntity.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebView.dart';
 import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordView.dart';
 import 'package:sintir/Features/Ai_Teacher/presentation/views/AiTeacherView.dart';
@@ -29,10 +28,14 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/displayCourseVedioVeiw.dart';
 import 'package:sintir/Features/Favorites/presentation/views/FavoritesView.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
+import 'package:sintir/Features/MyCourses/Presentation/Views/MyCoursesView.dart';
+import 'package:sintir/Features/MyMistakes/Presentation/Views/MyMistakesView.dart';
+import 'package:sintir/Features/MyResults/Presentation/Views/MyResultsView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/ProfileView.dart';
 import 'package:sintir/Features/Search/Presentation/Views/SearchView.dart';
 import 'package:sintir/Features/Splash/Presentation/views/SplashView.dart';
 import 'package:sintir/Features/StudentOnboarding/Presentation/Views/StudentOnboardingView.dart';
+import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobWebViewRequirmentsEntity.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/SubscribtionView.dart';
 import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnboardingView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
@@ -387,6 +390,24 @@ class App_router {
         path: SearchView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const SearchView();
+        },
+      ),
+      GoRoute(
+        path: MyCoursesView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const MyCoursesView();
+        },
+      ),
+      GoRoute(
+        path: MyMistakesView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const MyMistakesView();
+        },
+      ),
+      GoRoute(
+        path: MyResultsView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const MyResultsView();
         },
       ),
     ],

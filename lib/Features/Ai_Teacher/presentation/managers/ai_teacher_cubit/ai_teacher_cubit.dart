@@ -7,11 +7,11 @@ import 'package:bloc/bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:meta/meta.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sintir/Core/entities/ElevenlabsEntities/ElevenlabsRequestBodyEntity.dart';
-import 'package:sintir/Core/entities/ElevenlabsEntities/ElevenlabsVoiceSettingsEntity.dart';
-import 'package:sintir/Core/entities/gemini/GeminiContent.dart';
-import 'package:sintir/Core/entities/gemini/GeminiResponse.dart';
 import 'package:sintir/Features/Ai_Teacher/domain/Repos/AITeacherRepo.dart';
+import 'package:sintir/Features/Ai_Teacher/domain/entities/ElevenlabsEntities/ElevenlabsRequestBodyEntity.dart';
+import 'package:sintir/Features/Ai_Teacher/domain/entities/ElevenlabsEntities/ElevenlabsVoiceSettingsEntity.dart';
+import 'package:sintir/Features/Ai_Teacher/domain/entities/gemini/GeminiContent.dart';
+import 'package:sintir/Features/Ai_Teacher/domain/entities/gemini/GeminiResponse.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 part 'ai_teacher_state.dart';

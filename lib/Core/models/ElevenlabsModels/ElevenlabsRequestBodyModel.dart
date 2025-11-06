@@ -1,5 +1,5 @@
-import 'package:sintir/Core/entities/ElevenlabsEntities/ElevenlabsRequestBodyEntity.dart';
 import 'package:sintir/Core/models/ElevenlabsModels/ElevenlabsvoicesettingsModel.dart';
+import 'package:sintir/Features/Ai_Teacher/domain/entities/ElevenlabsEntities/ElevenlabsRequestBodyEntity.dart';
 
 class ElevenlabsRequestBodyModel {
   final String text;

@@ -14,7 +14,7 @@ class GridHelper {
     final freeSpaceWidth = spacing * freeSpaceCount;
     final availableWidth = maxWidth - freeSpaceWidth;
     final itemWidth = availableWidth / crossAxisCount;
-    final itemHeight = itemWidth / 0.75;
+    final itemHeight = itemWidth / 0.7;
 
     return itemWidth / itemHeight;
   }

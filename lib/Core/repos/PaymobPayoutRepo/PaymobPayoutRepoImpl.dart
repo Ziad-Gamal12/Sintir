@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/PaymobPayoutRepo/PaymobPayoutRepo.dart';
-import 'package:sintir/Core/services/PaymobPayoutService.dart';
+import 'package:sintir/Core/services/Paymob/PaymobPayoutService.dart';
 
 class PaymobPayoutRepoImpl implements PaymobPayoutRepo {
   final PaymobPayoutService service;

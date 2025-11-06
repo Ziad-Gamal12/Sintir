@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:sintir/Core/entities/GetExamResultsReponseEntity.dart';
+import 'package:sintir/Core/entities/FetchDataResponses/GetExamResultsReponseEntity.dart';
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 
 part 'get_exam_results_state.dart';

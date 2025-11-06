@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
-import 'package:sintir/Core/utils/Variables.dart';
+import 'package:sintir/Core/helper/ShowBottomSheet.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheet.dart';
 import 'package:sintir/constant.dart';
@@ -20,18 +20,17 @@ class BestsellercourseListview extends StatelessWidget {
           itemCount: courses.length,
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: AspectRatio(
-                aspectRatio: 140 / 202,
+                aspectRatio: 140 / 190,
                 child: CustomCourseItem(
                     courseItem: courses[index],
                     ontap: () {
-                      Variables.HomeViewScaffoldKey.currentState!
-                          .showBottomSheet((context) {
-                        return CourseBottomSheet(
-                          courseEntity: courses[index],
-                        );
-                      });
+                      showCustomBottomSheet(
+                          child: CourseBottomSheet(
+                            courseEntity: courses[index],
+                          ),
+                          context: context);
                     }),
               ),
             );

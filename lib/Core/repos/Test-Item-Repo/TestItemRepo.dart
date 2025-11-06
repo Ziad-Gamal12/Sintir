@@ -3,7 +3,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
-import 'package:sintir/Core/entities/GetExamResultsReponseEntity.dart';
+import 'package:sintir/Core/entities/FetchDataResponses/GetExamResultsReponseEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 
 abstract class Testitemrepo {

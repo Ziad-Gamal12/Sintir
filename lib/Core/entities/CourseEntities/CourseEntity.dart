@@ -31,6 +31,8 @@ class CourseEntity {
       state: 'loading',
       title: 'loading',
       description: 'loading',
+      posterUrl:
+          "https://foundr.com/wp-content/uploads/2021/09/Best-online-course-platforms.png",
       price: 0,
       language: 'loading',
       subject: 'loading',

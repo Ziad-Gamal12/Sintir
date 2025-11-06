@@ -5,12 +5,12 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sintir/Core/entities/FireStorePaginateResponse.dart';
-import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
+import 'package:sintir/Core/entities/FireStoreEntities/FireStorePaginateResponse.dart';
+import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
-import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
+import 'package:sintir/Core/services/FireBase/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Auth/Data/models/UserModel.dart';

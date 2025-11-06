@@ -31,20 +31,23 @@ import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepo.dart';
 import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepoImpli.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
-import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
-import 'package:sintir/Core/services/FirebaseStorageService.dart';
-import 'package:sintir/Core/services/Firebase_FirestoreService.dart';
+import 'package:sintir/Core/services/FireBase/FirebaseAuth_Service.dart';
+import 'package:sintir/Core/services/FireBase/Firebase_FirestoreService.dart';
+import 'package:sintir/Core/services/FireBase/firebaseStorageService.dart';
 import 'package:sintir/Core/services/GeminiAPiService.dart';
-import 'package:sintir/Core/services/PayMobService.dart';
-import 'package:sintir/Core/services/PaymobPayoutService.dart';
+import 'package:sintir/Core/services/Paymob/PayMobService.dart';
+import 'package:sintir/Core/services/Paymob/PaymobPayoutService.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/services/elevenlabsApi.dart';
-import 'package:sintir/Core/services/sqfliteServices.dart';
 import 'package:sintir/Features/Ai_Teacher/data/repos_impli/AiTeacherRepo_Impli.dart';
 import 'package:sintir/Features/Ai_Teacher/domain/Repos/AITeacherRepo.dart';
 import 'package:sintir/Features/Auth/Data/repos/AuthRepoImpl.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
+import 'package:sintir/Features/MyMistakes/Data/Repos/MyMistakesRepoImpl.dart';
+import 'package:sintir/Features/MyMistakes/Domain/Repo/MyMistakesRepo.dart';
+import 'package:sintir/Features/MyResults/Data/Repo/MyResultsRepoImpl.dart';
+import 'package:sintir/Features/MyResults/Domain/Repo/MyResultsRepo.dart';
 import 'package:sintir/Features/Search/Data/Repos/SearchRepoImpl.dart';
 import 'package:sintir/Features/Search/Domain/Repos/SearchRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/TeacherWalletRepoImpl.dart';
@@ -62,7 +65,6 @@ void setup_Getit() {
       () => firebasestorageservice(pickerassetsservice: getIt()));
   getIt.registerLazySingleton<StorageService>(
       () => getIt<firebasestorageservice>());
-  getIt.registerLazySingleton<Sqfliteservices>(() => Sqfliteservices());
 
   getIt.registerLazySingleton<Coursesrepo>(() => CoursesrepoImpl(
         databaseservice: getIt(),
@@ -111,7 +113,11 @@ void setup_Getit() {
       () => SearchRepoImpl(databaseservice: getIt()));
 
   getIt.registerLazySingleton<TeacherWalletRepo>(() => TeacherWalletRepoImpl(
-        databaseservice: getIt(),
-        authRepo: getIt(),
+        databaseservice: getIt<Databaseservice>(),
+        authRepo: getIt<AuthRepo>(),
       ));
+  getIt.registerLazySingleton<MyMistakesRepo>(
+      () => MyMistakesRepoImpl(databaseservice: getIt<Databaseservice>()));
+  getIt.registerLazySingleton<MyResultsRepo>(
+      () => MyResultsRepoImpl(dataBaseService: getIt<Databaseservice>()));
 }

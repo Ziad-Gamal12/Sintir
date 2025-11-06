@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:sintir/Core/entities/GetCourseResonseEntity.dart';
+import 'package:sintir/Core/entities/FetchDataResponses/GetCourseResonseEntity.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 
 part 'get_courses_state.dart';

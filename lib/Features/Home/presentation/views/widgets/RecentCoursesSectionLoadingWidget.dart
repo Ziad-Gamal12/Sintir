@@ -24,8 +24,8 @@ class RecentCoursesSectionLoadingWidget extends StatelessWidget {
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount:
               GridHelper.getCrossAxisCount(MediaQuery.of(context).size.width),
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20,
           childAspectRatio: GridHelper.getAspectRatio(
               maxWidth: MediaQuery.of(context).size.width),
         ),

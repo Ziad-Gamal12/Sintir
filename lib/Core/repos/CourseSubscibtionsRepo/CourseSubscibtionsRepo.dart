@@ -2,7 +2,7 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
-import 'package:sintir/Core/entities/GetCourseSubscribersEntity.dart';
+import 'package:sintir/Core/entities/FetchDataResponses/GetCourseSubscribersEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 

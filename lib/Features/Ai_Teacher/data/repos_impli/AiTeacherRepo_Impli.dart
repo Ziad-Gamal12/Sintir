@@ -2,9 +2,6 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dartz/dartz.dart';
-import 'package:sintir/Core/entities/ElevenlabsEntities/ElevenlabsRequestBodyEntity.dart';
-import 'package:sintir/Core/entities/gemini/GeminiContent.dart';
-import 'package:sintir/Core/entities/gemini/GeminiResponse.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/models/ElevenlabsModels/ElevenlabsRequestBodyModel.dart';
@@ -14,6 +11,9 @@ import 'package:sintir/Core/services/GeminiAPiService.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/services/elevenlabsApi.dart';
 import 'package:sintir/Features/Ai_Teacher/domain/Repos/AITeacherRepo.dart';
+import 'package:sintir/Features/Ai_Teacher/domain/entities/ElevenlabsEntities/ElevenlabsRequestBodyEntity.dart';
+import 'package:sintir/Features/Ai_Teacher/domain/entities/gemini/GeminiContent.dart';
+import 'package:sintir/Features/Ai_Teacher/domain/entities/gemini/GeminiResponse.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class AiTeacherRepoImpli implements AiTeacherRepo {

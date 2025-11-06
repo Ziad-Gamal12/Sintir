@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:sintir/Core/entities/gemini/GeminiCandidate.dart';
+import 'package:sintir/Features/Ai_Teacher/domain/entities/gemini/GeminiCandidate.dart';
 
 import 'content.dart';
 

@@ -1,4 +1,4 @@
-import 'package:sintir/Core/entities/ElevenlabsEntities/ElevenlabsVoiceSettingsEntity.dart';
+import 'package:sintir/Features/Ai_Teacher/domain/entities/ElevenlabsEntities/ElevenlabsVoiceSettingsEntity.dart';
 
 class ElevenlabsvoicesettingsModel {
   final double stability;

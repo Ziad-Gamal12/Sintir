@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:sintir/Core/repos/ResetPaswordRepo/ResetPaswordRepo.dart';
-import 'package:sintir/Core/services/FirebaseAuth_Service.dart';
+import 'package:sintir/Core/services/FireBase/FirebaseAuth_Service.dart';
 
 class ResetPaswordRepoImp implements ResetPaswordRepo {
   final firebaseAuthService authService;

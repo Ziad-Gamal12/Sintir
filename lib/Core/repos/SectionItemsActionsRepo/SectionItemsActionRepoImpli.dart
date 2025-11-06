@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
-import 'package:sintir/Core/entities/FireStorePaginateResponse.dart';
-import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
+import 'package:sintir/Core/entities/FireStoreEntities/FireStorePaginateResponse.dart';
+import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';

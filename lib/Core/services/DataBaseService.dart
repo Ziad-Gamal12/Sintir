@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
-import 'package:sintir/Core/entities/FireStorePaginateResponse.dart';
-import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
+import 'package:sintir/Core/entities/FireStoreEntities/FireStorePaginateResponse.dart';
+import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 
 abstract class Databaseservice {
   Future<void> setData({

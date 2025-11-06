@@ -2,7 +2,7 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
-import 'package:sintir/Core/entities/GetCourseCouponsResponseEntity.dart';
+import 'package:sintir/Core/entities/FetchDataResponses/GetCourseCouponsResponseEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 
 abstract class CourseCouponsRepo {
@@ -22,7 +22,7 @@ abstract class CourseCouponsRepo {
     required String courseID,
     required CourseCouponEntity coupon,
   });
-  Future<Either<Failure,CourseCouponEntity >> isCouponExists({
+  Future<Either<Failure, CourseCouponEntity>> isCouponExists({
     required String couponCode,
     required String courseID,
   });

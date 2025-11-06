@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
-import 'package:sintir/Core/entities/GetCourseCouponsResponseEntity.dart';
+import 'package:sintir/Core/entities/FetchDataResponses/GetCourseCouponsResponseEntity.dart';
 import 'package:sintir/Core/repos/CourseCouponsRepo/CourseCouponsRepo.dart';
 
 part 'course_coupons_state.dart';

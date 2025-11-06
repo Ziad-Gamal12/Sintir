@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
-import 'package:sintir/Core/entities/PayMobResponse.dart';
-import 'package:sintir/Core/entities/PaymentEntities/BillingDataEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
-import 'package:sintir/Core/models/PaymentModels/BillingDataModel.dart';
-import 'package:sintir/Core/models/PaymentModels/OrderItemModel.dart';
 import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
-import 'package:sintir/Core/services/PayMobService.dart';
+import 'package:sintir/Core/services/Paymob/PayMobService.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
+import 'package:sintir/Features/Subscribtion/Data/Models/PaymentModels/BillingDataModel.dart';
+import 'package:sintir/Features/Subscribtion/Data/Models/PaymentModels/OrderItemModel.dart';
+import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobResponse.dart';
+import 'package:sintir/Features/Subscribtion/Domain/Entities/PaymentEntities/BillingDataEntity.dart';
 import 'package:sintir/constant.dart';
 
 class PaymobRepoImp implements PaymobRepo {

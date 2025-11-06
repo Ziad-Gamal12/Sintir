@@ -15,8 +15,6 @@ abstract class Variables {
   static GlobalKey<FormState> AddCourseSectionVideoItemFormKey =
       GlobalKey<FormState>();
   static GlobalKey<FormState> AddCourseSectionFormKey = GlobalKey<FormState>();
-  static GlobalKey<ScaffoldState> HomeViewScaffoldKey =
-      GlobalKey<ScaffoldState>();
   static GlobalKey<ScaffoldState> DisplaycoursevedioveiwScaffoldKey =
       GlobalKey<ScaffoldState>();
   static GlobalKey<FormState> AddCourseSectionExamFormKey =

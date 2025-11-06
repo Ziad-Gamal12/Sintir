@@ -5,7 +5,7 @@ import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
 import 'package:sintir/Core/widgets/customRefreshWidget.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_courses_cubit/get_courses_cubit.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_user_data_cubit/get_user_data_cubit.dart';
-import 'package:sintir/Features/Home/presentation/views/widgets/HomeHeader.dart';
+import 'package:sintir/Features/Home/presentation/views/widgets/HomeViewBodyAppBar.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/popularCoursesSection.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/recentCoursesSection.dart';
 import 'package:sintir/constant.dart';
@@ -59,10 +59,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
           ),
           child: CustomScrollView(
             slivers: [
-              SliverToBoxAdapter(
-                  child: HomeHeader(
-                controller: homeSearchController,
-              )),
+              const SliverToBoxAdapter(child: HomeViewBodyAppBar()),
               const SliverToBoxAdapter(child: SizedBox(height: 20)),
               const PopularCoursesSection(),
               const SliverToBoxAdapter(child: SizedBox(height: 20)),

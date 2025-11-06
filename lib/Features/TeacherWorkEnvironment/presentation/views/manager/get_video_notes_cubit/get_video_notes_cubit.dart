@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:sintir/Core/entities/GetVideoItemNotesResponseEntity.dart';
+import 'package:sintir/Core/entities/FetchDataResponses/GetVideoItemNotesResponseEntity.dart';
 import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepo.dart';
 
 part 'get_video_notes_state.dart';

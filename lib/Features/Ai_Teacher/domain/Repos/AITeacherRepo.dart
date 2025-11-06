@@ -1,10 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:dartz/dartz.dart';
-import 'package:sintir/Core/entities/ElevenlabsEntities/ElevenlabsRequestBodyEntity.dart';
-import 'package:sintir/Core/entities/gemini/GeminiContent.dart';
-import 'package:sintir/Core/entities/gemini/GeminiResponse.dart';
 import 'package:sintir/Core/errors/Failures.dart';
+import 'package:sintir/Features/Ai_Teacher/domain/entities/ElevenlabsEntities/ElevenlabsRequestBodyEntity.dart';
+import 'package:sintir/Features/Ai_Teacher/domain/entities/gemini/GeminiContent.dart';
+import 'package:sintir/Features/Ai_Teacher/domain/entities/gemini/GeminiResponse.dart';
 
 abstract class AiTeacherRepo {
   Future<Either<Failure, String>> extractTextFromFile();

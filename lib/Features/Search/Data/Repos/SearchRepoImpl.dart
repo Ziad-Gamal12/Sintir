@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sintir/Core/entities/CourseEntities/ContentCreaterEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
-import 'package:sintir/Core/entities/FireStoreRequirmentsEntity.dart';
+import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/models/CourseModel.dart';
