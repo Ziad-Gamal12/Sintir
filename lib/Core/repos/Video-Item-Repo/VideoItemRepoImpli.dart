@@ -17,7 +17,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 
 class VideoItemRepoImpli implements VideoItemRepo {
   final StorageService storageService;
-  final Databaseservice databaseservice;
+  final DataBaseService databaseservice;
 
   VideoItemRepoImpli(
       {required this.storageService, required this.databaseservice});

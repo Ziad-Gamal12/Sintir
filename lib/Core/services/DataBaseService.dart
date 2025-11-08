@@ -3,7 +3,7 @@
 import 'package:sintir/Core/entities/FireStoreEntities/FireStorePaginateResponse.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 
-abstract class Databaseservice {
+abstract class DataBaseService {
   Future<void> setData({
     required Map<String, dynamic> data,
     required FireStoreRequirmentsEntity requirements,

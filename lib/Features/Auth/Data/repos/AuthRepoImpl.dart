@@ -20,7 +20,7 @@ import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 
 class AuthRepoImpl implements AuthRepo {
   final firebaseAuthService authService;
-  final Databaseservice databaseservice;
+  final DataBaseService databaseservice;
   AuthRepoImpl({required this.authService, required this.databaseservice});
 
   @override

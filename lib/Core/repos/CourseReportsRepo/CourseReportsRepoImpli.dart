@@ -14,7 +14,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseReportsItemEntity.dart';
 
 class CourseReportsRepoimpli implements CourseReportsRepo {
-  final Databaseservice databaseservice;
+  final DataBaseService databaseservice;
   CourseReportsRepoimpli({required this.databaseservice});
 
   @override

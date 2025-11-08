@@ -11,7 +11,7 @@ import 'package:sintir/Features/MyMistakes/Domain/Entities/GetMyMistakesResponse
 import 'package:sintir/Features/MyMistakes/Domain/Repo/MyMistakesRepo.dart';
 
 class MyMistakesRepoImpl implements MyMistakesRepo {
-  final Databaseservice databaseservice;
+  final DataBaseService databaseservice;
   MyMistakesRepoImpl({required this.databaseservice});
   final Map<String, dynamic> getMyMistakesQuery = {
     "startAfter": null,

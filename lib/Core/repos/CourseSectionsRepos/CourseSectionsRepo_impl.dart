@@ -23,7 +23,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 
 class CourseSectionsRepoImpl implements CourseSectionsRepo {
-  final Databaseservice datebaseservice;
+  final DataBaseService datebaseservice;
   CourseSectionsRepoImpl({
     required this.datebaseservice,
   });

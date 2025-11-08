@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/CourseEntities/ContentCreaterEntity.dart';
+import 'package:sintir/Features/ContentCreatorProfile/Presentation/Views/ContentCreatorProfile.dart';
 import 'package:sintir/Features/Search/Presentation/Views/Widgets/SearchViewBodyTeachersListViewItem.dart';
 
 class SearchTeachersList extends StatelessWidget {
@@ -18,8 +20,14 @@ class SearchTeachersList extends StatelessWidget {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: SearchViewBodyTeachersListViewItem(
-              contentcreaterentity: teachersList[index],
+            child: GestureDetector(
+              onTap: () {
+                GoRouter.of(context).push(ContentCreatorProfile.routeName,
+                    extra: teachersList[index]);
+              },
+              child: SearchViewBodyTeachersListViewItem(
+                contentcreaterentity: teachersList[index],
+              ),
             ),
           );
         },

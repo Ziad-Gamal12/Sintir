@@ -14,7 +14,7 @@ import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 
 class CourseCouponsRepoImp implements CourseCouponsRepo {
-  final Databaseservice databaseservice;
+  final DataBaseService databaseservice;
   CourseCouponsRepoImp({required this.databaseservice});
 
   DocumentSnapshot? _lastDoc;

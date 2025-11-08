@@ -19,7 +19,7 @@ import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 
 class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
-  final Databaseservice databaseService;
+  final DataBaseService databaseService;
 
   CourseSubscriptionsRepoImpl({required this.databaseService});
 

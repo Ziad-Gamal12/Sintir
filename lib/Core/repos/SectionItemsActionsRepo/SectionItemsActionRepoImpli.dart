@@ -16,7 +16,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
 
 class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
-  final Databaseservice datebaseservice;
+  final DataBaseService datebaseservice;
 
   SectionItemsActionsRepoImpli({required this.datebaseservice});
 

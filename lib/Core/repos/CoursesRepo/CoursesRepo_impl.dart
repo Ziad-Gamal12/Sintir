@@ -18,7 +18,7 @@ import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 
 class CoursesrepoImpl implements Coursesrepo {
-  final Databaseservice databaseservice;
+  final DataBaseService databaseservice;
   final StorageService storageService;
 
   CoursesrepoImpl({

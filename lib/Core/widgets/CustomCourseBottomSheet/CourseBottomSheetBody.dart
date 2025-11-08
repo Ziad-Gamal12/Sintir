@@ -60,7 +60,7 @@ class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
                 ),
                 CourseBottomContentCreator(),
                 SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 CustomCourseBottomSheetActionButtons()
               ],

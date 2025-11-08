@@ -8,7 +8,7 @@ import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntit
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 
-class FirebaseFirestoreservice implements Databaseservice {
+class FirebaseFirestoreservice implements DataBaseService {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   CollectionReference<Map<String, dynamic>> _collectionRef(String collection) =>

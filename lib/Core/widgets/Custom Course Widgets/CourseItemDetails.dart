@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/ContentCreatorProfile/Presentation/Views/ContentCreatorProfile.dart';
 
 class CourseItemDetails extends StatelessWidget {
   const CourseItemDetails({
@@ -32,12 +34,18 @@ class CourseItemDetails extends StatelessWidget {
 
           /// ✅ Instructor Name
           if (courseItem.contentcreaterentity?.name != null)
-            Text(
-              courseItem.contentcreaterentity!.name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.right,
-              style: styles.regular10.copyWith(color: Colors.red),
+            InkWell(
+              onTap: () {
+                GoRouter.of(context).push(ContentCreatorProfile.routeName,
+                    extra: courseItem.contentcreaterentity);
+              },
+              child: Text(
+                courseItem.contentcreaterentity!.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.right,
+                style: styles.regular10.copyWith(color: Colors.red),
+              ),
             ),
 
           const SizedBox(height: 4),

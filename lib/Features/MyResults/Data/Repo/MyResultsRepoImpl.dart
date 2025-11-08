@@ -11,7 +11,7 @@ import 'package:sintir/Features/MyResults/Domain/Entities/GetMyResultsResponseEn
 import 'package:sintir/Features/MyResults/Domain/Repo/MyResultsRepo.dart';
 
 class MyResultsRepoImpl implements MyResultsRepo {
-  final Databaseservice dataBaseService;
+  final DataBaseService dataBaseService;
 
   MyResultsRepoImpl({required this.dataBaseService});
   Map<String, dynamic> getMyResultsQuery = {

@@ -44,6 +44,8 @@ import 'package:sintir/Features/Ai_Teacher/data/repos_impli/AiTeacherRepo_Impli.
 import 'package:sintir/Features/Ai_Teacher/domain/Repos/AITeacherRepo.dart';
 import 'package:sintir/Features/Auth/Data/repos/AuthRepoImpl.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
+import 'package:sintir/Features/ContentCreatorProfile/data/Repos/ContentCreatorProfileRepoImpl.dart';
+import 'package:sintir/Features/ContentCreatorProfile/domain/Repos/ContentCreatorProfileRepo.dart';
 import 'package:sintir/Features/MyMistakes/Data/Repos/MyMistakesRepoImpl.dart';
 import 'package:sintir/Features/MyMistakes/Domain/Repo/MyMistakesRepo.dart';
 import 'package:sintir/Features/MyResults/Data/Repo/MyResultsRepoImpl.dart';
@@ -60,7 +62,7 @@ void setup_Getit() {
   getIt.registerLazySingleton<firebaseAuthService>(() => firebaseAuthService());
   getIt.registerLazySingleton<Pickerassetsservice>(() => Pickerassetsservice());
   getIt
-      .registerLazySingleton<Databaseservice>(() => FirebaseFirestoreservice());
+      .registerLazySingleton<DataBaseService>(() => FirebaseFirestoreservice());
   getIt.registerLazySingleton<firebasestorageservice>(
       () => firebasestorageservice(pickerassetsservice: getIt()));
   getIt.registerLazySingleton<StorageService>(
@@ -113,11 +115,14 @@ void setup_Getit() {
       () => SearchRepoImpl(databaseservice: getIt()));
 
   getIt.registerLazySingleton<TeacherWalletRepo>(() => TeacherWalletRepoImpl(
-        databaseservice: getIt<Databaseservice>(),
+        databaseservice: getIt<DataBaseService>(),
         authRepo: getIt<AuthRepo>(),
       ));
   getIt.registerLazySingleton<MyMistakesRepo>(
-      () => MyMistakesRepoImpl(databaseservice: getIt<Databaseservice>()));
+      () => MyMistakesRepoImpl(databaseservice: getIt<DataBaseService>()));
   getIt.registerLazySingleton<MyResultsRepo>(
-      () => MyResultsRepoImpl(dataBaseService: getIt<Databaseservice>()));
+      () => MyResultsRepoImpl(dataBaseService: getIt<DataBaseService>()));
+
+  getIt.registerLazySingleton<ContentCreatorProfileRepo>(() =>
+      ContentCreatorProfileRepoImpl(dataBaseService: getIt<DataBaseService>()));
 }

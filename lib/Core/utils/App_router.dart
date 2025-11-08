@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/ContentCreaterEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
@@ -17,6 +18,7 @@ import 'package:sintir/Features/Auth/TeacherPresentation/views/TeacherSignInView
 import 'package:sintir/Features/Auth/TeacherPresentation/views/TeacherSignUpView.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/views/teacherTermsAndConditionsView.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/ChoosingUserKindView.dart';
+import 'package:sintir/Features/ContentCreatorProfile/Presentation/Views/ContentCreatorProfile.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFedBackView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFilePreviewer_View.dart';
@@ -408,6 +410,13 @@ class App_router {
         path: MyResultsView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const MyResultsView();
+        },
+      ),
+      GoRoute(
+        path: ContentCreatorProfile.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return ContentCreatorProfile(
+              contentcreaterentity: state.extra as Contentcreaterentity);
         },
       ),
     ],

@@ -20,7 +20,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 
 class TestItemRepoImpli implements Testitemrepo {
   final StorageService storageService;
-  final Databaseservice databaseservice;
+  final DataBaseService databaseservice;
 
   // Keep last document for pagination (single per repository instance)
   DocumentSnapshot? lastTestResultDoc;

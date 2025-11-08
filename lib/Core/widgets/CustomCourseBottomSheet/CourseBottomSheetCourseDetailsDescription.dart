@@ -20,6 +20,8 @@ class CourseBottomSheetCourseDetailsDescription extends StatelessWidget {
         ),
         Text(
           description,
+          maxLines: 4,
+          overflow: TextOverflow.ellipsis,
           style: AppTextStyles(context).regular10.copyWith(color: Colors.black),
         ),
       ],

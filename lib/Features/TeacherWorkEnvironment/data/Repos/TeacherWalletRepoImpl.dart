@@ -7,7 +7,7 @@ import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/TeacherWalletRepo.dart';
 
 class TeacherWalletRepoImpl implements TeacherWalletRepo {
-  final Databaseservice databaseservice;
+  final DataBaseService databaseservice;
   final AuthRepo authRepo;
 
   TeacherWalletRepoImpl(

@@ -17,7 +17,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
 
 class CourseFeedBacksRepoImpli implements CourseFeedBacksRepo {
-  final Databaseservice databaseservice;
+  final DataBaseService databaseservice;
 
   CourseFeedBacksRepoImpli({required this.databaseservice});
 

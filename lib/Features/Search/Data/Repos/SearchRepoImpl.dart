@@ -16,7 +16,7 @@ import 'package:sintir/Features/Search/Domain/Entities/SearchResponse.dart';
 import 'package:sintir/Features/Search/Domain/Repos/SearchRepo.dart';
 
 class SearchRepoImpl implements SearchRepo {
-  final Databaseservice databaseservice;
+  final DataBaseService databaseservice;
   SearchRepoImpl({required this.databaseservice});
 
   @override
