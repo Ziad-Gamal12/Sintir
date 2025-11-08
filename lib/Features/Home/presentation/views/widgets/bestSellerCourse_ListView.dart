@@ -13,7 +13,7 @@ class BestsellercourseListview extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
 
     return SizedBox(
-      height: height * .26,
+      height: height * .28,
       child: ListView.builder(
           padding: const EdgeInsets.only(right: KHorizontalPadding),
           scrollDirection: Axis.horizontal,
@@ -22,7 +22,7 @@ class BestsellercourseListview extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: AspectRatio(
-                aspectRatio: 140 / 190,
+                aspectRatio: 150 / 200,
                 child: CustomCourseItem(
                     courseItem: courses[index],
                     ontap: () {

@@ -17,14 +17,14 @@ class CourseItemDetails extends StatelessWidget {
     final styles = AppTextStyles(context);
 
     return Padding(
-      padding: const EdgeInsets.only(right: 4, bottom: 10, left: 4),
+      padding: const EdgeInsets.only(right: 8, bottom: 10, left: 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           /// ✅ Title
           Text(
             courseItem.title,
-            maxLines: 1,
+            maxLines: 2,
             textAlign: TextAlign.right,
             overflow: TextOverflow.ellipsis,
             style: styles.semiBold12.copyWith(color: Colors.black),
@@ -67,24 +67,13 @@ class CourseItemDetails extends StatelessWidget {
             ],
           ),
 
-          const SizedBox(height: 6),
-
-          /// ✅ Short description
-          Text(
-            courseItem.description,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.right,
-            style: styles.regular10.copyWith(color: const Color(0xff818181)),
-          ),
-
           const Spacer(),
 
           /// ✅ Price
           Text(
             "${courseItem.price} جنيه",
             textAlign: TextAlign.right,
-            style: styles.semiBold14.copyWith(color: Colors.red),
+            style: styles.bold14.copyWith(color: Colors.red),
           ),
         ],
       ),
