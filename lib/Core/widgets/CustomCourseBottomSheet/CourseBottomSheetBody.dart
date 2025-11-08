@@ -8,9 +8,11 @@ import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
+import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomContentCreator.dart';
+import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetBodyCoursePoster.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetCourseDetails.dart';
-import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetHeader.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CustomCourseBottomSheetActionButtons.dart';
+import 'package:sintir/constant.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CourseBottomSheetBody extends StatefulWidget {
@@ -43,20 +45,22 @@ class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
         return Skeletonizer(
           enabled: state is CheckIfSubscribedLoading,
           child: const Padding(
-            padding: EdgeInsets.only(left: 16, right: 16, bottom: 20),
+            padding: EdgeInsets.symmetric(
+                horizontal: KHorizontalPadding, vertical: KVerticalPadding),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                CourseBottomSheetBodyCoursePoster(),
                 SizedBox(
                   height: 20,
                 ),
-                CourseBottomSheetHeader(),
-                SizedBox(
-                  height: 10,
-                ),
                 CourseBottomSheetCourseDetails(),
                 SizedBox(
-                  height: 40,
+                  height: 20,
+                ),
+                CourseBottomContentCreator(),
+                SizedBox(
+                  height: 10,
                 ),
                 CustomCourseBottomSheetActionButtons()
               ],
