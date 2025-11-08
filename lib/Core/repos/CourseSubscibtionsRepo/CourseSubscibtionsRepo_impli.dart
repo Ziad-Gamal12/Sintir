@@ -255,6 +255,58 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       return left(ServerFailure(message: "حدث خطاء"));
     }
   }
+
+  DocumentSnapshot? _lastSearchSubscribersDoc;
+  @override
+  Future<Either<Failure, GetCourseSubscribersEntity>> searchSubscribers(
+      {required String courseID,
+      required String searchKey,
+      required bool isPaginate}) async {
+    try {
+      Map<String, dynamic> query = {
+        "startAfter": isPaginate ? _lastSubscribersDoc : null,
+        "limit": 10,
+        "searchField": "name",
+        "searchValue": searchKey,
+      };
+
+      final response = await databaseService.getData(
+        query: query,
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.coursesCollection,
+          subCollection: BackendEndpoints.subscribersSubCollection,
+          docId: courseID,
+        ),
+      );
+
+      if (response.listData == null) {
+        return left(ServerFailure(message: "البيانات غير موجودة"));
+      }
+
+      if (response.listData!.isEmpty) {
+        return right(GetCourseSubscribersEntity(
+          subscribers: [],
+          hasMore: false,
+          isPaginate: isPaginate,
+        ));
+      }
+
+      _lastSubscribersDoc = response.lastDocumentSnapshot;
+
+      final subscribers = await compute(_parseSubscribers, response.listData!);
+      final hasMore = response.hasMore ?? false;
+
+      return right(GetCourseSubscribersEntity(
+        subscribers: subscribers,
+        hasMore: hasMore,
+        isPaginate: isPaginate,
+      ));
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
 }
 
 List<Subscriberentity> _parseSubscribers(List<dynamic> rawList) {

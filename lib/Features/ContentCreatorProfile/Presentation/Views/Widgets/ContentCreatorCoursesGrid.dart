@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/Managers/Cubits/content_creator_courses_cubit/content_creator_courses_cubit.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
-import 'package:sintir/Features/ContentCreatorProfile/Presentation/Manager/cubit/content_creator_courses_cubit.dart';
 import 'package:sintir/Features/ContentCreatorProfile/Presentation/Views/Widgets/ContentCreatorCoursesGridDisplayedCourses.dart';
 import 'package:sintir/Features/ContentCreatorProfile/Presentation/Views/Widgets/ContentCreatorCoursesGridLoadingCourses.dart';
 import 'package:sintir/constant.dart';

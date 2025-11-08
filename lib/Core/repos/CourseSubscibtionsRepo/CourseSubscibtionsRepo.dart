@@ -16,5 +16,9 @@ abstract class CourseSubscibtionsRepo {
       {required String userID, required String courseID});
   Future<Either<Failure, GetCourseSubscribersEntity>> getSubscribers(
       {required String courseID, required bool isPaginate});
+  Future<Either<Failure, GetCourseSubscribersEntity>> searchSubscribers(
+      {required String courseID,
+      required String searchKey,
+      required bool isPaginate});
   Future<Either<Failure, int>> getSubscribersCount({required String courseID});
 }

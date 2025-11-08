@@ -207,9 +207,7 @@ class App_router {
       GoRoute(
         path: TeacherWorkenvironmentview.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return TeacherWorkenvironmentview(
-            myCourses: state.extra as List<CourseEntity>,
-          );
+          return const TeacherWorkenvironmentview();
         },
       ),
       GoRoute(

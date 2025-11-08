@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/GridHelper.dart';
-import 'package:sintir/Core/helper/ShowBottomSheet.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
-import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheet.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
-class ContentCreatorCoursesGridDisplayedCourses extends StatelessWidget {
-  const ContentCreatorCoursesGridDisplayedCourses({
+class TeacherEnvironmentGridLoadingCourses extends StatelessWidget {
+  const TeacherEnvironmentGridLoadingCourses({
     super.key,
-    required this.coursesList,
   });
-  final List<CourseEntity> coursesList;
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    List<CourseEntity> coursesList = CourseEntity.fakeCourses;
     return SliverGrid.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: GridHelper.getCrossAxisCount(width),
@@ -23,13 +22,12 @@ class ContentCreatorCoursesGridDisplayedCourses extends StatelessWidget {
       ),
       itemCount: coursesList.length,
       itemBuilder: (context, index) {
-        return CustomCourseItem(
-          ontap: () {
-            showCustomBottomSheet(
-                child: CourseBottomSheet(courseEntity: coursesList[index]),
-                context: context);
-          },
-          courseItem: coursesList[index],
+        return Skeletonizer(
+          enabled: true,
+          child: CustomCourseItem(
+            ontap: () {},
+            courseItem: coursesList[index],
+          ),
         );
       },
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Core/widgets/CustomAnimatedDropDownButton.dart';
 
 class SelecteIssuerDropDownButton extends StatefulWidget {
   const SelecteIssuerDropDownButton({super.key, required this.onSelected});
@@ -12,73 +12,15 @@ class SelecteIssuerDropDownButton extends StatefulWidget {
 
 class _SelecteIssuerDropDownButtonState
     extends State<SelecteIssuerDropDownButton> {
-  String? selectedValue = "vodafone";
+  List<String> items = ["vodafone", "etisalat", "orange", "we"];
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: AlignmentDirectional.center,
-      decoration: BoxDecoration(
-        color: Colors.grey.shade50,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.grey.shade200),
-      ),
-      child: DropdownButton<String>(
+    return CustomAnimatedDropDownButton(
+        items: items,
+        hintText: "نوع المحفظة",
         onChanged: (val) {
           widget.onSelected(val);
-          setState(() {
-            selectedValue = val;
-          });
-        },
-        value: selectedValue,
-        isExpanded: true,
-        icon: const Icon(
-          Icons.wallet_rounded,
-          color: Colors.grey,
-        ),
-        isDense: true,
-        dropdownColor: Colors.grey.shade50,
-        barrierDismissible: true,
-        borderRadius: BorderRadius.circular(10),
-        padding: const EdgeInsets.all(10),
-        autofocus: true,
-        hint: Text(
-          "اختر المصدر",
-          style: AppTextStyles(context).regular14,
-        ),
-        underline: Container(),
-        focusColor: Colors.grey.shade200,
-        items: [
-          DropdownMenuItem(
-            value: "vodafone",
-            child: Text(
-              "Vodafone",
-              style: AppTextStyles(context).semiBold12,
-            ),
-          ),
-          DropdownMenuItem(
-            value: "etisalat",
-            child: Text(
-              "Etisalat",
-              style: AppTextStyles(context).semiBold12,
-            ),
-          ),
-          DropdownMenuItem(
-            value: "orange",
-            child: Text(
-              "Orange",
-              style: AppTextStyles(context).semiBold12,
-            ),
-          ),
-          DropdownMenuItem(
-            value: "aman",
-            child: Text(
-              "Aman",
-              style: AppTextStyles(context).semiBold12,
-            ),
-          ),
-        ],
-      ),
-    );
+        });
   }
 }

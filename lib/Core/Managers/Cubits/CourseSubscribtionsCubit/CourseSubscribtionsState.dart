@@ -67,3 +67,20 @@ final class PayWithWalletFailure extends CourseSubscribtionsState {
   final String errMessage;
   PayWithWalletFailure({required this.errMessage});
 }
+// search Subscribers
+
+final class SearchSubscribersLoading extends CourseSubscribtionsState {
+  final bool isPaginate;
+
+  SearchSubscribersLoading({required this.isPaginate});
+}
+
+final class SearchSubscribersSuccess extends CourseSubscribtionsState {
+  final GetCourseSubscribersEntity response;
+  SearchSubscribersSuccess({required this.response});
+}
+
+final class SearchSubscribersFailure extends CourseSubscribtionsState {
+  final String errMessage;
+  SearchSubscribersFailure({required this.errMessage});
+}

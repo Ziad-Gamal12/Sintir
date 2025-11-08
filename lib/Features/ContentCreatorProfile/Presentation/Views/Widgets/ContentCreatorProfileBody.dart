@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/Managers/Cubits/content_creator_courses_cubit/content_creator_courses_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/ContentCreaterEntity.dart';
-import 'package:sintir/Features/ContentCreatorProfile/Presentation/Manager/cubit/content_creator_courses_cubit.dart';
 import 'package:sintir/Features/ContentCreatorProfile/Presentation/Views/Widgets/ContentCreatorCoursesGrid.dart';
 import 'package:sintir/Features/ContentCreatorProfile/Presentation/Views/Widgets/ContentCreatorCoursesHeader.dart';
 import 'package:sintir/Features/ContentCreatorProfile/Presentation/Views/Widgets/ContentCreatorDetails.dart';

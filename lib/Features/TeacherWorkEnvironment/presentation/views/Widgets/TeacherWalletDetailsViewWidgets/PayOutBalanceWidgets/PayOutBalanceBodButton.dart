@@ -30,23 +30,47 @@ class PayOutBalanceBodButton extends StatelessWidget {
       color: KMainColor,
       textColor: Colors.white,
       onPressed: () {
-        if (formKey.currentState!.validate()) {
-          if (walletEntity.status == BackendEndpoints.walletActive) {
-            if (walletEntity.balance >= double.parse(amountController.text)) {
-              context.read<PayoutCubit>().sendDisbursement(
-                    receiverMobile: phoneController.text,
-                    issuer: "Vodafone",
-                    amount: double.parse(amountController.text),
-                  );
-            } else {
-              ShowErrorSnackBar(
-                  context: context, message: "لا يوجد مبلغ كافي في المحفظه");
-            }
-          } else {
-            ShowErrorSnackBar(context: context, message: "المحفظه غير مفعلة");
-          }
+        if (!formKey.currentState!.validate()) return;
+
+        final amount = double.tryParse(amountController.text);
+        if (amount == null) {
+          ShowErrorSnackBar(context: context, message: "المبلغ غير صالح");
+          return;
         }
+
+        if (walletEntity.status != BackendEndpoints.walletActive) {
+          ShowErrorSnackBar(context: context, message: "المحفظه غير مفعلة");
+          return;
+        }
+
+        if (walletEntity.balance < amount) {
+          ShowErrorSnackBar(
+              context: context, message: "لا يوجد مبلغ كافي في المحفظه");
+          return;
+        }
+
+        if (!validateIssuer(issuer: issuer, phone: phoneController.text)) {
+          ShowErrorSnackBar(
+              context: context, message: "رقم الهاتف غير متوافق مع المزود");
+          return;
+        }
+
+        context.read<PayoutCubit>().sendDisbursement(
+              receiverMobile: phoneController.text,
+              issuer: issuer,
+              amount: amount,
+            );
       },
     );
+  }
+
+  bool validateIssuer({required String issuer, required String phone}) {
+    const prefixes = {
+      'vodafone': '010',
+      'orange': '012',
+      'we': '015',
+      'etisalat': '011',
+    };
+    return prefixes[issuer]?.startsWith(phone.substring(0, 3)) ?? false;
   }
 }

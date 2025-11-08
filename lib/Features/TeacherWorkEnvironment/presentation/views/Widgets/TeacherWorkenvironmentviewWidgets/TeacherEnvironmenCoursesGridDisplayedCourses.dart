@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/GridHelper.dart';
-import 'package:sintir/Core/helper/ShowBottomSheet.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
-import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheet.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/CourseDetailView.dart';
 
-class ContentCreatorCoursesGridDisplayedCourses extends StatelessWidget {
-  const ContentCreatorCoursesGridDisplayedCourses({
+class TeacherEnvironmenCoursesGridDisplayedCourses extends StatelessWidget {
+  const TeacherEnvironmenCoursesGridDisplayedCourses({
     super.key,
     required this.coursesList,
   });
@@ -25,9 +25,8 @@ class ContentCreatorCoursesGridDisplayedCourses extends StatelessWidget {
       itemBuilder: (context, index) {
         return CustomCourseItem(
           ontap: () {
-            showCustomBottomSheet(
-                child: CourseBottomSheet(courseEntity: coursesList[index]),
-                context: context);
+            GoRouter.of(context)
+                .push(CourseDetailView.routeName, extra: coursesList[index]);
           },
           courseItem: coursesList[index],
         );

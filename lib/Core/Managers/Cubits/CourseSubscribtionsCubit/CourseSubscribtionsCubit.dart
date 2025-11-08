@@ -73,4 +73,18 @@ class CourseSubscribtionsCubit extends Cubit<CourseSubscribtionsState> {
       emit(GetCourseSubscribersSuccess(response: response));
     });
   }
+
+  Future<void> searchSubscribers(
+      {required String keyword, required bool isPaginate}) async {
+    emit(SearchSubscribersLoading(
+      isPaginate: isPaginate,
+    ));
+    var result = await subscribtionRepo.searchSubscribers(
+        searchKey: keyword, isPaginate: isPaginate, courseID: course.id);
+    result.fold((failure) {
+      emit(SearchSubscribersFailure(errMessage: failure.message));
+    }, (response) {
+      emit(SearchSubscribersSuccess(response: response));
+    });
+  }
 }

@@ -20,4 +20,16 @@ class ContentCreatorCoursesCubit extends Cubit<ContentCreatorCoursesState> {
         (courses) =>
             emit(GetContentCreatorCoursesSuccess(coursesList: courses)));
   }
+
+  Future<void> searchContentCreatorCourses(
+      {required String userId, required String keyword}) async {
+    emit(SearchContentCreatorCoursesLoading());
+    final response = await contentCreatorProfileRepo
+        .searchContentCreatorCourses(userId: userId, keyword: keyword);
+    response.fold(
+        (failure) => emit(
+            SearchContentCreatorCoursesFailure(errmessage: failure.message)),
+        (courses) =>
+            emit(SearchContentCreatorCoursesSuccess(coursesList: courses)));
+  }
 }
