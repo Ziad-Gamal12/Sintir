@@ -1,7 +1,7 @@
 import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
 
 class GetCourseSubscribersEntity {
-  final List<Subscriberentity> subscribers;
+  final List<SubscriberEntity> subscribers;
   final bool hasMore;
   final bool isPaginate;
 

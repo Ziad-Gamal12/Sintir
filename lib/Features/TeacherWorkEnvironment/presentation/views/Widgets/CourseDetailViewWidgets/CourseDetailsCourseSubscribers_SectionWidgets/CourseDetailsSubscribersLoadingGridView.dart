@@ -27,7 +27,7 @@ class CourseDetailsSubscribersLoadingGridView extends StatelessWidget {
     );
   }
 
-  List<Subscriberentity> getFakLoadingSubscribers() {
-    return List.generate(6, (index) => Subscriberentity.empty());
+  List<SubscriberEntity> getFakLoadingSubscribers() {
+    return List.generate(6, (index) => SubscriberEntity.empty());
   }
 }

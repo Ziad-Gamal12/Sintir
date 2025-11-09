@@ -15,7 +15,7 @@ class Subscripersidsmodel {
       required this.imageUrl,
       required this.address});
   factory Subscripersidsmodel.fromEntit(
-      {required Subscriberentity subscriberentity}) {
+      {required SubscriberEntity subscriberentity}) {
     return Subscripersidsmodel(
       id: subscriberentity.id,
       name: subscriberentity.name,
@@ -38,7 +38,7 @@ class Subscripersidsmodel {
       address: json['address'],
     );
   }
-  Subscriberentity toEntity() => Subscriberentity(
+  SubscriberEntity toEntity() => SubscriberEntity(
       id: id,
       name: name,
       gender: gender,

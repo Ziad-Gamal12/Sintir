@@ -9,7 +9,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
   const CourseDetailsSubscribersGridviewItem(
       {super.key, required this.subscriberentity});
-  final Subscriberentity subscriberentity;
+  final SubscriberEntity subscriberentity;
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -11,7 +11,8 @@ class Testresultemodel {
   final Map<String, dynamic> joinedby;
   final int result;
   final bool isPassed;
-
+  final String courseId;
+  final String sectionId;
   final List<Map<String, dynamic>> questionsSolvedList;
 
   Testresultemodel({
@@ -21,6 +22,8 @@ class Testresultemodel {
     required this.isPassed,
     required this.solvedQuestions,
     required this.joinedby,
+    required this.courseId,
+    required this.sectionId,
     required this.result,
     required this.questionsSolvedList,
   });
@@ -34,6 +37,8 @@ class Testresultemodel {
       solvedQuestions: json['solvedQuestions'],
       joinedby: json['joinedby'],
       result: json['result'],
+      courseId: json['courseId'],
+      sectionId: json['sectionId'],
       questionsSolvedList: (json["questionsSolvedList"] as List<dynamic>)
           .map((e) => e as Map<String, dynamic>)
           .toList(),
@@ -46,6 +51,8 @@ class Testresultemodel {
       serialNumber: entity.serialNumber,
       joinedDate: entity.joinedDate,
       isPassed: entity.isPassed,
+      courseId: entity.courseId,
+      sectionId: entity.sectionId,
       totalQuestions: entity.totalQuestions,
       solvedQuestions: entity.solvedQuestions,
       joinedby: JoinedbyModel.fromEntity(entity.joinedbyentity).toJson(),
@@ -63,6 +70,8 @@ class Testresultemodel {
       isPassed: isPassed,
       totalQuestions: totalQuestions,
       solvedQuestions: solvedQuestions,
+      courseId: courseId,
+      sectionId: sectionId,
       joinedbyentity: JoinedbyModel.fromJson(joinedby).toEntity(),
       result: result,
       questionsSolvedListEntity: questionsSolvedList
@@ -79,6 +88,8 @@ class Testresultemodel {
         "joinedby": joinedby,
         "isPassed": isPassed,
         "result": result,
+        "courseId": courseId,
+        "sectionId": sectionId,
         "questionsSolvedList": questionsSolvedList,
       };
 }

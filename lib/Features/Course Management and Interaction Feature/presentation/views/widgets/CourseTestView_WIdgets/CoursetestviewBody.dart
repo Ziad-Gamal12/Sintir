@@ -64,16 +64,18 @@ class _CourseTestViewBodyState extends State<CourseTestViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    final test =
-        context.read<CourseExamViewNavigationsRequirmentsEntity>().test;
+    final courseExamViewNavigationsRequirmentsEntity =
+        context.read<CourseExamViewNavigationsRequirmentsEntity>();
 
     return CourseTestListener(
-      test: test,
+      test: courseExamViewNavigationsRequirmentsEntity.test,
       stopWatchTimer: stopWatchTimer,
+      courseId: courseExamViewNavigationsRequirmentsEntity.course.id,
+      sectionId: courseExamViewNavigationsRequirmentsEntity.sectionId,
       builder: (context, state) {
         return CourseTestLayout(
           stopWatchTimer: stopWatchTimer,
-          test: test,
+          test: courseExamViewNavigationsRequirmentsEntity.test,
           currentQuestionIndex: currentQuestionIndex,
           onQuestionChanged: (index) {
             setState(() {

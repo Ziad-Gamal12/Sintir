@@ -6,7 +6,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 class CourseDetailsSubscribersGridView extends StatelessWidget {
   const CourseDetailsSubscribersGridView(
       {super.key, required this.subscribers});
-  final List<Subscriberentity> subscribers;
+  final List<SubscriberEntity> subscribers;
   @override
   Widget build(BuildContext context) {
     return GridView.builder(

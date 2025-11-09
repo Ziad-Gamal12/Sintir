@@ -74,7 +74,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
 
   /// Add new subscriber to course
   Future<void> _addSubscriber(
-    Subscriberentity subscriber,
+    SubscriberEntity subscriber,
     FireStoreRequirmentsEntity requirements,
   ) async {
     final data =
@@ -82,8 +82,8 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
     await databaseService.setData(data: data, requirements: requirements);
   }
 
-  Subscriberentity _buildSubscriberEntity(UserEntity user) {
-    return Subscriberentity(
+  SubscriberEntity _buildSubscriberEntity(UserEntity user) {
+    return SubscriberEntity(
       id: user.uid,
       name: user.firstName,
       gender: user.gender,
@@ -309,7 +309,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
   }
 }
 
-List<Subscriberentity> _parseSubscribers(List<dynamic> rawList) {
+List<SubscriberEntity> _parseSubscribers(List<dynamic> rawList) {
   return rawList
       .map((e) => Subscripersidsmodel.fromJson(e).toEntity())
       .toList();

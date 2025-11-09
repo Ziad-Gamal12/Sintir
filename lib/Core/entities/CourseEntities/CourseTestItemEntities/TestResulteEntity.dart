@@ -10,7 +10,7 @@ class TestResultEntity {
   final JoinedByEntity joinedbyentity;
   final int result;
   final List<ExamResultSolvedQuestionEntity> questionsSolvedListEntity;
-
+  final String courseId, sectionId;
   TestResultEntity(
       {required this.serialNumber,
       required this.joinedDate,
@@ -18,6 +18,8 @@ class TestResultEntity {
       required this.isPassed,
       required this.solvedQuestions,
       required this.joinedbyentity,
+      required this.courseId,
+      required this.sectionId,
       required this.result,
       required this.questionsSolvedListEntity});
   static TestResultEntity empty() {
@@ -25,6 +27,8 @@ class TestResultEntity {
       serialNumber: "123456789",
       joinedDate: DateTime.now(),
       totalQuestions: 0,
+      courseId: "00000",
+      sectionId: "00000",
       solvedQuestions: 0,
       joinedbyentity: JoinedByEntity.empty(),
       result: 0,

@@ -43,7 +43,10 @@ final class CheckIfSubscribedFailure extends CourseSubscribtionsState {
   CheckIfSubscribedFailure({required this.errMessage});
 }
 
-final class GetCourseSubscribersLoading extends CourseSubscribtionsState {}
+final class GetCourseSubscribersLoading extends CourseSubscribtionsState {
+  final bool isPaginate;
+  GetCourseSubscribersLoading({required this.isPaginate});
+}
 
 final class GetCourseSubscribersSuccess extends CourseSubscribtionsState {
   final GetCourseSubscribersEntity response;

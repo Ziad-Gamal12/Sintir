@@ -24,8 +24,8 @@ class _CourseDetailsSubscribersViewBodyState
     extends State<CourseDetailsSubscribersViewBody>
     with AutomaticKeepAliveClientMixin {
   final TextEditingController controller = TextEditingController();
-  final List<Subscriberentity> _subscribers = [];
-  final List<Subscriberentity> _searchSubscribers = [];
+  final List<SubscriberEntity> _subscribers = [];
+  final List<SubscriberEntity> _searchSubscribers = [];
 
   late ScrollController scrollController;
   Timer? _debounce;
@@ -40,13 +40,10 @@ class _CourseDetailsSubscribersViewBodyState
 
     final cubit = context.read<CourseSubscribtionsCubit>();
 
-    /// ✅ Load initial subscribers
     cubit.getCoursSubscribers(isPaginate: false);
 
-    /// ✅ Search listener with debounce
     controller.addListener(_onSearchChanged);
 
-    /// ✅ Pagination listener
     scrollController.addListener(() {
       if (!mounted) return;
 
@@ -78,7 +75,6 @@ class _CourseDetailsSubscribersViewBodyState
       final keyword = controller.text.trim();
       final cubit = context.read<CourseSubscribtionsCubit>();
 
-      /// ✅ Toggle search mode
       final searching = keyword.isNotEmpty;
       if (searching != isSearching) {
         setState(() {
@@ -86,7 +82,6 @@ class _CourseDetailsSubscribersViewBodyState
         });
       }
 
-      /// ✅ Load search results
       if (searching) {
         cubit.searchSubscribers(keyword: keyword, isPaginate: false);
       }

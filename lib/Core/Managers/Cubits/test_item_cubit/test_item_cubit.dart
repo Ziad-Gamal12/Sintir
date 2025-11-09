@@ -137,6 +137,8 @@ class TestItemCubit extends Cubit<TestItemState> {
   TestResultEntity getTestResults(
       {required BuildContext context,
       required CourseTestEntity test,
+      required String courseId,
+      required String sectionId,
       required UserEntity user}) {
     return TestResultEntity(
         isPassed: getResult(test: test) >= (test.questions.length / 2),
@@ -148,6 +150,8 @@ class TestItemCubit extends Cubit<TestItemState> {
           imageUrl: user.profilePicurl,
           joinedDate: DateTime.now(),
         ),
+        courseId: courseId,
+        sectionId: sectionId,
         result: getResult(test: test),
         solvedQuestions: getSolvedQuestionsnums(test: test).length,
         totalQuestions: test.questions.length,
@@ -164,8 +168,12 @@ class TestItemCubit extends Cubit<TestItemState> {
     emit(AddTestResultLoading());
     Either<Failure, void> result = await testitemrepo.addTestResult(
         userUID: userId,
-        testResult:
-            getTestResults(context: context, test: test, user: getUserData()),
+        testResult: getTestResults(
+            context: context,
+            test: test,
+            user: getUserData(),
+            courseId: courseId,
+            sectionId: sectionId),
         courseId: courseId,
         sectionId: sectionId,
         sectionItemId: sectionItemId);

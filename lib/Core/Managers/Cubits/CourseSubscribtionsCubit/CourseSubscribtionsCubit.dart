@@ -64,7 +64,9 @@ class CourseSubscribtionsCubit extends Cubit<CourseSubscribtionsState> {
   }
 
   Future<void> getCoursSubscribers({required bool isPaginate}) async {
-    emit(GetCourseSubscribersLoading());
+    emit(GetCourseSubscribersLoading(
+      isPaginate: isPaginate,
+    ));
     var result = await subscribtionRepo.getSubscribers(
         courseID: course.id, isPaginate: isPaginate);
     result.fold((failure) {
