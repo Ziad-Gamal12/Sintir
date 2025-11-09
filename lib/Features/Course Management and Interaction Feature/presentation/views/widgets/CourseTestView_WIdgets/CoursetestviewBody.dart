@@ -71,7 +71,6 @@ class _CourseTestViewBodyState extends State<CourseTestViewBody> {
       test: courseExamViewNavigationsRequirmentsEntity.test,
       stopWatchTimer: stopWatchTimer,
       courseId: courseExamViewNavigationsRequirmentsEntity.course.id,
-      sectionId: courseExamViewNavigationsRequirmentsEntity.sectionId,
       builder: (context, state) {
         return CourseTestLayout(
           stopWatchTimer: stopWatchTimer,

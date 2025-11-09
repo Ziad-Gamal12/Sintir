@@ -20,9 +20,11 @@ class CourseDetailsSubscribersView extends StatelessWidget {
           paymobRepo: getIt<PaymobRepo>(),
           course: courseEntity,
           subscribtionRepo: getIt<CourseSubscibtionsRepo>()),
-      child: const Scaffold(
-        appBar: CustomAppBar(appBartitle: "الطلاب"),
-        body: CourseDetailsSubscribersViewBody(),
+      child: Scaffold(
+        appBar: const CustomAppBar(appBartitle: "الطلاب"),
+        body: CourseDetailsSubscribersViewBody(
+          courseEntity: courseEntity,
+        ),
       ),
     );
   }

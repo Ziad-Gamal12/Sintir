@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
@@ -33,7 +35,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
       FireStoreRequirmentsEntity requirmentsEntity = FireStoreRequirmentsEntity(
         collection: BackendEndpoints.usersCollectionName,
         subCollection: BackendEndpoints.subscribetoCourseCollection,
-        subDocId: subscriberId,
+        docId: subscriberId,
       );
       final response = await databaseservice.getData(
         requirements: requirmentsEntity,
@@ -61,7 +63,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
       Map<String, dynamic> query = {
         "limit": 1,
         "orderBy": "result",
-        "isDescending": true,
+        "descending": true,
         "filters": <Map<String, dynamic>>[
           {
             "field": "courseId",
@@ -73,7 +75,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
       FireStoreRequirmentsEntity requirmentsEntity = FireStoreRequirmentsEntity(
         collection: BackendEndpoints.usersCollectionName,
         subCollection: BackendEndpoints.myResultsSubCollection,
-        subDocId: subscriberId,
+        docId: subscriberId,
       );
 
       final response = await databaseservice.getData(
@@ -85,12 +87,19 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
       }
       final List<Map<String, dynamic>> data =
           response.listData! as List<Map<String, dynamic>>;
+      if (data.isEmpty || data.first.isEmpty) {
+        return right(
+          TestResultEntity.empty(),
+        );
+      }
       TestResultEntity testResult =
           Testresultemodel.fromJson(data.first).toEntity();
       return right(testResult);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e) {
+    } catch (e, s) {
+      log(e.toString(), stackTrace: s);
+
       return left(ServerFailure(message: "حدث خطاء"));
     }
   }
@@ -102,7 +111,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
       Map<String, dynamic> query = {
         "limit": 1,
         "orderBy": "result",
-        "isDescending": false,
+        "descending": false,
         "filters": <Map<String, dynamic>>[
           {
             "field": "courseId",
@@ -114,7 +123,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
       FireStoreRequirmentsEntity requirmentsEntity = FireStoreRequirmentsEntity(
         collection: BackendEndpoints.usersCollectionName,
         subCollection: BackendEndpoints.myResultsSubCollection,
-        subDocId: subscriberId,
+        docId: subscriberId,
       );
 
       final response = await databaseservice.getData(
@@ -126,12 +135,18 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
       }
       final List<Map<String, dynamic>> data =
           response.listData! as List<Map<String, dynamic>>;
+      if (data.isEmpty || data.first.isEmpty) {
+        return right(
+          TestResultEntity.empty(),
+        );
+      }
       TestResultEntity testResult =
           Testresultemodel.fromJson(data.first).toEntity();
       return right(testResult);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e) {
+    } catch (e, s) {
+      log(e.toString(), stackTrace: s);
       return left(ServerFailure(message: "حدث خطاء"));
     }
   }
@@ -152,7 +167,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
       FireStoreRequirmentsEntity requirmentsEntity = FireStoreRequirmentsEntity(
         collection: BackendEndpoints.usersCollectionName,
         subCollection: BackendEndpoints.myResultsSubCollection,
-        subDocId: subscriberId,
+        docId: subscriberId,
       );
       final response = await databaseservice.getData(
         requirements: requirmentsEntity,

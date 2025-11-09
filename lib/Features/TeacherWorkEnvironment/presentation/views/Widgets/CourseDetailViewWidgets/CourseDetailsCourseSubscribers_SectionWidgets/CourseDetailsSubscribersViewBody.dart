@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomSearchTextField.dart';
@@ -13,8 +14,9 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/constant.dart';
 
 class CourseDetailsSubscribersViewBody extends StatefulWidget {
-  const CourseDetailsSubscribersViewBody({super.key});
-
+  const CourseDetailsSubscribersViewBody(
+      {super.key, required this.courseEntity});
+  final CourseEntity courseEntity;
   @override
   State<CourseDetailsSubscribersViewBody> createState() =>
       _CourseDetailsSubscribersViewBodyState();
@@ -143,7 +145,10 @@ class _CourseDetailsSubscribersViewBodyState
             if (state is GetCourseSubscribersLoading && _subscribers.isEmpty)
               const CourseDetailsSubscribersLoadingGridView()
             else if (list.isNotEmpty)
-              CourseDetailsSubscribersGridView(subscribers: list)
+              CourseDetailsSubscribersGridView(
+                subscribers: list,
+                courseEntity: widget.courseEntity,
+              )
             else if (state is! GetCourseSubscribersLoading &&
                 state is! SearchSubscribersLoading)
               CustomEmptyWidget(

@@ -52,7 +52,9 @@ import 'package:sintir/Features/MyResults/Data/Repo/MyResultsRepoImpl.dart';
 import 'package:sintir/Features/MyResults/Domain/Repo/MyResultsRepo.dart';
 import 'package:sintir/Features/Search/Data/Repos/SearchRepoImpl.dart';
 import 'package:sintir/Features/Search/Domain/Repos/SearchRepo.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/SubscribersDetailsRepoImpl.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/TeacherWalletRepoImpl.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/SubscribersDetailsRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/TeacherWalletRepo.dart';
 
 final getIt = GetIt.instance;
@@ -125,4 +127,6 @@ void setup_Getit() {
 
   getIt.registerLazySingleton<ContentCreatorProfileRepo>(() =>
       ContentCreatorProfileRepoImpl(dataBaseService: getIt<DataBaseService>()));
+  getIt.registerLazySingleton<SubscribersDetailsRepo>(() =>
+      SubscribersDetailsRepoImpl(databaseservice: getIt<DataBaseService>()));
 }
