@@ -17,7 +17,8 @@ class HomeViewBody extends StatefulWidget {
   State<HomeViewBody> createState() => _HomeViewBodyState();
 }
 
-class _HomeViewBodyState extends State<HomeViewBody> {
+class _HomeViewBodyState extends State<HomeViewBody>
+    with AutomaticKeepAliveClientMixin {
   final TextEditingController homeSearchController = TextEditingController();
 
   @override
@@ -78,4 +79,8 @@ class _HomeViewBodyState extends State<HomeViewBody> {
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

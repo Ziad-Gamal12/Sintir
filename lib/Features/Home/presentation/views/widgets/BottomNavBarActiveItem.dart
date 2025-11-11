@@ -12,7 +12,7 @@ class BottomNavBarActiveItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+            padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: KMainColor.withOpacity(0.1),
               borderRadius: BorderRadius.circular(24),
@@ -21,7 +21,7 @@ class BottomNavBarActiveItem extends StatelessWidget {
               children: [
                 SvgPicture.asset(
                   bottomNavBarEntity.activeIcon,
-                  color: KMainColor,
+                  color: const Color.fromARGB(255, 0, 48, 190),
                 ),
                 const SizedBox(
                   width: 10,
@@ -30,7 +30,7 @@ class BottomNavBarActiveItem extends StatelessWidget {
                   bottomNavBarEntity.title,
                   style: AppTextStyles(context)
                       .regular16
-                      .copyWith(color: KMainColor),
+                      .copyWith(color: const Color.fromARGB(255, 0, 48, 190)),
                 )
               ],
             ))

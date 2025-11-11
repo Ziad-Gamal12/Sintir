@@ -8,6 +8,7 @@ import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Core/widgets/CustomCourseHorizontalItem/CustomCourseHorizintalItem.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebView.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobWebViewRequirmentsEntity.dart';
 // Features
@@ -105,6 +106,10 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SubscribtionViewBodyCourseDetailsTitle(),
+            AspectRatio(
+                aspectRatio: 16 / 9,
+                child: CustomCourseHorizontalItem(
+                    course: widget.requirmentsEntity.course)),
             const SizedBox(height: 20),
 
             /// Coupon Text Field

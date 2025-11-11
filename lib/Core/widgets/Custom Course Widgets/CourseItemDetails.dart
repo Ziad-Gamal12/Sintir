@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseItemDetailsContentCreatorCard.dart';
 import 'package:sintir/Features/ContentCreatorProfile/Presentation/Views/ContentCreatorProfile.dart';
 
 class CourseItemDetails extends StatelessWidget {
@@ -16,67 +17,43 @@ class CourseItemDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final styles = AppTextStyles(context);
 
-    return Padding(
-      padding: const EdgeInsets.only(right: 8, bottom: 10, left: 4),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          /// ✅ Title
-          Text(
-            courseItem.title,
-            maxLines: 2,
-            textAlign: TextAlign.right,
-            overflow: TextOverflow.ellipsis,
-            style: styles.semiBold12.copyWith(color: Colors.black),
-          ),
-
-          const SizedBox(height: 6),
-
-          /// ✅ Instructor Name
-          if (courseItem.contentcreaterentity?.name != null)
-            InkWell(
-              onTap: () {
-                GoRouter.of(context).push(ContentCreatorProfile.routeName,
-                    extra: courseItem.contentcreaterentity);
-              },
-              child: Text(
-                courseItem.contentcreaterentity!.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.right,
-                style: styles.regular10.copyWith(color: Colors.red),
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text(
+          courseItem.title,
+          maxLines: 2,
+          textAlign: TextAlign.right,
+          overflow: TextOverflow.ellipsis,
+          style: styles.semiBold12.copyWith(color: Colors.black),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Text(
+          courseItem.description,
+          maxLines: 2,
+          textAlign: TextAlign.right,
+          overflow: TextOverflow.ellipsis,
+          style: styles.regular10.copyWith(color: Colors.grey),
+        ),
+        const Spacer(),
+        if (courseItem.contentcreaterentity != null)
+          InkWell(
+            onTap: () {
+              GoRouter.of(context).push(
+                ContentCreatorProfile.routeName,
+                extra: courseItem.contentcreaterentity,
+              );
+            },
+            child: CourseItemDetailsContentCreatorCard(
+              contentcreaterentity: courseItem.contentcreaterentity!,
             ),
-
-          const SizedBox(height: 4),
-
-          /// ✅ (Students + Level) Row
-          Row(
-            children: [
-              Icon(Icons.person, size: 12, color: Colors.grey[600]),
-              const SizedBox(width: 4),
-              Text(
-                "${courseItem.studentsCount} طالب",
-                style: styles.regular10.copyWith(color: Colors.grey[700]),
-              ),
-              const SizedBox(width: 12),
-              Text(
-                "• ${courseItem.level}",
-                style: styles.regular10.copyWith(color: Colors.grey[700]),
-              ),
-            ],
-          ),
-
-          const Spacer(),
-
-          /// ✅ Price
-          Text(
-            "${courseItem.price} جنيه",
-            textAlign: TextAlign.right,
-            style: styles.bold14.copyWith(color: Colors.red),
-          ),
-        ],
-      ),
+          )
+        else
+          const SizedBox(),
+      ],
     );
   }
 }

@@ -28,7 +28,8 @@ class _SearchViewBodyState extends State<SearchViewBody> {
   @override
   void initState() {
     super.initState();
-    _controller.init(context, filters: null, userId: null);
+    WidgetsBinding.instance.addPostFrameCallback(
+        (_) => _controller.init(context, filters: null, userId: null));
   }
 
   @override

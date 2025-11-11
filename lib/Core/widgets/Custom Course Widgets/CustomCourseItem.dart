@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, must_be_immutable
+// ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
@@ -6,47 +6,55 @@ import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseItemDetails.
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseItemFavouriteIcon.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseItemImage.dart';
 
-class CustomCourseItem extends StatelessWidget {
-  CustomCourseItem({
+class CustomCourseItem extends StatefulWidget {
+  final VoidCallback ontap;
+  final CourseEntity courseItem;
+
+  const CustomCourseItem({
     super.key,
     required this.ontap,
     required this.courseItem,
   });
 
-  final VoidCallback ontap;
-  final CourseEntity courseItem;
+  @override
+  State<CustomCourseItem> createState() => _CustomCourseItemState();
+}
+
+class _CustomCourseItemState extends State<CustomCourseItem> {
   bool isFavourite = false;
 
   @override
   Widget build(BuildContext context) {
+    final course = widget.courseItem;
+
     return GestureDetector(
-      onTap: ontap,
+      onTap: () {
+        widget.ontap();
+      },
       child: Container(
-        alignment: Alignment.center,
+        padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade300, width: 1),
+          borderRadius: BorderRadius.circular(16),
+          color: Colors.white,
           boxShadow: const [
             BoxShadow(
               color: Colors.black12,
-              blurRadius: 10,
-              spreadRadius: 1,
-            ),
+              blurRadius: 12,
+              offset: Offset(0, 4),
+            )
           ],
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.white,
         ),
         child: Stack(
           children: [
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  flex: 4,
-                  child: CourseItemImage(imageUrl: courseItem.posterUrl ?? ""),
+                  child: CourseItemImage(imageUrl: course.posterUrl ?? ""),
                 ),
                 const SizedBox(height: 8),
                 Expanded(
-                  flex: 3,
-                  child: CourseItemDetails(courseItem: courseItem),
+                  child: CourseItemDetails(courseItem: course),
                 ),
               ],
             ),

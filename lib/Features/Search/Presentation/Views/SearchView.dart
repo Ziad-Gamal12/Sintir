@@ -6,9 +6,16 @@ import 'package:sintir/Features/Search/Domain/Repos/SearchRepo.dart';
 import 'package:sintir/Features/Search/Presentation/Managers/cubit/search_cubit.dart';
 import 'package:sintir/Features/Search/Presentation/Views/Widgets/SearchViewBody.dart';
 
-class SearchView extends StatelessWidget {
+class SearchView extends StatefulWidget {
   const SearchView({super.key});
   static const routeName = "/SearchView";
+
+  @override
+  State<SearchView> createState() => _SearchViewState();
+}
+
+class _SearchViewState extends State<SearchView>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -21,4 +28,8 @@ class SearchView extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
