@@ -114,6 +114,38 @@ class Assets {
   /// assets/Icons/SVG_Icons/arrowLeftBack.svg
   static const String assetsIconsSVGIconsArrowLeftBack = "assets/Icons/SVG_Icons/arrowLeftBack.svg";
 
+  /// Assets for assetsIconsSVGIconsBottomNavBarFavouriteActiveIcon
+  /// assets/Icons/SVG_Icons/BottomNavBarFavouriteActiveIcon.svg
+  static const String assetsIconsSVGIconsBottomNavBarFavouriteActiveIcon = "assets/Icons/SVG_Icons/BottomNavBarFavouriteActiveIcon.svg";
+
+  /// Assets for assetsIconsSVGIconsBottomNavBarFavouriteInActiveIcon
+  /// assets/Icons/SVG_Icons/BottomNavBarFavouriteInActiveIcon.svg
+  static const String assetsIconsSVGIconsBottomNavBarFavouriteInActiveIcon = "assets/Icons/SVG_Icons/BottomNavBarFavouriteInActiveIcon.svg";
+
+  /// Assets for assetsIconsSVGIconsBottomNavBarHomeActiveIcon
+  /// assets/Icons/SVG_Icons/BottomNavBarHomeActiveIcon.svg
+  static const String assetsIconsSVGIconsBottomNavBarHomeActiveIcon = "assets/Icons/SVG_Icons/BottomNavBarHomeActiveIcon.svg";
+
+  /// Assets for assetsIconsSVGIconsBottomNavBarHomeInActiveIcon
+  /// assets/Icons/SVG_Icons/BottomNavBarHomeInActiveIcon.svg
+  static const String assetsIconsSVGIconsBottomNavBarHomeInActiveIcon = "assets/Icons/SVG_Icons/BottomNavBarHomeInActiveIcon.svg";
+
+  /// Assets for assetsIconsSVGIconsBottomNavBarProfileActiveIcon
+  /// assets/Icons/SVG_Icons/BottomNavBarProfileActiveIcon.svg
+  static const String assetsIconsSVGIconsBottomNavBarProfileActiveIcon = "assets/Icons/SVG_Icons/BottomNavBarProfileActiveIcon.svg";
+
+  /// Assets for assetsIconsSVGIconsBottomNavBarProfileInActiveIcon
+  /// assets/Icons/SVG_Icons/BottomNavBarProfileInActiveIcon.svg
+  static const String assetsIconsSVGIconsBottomNavBarProfileInActiveIcon = "assets/Icons/SVG_Icons/BottomNavBarProfileInActiveIcon.svg";
+
+  /// Assets for assetsIconsSVGIconsBottomNavBarSearchActiveIcon
+  /// assets/Icons/SVG_Icons/BottomNavBarSearchActiveIcon.svg
+  static const String assetsIconsSVGIconsBottomNavBarSearchActiveIcon = "assets/Icons/SVG_Icons/BottomNavBarSearchActiveIcon.svg";
+
+  /// Assets for assetsIconsSVGIconsBottomNavBarSearchInActiveIcon
+  /// assets/Icons/SVG_Icons/BottomNavBarSearchInActiveIcon.svg
+  static const String assetsIconsSVGIconsBottomNavBarSearchInActiveIcon = "assets/Icons/SVG_Icons/BottomNavBarSearchInActiveIcon.svg";
+
   /// Assets for assetsIconsSVGIconsCheckedIcon
   /// assets/Icons/SVG_Icons/Checked_icon.svg
   static const String assetsIconsSVGIconsCheckedIcon = "assets/Icons/SVG_Icons/Checked_icon.svg";

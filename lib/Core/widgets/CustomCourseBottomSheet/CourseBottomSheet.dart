@@ -46,7 +46,7 @@ class _CourseBottomSheetState extends State<CourseBottomSheet>
                 topLeft: Radius.circular(20),
                 topRight: Radius.circular(20),
               ),
-              border: Border.all(color: Colors.black, width: 1)),
+              border: Border.all(color: Colors.grey, width: 1)),
           child: SafeArea(
             child: Provider.value(
               value: bottomsheetnavigationrequirmentsentity,

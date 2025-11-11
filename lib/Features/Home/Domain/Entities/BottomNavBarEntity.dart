@@ -1,37 +1,38 @@
 // ignore_for_file: file_names
 
-import 'package:flutter/widgets.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sintir/Core/utils/imageAssets.dart';
 
 class BottomNavBarEntity {
   final String title;
-  final IconData icon;
+  final String activeIcon, inactiveIcon;
 
   BottomNavBarEntity({
     required this.title,
-    required this.icon,
+    required this.activeIcon,
+    required this.inactiveIcon,
   });
   static List<BottomNavBarEntity> toList() {
     return [
       BottomNavBarEntity(
         title: "الرئيسية",
-        icon: FontAwesomeIcons.house,
+        activeIcon: Assets.assetsIconsSVGIconsBottomNavBarHomeActiveIcon,
+        inactiveIcon: Assets.assetsIconsSVGIconsBottomNavBarHomeInActiveIcon,
       ),
       BottomNavBarEntity(
         title: "البحث",
-        icon: FontAwesomeIcons.magnifyingGlass,
-      ),
-      BottomNavBarEntity(
-        title: "المساعد الآلي",
-        icon: FontAwesomeIcons.robot,
+        activeIcon: Assets.assetsIconsSVGIconsBottomNavBarSearchActiveIcon,
+        inactiveIcon: Assets.assetsIconsSVGIconsBottomNavBarSearchInActiveIcon,
       ),
       BottomNavBarEntity(
         title: "المفضلة",
-        icon: FontAwesomeIcons.solidHeart,
+        activeIcon: Assets.assetsIconsSVGIconsBottomNavBarFavouriteActiveIcon,
+        inactiveIcon:
+            Assets.assetsIconsSVGIconsBottomNavBarFavouriteInActiveIcon,
       ),
       BottomNavBarEntity(
         title: "حسابي",
-        icon: FontAwesomeIcons.user,
+        activeIcon: Assets.assetsIconsSVGIconsBottomNavBarProfileActiveIcon,
+        inactiveIcon: Assets.assetsIconsSVGIconsBottomNavBarProfileInActiveIcon,
       ),
     ];
   }
