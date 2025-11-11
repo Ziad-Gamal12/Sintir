@@ -51,6 +51,8 @@ class _HomeviewState extends State<Homeview> {
         ),
         body: SafeArea(
             child: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          scrollDirection: Axis.horizontal,
           controller: pageController,
           children: screens,
         )),

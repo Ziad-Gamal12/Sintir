@@ -19,8 +19,8 @@ class CourseCouponEntity {
 
   bool get isExpired => DateTime.now().isAfter(expiryDate);
 
-  double applyDiscount(double originalPrice) {
-    if (!isActive || isExpired) return originalPrice;
+  double applyDiscount(int originalPrice) {
+    if (!isActive || isExpired) return originalPrice.toDouble();
     return originalPrice * (1 - discountPercentage / 100);
   }
 

@@ -238,6 +238,10 @@ class Assets {
   /// assets/images/BookImageTest.png
   static const String assetsImagesBookImageTest = "assets/images/BookImageTest.png";
 
+  /// Assets for assetsImagesSVGImagesErorr
+  /// assets/images/SVG_Images/erorr.svg
+  static const String assetsImagesSVGImagesErorr = "assets/images/SVG_Images/erorr.svg";
+
   /// Assets for assetsImagesSVGImagesForgetPasswordWelcomeImage
   /// assets/images/SVG_Images/ForgetPasswordWelcomeImage.svg
   static const String assetsImagesSVGImagesForgetPasswordWelcomeImage = "assets/images/SVG_Images/ForgetPasswordWelcomeImage.svg";

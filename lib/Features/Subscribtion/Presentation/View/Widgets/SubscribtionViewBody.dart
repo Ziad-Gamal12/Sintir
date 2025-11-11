@@ -8,6 +8,7 @@ import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomCourseHorizontalItem/CustomCourseHorizintalItem.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebView.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobWebViewRequirmentsEntity.dart';
@@ -82,7 +83,7 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
                 context.read<CourseSubscribtionsCubit>().payWithWallet(
                       userEntity: getUserData(),
                       amount: coupon!.applyDiscount(
-                        widget.requirmentsEntity.course.price.toDouble(),
+                        widget.requirmentsEntity.course.price,
                       ),
                     );
                 break;
@@ -106,10 +107,21 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SubscribtionViewBodyCourseDetailsTitle(),
+            const SizedBox(height: 20),
+
             AspectRatio(
                 aspectRatio: 16 / 9,
                 child: CustomCourseHorizontalItem(
                     course: widget.requirmentsEntity.course)),
+            Divider(
+              color: Colors.grey.shade200,
+              thickness: 2,
+              height: 40,
+            ),
+            Text(
+              "الخصومات",
+              style: AppTextStyles(context).semiBold20,
+            ),
             const SizedBox(height: 20),
 
             /// Coupon Text Field
@@ -119,8 +131,8 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
             const SizedBox(height: 20),
 
             /// Course Price Details
-            SubscribtionViewBodyDiscountDetailsSection(
-              requirmentsEntity: widget.requirmentsEntity,
+            PremiumSubscriptionPriceSection(
+              originalPrice: widget.requirmentsEntity.course.price,
             ),
 
             const Spacer(),
@@ -130,7 +142,7 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
               courseID: widget.requirmentsEntity.course.id,
               coupon: coupon,
               amount: coupon?.applyDiscount(
-                    widget.requirmentsEntity.course.price.toDouble(),
+                    widget.requirmentsEntity.course.price,
                   ) ??
                   widget.requirmentsEntity.course.price.toDouble(),
             ),

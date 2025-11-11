@@ -11,7 +11,7 @@ class CustomErrorWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Image.asset(Assets.assetsIconsError404,
+        Image.asset(Assets.assetsImagesSVGImagesErorr,
             height: 70, width: 70, fit: BoxFit.fill),
         const SizedBox(
           height: 10,
