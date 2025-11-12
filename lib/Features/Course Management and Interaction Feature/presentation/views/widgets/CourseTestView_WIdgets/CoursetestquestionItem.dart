@@ -35,7 +35,6 @@ class CourseTestQuestionItem extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              flex: 2,
               child: QuestionOptionsList(
                 solutions: question.solutions,
                 selectedAnswer: selectedAnswer,
@@ -44,7 +43,6 @@ class CourseTestQuestionItem extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             Expanded(
-              flex: 1,
               child: QuestionImageWidget(imageUrl: question.imageUrl),
             ),
           ],

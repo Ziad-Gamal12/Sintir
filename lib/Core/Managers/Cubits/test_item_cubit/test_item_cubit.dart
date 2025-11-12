@@ -200,4 +200,8 @@ class TestItemCubit extends Cubit<TestItemState> {
       emit(JoinToTestItemSuccess());
     });
   }
+
+  void resizeQuestionsImages({required String image, required bool isFilled}) {
+    emit(ResizeQuestionsImageSuccess(imageUrl: image, isFilled: isFilled));
+  }
 }

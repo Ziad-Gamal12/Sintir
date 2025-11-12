@@ -21,7 +21,7 @@ class CourseCouponsListView extends StatelessWidget {
             vertical: KVerticalPadding, horizontal: KHorizontalPadding),
         itemBuilder: (context, index) {
           return AspectRatio(
-            aspectRatio: 2 / 1.4,
+            aspectRatio: 2 / 1.5,
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 10,

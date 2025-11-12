@@ -50,3 +50,10 @@ final class AddTestItemFailure extends TestItemState {
 }
 
 final class AddTestItemSuccess extends TestItemState {}
+
+final class ResizeQuestionsImageSuccess extends TestItemState {
+  final bool isFilled;
+  final String imageUrl;
+
+  ResizeQuestionsImageSuccess({required this.isFilled, required this.imageUrl});
+}

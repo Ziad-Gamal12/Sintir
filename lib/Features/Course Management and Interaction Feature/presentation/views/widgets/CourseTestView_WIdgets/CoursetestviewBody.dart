@@ -7,6 +7,7 @@ import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CourseTestLayout.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CourseTestListener.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CustomFilledQuestionImage.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class CourseTestViewBody extends StatefulWidget {
@@ -72,15 +73,24 @@ class _CourseTestViewBodyState extends State<CourseTestViewBody> {
       stopWatchTimer: stopWatchTimer,
       courseId: courseExamViewNavigationsRequirmentsEntity.course.id,
       builder: (context, state) {
-        return CourseTestLayout(
-          stopWatchTimer: stopWatchTimer,
-          test: courseExamViewNavigationsRequirmentsEntity.test,
-          currentQuestionIndex: currentQuestionIndex,
-          onQuestionChanged: (index) {
-            setState(() {
-              currentQuestionIndex = index;
-            });
-          },
+        return Stack(
+          children: [
+            CourseTestLayout(
+              stopWatchTimer: stopWatchTimer,
+              test: courseExamViewNavigationsRequirmentsEntity.test,
+              currentQuestionIndex: currentQuestionIndex,
+              onQuestionChanged: (index) {
+                setState(() {
+                  currentQuestionIndex = index;
+                });
+              },
+            ),
+            if (state is ResizeQuestionsImageSuccess &&
+                state.isFilled == true &&
+                state.imageUrl != "")
+              Positioned.fill(
+                  child: CustomFilledQuestionImage(image: state.imageUrl))
+          ],
         );
       },
     );
