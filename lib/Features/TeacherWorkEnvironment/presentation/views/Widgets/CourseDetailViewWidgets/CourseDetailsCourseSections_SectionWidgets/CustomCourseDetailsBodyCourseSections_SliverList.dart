@@ -30,9 +30,17 @@ class CustomCourseDetailsBodyCourseSections_SliverList extends StatelessWidget {
           current is DeleteSectionFailure,
       listener: (context, state) {
         if (state is DeleteSectionSuccess) {
-          showSuccessSnackBar(context: context, message: "تم حذف القسم بنجاح");
+          CustomSnackBar.show(
+            context,
+            message: "تم حذف القسم بنجاح",
+            type: SnackType.success,
+          );
         } else if (state is DeleteSectionFailure) {
-          ShowErrorSnackBar(context: context, message: state.errMessage);
+          CustomSnackBar.show(
+            context,
+            message: state.errMessage,
+            type: SnackType.error,
+          );
         }
       },
       builder: (context, state) => SliverList.builder(

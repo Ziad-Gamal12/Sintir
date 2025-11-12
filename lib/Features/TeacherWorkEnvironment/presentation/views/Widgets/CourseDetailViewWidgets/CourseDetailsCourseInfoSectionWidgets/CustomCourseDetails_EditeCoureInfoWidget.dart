@@ -26,14 +26,25 @@ class EditCourseInfoSection extends StatelessWidget {
         listener: (context, state) {
           if (state is UpdateCourseSuccess) {
             GoRouter.of(context).pop();
-            showSuccessSnackBar(
-                context: context, message: "تم تعديل البيانات بنجاح");
+            CustomSnackBar.show(
+              context,
+              message: "تم التعديل بنجاح",
+              type: SnackType.success,
+            );
           } else if (state is UpdateCourseFailure) {
-            ShowErrorSnackBar(context: context, message: state.errmessage);
+            CustomSnackBar.show(
+              context,
+              message: state.errmessage,
+              type: SnackType.error,
+            );
           } else if (state is UpdateCourseCubitAssetPicked) {
             coursePoster = state.file;
           } else if (state is UpdateCourseCubitAssetFailure) {
-            ShowErrorSnackBar(context: context, message: state.errmessage);
+            CustomSnackBar.show(
+              context,
+              message: state.errmessage,
+              type: SnackType.error,
+            );
           }
         },
         child: Provider.value(

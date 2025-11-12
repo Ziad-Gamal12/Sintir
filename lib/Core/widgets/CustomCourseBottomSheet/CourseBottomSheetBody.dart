@@ -6,7 +6,6 @@ import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubsc
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomContentCreator.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetBodyCoursePoster.dart';
@@ -83,13 +82,11 @@ class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
           .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
           .isSubscribed = state.isSubscribed;
     } else if (state is CheckIfSubscribedFailure) {
-      ShowSnackBar(
-          context: context,
-          child: Text(state.errMessage,
-              style: AppTextStyles(context)
-                  .regular14
-                  .copyWith(color: Colors.white)),
-          backgroundColor: Colors.red);
+      CustomSnackBar.show(
+        context,
+        message: state.errMessage,
+        type: SnackType.error,
+      );
     }
   }
 }

@@ -26,8 +26,11 @@ class EditCourseSaveButton extends StatelessWidget {
                 .updateCourse(courseEntity: course);
           }
         } else {
-          ShowErrorSnackBar(
-              context: context, message: "لم يتم تعديل المعلومات");
+          CustomSnackBar.show(
+            context,
+            message: "حدث خطاء في اختيار الملف",
+            type: SnackType.error,
+          );
         }
       },
     );

@@ -29,10 +29,18 @@ class _CustomSendNoteWidgetBodyState extends State<CustomSendNoteWidgetBody> {
     return BlocListener<VideoItemCubit, VideoItemState>(
       listener: (context, state) {
         if (state is AddVideoNoteSuccess) {
-          showSuccessSnackBar(context: context, message: "تم ارسال الملاحظة");
+          CustomSnackBar.show(
+            context,
+            message: "تم اضافة الملاحظة بنجاح",
+            type: SnackType.success,
+          );
           Navigator.pop(context);
         } else if (state is AddVideoNoteFailure) {
-          ShowErrorSnackBar(context: context, message: state.errMessage);
+          CustomSnackBar.show(
+            context,
+            message: state.errMessage,
+            type: SnackType.error,
+          );
         }
       },
       child: Form(

@@ -7,7 +7,6 @@ import 'package:pdfx/pdfx.dart';
 import 'package:sintir/Core/Managers/Cubits/file_item_cubit/file_item_cubit.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
@@ -46,13 +45,11 @@ class _CoursefilepreviewerviewbodyState
         });
       } else {
         if (mounted) {
-          ShowSnackBar(
-              context: context,
-              child: Text("حدث خطأ في تحميل الملف",
-                  style: AppTextStyles(context)
-                      .regular14
-                      .copyWith(color: Colors.white)),
-              backgroundColor: Colors.red);
+          CustomSnackBar.show(
+            context,
+            message: "حدث خطاء في تحميل الملف",
+            type: SnackType.error,
+          );
         }
       }
     } catch (e) {
@@ -103,21 +100,17 @@ class _CoursefilepreviewerviewbodyState
       return BlocConsumer<FileItemCubit, FileItemState>(
         listener: (context, state) {
           if (state is JoinToFileITemSuccess) {
-            ShowSnackBar(
-                context: context,
-                child: Text("تم الإنضمام بنجاح",
-                    style: AppTextStyles(context)
-                        .regular14
-                        .copyWith(color: Colors.white)),
-                backgroundColor: Colors.green);
+            CustomSnackBar.show(
+              context,
+              message: "تم التسجيل بنجاح",
+              type: SnackType.success,
+            );
           } else if (state is JoinToFileITemFailure) {
-            ShowSnackBar(
-                context: context,
-                child: Text(state.errMessage,
-                    style: AppTextStyles(context)
-                        .regular14
-                        .copyWith(color: Colors.white)),
-                backgroundColor: Colors.red);
+            CustomSnackBar.show(
+              context,
+              message: state.errMessage,
+              type: SnackType.error,
+            );
           }
         },
         builder: (context, state) {

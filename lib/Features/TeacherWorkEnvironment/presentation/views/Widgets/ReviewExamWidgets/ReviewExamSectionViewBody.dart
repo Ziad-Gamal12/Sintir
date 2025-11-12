@@ -74,19 +74,36 @@ class ReviewExamSectionViewBody extends StatelessWidget {
     if (state is QuestionsImagesUploadedingSuccuss) {
       questionsImagesUploadedSuccessState(context);
     } else if (state is QuestionsImagesUploadedingFailure) {
-      ShowErrorSnackBar(context: context, message: state.errMessage);
+      CustomSnackBar.show(
+        context,
+        message: state.errMessage,
+        type: SnackType.error,
+      );
     } else if (state is AddTestItemFailure) {
       errordialog(context, state.errMessage).show();
     } else if (state is AddTestItemSuccess) {
-      showSuccessSnackBar(context: context, message: "تم اضافة الأختبار بنجاح");
+      CustomSnackBar.show(
+        context,
+        message: "تمت الإضافة بنجاح",
+        type: SnackType.success,
+      );
+      GoRouter.of(context).pop();
     }
   }
 
   void courseSectionListener(CourseSectionsState state, BuildContext context) {
     if (state is AddCourseSectionFailure) {
-      ShowErrorSnackBar(context: context, message: state.errMessage);
+      CustomSnackBar.show(
+        context,
+        message: state.errMessage,
+        type: SnackType.error,
+      );
     } else if (state is AddCourseSectionSuccess) {
-      showSuccessSnackBar(context: context, message: "تمت الإضافة بنجاح");
+      CustomSnackBar.show(
+        context,
+        message: "تمت الإضافة بنجاح",
+        type: SnackType.success,
+      );
       GoRouter.of(context).pop();
     }
   }

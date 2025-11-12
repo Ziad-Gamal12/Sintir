@@ -5,7 +5,6 @@ import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/ReviewTestResultView.dart';
 
@@ -28,22 +27,16 @@ class CourseTestListener extends StatelessWidget {
     return BlocConsumer<TestItemCubit, TestItemState>(
       listener: (context, state) {
         if (state is JoinToTestItemSuccess) {
-          ShowSnackBar(
-            context: context,
-            child: Text("تم الانضمام بنجاح",
-                style: AppTextStyles(context)
-                    .regular14
-                    .copyWith(color: Colors.black)),
-            backgroundColor: Colors.grey.shade200,
+          CustomSnackBar.show(
+            context,
+            message: "تم التسجيل بنجاح",
+            type: SnackType.success,
           );
         } else if (state is JoinToTestItemFailure) {
-          ShowSnackBar(
-            context: context,
-            child: Text(state.errMessage,
-                style: AppTextStyles(context)
-                    .regular14
-                    .copyWith(color: Colors.white)),
-            backgroundColor: Colors.red,
+          CustomSnackBar.show(
+            context,
+            message: state.errMessage,
+            type: SnackType.error,
           );
         } else if (state is AddTestResultSuccess) {
           successdialog(

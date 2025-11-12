@@ -6,7 +6,6 @@ import 'dart:io';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomVedioErrorWidget.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:video_player/video_player.dart';
@@ -48,13 +47,11 @@ class _CustomDisplayingVideoWidgetState
         videoPlayerController =
             VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl!));
       } else {
-        ShowSnackBar(
-            context: context,
-            child: Text("حدث خطأ فى العنصر",
-                style: AppTextStyles(context)
-                    .regular14
-                    .copyWith(color: Colors.white)),
-            backgroundColor: Colors.red);
+        CustomSnackBar.show(
+          context,
+          message: "لا يمكن تشغيل الفيديو",
+          type: SnackType.error,
+        );
         return;
       }
       await videoPlayerController.initialize();

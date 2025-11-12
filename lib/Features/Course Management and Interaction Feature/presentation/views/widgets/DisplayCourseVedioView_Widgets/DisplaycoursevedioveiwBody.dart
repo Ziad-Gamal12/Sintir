@@ -5,7 +5,6 @@ import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/Cour
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVideoviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/Video%20Previewer%20Widgets/CustomDisplayingVedioWidget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/DisplayCourseVedioView_Widgets/CustomSendNoteText.dart';
@@ -56,21 +55,17 @@ class _DisplaycoursevedioveiwBodyState
     return BlocConsumer<VideoItemCubit, VideoItemState>(
       listener: (context, state) {
         if (state is JoinToVideoItemSuccess) {
-          ShowSnackBar(
-              context: context,
-              child: Text("تم الانضمام بنجاح",
-                  style: AppTextStyles(context)
-                      .regular14
-                      .copyWith(color: Colors.black)),
-              backgroundColor: Colors.grey.shade200);
+          CustomSnackBar.show(
+            context,
+            message: "تم التسجيل بنجاح",
+            type: SnackType.success,
+          );
         } else if (state is JoinToVideoItemFailure) {
-          ShowSnackBar(
-              context: context,
-              child: Text(state.errMessage,
-                  style: AppTextStyles(context)
-                      .regular14
-                      .copyWith(color: Colors.white)),
-              backgroundColor: Colors.red);
+          CustomSnackBar.show(
+            context,
+            message: state.errMessage,
+            type: SnackType.error,
+          );
         }
       },
       builder: (context, state) {

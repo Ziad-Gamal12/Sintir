@@ -51,7 +51,11 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
                 break;
 
               case PayWithWalletFailure(:final errMessage):
-                ShowErrorSnackBar(context: context, message: errMessage);
+                CustomSnackBar.show(
+                  context,
+                  message: errMessage,
+                  type: SnackType.error,
+                );
                 break;
 
               default:
@@ -66,9 +70,10 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
             switch (state) {
               case IsCouponExistSuccess(:final coupon):
                 if (!coupon.isActive || coupon.isExpired) {
-                  ShowErrorSnackBar(
-                    context: context,
-                    message: "هذا الكوبون غير صالح",
+                  CustomSnackBar.show(
+                    context,
+                    message: "الكوبون غير صالح",
+                    type: SnackType.error,
                   );
                   return;
                 }
@@ -76,7 +81,11 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
                 break;
 
               case IsCouponExistFailure(:final errmessage):
-                ShowErrorSnackBar(context: context, message: errmessage);
+                CustomSnackBar.show(
+                  context,
+                  message: errmessage,
+                  type: SnackType.error,
+                );
                 break;
 
               case UseCouponSuccess():
@@ -89,7 +98,11 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
                 break;
 
               case UseCouponFailure(:final errmessage):
-                ShowErrorSnackBar(context: context, message: errmessage);
+                CustomSnackBar.show(
+                  context,
+                  message: errmessage,
+                  type: SnackType.error,
+                );
                 break;
 
               default:

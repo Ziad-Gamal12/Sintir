@@ -22,7 +22,11 @@ class CustomCourseDetailsSectionListViewFileItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        showInfoSnackBar(context: context, message: "لا يوجد تقرير للملفات");
+        CustomSnackBar.show(
+          context,
+          message: "${item.title} , ${item.description}",
+          type: SnackType.info,
+        );
       },
       child: BlocSelector<CourseSectionsCubit, CourseSectionsState, bool>(
         selector: (state) {

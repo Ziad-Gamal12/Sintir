@@ -24,10 +24,18 @@ class FileItemStateHandler {
   void handle(FileItemState state) {
     switch (state) {
       case AddFileItemFailure(:final errMessage):
-        ShowErrorSnackBar(context: context, message: errMessage);
+        CustomSnackBar.show(
+          context,
+          message: errMessage,
+          type: SnackType.error,
+        );
         break;
       case AddFileItemSuccess():
-        showSuccessSnackBar(context: context, message: "تم اضافة الملف بنجاح");
+        CustomSnackBar.show(
+          context,
+          message: "تم اضافة الملف بنجاح",
+          type: SnackType.success,
+        );
         GoRouter.of(context).pop();
         break;
 
@@ -36,9 +44,10 @@ class FileItemStateHandler {
         break;
 
       case PickFileFailure():
-        ShowErrorSnackBar(
-          context: context,
-          message: "حدث خطأ في اختيار الملف",
+        CustomSnackBar.show(
+          context,
+          message: "حدث خطاء في اختيار الملف",
+          type: SnackType.error,
         );
         break;
 
@@ -47,9 +56,10 @@ class FileItemStateHandler {
         break;
 
       case UplaodFileFailure(:final errMessage):
-        ShowErrorSnackBar(
-          context: context,
+        CustomSnackBar.show(
+          context,
           message: errMessage,
+          type: SnackType.error,
         );
         break;
 

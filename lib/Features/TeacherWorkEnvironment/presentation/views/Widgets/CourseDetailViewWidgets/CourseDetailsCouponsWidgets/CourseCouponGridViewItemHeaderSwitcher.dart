@@ -26,10 +26,17 @@ class _CourseCouponGridViewItemHeaderSwitcherState
     return BlocListener<CourseCouponsCubit, CourseCouponsState>(
       listener: (context, state) {
         if (state is UpdateCourseCouponSuccess) {
-          showSuccessSnackBar(
-              context: context, message: "تم تعديل الكوبون بنجاح");
+          CustomSnackBar.show(
+            context,
+            message: "تم تعديل الكوبون بنجاح",
+            type: SnackType.success,
+          );
         } else if (state is UpdateCourseCouponFailure) {
-          ShowErrorSnackBar(context: context, message: state.errmessage);
+          CustomSnackBar.show(
+            context,
+            message: state.errmessage,
+            type: SnackType.error,
+          );
         }
       },
       child: SizedBox(

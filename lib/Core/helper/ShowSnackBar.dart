@@ -1,91 +1,130 @@
-// ignore_for_file: file_names, non_constant_identifier_names
-
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
 
-ShowSnackBar({
-  required BuildContext context,
-  required Widget child,
-  required Color backgroundColor,
-}) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      backgroundColor: backgroundColor,
+enum SnackType { success, error, warning, info }
+
+class CustomSnackBar {
+  static void show(
+    BuildContext context, {
+    required String message,
+    required SnackType type,
+  }) {
+    final colorData = _getSnackData(type);
+
+    final snackBar = SnackBar(
       behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      content: child,
-    ),
-  );
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      duration: const Duration(seconds: 3),
+      content: _SnackContent(
+        icon: colorData.icon,
+        iconColor: colorData.color,
+        title: colorData.title,
+        message: message,
+      ),
+    );
+
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(snackBar);
+  }
+
+  static _SnackBarData _getSnackData(SnackType type) {
+    switch (type) {
+      case SnackType.success:
+        return _SnackBarData(
+          title: "نجاح",
+          icon: Icons.check_circle,
+          color: Colors.green,
+        );
+      case SnackType.error:
+        return _SnackBarData(
+          title: "خطأ",
+          icon: Icons.error,
+          color: Colors.redAccent,
+        );
+      case SnackType.warning:
+        return _SnackBarData(
+          title: "تحذير",
+          icon: Icons.warning_amber_rounded,
+          color: Colors.orangeAccent,
+        );
+      case SnackType.info:
+        return _SnackBarData(
+          title: "معلومة",
+          icon: Icons.info_outline,
+          color: Colors.blueAccent,
+        );
+    }
+  }
 }
 
-void ShowErrorSnackBar({
-  required BuildContext context,
-  required String message,
-}) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      elevation: 0,
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      content: AwesomeSnackbarContent(
-        title: "خطأ",
-        message: message,
-        contentType: ContentType.failure,
-      ),
-    ),
-  );
+class _SnackBarData {
+  final String title;
+  final IconData icon;
+  final Color color;
+
+  _SnackBarData({required this.title, required this.icon, required this.color});
 }
 
-void showWarningSnackBar({
-  required BuildContext context,
-  required String message,
-}) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      elevation: 0,
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      content: AwesomeSnackbarContent(
-        title: "تحذير",
-        message: message,
-        contentType: ContentType.warning,
-      ),
-    ),
-  );
-}
+class _SnackContent extends StatelessWidget {
+  final String title;
+  final String message;
+  final IconData icon;
+  final Color iconColor;
 
-void showSuccessSnackBar({
-  required BuildContext context,
-  required String message,
-}) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      elevation: 0,
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      content: AwesomeSnackbarContent(
-        title: "نجاح",
-        message: message,
-        contentType: ContentType.success,
-      ),
-    ),
-  );
-}
+  const _SnackContent({
+    required this.title,
+    required this.message,
+    required this.icon,
+    required this.iconColor,
+  });
 
-void showInfoSnackBar({
-  required BuildContext context,
-  required String message,
-}) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      elevation: 0,
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.transparent,
-      content: AwesomeSnackbarContent(
-        title: "معلومات",
-        message: message,
-        contentType: ContentType.help,
+  @override
+  Widget build(BuildContext context) {
+    final style = AppTextStyles(context);
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 4,
+          ),
+        ],
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: iconColor.withOpacity(0.2)),
       ),
-    ),
-  );
+      child: Row(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: iconColor.withOpacity(0.15),
+              shape: BoxShape.circle,
+            ),
+            padding: const EdgeInsets.all(10),
+            child: Icon(icon, color: iconColor, size: 24),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(title, style: style.semiBold16.copyWith(color: iconColor)),
+                const SizedBox(height: 3),
+                Text(message,
+                    style: style.regular14.copyWith(color: Colors.black87)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

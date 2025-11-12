@@ -5,7 +5,6 @@ import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCu
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomCourseSectionItem/ContentContainer.dart';
 import 'package:sintir/Core/widgets/CustomCourseSectionItem/SectionExpanded.dart';
 import 'package:sintir/Core/widgets/CustomCourseSectionItem/SectionHeader.dart';
@@ -53,15 +52,10 @@ class _CustomContentListViewitemState extends State<CustomContentListViewitem> {
               sectionLessons = state.items;
             });
           } else if (state is GetSectionItemsFailure) {
-            ShowSnackBar(
-              context: context,
-              child: Text(
-                state.errMessage,
-                style: AppTextStyles(context)
-                    .regular14
-                    .copyWith(color: Colors.white),
-              ),
-              backgroundColor: Colors.red,
+            CustomSnackBar.show(
+              context,
+              message: state.errMessage,
+              type: SnackType.error,
             );
           }
         },

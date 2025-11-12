@@ -5,7 +5,6 @@ import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCu
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/section_expanded_content.dart.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/section_header_tile.dartd.dart';
 
@@ -95,13 +94,10 @@ class _CustomCourseDetailsSectionsListViewItemState
         state.sectionId == widget.sectionItem.id) {
       setState(() => sectionLessons = state.items);
     } else if (state is GetSectionItemsFailure) {
-      ShowSnackBar(
-        context: context,
-        child: Text(
-          state.errMessage,
-          style: AppTextStyles(context).regular14.copyWith(color: Colors.white),
-        ),
-        backgroundColor: Colors.red,
+      CustomSnackBar.show(
+        context,
+        message: state.errMessage,
+        type: SnackType.error,
       );
     }
   }

@@ -28,12 +28,17 @@ class CourseSectionItemList extends StatelessWidget {
           current is GetSectionItemsLoading,
       listener: (context, state) {
         if (state is DeleteSectionItemSuccess) {
-          showSuccessSnackBar(
-            context: context,
-            message: "تم حذف العنصر بنجاح",
+          CustomSnackBar.show(
+            context,
+            message: "تم حذف الملف بنجاح",
+            type: SnackType.success,
           );
         } else if (state is GetSectionItemsFailure) {
-          ShowErrorSnackBar(context: context, message: state.errMessage);
+          CustomSnackBar.show(
+            context,
+            message: state.errMessage,
+            type: SnackType.error,
+          );
         }
       },
       builder: (context, state) {

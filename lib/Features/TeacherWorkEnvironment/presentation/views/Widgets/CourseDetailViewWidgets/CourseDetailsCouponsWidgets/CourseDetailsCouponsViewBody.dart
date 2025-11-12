@@ -68,11 +68,18 @@ class _CourseDetailsCouponsViewBodyState
           hasMore = state.response.hasMore;
         } else if (state is DeleteCourseCouponSuccess) {
           coupons.removeWhere((element) => element.code == state.couponId);
-          showSuccessSnackBar(
-              context: context, message: "تم حذف الكوبون بنجاح");
+          CustomSnackBar.show(
+            context,
+            message: "تم حذف الكوبون بنجاح",
+            type: SnackType.success,
+          );
           setState(() {});
         } else if (state is DeleteCourseCouponFailure) {
-          ShowErrorSnackBar(context: context, message: state.errmessage);
+          CustomSnackBar.show(
+            context,
+            message: state.errmessage,
+            type: SnackType.error,
+          );
         }
       },
       builder: (context, state) {

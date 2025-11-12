@@ -23,7 +23,7 @@ class Customfilelistviewitem extends StatelessWidget {
     return Stack(
       children: [
         InkWell(
-          onTap: () => () => isAvilabe
+          onTap: () => isAvilabe
               ? item.ontap(
                   context: context,
                   item: Coursefileviewnavigationsrequirmentsentity(

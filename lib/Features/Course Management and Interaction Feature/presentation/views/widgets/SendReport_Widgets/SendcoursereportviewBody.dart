@@ -37,10 +37,18 @@ class _SendcoursereportviewbodyState extends State<Sendcoursereportviewbody> {
     return BlocListener<CourseReportsCubit, CourseReportsState>(
       listener: (context, state) {
         if (state is CourseReportsAddReportSuccess) {
-          showSuccessSnackBar(context: context, message: "تم ارسال الابلاغ");
+          CustomSnackBar.show(
+            context,
+            message: "تم ارسال الابلاغ بنجاح",
+            type: SnackType.success,
+          );
           Navigator.pop(context);
         } else if (state is CourseReportsAddReportFailure) {
-          ShowErrorSnackBar(context: context, message: state.errMessage);
+          CustomSnackBar.show(
+            context,
+            message: state.errMessage,
+            type: SnackType.error,
+          );
         }
       },
       child: Padding(

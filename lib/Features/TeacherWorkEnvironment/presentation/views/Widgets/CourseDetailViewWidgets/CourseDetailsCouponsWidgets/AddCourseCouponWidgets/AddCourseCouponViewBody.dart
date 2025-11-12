@@ -44,10 +44,17 @@ class _AddCourseCouponViewBodyState extends State<AddCourseCouponViewBody> {
       listener: (context, state) {
         if (state is AddCourseCouponSuccess) {
           GoRouter.of(context).pop();
-          showSuccessSnackBar(
-              context: context, message: "تم اضافة الكوبون بنجاح");
+          CustomSnackBar.show(
+            context,
+            message: "تم اضافة الكوبون بنجاح",
+            type: SnackType.success,
+          );
         } else if (state is AddCourseCouponFailure) {
-          ShowErrorSnackBar(context: context, message: state.errmessage);
+          CustomSnackBar.show(
+            context,
+            message: state.errmessage,
+            type: SnackType.error,
+          );
         }
       },
       child: Padding(

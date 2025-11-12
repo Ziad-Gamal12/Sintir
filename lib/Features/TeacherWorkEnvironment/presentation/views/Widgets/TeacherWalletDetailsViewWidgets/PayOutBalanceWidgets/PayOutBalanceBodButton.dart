@@ -34,24 +34,38 @@ class PayOutBalanceBodButton extends StatelessWidget {
 
         final amount = double.tryParse(amountController.text);
         if (amount == null) {
-          ShowErrorSnackBar(context: context, message: "المبلغ غير صالح");
+          CustomSnackBar.show(
+            context,
+            message: "المبلغ غير صحيح",
+            type: SnackType.error,
+          );
           return;
         }
 
         if (walletEntity.status != BackendEndpoints.walletActive) {
-          ShowErrorSnackBar(context: context, message: "المحفظه غير مفعلة");
+          CustomSnackBar.show(
+            context,
+            message: "المحفظة غير مفعلة",
+            type: SnackType.error,
+          );
           return;
         }
 
         if (walletEntity.balance < amount) {
-          ShowErrorSnackBar(
-              context: context, message: "لا يوجد مبلغ كافي في المحفظه");
+          CustomSnackBar.show(
+            context,
+            message: "لا يوجد كافة المبلغ في المحفظة",
+            type: SnackType.error,
+          );
           return;
         }
 
         if (!validateIssuer(issuer: issuer, phone: phoneController.text)) {
-          ShowErrorSnackBar(
-              context: context, message: "رقم الهاتف غير متوافق مع المزود");
+          CustomSnackBar.show(
+            context,
+            message: "رقم المحفظه غير متطابق مع النوع",
+            type: SnackType.error,
+          );
           return;
         }
 

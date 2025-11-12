@@ -13,11 +13,19 @@ class CourseSectionStateHandler {
   void handle(CourseSectionsState state) {
     switch (state) {
       case AddCourseSectionFailure(:final errMessage):
-        ShowErrorSnackBar(context: context, message: errMessage);
+        CustomSnackBar.show(
+          context,
+          message: errMessage,
+          type: SnackType.error,
+        );
         break;
 
       case AddCourseSectionSuccess():
-        showSuccessSnackBar(context: context, message: "تمت الإضافة بنجاح");
+        CustomSnackBar.show(
+          context,
+          message: "تم اضافة القسم بنجاح",
+          type: SnackType.success,
+        );
         GoRouter.of(context).pop();
 
         break;

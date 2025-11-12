@@ -18,8 +18,11 @@ class CourseCouponGridViewItemCode extends StatelessWidget {
         InkWell(
           onTap: () {
             Clipboard.setData(ClipboardData(text: couponEntity.code));
-            showSuccessSnackBar(
-                context: context, message: "تم نسخ الكود بنجاح");
+            CustomSnackBar.show(
+              context,
+              message: "تم نسخ الكوبون بنجاح",
+              type: SnackType.success,
+            );
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -25,6 +25,8 @@ class PayOutBalanceBodyTextFields extends StatelessWidget {
             validator: (value) {
               if (value!.isEmpty) {
                 return "ادخل رقم المحفظه";
+              } else if (value.length != 11) {
+                return "ادخل رقم المحفظه صحيح";
               }
               return null;
             },
@@ -39,7 +41,7 @@ class PayOutBalanceBodyTextFields extends StatelessWidget {
             hintText: "المبلغ",
             controller: amountController,
             obscureText: false,
-            prefixIcon: Icons.currency_bitcoin,
+            prefixIcon: Icons.attach_money,
             validator: (value) {
               if (value!.isEmpty) {
                 return "ادخل المبلغ";

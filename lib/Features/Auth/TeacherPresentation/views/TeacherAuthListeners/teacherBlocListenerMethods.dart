@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/manager/TeacherSignUP/teacher_sign_up_cubit.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/manager/teacher_sign_in/teacher_sign_in_cubit.dart';
@@ -33,19 +32,10 @@ void teacherSignUpViewBodyUplaodPicListener(
   BuildContext context,
 ) {
   if (state is PickTeacherProfilePicSuccess) {
-    ShowSnackBar(
-        context: context,
-        child: ListTile(
-          leading: const Icon(
-            Icons.check_circle,
-            color: Colors.white,
-          ),
-          title: Text(
-            "تم تحميل الصورة بنجاح",
-            style:
-                AppTextStyles(context).semiBold13.copyWith(color: Colors.white),
-          ),
-        ),
-        backgroundColor: Colors.green);
+    CustomSnackBar.show(
+      context,
+      message: "تم رفع الصورة بنجاح",
+      type: SnackType.success,
+    );
   }
 }

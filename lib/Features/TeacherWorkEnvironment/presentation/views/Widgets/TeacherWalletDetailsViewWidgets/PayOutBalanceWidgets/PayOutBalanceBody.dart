@@ -45,7 +45,11 @@ class _PayOutBalanceBodyState extends State<PayOutBalanceBody> {
       _updateWalletBalance(context);
     } else if (state is PayoutFailure) {
       _setLoading(false);
-      ShowErrorSnackBar(context: context, message: state.message);
+      CustomSnackBar.show(
+        context,
+        message: state.message,
+        type: SnackType.error,
+      );
     }
   }
 
@@ -55,10 +59,18 @@ class _PayOutBalanceBodyState extends State<PayOutBalanceBody> {
       _setLoading(true);
     } else if (state is UpdateTeacherWalletSuccess) {
       _setLoading(false);
-      showSuccessSnackBar(context: context, message: "تم التحويل بنجاح");
+      CustomSnackBar.show(
+        context,
+        message: "تمت العملية بنجاح",
+        type: SnackType.success,
+      );
     } else if (state is UpdateTeacherWalletFailure) {
       _setLoading(false);
-      ShowErrorSnackBar(context: context, message: state.errMessage);
+      CustomSnackBar.show(
+        context,
+        message: state.errMessage,
+        type: SnackType.error,
+      );
     }
   }
 

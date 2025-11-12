@@ -63,9 +63,17 @@ class _CoursefedbackviewbodyState extends State<Coursefedbackviewbody> {
       listener: (context, state) {
         if (state is CourseFeedBacksAddFeedBackSuccess) {
           controller.clear();
-          showSuccessSnackBar(context: context, message: "تم اضافة التعليق");
+          CustomSnackBar.show(
+            context,
+            message: "تمت التعليق بنجاح!",
+            type: SnackType.success,
+          );
         } else if (state is CourseFeedBacksAddFeedBackFailure) {
-          ShowErrorSnackBar(context: context, message: state.errMessage);
+          CustomSnackBar.show(
+            context,
+            message: state.errMessage,
+            type: SnackType.error,
+          );
         } else if (state is CourseFeedBacksGetFeedBackSuccess) {
           if (state.response.isPaginate) {
             feedBacks.addAll(state.response.feedBacks);
