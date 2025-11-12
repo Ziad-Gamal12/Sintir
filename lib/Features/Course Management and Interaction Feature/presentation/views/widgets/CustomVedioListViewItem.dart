@@ -39,8 +39,8 @@ class CustomVedioListViewItem extends StatelessWidget {
             trailing: Text(
               "${item.durationTime} دقائق",
               style: AppTextStyles(context)
-                  .regular11
-                  .copyWith(color: const Color(0xff818181)),
+                  .regular14
+                  .copyWith(color: Colors.black),
             ),
           )),
           CustomUnAvailableSectionWidget(isAvailable: isAvilabe)

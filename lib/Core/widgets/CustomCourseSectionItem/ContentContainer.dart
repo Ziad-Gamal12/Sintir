@@ -17,8 +17,8 @@ class ContentContainer extends StatelessWidget {
           ),
         ],
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.black, width: .5),
-        color: Colors.grey.shade100,
+        border: Border.all(color: Colors.grey, width: .5),
+        color: Colors.grey.shade50,
       ),
       child: child,
     );
