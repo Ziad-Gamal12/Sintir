@@ -39,7 +39,7 @@ class Addcoursesectionvedioview extends StatelessWidget {
       ],
       child: Builder(builder: (context) {
         return Scaffold(
-          appBar: const CustomAppBar(appBartitle: "اضافة فيديو"),
+          appBar: CustomAppBar(appBartitle: "اضافة فيديو"),
           body: Provider.value(
               value: optionnavigationrequirementsentity,
               child: const Addcoursesectionvedioviewbody()),

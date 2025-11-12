@@ -33,7 +33,7 @@ class Addcoursesectionview extends StatelessWidget {
         getIt<CourseSectionsRepo>(),
       ),
       child: Scaffold(
-        appBar: const CustomAppBar(appBartitle: "اضافة محاضرة"),
+        appBar: CustomAppBar(appBartitle: "اضافة محاضرة"),
         body: Provider.value(
           value: optionnavigationrequirementsentity,
           child: const Addcoursesectionviewbody(),

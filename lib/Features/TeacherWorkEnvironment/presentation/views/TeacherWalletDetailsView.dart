@@ -9,9 +9,9 @@ class TeacherWalletDetailsView extends StatelessWidget {
   static const routeName = '/TeacherWalletDetailsView';
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       appBar: CustomAppBar(appBartitle: "تفاصيل المحفظة"),
-      body: TeacherWalletDetailsViewBody(),
+      body: const TeacherWalletDetailsViewBody(),
     );
   }
 }

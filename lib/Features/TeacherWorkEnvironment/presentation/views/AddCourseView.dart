@@ -22,11 +22,11 @@ class _AddcourseviewState extends State<Addcourseview> {
       create: (context) => AddCourseCubitCubit(
           coursesrepo: getIt<Coursesrepo>(),
           assetspickerrepo: getIt<Assetspickerrepo>()),
-      child: const Scaffold(
+      child: Scaffold(
         appBar: CustomAppBar(
           appBartitle: "اضافة دورة",
         ),
-        body: AddCourseViewBody(),
+        body: const AddCourseViewBody(),
       ),
     );
   }

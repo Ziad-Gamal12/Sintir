@@ -12,7 +12,7 @@ class MyCoursesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(appBartitle: "الدورات الخاصه بي"),
+      appBar: CustomAppBar(appBartitle: "الدورات الخاصه بي"),
       body: BlocProvider(
           create: (context) => MyCoursesCubit(
                 coursesrepo: getIt<Coursesrepo>(),

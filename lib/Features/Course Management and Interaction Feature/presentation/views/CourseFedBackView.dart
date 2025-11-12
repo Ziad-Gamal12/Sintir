@@ -18,7 +18,7 @@ class Coursefedbackview extends StatelessWidget {
         courseFeedBacksRepo: getIt<CourseFeedBacksRepo>(),
       ),
       child: Scaffold(
-        appBar: const CustomAppBar(appBartitle: "اراء الطلاب"),
+        appBar: CustomAppBar(appBartitle: "اراء الطلاب"),
         body: Coursefedbackviewbody(
           requirmentsEntity: requirmentsEntity,
         ),

@@ -16,15 +16,17 @@ class _SubscriberAverageScoreCardState
     extends State<SubscriberAverageScoreCard> {
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<SubscriberDetailsCubit, SubscriberDetailsState, double>(
-      selector: (state) {
-        if (state is SubscriberAvrageCalculationSuccess) {
-          return state.avrage;
+    return BlocBuilder<SubscriberDetailsCubit, SubscriberDetailsState>(
+      buildWhen: (previous, current) {
+        if (current is SubscriberAvrageCalculationSuccess) {
+          return true;
         } else {
-          return 0;
+          return false;
         }
       },
-      builder: (context, average) {
+      builder: (context, state) {
+        double average =
+            state is SubscriberAvrageCalculationSuccess ? state.avrage : 0;
         return Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(

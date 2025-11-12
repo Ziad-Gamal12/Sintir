@@ -34,7 +34,7 @@ class Addcoursesectionfileview extends StatelessWidget {
                 assetspickerrepo: getIt<Assetspickerrepo>()))
       ],
       child: Scaffold(
-        appBar: const CustomAppBar(appBartitle: "اضافة ملف"),
+        appBar: CustomAppBar(appBartitle: "اضافة ملف"),
         body: Provider.value(
             value: optionnavigationrequirementsentity,
             child: const AddcoursesectionfileviewBody()),

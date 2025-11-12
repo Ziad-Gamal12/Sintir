@@ -41,7 +41,7 @@ class _StudentSignupViewState extends State<StudentSignupView> {
     return BlocProvider(
       create: (context) => StudentSignUpCubit(getIt<AuthRepo>()),
       child: Scaffold(
-        appBar: const CustomAppBar(appBartitle: "انشاء حساب"),
+        appBar: CustomAppBar(appBartitle: "انشاء حساب"),
         body: Provider.value(
             value: userEntity, child: const StudentSignupViewBody()),
       ),

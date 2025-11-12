@@ -18,7 +18,7 @@ class CourseDetailsSubscribersReviewsView extends StatelessWidget {
       create: (context) => CourseFeedBacksCubit(
           courseFeedBacksRepo: getIt<CourseFeedBacksRepo>()),
       child: Scaffold(
-        appBar: const CustomAppBar(appBartitle: "أراء الطلاب"),
+        appBar: CustomAppBar(appBartitle: "أراء الطلاب"),
         body: CourseDetailsSubscribersReviewsViewBody(
           courseId: courseId,
         ),

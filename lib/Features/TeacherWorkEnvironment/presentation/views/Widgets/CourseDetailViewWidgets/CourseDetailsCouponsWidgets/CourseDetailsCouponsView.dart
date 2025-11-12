@@ -18,7 +18,7 @@ class CourseDetailsCouponsView extends StatelessWidget {
         courseCouponsRepo: getIt<CourseCouponsRepo>(),
       ),
       child: Scaffold(
-        appBar: const CustomAppBar(appBartitle: "الخصومات"),
+        appBar: CustomAppBar(appBartitle: "الخصومات"),
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton:

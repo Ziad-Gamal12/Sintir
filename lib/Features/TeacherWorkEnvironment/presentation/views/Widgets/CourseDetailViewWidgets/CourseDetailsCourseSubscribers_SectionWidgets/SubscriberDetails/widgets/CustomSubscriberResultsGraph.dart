@@ -26,9 +26,13 @@ class _SubscriberResultsChartState extends State<SubscriberResultsChart> {
         ),
       );
     }
-
-    final values =
-        widget.results.map((e) => (e.result ?? 0).toDouble()).toList();
+    List<TestResultEntity> results = [];
+    if (widget.results.length > 6) {
+      results = widget.results.sublist(0, 6);
+    } else {
+      results = widget.results;
+    }
+    final values = results.map((e) => (e.result ?? 0).toDouble()).toList();
     final maxValue =
         values.isNotEmpty ? values.reduce((a, b) => a > b ? a : b) + 5 : 10;
     final avgValue = values.isNotEmpty

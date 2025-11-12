@@ -21,7 +21,7 @@ class CourseDetailView extends StatelessWidget {
             assetspickerrepo: getIt<Assetspickerrepo>()),
         child: Scaffold(
             key: Variables.courseDeatilsViewScaffoldKey,
-            appBar: const CustomAppBar(appBartitle: "تفاصيل الدورة"),
+            appBar: CustomAppBar(appBartitle: "تفاصيل الدورة"),
             body: Builder(builder: (context) {
               return CourseDetailViewBody(
                 courseEntity: courseEntity,

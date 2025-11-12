@@ -35,7 +35,7 @@ class _SendcoursereportviewState extends State<Sendcoursereportview> {
       child: Provider.value(
         value: coursereportsitementity,
         child: Scaffold(
-          appBar: const CustomAppBar(appBartitle: "ابلاغ"),
+          appBar: CustomAppBar(appBartitle: "ابلاغ"),
           body: Sendcoursereportviewbody(
             requirmentsEntity: widget.requirmentsEntity,
           ),

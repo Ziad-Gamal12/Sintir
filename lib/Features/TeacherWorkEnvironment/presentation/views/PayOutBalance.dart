@@ -18,7 +18,7 @@ class PayOutBalance extends StatelessWidget {
         payoutRepo: getIt<PaymobPayoutRepo>(),
       ),
       child: Scaffold(
-        appBar: const CustomAppBar(appBartitle: "سحب رصيد المحفظة"),
+        appBar: CustomAppBar(appBartitle: "سحب رصيد المحفظة"),
         body: PayOutBalanceBody(walletEntity: walletEntity),
       ),
     );

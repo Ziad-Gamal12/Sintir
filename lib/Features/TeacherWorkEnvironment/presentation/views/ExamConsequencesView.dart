@@ -30,7 +30,7 @@ class TestConsequencesView extends StatelessWidget {
       ],
       child: Scaffold(
         key: Variables.testConsequencesViewScaffoldKey,
-        appBar: const CustomAppBar(appBartitle: "التقارير الخاصة بالاختبار"),
+        appBar: CustomAppBar(appBartitle: "التقارير الخاصة بالاختبار"),
         body: TestConsequencesViewBody(
           requirements: requirements,
         ),

@@ -36,9 +36,9 @@ class ReviewExamSectionView extends StatelessWidget {
       ],
       child: Provider.value(
         value: navigateExamReviewRequirmentsEntity,
-        child: const Scaffold(
+        child: Scaffold(
           appBar: CustomAppBar(appBartitle: "مراجعه"),
-          body: ReviewExamSectionViewBody(),
+          body: const ReviewExamSectionViewBody(),
         ),
       ),
     );

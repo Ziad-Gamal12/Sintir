@@ -18,6 +18,7 @@ class ScoreStatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.center,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -25,8 +26,10 @@ class ScoreStatCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text("$total/", style: AppTextStyles(context).semiBold16),
               Text(
@@ -38,7 +41,7 @@ class ScoreStatCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             label,
-            style: AppTextStyles(context).bold16,
+            style: AppTextStyles(context).semiBold14,
           ),
         ],
       ),

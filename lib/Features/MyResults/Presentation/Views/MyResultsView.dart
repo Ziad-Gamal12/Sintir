@@ -12,7 +12,7 @@ class MyResultsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(appBartitle: "نتائجي"),
+      appBar: CustomAppBar(appBartitle: "نتائجي"),
       body: BlocProvider(
           create: (context) => MyResultsCubit(
                 myResultsRepo: getIt.get<MyResultsRepo>(),

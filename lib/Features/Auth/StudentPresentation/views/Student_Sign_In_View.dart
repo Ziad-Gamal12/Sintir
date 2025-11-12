@@ -15,9 +15,9 @@ class StudentSignInView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => StudentSignInCubit(getIt<AuthRepo>()),
-      child: const Scaffold(
+      child: Scaffold(
         appBar: CustomAppBar(appBartitle: "تسجيل الدخول"),
-        body: StudentSignInViewBody(),
+        body: const StudentSignInViewBody(),
       ),
     );
   }

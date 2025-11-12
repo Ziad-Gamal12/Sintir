@@ -14,7 +14,7 @@ class ContentCreatorProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(appBartitle: "تفاصيل المعلم"),
+        appBar: CustomAppBar(appBartitle: "تفاصيل المعلم"),
         body: BlocProvider(
           create: (context) => ContentCreatorCoursesCubit(
             contentCreatorProfileRepo: getIt<ContentCreatorProfileRepo>(),

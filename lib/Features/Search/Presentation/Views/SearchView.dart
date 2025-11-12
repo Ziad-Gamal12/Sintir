@@ -22,9 +22,12 @@ class _SearchViewState extends State<SearchView>
       create: (context) => SearchCubit(
         searchRepo: getIt.get<SearchRepo>(),
       ),
-      child: const Scaffold(
-        appBar: CustomAppBar(appBartitle: "البحث"),
-        body: SearchViewBody(),
+      child: Scaffold(
+        appBar: CustomAppBar(
+          appBartitle: "البحث",
+          isPopUp: false,
+        ),
+        body: const SearchViewBody(),
       ),
     );
   }

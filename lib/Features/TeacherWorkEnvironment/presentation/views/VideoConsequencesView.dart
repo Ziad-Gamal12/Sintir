@@ -30,7 +30,7 @@ class VideoConsequencesView extends StatelessWidget {
         ),
       ],
       child: Scaffold(
-        appBar: const CustomAppBar(appBartitle: "التقارير الخاصة بالفيديو"),
+        appBar: CustomAppBar(appBartitle: "التقارير الخاصة بالفيديو"),
         body: VideoConsequencesViewBody(requirements: requirements),
       ),
     );

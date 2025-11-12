@@ -7,11 +7,12 @@ class ProfileView extends StatelessWidget {
   static const String routeName = "/ProfileView";
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       appBar: CustomAppBar(
         appBartitle: "الملف الشخصي",
+        isPopUp: false,
       ),
-      body: ProfileViewBody(),
+      body: const ProfileViewBody(),
     );
   }
 }

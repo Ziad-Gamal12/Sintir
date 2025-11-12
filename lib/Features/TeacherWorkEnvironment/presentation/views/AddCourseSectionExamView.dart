@@ -37,7 +37,7 @@ class _AddcourseSectionExamviewState extends State<AddcourseSectionExamview>
           testitemrepo: getIt<Testitemrepo>(),
           assetspickerrepo: getIt<Assetspickerrepo>()),
       child: Scaffold(
-        appBar: const CustomAppBar(appBartitle: "اضافة امتحان"),
+        appBar: CustomAppBar(appBartitle: "اضافة امتحان"),
         body: Provider.value(
           value: widget.optionnavigationrequirementsentity,
           child: const AddCourseSectionExamViewBody(),

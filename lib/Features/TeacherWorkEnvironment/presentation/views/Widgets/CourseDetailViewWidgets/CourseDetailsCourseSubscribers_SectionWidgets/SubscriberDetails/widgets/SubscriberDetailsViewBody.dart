@@ -31,18 +31,25 @@ class _SubscriberDetailsViewBodyState extends State<SubscriberDetailsViewBody> {
         subscriberId: widget.requirements.subscriber.id,
         contentCreatorId: widget.requirements.contentCreatorId,
       );
-      cubit.getSubscriberResults(
-        subscriberId: widget.requirements.subscriber.id,
-        courseId: widget.requirements.courseId,
-      );
-      cubit.getSubscriberHighestScore(
-        subscriberId: widget.requirements.subscriber.id,
-        courseId: widget.requirements.courseId,
-      );
-      cubit.getSubscriberLowestScore(
-        subscriberId: widget.requirements.subscriber.id,
-        courseId: widget.requirements.courseId,
-      );
+      Future.delayed(const Duration(seconds: 1), () {
+        cubit.getSubscriberResults(
+          subscriberId: widget.requirements.subscriber.id,
+          courseId: widget.requirements.courseId,
+        );
+      });
+
+      Future.delayed(const Duration(seconds: 1), () {
+        cubit.getSubscriberHighestScore(
+          subscriberId: widget.requirements.subscriber.id,
+          courseId: widget.requirements.courseId,
+        );
+      });
+      Future.delayed(const Duration(seconds: 1), () {
+        cubit.getSubscriberLowestScore(
+          subscriberId: widget.requirements.subscriber.id,
+          courseId: widget.requirements.courseId,
+        );
+      });
     });
   }
 
@@ -53,6 +60,7 @@ class _SubscriberDetailsViewBodyState extends State<SubscriberDetailsViewBody> {
       listener: (context, state) {
         if (state is GetSubscriberResultsSuccess) {
           results = state.results;
+          context.read<SubscriberDetailsCubit>().getSubscriberAverageScore();
         }
       },
       builder: (context, state) => Padding(

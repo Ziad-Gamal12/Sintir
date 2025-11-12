@@ -25,7 +25,7 @@ class Custombutton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      height: 50,
+      height: 46,
       minWidth: double.infinity,
       shape: RoundedRectangleBorder(
         side: side ?? BorderSide.none,
@@ -37,7 +37,8 @@ class Custombutton extends StatelessWidget {
       child: child ??
           Text(text,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles(context).bold16.copyWith(color: textColor)),
+              style:
+                  AppTextStyles(context).semiBold16.copyWith(color: textColor)),
     );
   }
 }

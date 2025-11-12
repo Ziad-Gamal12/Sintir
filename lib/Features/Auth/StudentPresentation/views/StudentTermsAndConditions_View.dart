@@ -10,7 +10,7 @@ class StudenttermsandconditionsView extends StatelessWidget {
   static const String routeName = '/StudenttermsandconditionsView';
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       appBar: CustomAppBar(appBartitle: "الشروط والاحكام"),
       body: StudentTermsAndConditions_ViewBody(),
     );

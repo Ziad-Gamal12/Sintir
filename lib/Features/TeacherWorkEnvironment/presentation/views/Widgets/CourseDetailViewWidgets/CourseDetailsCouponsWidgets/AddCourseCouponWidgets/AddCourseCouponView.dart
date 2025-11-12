@@ -32,7 +32,7 @@ class _AddCourseCouponViewState extends State<AddCourseCouponView> {
         courseCouponsRepo: getIt<CourseCouponsRepo>(),
       ),
       child: Scaffold(
-        appBar: const CustomAppBar(appBartitle: "اضافة كوبون"),
+        appBar: CustomAppBar(appBartitle: "اضافة كوبون"),
         body: Provider.value(
             value: coupon,
             child: AddCourseCouponViewBody(

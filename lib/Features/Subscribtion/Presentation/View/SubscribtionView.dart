@@ -31,7 +31,7 @@ class SubscribtionView extends StatelessWidget {
         )
       ],
       child: Scaffold(
-        appBar: const CustomAppBar(appBartitle: "الأشتراك"),
+        appBar: CustomAppBar(appBartitle: "الأشتراك"),
         body: SubscribtionViewBody(
           requirmentsEntity: requirmentsEntity,
         ),

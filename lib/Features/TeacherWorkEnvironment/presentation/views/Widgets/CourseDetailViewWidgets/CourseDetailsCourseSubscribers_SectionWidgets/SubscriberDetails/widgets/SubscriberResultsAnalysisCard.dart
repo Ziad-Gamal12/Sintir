@@ -22,11 +22,11 @@ class _SubscriberResultsAnalysisCardState
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          SubscriberHighestScoreCard(),
+          Expanded(flex: 4, child: SubscriberHighestScoreCard()),
           SizedBox(width: 10),
-          SubscriberAverageScoreCard(),
+          Expanded(flex: 5, child: SubscriberAverageScoreCard()),
           SizedBox(width: 10),
-          SubscriberLowestScoreCard()
+          Expanded(flex: 4, child: SubscriberLowestScoreCard())
         ],
       ),
     );

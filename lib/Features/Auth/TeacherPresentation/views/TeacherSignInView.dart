@@ -16,7 +16,7 @@ class TeacherSignInView extends StatelessWidget {
     return BlocProvider(
       create: (context) => TeacherSignInCubit(authrepo: getIt<AuthRepo>()),
       child: Scaffold(
-        appBar: const CustomAppBar(appBartitle: "تسجيل الدخول"),
+        appBar: CustomAppBar(appBartitle: "تسجيل الدخول"),
         body: Builder(builder: (context) {
           return const TeacherSigninViewBody();
         }),

@@ -12,7 +12,7 @@ class MyMistakesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(appBartitle: "أخطائي"),
+      appBar: CustomAppBar(appBartitle: "أخطائي"),
       body: BlocProvider(
         create: (context) => GetMyMistakesCubit(
           myMistakesRepo: getIt.get<MyMistakesRepo>(),

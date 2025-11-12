@@ -22,7 +22,7 @@ class CourseDetailsCourseSectionsView extends StatelessWidget {
       ),
       child: Scaffold(
         key: Variables.courseSectionsViewScaffoldKey,
-        appBar: const CustomAppBar(appBartitle: "المحتوى"),
+        appBar: CustomAppBar(appBartitle: "المحتوى"),
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton:

@@ -11,7 +11,7 @@ class Reviewtestresultview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(appBartitle: "نتايج الاختبار"),
+      appBar: CustomAppBar(appBartitle: "نتايج الاختبار"),
       body: Provider.value(
           value: resultEntity, child: const Reviewtestresultviewbody()),
     );

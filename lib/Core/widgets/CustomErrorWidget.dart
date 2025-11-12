@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:svg_flutter/svg_flutter.dart';
 
 class CustomErrorWidget extends StatelessWidget {
   const CustomErrorWidget({super.key, required this.errormessage});
@@ -11,7 +12,7 @@ class CustomErrorWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Image.asset(Assets.assetsImagesSVGImagesErorr,
+        SvgPicture.asset(Assets.assetsImagesSVGImagesErorr,
             height: 70, width: 70, fit: BoxFit.fill),
         const SizedBox(
           height: 10,

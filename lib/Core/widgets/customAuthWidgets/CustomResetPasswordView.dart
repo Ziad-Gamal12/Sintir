@@ -16,9 +16,9 @@ class CustomResetPasswordView extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           CustomResetPasswordCubit(authrepo: getIt<ResetPaswordRepo>()),
-      child: const Scaffold(
+      child: Scaffold(
         appBar: CustomAppBar(appBartitle: "استعادة كلمة المرور"),
-        body: CustomResetPasswordViewBody(),
+        body: const CustomResetPasswordViewBody(),
       ),
     );
   }

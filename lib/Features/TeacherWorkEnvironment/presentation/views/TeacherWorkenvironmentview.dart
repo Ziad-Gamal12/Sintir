@@ -15,7 +15,7 @@ class TeacherWorkenvironmentview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(appBartitle: "بيئة العمل"),
+      appBar: CustomAppBar(appBartitle: "بيئة العمل"),
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: const AddCourseFloatingActionButton(),

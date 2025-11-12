@@ -21,7 +21,7 @@ class CourseDetailsSubscribersView extends StatelessWidget {
           course: courseEntity,
           subscribtionRepo: getIt<CourseSubscibtionsRepo>()),
       child: Scaffold(
-        appBar: const CustomAppBar(appBartitle: "الطلاب"),
+        appBar: CustomAppBar(appBartitle: "الطلاب"),
         body: CourseDetailsSubscribersViewBody(
           courseEntity: courseEntity,
         ),
