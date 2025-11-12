@@ -33,6 +33,5 @@ class _SearchViewState extends State<SearchView>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

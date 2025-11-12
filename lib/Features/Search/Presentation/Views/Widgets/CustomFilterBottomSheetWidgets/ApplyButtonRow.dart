@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Search/Domain/Entities/CustomFilterEntity.dart';
+import 'package:sintir/Features/Search/Presentation/Views/Widgets/CustomFilterBottomSheetWidgets/ClearFilters.dart';
 import 'package:sintir/constant.dart';
 
 class ApplyButtonRow extends StatelessWidget {
@@ -22,6 +23,7 @@ class ApplyButtonRow extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
+              flex: 4,
               child: Custombutton(
                 text: "فلتره",
                 color: KMainColor,
@@ -32,6 +34,10 @@ class ApplyButtonRow extends StatelessWidget {
                 },
               ),
             ),
+            const SizedBox(
+              width: 10,
+            ),
+            Expanded(child: ClearFilters(onFilterChanged: onFilterChanged)),
           ],
         ),
       ),
