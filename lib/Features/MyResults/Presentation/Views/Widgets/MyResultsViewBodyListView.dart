@@ -43,7 +43,7 @@ class _MyResultsViewBodyListViewState extends State<MyResultsViewBodyListView> {
             child: index == widget.myResults.length
                 ? const MyResultsViewBodyListViewLoading()
                 : AspectRatio(
-                    aspectRatio: 2 / 1.1,
+                    aspectRatio: 2 / 1.7,
                     child: StudentResultCard(
                       testResultEntity: widget.myResults[index],
                     ),

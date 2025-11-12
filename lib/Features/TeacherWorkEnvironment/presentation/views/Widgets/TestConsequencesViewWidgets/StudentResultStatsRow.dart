@@ -7,43 +7,34 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 class StudentResultStatsRow extends StatelessWidget {
   const StudentResultStatsRow({super.key, required this.testResultEntity});
   final TestResultEntity testResultEntity;
+
   @override
   Widget build(BuildContext context) {
+    final percent = ResultDetailsHelper.getResultPercent(testResultEntity)
+        .toStringAsFixed(2);
+    final score =
+        "${ResultDetailsHelper.getSuccessQuestions(testResultEntity).length}/${testResultEntity.totalQuestions}";
+
     return Row(
       children: [
         Expanded(
           child: StudentStatItem(
             icon: Assets.assetsIconsGraphBar,
-            value:
-                "${ResultDetailsHelper.getResultPercent(testResultEntity).toStringAsFixed(2)} %",
             title: "نسبة التقييم",
-            backgroundColor: Colors.lightBlue.shade100,
+            value: "$percent%",
+            backgroundColor: Colors.blue.shade50,
           ),
         ),
-        Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              width: 1,
-              height: 50,
-              color: Colors.grey.shade300,
-            )),
+        const SizedBox(width: 12),
         Expanded(
           child: StudentStatItem(
             icon: Assets.assetsIconsMisionIcon,
-            value:
-                "${ResultDetailsHelper.getSuccessQuestions(testResultEntity).length}/${testResultEntity.totalQuestions}",
             title: "درجة الطالب",
-            backgroundColor: Colors.lightBlue.shade100,
+            value: score,
+            backgroundColor: Colors.green.shade50,
           ),
         ),
       ],
     );
-  }
-
-  double getResultPercentage(int correctAnswers, int totalQuestions) {
-    if (totalQuestions == 0) {
-      return 0.0;
-    }
-    return (correctAnswers / totalQuestions) * 100;
   }
 }
