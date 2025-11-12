@@ -34,7 +34,7 @@ class CourseDetailsSubscribersGridView extends StatelessWidget {
                   courseId: courseEntity.id));
         },
         child: CourseDetailsSubscribersGridviewItem(
-            subscriberentity: subscribers[index]),
+            subscriber: subscribers[index]),
       ),
     );
   }

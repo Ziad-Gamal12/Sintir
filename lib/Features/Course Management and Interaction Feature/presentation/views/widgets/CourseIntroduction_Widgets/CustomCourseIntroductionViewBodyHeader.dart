@@ -20,7 +20,7 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
           Positioned(
             left: 20,
             right: 20,
-            top: (MediaQuery.of(context).size.width / 2) - 100,
+            top: (MediaQuery.of(context).size.width / 2.5) - 100,
             child: CourseInfoCard(requirmentsEntity: requirmentsEntity),
           ),
         ],

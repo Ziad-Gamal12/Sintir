@@ -27,17 +27,16 @@ class _CourseInfoCardState extends State<CourseInfoCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CourseInfoCardCourseDescription(),
-          const SizedBox(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                  flex: 2, child: CourseMetaInfo(widget.requirmentsEntity)),
+                  flex: 4, child: CourseMetaInfo(widget.requirmentsEntity)),
               const Spacer(flex: 1),
               Expanded(flex: 2, child: CourseActions(widget.requirmentsEntity)),
             ],
           ),
+          const CourseInfoCardCourseDescription(),
         ],
       ),
     );

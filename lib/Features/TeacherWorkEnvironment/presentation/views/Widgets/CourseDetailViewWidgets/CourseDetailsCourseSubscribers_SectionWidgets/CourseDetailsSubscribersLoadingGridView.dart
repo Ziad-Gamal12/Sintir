@@ -21,7 +21,7 @@ class CourseDetailsSubscribersLoadingGridView extends StatelessWidget {
             mainAxisSpacing: 10,
             childAspectRatio: 1 / 1.2),
         itemBuilder: (context, index) => CourseDetailsSubscribersGridviewItem(
-            subscriberentity: getFakLoadingSubscribers()[index]),
+            subscriber: getFakLoadingSubscribers()[index]),
         itemCount: getFakLoadingSubscribers().length,
       ),
     );

@@ -8,12 +8,12 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 
 class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
   const CourseDetailsSubscribersGridviewItem(
-      {super.key, required this.subscriberentity});
-  final SubscriberEntity subscriberentity;
+      {super.key, required this.subscriber});
+  final SubscriberEntity subscriber;
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -32,27 +32,27 @@ class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CourseDetailsSubscribersGridviewItemAvatar(
-              imageUrl: subscriberentity.imageUrl),
+              imageUrl: subscriber.imageUrl),
           const SizedBox(
             height: 10,
           ),
           Text(
-            subscriberentity.name,
+            subscriber.name,
             style: AppTextStyles(context).semiBold20,
           ),
           const Spacer(),
           CourseDetailsSubscribersGridviewItemPhoneNumber(
-              phone: subscriberentity.phone),
+              phone: subscriber.phone),
           const SizedBox(
             height: 5,
           ),
           CourseDetailsSubscribersGridviewItemSchoolLevel(
-              schoolLevel: subscriberentity.educationLevel),
+              schoolLevel: subscriber.educationLevel),
           const SizedBox(
             height: 5,
           ),
           CourseDetailsSubscribersGridviewItemAddress(
-              address: subscriberentity.address),
+              address: subscriber.address),
         ],
       ),
     );

@@ -47,7 +47,7 @@ class _CourseInfoCardCourseDescriptionState
             ),
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 4),
         Text(
           courseEntity.description,
           style: AppTextStyles(context)

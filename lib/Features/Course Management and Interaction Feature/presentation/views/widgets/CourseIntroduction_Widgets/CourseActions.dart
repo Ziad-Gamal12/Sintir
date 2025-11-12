@@ -16,6 +16,7 @@ class CourseActions extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
+          behavior: HitTestBehavior.translucent,
           onTap: () {
             GoRouter.of(context)
                 .push(Sendcoursereportview.routeName, extra: requirmentsEntity);
@@ -27,6 +28,7 @@ class CourseActions extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         GestureDetector(
+          behavior: HitTestBehavior.translucent,
           onTap: () {
             GoRouter.of(context)
                 .push(Coursefedbackview.routeName, extra: requirmentsEntity);
