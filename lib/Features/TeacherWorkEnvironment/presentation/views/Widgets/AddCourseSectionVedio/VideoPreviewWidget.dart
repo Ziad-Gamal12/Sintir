@@ -15,9 +15,9 @@ class VideoPreviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomDisplayingVideoWidget(
-      durtationChanged: (value) {
-        coursevedioitementity.durationTime = value;
+    return PremiumVideoPlayer(
+      onDurationChanged: (value) {
+        coursevedioitementity.durationTime = value.inMinutes;
       },
       file: videoFile,
     );

@@ -1,94 +1,70 @@
-// ignore_for_file: must_be_immutable
-
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/widgets/CustomVedioErrorWidget.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
-import 'package:video_player/video_player.dart';
+import 'package:sintir/Core/widgets/Video%20Previewer%20Widgets/controllers/video_player_controller_helper.dart';
 
-class CustomDisplayingVideoWidget extends StatefulWidget {
-  CustomDisplayingVideoWidget(
-      {super.key, this.videoUrl, this.file, this.durtationChanged});
+class PremiumVideoPlayer extends StatefulWidget {
   final String? videoUrl;
   final File? file;
-  ValueChanged<int>? durtationChanged;
+  final ValueChanged<Duration>? onDurationChanged;
+
+  const PremiumVideoPlayer({
+    super.key,
+    this.videoUrl,
+    this.file,
+    this.onDurationChanged,
+  });
 
   @override
-  State<CustomDisplayingVideoWidget> createState() =>
-      _CustomDisplayingVideoWidgetState();
+  State<PremiumVideoPlayer> createState() => _PremiumVideoPlayerState();
 }
 
-class _CustomDisplayingVideoWidgetState
-    extends State<CustomDisplayingVideoWidget> {
-  late VideoPlayerController videoPlayerController;
-  late ChewieController chewieController;
+class _PremiumVideoPlayerState extends State<PremiumVideoPlayer> {
+  final CustomVideoController _controller = CustomVideoController();
+  bool _isLoading = true;
+  final bool _isMuted = false;
+
   @override
   void initState() {
     super.initState();
-    initVideoController();
+    _initVideo();
+  }
+
+  Future<void> _initVideo() async {
+    try {
+      await _controller.initializeVideo(
+        videoUrl: widget.videoUrl,
+        file: widget.file,
+        onUpdate: () {
+          setState(() => _isLoading = false);
+        },
+        onDurationChanged: widget.onDurationChanged ?? (_) {},
+      );
+    } catch (_) {
+      setState(() => _isLoading = false);
+    }
   }
 
   @override
   void dispose() {
-    videoPlayerController.dispose();
-    chewieController.dispose();
+    _controller.dispose();
     super.dispose();
-  }
-
-  Future<void> initVideoController() async {
-    try {
-      if (widget.file != null) {
-        videoPlayerController = VideoPlayerController.file(widget.file!);
-      } else if (widget.videoUrl != null) {
-        videoPlayerController =
-            VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl!));
-      } else {
-        CustomSnackBar.show(
-          context,
-          message: "لا يمكن تشغيل الفيديو",
-          type: SnackType.error,
-        );
-        return;
-      }
-      await videoPlayerController.initialize();
-      widget.durtationChanged != null
-          ? widget
-              .durtationChanged!(videoPlayerController.value.duration.inMinutes)
-          : null;
-      chewieController = ChewieController(
-        videoPlayerController: videoPlayerController,
-        errorBuilder: (context, errorMessage) {
-          return CustomVedioErrorWidget(errorMessage: errorMessage);
-        },
-        autoPlay: true,
-        looping: true,
-        showControls: true,
-      );
-      setState(() {});
-    } catch (e) {
-      log("Video Initialization Error: $e");
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (videoPlayerController.value.isInitialized) {
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: AspectRatio(
-          aspectRatio: 16 / 9,
-          child: Chewie(controller: chewieController),
-        ),
-      );
-    } else {
-      return const Custom_Loading_Widget(
-        isLoading: true,
-        child: SizedBox(),
-      );
+    if (_isLoading) {
+      return const Custom_Loading_Widget(isLoading: true, child: SizedBox());
     }
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: AspectRatio(
+        aspectRatio: 16 / 9,
+        child: Chewie(controller: _controller.chewieController),
+      ),
+    );
   }
 }

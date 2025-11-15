@@ -82,7 +82,7 @@ class _DisplaycoursevedioveiwBodyState
                           const SizedBox(
                             height: 10,
                           ),
-                          CustomDisplayingVideoWidget(
+                          PremiumVideoPlayer(
                             videoUrl: vedio.vedioUrl,
                           ),
                           const SizedBox(
