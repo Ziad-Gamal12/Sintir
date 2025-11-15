@@ -8,6 +8,7 @@ import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
+import 'package:sintir/Core/widgets/SensitivePageWrapper.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/CoursetestviewBody.dart';
 
 class Coursetestview extends StatelessWidget {
@@ -26,11 +27,13 @@ class Coursetestview extends StatelessWidget {
       ),
       child: Provider.value(
         value: coursetestviewnavigationsrequirmentsentity,
-        child: Scaffold(
-          appBar: CustomAppBar(
-              appBartitle:
-                  coursetestviewnavigationsrequirmentsentity.test.title),
-          body: const CourseTestViewBody(),
+        child: SensitivePageWrapper(
+          child: Scaffold(
+            appBar: CustomAppBar(
+                appBartitle:
+                    coursetestviewnavigationsrequirmentsentity.test.title),
+            body: const CourseTestViewBody(),
+          ),
         ),
       ),
     );

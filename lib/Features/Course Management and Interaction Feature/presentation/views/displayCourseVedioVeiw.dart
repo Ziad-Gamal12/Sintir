@@ -9,6 +9,7 @@ import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
+import 'package:sintir/Core/widgets/SensitivePageWrapper.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/DisplayCourseVedioView_Widgets/DisplaycoursevedioveiwBody.dart';
 
 class Displaycoursevedioveiw extends StatelessWidget {
@@ -28,14 +29,16 @@ class Displaycoursevedioveiw extends StatelessWidget {
         assetspickerrepo: getIt<Assetspickerrepo>(),
         sectionItemsActionsRepo: getIt<SectionItemsActionsRepo>(),
       ),
-      child: Scaffold(
-        key: Variables.DisplaycoursevedioveiwScaffoldKey,
-        appBar: CustomAppBar(
-            appBartitle:
-                coursevideoviewnavigationsrequirmentsentity.video.title),
-        body: Provider.value(
-          value: coursevideoviewnavigationsrequirmentsentity,
-          child: const DisplaycoursevedioveiwBody(),
+      child: SensitivePageWrapper(
+        child: Scaffold(
+          key: Variables.DisplaycoursevedioveiwScaffoldKey,
+          appBar: CustomAppBar(
+              appBartitle:
+                  coursevideoviewnavigationsrequirmentsentity.video.title),
+          body: Provider.value(
+            value: coursevideoviewnavigationsrequirmentsentity,
+            child: const DisplaycoursevedioveiwBody(),
+          ),
         ),
       ),
     );
