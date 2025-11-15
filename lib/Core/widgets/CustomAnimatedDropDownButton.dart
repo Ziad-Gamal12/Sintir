@@ -27,6 +27,7 @@ class CustomAnimatedDropDownButton extends StatelessWidget {
         closedFillColor: const Color(0xffF9FAFA),
         closedBorder: BoxBorder.all(
           color: const Color(0xffD1D1D1),
+          width: .5,
         ),
         closedBorderRadius: const BorderRadius.all(Radius.circular(14)),
       ),

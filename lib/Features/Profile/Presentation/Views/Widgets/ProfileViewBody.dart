@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
+import 'package:sintir/Core/widgets/LogOutDialog.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/ProfileItemActionsButtons.dart';
 import 'package:sintir/constant.dart';
 
@@ -22,7 +23,12 @@ class ProfileViewBody extends StatelessWidget {
               text: "تسجيل الخروج",
               color: Colors.red,
               textColor: Colors.white,
-              onPressed: () {},
+              onPressed: () {
+                showDialog<void>(
+                  context: context,
+                  builder: (BuildContext context) => const LogoutDialog(),
+                );
+              },
             ),
           ),
         ],

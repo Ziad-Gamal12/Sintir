@@ -123,7 +123,7 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
             const SizedBox(height: 20),
 
             AspectRatio(
-                aspectRatio: 16 / 9,
+                aspectRatio: 16 / 10,
                 child: CustomCourseHorizontalItem(
                     course: widget.requirmentsEntity.course)),
             Divider(

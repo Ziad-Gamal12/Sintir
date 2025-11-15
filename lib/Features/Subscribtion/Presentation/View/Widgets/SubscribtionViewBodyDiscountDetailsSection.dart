@@ -16,6 +16,15 @@ class PremiumSubscriptionPriceSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CourseCouponsCubit, CourseCouponsState>(
+      buildWhen: (previous, current) {
+        if (current is IsCouponExistSuccess ||
+            current is IsCouponExistFailure ||
+            current is IsCouponExistLoading) {
+          return true;
+        } else {
+          return false;
+        }
+      },
       builder: (context, state) {
         final bool hasDiscount = state is IsCouponExistSuccess &&
             state.coupon.isActive &&

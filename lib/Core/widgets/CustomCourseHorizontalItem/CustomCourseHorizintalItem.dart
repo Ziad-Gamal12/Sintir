@@ -100,19 +100,23 @@ class _CustomCourseHorizontalItemState extends State<CustomCourseHorizontalItem>
                     const SizedBox(height: 6),
 
                     // Chips Row (level - subject - language)
-                    Wrap(
-                      spacing: 6,
-                      runSpacing: 4,
-                      children: [
-                        _buildChip(Icons.school_rounded, course.level),
-                        _buildChip(Icons.menu_book_rounded, course.subject),
-                        _buildChip(Icons.language_rounded, course.language),
-                        _buildChip(
-                            Icons.timer, "منذ ${_postedAgo(course.postedDate)}")
-                      ],
+                    Flexible(
+                      child: SingleChildScrollView(
+                        child: Wrap(
+                          spacing: 6,
+                          runSpacing: 4,
+                          children: [
+                            _buildChip(Icons.school_rounded, course.level),
+                            _buildChip(Icons.menu_book_rounded, course.subject),
+                            _buildChip(Icons.language_rounded, course.language),
+                            _buildChip(Icons.timer,
+                                "منذ ${_postedAgo(course.postedDate)}")
+                          ],
+                        ),
+                      ),
                     ),
 
-                    const Spacer(),
+                    const SizedBox(height: 6),
 
                     // Price
                     CustomCourseHorizontalItemPrice(
