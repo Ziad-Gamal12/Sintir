@@ -1,14 +1,15 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
-import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
 import 'package:sintir/Core/widgets/customRefreshWidget.dart';
+import 'package:sintir/Features/ChoosingUserKind/Presentation/views/ChoosingUserKindView.dart';
+import 'package:sintir/Features/Home/Extensions/HomeDataFetch.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_courses_cubit/get_courses_cubit.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_user_data_cubit/get_user_data_cubit.dart';
-import 'package:sintir/Features/Home/presentation/views/widgets/HomeViewBodyAppBar.dart';
-import 'package:sintir/Features/Home/presentation/views/widgets/popularCoursesSection.dart';
-import 'package:sintir/Features/Home/presentation/views/widgets/recentCoursesSection.dart';
-import 'package:sintir/constant.dart';
+import 'package:sintir/Features/Home/presentation/views/widgets/HomeViewBodyBuilder.dart';
 
 class HomeViewBody extends StatefulWidget {
   const HomeViewBody({super.key});
@@ -41,46 +42,26 @@ class _HomeViewBodyState extends State<HomeViewBody>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocListener<GetUserDataCubit, GetUserDataState>(
       listener: (context, state) {
         if (state is GetUserDataFailure) {
           errordialog(context, state.errmessage).show();
+          GoRouter.of(context).pushReplacement(ChoosingUserKindView.routeName);
         } else if (state is GetUserDataSuccess) {
-          context.read<GetCoursesCubit>().getRecentCourses(isPaginate: false);
-          context.read<GetCoursesCubit>().getPopularCourses(isPaginate: false);
+          final cubit = context.read<GetCoursesCubit>();
+          cubit.fetchAllHomeData(context);
         }
       },
       child: Customrefreshwidget(
         onRefresh: () async {
           context.read<GetCoursesCubit>().handleRefresh();
         },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: KHorizontalPadding,
-          ),
-          child: CustomScrollView(
-            slivers: [
-              const SliverToBoxAdapter(child: HomeViewBodyAppBar()),
-              const SliverToBoxAdapter(child: SizedBox(height: 20)),
-              const PopularCoursesSection(),
-              const SliverToBoxAdapter(child: SizedBox(height: 20)),
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    CustomListORGridTextHeader(text: "أحدث الكورسات"),
-                    const SizedBox(height: 10),
-                  ],
-                ),
-              ),
-              const RecentCoursesSection(),
-            ],
-          ),
-        ),
+        child: const HomeViewBodyBuilder(),
       ),
     );
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

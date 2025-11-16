@@ -35,7 +35,7 @@ class _PrivacyWrapperState extends State<PrivacyWrapper>
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: TextDirection.ltr, // or TextDirection.rtl for Arabic
+      textDirection: TextDirection.ltr,
       child: Stack(
         children: [
           widget.child,

@@ -24,12 +24,11 @@ class PremiumVideoPlayer extends StatefulWidget {
 class _PremiumVideoPlayerState extends State<PremiumVideoPlayer> {
   final CustomVideoController _controller = CustomVideoController();
   bool _isLoading = true;
-  final bool _isMuted = false;
 
   @override
   void initState() {
     super.initState();
-    _initVideo();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _initVideo());
   }
 
   Future<void> _initVideo() async {
@@ -55,7 +54,7 @@ class _PremiumVideoPlayerState extends State<PremiumVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
+    if (_isLoading || _controller.chewieController == null) {
       return const Custom_Loading_Widget(isLoading: true, child: SizedBox());
     }
 
@@ -63,7 +62,7 @@ class _PremiumVideoPlayerState extends State<PremiumVideoPlayer> {
       borderRadius: BorderRadius.circular(16),
       child: AspectRatio(
         aspectRatio: 16 / 9,
-        child: Chewie(controller: _controller.chewieController),
+        child: Chewie(controller: _controller.chewieController!),
       ),
     );
   }

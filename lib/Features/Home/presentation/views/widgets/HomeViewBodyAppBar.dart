@@ -2,11 +2,9 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/Profile/Presentation/Views/ProfileView.dart';
 import 'package:sintir/constant.dart';
 
 class HomeViewBodyAppBar extends StatelessWidget {

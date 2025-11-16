@@ -21,4 +21,8 @@ abstract class Coursesrepo {
       {required bool isPaginate});
   Future<Either<Failure, void>> updateCourse(
       {required CourseEntity courseEntity});
+  Future<Either<Failure, GetCoursesResonseEntity>> getTeaceherInterestedCourses(
+      {required bool isPaginate, required String subject});
+  Future<Either<Failure, GetCoursesResonseEntity>> getStudentInterestedCourses(
+      {required bool isPaginate, required String educationlevel});
 }

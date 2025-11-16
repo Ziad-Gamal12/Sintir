@@ -81,6 +81,8 @@ class CoursesrepoImpl implements Coursesrepo {
   DocumentSnapshot? _recentLastDoc;
   DocumentSnapshot? _popularLastDoc;
   DocumentSnapshot? _myCoursesLastDoc;
+  DocumentSnapshot? _teacherInterestedCoursesLastDoc;
+  DocumentSnapshot? _studentInterestedCoursesLastDoc;
 
   Future<Either<Failure, GetCoursesResonseEntity>> _getCourses({
     required Map<String, dynamic> baseQuery,
@@ -215,6 +217,65 @@ class CoursesrepoImpl implements Coursesrepo {
     } catch (_) {
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
+  }
+
+  @override
+  Future<Either<Failure, GetCoursesResonseEntity>> getStudentInterestedCourses(
+      {required bool isPaginate, required String educationlevel}) async {
+    return _getCourses(
+      baseQuery: {
+        "filters": [
+          {
+            "field": "level",
+            "operator": "==",
+            "value": educationlevel,
+          },
+          {
+            "field": "state",
+            "operator": "==",
+            "value": BackendEndpoints.coursePublishedState,
+          }
+        ],
+        "orderBy": "postedDate",
+        "limit": 10,
+      },
+      requirements: FireStoreRequirmentsEntity(
+        collection: BackendEndpoints.coursesCollection,
+      ),
+      lastDoc: _studentInterestedCoursesLastDoc,
+      isPaginate: isPaginate,
+      saveLastDoc: (doc) => _studentInterestedCoursesLastDoc = doc,
+    );
+  }
+
+  @override
+  Future<Either<Failure, GetCoursesResonseEntity>> getTeaceherInterestedCourses(
+      {required bool isPaginate, required String subject}) async {
+    return _getCourses(
+      baseQuery: {
+        "filters": [
+          {
+            "field": "subject",
+            "operator": "==",
+            "value": subject,
+          },
+          {
+            "field": "state",
+            "operator": "==",
+            "value": BackendEndpoints.coursePublishedState,
+          }
+        ],
+        "orderBy": "postedDate",
+        "descending": true,
+        "limit": 10,
+      },
+      requirements: FireStoreRequirmentsEntity(
+        collection: BackendEndpoints.coursesCollection,
+      ),
+      lastDoc: _teacherInterestedCoursesLastDoc,
+      isPaginate: isPaginate,
+      saveLastDoc: (doc) => _teacherInterestedCoursesLastDoc = doc,
+    );
   }
 }
 

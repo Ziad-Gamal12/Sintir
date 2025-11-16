@@ -31,7 +31,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
       final newIndex = page.round();
 
-      /// Only update state when index actually changes
       if (newIndex != currentIndex) {
         setState(() => currentIndex = newIndex);
       }

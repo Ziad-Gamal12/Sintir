@@ -22,9 +22,9 @@ class StudentStatItem extends StatelessWidget {
     final style = AppTextStyles(context);
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(16),
         gradient: LinearGradient(
           colors: [
             backgroundColor.withOpacity(0.85),
@@ -48,7 +48,7 @@ class StudentStatItem extends StatelessWidget {
       child: Row(
         children: [
           StudentStatItemIcon(icon: icon),
-          const SizedBox(width: 14),
+          const SizedBox(width: 10),
 
           // Text details
           Expanded(
@@ -57,7 +57,7 @@ class StudentStatItem extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: style.regular13.copyWith(
+                  style: style.regular11.copyWith(
                     color: Colors.grey.shade600,
                     letterSpacing: 0.3,
                   ),

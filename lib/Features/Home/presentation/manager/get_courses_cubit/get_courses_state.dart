@@ -32,3 +32,17 @@ final class GetRecentCoursesFailure extends GetCoursesState {
 
   GetRecentCoursesFailure({required this.errmessage});
 }
+
+final class GetUserInerestCoursesSuccess extends GetCoursesState {
+  final GetCoursesResonseEntity resonseEntity;
+
+  GetUserInerestCoursesSuccess({required this.resonseEntity});
+}
+
+final class GetUserInerestCoursesLoading extends GetCoursesState {}
+
+final class GetUserInerestCoursesFailure extends GetCoursesState {
+  final String errmessage;
+
+  GetUserInerestCoursesFailure({required this.errmessage});
+}
