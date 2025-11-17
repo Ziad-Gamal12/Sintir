@@ -24,7 +24,7 @@ class AddCourseSectionExamActionButtons extends StatelessWidget {
         right: 0,
         left: 0,
         child: Container(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(12),
           width: double.infinity,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -32,28 +32,24 @@ class AddCourseSectionExamActionButtons extends StatelessWidget {
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
             ),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
-                color: Colors.grey.shade100,
-                blurRadius: 30,
-                spreadRadius: 10,
-                offset: const Offset(5, -15),
+                color: Colors.black12,
+                blurRadius: 20,
+                spreadRadius: 6,
+                offset: Offset(5, -15),
               )
             ],
-            border: Border.all(color: Colors.grey),
+            border: Border.all(color: Colors.grey.shade300, width: 1),
           ),
-          child: Column(
-            children: [
-              Custombutton(
-                  text: "حفظ",
-                  color: KSecondaryColor,
-                  textColor: Colors.white,
-                  onPressed: () {
-                    navigatetoReviewTestView(optionnavigationrequirementsentity,
-                        courseTestEntity, context);
-                  }),
-            ],
-          ),
+          child: Custombutton(
+              text: "حفظ",
+              color: KSecondaryColor,
+              textColor: Colors.white,
+              onPressed: () {
+                navigatetoReviewTestView(optionnavigationrequirementsentity,
+                    courseTestEntity, context);
+              }),
         ));
   }
 

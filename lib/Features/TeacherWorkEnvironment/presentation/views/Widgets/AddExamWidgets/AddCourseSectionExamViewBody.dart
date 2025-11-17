@@ -15,26 +15,32 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/CustomAddCourseSectionExamNameAndDuration.dart';
 import 'package:sintir/constant.dart';
 
-class AddCourseSectionExamViewBody extends StatelessWidget {
+class AddCourseSectionExamViewBody extends StatefulWidget {
   const AddCourseSectionExamViewBody({
     super.key,
   });
+
+  @override
+  State<AddCourseSectionExamViewBody> createState() =>
+      _AddCourseSectionExamViewBodyState();
+}
+
+class _AddCourseSectionExamViewBodyState
+    extends State<AddCourseSectionExamViewBody> {
+  CourseTestEntity coursetestentity = CourseTestEntity(
+    type: "Test",
+    id: "${DateTime.now().toIso8601String()}-Test",
+    questions: [
+      CourseTestQuestionEntity(isOpened: false, questionTitle: "", solutions: [
+        Coursetestquestionsolutionentity(answer: "", isCorrect: false)
+      ])
+    ],
+    title: Variables.AddExamName.text,
+    durationTime: int.tryParse(Variables.AddExamDuration.text) ?? 0,
+  );
+
   @override
   Widget build(BuildContext context) {
-    CourseTestEntity coursetestentity = CourseTestEntity(
-      type: "Test",
-      id: "${DateTime.now().toIso8601String()}-Test",
-      questions: [
-        CourseTestQuestionEntity(
-            isOpened: false,
-            questionTitle: "",
-            solutions: [
-              Coursetestquestionsolutionentity(answer: "0", isCorrect: false)
-            ])
-      ],
-      title: Variables.AddExamName.text,
-      durationTime: int.tryParse(Variables.AddExamDuration.text) ?? 0,
-    );
     return BlocBuilder<TestItemCubit, TestItemState>(
       builder: (context, state) {
         return Form(

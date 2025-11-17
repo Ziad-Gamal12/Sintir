@@ -29,15 +29,22 @@ class _AddCourseExamAddQuestionListViewItemState
   Widget build(BuildContext context) {
     return Dismissible(
       key: ValueKey(
-        widget.coursetestquestionentity.index.toString(),
+        widget.index.toString(),
       ),
       onDismissed: (direction) => removeQuestionItem(context),
       direction: DismissDirection.horizontal,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          color: const Color(0xffF2F2F7),
-          border: Border.all(color: Colors.grey.shade300, width: 2),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 4,
+              offset: Offset(0, 4),
+            ),
+          ],
+          color: Colors.white,
+          border: Border.all(color: Colors.grey.shade300, width: 1),
         ),
         child: Column(
           children: [
@@ -46,8 +53,8 @@ class _AddCourseExamAddQuestionListViewItemState
               coursetestquestionentity: widget.coursetestquestionentity,
               courseTestEntity: widget.coursetestentity,
             ),
-            const Divider(
-              color: Colors.black,
+            Divider(
+              color: Colors.grey.shade300,
               thickness: 1,
             ),
             AddCourseExamAddQuestionImage(

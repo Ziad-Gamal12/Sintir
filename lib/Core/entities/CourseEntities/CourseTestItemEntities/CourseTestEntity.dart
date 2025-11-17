@@ -67,4 +67,11 @@ class CourseTestEntity {
     question.questionController.dispose();
     questions.remove(question);
   }
+
+  void dispose() {
+    for (CourseTestQuestionEntity question in questions) {
+      question.dispose();
+      question.disposeSolutions();
+    }
+  }
 }

@@ -1,32 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
-import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/widgets/AwesomeDialog.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateExamReviewRequirmentsEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Listeners/ReviewExamSectionViewBodyListener.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewExamButtonAction.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewExamDetails.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewExamQuestionsHeader.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/CustomReviewExamQuestionsSliverList.dart';
 import 'package:sintir/constant.dart';
 
-class ReviewExamSectionViewBody extends StatelessWidget {
+class ReviewExamSectionViewBody extends StatefulWidget {
   const ReviewExamSectionViewBody({
     super.key,
   });
+
+  @override
+  State<ReviewExamSectionViewBody> createState() =>
+      _ReviewExamSectionViewBodyState();
+}
+
+class _ReviewExamSectionViewBodyState extends State<ReviewExamSectionViewBody> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
         listeners: [
           BlocListener<TestItemCubit, TestItemState>(
               listener: (context, state) {
-            testItemBlocListener(state, context);
+            ReviewExamSectionViewBodyListener(context)
+                .testItemBlocListener(state, context);
           }),
           BlocListener<CourseSectionsCubit, CourseSectionsState>(
               listener: (context, state) {
-            courseSectionListener(state, context);
+            ReviewExamSectionViewBodyListener(context)
+                .courseSectionListener(state, context);
           })
         ],
         child: BlocBuilder<TestItemCubit, TestItemState>(
@@ -68,59 +74,5 @@ class ReviewExamSectionViewBody extends StatelessWidget {
             ),
           );
         }));
-  }
-
-  void testItemBlocListener(TestItemState state, BuildContext context) {
-    if (state is QuestionsImagesUploadedingSuccuss) {
-      questionsImagesUploadedSuccessState(context);
-    } else if (state is QuestionsImagesUploadedingFailure) {
-      CustomSnackBar.show(
-        context,
-        message: state.errMessage,
-        type: SnackType.error,
-      );
-    } else if (state is AddTestItemFailure) {
-      errordialog(context, state.errMessage).show();
-    } else if (state is AddTestItemSuccess) {
-      CustomSnackBar.show(
-        context,
-        message: "تمت الإضافة بنجاح",
-        type: SnackType.success,
-      );
-      GoRouter.of(context).pop();
-    }
-  }
-
-  void courseSectionListener(CourseSectionsState state, BuildContext context) {
-    if (state is AddCourseSectionFailure) {
-      CustomSnackBar.show(
-        context,
-        message: state.errMessage,
-        type: SnackType.error,
-      );
-    } else if (state is AddCourseSectionSuccess) {
-      CustomSnackBar.show(
-        context,
-        message: "تمت الإضافة بنجاح",
-        type: SnackType.success,
-      );
-      GoRouter.of(context).pop();
-    }
-  }
-
-  void questionsImagesUploadedSuccessState(BuildContext context) {
-    NavigateExamReviewRequirmentsEntity navigatesqlreviewrequirmentsentity =
-        context.read<NavigateExamReviewRequirmentsEntity>();
-    if (navigatesqlreviewrequirmentsentity.isNewSection) {
-      context.read<CourseSectionsCubit>().addCourseSection(
-          sectionItem: navigatesqlreviewrequirmentsentity.coursetestentity,
-          courseId: navigatesqlreviewrequirmentsentity.courseEntity.id,
-          section: navigatesqlreviewrequirmentsentity.section);
-    } else {
-      context.read<TestItemCubit>().addTestItem(
-          courseId: navigatesqlreviewrequirmentsentity.courseEntity.id,
-          sectionId: navigatesqlreviewrequirmentsentity.section.id,
-          test: navigatesqlreviewrequirmentsentity.coursetestentity);
-    }
   }
 }

@@ -34,14 +34,17 @@ class UserInterestedCoursesSection extends StatelessWidget {
         } else if (state is GetUserInerestCoursesSuccess) {
           final courses = state.resonseEntity.courses;
           if (courses.isEmpty) {
-            return CustomEmptyWidget(text: "لا يوجد دورات حديثة");
+            return SliverToBoxAdapter(
+                child: CustomEmptyWidget(text: "لا يوجد دورات حديثة"));
           } else {
-            return Column(
-              children: [
-                CustomListORGridTextHeader(text: "موصى بها"),
-                const SizedBox(height: 10),
-                HorizentalCoursesListView(courses: courses),
-              ],
+            return SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  CustomListORGridTextHeader(text: "موصى بها"),
+                  const SizedBox(height: 10),
+                  HorizentalCoursesListView(courses: courses),
+                ],
+              ),
             );
           }
         } else {

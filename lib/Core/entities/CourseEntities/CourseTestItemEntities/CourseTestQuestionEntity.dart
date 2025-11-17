@@ -23,18 +23,27 @@ class CourseTestQuestionEntity {
       this.selectedSolution = ""})
       : questionController = TextEditingController(text: questionTitle);
 
-  int index = 0;
-  addSolution(Coursetestquestionsolutionentity? solution) {
+  void addSolution(Coursetestquestionsolutionentity? solution) {
     if (solution != null) {
       solutions.add(solution);
     }
-    index++;
-    solutions.add(
-        Coursetestquestionsolutionentity(answer: "$index", isCorrect: false));
+
+    solutions
+        .add(Coursetestquestionsolutionentity(answer: "", isCorrect: false));
   }
 
-  removeSolution(Coursetestquestionsolutionentity solution) {
-    solution.solutionController.dispose();
+  void removeSolution(Coursetestquestionsolutionentity solution) {
+    dispose();
     solutions.remove(solution);
+  }
+
+  void dispose() {
+    questionController.dispose();
+  }
+
+  void disposeSolutions() {
+    for (Coursetestquestionsolutionentity solution in solutions) {
+      solution.solutionController.dispose();
+    }
   }
 }

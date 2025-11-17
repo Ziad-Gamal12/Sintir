@@ -37,36 +37,42 @@ class _AddCourseExamAddQuestionImageState
         padding:
             const EdgeInsets.only(top: 20, left: 27, right: 27, bottom: 29),
         decoration: const BoxDecoration(
-          color: Color(0xffF2F2F7),
+          color: Colors.white,
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(10),
             bottomRight: Radius.circular(10),
           ),
         ),
-        child: widget.coursetestquestionentity.imageFile != null
-            ? Image.file(
-                widget.coursetestquestionentity.imageFile!,
-                fit: BoxFit.cover,
-              )
-            : Column(
-                children: [
-                  Image.asset(
-                    Assets.assetsIconsAddImageIcon,
-                    height: 50,
-                    width: 50,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "الصورة المصغرة للسؤال",
-                    style: AppTextStyles(context)
-                        .bold13
-                        .copyWith(color: Colors.black),
-                  )
-                ],
-              ),
+        child: getDispalyedWidget(),
       ),
     );
+  }
+
+  Widget getDispalyedWidget() {
+    if (widget.coursetestquestionentity.imageFile != null) {
+      return Image.file(
+        widget.coursetestquestionentity.imageFile!,
+        fit: BoxFit.cover,
+      );
+    } else {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            Assets.assetsIconsAddImageIcon,
+            height: 25,
+            width: 25,
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Text(
+            "الصورة المصغرة للسؤال",
+            style:
+                AppTextStyles(context).semiBold12.copyWith(color: Colors.black),
+          )
+        ],
+      );
+    }
   }
 }

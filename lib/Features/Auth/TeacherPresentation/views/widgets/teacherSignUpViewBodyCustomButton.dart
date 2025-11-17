@@ -8,37 +8,46 @@ import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/manager/TeacherSignUP/teacher_sign_up_cubit.dart';
 import 'package:sintir/constant.dart';
 
-class teacherSignUpViewBodyCustomButton extends StatelessWidget {
-  const teacherSignUpViewBodyCustomButton(
-      {super.key,
-      required this.isChecked,
-      required this.teacherSignUpPasswordController,
-      required this.formKey});
+class TeacherSignUpButton extends StatelessWidget {
+  const TeacherSignUpButton({
+    super.key,
+    required this.isChecked,
+    required this.formKey,
+    required this.teacherSignUpPasswordController,
+  });
 
   final bool isChecked;
   final GlobalKey<FormState> formKey;
   final TextEditingController teacherSignUpPasswordController;
+
   @override
   Widget build(BuildContext context) {
     return Custombutton(
-        text: "انشاء حساب",
-        color: KMainColor,
-        textColor: Colors.white,
-        onPressed: () {
-          if (formKey.currentState!.validate()) {
-            formKey.currentState!.save();
-            context.read<UserEntity>().fullName =
-                "${context.read<UserEntity>().firstName} ${context.read<UserEntity>().lastName}";
-            if (isChecked) {
-              BlocProvider.of<TeacherSignUpCubit>(context)
-                  .createUserWithEmailAndPassword(
-                userentity: context.read<UserEntity>(),
-                password: teacherSignUpPasswordController.text,
-              );
-            } else {
-              errordialog(context, "قم بقبول الشروط والاحكام").show();
-            }
-          }
-        });
+      text: "انشاء حساب",
+      color: KMainColor,
+      textColor: Colors.white,
+      onPressed: () {
+        if (!formKey.currentState!.validate()) return;
+
+        final cubit = context.read<TeacherSignUpCubit>();
+        final user = context.read<UserEntity>();
+        user.fullName = "${user.firstName} ${user.lastName}";
+
+        final subject = user.teacherExtraDataEntity?.subject ?? "";
+        if (subject.isEmpty) {
+          errordialog(context, "يجب اختيار المادة").show();
+          return;
+        }
+
+        if (!isChecked) {
+          errordialog(context, "قم بقبول الشروط والاحكام").show();
+          return;
+        }
+        cubit.createUserWithEmailAndPassword(
+          userentity: user,
+          password: teacherSignUpPasswordController.text,
+        );
+      },
+    );
   }
 }

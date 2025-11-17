@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
-import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddcourseExamQuestionItemTextField.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/CustomQuestionSolutionsList.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ExamQuestionInputsAddNewSoluotionButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ExamQuestionInputsQuestionHeader.dart';
 
 class ExamQuestionInputs extends StatelessWidget {
@@ -20,53 +20,50 @@ class ExamQuestionInputs extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: const Color(0xffF2F2F7),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 10,
+    return BlocBuilder<TestItemCubit, TestItemState>(
+      builder: (context, state) {
+        return Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
           ),
-          ExamQuestionInputsQuestionHeader(
-              index: index, totalQuestions: courseTestEntity.questions.length),
-          const SizedBox(
-            height: 20,
-          ),
-          AddcourseExamQuestionItemTextField(
-            coursetestquestionentity: coursetestquestionentity,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomQuestionSolutionsList(
-                question: coursetestquestionentity,
-                coursetestentity: courseTestEntity,
+              const SizedBox(
+                height: 10,
+              ),
+              ExamQuestionInputsQuestionHeader(
+                  index: index,
+                  totalQuestions: courseTestEntity.questions.length),
+              const SizedBox(
+                height: 20,
+              ),
+              AddcourseExamQuestionItemTextField(
+                coursetestquestionentity: coursetestquestionentity,
               ),
               const SizedBox(
                 height: 10,
               ),
-              Custombutton(
-                  text: "اضافه أجابة",
-                  color: Colors.lightBlue,
-                  borderRadius: BorderRadius.circular(8),
-                  textColor: Colors.white,
-                  onPressed: () {
-                    context.read<TestItemCubit>().addSolution(
-                          question: coursetestquestionentity,
-                        );
-                  })
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  CustomQuestionSolutionsList(
+                    question: coursetestquestionentity,
+                    coursetestentity: courseTestEntity,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ExamQuestionInputsAddNewSoluotionButton(
+                      coursetestquestionentity: coursetestquestionentity)
+                ],
+              )
             ],
-          )
-        ],
-      ),
+          ),
+        );
+      },
     );
   }
 }

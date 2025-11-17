@@ -8,4 +8,8 @@ class Coursetestquestionsolutionentity {
   Coursetestquestionsolutionentity(
       {required this.answer, required this.isCorrect})
       : solutionController = TextEditingController(text: answer);
+
+  void dispose() {
+    solutionController.dispose();
+  }
 }

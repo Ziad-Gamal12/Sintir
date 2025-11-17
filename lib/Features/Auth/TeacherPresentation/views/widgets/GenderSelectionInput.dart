@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Core/widgets/CustomRadioWidget.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
-import 'package:sintir/constant.dart';
 
 class GenderSelectionInput extends StatefulWidget {
   const GenderSelectionInput({
@@ -27,11 +27,10 @@ class _GenderSelectionInputState extends State<GenderSelectionInput> {
         children: [
           Row(
             children: [
-              Radio(
-                  activeColor: KMainColor,
+              CustomRadioWidget(
                   value: "ذكر",
                   groupValue: radiovalue,
-                  onChanged: (val) {
+                  onchange: (val) {
                     setState(() {
                       radiovalue = val ?? "";
                     });
@@ -48,11 +47,10 @@ class _GenderSelectionInputState extends State<GenderSelectionInput> {
           ),
           Row(
             children: [
-              Radio(
-                  activeColor: KMainColor,
+              CustomRadioWidget(
                   value: "أنثى",
                   groupValue: radiovalue,
-                  onChanged: (val) {
+                  onchange: (val) {
                     setState(() {
                       radiovalue = val ?? "";
                     });

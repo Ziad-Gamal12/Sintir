@@ -73,7 +73,7 @@ class _teacherSignUpViewBodyBlocBuilderState
                   ),
                   Custom_Loading_Widget(
                     isLoading: state,
-                    child: teacherSignUpViewBodyCustomButton(
+                    child: TeacherSignUpButton(
                       teacherSignUpPasswordController:
                           teacherSignUpPasswordController,
                       isChecked: isChecked,
