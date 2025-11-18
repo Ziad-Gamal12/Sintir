@@ -23,7 +23,7 @@ class CourseItemDetails extends StatelessWidget {
       children: [
         Text(
           courseItem.title,
-          maxLines: 2,
+          maxLines: 1,
           textAlign: TextAlign.right,
           overflow: TextOverflow.ellipsis,
           style: styles.semiBold12.copyWith(color: Colors.black),

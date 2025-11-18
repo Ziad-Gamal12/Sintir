@@ -33,7 +33,7 @@ class _CourseInfoCardState extends State<CourseInfoCard> {
               Expanded(
                   flex: 4, child: CourseMetaInfo(widget.requirmentsEntity)),
               const Spacer(flex: 1),
-              Expanded(flex: 2, child: CourseActions(widget.requirmentsEntity)),
+              Expanded(flex: 3, child: CourseActions(widget.requirmentsEntity)),
             ],
           ),
           const CourseInfoCardCourseDescription(),

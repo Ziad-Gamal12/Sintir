@@ -30,6 +30,7 @@ class _TeacherSignUpViewState extends State<TeacherSignUpView> {
         firstName: "",
         lastName: "",
         email: "",
+        deviceId: "",
         address: "",
         phoneNumber: "",
         teacherExtraDataEntity: TeacherExtraDataEntity(

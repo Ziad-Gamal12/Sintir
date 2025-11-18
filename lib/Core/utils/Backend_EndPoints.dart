@@ -3,14 +3,14 @@
 class BackendEndpoints {
   static String usersCollectionName = "Users";
   static String storeUserLocaly = "UserData";
-  static String pendingStatus = "Pending";
-  static String activeStatus = "Active";
-  static String inActiveStatus = "InActive";
-  static String rejectedStatus = "Rejected";
-  static String blockedStatus = "Blocked";
-  static String walletActive = "active";
-  static String walletSuspended = "suspended";
-  static String walletClosed = "closed";
+  static const String pendingStatus = "Pending";
+  static const String activeStatus = "Active";
+  static const String inActiveStatus = "InActive";
+  static const String rejectedStatus = "Rejected";
+  static const String blockedStatus = "Blocked";
+  static const String walletActive = "active";
+  static const String walletSuspended = "suspended";
+  static const String walletClosed = "closed";
   static String studentRole = "Student";
   static String teacherRole = "Teacher";
   static String courseSectionItemsCollectionName = "Items";

@@ -28,6 +28,7 @@ class _StudentSignupViewState extends State<StudentSignupView> {
       email: "",
       address: "",
       phoneNumber: "",
+      deviceId: "",
       studentExtraDataEntity: StudentExtraDataEntity(
           educationLevel: "", birthDate: DateTime.now().toString()),
       gender: "",

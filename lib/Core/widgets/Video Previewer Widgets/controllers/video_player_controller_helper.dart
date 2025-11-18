@@ -21,6 +21,9 @@ class CustomVideoController {
     required VoidCallback? onUpdate,
   }) async {
     try {
+      // -------------------------
+      // Initialize VideoPlayerController
+      // -------------------------
       if (file != null) {
         videoPlayerController = VideoPlayerController.file(file);
       } else if (videoUrl != null) {
@@ -29,18 +32,34 @@ class CustomVideoController {
       } else {
         throw Exception("لا يمكن تشغيل الفيديو: لا يوجد رابط أو ملف");
       }
-      await videoPlayerController!.initialize();
-      // Notify duration (important)
+
+      // -------------------------
+      // Catch initialization errors (especially on low-end devices)
+      // -------------------------
+      try {
+        await videoPlayerController!.initialize();
+      } catch (e) {
+        debugPrint("⚠️ VideoPlayer failed to initialize: $e");
+        // On error, fallback: maybe try re-initialize with another approach
+        throw Exception("تعذر تشغيل الفيديو على هذا الجهاز");
+      }
+
+      // Notify duration
       if (onDurationChanged != null) {
         onDurationChanged(videoPlayerController!.value.duration);
       }
 
+      // -------------------------
+      // Initialize ChewieController
+      // -------------------------
       chewieController = ChewieController(
         videoPlayerController: videoPlayerController!,
         autoPlay: true,
         looping: false,
         showControls: true,
         allowFullScreen: true,
+        progressIndicatorDelay:
+            Platform.isAndroid ? const Duration(days: 1) : null,
         allowMuting: true,
         allowedScreenSleep: false,
         allowPlaybackSpeedChanging: true,
@@ -49,8 +68,6 @@ class CustomVideoController {
             : videoPlayerController!.value.aspectRatio,
         showOptions: true,
         playbackSpeeds: const [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
-
-        // Custom Options
         additionalOptions: (context) => <OptionItem>[
           OptionItem(
             onTap: (context) => videoPlayerController?.pause(),
@@ -99,15 +116,14 @@ class CustomVideoController {
             title: 'تبديل السرعة',
           ),
         ],
-
         placeholder: const CustomVideoControllerPlaceHolder(),
         errorBuilder: (context, errorMessage) =>
             const CustomVideoControllerErrorWidget(),
-
-        // Fix Android infinite loading
-        progressIndicatorDelay: Platform.isAndroid ? Duration.zero : null,
       );
 
+      // -------------------------
+      // Listener to track playback state
+      // -------------------------
       videoPlayerController!.addListener(() {
         if (videoPlayerController == null) return;
         _wasPlayingBefore = videoPlayerController!.value.isPlaying;
@@ -115,8 +131,11 @@ class CustomVideoController {
 
       isInitialized = true;
       onUpdate?.call();
-    } catch (e) {
-      rethrow;
+    } catch (e, st) {
+      debugPrint("❌ CustomVideoController Error: $e");
+      debugPrint("$st");
+      isInitialized = false;
+      onUpdate?.call();
     }
   }
 

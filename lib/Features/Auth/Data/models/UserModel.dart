@@ -10,6 +10,7 @@ class UserModel {
   final String email;
   final String address;
   final String phoneNumber;
+  final String? deviceId;
   Map<String, dynamic>? studentExtraData;
   Map<String, dynamic>? teacherExtraData;
   final String gender;
@@ -26,6 +27,7 @@ class UserModel {
       required this.email,
       required this.address,
       required this.phoneNumber,
+      required this.deviceId,
       required this.gender,
       required this.profilePicurl,
       required this.status,
@@ -42,6 +44,7 @@ class UserModel {
       fullName: json['fullName'],
       email: json['email'],
       address: json['address'],
+      deviceId: json['deviceId'],
       phoneNumber: json['phoneNumber'],
       teacherExtraData: json['teacherExtraData'],
       studentExtraData: json['studentExtraData'],
@@ -59,6 +62,7 @@ class UserModel {
       lastName: entity.lastName,
       email: entity.email,
       fullName: entity.fullName,
+      deviceId: entity.deviceId,
       studentExtraData: entity.studentExtraDataEntity != null
           ? StudentExtraDataModel.fromEntity(entity.studentExtraDataEntity!)
               .toMap()
@@ -82,6 +86,7 @@ class UserModel {
       uid: uid,
       firstName: firstName,
       fullName: fullName,
+      deviceId: deviceId ?? "",
       lastName: lastName,
       email: email,
       studentExtraDataEntity: studentExtraData != null
@@ -114,6 +119,7 @@ class UserModel {
       'profilePicurl': profilePicurl,
       'status': status,
       'role': role,
+      'deviceId': deviceId,
       'joinedDate': joinedDate,
       'studentExtraData': studentExtraData
     };

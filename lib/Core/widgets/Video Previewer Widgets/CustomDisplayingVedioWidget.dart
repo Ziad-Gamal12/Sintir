@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:chewie/chewie.dart';
@@ -24,11 +25,12 @@ class PremiumVideoPlayer extends StatefulWidget {
 class _PremiumVideoPlayerState extends State<PremiumVideoPlayer> {
   final CustomVideoController _controller = CustomVideoController();
   bool _isLoading = true;
+  bool _hasError = false;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _initVideo());
+    _initVideo();
   }
 
   Future<void> _initVideo() async {
@@ -37,12 +39,18 @@ class _PremiumVideoPlayerState extends State<PremiumVideoPlayer> {
         videoUrl: widget.videoUrl,
         file: widget.file,
         onUpdate: () {
-          setState(() => _isLoading = false);
+          if (mounted) setState(() => _isLoading = false);
         },
         onDurationChanged: widget.onDurationChanged ?? (_) {},
       );
-    } catch (_) {
-      setState(() => _isLoading = false);
+    } catch (e, s) {
+      log(e.toString(), stackTrace: s);
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+          _hasError = true;
+        });
+      }
     }
   }
 
@@ -54,14 +62,29 @@ class _PremiumVideoPlayerState extends State<PremiumVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading || _controller.chewieController == null) {
+    if (_isLoading) {
       return const Custom_Loading_Widget(isLoading: true, child: SizedBox());
+    }
+
+    if (_hasError || !_controller.isInitialized) {
+      return const Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.error_outline, size: 50, color: Colors.red),
+            SizedBox(height: 8),
+            Text("فشل تحميل الفيديو"),
+          ],
+        ),
+      );
     }
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
       child: AspectRatio(
-        aspectRatio: 16 / 9,
+        aspectRatio: _controller.videoPlayerController!.value.aspectRatio == 0
+            ? 16 / 9
+            : _controller.videoPlayerController!.value.aspectRatio,
         child: Chewie(controller: _controller.chewieController!),
       ),
     );

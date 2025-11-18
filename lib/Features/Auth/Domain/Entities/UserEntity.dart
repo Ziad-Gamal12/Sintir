@@ -9,6 +9,7 @@ class UserEntity {
   String email;
   String address;
   String phoneNumber;
+  String deviceId;
   TeacherExtraDataEntity? teacherExtraDataEntity;
   StudentExtraDataEntity? studentExtraDataEntity;
   String gender;
@@ -24,6 +25,7 @@ class UserEntity {
       required this.email,
       required this.address,
       required this.phoneNumber,
+      required this.deviceId,
       required this.gender,
       required this.profilePicurl,
       required this.status,
@@ -39,6 +41,7 @@ class UserEntity {
       email: "empty",
       address: "empty",
       phoneNumber: "empty",
+      deviceId: "empty",
       gender: "empty",
       profilePicurl: "https://cdn-icons-png.flaticon.com/128/149/149071.png",
       status: "empty",

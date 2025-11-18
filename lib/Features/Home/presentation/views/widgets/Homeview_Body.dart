@@ -31,7 +31,7 @@ class _HomeViewBodyState extends State<HomeViewBody>
   void _initFetchData() async {
     final getUserDataCubit = context.read<GetUserDataCubit>();
     if (getUserDataCubit.isUserDataFetched) return;
-    getUserDataCubit.getUserData();
+    getUserDataCubit.fetchUserData();
   }
 
   @override
@@ -46,8 +46,10 @@ class _HomeViewBodyState extends State<HomeViewBody>
     return BlocListener<GetUserDataCubit, GetUserDataState>(
       listener: (context, state) {
         if (state is GetUserDataFailure) {
-          errordialog(context, state.errmessage).show();
-          GoRouter.of(context).pushReplacement(ChoosingUserKindView.routeName);
+          errordialog(context, state.errmessage, btnOkOnPress: () {
+            GoRouter.of(context)
+                .pushReplacement(ChoosingUserKindView.routeName);
+          }).show();
         } else if (state is GetUserDataSuccess) {
           final cubit = context.read<GetCoursesCubit>();
           cubit.fetchAllHomeData(context);

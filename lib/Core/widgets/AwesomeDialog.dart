@@ -3,7 +3,8 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 
-AwesomeDialog errordialog(context, String? error) {
+AwesomeDialog errordialog(context, String? error,
+    {void Function()? btnOkOnPress}) {
   return AwesomeDialog(
       context: context,
       dialogType: DialogType.error,
@@ -11,7 +12,7 @@ AwesomeDialog errordialog(context, String? error) {
       title: 'خطأ',
       btnOkText: 'حسنا',
       desc: error,
-      btnOkOnPress: () {},
+      btnOkOnPress: btnOkOnPress,
       btnOkColor: Colors.red);
 }
 
