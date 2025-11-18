@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
 
 class CourseSectionStateHandler {
   final BuildContext context;
@@ -26,7 +26,8 @@ class CourseSectionStateHandler {
           message: "تم اضافة القسم بنجاح",
           type: SnackType.success,
         );
-        GoRouter.of(context).pop();
+        Navigator.popUntil(context,
+            ModalRoute.withName(CourseDetailsCourseSectionsView.routeName));
 
         break;
 

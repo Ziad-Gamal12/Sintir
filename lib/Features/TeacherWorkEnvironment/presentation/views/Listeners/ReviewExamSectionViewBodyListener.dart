@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateExamReviewRequirmentsEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
 
 class ReviewExamSectionViewBodyListener {
   final BuildContext context;
@@ -33,7 +33,8 @@ class ReviewExamSectionViewBodyListener {
       CourseTestEntity testItem =
           context.read<NavigateExamReviewRequirmentsEntity>().coursetestentity;
       testItem.dispose();
-      GoRouter.of(context).pop();
+      Navigator.popUntil(context,
+          ModalRoute.withName(CourseDetailsCourseSectionsView.routeName));
     }
   }
 
@@ -53,7 +54,8 @@ class ReviewExamSectionViewBodyListener {
       CourseTestEntity testItem =
           context.read<NavigateExamReviewRequirmentsEntity>().coursetestentity;
       testItem.dispose();
-      GoRouter.of(context).pop();
+      Navigator.popUntil(context,
+          ModalRoute.withName(CourseDetailsCourseSectionsView.routeName));
     }
   }
 

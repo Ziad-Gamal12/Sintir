@@ -27,10 +27,10 @@ class _AddCourseExamAddQuestionImageState
       onTap: () async {
         File? image = await widget.pickerassetsservice
             .getImage(source: ImageSource.gallery);
-        if (context.mounted) {
+        if (context.mounted && image != null) {
           widget.coursetestquestionentity.imageFile = image;
-          setState(() {});
         }
+        setState(() {});
       },
       child: Container(
         width: double.infinity,

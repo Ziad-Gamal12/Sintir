@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/AddcoursesectionOptionItem.dart';
@@ -9,11 +7,10 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCou
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionVedioView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/AddCourseSectionContentItem.dart';
 
-class AddCourseSectionContentOptions extends StatelessWidget {
-  AddCourseSectionContentOptions(
-      {super.key, required this.optionRequirementsEntity, this.onSave});
+class AddCourseSectionItemContentOptions extends StatelessWidget {
+  const AddCourseSectionItemContentOptions(
+      {super.key, required this.optionRequirementsEntity});
   final OptionNavigationRequirementsEntity optionRequirementsEntity;
-  VoidCallback? onSave;
 
   @override
   Widget build(BuildContext context) {
@@ -25,18 +22,16 @@ class AddCourseSectionContentOptions extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: GestureDetector(
               onTap: () {
-                if (onSave != null) onSave!();
                 if (e.key == 1) {
-                  GoRouter.of(context).pushReplacement(
-                      AddcourseSectionExamview.routeName,
+                  GoRouter.of(context).push(AddcourseSectionExamview.routeName,
                       extra: optionRequirementsEntity);
                 } else if (e.key == 0) {
-                  GoRouter.of(context).pushReplacement(
+                  GoRouter.of(context).push(
                     Addcoursesectionvedioview.routeName,
                     extra: optionRequirementsEntity,
                   );
                 } else if (e.key == 2) {
-                  GoRouter.of(context).pushReplacement(
+                  GoRouter.of(context).push(
                     Addcoursesectionfileview.routeName,
                     extra: optionRequirementsEntity,
                   );

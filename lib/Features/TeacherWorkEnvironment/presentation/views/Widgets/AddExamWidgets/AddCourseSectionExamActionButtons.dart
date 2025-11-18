@@ -24,7 +24,7 @@ class AddCourseSectionExamActionButtons extends StatelessWidget {
         right: 0,
         left: 0,
         child: Container(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(24),
           width: double.infinity,
           decoration: BoxDecoration(
             color: Colors.white,

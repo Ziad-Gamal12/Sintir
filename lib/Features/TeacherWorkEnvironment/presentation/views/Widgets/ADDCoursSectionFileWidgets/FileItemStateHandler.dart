@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/Managers/Cubits/file_item_cubit/file_item_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
 
 class FileItemStateHandler {
   final BuildContext context;
@@ -36,7 +36,8 @@ class FileItemStateHandler {
           message: "تم اضافة الملف بنجاح",
           type: SnackType.success,
         );
-        GoRouter.of(context).pop();
+        Navigator.popUntil(context,
+            ModalRoute.withName(CourseDetailsCourseSectionsView.routeName));
         break;
 
       case PickFileSuccess(:final file):

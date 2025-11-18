@@ -35,6 +35,7 @@ class CourseSectionTextFields extends StatelessWidget {
             obscureText: false,
             controller: Variables.AddCoursesesectionDescriptionController,
             textInputType: TextInputType.text,
+            maxLines: 5,
             validator: (value) {
               if (value!.isEmpty) {
                 return "ادخل وصف المحاضرة";

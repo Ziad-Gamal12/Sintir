@@ -39,6 +39,12 @@ class Sintir extends StatelessWidget {
       theme: ThemeData(
           fontFamily: "Cairo",
           primaryColor: KMainColor,
+          sliderTheme: SliderThemeData(
+            activeTrackColor: KMainColor,
+            inactiveTrackColor: KMainColor.withOpacity(0.3), // background line
+            thumbColor: KMainColor,
+            overlayColor: KMainColor.withOpacity(0.2),
+          ),
           appBarTheme: const AppBarTheme(
             backgroundColor: Colors.white,
           ),

@@ -16,16 +16,17 @@ class CustomAddCourseSectionExamNameAndDuration extends StatelessWidget {
         Expanded(
             flex: 3,
             child: CustomTextField(
-                hintText: "يرجى كتابه الأسم هنا ...",
+                hintText: "اسم الأختبار",
                 obscureText: false,
                 onSaved: (value) {
                   coursetestentity.title = value!;
                 },
                 controller: Variables.AddExamName,
                 textInputType: TextInputType.text,
+                prefixIcon: Icons.text_snippet_outlined,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "ادخل الاسم";
+                    return "ادخل اسم الأختبار";
                   }
                   return null;
                 })),
@@ -42,6 +43,7 @@ class CustomAddCourseSectionExamNameAndDuration extends StatelessWidget {
                 obscureText: false,
                 controller: Variables.AddExamDuration,
                 textInputType: TextInputType.number,
+                prefixIcon: Icons.timer_outlined,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "ادخل المده";

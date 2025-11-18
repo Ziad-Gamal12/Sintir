@@ -1,8 +1,6 @@
 // ignore_for_file: must_be_immutable, file_names
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionSolutionEntity.dart';
@@ -41,46 +39,41 @@ class _AddCourseSectionExamViewBodyState
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TestItemCubit, TestItemState>(
-      builder: (context, state) {
-        return Form(
-          key: Variables.AddCourseSectionExamFormKey,
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: KHorizontalPadding,
-                  vertical: 10,
+    return Form(
+      key: Variables.AddCourseSectionExamFormKey,
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: KHorizontalPadding,
+              vertical: 10,
+            ),
+            child: CustomScrollView(
+              slivers: [
+                const SliverToBoxAdapter(
+                  child: CustomAddCourseSectionExamNameAndDurationHeader(),
                 ),
-                child: CustomScrollView(
-                  slivers: [
-                    const SliverToBoxAdapter(
-                      child: CustomAddCourseSectionExamNameAndDurationHeader(),
-                    ),
-                    SliverToBoxAdapter(
-                      child: CustomAddCourseSectionExamNameAndDuration(
-                        coursetestentity: coursetestentity,
-                      ),
-                    ),
-                    const SliverToBoxAdapter(
-                        child: AddCourseSectionExamListviewHeader()),
-                    AddCourseSectionExamListview(
-                      coursetestentity: coursetestentity,
-                    ),
-                    SliverToBoxAdapter(
-                      child:
-                          AddQuestionButton(coursetestentity: coursetestentity),
-                    )
-                  ],
+                SliverToBoxAdapter(
+                  child: CustomAddCourseSectionExamNameAndDuration(
+                    coursetestentity: coursetestentity,
+                  ),
                 ),
-              ),
-              AddCourseSectionExamActionButtons(
-                courseTestEntity: coursetestentity,
-              ),
-            ],
+                const SliverToBoxAdapter(
+                    child: AddCourseSectionExamListviewHeader()),
+                AddCourseSectionExamListview(
+                  coursetestentity: coursetestentity,
+                ),
+                SliverToBoxAdapter(
+                  child: AddQuestionButton(coursetestentity: coursetestentity),
+                )
+              ],
+            ),
           ),
-        );
-      },
+          AddCourseSectionExamActionButtons(
+            courseTestEntity: coursetestentity,
+          ),
+        ],
+      ),
     );
   }
 }

@@ -3,21 +3,31 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/AddcoursesectionOptionItem.dart';
 import 'package:svg_flutter/svg.dart';
 
-class Addcoursesectioncontentitem extends StatelessWidget {
-  const Addcoursesectioncontentitem({super.key, required this.item});
+class AddCourseSectionContentItem extends StatelessWidget {
+  const AddCourseSectionContentItem({super.key, required this.item});
   final Addcoursesectionoptionitem item;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CircleAvatar(
-          radius: 35,
-          backgroundColor: const Color(0xffF3F2F7),
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 4,
+              ),
+            ],
+            border: Border.all(color: Colors.grey.shade300, width: 1.5),
+            shape: BoxShape.circle,
+          ),
           child: SvgPicture.asset(
             item.icon,
             color: Colors.black,
-            height: 25,
-            width: 25,
+            height: 28,
+            width: 28,
           ),
         ),
         const SizedBox(

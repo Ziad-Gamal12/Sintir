@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:chewie/chewie.dart';
@@ -31,7 +30,6 @@ class CustomVideoController {
         throw Exception("لا يمكن تشغيل الفيديو: لا يوجد رابط أو ملف");
       }
       await videoPlayerController!.initialize();
-
       // Notify duration (important)
       if (onDurationChanged != null) {
         onDurationChanged(videoPlayerController!.value.duration);
@@ -39,7 +37,7 @@ class CustomVideoController {
 
       chewieController = ChewieController(
         videoPlayerController: videoPlayerController!,
-        autoPlay: false,
+        autoPlay: true,
         looping: false,
         showControls: true,
         allowFullScreen: true,
@@ -49,7 +47,6 @@ class CustomVideoController {
         aspectRatio: videoPlayerController!.value.aspectRatio == 0
             ? 16 / 9
             : videoPlayerController!.value.aspectRatio,
-        zoomAndPan: true,
         showOptions: true,
         playbackSpeeds: const [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
 
@@ -103,32 +100,22 @@ class CustomVideoController {
           ),
         ],
 
-        controlsSafeAreaMinimum: const EdgeInsets.only(top: 6, bottom: 6),
-        customControls: const MaterialControls(showPlayButton: true),
         placeholder: const CustomVideoControllerPlaceHolder(),
         errorBuilder: (context, errorMessage) =>
             const CustomVideoControllerErrorWidget(),
 
         // Fix Android infinite loading
         progressIndicatorDelay: Platform.isAndroid ? Duration.zero : null,
-
-        showControlsOnInitialize: false,
       );
 
       videoPlayerController!.addListener(() {
-        bool isPlaying = videoPlayerController!.value.isPlaying;
-
-        if (!isPlaying && _wasPlayingBefore && Platform.isAndroid) {
-          videoPlayerController?.play();
-        }
-
-        _wasPlayingBefore = isPlaying;
+        if (videoPlayerController == null) return;
+        _wasPlayingBefore = videoPlayerController!.value.isPlaying;
       });
 
       isInitialized = true;
       onUpdate?.call();
     } catch (e) {
-      log("Video Initialization Error: $e");
       rethrow;
     }
   }

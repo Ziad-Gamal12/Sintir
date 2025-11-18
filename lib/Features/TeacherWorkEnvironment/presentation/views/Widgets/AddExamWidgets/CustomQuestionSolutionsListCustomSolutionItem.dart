@@ -21,30 +21,44 @@ class CustomQuestionSolutionsListCustomSolutionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: AddCourseExamAddSolutionItem(
-            coursetestquestionsolutionentity: e.value,
-            groupValue: question.solutions
-                .firstWhere((s) => s.isCorrect,
-                    orElse: () => Coursetestquestionsolutionentity(
-                        answer: "", isCorrect: false))
-                .hashCode
-                .toString(),
-            onChange: (value) {
-              context
-                  .read<TestItemCubit>()
-                  .changeSelectedSolution(question: question, index: e.key);
-            },
-          ),
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        CustomRemoveSolutionItem(
-            coursetestentity: coursetestentity, e: e, question: question)
-      ],
+    return BlocBuilder<TestItemCubit, TestItemState>(
+      buildWhen: (previous, current) {
+        if (current is AddCourseSectionTestSolutionChanged) {
+          return true;
+        }
+        return false;
+      },
+      builder: (context, state) {
+        return Row(
+          children: [
+            Expanded(
+              child: AddCourseExamAddSolutionItem(
+                coursetestquestionsolutionentity: e.value,
+                groupValue: getGroupValue(),
+                onChange: (value) {
+                  context
+                      .read<TestItemCubit>()
+                      .changeSelectedSolution(question: question, index: e.key);
+                },
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            CustomRemoveSolutionItem(
+                coursetestentity: coursetestentity, e: e, question: question)
+          ],
+        );
+      },
     );
+  }
+
+  String getGroupValue() {
+    return question.solutions
+        .firstWhere((s) => s.isCorrect,
+            orElse: () =>
+                Coursetestquestionsolutionentity(answer: "", isCorrect: false))
+        .id
+        .toString();
   }
 }

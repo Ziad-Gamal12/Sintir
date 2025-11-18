@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/Managers/Cubits/video_item_cubit/video_item_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
 
 class VideoItemStateHandler {
   final BuildContext context;
@@ -30,7 +30,8 @@ class VideoItemStateHandler {
           message: "تم اضافة الفيديو بنجاح",
           type: SnackType.success,
         );
-        GoRouter.of(context).pop();
+        Navigator.popUntil(context,
+            ModalRoute.withName(CourseDetailsCourseSectionsView.routeName));
         break;
 
       case PickVideoFileSuccess(:final file):

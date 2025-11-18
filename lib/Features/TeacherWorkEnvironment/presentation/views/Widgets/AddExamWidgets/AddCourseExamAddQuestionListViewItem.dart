@@ -8,7 +8,7 @@ import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseExamAddQuestionImage.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ExamQuestionInputs.dart';
 
-class AddCourseExamAddQuestionListViewItem extends StatefulWidget {
+class AddCourseExamAddQuestionListViewItem extends StatelessWidget {
   const AddCourseExamAddQuestionListViewItem({
     super.key,
     required this.coursetestquestionentity,
@@ -19,17 +19,10 @@ class AddCourseExamAddQuestionListViewItem extends StatefulWidget {
   final CourseTestEntity coursetestentity;
   final int index;
   @override
-  State<AddCourseExamAddQuestionListViewItem> createState() =>
-      _AddCourseExamAddQuestionListViewItemState();
-}
-
-class _AddCourseExamAddQuestionListViewItemState
-    extends State<AddCourseExamAddQuestionListViewItem> {
-  @override
   Widget build(BuildContext context) {
     return Dismissible(
       key: ValueKey(
-        widget.index.toString(),
+        index.toString(),
       ),
       onDismissed: (direction) => removeQuestionItem(context),
       direction: DismissDirection.horizontal,
@@ -49,16 +42,16 @@ class _AddCourseExamAddQuestionListViewItemState
         child: Column(
           children: [
             ExamQuestionInputs(
-              index: widget.index,
-              coursetestquestionentity: widget.coursetestquestionentity,
-              courseTestEntity: widget.coursetestentity,
+              index: index,
+              coursetestquestionentity: coursetestquestionentity,
+              courseTestEntity: coursetestentity,
             ),
             Divider(
               color: Colors.grey.shade300,
               thickness: 1,
             ),
             AddCourseExamAddQuestionImage(
-              coursetestquestionentity: widget.coursetestquestionentity,
+              coursetestquestionentity: coursetestquestionentity,
               pickerassetsservice: getIt<Pickerassetsservice>(),
             )
           ],
@@ -69,7 +62,6 @@ class _AddCourseExamAddQuestionListViewItemState
 
   void removeQuestionItem(BuildContext context) {
     context.read<TestItemCubit>().removeQuestion(
-        question: widget.coursetestquestionentity,
-        coursetestentity: widget.coursetestentity);
+        question: coursetestquestionentity, coursetestentity: coursetestentity);
   }
 }

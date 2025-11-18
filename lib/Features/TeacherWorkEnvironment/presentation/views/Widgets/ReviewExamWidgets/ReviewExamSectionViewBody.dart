@@ -44,7 +44,7 @@ class _ReviewExamSectionViewBodyState extends State<ReviewExamSectionViewBody> {
                 CustomScrollView(
                   slivers: [
                     SliverToBoxAdapter(
-                      child: CustomReviewExamDetails(),
+                      child: TestSummaryCard(),
                     ),
                     SliverToBoxAdapter(
                       child: Divider(

@@ -49,7 +49,6 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
         _emitFailure(failure);
       },
       (r) async {
-        // Section added successfully, now add the item
         final Either<Failure, void> addItemResult =
             await _courseSectionsRepo.addSectionItem(
           courseId: courseId,

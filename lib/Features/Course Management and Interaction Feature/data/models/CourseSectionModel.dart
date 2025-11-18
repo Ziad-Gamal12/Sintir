@@ -34,7 +34,7 @@ class CourseSectionModel {
       if (item["type"] == "Test") {
         courseItems.add(Coursetestmodel.fromJson(item).toEntity());
       } else if (item["type"] == "Vedio") {
-        courseItems.add(Coursevedioitemmodel.fromJson(item).toEntity());
+        courseItems.add(CourseVideoItemModel.fromJson(item).toEntity());
       } else {
         courseItems.add(Coursefilemodel.fromJson(item).toEntity());
       }

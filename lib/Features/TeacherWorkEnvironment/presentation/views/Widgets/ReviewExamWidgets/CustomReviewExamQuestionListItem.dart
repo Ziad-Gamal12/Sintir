@@ -18,12 +18,12 @@ class CustomReviewExamQuestionListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(16),
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
-        border: Border.all(color: Colors.grey.shade400),
-        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey.shade400, width: .5),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.shade100,
@@ -58,7 +58,7 @@ class CustomReviewExamQuestionListItem extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                width: 5,
+                width: 10,
               ),
               Expanded(
                   child:

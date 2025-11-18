@@ -1,27 +1,27 @@
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
 
-class Coursevedioitemmodel {
+class CourseVideoItemModel {
   final String title, vedioUrl;
   final int durationTime;
   final String id;
   String? type;
 
-  Coursevedioitemmodel(
+  CourseVideoItemModel(
       {required this.title,
       required this.vedioUrl,
       required this.durationTime,
       required this.id,
       this.type = "Video"});
-  factory Coursevedioitemmodel.fromJson(Map<String, dynamic> json) =>
-      Coursevedioitemmodel(
+  factory CourseVideoItemModel.fromJson(Map<String, dynamic> json) =>
+      CourseVideoItemModel(
         id: json['id'],
         title: json['title'],
         vedioUrl: json['vedioUrl'],
         durationTime: json['durationTime'],
         type: json['type'],
       );
-  factory Coursevedioitemmodel.fromEntity(CourseVideoItemEntity entity) =>
-      Coursevedioitemmodel(
+  factory CourseVideoItemModel.fromEntity(CourseVideoItemEntity entity) =>
+      CourseVideoItemModel(
           id: entity.id,
           title: entity.title,
           vedioUrl: entity.vedioUrl,

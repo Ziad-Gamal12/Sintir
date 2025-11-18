@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/AddCourseSectionContentOptions.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/AddCourseSectionItemContentOptions.dart';
 
 class CustomAddNewSectionItemBottomSheetChild extends StatelessWidget {
   const CustomAddNewSectionItemBottomSheetChild({
@@ -18,12 +18,12 @@ class CustomAddNewSectionItemBottomSheetChild extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.all(16),
+      margin: const EdgeInsets.all(20),
       decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(8), topRight: Radius.circular(8)),
           color: Colors.transparent),
-      child: AddCourseSectionContentOptions(
+      child: AddCourseSectionItemContentOptions(
         optionRequirementsEntity: OptionNavigationRequirementsEntity(
             isNewSection: false, section: section, courseEntity: courseEntity),
       ),

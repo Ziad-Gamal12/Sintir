@@ -13,12 +13,15 @@ class CustomVideoControllerErrorWidget extends StatelessWidget {
       color: Colors.black,
       alignment: Alignment.center,
       padding: const EdgeInsets.all(16),
-      child: Text(
-        errorMessage,
-        style: AppTextStyles(context)
-            .regular16
-            .copyWith(color: Colors.red.shade500),
-        textAlign: TextAlign.center,
+      child: Card(
+        color: Colors.transparent.withOpacity(0.2),
+        child: Text(
+          errorMessage,
+          style: AppTextStyles(context)
+              .regular16
+              .copyWith(color: Colors.red.shade500),
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }

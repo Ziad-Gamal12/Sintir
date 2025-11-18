@@ -42,7 +42,7 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
         return right(null);
       } else if (sectionItem is CourseVideoItemEntity) {
         Map<String, dynamic> json =
-            Coursevedioitemmodel.fromEntity(sectionItem).toJson();
+            CourseVideoItemModel.fromEntity(sectionItem).toJson();
         await datebaseservice.setData(
             requirements: FireStoreRequirmentsEntity(
                 collection: BackendEndpoints.coursesCollection,
@@ -101,7 +101,7 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
         if (item["type"] == "Test") {
           items.add(Coursetestmodel.fromJson(item).toEntity());
         } else if (item["type"] == "Vedio") {
-          items.add(Coursevedioitemmodel.fromJson(item).toEntity());
+          items.add(CourseVideoItemModel.fromJson(item).toEntity());
         } else {
           items.add(Coursefilemodel.fromJson(item).toEntity());
         }

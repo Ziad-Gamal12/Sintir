@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'dart:developer';
-import 'dart:isolate';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
@@ -50,6 +49,7 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
 
       return right(null);
     } on CustomException catch (e) {
+      log("add course section error $e");
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log("add course section error $e $s");
@@ -127,7 +127,8 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
         return left(
             ServerFailure(message: "العنصر غير معرف, يرجى المحاولة مرة أخرى"));
       }
-      final json = await Isolate.run(() => _getSectionItemData(sectionItem));
+
+      final json = _getSectionItemData(sectionItem);
       await datebaseservice.setData(
         data: json,
         requirements: getAddingSectionItemRequirments(
@@ -143,7 +144,8 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (_) {
+    } catch (e, s) {
+      log("add course section error $e $s");
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
@@ -152,7 +154,7 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
     if (sectionItem is CourseTestEntity) {
       return Coursetestmodel.fromEntity(sectionItem).toJson();
     } else if (sectionItem is CourseVideoItemEntity) {
-      return Coursevedioitemmodel.fromEntity(sectionItem).toJson();
+      return CourseVideoItemModel.fromEntity(sectionItem).toJson();
     } else if (sectionItem is CourseFileEntity) {
       return Coursefilemodel.fromEntity(sectionItem).toJson();
     } else {
@@ -221,7 +223,7 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
       if (item["type"] == "Test") {
         items.add(Coursetestmodel.fromJson(item).toEntity());
       } else if (item["type"] == "Video") {
-        items.add(Coursevedioitemmodel.fromJson(item).toEntity());
+        items.add(CourseVideoItemModel.fromJson(item).toEntity());
       } else {
         items.add(Coursefilemodel.fromJson(item).toEntity());
       }
