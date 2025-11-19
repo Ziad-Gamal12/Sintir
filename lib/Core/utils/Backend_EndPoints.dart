@@ -32,6 +32,7 @@ class BackendEndpoints {
   static String testResultsSubCollection = "Results";
   static String myResultsSubCollection = "MyResults";
   static String myMistakesSubCollection = "MyMistakes";
+  static String favoritesSubCollection = "Favorites";
   static String getCourseSectionsCollection = "Courses";
   static String addCourseSectionCollectionToTeacherSubCollection = "Sections";
   static String addCourseToCoursesCollection = "Courses";

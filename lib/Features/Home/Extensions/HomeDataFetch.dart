@@ -5,7 +5,6 @@ import 'package:sintir/Features/Home/presentation/manager/get_courses_cubit/get_
 
 extension HomeDataFetch on GetCoursesCubit {
   Future<void> fetchAllHomeData(BuildContext context) async {
-    getUserData();
     if (!context.mounted) return;
     final user = getUserData();
     final coursesCubit = context.read<GetCoursesCubit>();

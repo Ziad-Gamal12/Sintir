@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/utils/Variables.dart';
-import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
-import 'package:sintir/Features/Favorites/presentation/views/widgets/FavouriteBooksListView.dart';
-import 'package:sintir/Features/Favorites/presentation/views/widgets/FavouriteCoursesGrideView.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
+import 'package:sintir/Features/Favorites/presentation/views/Manager/favourites_cubit/favourites_cubit.dart';
+import 'package:sintir/Features/Favorites/presentation/views/widgets/FavoritesviewBodyGridView.dart';
 import 'package:sintir/constant.dart';
 
 class FavoritesviewBody extends StatelessWidget {
@@ -10,58 +11,23 @@ class FavoritesviewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: KHorizontalPadding),
-                child: CustomListORGridTextHeader(
-                  text: "كتبي المفضلة",
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Favouritebookslistview(),
-              const SizedBox(
-                height: 17,
-              ),
-            ],
+    double width = MediaQuery.of(context).size.width;
+    List<CourseEntity> courses = context.watch<FavouritesCubit>().favorites;
+    return BlocBuilder<FavouritesCubit, FavouritesState>(
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: KHorizontalPadding, vertical: KVerticalPadding),
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 300),
+            child: courses.isEmpty
+                ? CustomEmptyWidget(
+                    text: "قم بإضافة دورات للمفضلة",
+                  )
+                : FavoritesviewBodyGridView(width: width, courses: courses),
           ),
-        ),
-        const SliverToBoxAdapter(
-          child: Divider(
-            color: Colors.black,
-            height: 1,
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 14,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: KHorizontalPadding),
-                child: CustomListORGridTextHeader(
-                  text: "كورساتي المفضلة",
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-            ],
-          ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
-          sliver: Favouritecoursesgrideview(
-            courses: Variables.TestCoursesList,
-          ),
-        )
-      ],
+        );
+      },
     );
   }
 }

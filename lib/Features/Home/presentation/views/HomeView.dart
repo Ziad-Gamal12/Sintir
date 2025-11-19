@@ -6,6 +6,7 @@ import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/services/FireBase/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
+import 'package:sintir/Features/Favorites/presentation/views/FavoritesView.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_courses_cubit/get_courses_cubit.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_user_data_cubit/get_user_data_cubit.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/BottomNavBar.dart';
@@ -26,8 +27,7 @@ class _HomeviewState extends State<Homeview> {
   List<Widget> screens = [
     const HomeViewBody(),
     const SearchView(),
-    // const AiTeacherview(),
-    const SizedBox(),
+    const Favoritesview(),
     const ProfileView()
   ];
   @override

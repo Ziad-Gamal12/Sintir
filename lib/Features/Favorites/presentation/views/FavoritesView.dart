@@ -8,7 +8,10 @@ class Favoritesview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(appBartitle: "المفضله"),
+      appBar: CustomAppBar(
+        appBartitle: "المفضله",
+        isPopUp: false,
+      ),
       body: const FavoritesviewBody(),
     );
   }

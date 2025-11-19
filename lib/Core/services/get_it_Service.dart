@@ -46,6 +46,8 @@ import 'package:sintir/Features/Auth/Data/repos/AuthRepoImpl.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 import 'package:sintir/Features/ContentCreatorProfile/data/Repos/ContentCreatorProfileRepoImpl.dart';
 import 'package:sintir/Features/ContentCreatorProfile/domain/Repos/ContentCreatorProfileRepo.dart';
+import 'package:sintir/Features/Favorites/Data/Repos/FavoritesRepoImpl.dart';
+import 'package:sintir/Features/Favorites/Domain/Repos/FavoritesRepo.dart';
 import 'package:sintir/Features/MyMistakes/Data/Repos/MyMistakesRepoImpl.dart';
 import 'package:sintir/Features/MyMistakes/Domain/Repo/MyMistakesRepo.dart';
 import 'package:sintir/Features/MyResults/Data/Repo/MyResultsRepoImpl.dart';
@@ -129,4 +131,7 @@ void setup_Getit() {
       ContentCreatorProfileRepoImpl(dataBaseService: getIt<DataBaseService>()));
   getIt.registerLazySingleton<SubscribersDetailsRepo>(() =>
       SubscribersDetailsRepoImpl(databaseservice: getIt<DataBaseService>()));
+
+  getIt.registerLazySingleton<FavoritesRepo>(
+      () => FavoritesRepoImpl(dataBaseService: getIt<DataBaseService>()));
 }

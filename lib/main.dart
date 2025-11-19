@@ -8,6 +8,8 @@ import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/App_router.dart';
 import 'package:sintir/Core/widgets/PrivacyWrapper.dart';
+import 'package:sintir/Features/Favorites/Domain/Repos/FavoritesRepo.dart';
+import 'package:sintir/Features/Favorites/presentation/views/Manager/favourites_cubit/favourites_cubit.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/firebase_options.dart';
 import 'package:sintir/generated/l10n.dart';
@@ -35,33 +37,32 @@ class Sintir extends StatelessWidget {
   const Sintir({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      theme: ThemeData(
-          fontFamily: "Cairo",
-          primaryColor: KMainColor,
-          sliderTheme: SliderThemeData(
-            activeTrackColor: KMainColor,
-            inactiveTrackColor: KMainColor.withOpacity(0.3), // background line
-            thumbColor: KMainColor,
-            overlayColor: KMainColor.withOpacity(0.2),
-          ),
-          appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.white,
-          ),
-          scaffoldBackgroundColor: Colors.white),
-      localizationsDelegates: const [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'),
-        Locale('ar'),
-      ],
-      locale: const Locale('ar'),
-      debugShowCheckedModeBanner: false,
-      routerConfig: App_router.router,
+    return BlocProvider(
+      create: (context) => FavouritesCubit(
+        favoritesRepo: getIt<FavoritesRepo>(),
+      ),
+      child: MaterialApp.router(
+        theme: ThemeData(
+            fontFamily: "Cairo",
+            primaryColor: KMainColor,
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.white,
+            ),
+            scaffoldBackgroundColor: Colors.white),
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en'),
+          Locale('ar'),
+        ],
+        locale: const Locale('ar'),
+        debugShowCheckedModeBanner: false,
+        routerConfig: App_router.router,
+      ),
     );
   }
 }

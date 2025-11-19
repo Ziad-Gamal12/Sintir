@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseItemDetails.dart';
-import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseItemFavouriteIcon.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseItemImage.dart';
+import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomAddFavouriteIcon.dart';
 
 class CustomCourseItem extends StatefulWidget {
   final VoidCallback ontap;
@@ -21,8 +21,6 @@ class CustomCourseItem extends StatefulWidget {
 }
 
 class _CustomCourseItemState extends State<CustomCourseItem> {
-  bool isFavourite = false;
-
   @override
   Widget build(BuildContext context) {
     final course = widget.courseItem;
@@ -59,11 +57,10 @@ class _CustomCourseItemState extends State<CustomCourseItem> {
               ],
             ),
             Positioned(
-              top: 8,
-              left: 8,
-              child: CourseItemFavouriteIcon(
-                isFavourite: isFavourite,
-                onTap: () {},
+              top: 15,
+              left: 15,
+              child: CustomAddFavouriteIcon(
+                courseEntity: course,
               ),
             ),
           ],
