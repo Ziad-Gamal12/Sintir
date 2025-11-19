@@ -5,10 +5,10 @@ import 'package:sintir/Features/Home/presentation/views/widgets/BottomNavBarItem
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({
     super.key,
-    required this.pageController,
+    required this.onPageChanged,
   });
 
-  final PageController pageController;
+  final ValueChanged<int> onPageChanged;
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
@@ -16,35 +16,6 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int currentIndex = 0;
-
-  /// To avoid multiple listeners being added
-  late final VoidCallback _pageListener;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _pageListener = () {
-      final page = widget.pageController.page;
-
-      if (page == null) return;
-
-      final newIndex = page.round();
-
-      if (newIndex != currentIndex) {
-        setState(() => currentIndex = newIndex);
-      }
-    };
-
-    widget.pageController.addListener(_pageListener);
-  }
-
-  @override
-  void dispose() {
-    widget.pageController.removeListener(_pageListener);
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final items = BottomNavBarEntity.toList();
@@ -74,11 +45,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
             flex: isSelected ? 3 : 2,
             child: InkWell(
               onTap: () {
-                widget.pageController.animateToPage(
-                  index,
-                  duration: const Duration(milliseconds: 400),
-                  curve: Curves.easeInOut,
-                );
+                widget.onPageChanged(index);
+                setState(() {
+                  currentIndex = index;
+                });
               },
               child: BottomNavBarItem(
                 isSelected: isSelected,

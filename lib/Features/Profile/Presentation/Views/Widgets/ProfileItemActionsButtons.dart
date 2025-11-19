@@ -25,9 +25,15 @@ class _ProfileItemActionsButtonsState extends State<ProfileItemActionsButtons> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: actions()
-          .map((e) => ProfileItemAction(profileActionsEntity: e))
-          .toList(),
+      children: [
+        ...actions().map((e) => ProfileItemAction(profileActionsEntity: e)),
+        Divider(
+          color: Colors.grey.shade300,
+          height: 40,
+        ),
+        ...ProfileActionsEntity.appCoreActions
+            .map((e) => ProfileItemAction(profileActionsEntity: e)),
+      ],
     );
   }
 }

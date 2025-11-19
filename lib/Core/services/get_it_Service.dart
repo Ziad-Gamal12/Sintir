@@ -52,6 +52,8 @@ import 'package:sintir/Features/MyMistakes/Data/Repos/MyMistakesRepoImpl.dart';
 import 'package:sintir/Features/MyMistakes/Domain/Repo/MyMistakesRepo.dart';
 import 'package:sintir/Features/MyResults/Data/Repo/MyResultsRepoImpl.dart';
 import 'package:sintir/Features/MyResults/Domain/Repo/MyResultsRepo.dart';
+import 'package:sintir/Features/Profile/Data/Repos/PersonalDetailsRepoImpl.dart';
+import 'package:sintir/Features/Profile/Domain/Repos/PersonalDetailsRepo.dart';
 import 'package:sintir/Features/Search/Data/Repos/SearchRepoImpl.dart';
 import 'package:sintir/Features/Search/Domain/Repos/SearchRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/SubscribersDetailsRepoImpl.dart';
@@ -134,4 +136,11 @@ void setup_Getit() {
 
   getIt.registerLazySingleton<FavoritesRepo>(
       () => FavoritesRepoImpl(dataBaseService: getIt<DataBaseService>()));
+
+  getIt.registerLazySingleton<PersonalDetailsRepo>(() =>
+      PersonalDetailsRepoImpl(
+          dataBaseService: getIt<DataBaseService>(),
+          storageService: getIt<StorageService>(),
+          authRepo: getIt<AuthRepo>(),
+          assetspickerrepo: getIt<Assetspickerrepo>()));
 }

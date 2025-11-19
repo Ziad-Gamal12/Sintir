@@ -23,18 +23,15 @@ class Homeview extends StatefulWidget {
 }
 
 class _HomeviewState extends State<Homeview> {
-  PageController pageController = PageController();
+  int currentIndex = 0;
   List<Widget> screens = [
     const HomeViewBody(),
     const SearchView(),
-    const Favoritesview(),
+    Favoritesview(
+      isPopUp: false,
+    ),
     const ProfileView()
   ];
-  @override
-  void dispose() {
-    super.dispose();
-    pageController.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +47,14 @@ class _HomeviewState extends State<Homeview> {
       ],
       child: Scaffold(
         bottomNavigationBar: BottomNavBar(
-          pageController: pageController,
+          onPageChanged: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
         ),
         body: SafeArea(
-            child: PageView(
-          physics: const NeverScrollableScrollPhysics(),
-          scrollDirection: Axis.horizontal,
-          controller: pageController,
-          children: screens,
-        )),
+            child: IndexedStack(index: currentIndex, children: screens)),
       ),
     );
   }
