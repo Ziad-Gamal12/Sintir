@@ -1,152 +1,98 @@
 import 'dart:io';
 
-import 'package:chewie/chewie.dart';
+import 'package:better_player_plus/better_player_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/widgets/Video Previewer Widgets/Widgets/CustomVideoControllerErrorWidget.dart';
-import 'package:sintir/Core/widgets/Video Previewer Widgets/Widgets/CustomVideoControllerPlaceHolder.dart';
-import 'package:video_player/video_player.dart';
 
-class CustomVideoController {
-  VideoPlayerController? videoPlayerController;
-  ChewieController? chewieController;
-
-  bool _wasPlayingBefore = false;
+class CustomVideoControllerBetter {
+  BetterPlayerController? betterPlayerController;
   bool isInitialized = false;
 
   Future<void> initializeVideo({
     required String? videoUrl,
     required File? file,
-    ValueChanged<Duration>? onDurationChanged,
     required VoidCallback? onUpdate,
+    ValueChanged<Duration>? onDurationChanged,
+    BuildContext? context,
   }) async {
     try {
-      // -------------------------
-      // Initialize VideoPlayerController
-      // -------------------------
-      if (file != null) {
-        videoPlayerController = VideoPlayerController.file(file);
-      } else if (videoUrl != null) {
-        videoPlayerController =
-            VideoPlayerController.networkUrl(Uri.parse(videoUrl));
-      } else {
+      if (videoUrl == null && file == null) {
         throw Exception("لا يمكن تشغيل الفيديو: لا يوجد رابط أو ملف");
       }
 
-      // -------------------------
-      // Catch initialization errors (especially on low-end devices)
-      // -------------------------
-      try {
-        await videoPlayerController!.initialize();
-      } catch (e) {
-        debugPrint("⚠️ VideoPlayer failed to initialize: $e");
-        // On error, fallback: maybe try re-initialize with another approach
-        throw Exception("تعذر تشغيل الفيديو على هذا الجهاز");
+      // إعداد مصدر الفيديو
+      BetterPlayerDataSource dataSource;
+      if (file != null) {
+        dataSource = BetterPlayerDataSource(
+          BetterPlayerDataSourceType.file,
+          file.path,
+        );
+      } else {
+        dataSource = BetterPlayerDataSource(
+          BetterPlayerDataSourceType.network,
+          videoUrl!,
+        );
       }
 
-      // Notify duration
-      if (onDurationChanged != null) {
-        onDurationChanged(videoPlayerController!.value.duration);
-      }
-
-      // -------------------------
-      // Initialize ChewieController
-      // -------------------------
-      chewieController = ChewieController(
-        videoPlayerController: videoPlayerController!,
+      // إعداد التحكم
+      BetterPlayerConfiguration betterPlayerConfiguration =
+          BetterPlayerConfiguration(
         autoPlay: true,
         looping: false,
-        showControls: true,
-        allowFullScreen: true,
-        progressIndicatorDelay:
-            Platform.isAndroid ? const Duration(days: 1) : null,
-        allowMuting: true,
         allowedScreenSleep: false,
-        allowPlaybackSpeedChanging: true,
-        aspectRatio: videoPlayerController!.value.aspectRatio == 0
-            ? 16 / 9
-            : videoPlayerController!.value.aspectRatio,
-        showOptions: true,
-        playbackSpeeds: const [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
-        additionalOptions: (context) => <OptionItem>[
-          OptionItem(
-            onTap: (context) => videoPlayerController?.pause(),
-            iconData: Icons.pause,
-            title: 'إيقاف',
-          ),
-          OptionItem(
-            onTap: (context) => videoPlayerController?.play(),
-            iconData: Icons.play_arrow,
-            title: 'تشغيل',
-          ),
-          OptionItem(
-            onTap: (context) => videoPlayerController?.seekTo(Duration.zero),
-            iconData: Icons.restart_alt,
-            title: 'إعادة التشغيل',
-          ),
-          OptionItem(
-            onTap: (context) => videoPlayerController?.setPlaybackSpeed(1),
-            iconData: Icons.speed,
-            title: 'سرعة 1x',
-          ),
-          OptionItem(
-            onTap: (context) => videoPlayerController?.setVolume(0),
-            iconData: Icons.volume_off,
-            title: 'كتم الصوت',
-          ),
-          OptionItem(
-            onTap: (context) => videoPlayerController?.setVolume(1),
-            iconData: Icons.volume_up,
-            title: 'تشغيل الصوت',
-          ),
-          OptionItem(
-            onTap: (context) {
-              final currentSpeed =
-                  videoPlayerController?.value.playbackSpeed ?? 1;
-              double newSpeed = currentSpeed == 1 ? 1.5 : 1;
-              videoPlayerController?.setPlaybackSpeed(newSpeed);
-
-              CustomSnackBar.show(
-                context,
-                message: "تم تغيير السرعة إلى $newSpeed",
-                type: SnackType.success,
-              );
-            },
-            iconData: Icons.speed_outlined,
-            title: 'تبديل السرعة',
-          ),
-        ],
-        placeholder: const CustomVideoControllerPlaceHolder(),
-        errorBuilder: (context, errorMessage) =>
-            const CustomVideoControllerErrorWidget(),
+        fit: BoxFit.contain,
+        aspectRatio: 16 / 9,
+        controlsConfiguration: const BetterPlayerControlsConfiguration(
+          enablePlaybackSpeed: true,
+          enableSkips: true,
+          enableFullscreen: true,
+          enableMute: true,
+        ),
+        errorBuilder: (context, errorMessage) {
+          CustomSnackBar.show(
+            context,
+            message: "❌ هذا الفيديو غير مدعوم على جهازك أو حدث خطأ",
+            type: SnackType.error,
+          );
+          return const Center(
+              child: Text(
+            "❌ فشل تشغيل الفيديو",
+            style: TextStyle(color: Colors.white),
+          ));
+        },
       );
 
-      // -------------------------
-      // Listener to track playback state
-      // -------------------------
-      videoPlayerController!.addListener(() {
-        if (videoPlayerController == null) return;
-        _wasPlayingBefore = videoPlayerController!.value.isPlaying;
-      });
+      betterPlayerController =
+          BetterPlayerController(betterPlayerConfiguration);
+
+      await betterPlayerController!.setupDataSource(dataSource);
+
+      // إعلام طول الفيديو
+      if (onDurationChanged != null) {
+        final duration =
+            betterPlayerController!.videoPlayerController?.value.duration;
+        if (duration != null) onDurationChanged(duration);
+      }
 
       isInitialized = true;
       onUpdate?.call();
-    } catch (e, st) {
-      debugPrint("❌ CustomVideoController Error: $e");
-      debugPrint("$st");
+    } catch (e) {
+      if (context != null) {
+        CustomSnackBar.show(
+          context,
+          message: "❌ تعذر تشغيل الفيديو على هذا الجهاز",
+          type: SnackType.error,
+        );
+      }
       isInitialized = false;
       onUpdate?.call();
+      debugPrint("⚠️ CustomVideoControllerBetter Error: $e");
     }
   }
 
-  // -----------------------------
-  // Clean Dispose
-  // -----------------------------
   void dispose() {
-    chewieController?.dispose();
-    videoPlayerController?.dispose();
-    chewieController = null;
-    videoPlayerController = null;
+    betterPlayerController?.dispose();
+    betterPlayerController = null;
     isInitialized = false;
   }
 }

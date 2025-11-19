@@ -17,7 +17,7 @@ class MyResultsViewBodyListViewLoading extends StatelessWidget {
         child: Skeletonizer(
           enabled: true,
           child: AspectRatio(
-            aspectRatio: 2 / 1.9,
+            aspectRatio: 2 / 1.75,
             child: StudentResultCard(
               testResultEntity: getFakeLoadingSubscribers()[index],
             ),

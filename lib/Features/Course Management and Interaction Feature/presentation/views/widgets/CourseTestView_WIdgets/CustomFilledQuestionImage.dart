@@ -44,10 +44,10 @@ class CustomFilledQuestionImage extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(18),
           child: AspectRatio(
-            aspectRatio: 3 / 2.5,
+            aspectRatio: 1,
             child: CustomCachedNetworkImage(
               imageUrl: image,
-              fit: BoxFit.cover,
+              fit: BoxFit.contain,
             ),
           ),
         ),

@@ -47,8 +47,9 @@ class StudentResultCard extends StatelessWidget {
           const Divider(thickness: 0.6),
 
           /// Stats
-          const SizedBox(height: 12),
+          const Spacer(),
           StudentResultStatsRow(testResultEntity: testResultEntity),
+          const Spacer(),
         ],
       ),
     )

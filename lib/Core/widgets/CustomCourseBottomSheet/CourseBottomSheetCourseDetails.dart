@@ -6,6 +6,7 @@ import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetCourseDetailsDescription.dart';
+import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetCourseDetailsIsSubscribedBanner.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetCourseDetailsPrice.dart';
 
 class CourseBottomSheetCourseDetails extends StatefulWidget {
@@ -40,18 +41,7 @@ class _CourseBottomSheetCourseDetailsState
                     style: AppTextStyles(context).semiBold20)),
             Visibility(
               visible: isSubscribed,
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text("مشترك",
-                    style: AppTextStyles(context)
-                        .regular14
-                        .copyWith(color: Colors.white)),
-              ),
+              child: const CourseBottomSheetCourseDetailsIsSubscribedBanner(),
             )
           ],
         ),

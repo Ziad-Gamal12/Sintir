@@ -21,7 +21,7 @@ class SubscriberResultsSliverListView extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: AspectRatio(
-            aspectRatio: 2 / 1.9,
+            aspectRatio: 2 / 1.75,
             child: StudentResultCard(
               testResultEntity: testResults[index],
             ),

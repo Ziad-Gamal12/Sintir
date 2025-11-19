@@ -54,7 +54,7 @@ class _CourseTestOverViewBodyListViewState
             return Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: AspectRatio(
-                  aspectRatio: 2 / 1.9,
+                  aspectRatio: 2 / 1.75,
                   child: StudentResultCard(
                     testResultEntity: results[index],
                   )),

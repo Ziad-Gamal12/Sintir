@@ -39,7 +39,7 @@ class _TestResultsSliverListViewState extends State<TestResultsSliverListView> {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: AspectRatio(
-                        aspectRatio: 2 / 1.9,
+                        aspectRatio: 2 / 1.75,
                         child: Skeletonizer(
                             enabled: true,
                             child: StudentResultCard(
@@ -62,7 +62,7 @@ class _TestResultsSliverListViewState extends State<TestResultsSliverListView> {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: AspectRatio(
-                      aspectRatio: 2 / 1.9,
+                      aspectRatio: 2 / 1.75,
                       child: StudentResultCard(
                         testResultEntity: widget.testResults[index],
                       )),
