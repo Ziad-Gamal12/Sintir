@@ -21,26 +21,17 @@ class _BottomNavBarState extends State<BottomNavBar> {
     final items = BottomNavBarEntity.toList();
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 15),
+      padding: const EdgeInsets.all(20),
       decoration: const BoxDecoration(
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 12,
-            offset: Offset(0, -3),
-          ),
-        ],
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(25),
           topRight: Radius.circular(25),
         ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: List.generate(items.length, (index) {
           final isSelected = index == currentIndex;
-
           return Expanded(
             flex: isSelected ? 3 : 2,
             child: InkWell(

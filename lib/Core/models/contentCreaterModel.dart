@@ -15,10 +15,11 @@ class Contentcreatermodel {
   factory Contentcreatermodel.fromTeacherEntity(
       {required UserEntity userEntity}) {
     return Contentcreatermodel(
-        name: "${userEntity.firstName} ${userEntity.lastName}",
-        profileImageUrl: userEntity.profilePicurl,
-        id: userEntity.uid,
-        title: " مدرس/ه${userEntity.teacherExtraDataEntity?.subject}");
+      name: "${userEntity.firstName} ${userEntity.lastName}",
+      profileImageUrl: userEntity.profilePicurl,
+      id: userEntity.uid,
+      title: "مدرس/ه  مادة ${userEntity.teacherExtraDataEntity?.subject ?? ""}",
+    );
   }
   factory Contentcreatermodel.fromEntity(
       {required Contentcreaterentity entity}) {

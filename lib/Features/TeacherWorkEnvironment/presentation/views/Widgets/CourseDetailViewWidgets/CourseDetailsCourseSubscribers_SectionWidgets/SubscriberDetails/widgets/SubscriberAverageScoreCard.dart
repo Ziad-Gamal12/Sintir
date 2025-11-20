@@ -35,6 +35,8 @@ class _SubscriberAverageScoreCardState
             borderRadius: BorderRadius.circular(20),
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 average.toStringAsFixed(2),

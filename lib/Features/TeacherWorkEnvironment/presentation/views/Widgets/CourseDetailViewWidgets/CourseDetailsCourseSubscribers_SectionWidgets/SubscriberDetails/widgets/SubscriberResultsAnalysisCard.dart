@@ -21,6 +21,7 @@ class _SubscriberResultsAnalysisCardState
     return const CustomCard(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(flex: 4, child: SubscriberHighestScoreCard()),
           SizedBox(width: 10),

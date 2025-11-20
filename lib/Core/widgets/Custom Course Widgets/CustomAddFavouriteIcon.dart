@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
+import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Favorites/presentation/views/Manager/favourites_cubit/favourites_cubit.dart';
 
@@ -66,23 +67,34 @@ class _CustomAddFavouriteIconState extends State<CustomAddFavouriteIcon>
       (cubit) => cubit.favoritesMap.containsKey(widget.courseEntity.id),
     );
 
-    return ScaleTransition(
-      scale: _scaleAnimation,
-      child: CircleAvatar(
-        radius: 18,
-        backgroundColor: Colors.transparent.withOpacity(.4),
-        child: IconButton(
-          onPressed: () => _handleTap(isFav),
-          icon: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 250),
-            transitionBuilder: (child, animation) =>
-                ScaleTransition(scale: animation, child: child),
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Icon(
-                isFav ? FontAwesomeIcons.solidHeart : FontAwesomeIcons.heart,
-                key: ValueKey<bool>(isFav),
-                color: isFav ? Colors.red : Colors.white,
+    return BlocListener<FavouritesCubit, FavouritesState>(
+      listener: (context, state) {
+        if (state is AddToFavoritesFailureState) {
+          CustomSnackBar.show(context,
+              message: state.errMessage, type: SnackType.error);
+        } else if (state is RemoveFromFavoritesFailureState) {
+          CustomSnackBar.show(context,
+              message: state.errMessage, type: SnackType.error);
+        }
+      },
+      child: ScaleTransition(
+        scale: _scaleAnimation,
+        child: CircleAvatar(
+          radius: 18,
+          backgroundColor: Colors.transparent.withOpacity(.4),
+          child: IconButton(
+            onPressed: () => _handleTap(isFav),
+            icon: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 250),
+              transitionBuilder: (child, animation) =>
+                  ScaleTransition(scale: animation, child: child),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Icon(
+                  isFav ? FontAwesomeIcons.solidHeart : FontAwesomeIcons.heart,
+                  key: ValueKey<bool>(isFav),
+                  color: isFav ? Colors.red : Colors.white,
+                ),
               ),
             ),
           ),

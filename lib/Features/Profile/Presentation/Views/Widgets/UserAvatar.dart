@@ -14,19 +14,15 @@ class UserAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<UserPersonalDetailsCubit, UserPersonalDetailsState,
-        bool>(
-      selector: (state) {
-        return state is UpdatedUserProfilePicLoading;
-      },
-      builder: (context, isLoading) => Skeletonizer(
-          enabled: isLoading,
-          child: CircleAvatar(
-            backgroundColor: Colors.grey[300],
-            radius: 30,
+    return BlocBuilder<UserPersonalDetailsCubit, UserPersonalDetailsState>(
+      builder: (context, state) => Skeletonizer(
+          enabled: state is UpdatedUserProfilePicLoading,
+          child: AspectRatio(
+            aspectRatio: 1,
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(50),
-                child: CustomCachedNetworkImage(imageUrl: profilePicurl)),
+                child: CustomCachedNetworkImage(
+                    imageUrl: profilePicurl, fit: BoxFit.cover)),
           )),
     );
   }

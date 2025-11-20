@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
@@ -81,9 +82,8 @@ class FavoritesRepoImpl implements FavoritesRepo {
         return right([]);
       }
 
-      List<CourseEntity> favourites = response.listData!
-          .map((e) => Coursemodel.fromJson(e).toEntity())
-          .toList();
+      List<CourseEntity> favourites = await compute(
+          _parseCourses, response.listData! as List<Map<String, dynamic>>);
       return right(favourites);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
@@ -91,4 +91,8 @@ class FavoritesRepoImpl implements FavoritesRepo {
       return left(ServerFailure(message: "حدث خطأ ما"));
     }
   }
+}
+
+List<CourseEntity> _parseCourses(List<Map<String, dynamic>> listData) {
+  return listData.map((e) => Coursemodel.fromJson(e).toEntity()).toList();
 }

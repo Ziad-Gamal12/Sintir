@@ -34,58 +34,79 @@ class CustomAddCourseActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<AddCourseCubitCubit, AddCourseCubitState, bool>(
-      selector: (state) {
-        return state is AddCourseCubitLoading;
-      },
-      builder: (context, state) {
+      selector: (state) => state is AddCourseCubitLoading,
+      builder: (context, isLoading) {
         return Custom_Loading_Widget(
-            isLoading: state,
-            child: Custombutton(
-                text: "التالى",
-                color: KMainColor,
-                textColor: Colors.white,
-                onPressed: () {
-                  if (!formKey.currentState!.validate()) return;
-
-                  if (selectedLevel == null ||
-                      selectedSubject == null ||
-                      selectedLanguage == null) {
-                    errordialog(context, "هناك خانات ناقصة").show();
-                    return;
-                  }
-
-                  if (context.read<AddCourseCubitCubit>().coursePosterImage ==
-                      null) {
-                    errordialog(context, "يرجى إضافة صورة للدورة").show();
-                    return;
-                  }
-
-                  final course = CourseEntity(
-                    studentsCount: 0,
-                    subject: selectedSubject!,
-                    id: codeController.text,
-                    level: selectedLevel!,
-                    state: BackendEndpoints.coursePendingState,
-                    title: titleController.text,
-                    description: descriptionController.text,
-                    price: int.parse(priceController.text),
-                    language: selectedLanguage!,
-                    postedDate: DateTime.now(),
-                  );
-
-                  context.read<AddCourseCubitCubit>().addCourse(
-                        courseEntity: course,
-                        userEntity: getUserData(),
-                      );
-
-                  if (selectedLanguage == null ||
-                      selectedLevel == null ||
-                      selectedSubject == null) {
-                    context.read<AddCourseCubitCubit>().addCourse(
-                        courseEntity: course, userEntity: getUserData());
-                  }
-                }));
+          isLoading: isLoading,
+          child: Custombutton(
+            text: "إضافة",
+            color: KMainColor,
+            textColor: Colors.white,
+            onPressed: isLoading ? () {} : () => _submitCourse(context),
+          ),
+        );
       },
     );
+  }
+
+  void _showMissingFieldsDialog(BuildContext context) {
+    errordialog(context, "هناك خانات ناقصة").show();
+  }
+
+  void _showMissingImageDialog(BuildContext context) {
+    errordialog(context, "يرجى إضافة صورة للدورة").show();
+  }
+
+  void _showInvalidPriceDialog(BuildContext context) {
+    errordialog(context, "الرجاء إدخال سعر صحيح").show();
+  }
+
+  void _submitCourse(BuildContext context) {
+    FocusScope.of(context).unfocus();
+
+    final cubit = context.read<AddCourseCubitCubit>();
+
+    if (!formKey.currentState!.validate()) return;
+
+    if (selectedLevel == null ||
+        selectedSubject == null ||
+        selectedLanguage == null) {
+      _showMissingFieldsDialog(context);
+      return;
+    }
+
+    if (cubit.coursePosterImage == null) {
+      _showMissingImageDialog(context);
+      return;
+    }
+
+    final priceText = priceController.text.trim();
+    final price = int.tryParse(priceText);
+    if (price == null || price < 0) {
+      _showInvalidPriceDialog(context);
+      return;
+    }
+
+    final course = CourseEntity(
+      studentsCount: 0,
+      subject: selectedSubject!,
+      id: codeController.text.trim(),
+      level: selectedLevel!,
+      state: BackendEndpoints.coursePendingState,
+      title: titleController.text.trim(),
+      description: descriptionController.text.trim(),
+      price: price,
+      language: selectedLanguage!,
+      postedDate: DateTime.now(),
+    );
+
+    // Show a confirmation warning before actually adding
+    warningdialog(
+      context,
+      "هام! سيتم خصم نسبه 5% من السعر المحدد عند الأشتراك",
+      () {
+        cubit.addCourse(courseEntity: course, userEntity: getUserData());
+      },
+    ).show();
   }
 }

@@ -9,7 +9,7 @@ class ContentCreatorCoursesCubit extends Cubit<ContentCreatorCoursesState> {
   ContentCreatorCoursesCubit({required this.contentCreatorProfileRepo})
       : super(ContentCreatorCoursesInitial());
   final ContentCreatorProfileRepo contentCreatorProfileRepo;
-
+  List<CourseEntity> contentCreatorCourses = [];
   Future<void> getContentCreatorCourses({required String userId}) async {
     emit(GetContentCreatorCoursesLoading());
     final response = await contentCreatorProfileRepo.getContentCreatorCourses(
@@ -17,8 +17,10 @@ class ContentCreatorCoursesCubit extends Cubit<ContentCreatorCoursesState> {
     response.fold(
         (failure) =>
             emit(GetContentCreatorCoursesFailure(errmessage: failure.message)),
-        (courses) =>
-            emit(GetContentCreatorCoursesSuccess(coursesList: courses)));
+        (courses) {
+      contentCreatorCourses = courses;
+      emit(GetContentCreatorCoursesSuccess(coursesList: courses));
+    });
   }
 
   Future<void> searchContentCreatorCourses(
@@ -31,5 +33,17 @@ class ContentCreatorCoursesCubit extends Cubit<ContentCreatorCoursesState> {
             SearchContentCreatorCoursesFailure(errmessage: failure.message)),
         (courses) =>
             emit(SearchContentCreatorCoursesSuccess(coursesList: courses)));
+  }
+
+  int getContentCreatorSubscribersCount() {
+    int count = 0;
+    for (var course in contentCreatorCourses) {
+      count += course.studentsCount;
+    }
+    return count;
+  }
+
+  int getContentCreatorCoursesCount() {
+    return contentCreatorCourses.length;
   }
 }

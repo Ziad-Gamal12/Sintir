@@ -4,6 +4,7 @@ import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/PayOutBalanceWidgets/PayOutBalanceBodButton.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/PayOutBalanceWidgets/PayOutBalanceBodyConditionsRow.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/PayOutBalanceWidgets/PayOutBalanceBodyTextFields.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/PayOutBalanceWidgets/SelecteIssuerDropDownButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/payout_cubit/payout_cubit.dart';
@@ -27,6 +28,7 @@ class _PayOutBalanceBodyState extends State<PayOutBalanceBody> {
   String issuer = "vodafone";
   String transactionId = "";
   bool isLoading = false;
+  bool isAgree = false;
 
   @override
   void dispose() {
@@ -125,6 +127,12 @@ class _PayOutBalanceBodyState extends State<PayOutBalanceBody> {
                 onSelected: (value) => setState(() => issuer = value ?? ""),
               ),
 
+              const SizedBox(height: 20),
+              PayOutBalanceBodyConditionsRow(
+                onChanged: (value) {
+                  setState(() => isAgree = value);
+                },
+              ),
               const SizedBox(height: 80),
 
               /// Submit Button + Loading
@@ -132,6 +140,7 @@ class _PayOutBalanceBodyState extends State<PayOutBalanceBody> {
                 isLoading: isLoading,
                 child: PayOutBalanceBodButton(
                   formKey: formKey,
+                  isConditionAccepted: isAgree,
                   issuer: issuer,
                   walletEntity: widget.walletEntity,
                   amountController: amountController,

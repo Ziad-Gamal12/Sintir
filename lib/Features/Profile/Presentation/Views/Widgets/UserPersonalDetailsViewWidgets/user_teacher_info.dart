@@ -25,7 +25,7 @@ class UserTeacherInfo extends StatelessWidget {
             // Title
             Text(
               "بيانات المعلم",
-              style: styles.bold19.copyWith(color: Colors.black),
+              style: styles.semiBold20.copyWith(color: Colors.black),
             ),
 
             const SizedBox(height: 16),

@@ -15,6 +15,7 @@ class PayOutBalanceBodButton extends StatelessWidget {
     required this.amountController,
     required this.phoneController,
     required this.issuer,
+    required this.isConditionAccepted,
   });
 
   final GlobalKey<FormState> formKey;
@@ -22,7 +23,7 @@ class PayOutBalanceBodButton extends StatelessWidget {
   final TextEditingController amountController;
   final TextEditingController phoneController;
   final String issuer;
-
+  final bool isConditionAccepted;
   @override
   Widget build(BuildContext context) {
     return Custombutton(
@@ -31,7 +32,14 @@ class PayOutBalanceBodButton extends StatelessWidget {
       textColor: Colors.white,
       onPressed: () {
         if (!formKey.currentState!.validate()) return;
-
+        if (!isConditionAccepted) {
+          CustomSnackBar.show(
+            context,
+            message: "قبل استخدام هذه الميزة يجب قبول الشروط والاحكام",
+            type: SnackType.error,
+          );
+          return;
+        }
         final amount = double.tryParse(amountController.text);
         if (amount == null) {
           CustomSnackBar.show(

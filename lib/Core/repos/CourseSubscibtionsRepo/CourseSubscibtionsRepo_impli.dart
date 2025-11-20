@@ -256,7 +256,6 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
     }
   }
 
-  DocumentSnapshot? _lastSearchSubscribersDoc;
   @override
   Future<Either<Failure, GetCourseSubscribersEntity>> searchSubscribers(
       {required String courseID,

@@ -36,19 +36,24 @@ class FavouritesCubit extends Cubit<FavouritesState> {
     required String userId,
     required CourseEntity course,
   }) async {
-    final result =
-        await favoritesRepo.addToFavorites(userId: userId, course: course);
+    if (favorites.length <= 50) {
+      final result =
+          await favoritesRepo.addToFavorites(userId: userId, course: course);
 
-    result.fold(
-      (failure) =>
-          emit(AddToFavoritesFailureState(errMessage: failure.message)),
-      (_) {
-        favorites.add(course);
-        favoritesMap[course.id] = true;
+      result.fold(
+        (failure) =>
+            emit(AddToFavoritesFailureState(errMessage: failure.message)),
+        (_) {
+          favorites.add(course);
+          favoritesMap[course.id] = true;
 
-        emit(AddToFavoritesSuccessState());
-      },
-    );
+          emit(AddToFavoritesSuccessState());
+        },
+      );
+    } else {
+      emit(AddToFavoritesFailureState(
+          errMessage: "لا يمكنك اضافة اكثر من 50 كورس للمفضلة"));
+    }
   }
 
   Future<void> removeFromFavorites({

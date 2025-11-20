@@ -65,6 +65,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/SubscriberDetailsView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/PayOutBalanceWidgets/TermsAndConditions/PayoutTermsAndConditionsView.dart';
 
 class App_router {
   static GoRouter router = GoRouter(
@@ -432,6 +433,12 @@ class App_router {
         path: UserPersonalDetailsView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const UserPersonalDetailsView();
+        },
+      ),
+      GoRoute(
+        path: PayoutTermsAndConditionsView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const PayoutTermsAndConditionsView();
         },
       ),
     ],
