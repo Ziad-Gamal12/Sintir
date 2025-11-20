@@ -20,37 +20,17 @@ class AddCourseSectionExamActionButtons extends StatelessWidget {
     OptionNavigationRequirementsEntity optionnavigationrequirementsentity =
         Provider.of<OptionNavigationRequirementsEntity>(context);
     return Positioned(
-        bottom: 0,
-        right: 0,
-        left: 0,
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 20,
-                spreadRadius: 6,
-                offset: Offset(5, -15),
-              )
-            ],
-            border: Border.all(color: Colors.grey.shade300, width: 1),
-          ),
-          child: Custombutton(
-              text: "حفظ",
-              color: KSecondaryColor,
-              textColor: Colors.white,
-              onPressed: () {
-                navigatetoReviewTestView(optionnavigationrequirementsentity,
-                    courseTestEntity, context);
-              }),
-        ));
+        bottom: 20,
+        right: 16,
+        left: 16,
+        child: Custombutton(
+            text: "حفظ",
+            color: KSecondaryColor,
+            textColor: Colors.white,
+            onPressed: () {
+              navigatetoReviewTestView(optionnavigationrequirementsentity,
+                  courseTestEntity, context);
+            }));
   }
 
   void navigatetoReviewTestView(

@@ -24,6 +24,15 @@ final class QuestionsImagesUploadedingFailure extends TestItemState {
 
 final class QuestionsImagesUploadedingSuccuss extends TestItemState {}
 
+final class QuestionsSolutionsImagesUploadedingLoading extends TestItemState {}
+
+final class QuestionsSolutionsImagesUploadedingFailure extends TestItemState {
+  final String errMessage;
+  QuestionsSolutionsImagesUploadedingFailure({required this.errMessage});
+}
+
+final class QuestionsSolutionsImagesUploadedingSuccuss extends TestItemState {}
+
 final class AddTestResultLoading extends TestItemState {}
 
 final class AddTestResultFailure extends TestItemState {
@@ -57,3 +66,27 @@ final class ResizeQuestionsImageSuccess extends TestItemState {
 
   ResizeQuestionsImageSuccess({required this.isFilled, required this.imageUrl});
 }
+
+final class PickQuestionImageFailure extends TestItemState {
+  final String errMessage;
+  PickQuestionImageFailure({required this.errMessage});
+}
+
+final class PickQuestionImageSuccess extends TestItemState {
+  final File file;
+  PickQuestionImageSuccess({required this.file});
+}
+
+final class PickQuestionImageLoading extends TestItemState {}
+
+final class PickQuestionSolutionImageFailure extends TestItemState {
+  final String errMessage;
+  PickQuestionSolutionImageFailure({required this.errMessage});
+}
+
+final class PickQuestionSolutionImageSuccess extends TestItemState {
+  final File file;
+  PickQuestionSolutionImageSuccess({required this.file});
+}
+
+final class PickQuestionSolutionImageLoading extends TestItemState {}

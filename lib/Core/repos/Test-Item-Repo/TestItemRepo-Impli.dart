@@ -35,14 +35,33 @@ class TestItemRepoImpli implements Testitemrepo {
     required List<CourseTestQuestionEntity> questions,
   }) async {
     try {
-      for (var question in questions) {
+      for (CourseTestQuestionEntity question in questions) {
         final file = question.imageFile;
         if (file != null) {
-          // uploadFile may throw — let it bubble and be caught below
           final url = await storageService.uploadFile(file: file);
-          // NOTE: This mutates the passed entity (same as original behavior).
-          // If you want immutable behavior, return updated list instead.
           question.imageUrl = url;
+        }
+      }
+      return right(null);
+    } on CustomException catch (e) {
+      log('uploadTestQuestionsImages CustomException: ${e.message}');
+      return left(ServerFailure(message: e.message));
+    } catch (e, s) {
+      log('uploadTestQuestionsImages error: $e', stackTrace: s);
+      return left(ServerFailure(message: "حدث خطأ ما"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> uploadTestQuestionsSolutionsImages({
+    required List<CourseTestQuestionEntity> questions,
+  }) async {
+    try {
+      for (CourseTestQuestionEntity question in questions) {
+        final file = question.solutionFile;
+        if (file != null) {
+          final url = await storageService.uploadFile(file: file);
+          question.solutionImageUrl = url;
         }
       }
       return right(null);

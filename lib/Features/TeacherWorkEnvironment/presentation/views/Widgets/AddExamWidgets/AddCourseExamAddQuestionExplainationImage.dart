@@ -7,22 +7,22 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class AddCourseExamAddQuestionImage extends StatefulWidget {
-  const AddCourseExamAddQuestionImage(
+class AddCourseExamAddQuestionExplainationImage extends StatefulWidget {
+  const AddCourseExamAddQuestionExplainationImage(
       {super.key, required this.coursetestquestionentity});
   final CourseTestQuestionEntity coursetestquestionentity;
   @override
-  State<AddCourseExamAddQuestionImage> createState() =>
-      _AddCourseExamAddQuestionImageState();
+  State<AddCourseExamAddQuestionExplainationImage> createState() =>
+      _AddCourseExamAddQuestionExplainationImageState();
 }
 
-class _AddCourseExamAddQuestionImageState
-    extends State<AddCourseExamAddQuestionImage> {
+class _AddCourseExamAddQuestionExplainationImageState
+    extends State<AddCourseExamAddQuestionExplainationImage> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.read<TestItemCubit>().pickQuestionImage();
+        context.read<TestItemCubit>().pickQuestionSolutionImage();
       },
       child: Container(
         width: double.infinity,
@@ -37,25 +37,25 @@ class _AddCourseExamAddQuestionImageState
         ),
         child: BlocBuilder<TestItemCubit, TestItemState>(
           buildWhen: (previous, current) {
-            if (current is PickQuestionImageSuccess ||
-                current is PickQuestionImageFailure ||
-                current is PickQuestionImageLoading) {
+            if (current is PickQuestionSolutionImageFailure ||
+                current is PickQuestionSolutionImageSuccess ||
+                current is PickQuestionSolutionImageLoading) {
               return true;
             }
             return false;
           },
           builder: (context, state) {
-            if (state is PickQuestionImageFailure) {
+            if (state is PickQuestionSolutionImageFailure) {
               return CustomErrorWidget(errormessage: state.errMessage);
-            } else if (state is PickQuestionImageSuccess) {
-              widget.coursetestquestionentity.imageFile = state.file;
+            } else if (state is PickQuestionSolutionImageSuccess) {
+              widget.coursetestquestionentity.solutionFile = state.file;
               return Image.file(
                 state.file,
                 fit: BoxFit.cover,
               );
             } else {
               return Skeletonizer(
-                enabled: state is PickQuestionImageLoading,
+                enabled: state is PickQuestionSolutionImageLoading,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -69,7 +69,7 @@ class _AddCourseExamAddQuestionImageState
                       width: 10,
                     ),
                     Text(
-                      "صورة السؤال",
+                      "صورة الاجابة",
                       textAlign: TextAlign.center,
                       style: AppTextStyles(context)
                           .semiBold12

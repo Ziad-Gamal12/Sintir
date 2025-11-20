@@ -11,8 +11,10 @@ class CourseTestQuestionEntity {
   TextEditingController questionController;
   bool isOpened;
   String? imageUrl;
+  String? solutionImageUrl;
   String? selectedSolution;
   File? imageFile;
+  File? solutionFile;
 
   CourseTestQuestionEntity(
       {required this.questionTitle,
@@ -20,6 +22,8 @@ class CourseTestQuestionEntity {
       required this.isOpened,
       this.imageUrl,
       this.imageFile,
+      this.solutionImageUrl,
+      this.solutionFile,
       this.selectedSolution = ""})
       : questionController = TextEditingController(text: questionTitle);
 
@@ -33,7 +37,6 @@ class CourseTestQuestionEntity {
   }
 
   void removeSolution(Coursetestquestionsolutionentity solution) {
-    dispose();
     solutions.remove(solution);
   }
 

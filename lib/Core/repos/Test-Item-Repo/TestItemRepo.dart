@@ -9,6 +9,9 @@ import 'package:sintir/Core/errors/Failures.dart';
 abstract class Testitemrepo {
   Future<Either<Failure, void>> uploadTestQuestionsImages(
       {required List<CourseTestQuestionEntity> questions});
+  Future<Either<Failure, void>> uploadTestQuestionsSolutionsImages({
+    required List<CourseTestQuestionEntity> questions,
+  });
   Future<Either<Failure, void>> addTestResult(
       {required TestResultEntity testResult,
       required String courseId,

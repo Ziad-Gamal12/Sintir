@@ -24,10 +24,19 @@ class CustomReviewExamButtonAction extends StatelessWidget {
               text: "اضافة امتحان",
               color: KMainColor,
               textColor: Colors.white,
-              onPressed: () {
-                context.read<TestItemCubit>().uploadTestQuestionsImages(
-                      test: navigatesqlreviewrequirmentsentity.coursetestentity,
-                    );
+              onPressed: () async {
+                await Future.wait([
+                  context.read<TestItemCubit>().uploadTestQuestionsImages(
+                        test:
+                            navigatesqlreviewrequirmentsentity.coursetestentity,
+                      ),
+                  context
+                      .read<TestItemCubit>()
+                      .uploadTestQuestionsSolutionsImages(
+                        test:
+                            navigatesqlreviewrequirmentsentity.coursetestentity,
+                      ),
+                ]);
               }),
         );
       },

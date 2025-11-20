@@ -57,8 +57,8 @@ class _CustomCourseItemState extends State<CustomCourseItem> {
               ],
             ),
             Positioned(
-              top: 15,
-              left: 15,
+              top: 8,
+              left: 8,
               child: CustomAddFavouriteIcon(
                 courseEntity: course,
               ),

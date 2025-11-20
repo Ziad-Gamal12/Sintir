@@ -6,12 +6,14 @@ class Coursetestquestionmodel {
   final List<Map<String, dynamic>> solutions;
   final bool isOpened;
   String? imageUrl;
+  String? solutionUrl;
   String? selectedSolution;
 
   Coursetestquestionmodel(
       {required this.questionTitle,
       required this.solutions,
       required this.isOpened,
+      this.solutionUrl,
       this.imageUrl,
       this.selectedSolution = ""});
 
@@ -23,6 +25,7 @@ class Coursetestquestionmodel {
               .toList(),
           isOpened: json["isOpened"],
           imageUrl: json["imageUrl"],
+          solutionUrl: json["solutionUrl"],
           selectedSolution: json["selectedSolution"]);
   factory Coursetestquestionmodel.fromEntity(
           CourseTestQuestionEntity courseTestQuestionModel) =>
@@ -33,6 +36,7 @@ class Coursetestquestionmodel {
                       coursetestquestionsolution: e)
                   .toJson())
               .toList(),
+          solutionUrl: courseTestQuestionModel.solutionImageUrl,
           isOpened: courseTestQuestionModel.isOpened,
           imageUrl: courseTestQuestionModel.imageUrl,
           selectedSolution: courseTestQuestionModel.selectedSolution);
@@ -43,6 +47,7 @@ class Coursetestquestionmodel {
           .map((e) => Coursetestquestionsolutionmodel.fromJson(e).toEntity())
           .toList(),
       isOpened: isOpened,
+      solutionImageUrl: solutionUrl,
       imageUrl: imageUrl,
       selectedSolution: selectedSolution);
   Map<String, dynamic> toJson() => {
@@ -50,6 +55,7 @@ class Coursetestquestionmodel {
         "solutions": solutions,
         "isOpened": isOpened,
         "imageUrl": imageUrl,
+        "solutionUrl": solutionUrl,
         "selectedSolution": selectedSolution
       };
 }

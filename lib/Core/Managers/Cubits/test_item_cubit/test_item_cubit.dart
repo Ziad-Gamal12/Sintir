@@ -1,5 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +69,7 @@ class TestItemCubit extends Cubit<TestItemState> {
     emit(AddCourseSectionTestSolutionChanged());
   }
 
-  void uploadTestQuestionsImages({
+  Future<void> uploadTestQuestionsImages({
     required CourseTestEntity test,
   }) async {
     emit(QuestionsImagesUploadedingLoading());
@@ -77,6 +79,20 @@ class TestItemCubit extends Cubit<TestItemState> {
       emit(QuestionsImagesUploadedingFailure(errMessage: failure.message));
     }, (success) {
       emit(QuestionsImagesUploadedingSuccuss());
+    });
+  }
+
+  Future<void> uploadTestQuestionsSolutionsImages({
+    required CourseTestEntity test,
+  }) async {
+    emit(QuestionsSolutionsImagesUploadedingLoading());
+    var resulte = await testitemrepo.uploadTestQuestionsSolutionsImages(
+        questions: test.questions);
+    resulte.fold((failure) {
+      emit(QuestionsSolutionsImagesUploadedingFailure(
+          errMessage: failure.message));
+    }, (success) {
+      emit(QuestionsSolutionsImagesUploadedingSuccuss());
     });
   }
 
@@ -203,5 +219,25 @@ class TestItemCubit extends Cubit<TestItemState> {
 
   void resizeQuestionsImages({required String image, required bool isFilled}) {
     emit(ResizeQuestionsImageSuccess(imageUrl: image, isFilled: isFilled));
+  }
+
+  Future<void> pickQuestionImage() async {
+    emit(PickQuestionImageLoading());
+    final result = await assetspickerrepo.pickImageFromGallery();
+    result.fold((failure) {
+      emit(PickQuestionImageFailure(errMessage: failure.message));
+    }, (pickedImage) {
+      emit(PickQuestionImageSuccess(file: pickedImage));
+    });
+  }
+
+  Future<void> pickQuestionSolutionImage() async {
+    emit(PickQuestionSolutionImageLoading());
+    final result = await assetspickerrepo.pickVideoFromGallery();
+    result.fold((failure) {
+      emit(PickQuestionSolutionImageFailure(errMessage: failure.message));
+    }, (pickedImage) {
+      emit(PickQuestionSolutionImageSuccess(file: pickedImage));
+    });
   }
 }
