@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/constant.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
@@ -15,24 +16,55 @@ class CustomTextField extends StatelessWidget {
   List<TextInputFormatter>? inputFormatters;
   Function(String?)? onSaved;
   int maxLines;
-  CustomTextField(
-      {super.key,
-      this.inputFormatters,
-      required this.hintText,
-      this.prefixIcon,
-      this.suffixIcon,
-      required this.obscureText,
-      this.controller,
-      required this.textInputType,
-      required this.validator,
-      this.onSaved,
-      this.maxLines = 1});
+
+  CustomTextField({
+    super.key,
+    this.inputFormatters,
+    required this.hintText,
+    this.prefixIcon,
+    this.suffixIcon,
+    required this.obscureText,
+    this.controller,
+    required this.textInputType,
+    required this.validator,
+    this.onSaved,
+    this.maxLines = 1,
+  });
 
   @override
   Widget build(BuildContext context) {
-    OutlineInputBorder border = const OutlineInputBorder(
-        borderSide: BorderSide(color: Color(0xffDDDFDF), width: 1),
-        borderRadius: BorderRadius.all(Radius.circular(14)));
+    final baseBorder = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: const BorderSide(
+        color: Color(0xFFE4E6E8),
+        width: .5,
+      ),
+    );
+
+    final focusedBorder = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: const BorderSide(
+        color: KMainColor,
+        width: 1,
+      ),
+    );
+
+    final errorBorder = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: const BorderSide(
+        color: Color(0xFFE03131),
+        width: 1,
+      ),
+    );
+
+    final disabledBorder = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(16),
+      borderSide: const BorderSide(
+        color: Color(0xFFCED4DA),
+        width: 1,
+      ),
+    );
+
     return TextFormField(
       onSaved: onSaved,
       inputFormatters: inputFormatters,
@@ -41,23 +73,39 @@ class CustomTextField extends StatelessWidget {
       obscureText: obscureText,
       validator: validator,
       maxLines: maxLines,
-      decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: AppTextStyles(context)
-              .bold13
-              .copyWith(color: const Color(0xffAEAEB2)),
-          prefixIcon: Icon(
-            prefixIcon,
-            size: 24,
-            color: Colors.grey,
+      style: AppTextStyles(context).semiBold14.copyWith(
+            color: const Color(0xFF1C1C1E),
           ),
-          suffixIcon: suffixIcon,
-          border: border,
-          focusedBorder: border,
-          enabledBorder: border,
-          filled: true,
-          focusColor: const Color(0xffF9FAFA),
-          fillColor: const Color(0xffF9FAFA)),
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: AppTextStyles(context)
+            .semiBold14
+            .copyWith(color: const Color(0xFFB1B1B5)),
+
+        prefixIcon: Icon(
+          prefixIcon,
+          size: 24,
+          color: const Color(0xFF6C6C70),
+        ),
+
+        suffixIcon: suffixIcon,
+
+        // Borders
+        enabledBorder: baseBorder,
+        border: baseBorder,
+        focusedBorder: focusedBorder,
+        errorBorder: errorBorder,
+        focusedErrorBorder: errorBorder,
+        disabledBorder: disabledBorder,
+
+        filled: true,
+        fillColor: const Color(0xFFF8F9FB),
+
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 16,
+          horizontal: 16,
+        ),
+      ),
     );
   }
 }

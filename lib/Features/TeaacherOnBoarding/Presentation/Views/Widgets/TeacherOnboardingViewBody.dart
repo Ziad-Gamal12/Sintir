@@ -37,14 +37,14 @@ class _TeacherOnboardingViewBodyState extends State<TeacherOnboardingViewBody> {
     return Column(
       children: [
         Expanded(
-          flex: 2,
+          flex: 9,
           child: TeacherOnboardingPageView(
             pageController: pageController,
             onPageChanged: (index) => currentPageNotifier.value = index,
           ),
         ),
         Expanded(
-          flex: 1,
+          flex: 4,
           child: TeacherOnboardingInfoCard(
             pages: pages,
             currentPageNotifier: currentPageNotifier,

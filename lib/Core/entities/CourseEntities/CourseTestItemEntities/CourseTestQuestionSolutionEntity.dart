@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class Coursetestquestionsolutionentity {
+class CourseTestQuestionSolutionEntity {
   String answer;
   bool isCorrect;
   TextEditingController solutionController;
   String id = DateTime.now().millisecondsSinceEpoch.toString();
 
-  Coursetestquestionsolutionentity(
+  CourseTestQuestionSolutionEntity(
       {required this.answer, required this.isCorrect})
       : solutionController = TextEditingController(text: answer);
 

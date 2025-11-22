@@ -17,7 +17,7 @@ class CustomQuestionSolutionsListCustomSolutionItem extends StatelessWidget {
   final CourseTestQuestionEntity question;
   final CourseTestEntity coursetestentity;
 
-  final MapEntry<int, Coursetestquestionsolutionentity> e;
+  final MapEntry<int, CourseTestQuestionSolutionEntity> e;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class CustomQuestionSolutionsListCustomSolutionItem extends StatelessWidget {
     return question.solutions
         .firstWhere((s) => s.isCorrect,
             orElse: () =>
-                Coursetestquestionsolutionentity(answer: "", isCorrect: false))
+                CourseTestQuestionSolutionEntity(answer: "", isCorrect: false))
         .id
         .toString();
   }

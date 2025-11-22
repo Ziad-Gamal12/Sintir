@@ -19,24 +19,16 @@ class CustomReviewExamButtonAction extends StatelessWidget {
       builder: (context, state) {
         return Custom_Loading_Widget(
           isLoading: state is AddTestItemLoading ||
-              state is QuestionsImagesUploadedingLoading,
+              state is QuestionsImagesUploadedingLoading ||
+              state is QuestionsSolutionsImagesUploadedingLoading,
           child: Custombutton(
               text: "اضافة امتحان",
               color: KMainColor,
               textColor: Colors.white,
               onPressed: () async {
-                await Future.wait([
-                  context.read<TestItemCubit>().uploadTestQuestionsImages(
-                        test:
-                            navigatesqlreviewrequirmentsentity.coursetestentity,
-                      ),
-                  context
-                      .read<TestItemCubit>()
-                      .uploadTestQuestionsSolutionsImages(
-                        test:
-                            navigatesqlreviewrequirmentsentity.coursetestentity,
-                      ),
-                ]);
+                context.read<TestItemCubit>().uploadTestQuestionsImages(
+                      test: navigatesqlreviewrequirmentsentity.coursetestentity,
+                    );
               }),
         );
       },

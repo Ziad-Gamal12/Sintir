@@ -10,7 +10,7 @@ class QuestionOptionsList extends StatelessWidget {
     required this.onChanged,
   });
 
-  final List<Coursetestquestionsolutionentity> solutions;
+  final List<CourseTestQuestionSolutionEntity> solutions;
   final String selectedAnswer;
   final ValueChanged<String?> onChanged;
 

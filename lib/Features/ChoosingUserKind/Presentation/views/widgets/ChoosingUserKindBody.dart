@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/domain/ChoosingUserKindpageViewItemEntity.dart';
-import 'package:sintir/Features/ChoosingUserKind/Presentation/views/widgets/ChoosingUserKindInfoCard.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/widgets/CustomPageView.dart';
+import 'package:sintir/Features/ChoosingUserKind/Presentation/views/widgets/PageIndicatorAndButton.dart';
 import 'package:sintir/constant.dart';
 
 class ChoosingUserKindBody extends StatefulWidget {
@@ -34,21 +34,21 @@ class _ChoosingUserKindBodyState extends State<ChoosingUserKindBody> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: 30,
+        vertical: KVerticalPadding,
         horizontal: KHorizontalPadding,
       ),
       child: Column(
         children: [
           Expanded(
             flex: 6,
-            child: Custompageview(
+            child: CustomPageview(
               controller: pageController,
               onPageChanged: (index) => currentPageNotifier.value = index,
             ),
           ),
           Expanded(
-            flex: 4,
-            child: ChoosingUserKindInfoCard(
+            flex: 2,
+            child: PageIndicatorAndButton(
               pages: pages,
               currentPageNotifier: currentPageNotifier,
               pageController: pageController,

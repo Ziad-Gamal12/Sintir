@@ -15,7 +15,7 @@ class CustomRemoveSolutionItem extends StatelessWidget {
   });
 
   final CourseTestEntity coursetestentity;
-  final MapEntry<int, Coursetestquestionsolutionentity> e;
+  final MapEntry<int, CourseTestQuestionSolutionEntity> e;
   final CourseTestQuestionEntity question;
 
   @override

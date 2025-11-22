@@ -18,19 +18,19 @@ class TeacherOnboardingInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+      decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.shade200,
-            blurRadius: 60,
+            color: Colors.black12,
+            blurRadius: 30,
             spreadRadius: 3,
-            offset: const Offset(5, 10),
+            offset: Offset(5, 10),
           )
         ],
       ),
@@ -41,23 +41,20 @@ class TeacherOnboardingInfoCard extends StatelessWidget {
           return Column(
             children: [
               page.title,
-              const SizedBox(height: 20),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 37),
-                child: Text(
-                  page.description,
-                  textAlign: TextAlign.justify,
-                  style: AppTextStyles(context)
-                      .regular13
-                      .copyWith(color: const Color(0xff4E5556)),
-                ),
+              const SizedBox(height: 16),
+              Text(
+                page.description,
+                textAlign: TextAlign.justify,
+                style: AppTextStyles(context)
+                    .regular14
+                    .copyWith(color: Colors.black54),
               ),
               const Spacer(),
               TeacherOnBoardingButton(
                 currentPageNotifier: currentPageNotifier,
                 pageController: pageController,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
             ],
           );
         },

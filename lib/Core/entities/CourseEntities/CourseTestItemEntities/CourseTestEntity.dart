@@ -57,7 +57,7 @@ class CourseTestEntity {
       isOpened: false,
       questionTitle: "",
       solutions: [
-        Coursetestquestionsolutionentity(answer: "0", isCorrect: false)
+        CourseTestQuestionSolutionEntity(answer: "0", isCorrect: false)
       ],
     );
     questions.add(question);

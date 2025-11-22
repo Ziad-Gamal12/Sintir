@@ -22,11 +22,11 @@ class CustomOnBoardingPageViewEntity {
             children: [
               Text(" مرحبًا بك في ",
                   style: AppTextStyles(context)
-                      .bold23
+                      .semiBold24
                       .copyWith(color: const Color(0xff000000))),
               Text("SINTIR",
                   style: AppTextStyles(context)
-                      .bold23
+                      .semiBold24
                       .copyWith(color: KSecondaryColor)),
             ],
           ),
@@ -37,7 +37,7 @@ class CustomOnBoardingPageViewEntity {
         CustomOnBoardingPageViewEntity(
           title: Text(" تعلم بسهولة وأمان",
               style: AppTextStyles(context)
-                  .bold23
+                  .semiBold24
                   .copyWith(color: const Color(0xff000000))),
           image: Assets.assetsImagesSVGImagesStudentOnboardingTwo,
           description:
@@ -49,7 +49,7 @@ class CustomOnBoardingPageViewEntity {
           image: Assets.assetsImagesSVGImagesStudentOnboardingThree,
           title: Text("ابدأ رحلتك التعليمية",
               style: AppTextStyles(context)
-                  .bold23
+                  .semiBold24
                   .copyWith(color: const Color(0xff000000))),
         ),
       ];
@@ -66,11 +66,11 @@ class CustomOnBoardingPageViewEntity {
             children: [
               Text(" مرحبًا بك في ",
                   style: AppTextStyles(context)
-                      .bold23
+                      .semiBold24
                       .copyWith(color: const Color(0xff000000))),
               Text("SINTIR",
                   style: AppTextStyles(context)
-                      .bold23
+                      .semiBold24
                       .copyWith(color: KSecondaryColor)),
             ],
           ),
@@ -81,7 +81,7 @@ class CustomOnBoardingPageViewEntity {
           image: Assets.assetsImagesSVGImagesTeacherOnboarding2,
           title: Text("تفاعل مع طلابك",
               style: AppTextStyles(context)
-                  .bold23
+                  .semiBold24
                   .copyWith(color: const Color(0xff000000))),
         ),
         CustomOnBoardingPageViewEntity(
@@ -90,7 +90,7 @@ class CustomOnBoardingPageViewEntity {
           image: Assets.assetsImagesSVGImagesTeacherOnboarding3,
           title: Text("ابدأ اليوم",
               style: AppTextStyles(context)
-                  .bold23
+                  .semiBold24
                   .copyWith(color: const Color(0xff000000))),
         ),
       ];

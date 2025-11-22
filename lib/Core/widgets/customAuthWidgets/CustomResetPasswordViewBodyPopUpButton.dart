@@ -16,7 +16,9 @@ class CustomResetPasswordViewBodyPopUpButton extends StatelessWidget {
       },
       child: Text(
         "تسجيل الدخول؟",
-        style: AppTextStyles(context).semiBold16.copyWith(color: KMainColor),
+        style: AppTextStyles(context)
+            .semiBold16
+            .copyWith(color: KMainColor, decoration: TextDecoration.underline),
       ),
     );
   }

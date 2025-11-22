@@ -1,9 +1,10 @@
 // ignore_for_file: file_names, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/domain/ChoosingUserKindpageViewItemEntity.dart';
+import 'package:sintir/Features/ChoosingUserKind/Presentation/views/widgets/ChoosingUserKindDescription.dart';
+import 'package:sintir/Features/ChoosingUserKind/Presentation/views/widgets/ChoosingUserKindTitle.dart';
+import 'package:sintir/constant.dart';
 import 'package:svg_flutter/svg.dart';
 
 class Custompageviewitem extends StatelessWidget {
@@ -16,34 +17,24 @@ class Custompageviewitem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    return SizedBox(
-      width: double.infinity,
-      child: AspectRatio(
-          aspectRatio: 16 / 9,
-          child: SvgPicture.asset(pageViewItemEntity.image)),
-    );
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 25),
+      padding: const EdgeInsets.symmetric(
+          horizontal: KHorizontalPadding, vertical: KVerticalPadding),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-              height: height * 0.3,
+              height: height * 0.4,
               child: SvgPicture.asset(pageViewItemEntity.image)),
           const SizedBox(
-            height: 35,
+            height: 16,
           ),
-          Text(
-            pageViewItemEntity.title,
-            style: AppTextStyles(context).bold32,
-          ),
-          const Customsizedbox(width: 0, height: 10),
-          Text(
-            pageViewItemEntity.description,
-            textAlign: TextAlign.center,
-            style: AppTextStyles(context)
-                .regular16
-                .copyWith(color: const Color(0xff818181)),
-          ),
+          ChoosingUserKindTitle(title: pageViewItemEntity.title),
+          const SizedBox(height: 8),
+          ChoosingUserKindDescription(
+              description: pageViewItemEntity.description),
         ],
       ),
     );

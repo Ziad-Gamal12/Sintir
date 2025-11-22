@@ -16,16 +16,33 @@ class CustomResetPasswordViewBodyActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Custombutton(
-        text: "استعادة كلمة المرور",
-        color: KMainColor,
-        textColor: Colors.white,
-        onPressed: () {
-          if (resetPasswordFormKey.currentState!.validate()) {
-            context
-                .read<CustomResetPasswordCubit>()
-                .sendResetPasswordEmail(email: emailController.text);
-          }
-        });
+    return // Send Button
+        BlocBuilder<CustomResetPasswordCubit, CustomResetPasswordState>(
+      builder: (context, state) {
+        final isLoading = state is CustomResetPasswordLoading;
+
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          alignment: Alignment.center,
+          child: isLoading
+              ? const CircularProgressIndicator(
+                  color: Colors.white,
+                )
+              : Custombutton(
+                  text: "ارسال الرابط",
+                  color: KMainColor,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    if (resetPasswordFormKey.currentState!.validate()) {
+                      context
+                          .read<CustomResetPasswordCubit>()
+                          .sendResetPasswordEmail(
+                            email: emailController.text,
+                          );
+                    }
+                  }),
+        );
+      },
+    );
   }
 }

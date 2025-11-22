@@ -14,14 +14,14 @@ class Coursetestquestionsolutionmodel {
         answer: json['answer'], isCorrect: json['isCorrect']);
   }
   factory Coursetestquestionsolutionmodel.fromEntity(
-      {required Coursetestquestionsolutionentity coursetestquestionsolution}) {
+      {required CourseTestQuestionSolutionEntity coursetestquestionsolution}) {
     return Coursetestquestionsolutionmodel(
         answer: coursetestquestionsolution.answer,
         isCorrect: coursetestquestionsolution.isCorrect);
   }
 
-  Coursetestquestionsolutionentity toEntity() {
-    return Coursetestquestionsolutionentity(
+  CourseTestQuestionSolutionEntity toEntity() {
+    return CourseTestQuestionSolutionEntity(
       answer: answer,
       isCorrect: isCorrect,
     );

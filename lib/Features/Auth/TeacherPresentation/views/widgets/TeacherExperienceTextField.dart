@@ -14,7 +14,7 @@ class TeacherExperienceTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomTextField(
         hintText: "عدد سنين الخبرة",
-        prefixIcon: Icons.work_history_outlined,
+        prefixIcon: Icons.workspace_premium,
         obscureText: false,
         onSaved: (val) {
           context.read<UserEntity>().teacherExtraDataEntity?.workExperience =

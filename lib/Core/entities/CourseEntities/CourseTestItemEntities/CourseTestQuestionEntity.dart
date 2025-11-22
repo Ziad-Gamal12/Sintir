@@ -7,7 +7,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 
 class CourseTestQuestionEntity {
   String? questionTitle;
-  List<Coursetestquestionsolutionentity> solutions;
+  List<CourseTestQuestionSolutionEntity> solutions;
   TextEditingController questionController;
   bool isOpened;
   String? imageUrl;
@@ -27,16 +27,16 @@ class CourseTestQuestionEntity {
       this.selectedSolution = ""})
       : questionController = TextEditingController(text: questionTitle);
 
-  void addSolution(Coursetestquestionsolutionentity? solution) {
+  void addSolution(CourseTestQuestionSolutionEntity? solution) {
     if (solution != null) {
       solutions.add(solution);
     }
 
     solutions
-        .add(Coursetestquestionsolutionentity(answer: "", isCorrect: false));
+        .add(CourseTestQuestionSolutionEntity(answer: "", isCorrect: false));
   }
 
-  void removeSolution(Coursetestquestionsolutionentity solution) {
+  void removeSolution(CourseTestQuestionSolutionEntity solution) {
     solutions.remove(solution);
   }
 
@@ -45,7 +45,7 @@ class CourseTestQuestionEntity {
   }
 
   void disposeSolutions() {
-    for (Coursetestquestionsolutionentity solution in solutions) {
+    for (CourseTestQuestionSolutionEntity solution in solutions) {
       solution.solutionController.dispose();
     }
   }

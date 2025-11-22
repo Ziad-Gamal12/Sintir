@@ -18,7 +18,7 @@ class TeacherSignInViewBodyTextFieledInPuts extends StatelessWidget {
           controller: teacherSignInEmailController,
           isIconVisible: true,
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 12),
         CustomPasswordTextField(
           controller: teacherSignInPasswordController,
         )

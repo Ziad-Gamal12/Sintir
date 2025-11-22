@@ -15,8 +15,9 @@ class CustomOnboardingPageViewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      child:
-          AspectRatio(aspectRatio: 16 / 9, child: SvgPicture.asset(svgImage)),
+      child: SvgPicture.asset(
+        svgImage,
+      ),
     );
   }
 }

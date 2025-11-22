@@ -11,9 +11,10 @@ class CustomResetPasswordViewBodyDescription extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: Text(
-        "إذا كنت قد نسيت كلمة المرور الخاصة بك، لا داعي للقلق. نحن هنا لمساعدتك! يرجى إدخال عنوان بريدك الإلكتروني المسجل في الحقل أدناه. بعد ذلك، سنرسل لك رسالة تحتوي على تعليمات مفصلة لإعادة تعيين كلمة المرور الخاصة بك. تأكد من التحقق من صندوق الوارد والبريد غير الهام (سبام) الخاص بك. إذا لم تصلك الرسالة خلال بضع دقائق، يمكنك إعادة المحاولة.",
-        style: AppTextStyles(context).semiBold13.copyWith(color: Colors.grey),
-        textAlign: TextAlign.justify,
+        "أدخل بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة المرور الخاصة بك.",
+        style:
+            AppTextStyles(context).semiBold14.copyWith(color: Colors.black54),
+        textAlign: TextAlign.center,
       ),
     );
   }

@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/widgets/CustomLoginViewBodyDonotHaveAccountText.dart';
 import 'package:sintir/Core/widgets/CustomSepratedWidget.dart';
-import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/manager/StudentSignIn_Cubit/student_sign_in_cubit.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/views/Student_signUp_View.dart';
@@ -57,21 +56,21 @@ class _StudentSigninViewBodyBlocBuilderState
       },
       builder: (context, state) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+          padding: const EdgeInsets.symmetric(
+              horizontal: KHorizontalPadding, vertical: KVerticalPadding),
           child: SingleChildScrollView(
             child: Form(
               key: studentSignInFormKey,
               child: Column(
                 children: [
-                  const Customsizedbox(width: 0, height: 12),
                   student_SigninTextfiledsection(
                     studentSignInEmailController: studentSignInEmailController,
                     studentSignInPasswordController:
                         studentSignInPasswordController,
                   ),
-                  const Customsizedbox(width: 0, height: 16),
+                  const SizedBox(height: 16),
                   const StudentSignInForgetPasswordTextWidget(),
-                  const Customsizedbox(width: 0, height: 30),
+                  const SizedBox(height: 32),
                   Custom_Loading_Widget(
                     isLoading: state,
                     child: StudentSignInCustomButton(
@@ -81,15 +80,15 @@ class _StudentSigninViewBodyBlocBuilderState
                         studentSignInPasswordController:
                             studentSignInPasswordController),
                   ),
-                  const Customsizedbox(width: 0, height: 30),
+                  const SizedBox(height: 32),
                   CustomLoginViewBodyDonotHaveAccountText(onTap: () {
                     GoRouter.of(context).push(StudentSignupView.routeName);
                   }),
-                  const Customsizedbox(width: 0, height: 55),
+                  const SizedBox(height: 32),
                   const Customsepratedwidget(
                     centerTitle: "او",
                   ),
-                  const Customsizedbox(width: 0, height: 30),
+                  const SizedBox(height: 32),
                   const Student_SigninSocialbuttonssection()
                 ],
               ),

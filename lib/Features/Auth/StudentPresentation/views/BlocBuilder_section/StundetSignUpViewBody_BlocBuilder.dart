@@ -51,23 +51,21 @@ class _StundetSignUpViewBody_BlocBuilderState
     return Form(
         key: studentSignUpFormKey,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+          padding: const EdgeInsets.symmetric(
+              horizontal: KHorizontalPadding, vertical: KVerticalPadding),
           child: SingleChildScrollView(
-            child: Column(children: [
-              const SizedBox(width: 0, height: 20),
+            child: Column(spacing: 12, children: [
               const StudentSignUpFirstAndLastNameField(),
-              const SizedBox(width: 0, height: 10),
               const StudentSignUpemailaddressfiled(),
-              const SizedBox(width: 0, height: 10),
               const StudentSignUpPhoneNumberFiled(),
-              const SizedBox(width: 0, height: 10),
               const StudentSignUpBirthDateAndSchoolNameAndGenderSection(),
-              const SizedBox(height: 10),
               StudentSignUpPasswordField(
                 studentSignUpPasswordController:
                     studentSignUpPasswordController,
               ),
-              const SizedBox(height: 20),
+              const SizedBox(
+                height: 16,
+              ),
               Customtermsandconditiona(textonpressed: () {
                 GoRouter.of(context)
                     .push(StudenttermsandconditionsView.routeName);
@@ -75,8 +73,8 @@ class _StundetSignUpViewBody_BlocBuilderState
                 isTermsAndConditionChecked = value;
                 setState(() {});
               }),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.03,
+              const SizedBox(
+                height: 16,
               ),
               Custom_Loading_Widget(
                   isLoading:
@@ -87,9 +85,10 @@ class _StundetSignUpViewBody_BlocBuilderState
                     studentSignUpPasswordController:
                         studentSignUpPasswordController,
                   )),
-              const SizedBox(height: 20),
+              const SizedBox(
+                height: 16,
+              ),
               const StudentSignUpHaveAnAccountTextWidget(),
-              const SizedBox(height: 20),
             ]),
           ),
         ));

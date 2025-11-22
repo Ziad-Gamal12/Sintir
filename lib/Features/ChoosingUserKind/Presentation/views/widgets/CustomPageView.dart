@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/domain/ChoosingUserKindpageViewItemEntity.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/widgets/CustomPageViewItem.dart';
 
-class Custompageview extends StatelessWidget {
+class CustomPageview extends StatelessWidget {
   final PageController controller;
   final ValueChanged<int> onPageChanged;
-  const Custompageview(
+  const CustomPageview(
       {super.key, required this.controller, required this.onPageChanged});
 
   @override

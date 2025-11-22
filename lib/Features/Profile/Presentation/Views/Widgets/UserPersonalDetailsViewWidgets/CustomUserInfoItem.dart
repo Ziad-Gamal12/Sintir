@@ -12,6 +12,7 @@ class CustomUserInfoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: const EdgeInsets.all(0),
       leading: CircleAvatar(
           radius: 22,
           backgroundColor: Colors.grey.shade50,

@@ -10,7 +10,7 @@ class CustomReviewQuestionSolutionListItem extends StatelessWidget {
     required this.solution,
   });
 
-  final Coursetestquestionsolutionentity solution;
+  final CourseTestQuestionSolutionEntity solution;
 
   @override
   Widget build(BuildContext context) {

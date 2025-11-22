@@ -14,17 +14,17 @@ class StudentSignUpBirthDateAndSchoolNameAndGenderSection
     return const Row(
       children: [
         Expanded(
-          flex: 1,
+          flex: 2,
           child: Column(
             children: [
               StudentsignupBirthdayfield(),
-              SizedBox(height: 10),
+              SizedBox(height: 12),
               CustomstudentsignupSchoollevel(),
             ],
           ),
         ),
-        SizedBox(height: 10),
-        StudentGenderSelectionInput()
+        SizedBox(height: 12),
+        Expanded(child: StudentGenderSelectionInput())
       ],
     );
   }

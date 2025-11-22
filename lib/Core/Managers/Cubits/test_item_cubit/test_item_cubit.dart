@@ -43,7 +43,7 @@ class TestItemCubit extends Cubit<TestItemState> {
   }
 
   void removeSolutin(
-      {required Coursetestquestionsolutionentity solution,
+      {required CourseTestQuestionSolutionEntity solution,
       required CourseTestEntity coursetestentity,
       required CourseTestQuestionEntity question}) {
     if (question.solutions.length > 1) {
@@ -233,7 +233,7 @@ class TestItemCubit extends Cubit<TestItemState> {
 
   Future<void> pickQuestionSolutionImage() async {
     emit(PickQuestionSolutionImageLoading());
-    final result = await assetspickerrepo.pickVideoFromGallery();
+    final result = await assetspickerrepo.pickImageFromGallery();
     result.fold((failure) {
       emit(PickQuestionSolutionImageFailure(errMessage: failure.message));
     }, (pickedImage) {

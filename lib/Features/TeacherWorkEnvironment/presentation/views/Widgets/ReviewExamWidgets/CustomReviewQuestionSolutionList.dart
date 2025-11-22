@@ -4,7 +4,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 
 class Customreviewquestionsolutionlist extends StatelessWidget {
   const Customreviewquestionsolutionlist({super.key, required this.solutions});
-  final List<Coursetestquestionsolutionentity> solutions;
+  final List<CourseTestQuestionSolutionEntity> solutions;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

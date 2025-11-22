@@ -11,7 +11,7 @@ class AddCourseExamAddSolutionItem extends StatelessWidget {
     required this.onChange,
   });
 
-  final Coursetestquestionsolutionentity coursetestquestionsolutionentity;
+  final CourseTestQuestionSolutionEntity coursetestquestionsolutionentity;
   final String groupValue;
   final ValueChanged<String?> onChange;
 

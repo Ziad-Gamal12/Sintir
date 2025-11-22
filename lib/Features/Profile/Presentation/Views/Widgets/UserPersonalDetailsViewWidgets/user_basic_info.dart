@@ -39,8 +39,6 @@ class UserBasicInfo extends StatelessWidget {
               value: user.email,
             ),
 
-            const SizedBox(height: 8),
-
             // Gender
             CustomUserInfoItem(
               icon: FontAwesomeIcons.venusMars,

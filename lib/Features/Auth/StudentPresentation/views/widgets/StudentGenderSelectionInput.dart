@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomRadioWidget.dart';
-import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 
 class StudentGenderSelectionInput extends StatefulWidget {
@@ -37,11 +36,13 @@ class _StudentGenderSelectionInputState
                     });
                     context.read<UserEntity>().gender = val ?? "";
                   }),
-              const Customsizedbox(width: 20, height: 0),
+              const SizedBox(
+                width: 12,
+              ),
               Text(
                 "ذكر",
                 style: AppTextStyles(context)
-                    .bold14
+                    .bold16
                     .copyWith(color: const Color(0xff818181)),
               ),
             ],
@@ -57,11 +58,13 @@ class _StudentGenderSelectionInputState
                     });
                     context.read<UserEntity>().gender = val ?? "";
                   }),
-              const Customsizedbox(width: 20, height: 0),
+              const SizedBox(
+                width: 12,
+              ),
               Text(
                 "أنثى",
                 style: AppTextStyles(context)
-                    .bold14
+                    .bold16
                     .copyWith(color: const Color(0xff818181)),
               ),
             ],

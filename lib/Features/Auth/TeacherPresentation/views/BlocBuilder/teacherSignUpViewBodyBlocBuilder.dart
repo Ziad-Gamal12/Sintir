@@ -53,14 +53,14 @@ class _teacherSignUpViewBodyBlocBuilderState
             key: teacherSignUpFormKey,
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                  horizontal: KHorizontalPadding, vertical: 24),
+                  horizontal: KHorizontalPadding, vertical: KVerticalPadding),
               child: Column(
                 children: [
                   TeacherSignUPTextFieldsSection(
                     teacherSignUpPasswordController:
                         teacherSignUpPasswordController,
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 16),
                   Customtermsandconditiona(textonpressed: () {
                     GoRouter.of(context)
                         .push(Teachertermsandconditionsview.routeName);
@@ -68,8 +68,8 @@ class _teacherSignUpViewBodyBlocBuilderState
                     isChecked = value;
                     setState(() {});
                   }),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.02,
+                  const SizedBox(
+                    height: 32,
                   ),
                   Custom_Loading_Widget(
                     isLoading: state,
@@ -80,7 +80,7 @@ class _teacherSignUpViewBodyBlocBuilderState
                       formKey: teacherSignUpFormKey,
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 32),
                   const TeacherSignUpViewBodyHaveAnAccountText()
                 ],
               ),

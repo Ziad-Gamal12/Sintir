@@ -8,7 +8,7 @@ class CustomExpansionHeaderTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
+      style: AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
     );
   }
 }

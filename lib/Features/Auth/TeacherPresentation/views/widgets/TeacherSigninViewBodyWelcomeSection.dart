@@ -16,12 +16,12 @@ class TeacherSigninViewBodyWelcomeSection extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: AspectRatio(
-            aspectRatio: 3 / 2,
+            aspectRatio: 2 / 1,
             child:
                 SvgPicture.asset(Assets.assetsImagesSVGImagesLoginWelcomeImage),
           ),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 16),
         Text.rich(
           TextSpan(children: [
             TextSpan(
@@ -37,7 +37,7 @@ class TeacherSigninViewBodyWelcomeSection extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         const SizedBox(
-          height: 10,
+          height: 8,
         ),
         Text(
           "سجل دخولك لكي تستطيع استخدام التطبيق",

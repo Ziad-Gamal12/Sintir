@@ -30,7 +30,7 @@ class _AddCourseSectionExamViewBodyState
     id: "${DateTime.now().toIso8601String()}-Test",
     questions: [
       CourseTestQuestionEntity(isOpened: false, questionTitle: "", solutions: [
-        Coursetestquestionsolutionentity(answer: "", isCorrect: false)
+        CourseTestQuestionSolutionEntity(answer: "", isCorrect: false)
       ])
     ],
     title: Variables.AddExamName.text,

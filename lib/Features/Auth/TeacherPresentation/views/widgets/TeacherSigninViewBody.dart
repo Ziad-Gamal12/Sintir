@@ -53,12 +53,12 @@ class _TeacherSigninViewBodyState extends State<TeacherSigninViewBody> {
               key: teacherLoginFormKey,
               child: Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: KHorizontalPadding, vertical: 24),
+                    horizontal: KHorizontalPadding, vertical: KVerticalPadding),
                 child: Column(
                   children: [
                     const TeacherSigninViewBodyWelcomeSection(),
                     const SizedBox(
-                      height: 40,
+                      height: 48,
                     ),
                     TeacherSignInViewBodyTextFieledInPuts(
                       teacherSignInPasswordController:
@@ -68,7 +68,7 @@ class _TeacherSigninViewBodyState extends State<TeacherSigninViewBody> {
                     ),
                     const SizedBox(height: 16),
                     const TeacherLoginViewBodyForgetPasswordText(),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 32),
                     Custom_Loading_Widget(
                         isLoading: state is TeacherSignInLoading,
                         child: TeacherSignInViewBodyCustomButton(
@@ -78,7 +78,7 @@ class _TeacherSigninViewBodyState extends State<TeacherSigninViewBody> {
                           teacherSignInEmailController:
                               teacherSignInEmailController,
                         )),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 32),
                     CustomLoginViewBodyDonotHaveAccountText(
                       onTap: () {
                         GoRouter.of(context).push(TeacherSignUpView.routeName);

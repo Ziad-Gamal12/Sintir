@@ -20,9 +20,7 @@ class AddCourseExamAddQuestionListViewItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: ValueKey(
-        index.toString(),
-      ),
+      key: ObjectKey(coursetestquestionentity),
       onDismissed: (direction) => removeQuestionItem(context),
       direction: DismissDirection.horizontal,
       child: Container(

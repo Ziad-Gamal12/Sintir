@@ -37,11 +37,11 @@ class BottomNavBarActiveItem extends StatelessWidget {
         .animate()
         .fadeIn(
           delay: 100.ms,
-          duration: 600.ms,
+          duration: 400.ms,
         )
         .moveY(
-          begin: 20,
-          duration: 400.ms,
+          begin: 10,
+          duration: 200.ms,
         );
   }
 }
