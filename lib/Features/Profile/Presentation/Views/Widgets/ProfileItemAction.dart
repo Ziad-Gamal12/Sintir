@@ -15,7 +15,7 @@ class ProfileItemAction extends StatelessWidget {
       },
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
+          horizontal: 12,
           vertical: 8,
         ),
         leading: ProfileItemActionLeadingIcon(

@@ -131,6 +131,7 @@ class TestItemCubit extends Cubit<TestItemState> {
     for (var element in test.questions) {
       if (element.selectedSolution != null) {
         numbers.add(ExamResultSolvedQuestionEntity(
+          solutionImageUrl: element.solutionImageUrl ?? "",
           imageUrl: element.imageUrl ?? "",
           questionTitle: element.questionTitle ?? "null",
           isCorrect: element.selectedSolution ==

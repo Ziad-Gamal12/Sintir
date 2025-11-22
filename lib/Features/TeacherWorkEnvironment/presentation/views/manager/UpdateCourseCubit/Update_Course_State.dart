@@ -25,3 +25,17 @@ final class UpdateCourseCubitAssetFailure extends UpdateCourseState {
   final String errmessage;
   UpdateCourseCubitAssetFailure(this.errmessage);
 }
+
+// updated course state
+final class UpdateCourseStateLoading extends UpdateCourseState {}
+
+final class UpdateCourseStateSuccess extends UpdateCourseState {
+  final CourseEntity courseEntity;
+  UpdateCourseStateSuccess({required this.courseEntity});
+}
+
+final class UpdateCourseStateFailure extends UpdateCourseState {
+  final String errmessage;
+
+  UpdateCourseStateFailure({required this.errmessage});
+}

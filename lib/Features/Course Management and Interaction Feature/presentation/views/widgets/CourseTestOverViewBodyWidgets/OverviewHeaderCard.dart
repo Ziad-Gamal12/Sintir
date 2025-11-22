@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestOverViewBodyWidgets/CourseTestOverViewBodyJoinExamButton.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestOverViewBodyWidgets/ExamDuration.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestOverViewBodyWidgets/ExamQuestionsCount.dart';
 
 class OverviewHeaderCard extends StatelessWidget {
   const OverviewHeaderCard({super.key, required this.entity});
@@ -9,7 +11,7 @@ class OverviewHeaderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: const [
@@ -26,9 +28,9 @@ class OverviewHeaderCard extends StatelessWidget {
             style:
                 AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 12),
           _OverviewHeaderRow(entity: entity),
-          const SizedBox(height: 20),
+          const SizedBox(height: 24),
           CourseTestOverViewBodyJoinExamButton(
               courseExamViewNavigationsRequirmentsEntity: entity),
         ],
@@ -43,14 +45,13 @@ class _OverviewHeaderRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle =
-        AppTextStyles(context).regular14.copyWith(color: Colors.black);
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Text("المدة : ${entity.test.durationTime} دقيقة", style: textStyle),
-        const Spacer(),
-        Text("عدد الأسئلة : ${entity.test.questions.length} سؤال",
-            style: textStyle),
+        ExamDuration(
+          duration: entity.test.durationTime,
+        ),
+        ExamQuestionsCount(questionsCount: entity.test.questions.length),
       ],
     );
   }

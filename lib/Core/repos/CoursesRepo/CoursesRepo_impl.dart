@@ -277,6 +277,8 @@ class CoursesrepoImpl implements Coursesrepo {
       saveLastDoc: (doc) => _teacherInterestedCoursesLastDoc = doc,
     );
   }
+  
+
 }
 
 List<CourseEntity> _parseCourses(List<dynamic> listData) {

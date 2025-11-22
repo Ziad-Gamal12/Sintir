@@ -17,9 +17,9 @@ class ProfileItemActionLeadingIcon extends StatelessWidget {
           shape: BoxShape.circle,
           color: profileActionsEntity.color == null
               ? Colors.grey.shade50
-              : profileActionsEntity.color?.withOpacity(.1),
+              : profileActionsEntity.color?.withOpacity(.05),
         ),
         child: Icon(profileActionsEntity.icon,
-            color: profileActionsEntity.color ?? Colors.black, size: 25));
+            color: profileActionsEntity.color ?? Colors.black, size: 24));
   }
 }

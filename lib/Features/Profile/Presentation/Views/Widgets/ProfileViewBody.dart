@@ -32,10 +32,11 @@ class ProfileViewBody extends StatelessWidget {
               child: ProfileViewBodyUserInfo(),
             ),
             SliverToBoxAdapter(
-                child: Divider(
-              height: 40,
-              color: Colors.grey.shade300,
-            )),
+              child: Divider(
+                color: Colors.grey.shade300,
+                height: 40,
+              ),
+            ),
             const SliverToBoxAdapter(
               child: ProfileItemActionsButtons(),
             ),

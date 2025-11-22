@@ -19,8 +19,8 @@ class SearchCoursesLoadingGrid extends StatelessWidget {
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: GridHelper.getCrossAxisCount(width),
           childAspectRatio: GridHelper.getAspectRatio(maxWidth: width),
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
+          mainAxisSpacing: 20,
+          crossAxisSpacing: 20,
         ),
         itemBuilder: (context, index) => Skeletonizer(
           enabled: true,

@@ -29,12 +29,11 @@ class CustomSendNoteText extends StatelessWidget {
         TextSpan(
             text: " لقد واجهنى بعض المشاكل؟  ",
             style:
-                AppTextStyles(context).regular11.copyWith(color: Colors.black)),
+                AppTextStyles(context).regular13.copyWith(color: Colors.black)),
         TextSpan(
             text: "أرسال ملاحظة",
-            style: AppTextStyles(context)
-                .regular11
-                .copyWith(color: KSecondaryColor))
+            style:
+                AppTextStyles(context).bold13.copyWith(color: KSecondaryColor))
       ])),
     );
   }

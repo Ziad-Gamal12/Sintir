@@ -63,7 +63,7 @@ class _SearchViewBodyState extends State<SearchViewBody> {
                   controller: _controller,
                 ),
               ),
-              const SliverToBoxAdapter(child: SizedBox(height: 20)),
+              const SliverToBoxAdapter(child: SizedBox(height: 24)),
               SliverToBoxAdapter(
                 child: SearchTeachersSection(
                   teachers:
@@ -71,12 +71,12 @@ class _SearchViewBodyState extends State<SearchViewBody> {
                 ),
               ),
               const SliverToBoxAdapter(
-                  child: Divider(height: 40, color: Color(0xffE5E5EA))),
+                  child: Divider(height: 24, color: Color(0xffE5E5EA))),
               const SliverToBoxAdapter(
                 child: SearchViewBodySearchViewBodyCoursesListHeader(),
               ),
               const SliverToBoxAdapter(
-                child: SizedBox(height: 10),
+                child: SizedBox(height: 12),
               ),
               SearchCoursesSliverGridView(
                   courses:

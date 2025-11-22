@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/HomeViewBodyAppBar.dart';
+import 'package:sintir/Features/Home/presentation/views/widgets/NewestCoursesHeader.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/PopularCoursesSection.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/RecentCoursesSection.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/UserInterestedCoursesSection.dart';
@@ -13,27 +13,24 @@ class HomeViewBodyBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
+    return const Padding(
+      padding: EdgeInsets.symmetric(
         horizontal: KHorizontalPadding,
+        vertical: KVerticalPadding,
       ),
       child: CustomScrollView(
         slivers: [
-          const SliverToBoxAdapter(child: HomeViewBodyAppBar()),
-          const SliverToBoxAdapter(child: SizedBox(height: 20)),
-          const UserInterestedCoursesSection(),
-          const SliverToBoxAdapter(child: SizedBox(height: 20)),
-          const PopularCoursesSection(),
-          const SliverToBoxAdapter(child: SizedBox(height: 20)),
+          SliverToBoxAdapter(child: HomeViewBodyAppBar()),
+          SliverToBoxAdapter(child: SizedBox(height: 24)),
+          UserInterestedCoursesSection(),
+          SliverToBoxAdapter(child: SizedBox(height: 24)),
+          PopularCoursesSection(),
+          SliverToBoxAdapter(child: SizedBox(height: 24)),
           SliverToBoxAdapter(
-            child: Column(
-              children: [
-                CustomListORGridTextHeader(text: "أحدث الكورسات"),
-                const SizedBox(height: 10),
-              ],
-            ),
+            child: NewestCoursesHeader(),
           ),
-          const RecentCoursesSection(),
+          SliverToBoxAdapter(child: SizedBox(height: 12)),
+          RecentCoursesSection(),
         ],
       ),
     );

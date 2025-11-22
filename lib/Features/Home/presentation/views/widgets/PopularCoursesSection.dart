@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
-import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_courses_cubit/get_courses_cubit.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/HorizentalCoursesListView.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/HorizentalLoadingCoursesListView.dart';
+import 'package:sintir/Features/Home/presentation/views/widgets/PopularCoursesSectionHeader.dart';
 
 class PopularCoursesSection extends StatelessWidget {
   const PopularCoursesSection({super.key});
@@ -15,8 +15,8 @@ class PopularCoursesSection extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Column(
         children: [
-          CustomListORGridTextHeader(text: "الأكثر مشاهدة"),
-          const SizedBox(height: 10),
+          PopularCoursesSectionHeader(),
+          const SizedBox(height: 12),
           BlocBuilder<GetCoursesCubit, GetCoursesState>(
             buildWhen: (prev, curr) =>
                 curr is GetPopularCoursesLoading ||

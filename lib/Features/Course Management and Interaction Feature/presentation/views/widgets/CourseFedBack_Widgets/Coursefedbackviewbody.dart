@@ -31,7 +31,6 @@ class _CoursefedbackviewbodyState extends State<Coursefedbackviewbody> {
     coursefedbackItemEntity = CoursefeedbackItemEntity(
         datePosted: DateTime.now(),
         fedBack: "",
-        likesCount: 0,
         name: getUserData().fullName,
         userImage: getUserData().profilePicurl,
         uid: getUserData().uid);

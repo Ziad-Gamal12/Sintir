@@ -22,8 +22,8 @@ class FavoritesviewBodyGridView extends StatelessWidget {
       addRepaintBoundaries: true,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: GridHelper.getCrossAxisCount(width),
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20,
         childAspectRatio: GridHelper.getAspectRatio(maxWidth: width),
       ),
       itemCount: courses.length,

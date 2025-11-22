@@ -18,6 +18,7 @@ class _SearchViewState extends State<SearchView>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocProvider(
       create: (context) => SearchCubit(
         searchRepo: getIt.get<SearchRepo>(),

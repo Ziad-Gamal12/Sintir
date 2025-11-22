@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomRadioWidget.dart';
 
 class QuestionOptionTile extends StatelessWidget {
@@ -22,11 +23,11 @@ class QuestionOptionTile extends StatelessWidget {
           groupValue: groupValue,
           onchange: onChanged,
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 12),
         Flexible(
           child: Text(
             value,
-            style: const TextStyle(color: Colors.black),
+            style: AppTextStyles(context).regular16,
             overflow: TextOverflow.ellipsis,
           ),
         ),

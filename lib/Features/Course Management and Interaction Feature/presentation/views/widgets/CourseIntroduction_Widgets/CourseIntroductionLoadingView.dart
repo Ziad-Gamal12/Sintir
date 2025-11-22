@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseContentListView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/CourseIntroductionStaticWidgets.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/courseIntroductionViewBodyListViewHeader.dart';
 import 'package:sintir/constant.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -16,9 +17,10 @@ class CourseIntroductionLoadingView extends StatelessWidget {
         child: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(child: CourseIntroductionStaticHeader()),
-            SliverToBoxAdapter(child: SizedBox(height: 100)),
-            SliverToBoxAdapter(child: CourseIntroductionStaticListViewHeader()),
-            SliverToBoxAdapter(child: SizedBox(height: 15)),
+            SliverToBoxAdapter(child: SizedBox(height: 32)),
+            SliverToBoxAdapter(
+                child: courseIntroductionViewBodyListViewHeader()),
+            SliverToBoxAdapter(child: SizedBox(height: 12)),
             CourseContentListView(courseSectionsEntity: []),
           ],
         ),

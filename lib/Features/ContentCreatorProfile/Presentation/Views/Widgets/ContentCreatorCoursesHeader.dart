@@ -12,11 +12,11 @@ class ContentCreatorCoursesHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(
-          height: 20,
+          height: 24,
         ),
         Text("كورساتي", style: AppTextStyles(context).semiBold20),
         const SizedBox(
-          height: 10,
+          height: 12,
         ),
       ],
     );

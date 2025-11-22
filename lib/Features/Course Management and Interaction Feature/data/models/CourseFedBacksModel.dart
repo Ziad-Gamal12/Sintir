@@ -3,7 +3,6 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 
 class Coursefeedbacksmodel {
   final String userImage, uid, name, fedBack;
-  final int likesCount;
   final DateTime datePosted;
 
   Coursefeedbacksmodel(
@@ -11,7 +10,6 @@ class Coursefeedbacksmodel {
       required this.name,
       required this.uid,
       required this.fedBack,
-      required this.likesCount,
       required this.datePosted});
 
   factory Coursefeedbacksmodel.fromEntity(
@@ -21,7 +19,6 @@ class Coursefeedbacksmodel {
       name: coursefedbackItemEntity.name,
       uid: coursefedbackItemEntity.uid,
       fedBack: coursefedbackItemEntity.fedBack,
-      likesCount: coursefedbackItemEntity.likesCount,
       datePosted: coursefedbackItemEntity.datePosted,
     );
   }
@@ -31,7 +28,6 @@ class Coursefeedbacksmodel {
       uid: json["uid"],
       name: json["name"],
       fedBack: json["fedBack"],
-      likesCount: (json["likesCount"] as num).toInt(),
       datePosted: (json["datePosted"] as Timestamp).toDate(),
     );
   }
@@ -39,7 +35,6 @@ class Coursefeedbacksmodel {
         userImage: userImage,
         name: name,
         fedBack: fedBack,
-        likesCount: likesCount,
         uid: uid,
         datePosted: datePosted,
       );
@@ -47,7 +42,6 @@ class Coursefeedbacksmodel {
         "userImage": userImage,
         "name": name,
         "fedBack": fedBack,
-        "likesCount": likesCount,
         "uid": uid,
         "datePosted": datePosted,
       };

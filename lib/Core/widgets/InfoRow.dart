@@ -18,20 +18,18 @@ class InfoRow extends StatelessWidget {
     return Row(
       children: [
         headline == null
-            ? Icon(icon, color: const Color(0xff818181), size: 18)
+            ? Icon(icon, color: Colors.black87, size: 18)
             : Text(
                 headline!,
                 style: AppTextStyles(context)
                     .semiBold12
                     .copyWith(color: Colors.black),
               ),
-        const SizedBox(width: 5),
+        const SizedBox(width: 8),
         Text(
           label,
           style: textStyle ??
-              AppTextStyles(context)
-                  .regular10
-                  .copyWith(color: const Color(0xff818181)),
+              AppTextStyles(context).regular10.copyWith(color: Colors.black87),
         ),
       ],
     );

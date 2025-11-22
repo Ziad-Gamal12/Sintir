@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
@@ -24,8 +23,7 @@ class courseIntroductionViewBodyListViewHeader extends StatelessWidget {
           enabled: state,
           child: Row(
             children: [
-              const Icon(FontAwesomeIcons.starOfLife,
-                  color: KMainColor, size: 20),
+              const Icon(Icons.menu_book_outlined, color: KMainColor, size: 20),
               const SizedBox(
                 width: 10,
               ),

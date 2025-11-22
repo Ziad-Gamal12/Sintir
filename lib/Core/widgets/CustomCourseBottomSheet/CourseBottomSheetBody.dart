@@ -51,15 +51,15 @@ class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
               children: [
                 CourseBottomSheetBodyCoursePoster(),
                 SizedBox(
-                  height: 20,
+                  height: 24,
                 ),
                 CourseBottomSheetCourseDetails(),
                 SizedBox(
-                  height: 20,
+                  height: 24,
                 ),
                 CourseBottomContentCreator(),
                 SizedBox(
-                  height: 20,
+                  height: 24,
                 ),
                 CustomCourseBottomSheetActionButtons()
               ],

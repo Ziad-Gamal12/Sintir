@@ -30,7 +30,8 @@ class _CourseTestLayoutState extends State<CourseTestLayout> {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+          padding: const EdgeInsets.symmetric(
+              horizontal: KHorizontalPadding, vertical: KVerticalPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -53,7 +54,7 @@ class _CourseTestLayoutState extends State<CourseTestLayout> {
                 },
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 24),
 
               /// Question navigation bar
               QuestionNavigationBar(

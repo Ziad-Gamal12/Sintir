@@ -83,17 +83,12 @@ class _TeacherWorkenvironmentviewBodyState
           ),
           const SliverToBoxAdapter(
             child: SizedBox(
-              height: 10,
+              height: 12,
             ),
           ),
           SliverToBoxAdapter(
             child: CustomTeacherCardItem(
               user: user,
-            ),
-          ),
-          const SliverToBoxAdapter(
-            child: SizedBox(
-              height: 10,
             ),
           ),
           const SliverToBoxAdapter(
@@ -107,7 +102,7 @@ class _TeacherWorkenvironmentviewBodyState
           ),
           const SliverToBoxAdapter(
             child: SizedBox(
-              height: 10,
+              height: 12,
             ),
           ),
           SliverToBoxAdapter(
@@ -117,7 +112,7 @@ class _TeacherWorkenvironmentviewBodyState
           ),
           const SliverToBoxAdapter(
             child: SizedBox(
-              height: 20,
+              height: 12,
             ),
           ),
           TeacherEnvironmentCoursesGrid(

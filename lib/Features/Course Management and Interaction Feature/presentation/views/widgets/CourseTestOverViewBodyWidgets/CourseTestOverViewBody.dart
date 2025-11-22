@@ -50,9 +50,9 @@ class _CourseTestOverViewBodyState extends State<CourseTestOverViewBody> {
                 OverviewHeaderCard(
                   entity: widget.navigationRequirements,
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 32),
                 const CourseTestOverViewBodyListViewHeader(),
-                const SizedBox(height: 20),
+                const SizedBox(height: 12),
               ],
             ),
           ),

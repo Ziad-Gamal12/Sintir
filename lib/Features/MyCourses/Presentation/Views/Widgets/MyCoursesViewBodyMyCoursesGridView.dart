@@ -33,8 +33,8 @@ class MyCoursesViewBodyMyCoursesGridView extends StatelessWidget {
                 GridHelper.getCrossAxisCount(MediaQuery.of(context).size.width),
             childAspectRatio: GridHelper.getAspectRatio(
                 maxWidth: MediaQuery.of(context).size.width),
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 20,
           ),
           itemBuilder: (context, index) =>
               isLoading && index == myCourses.length

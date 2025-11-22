@@ -3,7 +3,6 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/ShowBottomSheet.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheet.dart';
-import 'package:sintir/constant.dart';
 
 class HorizentalCoursesListView extends StatelessWidget {
   const HorizentalCoursesListView({super.key, required this.courses});
@@ -14,12 +13,11 @@ class HorizentalCoursesListView extends StatelessWidget {
     return SizedBox(
       height: height * .28,
       child: ListView.builder(
-          padding: const EdgeInsets.only(right: KHorizontalPadding),
           scrollDirection: Axis.horizontal,
           itemCount: courses.length,
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.only(left: 12),
               child: AspectRatio(
                 aspectRatio: 150 / 200,
                 child: CustomCourseItem(

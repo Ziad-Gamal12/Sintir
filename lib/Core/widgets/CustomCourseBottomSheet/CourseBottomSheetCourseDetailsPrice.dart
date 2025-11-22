@@ -15,14 +15,14 @@ class CourseBottomSheetCourseDetailsPrice extends StatelessWidget {
       return Text.rich(
         TextSpan(children: [
           TextSpan(
-              text: "السعر :  ",
+              text: "السعر : ",
               style: AppTextStyles(context)
-                  .semiBold16
+                  .semiBold20
                   .copyWith(color: Colors.black)),
           TextSpan(
               text: " $price جنيه ",
               style: AppTextStyles(context)
-                  .semiBold20
+                  .bold20
                   .copyWith(color: KSecondaryColor))
         ]),
       );

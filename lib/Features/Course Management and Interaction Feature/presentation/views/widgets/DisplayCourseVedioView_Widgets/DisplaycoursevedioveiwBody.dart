@@ -72,8 +72,8 @@ class _DisplaycoursevedioveiwBodyState
         return Stack(
           children: [
             Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: KHorizontalPadding, vertical: KVerticalPadding),
                 child: CustomScrollView(
                   slivers: [
                     SliverToBoxAdapter(
@@ -86,7 +86,7 @@ class _DisplaycoursevedioveiwBodyState
                             videoUrl: vedio.vedioUrl,
                           ),
                           const SizedBox(
-                            height: 25,
+                            height: 32,
                           ),
                           const CustomSendNoteText(),
                         ],

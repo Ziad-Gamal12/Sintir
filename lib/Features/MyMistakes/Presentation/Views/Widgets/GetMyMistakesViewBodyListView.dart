@@ -40,7 +40,7 @@ class _GetMyMistakesViewBodyListViewState
               ? widget.myMistakes.length + 1
               : widget.myMistakes.length,
           itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.only(bottom: 20),
             child: index == widget.myMistakes.length
                 ? const GetMyMistakesViewBodyListViewLoading()
                 : CustomSolvedQuestionListItem(

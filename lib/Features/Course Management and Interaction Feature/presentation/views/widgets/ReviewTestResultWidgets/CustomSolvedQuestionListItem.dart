@@ -3,8 +3,10 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/ExamR
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/CustomSolvedQuestionListItemContent.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/CustomSolvedQuestionListItemHeader.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/CustomSolvedQuestionListItemQuestionTitle%20.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/ShowHideSolutionButton.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/SolutionImageOverlay.dart';
 
-class CustomSolvedQuestionListItem extends StatelessWidget {
+class CustomSolvedQuestionListItem extends StatefulWidget {
   const CustomSolvedQuestionListItem({
     super.key,
     required this.examResultSolvedQuestionEntity,
@@ -17,7 +19,18 @@ class CustomSolvedQuestionListItem extends StatelessWidget {
   final int length;
 
   @override
+  State<CustomSolvedQuestionListItem> createState() =>
+      _CustomSolvedQuestionListItemState();
+}
+
+class _CustomSolvedQuestionListItemState
+    extends State<CustomSolvedQuestionListItem> {
+  bool isSolutionVisible = false;
+
+  @override
   Widget build(BuildContext context) {
+    final hasSolutionImage =
+        widget.examResultSolvedQuestionEntity.solutionImageUrl.isNotEmpty;
     return AspectRatio(
       aspectRatio: 2 / 1.4,
       child: Container(
@@ -25,31 +38,51 @@ class CustomSolvedQuestionListItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.grey.shade50,
           border: Border.all(
-            color: examResultSolvedQuestionEntity.isCorrect
+            color: widget.examResultSolvedQuestionEntity.isCorrect
                 ? Colors.green
                 : Colors.red,
             width: 1,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            CustomSolvedQuestionListItemHeader(
-              index: index,
-              length: length,
-              isCorrect: examResultSolvedQuestionEntity.isCorrect,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomSolvedQuestionListItemHeader(
+                  index: widget.index,
+                  length: widget.length,
+                  isCorrect: widget.examResultSolvedQuestionEntity.isCorrect,
+                ),
+                const SizedBox(height: 16),
+                CustomSolvedQuestionListItemQuestionTitle(
+                  questionTitle:
+                      widget.examResultSolvedQuestionEntity.questionTitle,
+                ),
+                const SizedBox(height: 12),
+                Expanded(
+                  child: CustomSolvedQuestionListItemContent(
+                    examResultSolvedQuestionEntity:
+                        widget.examResultSolvedQuestionEntity,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 20),
-            CustomSolvedQuestionListItemQuestionTitle(
-              questionTitle: examResultSolvedQuestionEntity.questionTitle,
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: CustomSolvedQuestionListItemContent(
-                examResultSolvedQuestionEntity: examResultSolvedQuestionEntity,
+            if (isSolutionVisible)
+              SolutionImageOverlay(
+                imageUrl:
+                    widget.examResultSolvedQuestionEntity.solutionImageUrl,
               ),
-            ),
+            if (hasSolutionImage)
+              ShowHideSolutionButton(
+                isVisible: isSolutionVisible,
+                onTap: () {
+                  setState(() {
+                    isSolutionVisible = !isSolutionVisible;
+                  });
+                },
+              ),
           ],
         ),
       ),

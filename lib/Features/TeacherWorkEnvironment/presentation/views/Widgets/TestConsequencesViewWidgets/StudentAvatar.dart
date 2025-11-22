@@ -8,6 +8,7 @@ class StudentAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         boxShadow: [
@@ -21,10 +22,14 @@ class StudentAvatar extends StatelessWidget {
       child: CircleAvatar(
         radius: 38,
         backgroundColor: Colors.white,
-        child: ClipOval(
-          child: CustomCachedNetworkImage(
-            imageUrl: url,
-            fit: BoxFit.cover,
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: CustomCachedNetworkImage(
+              imageUrl: url,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
       ),

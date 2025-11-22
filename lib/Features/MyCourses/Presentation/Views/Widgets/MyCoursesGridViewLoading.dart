@@ -17,8 +17,8 @@ class MyCoursesGridViewLoading extends StatelessWidget {
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: GridHelper.getCrossAxisCount(maxWidth),
           childAspectRatio: GridHelper.getAspectRatio(maxWidth: maxWidth),
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
+          mainAxisSpacing: 20,
+          crossAxisSpacing: 20,
         ),
         itemBuilder: (context, index) => Skeletonizer(
                 child: CustomCourseItem(

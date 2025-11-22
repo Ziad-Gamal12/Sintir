@@ -39,7 +39,7 @@ class _MyResultsViewBodyListViewState extends State<MyResultsViewBodyListView> {
               ? widget.myResults.length + 1
               : widget.myResults.length,
           itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.only(bottom: 20),
             child: index == widget.myResults.length
                 ? const MyResultsViewBodyListViewLoading()
                 : AspectRatio(

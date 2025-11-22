@@ -12,7 +12,10 @@ class Sendreportreasonsgridview extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverGrid.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            childAspectRatio: 90 / 20, crossAxisCount: 2),
+            childAspectRatio: 90 / 20,
+            crossAxisCount: 2,
+            mainAxisSpacing: 20,
+            crossAxisSpacing: 20),
         itemCount: Sendcoursereportentity.reportReasons.length,
         itemBuilder: (context, index) {
           return Row(

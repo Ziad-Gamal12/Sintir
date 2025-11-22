@@ -14,15 +14,16 @@ class CourseBottomSheetCourseDetailsDescription extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("الوصف", style: AppTextStyles(context).semiBold16),
+        Text("الوصف", style: AppTextStyles(context).semiBold20),
         const SizedBox(
-          height: 10,
+          height: 12,
         ),
         Text(
           description,
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
-          style: AppTextStyles(context).regular10.copyWith(color: Colors.black),
+          style:
+              AppTextStyles(context).regular14.copyWith(color: Colors.black87),
         ),
       ],
     );

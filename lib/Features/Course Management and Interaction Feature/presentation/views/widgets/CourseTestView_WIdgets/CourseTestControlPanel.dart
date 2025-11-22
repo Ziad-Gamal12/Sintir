@@ -35,7 +35,7 @@ class CourseTestControlPanel extends StatelessWidget {
           /// Displays question stats (total, answered, unanswered)
           QuestionStatsRow(exam: exam),
 
-          const SizedBox(height: 10),
+          const SizedBox(height: 12),
 
           /// Displays timer + test action buttons
           TestTimerAndActionsRow(stopWatchTimer: stopWatchTimer),

@@ -17,8 +17,8 @@ class ResultDetailsStatsGrid extends StatelessWidget {
         crossAxisCount:
             GridHelper.getCrossAxisCount(MediaQuery.of(context).size.width),
         childAspectRatio: 2 / 1.3,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20,
       ),
       children: [
         Testresultdetailsrow(

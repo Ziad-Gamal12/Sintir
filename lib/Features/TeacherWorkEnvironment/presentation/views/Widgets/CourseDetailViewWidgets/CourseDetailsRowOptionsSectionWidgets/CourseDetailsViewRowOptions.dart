@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/helper/GridHelper.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/CoursedetailsviewOptionitemEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsRowOptionsSectionWidgets/CustomCourseDetails_OptionItem.dart';
 
@@ -19,11 +20,12 @@ class CourseDetailsViewRowOptions extends StatelessWidget {
             itemCount: items.length,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 childAspectRatio: 1.2 / 1,
                 mainAxisSpacing: 20,
                 crossAxisSpacing: 20,
-                crossAxisCount: 2),
+                crossAxisCount: GridHelper.getCrossAxisCount(
+                    MediaQuery.of(context).size.width)),
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {

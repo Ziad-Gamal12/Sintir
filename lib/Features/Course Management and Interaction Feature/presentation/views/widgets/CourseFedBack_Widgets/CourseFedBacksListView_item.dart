@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomCachedNetworkImage.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
@@ -38,37 +37,11 @@ class CoursefedbackslistviewItem extends StatelessWidget {
             imageUrl: item.userImage,
           ),
         ),
-        trailing: IntrinsicWidth(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  const Icon(
-                    FontAwesomeIcons.thumbsUp,
-                    size: 20,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    item.likesCount.toString(),
-                    style: AppTextStyles(context)
-                        .semiBold12
-                        .copyWith(color: Colors.black),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                "${item.datePosted.year}/${item.datePosted.month}/${item.datePosted.day}",
-                style: AppTextStyles(context)
-                    .regular14
-                    .copyWith(color: const Color(0xff818181)),
-              )
-            ],
-          ),
+        trailing: Text(
+          "${item.datePosted.year}/${item.datePosted.month}/${item.datePosted.day}",
+          style: AppTextStyles(context)
+              .regular14
+              .copyWith(color: const Color(0xff818181)),
         ),
       ),
     );

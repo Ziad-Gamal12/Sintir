@@ -11,7 +11,10 @@ class CoursePosterImage extends StatelessWidget {
       width: double.infinity,
       child: AspectRatio(
         aspectRatio: 16 / 9,
-        child: CustomCachedNetworkImage(fit: BoxFit.fill, imageUrl: imageUrl),
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child:
+                CustomCachedNetworkImage(fit: BoxFit.fill, imageUrl: imageUrl)),
       ),
     );
   }

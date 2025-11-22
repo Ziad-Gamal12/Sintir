@@ -23,7 +23,7 @@ class CustomSolvedQuestionListItemContent extends StatelessWidget {
             selectedAnswer: examResultSolvedQuestionEntity.selectedAnswer,
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 8),
         if (examResultSolvedQuestionEntity.imageUrl.isNotEmpty)
           Expanded(
             child: ClipRRect(

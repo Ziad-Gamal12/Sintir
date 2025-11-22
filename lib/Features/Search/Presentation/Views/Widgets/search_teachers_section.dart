@@ -13,7 +13,7 @@ class SearchTeachersSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SearchViewBodySearchViewBodyTeachersListHeader(),
-        const SizedBox(height: 10),
+        const SizedBox(height: 12),
         SearchTeachersListView(teachersList: teachers),
       ],
     );

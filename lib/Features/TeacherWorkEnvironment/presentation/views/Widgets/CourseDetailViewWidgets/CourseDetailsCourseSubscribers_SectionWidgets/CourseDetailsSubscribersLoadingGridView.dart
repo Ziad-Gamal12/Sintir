@@ -17,8 +17,8 @@ class CourseDetailsSubscribersLoadingGridView extends StatelessWidget {
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount:
                 GridHelper.getCrossAxisCount(MediaQuery.of(context).size.width),
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20,
             childAspectRatio: 1 / 1.2),
         itemBuilder: (context, index) => CourseDetailsSubscribersGridviewItem(
             subscriber: getFakLoadingSubscribers()[index]),

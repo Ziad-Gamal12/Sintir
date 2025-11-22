@@ -12,19 +12,31 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
     final requirmentsEntity =
         context.read<DisplayCourseBottomsheetNavigationRequirmentsEntity>();
     return IntrinsicHeight(
-      child: Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.bottomCenter,
-        children: [
-          CoursePosterImage(imageUrl: requirmentsEntity.course.posterUrl ?? ""),
-          Positioned(
-            left: 20,
-            right: 20,
-            top: (MediaQuery.of(context).size.width / 2.5) - 100,
-            child: CourseInfoCard(requirmentsEntity: requirmentsEntity),
+      child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade200,
+                blurRadius: 50,
+                spreadRadius: 1,
+                offset: const Offset(5, 15),
+              )
+            ],
           ),
-        ],
-      ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            spacing: 32,
+            children: [
+              CoursePosterImage(
+                  imageUrl: requirmentsEntity.course.posterUrl ?? ""),
+              CourseInfoCard(requirmentsEntity: requirmentsEntity),
+            ],
+          )),
     );
   }
 }

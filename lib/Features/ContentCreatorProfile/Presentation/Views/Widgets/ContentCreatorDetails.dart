@@ -66,7 +66,7 @@ class _ContentCreatorDetailsState extends State<ContentCreatorDetails>
         child: Column(
           children: [
             CreatorAvatar(imageUrl: creator.profileImageUrl),
-            const SizedBox(height: 18),
+            const SizedBox(height: 16),
             CreatorNameTitle(
               name: creator.name,
               title: creator.title,

@@ -22,11 +22,9 @@ class CourseBottomSheet extends StatefulWidget {
   State<CourseBottomSheet> createState() => _CourseBottomSheetState();
 }
 
-class _CourseBottomSheetState extends State<CourseBottomSheet>
-    with AutomaticKeepAliveClientMixin {
+class _CourseBottomSheetState extends State<CourseBottomSheet> {
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     DisplayCourseBottomsheetNavigationRequirmentsEntity
         bottomsheetnavigationrequirmentsentity =
         DisplayCourseBottomsheetNavigationRequirmentsEntity(
@@ -43,10 +41,10 @@ class _CourseBottomSheetState extends State<CourseBottomSheet>
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
               ),
-              border: Border.all(color: Colors.grey, width: 1)),
+              border: Border.all(color: Colors.grey.shade300, width: 1)),
           child: SafeArea(
             child: Provider.value(
               value: bottomsheetnavigationrequirmentsentity,
@@ -57,7 +55,4 @@ class _CourseBottomSheetState extends State<CourseBottomSheet>
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

@@ -5,7 +5,8 @@ import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseContentListView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/CourseIntroductionStaticWidgets.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/CourseIntroductionSuccessViewSubscribeButton.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/CourseIntroductionSuccessViewSubscribeButtonBuilder.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/courseIntroductionViewBodyListViewHeader.dart';
 import 'package:sintir/constant.dart';
 
 class CourseIntroductionSuccessView extends StatelessWidget {
@@ -22,15 +23,16 @@ class CourseIntroductionSuccessView extends StatelessWidget {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+          padding: const EdgeInsets.symmetric(
+              horizontal: KHorizontalPadding, vertical: KVerticalPadding),
           child: CustomScrollView(
             controller: scrollController,
             slivers: [
               const SliverToBoxAdapter(child: CourseIntroductionStaticHeader()),
-              const SliverToBoxAdapter(child: SizedBox(height: 100)),
+              const SliverToBoxAdapter(child: SizedBox(height: 32)),
               const SliverToBoxAdapter(
-                  child: CourseIntroductionStaticListViewHeader()),
-              const SliverToBoxAdapter(child: SizedBox(height: 15)),
+                  child: courseIntroductionViewBodyListViewHeader()),
+              const SliverToBoxAdapter(child: SizedBox(height: 12)),
               if (sections.isEmpty)
                 SliverToBoxAdapter(
                   child: Center(
@@ -39,7 +41,7 @@ class CourseIntroductionSuccessView extends StatelessWidget {
                       child: Text(
                         "سيتم اضافة المحتوى قريبا ⌛️",
                         style: AppTextStyles(context)
-                            .bold24
+                            .semiBold20
                             .copyWith(color: Colors.black),
                       ),
                     ),
@@ -57,7 +59,7 @@ class CourseIntroductionSuccessView extends StatelessWidget {
             bottom: 0,
             left: 0,
             right: 0,
-            child: CourseIntroductionSuccessViewSubscribeButton(
+            child: CourseIntroductionSuccessViewSubscribeButtonBuilder(
                 isSubscribed: isSubscribed))
       ],
     );

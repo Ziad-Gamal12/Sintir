@@ -50,4 +50,14 @@ class UpdateCourseCubit extends Cubit<UpdateCourseState> {
       emit(UpdateCourseCubitAssetPicked(file: file));
     });
   }
+
+  void updateCourseState({required CourseEntity courseEntity}) async {
+    emit(UpdateCourseStateLoading());
+    final result = await coursesrepo.updateCourse(courseEntity: courseEntity);
+    result.fold((failure) {
+      emit(UpdateCourseStateFailure(errmessage: failure.message));
+    }, (success) {
+      emit(UpdateCourseStateSuccess(courseEntity: courseEntity));
+    });
+  }
 }

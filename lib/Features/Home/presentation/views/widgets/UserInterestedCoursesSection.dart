@@ -27,7 +27,7 @@ class UserInterestedCoursesSection extends StatelessWidget {
               child: Column(
             children: [
               CustomListORGridTextHeader(text: "موصى بها"),
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
               const HorizentalLoadingCoursesListView(),
             ],
           ));
@@ -41,7 +41,7 @@ class UserInterestedCoursesSection extends StatelessWidget {
               child: Column(
                 children: [
                   CustomListORGridTextHeader(text: "موصى بها"),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 12),
                   HorizentalCoursesListView(courses: courses),
                 ],
               ),
@@ -52,7 +52,7 @@ class UserInterestedCoursesSection extends StatelessWidget {
               child: Column(
             children: [
               CustomListORGridTextHeader(text: "موصى بها"),
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
               const HorizentalLoadingCoursesListView(),
             ],
           ));

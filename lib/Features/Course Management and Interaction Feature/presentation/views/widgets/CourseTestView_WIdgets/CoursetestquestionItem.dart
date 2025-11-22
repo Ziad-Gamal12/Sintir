@@ -31,7 +31,7 @@ class CourseTestQuestionItem extends StatelessWidget {
           index: currentQuestionIndex,
           title: question.questionTitle ?? "",
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 16),
         Row(
           children: [
             Expanded(
@@ -41,7 +41,7 @@ class CourseTestQuestionItem extends StatelessWidget {
                 onChanged: answerChange,
               ),
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 12),
             Expanded(
               child: QuestionImageWidget(imageUrl: question.imageUrl),
             ),

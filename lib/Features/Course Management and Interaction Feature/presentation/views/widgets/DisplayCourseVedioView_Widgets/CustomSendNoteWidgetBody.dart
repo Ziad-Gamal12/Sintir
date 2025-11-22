@@ -53,16 +53,16 @@ class _CustomSendNoteWidgetBodyState extends State<CustomSendNoteWidgetBody> {
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
               ),
-              border: Border.all(color: Colors.black, width: 1)),
+              border: Border.all(color: Colors.grey, width: 1)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const CustomSendNoteWidgetBodyHeader(),
               const SizedBox(
-                height: 15,
+                height: 16,
               ),
               const CustomSendNoteWidgetBodyTextField(),
               const Spacer(),

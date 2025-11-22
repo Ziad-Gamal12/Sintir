@@ -18,7 +18,7 @@ class TestTimerAndActionsRow extends StatelessWidget {
           timerStream: stopWatchTimer.rawTime,
         ),
 
-        const SizedBox(width: 20),
+        const SizedBox(width: 24),
 
         /// Buttons
         const Expanded(

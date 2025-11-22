@@ -15,8 +15,9 @@ class CustomSolvedQuestionListItemHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
           padding: const EdgeInsets.all(8),
@@ -30,6 +31,7 @@ class CustomSolvedQuestionListItemHeader extends StatelessWidget {
                 AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
           ),
         ),
+        const SizedBox(height: 8),
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
