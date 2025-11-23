@@ -9,6 +9,7 @@ import 'package:sintir/Features/Subscribtion/Data/Models/PaymentModels/OrderItem
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobResponse.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PaymentEntities/BillingDataEntity.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class PaymobRepoImp implements PaymobRepo {
   final PayMobService payMobService;
@@ -39,7 +40,7 @@ class PaymobRepoImp implements PaymobRepo {
 
       final clientSecret = response["client_secret"];
       if (clientSecret == null) {
-        return left(ServerFailure(message: "لم يتم إنشاء client_secret"));
+        return left(ServerFailure(message: LocaleKeys.unexpectedError));
       }
 
       final checkoutUrl =
@@ -50,7 +51,7 @@ class PaymobRepoImp implements PaymobRepo {
         amount: amount,
       ));
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما أثناء عملية الدفع"));
+      return left(ServerFailure(message: LocaleKeys.unexpectedError));
     }
   }
 

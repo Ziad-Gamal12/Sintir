@@ -7,6 +7,7 @@ import 'package:sintir/Core/services/FireBase/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/ChoosingUserKindView.dart';
+import 'package:sintir/locale_keys.dart';
 
 class LogoutDialog extends StatelessWidget {
   const LogoutDialog({super.key});
@@ -20,10 +21,8 @@ class LogoutDialog extends StatelessWidget {
       content: Padding(
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 60),
         child: Text(
-          "هل انت متأكد من تسجيل الخروج؟",
-          style: AppTextStyles(
-            context,
-          )
+          LocaleKeys.logoutConfirm, // "هل انت متأكد من تسجيل الخروج؟"
+          style: AppTextStyles(context)
               .semiBold14
               .copyWith(color: Colors.black, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
@@ -40,7 +39,7 @@ class LogoutDialog extends StatelessWidget {
                     GoRouter.of(context).go(ChoosingUserKindView.routeName);
                   }
                 },
-                text: "تأكيد",
+                text: LocaleKeys.confirm, // "تأكيد"
                 color: Colors.red,
                 textColor: Colors.white,
               ),
@@ -51,7 +50,7 @@ class LogoutDialog extends StatelessWidget {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                text: "لا أرغب",
+                text: LocaleKeys.cancel, // "لا أرغب"
                 color: isDark ? Colors.grey.shade900 : Colors.white,
                 textColor: Colors.black,
                 side: const BorderSide(color: Colors.black),

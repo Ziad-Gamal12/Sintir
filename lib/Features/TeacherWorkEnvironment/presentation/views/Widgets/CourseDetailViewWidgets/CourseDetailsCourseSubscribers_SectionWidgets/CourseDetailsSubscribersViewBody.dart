@@ -11,6 +11,7 @@ import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomSearchTextField.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersGridView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersLoadingGridView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseStudentsCount.dart';
 import 'package:sintir/constant.dart';
 
 class CourseDetailsSubscribersViewBody extends StatefulWidget {
@@ -139,8 +140,9 @@ class _CourseDetailsSubscribersViewBodyState
             vertical: KVerticalPadding,
           ),
           children: [
-            const SizedBox(height: 20),
             CustomSearchTextField(controller: controller),
+            const SizedBox(height: 20),
+            CourseStudentsCount(count: widget.courseEntity.studentsCount),
             const SizedBox(height: 20),
             if (state is GetCourseSubscribersLoading && _subscribers.isEmpty)
               const CourseDetailsSubscribersLoadingGridView()

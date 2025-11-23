@@ -21,7 +21,7 @@ class _StudentSignInViewBodyState extends State<StudentSignInViewBody> {
     return BlocConsumer<StudentSignInCubit, StudentSignInState>(
       listener: (context, state) {
         if (state is StudentSignInSuccess) {
-          GoRouter.of(context).pushReplacement(Homeview.routeName);
+          GoRouter.of(context).go(Homeview.routeName);
         } else if (state is StudentSignInFailure) {
           errordialog(context, state.errmessage).show();
         }

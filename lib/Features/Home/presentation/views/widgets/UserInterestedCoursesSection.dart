@@ -35,7 +35,7 @@ class UserInterestedCoursesSection extends StatelessWidget {
           final courses = state.resonseEntity.courses;
           if (courses.isEmpty) {
             return SliverToBoxAdapter(
-                child: CustomEmptyWidget(text: "لا يوجد دورات حديثة"));
+                child: CustomEmptyWidget(text: "لا يوجد دورات موصى بها"));
           } else {
             return SliverToBoxAdapter(
               child: Column(

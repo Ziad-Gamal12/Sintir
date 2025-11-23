@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_portal/flutter_portal.dart';
+import 'package:localingo/app_localizations.dart';
 import 'package:sintir/Core/services/BlocObserver.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
@@ -12,7 +13,6 @@ import 'package:sintir/Features/Favorites/Domain/Repos/FavoritesRepo.dart';
 import 'package:sintir/Features/Favorites/presentation/views/Manager/favourites_cubit/favourites_cubit.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/firebase_options.dart';
-import 'package:sintir/generated/l10n.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,15 +50,22 @@ class Sintir extends StatelessWidget {
             ),
             scaffoldBackgroundColor: Colors.white),
         localizationsDelegates: const [
-          S.delegate,
+          AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
+
+        // Specify supported locales
         supportedLocales: const [
-          Locale('en'),
-          Locale('ar'),
+          Locale('en'), // English
+          Locale('ar'), // Arabic
+          Locale('fr'), // French
+          Locale('es'), // Spanish
+          Locale('de'),
+          Locale('it'), // German
         ],
+
         locale: const Locale('ar'),
         debugShowCheckedModeBanner: false,
         routerConfig: App_router.router,

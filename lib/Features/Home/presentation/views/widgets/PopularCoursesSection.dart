@@ -15,7 +15,7 @@ class PopularCoursesSection extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Column(
         children: [
-          PopularCoursesSectionHeader(),
+          const PopularCoursesSectionHeader(),
           const SizedBox(height: 12),
           BlocBuilder<GetCoursesCubit, GetCoursesState>(
             buildWhen: (prev, curr) =>
@@ -30,7 +30,7 @@ class PopularCoursesSection extends StatelessWidget {
               } else if (state is GetPopularCoursesSuccess) {
                 final courses = state.resonseEntity.courses;
                 if (courses.isEmpty) {
-                  return CustomEmptyWidget(text: "لا يوجد دورات حديثة");
+                  return CustomEmptyWidget(text: "لا يوجد دورات مشهورة");
                 } else {
                   return HorizentalCoursesListView(courses: courses);
                 }

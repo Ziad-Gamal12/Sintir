@@ -8,7 +8,7 @@ import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 
 void teacherSignInBlocListener(context, state) {
   if (state is TeacherSignInSuccess) {
-    GoRouter.of(context).pushReplacement(Homeview.routeName);
+    GoRouter.of(context).go(Homeview.routeName);
   } else if (state is TeacherSignInFailure) {
     errordialog(context, state.errmessage).show();
   }
