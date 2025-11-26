@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_portal/flutter_portal.dart';
-import 'package:localingo/app_localizations.dart';
+import 'package:localingo/localingo.dart';
 import 'package:sintir/Core/services/BlocObserver.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
@@ -35,38 +35,40 @@ void main() async {
 
 class Sintir extends StatelessWidget {
   const Sintir({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final navigatorKey = App_router.navigatorKey;
+    Localingo.setNavigatorKey(navigatorKey);
+
     return BlocProvider(
       create: (context) => FavouritesCubit(
         favoritesRepo: getIt<FavoritesRepo>(),
       ),
       child: MaterialApp.router(
         theme: ThemeData(
-            fontFamily: "Cairo",
-            primaryColor: KMainColor,
-            appBarTheme: const AppBarTheme(
-              backgroundColor: Colors.white,
-            ),
-            scaffoldBackgroundColor: Colors.white),
+          fontFamily: "Cairo",
+          primaryColor: KMainColor,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.white,
+          ),
+          scaffoldBackgroundColor: Colors.white,
+        ),
         localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-
-        // Specify supported locales
         supportedLocales: const [
-          Locale('en'), // English
-          Locale('ar'), // Arabic
-          Locale('fr'), // French
-          Locale('es'), // Spanish
+          Locale('en'),
+          Locale('ar'),
+          Locale('fr'),
+          Locale('es'),
           Locale('de'),
-          Locale('it'), // German
+          Locale('it'),
         ],
-
-        locale: const Locale('ar'),
+        locale: const Locale('en'),
         debugShowCheckedModeBanner: false,
         routerConfig: App_router.router,
       ),

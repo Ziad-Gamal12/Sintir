@@ -5,6 +5,7 @@ import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/Profile/Domain/Repos/PersonalDetailsRepo.dart';
 import 'package:sintir/Features/Profile/Presentation/Manager/user_personal_details_cubit/user_personal_details_cubit.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/ProfileViewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -17,7 +18,7 @@ class ProfileView extends StatelessWidget {
       ),
       child: Scaffold(
         appBar: CustomAppBar(
-          appBartitle: "الملف الشخصي",
+          appBartitle: LocaleKeys.profile,
           isPopUp: false,
         ),
         body: const ProfileViewBody(),

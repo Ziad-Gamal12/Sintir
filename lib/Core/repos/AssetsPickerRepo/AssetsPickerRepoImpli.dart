@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Assetspickerrepoimpli implements Assetspickerrepo {
   final Pickerassetsservice pickerassetsservice;
@@ -22,10 +23,10 @@ class Assetspickerrepoimpli implements Assetspickerrepo {
       if (file != null) {
         return right(file);
       } else {
-        return left(ServerFailure(message: "الصورة غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.imageNotFound));
       }
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -37,10 +38,10 @@ class Assetspickerrepoimpli implements Assetspickerrepo {
       if (file != null) {
         return right(file);
       } else {
-        return left(ServerFailure(message: "الصورة غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.imageNotFound));
       }
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -52,10 +53,10 @@ class Assetspickerrepoimpli implements Assetspickerrepo {
       if (file != null) {
         return right(file);
       } else {
-        return left(ServerFailure(message: "الفيديو غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.videoNotFound));
       }
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -66,7 +67,7 @@ class Assetspickerrepoimpli implements Assetspickerrepo {
       if (file != null) {
         return right(file);
       } else {
-        return left(ServerFailure(message: "الملف غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.fileNotFound));
       }
     } catch (e) {
       log(e.toString());
@@ -82,10 +83,10 @@ class Assetspickerrepoimpli implements Assetspickerrepo {
       if (file != null) {
         return right(file);
       } else {
-        return left(ServerFailure(message: "الفيديو غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.videoNotFound));
       }
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 }

@@ -12,6 +12,7 @@ import 'package:sintir/Core/models/CourseCouponModel.dart';
 import 'package:sintir/Core/repos/CourseCouponsRepo/CourseCouponsRepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseCouponsRepoImp implements CourseCouponsRepo {
   final DataBaseService databaseservice;
@@ -47,7 +48,7 @@ class CourseCouponsRepoImp implements CourseCouponsRepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log(e.toString(), stackTrace: s);
-      return left(ServerFailure(message: "حدث خطأ أثناء إضافة الكوبون"));
+      return left(ServerFailure(message: LocaleKeys.couponAddError));
     }
   }
 
@@ -68,7 +69,7 @@ class CourseCouponsRepoImp implements CourseCouponsRepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log(e.toString(), stackTrace: s);
-      return left(ServerFailure(message: "حدث خطأ أثناء حذف الكوبون"));
+      return left(ServerFailure(message: LocaleKeys.couponDeleteError));
     }
   }
 
@@ -94,7 +95,7 @@ class CourseCouponsRepoImp implements CourseCouponsRepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log(e.toString(), stackTrace: s);
-      return left(ServerFailure(message: "حدث خطأ أثناء تحديث بيانات الكوبون"));
+      return left(ServerFailure(message: LocaleKeys.couponUpdateError));
     }
   }
 
@@ -116,7 +117,7 @@ class CourseCouponsRepoImp implements CourseCouponsRepo {
       );
 
       if (response.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
 
       if (response.listData!.isEmpty) {
@@ -151,7 +152,7 @@ class CourseCouponsRepoImp implements CourseCouponsRepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log(e.toString(), stackTrace: s);
-      return left(ServerFailure(message: "حدث خطأ أثناء جلب الكوبونات"));
+      return left(ServerFailure(message: LocaleKeys.fetchCouponsError));
     }
   }
 
@@ -170,12 +171,12 @@ class CourseCouponsRepoImp implements CourseCouponsRepo {
       if (response.docData != null) {
         return right(CourseCouponModel.fromJson(response.docData!).toEntity());
       } else {
-        return left(ServerFailure(message: "الكوبون غير موجود"));
+        return left(ServerFailure(message: LocaleKeys.couponNotFound));
       }
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطاء"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -190,7 +191,7 @@ class CourseCouponsRepoImp implements CourseCouponsRepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log(e.toString(), stackTrace: s);
-      return left(ServerFailure(message: "حدث خطاء"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 }

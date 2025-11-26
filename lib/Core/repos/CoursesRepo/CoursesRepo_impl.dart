@@ -16,6 +16,7 @@ import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CoursesrepoImpl implements Coursesrepo {
   final DataBaseService databaseservice;
@@ -35,9 +36,7 @@ class CoursesrepoImpl implements Coursesrepo {
         docId: courseEntity.id,
       );
       if (isExists) {
-        return left(ServerFailure(
-            message:
-                "هذة الدورة موجوده بالفعل يجب عليك تغيير الكود الخاص بالدورة"));
+        return left(ServerFailure(message: LocaleKeys.coursecodeexists));
       }
 
       final data = Coursemodel.fromEntity(courseEntity: courseEntity).toJson();
@@ -64,7 +63,7 @@ class CoursesrepoImpl implements Coursesrepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (_) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -116,7 +115,7 @@ class CoursesrepoImpl implements Coursesrepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (_) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -215,7 +214,7 @@ class CoursesrepoImpl implements Coursesrepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (_) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -277,8 +276,6 @@ class CoursesrepoImpl implements Coursesrepo {
       saveLastDoc: (doc) => _teacherInterestedCoursesLastDoc = doc,
     );
   }
-  
-
 }
 
 List<CourseEntity> _parseCourses(List<dynamic> listData) {

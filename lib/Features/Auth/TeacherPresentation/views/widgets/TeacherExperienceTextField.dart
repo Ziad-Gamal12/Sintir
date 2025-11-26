@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TeacherExperienceTextField extends StatelessWidget {
   const TeacherExperienceTextField({
@@ -13,7 +14,7 @@ class TeacherExperienceTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
-        hintText: "عدد سنين الخبرة",
+        hintText: LocaleKeys.experienceYears,
         prefixIcon: Icons.workspace_premium,
         obscureText: false,
         onSaved: (val) {
@@ -23,7 +24,7 @@ class TeacherExperienceTextField extends StatelessWidget {
         textInputType: TextInputType.number,
         validator: (value) {
           if (value!.isEmpty) {
-            return "ادخل عدد سنين الخبرة الخاصة بك";
+            return LocaleKeys.enterExperienceYears;
           }
           return null;
         });

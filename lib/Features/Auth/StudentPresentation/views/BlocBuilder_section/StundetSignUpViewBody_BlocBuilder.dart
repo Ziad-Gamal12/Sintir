@@ -66,10 +66,10 @@ class _StundetSignUpViewBody_BlocBuilderState
               const SizedBox(
                 height: 16,
               ),
-              Customtermsandconditiona(textonpressed: () {
+              CustomTermsAndConditions(textOnPressed: () {
                 GoRouter.of(context)
                     .push(StudenttermsandconditionsView.routeName);
-              }, onchanged: (value) {
+              }, onChanged: (value) {
                 isTermsAndConditionChecked = value;
                 setState(() {});
               }),

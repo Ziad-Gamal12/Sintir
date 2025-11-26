@@ -2,46 +2,20 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sintir/Core/widgets/CustomAnimatedDropDownButton.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseViewWidgets/CustomEducationLevelDropdownButton.dart';
 
-class CustomstudentsignupSchoollevel extends StatefulWidget {
+class CustomstudentsignupSchoollevel extends StatelessWidget {
   const CustomstudentsignupSchoollevel({
     super.key,
   });
   @override
-  State<CustomstudentsignupSchoollevel> createState() =>
-      CustomstudentsignupSchoollevelState();
-}
-
-class CustomstudentsignupSchoollevelState
-    extends State<CustomstudentsignupSchoollevel> {
-  String? optionItemSelected;
-  List<String> items = [
-    "الصف الأول الأبتدائى",
-    "الصف الثانى الأبتدائى",
-    "الصف الثالث الأبتدائى",
-    "الصف الرابع الأبتدائى",
-    "الصف الخامس الأبتدائى",
-    "الصف السادس الأبتدائى",
-    "الصف الأول الأعدادى",
-    "الصف الثانى الأعدادى",
-    "الصف الثالث الأعدادى",
-    "الصف الأول الثانوى",
-    "الصف الثانى الثانوى",
-    "الصف الثالث الثانوى",
-  ];
-
-  @override
   Widget build(BuildContext context) {
-    return CustomAnimatedDropDownButton(
-        items: items,
-        hintText: "السنة الدراسية",
-        onChanged: (val) {
-          optionItemSelected = val;
-          context.read<UserEntity>().studentExtraDataEntity?.educationLevel =
-              optionItemSelected ?? "";
-          setState(() {});
-        });
+    return CustomEducationLevelDropdownButton(
+      onValueChange: (value) {
+        context.read<UserEntity>().studentExtraDataEntity?.educationLevel =
+            value ?? "";
+      },
+    );
   }
 }

@@ -14,6 +14,7 @@ import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/VideoNoteModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/VideoNoteEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class VideoItemRepoImpli implements VideoItemRepo {
   final StorageService storageService;
@@ -30,7 +31,7 @@ class VideoItemRepoImpli implements VideoItemRepo {
 
       return right(url);
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -58,7 +59,7 @@ class VideoItemRepoImpli implements VideoItemRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -82,7 +83,7 @@ class VideoItemRepoImpli implements VideoItemRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطاء"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -112,7 +113,7 @@ class VideoItemRepoImpli implements VideoItemRepo {
           ),
           query: getVideNotesQuery);
       if (response.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
       if (response.listData!.isEmpty) {
         return right(
@@ -134,7 +135,7 @@ class VideoItemRepoImpli implements VideoItemRepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log(e.toString(), stackTrace: s);
-      return left(ServerFailure(message: "حدث خطاء"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 }

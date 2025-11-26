@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:secure_content/secure_content.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SensitivePageWrapper extends StatelessWidget {
   final Widget child;
@@ -19,11 +20,11 @@ class SensitivePageWrapper extends StatelessWidget {
       ),
       onScreenshotCaptured: () {
         CustomSnackBar.show(context,
-            message: "لا يمكن التصوير", type: SnackType.error);
+            message: LocaleKeys.screenshotBlocked, type: SnackType.error);
       },
       onScreenRecordingStart: () {
         CustomSnackBar.show(context,
-            message: "لا يمكن التسجيل", type: SnackType.error);
+            message: LocaleKeys.recordingBlocked, type: SnackType.error);
       },
       appSwitcherMenuColor: Colors.black,
       builder: (ctx, onInit, onDispose) {

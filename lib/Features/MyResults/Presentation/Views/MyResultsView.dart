@@ -5,6 +5,7 @@ import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/MyResults/Domain/Repo/MyResultsRepo.dart';
 import 'package:sintir/Features/MyResults/Presentation/Manager/cubit/my_results_cubit.dart';
 import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/MyResultsViewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class MyResultsView extends StatelessWidget {
   const MyResultsView({super.key});
@@ -12,7 +13,7 @@ class MyResultsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(appBartitle: "نتائجي"),
+      appBar: CustomAppBar(appBartitle: LocaleKeys.myResultsAppbar),
       body: BlocProvider(
           create: (context) => MyResultsCubit(
                 myResultsRepo: getIt.get<MyResultsRepo>(),

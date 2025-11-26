@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Features/Search/Domain/Entities/CustomFilterEntity.dart';
 import 'package:sintir/Features/Search/Presentation/Views/Widgets/CustomFilterBottomSheetWidgets/CustomFilterRadioButtonItem.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomFilterSubscribtionSection extends StatefulWidget {
   const CustomFilterSubscribtionSection({super.key});
@@ -27,7 +28,7 @@ class _CustomFilterSubscribtionSectionState
               context.read<CourseFilterEntity>().showUnsubscribedCourses = true;
             },
             value: "subscribed",
-            title: "مشترك"),
+            title: LocaleKeys.subscribed),
         CustomFilterRadioButtonItem(
             groupValue: subscribtiongroupValue,
             onchange: (value) {
@@ -36,7 +37,7 @@ class _CustomFilterSubscribtionSectionState
               context.read<CourseFilterEntity>().showSubscribedCourses = false;
             },
             value: "unsubscribed",
-            title: "غير مشترك"),
+            title: LocaleKeys.unsubscribed),
       ],
     );
   }

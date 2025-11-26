@@ -12,6 +12,7 @@ import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/manager/TeacherSignUP/teacher_sign_up_cubit.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherSignUpViewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TeacherSignUpView extends StatefulWidget {
   const TeacherSignUpView({super.key});
@@ -60,7 +61,7 @@ class _TeacherSignUpViewState extends State<TeacherSignUpView> {
     return BlocProvider(
       create: (context) => TeacherSignUpCubit(getIt<AuthRepo>()),
       child: Scaffold(
-        appBar: CustomAppBar(appBartitle: "انشاء حساب"),
+        appBar: CustomAppBar(appBartitle: LocaleKeys.createAccount),
         body: Provider.value(
             value: userEntity, child: const TeacherSignUpViewBody()),
       ),

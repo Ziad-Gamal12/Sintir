@@ -5,6 +5,7 @@ import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/Search/Domain/Repos/SearchRepo.dart';
 import 'package:sintir/Features/Search/Presentation/Managers/cubit/search_cubit.dart';
 import 'package:sintir/Features/Search/Presentation/Views/Widgets/SearchViewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({super.key});
@@ -25,7 +26,7 @@ class _SearchViewState extends State<SearchView>
       ),
       child: Scaffold(
         appBar: CustomAppBar(
-          appBartitle: "البحث",
+          appBartitle: LocaleKeys.search,
           isPopUp: false,
         ),
         body: const SearchViewBody(),

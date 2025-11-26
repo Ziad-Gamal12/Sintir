@@ -35,7 +35,7 @@ class CustomSearchTextField extends StatelessWidget {
               const BoxConstraints(minWidth: 20, minHeight: 20),
           filled: true,
           fillColor: Colors.white,
-          hintText: 'ابحث عن.......',
+          hintText: "search for ....",
           hintStyle: AppTextStyles(context)
               .regular13
               .copyWith(color: const Color(0xff949D9E)),

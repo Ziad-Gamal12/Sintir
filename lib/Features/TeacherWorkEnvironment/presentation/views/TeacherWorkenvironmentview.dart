@@ -6,6 +6,7 @@ import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/ContentCreatorProfile/domain/Repos/ContentCreatorProfileRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/AddCourseFloatingActionButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/TeacherWorkenvironmentviewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TeacherWorkenvironmentview extends StatelessWidget {
   const TeacherWorkenvironmentview({
@@ -15,7 +16,7 @@ class TeacherWorkenvironmentview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(appBartitle: "بيئة العمل"),
+      appBar: CustomAppBar(appBartitle: LocaleKeys.workEnvironment),
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: const AddCourseFloatingActionButton(),

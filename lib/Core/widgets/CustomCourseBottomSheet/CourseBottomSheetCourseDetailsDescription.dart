@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseBottomSheetCourseDetailsDescription extends StatelessWidget {
   const CourseBottomSheetCourseDetailsDescription({
@@ -14,7 +15,8 @@ class CourseBottomSheetCourseDetailsDescription extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("الوصف", style: AppTextStyles(context).semiBold20),
+        Text(LocaleKeys.descriptionLabel,
+            style: AppTextStyles(context).semiBold20),
         const SizedBox(
           height: 12,
         ),

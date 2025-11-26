@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomAnimatedDropDownButton.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SelecteIssuerDropDownButton extends StatefulWidget {
   const SelecteIssuerDropDownButton({super.key, required this.onSelected});
@@ -18,7 +19,7 @@ class _SelecteIssuerDropDownButtonState
   Widget build(BuildContext context) {
     return CustomAnimatedDropDownButton(
         items: items,
-        hintText: "نوع المحفظة",
+        hintText: LocaleKeys.wallet,
         onChanged: (val) {
           widget.onSelected(val);
         });

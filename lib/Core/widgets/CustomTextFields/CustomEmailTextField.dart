@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomEmailTextField extends StatelessWidget {
   CustomEmailTextField(
@@ -17,18 +18,18 @@ class CustomEmailTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomTextField(
         controller: controller,
-        hintText: "البريد الإلكتروني",
+        hintText: LocaleKeys.emailHint,
         prefixIcon: isIconVisible ? FontAwesomeIcons.envelope : null,
         onSaved: onSaved,
         obscureText: false,
         textInputType: TextInputType.emailAddress,
         validator: (val) {
           if (val == null || val.isEmpty) {
-            return 'الرجاء إدخال البريد الإلكتروني';
+            return LocaleKeys.emailRequired;
           } else if (!RegExp(
                   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
               .hasMatch(val)) {
-            return 'الرجاء إدخال بريد إلكتروني صالح';
+            return LocaleKeys.emailInvalid;
           }
           return null;
         });

@@ -15,6 +15,7 @@ import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CourseFedBacksModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseFeedBacksRepoImpli implements CourseFeedBacksRepo {
   final DataBaseService databaseservice;
@@ -45,7 +46,7 @@ class CourseFeedBacksRepoImpli implements CourseFeedBacksRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -76,7 +77,7 @@ class CourseFeedBacksRepoImpli implements CourseFeedBacksRepo {
       );
 
       if (response.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
       if (response.listData!.isEmpty) {
         return right(
@@ -109,7 +110,7 @@ class CourseFeedBacksRepoImpli implements CourseFeedBacksRepo {
       log("error $e $s");
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 }
@@ -124,7 +125,7 @@ List<CoursefeedbackItemEntity> _parseCourseFeedbacks(
       results.add(entity);
     } catch (e) {
       log(e.toString());
-      throw CustomException(message: "❌ حدث خطاء غير متوقع.");
+      throw CustomException(message: LocaleKeys.unexpectedError);
     }
   }
   return results;

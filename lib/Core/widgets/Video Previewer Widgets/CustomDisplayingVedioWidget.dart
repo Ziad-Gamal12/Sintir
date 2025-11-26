@@ -5,6 +5,7 @@ import 'package:better_player_plus/better_player_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Core/widgets/Video%20Previewer%20Widgets/controllers/video_player_controller_helper.dart';
+import 'package:sintir/locale_keys.dart';
 
 class PremiumVideoPlayer extends StatefulWidget {
   final String? videoUrl;
@@ -68,13 +69,13 @@ class _PremiumVideoPlayerState extends State<PremiumVideoPlayer> {
     }
 
     if (_hasError || !_controller.isInitialized) {
-      return const Center(
+      return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.error_outline, size: 50, color: Colors.red),
-            SizedBox(height: 8),
-            Text("فشل تحميل الفيديو"),
+            const Icon(Icons.error_outline, size: 50, color: Colors.red),
+            const SizedBox(height: 8),
+            Text(LocaleKeys.videoPlayFailed),
           ],
         ),
       );

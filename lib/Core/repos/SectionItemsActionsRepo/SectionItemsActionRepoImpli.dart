@@ -14,6 +14,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/JoinedByModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
   final DataBaseService datebaseservice;
@@ -67,13 +68,12 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
             data: json);
         return right(null);
       } else {
-        return left(
-            ServerFailure(message: "العنصر غير معرف, يرجى المحاولة مرة أخرى"));
+        return left(ServerFailure(message: LocaleKeys.unexpectedError));
       }
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.unexpectedError));
     }
   }
 
@@ -92,7 +92,7 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
         ),
       );
       if (data.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
       if (data.listData!.isEmpty) {
         return right([]);
@@ -110,7 +110,7 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.unexpectedError));
     }
   }
 
@@ -138,7 +138,7 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.unexpectedError));
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Features/Search/Domain/Entities/CustomFilterEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ClearFilters extends StatelessWidget {
   const ClearFilters({
@@ -12,7 +13,7 @@ class ClearFilters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: "استعادة الفلاتر الافتراضية",
+      message: LocaleKeys.restoreDefaultFilters,
       child: Container(
         alignment: Alignment.center,
         decoration: const BoxDecoration(

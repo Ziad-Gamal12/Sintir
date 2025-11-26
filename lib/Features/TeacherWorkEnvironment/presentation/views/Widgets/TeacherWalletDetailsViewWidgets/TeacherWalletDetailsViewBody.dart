@@ -15,6 +15,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/payout_cubit/payout_cubit.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/update_teacher_wallet_cubit/update_teacher_wallet_cubit.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TeacherWalletDetailsViewBody extends StatelessWidget {
   const TeacherWalletDetailsViewBody({
@@ -46,13 +47,13 @@ class TeacherWalletDetailsViewBody extends StatelessWidget {
             children: [
               TeacherWalletBalanceDetailsRow(
                 icon: Icons.calendar_month_outlined,
-                title: "تاريخ الانشاء",
+                title: LocaleKeys.createdDate,
                 value: "${user.teacherExtraDataEntity?.wallet.createdAt}",
               ),
               Divider(color: Colors.grey.shade100, height: 20),
               TeacherWalletBalanceDetailsRow(
                 icon: Icons.calendar_month_outlined,
-                title: "تاريخ التحديث",
+                title: LocaleKeys.updatedDate,
                 value: user.teacherExtraDataEntity?.wallet.updatedAt ?? "",
               ),
             ],
@@ -61,7 +62,7 @@ class TeacherWalletDetailsViewBody extends StatelessWidget {
             flex: 2,
           ),
           Custombutton(
-              text: "سحب رصيد",
+              text: LocaleKeys.withdrawBalance,
               color: KMainColor,
               textColor: Colors.white,
               onPressed: () {

@@ -5,6 +5,7 @@ import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseViewWidgets/CourseInputsCard.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseViewWidgets/CustomAddCourseActionButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseCubit/add_course_cubit.dart';
+import 'package:sintir/locale_keys.dart';
 
 class AddCourseViewBody extends StatefulWidget {
   const AddCourseViewBody({super.key});
@@ -40,7 +41,7 @@ class _AddCourseViewBodyState extends State<AddCourseViewBody> {
         if (state is AddCourseCubitSuccess) {
           successdialog(
             context: context,
-            SuccessMessage: "تم إرسال طلب الدورة بنجاح… سيتم المراجعة قريباً",
+            SuccessMessage: LocaleKeys.courseRequestSentSuccess,
             btnOkOnPress: () => GoRouter.of(context).pop(),
           ).show();
         }

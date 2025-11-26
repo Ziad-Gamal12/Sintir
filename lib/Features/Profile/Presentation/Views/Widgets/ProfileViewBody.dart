@@ -7,6 +7,7 @@ import 'package:sintir/Features/Profile/Presentation/Manager/user_personal_detai
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/ProfileItemActionsButtons.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/ProfileViewBodyUserInfo.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ProfileViewBody extends StatelessWidget {
   const ProfileViewBody({super.key});
@@ -17,7 +18,7 @@ class ProfileViewBody extends StatelessWidget {
       listener: (context, state) {
         if (state is UpdatedUserProfilePicSuccess) {
           CustomSnackBar.show(context,
-              message: "تم تغيير الصورة بنجاح", type: SnackType.success);
+              message: LocaleKeys.successImageChanged, type: SnackType.success);
         } else if (state is UpdatedUserProfilePicFailure) {
           CustomSnackBar.show(context,
               message: state.errMessage, type: SnackType.error);

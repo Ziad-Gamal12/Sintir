@@ -5,39 +5,51 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomCheckBox.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
-class Customtermsandconditiona extends StatelessWidget {
-  const Customtermsandconditiona(
-      {super.key, required this.textonpressed, required this.onchanged});
-  final VoidCallback textonpressed;
-  final ValueChanged<bool> onchanged;
+class CustomTermsAndConditions extends StatelessWidget {
+  const CustomTermsAndConditions({
+    super.key,
+    required this.textOnPressed,
+    required this.onChanged,
+  });
+
+  final VoidCallback textOnPressed;
+  final ValueChanged<bool> onChanged;
+
   @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Customcheckbox(onChanged: onchanged),
+        Customcheckbox(onChanged: onChanged),
         const Customsizedbox(width: 16, height: 0),
         Expanded(
           child: GestureDetector(
-            onTap: textonpressed,
+            onTap: textOnPressed,
             child: SizedBox(
-              child: Text.rich(TextSpan(children: [
+              child: Text.rich(
                 TextSpan(
-                    text: "من خلال إنشاء حساب ، فإنك توافق على",
-                    style: AppTextStyles(context)
-                        .semiBold13
-                        .copyWith(color: const Color(0xff949D9E))),
-                const TextSpan(text: " "),
-                TextSpan(
-                    text: "الشروط والأحكام الخاصة بنا ",
-                    style: AppTextStyles(context)
-                        .semiBold13
-                        .copyWith(color: KSecondaryColor))
-              ])),
+                  children: [
+                    TextSpan(
+                      text: LocaleKeys.agreeTerms,
+                      style: AppTextStyles(context)
+                          .semiBold13
+                          .copyWith(color: const Color(0xff949D9E)),
+                    ),
+                    const TextSpan(text: " "),
+                    TextSpan(
+                      text: LocaleKeys.termsConditions,
+                      style: AppTextStyles(context)
+                          .semiBold13
+                          .copyWith(color: KSecondaryColor),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
-        )
+        ),
       ],
     );
   }

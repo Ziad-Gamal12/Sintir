@@ -6,6 +6,7 @@ import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class HomeViewBodyAppBar extends StatelessWidget {
   const HomeViewBodyAppBar({super.key});
@@ -28,7 +29,7 @@ class HomeViewBodyAppBar extends StatelessWidget {
       ),
       title: Text.rich(TextSpan(children: [
         TextSpan(
-          text: "مرحبا بعودتك , ",
+          text: LocaleKeys.welcomeBackHome,
           style:
               AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
         ),

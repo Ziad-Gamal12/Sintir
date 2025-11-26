@@ -13,6 +13,27 @@
   "reset_password": "Passwort zurücksetzen",
   "description_label": "Beschreibung",
   "shared": "Geteilt",
+    "login": "Anmelden"
+, "first_name": "Vorname",
+  "enter_first_name": "Geben Sie den Vornamen ein",
+  "last_name": "Nachname",
+  "enter_last_name": "Geben Sie den Nachnamen ein",
+  "experience_years": "Jahre Erfahrung",
+  "enter_experience_years": "Geben Sie Ihre Berufserfahrung ein",
+  "subject_hint": "Fach",
+  "sign_in_google": "Mit Google anmelden",
+"sign_in_facebook": "Mit Facebook anmelden",
+"or_separator": "Oder"
+,
+"male": "Männlich",
+  "female": "Weiblich",
+   "term_1": "Einhaltung der Gesetze-\nLehrer müssen alle geltenden lokalen und nationalen Gesetze und Vorschriften bei der Bereitstellung von Bildungsinhalten einhalten.\nIllegale, anstößige oder urheberrechtsverletzende Inhalte sind nicht erlaubt.",
+  "term_2": "Inhaltsqualität:\nVon Lehrern wird erwartet, dass sie qualitativ hochwertige und genaue Bildungsinhalte bereitstellen.\nDie Inhalte müssen professionell aufbereitet sein und den Bedürfnissen der Schüler entsprechen.",
+  "term_3": "Respekt vor den Schülern:\nLehrer müssen die Schüler respektvoll und höflich behandeln und unangemessenes oder diskriminierendes Verhalten unterlassen.\nDie Vertraulichkeit der persönlichen Informationen der Schüler muss gewahrt und nicht an Dritte weitergegeben werden.",
+  "term_4": "Zahlungsrichtlinie:\nLehrer erhalten Zahlungen gemäß den in der App festgelegten Bedingungen.\nEs müssen korrekte Finanzinformationen bereitgestellt werden, um eine pünktliche Zahlung sicherzustellen.",
+  "term_5": "Kontoauflösung:\nSintir behält sich das Recht vor, das Konto eines Lehrers zu kündigen, wenn diese Bedingungen verletzt werden.\nLehrer können ihr Konto jederzeit kündigen, vorausgesetzt, alle laufenden Verpflichtungen gegenüber den Schülern werden erfüllt.",
+  "term_6": "Updates und Änderungen:\nSintir behält sich das Recht vor, diese Bedingungen jederzeit zu ändern.\nLehrer werden über wichtige Änderungen informiert, und die weitere Nutzung der Plattform bedeutet die Akzeptanz der neuen Bedingungen.",
+  "term_7": "Haftungsausschluss:\nSintir übernimmt keine Verantwortung für Fehler oder Verluste, die sich aus den von Lehrern bereitgestellten Inhalten ergeben.\nLehrer tragen die volle Verantwortung für die von ihnen veröffentlichten Inhalte.",
   "video_load_failed": "Das Video konnte nicht geladen werden",
   "my_courses": "Meine Kurse",
   "total_pages": "Gesamtseiten",
@@ -70,10 +91,28 @@
   "cancel": "Stornieren",
   "screenshot_blocked": "Screenshot blockiert",
   "recording_blocked": "Aufnahme blockiert",
-  "favorites": "Favoriten",
   "appBar_restore_password": "Passwort wiederherstellen",
   "success_email_sent": "Bestätigungs-E-Mail erfolgreich gesendet",
   "send_link": "Link senden",
+  "lowest_to_highest": "Von niedrig nach hoch",
+  "highest_to_lowest": "Von hoch nach niedrig",
+  "other": "Andere",
+   "course_request_sent_success": "Kursanfrage erfolgreich gesendet… Sie wird bald überprüft",
+  "enter_course_name": "Geben Sie den Kursnamen ein",
+  "course_name": "Kursname",
+  "course_code": "Kurscode",
+  "enter_course_code": "Geben Sie den Kurscode ein",
+  "course_description": "Kursbeschreibung",
+  "enter_course_description": "Geben Sie die Kursbeschreibung ein",
+  "enter_price": "Geben Sie den Preis ein",
+  "language": "Sprache",
+   "missing_fields": "Einige Felder fehlen",
+  "missing_image": "Bitte fügen Sie ein Kursbild hinzu",
+  "invalid_price": "Bitte geben Sie einen gültigen Preis ein",
+  "price_warning": "Wichtig! Bei der Anmeldung werden 5 % des angegebenen Preises abgezogen",
+  "course_thumbnail": "Kursminiatur",
+  "add_courses_to_favorites": "Kurse zu Favoriten hinzufügen"
+, "work_environment": "Arbeitsumgebung" ,
   "reset_password_description": "Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen einen Link zum Zurücksetzen Ihres Passworts.",
   "login_question": "Sie haben bereits ein Konto?",
   "content_creator": "Inhaltsersteller",
@@ -111,6 +150,12 @@
   "teacher_details": "Angaben zum Lehrer",
   "no_courses": "Keine Kurse verfügbar",
   "courses_label": "Kurse",
+  "welcome_back_home": "Willkommen zurück, ",
+    "latest_courses": "Neueste Kurse",
+ "home": "Startseite",
+  "search": "Suche",
+  "favorites": "Favoriten",
+  "profile": "Profil",
   "students_label": "Studenten",
   "report_inappropriate": "Unangemessener Inhalt",
   "report_wrong_info": "Falsche Informationen",
@@ -143,7 +188,6 @@
   "no_image_selected": "Kein Bild ausgewählt",
   "no_image_found": "Bild nicht gefunden",
   "upload_image_failed": "Bild konnte nicht hochgeladen werden",
-  "profile": "Profil",
   "profile_personal_data": "Persönliche Daten",
   "profile_my_courses": "Meine Kurse",
   "profile_favorites": "Favoriten",
@@ -273,7 +317,23 @@
   "payout_acceptance_title": "Annahme",
   "payout_acceptance_body": "Indem Sie eine Auszahlung beantragen, bestätigen Sie, dass Sie alle oben genannten Bedingungen akzeptieren. Die Plattform kann diese Bedingungen von Zeit zu Zeit aktualisieren. Wenn sich die Bedingungen ändern, werden Sie benachrichtigt und müssen möglicherweise vor zukünftigen Auszahlungen die aktualisierte Version erneut akzeptieren."
 ,"course_code_exists": "Der Kurscode ist bereits vorhanden, bitte ändern Sie ihn."
- , "choose_option": "Bitte auswählen"
+ , "choose_option": "Bitte auswählen",
+ 
+  "student_terms_intro_title": "1. Einführung",
+  "student_terms_intro_text": "Durch die Nutzung der Sintir-App stimmen die Schüler zu, die folgenden Bedingungen einzuhalten. Diese Bedingungen regeln die Nutzung der Plattform, einschließlich aller Interaktionen mit Lehrern und anderen Schülern.",
+  
+  "student_terms_usage_title": "2. Nutzungsrichtlinien",
+  "student_terms_usage_text": "Schüler müssen die App ausschließlich zu Bildungszwecken nutzen. Jegliches unangemessenes Verhalten, wie Belästigung, das Teilen illegaler Inhalte oder Störung der Lernumgebung, führt zur Sperrung des Kontos.",
+  
+  "student_terms_payments_title": "3. Zahlungen und Rückerstattungen",
+  "student_terms_payments_text": "Kurszahlungen sind nicht erstattungsfähig, außer in Fällen, in denen der Kurs vom Lehrer storniert wird. Schüler müssen sicherstellen, dass sie alle Kursanforderungen erfüllen, bevor sie sich anmelden.",
+  
+  "student_terms_privacy_title": "4. Datenschutzrichtlinie",
+  "student_terms_privacy_text": "Die Sintir-App respektiert Ihre Privatsphäre und verpflichtet sich zum Schutz Ihrer persönlichen Daten. Bitte lesen Sie unsere Datenschutzrichtlinie, um mehr darüber zu erfahren, wie wir Ihre Informationen sammeln, verwenden und schützen.",
+  
+  "student_terms_changes_title": "5. Änderungen der Bedingungen",
+  "student_terms_changes_text": "Sintir behält sich das Recht vor, diese Bedingungen jederzeit zu ändern. Schüler werden über Änderungen informiert, und die weitere Nutzung der App nach Änderungen bedeutet die Akzeptanz der neuen Bedingungen."
+
 
 
 }

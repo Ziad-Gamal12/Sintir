@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWalletDetailsView.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TeacherWorkenvironmentviewBodyWalletSectionHeader
     extends StatelessWidget {
@@ -23,7 +24,7 @@ class TeacherWorkenvironmentviewBodyWalletSectionHeader
           width: 10,
         ),
         Text(
-          "المحفظة",
+          LocaleKeys.wallet,
           style: AppTextStyles(context).bold20.copyWith(color: Colors.black),
         ),
         const Spacer(),
@@ -31,8 +32,8 @@ class TeacherWorkenvironmentviewBodyWalletSectionHeader
             onTap: () {
               GoRouter.of(context).push(TeacherWalletDetailsView.routeName);
             },
-            child:
-                Text("عرض التفاصيل", style: AppTextStyles(context).regular16)),
+            child: Text(LocaleKeys.viewDetails,
+                style: AppTextStyles(context).regular16)),
       ],
     );
   }

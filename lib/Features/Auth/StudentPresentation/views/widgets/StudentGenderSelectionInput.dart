@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomRadioWidget.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class StudentGenderSelectionInput extends StatefulWidget {
   const StudentGenderSelectionInput({
@@ -28,7 +29,7 @@ class _StudentGenderSelectionInputState
           Row(
             children: [
               CustomRadioWidget(
-                  value: "ذكر",
+                  value: "Male",
                   groupValue: radiovalue,
                   onchange: (val) {
                     setState(() {
@@ -40,7 +41,7 @@ class _StudentGenderSelectionInputState
                 width: 12,
               ),
               Text(
-                "ذكر",
+                LocaleKeys.male,
                 style: AppTextStyles(context)
                     .bold16
                     .copyWith(color: const Color(0xff818181)),
@@ -50,7 +51,7 @@ class _StudentGenderSelectionInputState
           Row(
             children: [
               CustomRadioWidget(
-                  value: "أنثى",
+                  value: "Female",
                   groupValue: radiovalue,
                   onchange: (val) {
                     setState(() {
@@ -62,7 +63,7 @@ class _StudentGenderSelectionInputState
                 width: 12,
               ),
               Text(
-                "أنثى",
+                LocaleKeys.female,
                 style: AppTextStyles(context)
                     .bold16
                     .copyWith(color: const Color(0xff818181)),

@@ -12,6 +12,7 @@ import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetBod
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetCourseDetails.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CustomCourseBottomSheetActionButtons.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CourseBottomSheetBody extends StatefulWidget {
@@ -74,7 +75,9 @@ class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
       CourseSubscribtionsState state, BuildContext context) {
     if (state is SubscibeingToCourseSuccess) {
       successdialog(
-          context: context, SuccessMessage: "تم الاشتراك", btnOkOnPress: () {});
+          context: context,
+          SuccessMessage: LocaleKeys.successSubscribe,
+          btnOkOnPress: () {});
     } else if (state is SubscibeingToCourseFailure) {
       errordialog(context, state.errMessge).show();
     } else if (state is CheckIfSubscribedSuccess) {

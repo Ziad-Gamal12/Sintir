@@ -13,6 +13,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   AppBar build(BuildContext context) {
+    Locale locale = Localizations.localeOf(context);
     return AppBar(
       leadingWidth: 40,
       elevation: 0,
@@ -24,14 +25,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 onTap: () {
                   GoRouter.of(context).pop();
                 },
-                child: SvgPicture.asset(
-                  Assets.assetsIconsSVGIconsArrowLeftBack,
-                  height: 20,
-                  width: 20,
+                child: Transform.rotate(
+                  angle: locale.languageCode == 'ar' ? 0 : 3.14,
+                  child: SvgPicture.asset(
+                    Assets.assetsIconsSVGIconsArrowLeftBack,
+                    height: 20,
+                    width: 20,
+                  ),
                 ),
               ),
             )
-          : SizedBox.shrink(),
+          : const SizedBox.shrink(),
       title: Text(
         appBartitle,
         style: AppTextStyles(context).bold19.copyWith(color: Colors.black),

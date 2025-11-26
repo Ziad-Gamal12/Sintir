@@ -98,7 +98,7 @@ class _TeacherWorkenvironmentviewBodyState
             ),
           ),
           const SliverToBoxAdapter(
-            child: Custommycoursesgridheader(),
+            child: CustomMyCoursesGridHeader(),
           ),
           const SliverToBoxAdapter(
             child: SizedBox(

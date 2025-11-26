@@ -17,6 +17,7 @@ import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
   final DataBaseService databaseService;
@@ -55,7 +56,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       return left(ServerFailure(message: e.message));
     } catch (e) {
       await _rollbackUserCourse(course, userEntity);
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -180,7 +181,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       );
       return right(isSubscribed);
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -208,7 +209,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       );
 
       if (response.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
 
       if (response.listData!.isEmpty) {
@@ -233,7 +234,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       return left(ServerFailure(message: e.message));
     } catch (e, st) {
       log('getSubscribers error: $e\n$st');
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -252,7 +253,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطاء"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -279,7 +280,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       );
 
       if (response.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
 
       if (response.listData!.isEmpty) {
@@ -303,7 +304,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 }

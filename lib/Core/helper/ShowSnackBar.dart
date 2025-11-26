@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 enum SnackType { success, error, warning, info }
 
@@ -35,25 +36,25 @@ class CustomSnackBar {
     switch (type) {
       case SnackType.success:
         return _SnackBarData(
-          title: "نجاح",
+          title: LocaleKeys.snackSuccess,
           icon: Icons.check_circle,
           color: Colors.green,
         );
       case SnackType.error:
         return _SnackBarData(
-          title: "خطأ",
+          title: LocaleKeys.snackError,
           icon: Icons.error,
           color: Colors.redAccent,
         );
       case SnackType.warning:
         return _SnackBarData(
-          title: "تحذير",
+          title: LocaleKeys.snackWarning,
           icon: Icons.warning_amber_rounded,
           color: Colors.orangeAccent,
         );
       case SnackType.info:
         return _SnackBarData(
-          title: "معلومة",
+          title: LocaleKeys.snackInfo,
           icon: Icons.info_outline,
           color: Colors.blueAccent,
         );

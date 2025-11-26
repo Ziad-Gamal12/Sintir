@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/UserPersonalDetailsViewWidgets/CustomUserInfoItem.dart';
+import 'package:sintir/locale_keys.dart';
 
 class UserBasicInfo extends StatelessWidget {
   final UserEntity user;
@@ -35,14 +36,14 @@ class UserBasicInfo extends StatelessWidget {
             // Email
             CustomUserInfoItem(
               icon: FontAwesomeIcons.solidEnvelope,
-              title: "البريد الإلكتروني",
+              title: LocaleKeys.profileEmail,
               value: user.email,
             ),
 
             // Gender
             CustomUserInfoItem(
               icon: FontAwesomeIcons.venusMars,
-              title: "النوع",
+              title: LocaleKeys.profileGender,
               value: user.gender,
             ),
 
@@ -51,7 +52,7 @@ class UserBasicInfo extends StatelessWidget {
             // Role
             CustomUserInfoItem(
               icon: FontAwesomeIcons.userTag,
-              title: "الصلاحية",
+              title: LocaleKeys.profileRole,
               value: user.role,
             ),
 
@@ -60,7 +61,7 @@ class UserBasicInfo extends StatelessWidget {
             // Joined Date
             CustomUserInfoItem(
               icon: FontAwesomeIcons.calendarCheck,
-              title: "تاريخ التسجيل",
+              title: LocaleKeys.profileJoinedDate,
               value: user.joinedDate,
             ),
           ],

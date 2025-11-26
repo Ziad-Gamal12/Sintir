@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/Custom_reset_password_cubit/Custom_reset_password_cubit.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomResetPasswordViewBodyActionButton extends StatelessWidget {
   const CustomResetPasswordViewBodyActionButton({
@@ -29,7 +30,7 @@ class CustomResetPasswordViewBodyActionButton extends StatelessWidget {
                   color: Colors.white,
                 )
               : Custombutton(
-                  text: "ارسال الرابط",
+                  text: LocaleKeys.sendLink,
                   color: KMainColor,
                   textColor: Colors.white,
                   onPressed: () {

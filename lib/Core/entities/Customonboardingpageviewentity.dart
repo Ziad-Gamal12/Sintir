@@ -25,7 +25,7 @@ class CustomOnBoardingPageViewEntity {
                     style: AppTextStyles(context)
                         .semiBold24
                         .copyWith(color: const Color(0xff000000))),
-                Text("SINTIR",
+                Text(" SINTIR ",
                     style: AppTextStyles(context)
                         .semiBold24
                         .copyWith(color: KSecondaryColor)),
@@ -64,7 +64,7 @@ class CustomOnBoardingPageViewEntity {
                   style: AppTextStyles(context)
                       .semiBold24
                       .copyWith(color: const Color(0xff000000))),
-              Text("SINTIR",
+              Text(" SINTIR ",
                   style: AppTextStyles(context)
                       .semiBold24
                       .copyWith(color: KSecondaryColor)),

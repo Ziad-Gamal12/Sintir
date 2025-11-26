@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class StudentTermsAndConditions_ViewBody extends StatelessWidget {
   const StudentTermsAndConditions_ViewBody({
@@ -16,34 +17,39 @@ class StudentTermsAndConditions_ViewBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 16),
-          Text('١. المقدمة', style: AppTextStyles(context).bold19),
+          Text(LocaleKeys.studentTermsIntroTitle,
+              style: AppTextStyles(context).bold19),
           const SizedBox(height: 8),
-          const Text(
-            'باستخدام تطبيق سينتير، يوافق الطلاب على الالتزام بالشروط والأحكام التالية. تحكم هذه الشروط استخدام المنصة، بما في ذلك جميع التفاعلات مع المعلمين والطلاب الآخرين.',
+          Text(
+            LocaleKeys.studentTermsIntroText,
           ),
           const SizedBox(height: 16),
-          Text('٢. إرشادات الاستخدام', style: AppTextStyles(context).bold19),
+          Text(LocaleKeys.studentTermsUsageTitle,
+              style: AppTextStyles(context).bold19),
           const SizedBox(height: 8),
-          const Text(
-            'يجب على الطلاب استخدام التطبيق لأغراض تعليمية فقط. أي سلوك غير لائق، مثل التحرش أو مشاركة محتوى غير قانوني أو تعطيل بيئة التعلم، سيؤدي إلى تعليق الحساب.',
+          Text(
+            LocaleKeys.studentTermsUsageText,
           ),
           const SizedBox(height: 16),
-          Text('٣. المدفوعات والاسترداد', style: AppTextStyles(context).bold19),
+          Text(LocaleKeys.studentTermsPaymentsTitle,
+              style: AppTextStyles(context).bold19),
           const SizedBox(height: 8),
-          const Text(
-            'المدفوعات الخاصة بالدورات غير قابلة للاسترداد، باستثناء الحالات التي يتم فيها إلغاء الدورة من قبل المعلم. يجب على الطلاب التأكد من تلبية جميع متطلبات الدورة قبل التسجيل.',
+          Text(
+            LocaleKeys.studentTermsPaymentsText,
           ),
           const SizedBox(height: 16),
-          Text('٤. سياسة الخصوصية', style: AppTextStyles(context).bold19),
+          Text(LocaleKeys.studentTermsPrivacyTitle,
+              style: AppTextStyles(context).bold19),
           const SizedBox(height: 8),
-          const Text(
-            'يحترم تطبيق سينتير خصوصيتك ويلتزم بحماية بياناتك الشخصية. يرجى الرجوع إلى سياسة الخصوصية الخاصة بنا لمعرفة المزيد حول كيفية جمع واستخدام وحماية معلوماتك.',
+          Text(
+            LocaleKeys.studentTermsPrivacyText,
           ),
           const SizedBox(height: 16),
-          Text('٥. التغييرات في الشروط', style: AppTextStyles(context).bold19),
+          Text(LocaleKeys.studentTermsChangesTitle,
+              style: AppTextStyles(context).bold19),
           const SizedBox(height: 8),
-          const Text(
-            'يحتفظ تطبيق سينتير بالحق في تعديل هذه الشروط في أي وقت. سيتم إخطار الطلاب بأي تغييرات، واستخدام التطبيق بعد التغييرات يعني قبول الشروط الجديدة.',
+          Text(
+            LocaleKeys.studentTermsChangesText,
           ),
           const SizedBox(height: 16),
         ],

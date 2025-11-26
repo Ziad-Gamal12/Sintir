@@ -7,6 +7,7 @@ import 'package:sintir/Features/MyResults/Presentation/Views/MyResultsView.dart'
 import 'package:sintir/Features/Profile/Presentation/Views/UserPersonalDetailsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ProfileActionsEntity {
   final String title;
@@ -22,28 +23,28 @@ class ProfileActionsEntity {
 
   static List<ProfileActionsEntity> userCoreActions = [
     ProfileActionsEntity(
-        title: "البيانات الشخصية",
+        title: LocaleKeys.profilePersonalData,
         icon: FontAwesomeIcons.user,
         routeName: UserPersonalDetailsView.routeName,
         color: KMainColor),
     ProfileActionsEntity(
-        title: "كورساتي",
+        title: LocaleKeys.profileMyCourses,
         icon: FontAwesomeIcons.graduationCap,
         routeName: MyCoursesView.routeName,
         color: KSecondaryColor),
     ProfileActionsEntity(
-      title: "المفضلة",
+      title: LocaleKeys.profileFavorites,
       icon: FontAwesomeIcons.solidHeart,
       routeName: Favoritesview.routeName,
       color: Colors.pink,
     ),
     ProfileActionsEntity(
-        title: "نتائجي",
+        title: LocaleKeys.profileResults,
         icon: FontAwesomeIcons.chartColumn,
         routeName: MyResultsView.routeName,
         color: Colors.deepPurple),
     ProfileActionsEntity(
-      title: "أخطائي",
+      title: LocaleKeys.profileMistakes,
       icon: FontAwesomeIcons.circleExclamation,
       routeName: MyMistakesView.routeName,
       color: Colors.red,
@@ -54,24 +55,24 @@ class ProfileActionsEntity {
   static List<ProfileActionsEntity> teacherActions = [
     ProfileActionsEntity(
         routeName: TeacherWorkenvironmentview.routeName,
-        title: "بيئة العمل",
+        title: LocaleKeys.workEnvironment,
         icon: FontAwesomeIcons.briefcase,
         color: Colors.green),
     ...userCoreActions
   ];
   static List<ProfileActionsEntity> appCoreActions = [
     ProfileActionsEntity(
-      title: "الإعدادات",
+      title: LocaleKeys.profileSettings,
       icon: FontAwesomeIcons.gear,
       routeName: "",
     ),
     ProfileActionsEntity(
-      title: "من نحن",
+      title: LocaleKeys.profileAbout,
       icon: FontAwesomeIcons.circleInfo,
       routeName: "",
     ),
     ProfileActionsEntity(
-      title: "الدعم",
+      title: LocaleKeys.profileSupport,
       icon: FontAwesomeIcons.circleQuestion,
       routeName: "",
     ),

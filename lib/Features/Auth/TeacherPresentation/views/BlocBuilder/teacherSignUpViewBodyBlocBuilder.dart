@@ -61,10 +61,10 @@ class _teacherSignUpViewBodyBlocBuilderState
                         teacherSignUpPasswordController,
                   ),
                   const SizedBox(height: 16),
-                  Customtermsandconditiona(textonpressed: () {
+                  CustomTermsAndConditions(textOnPressed: () {
                     GoRouter.of(context)
                         .push(Teachertermsandconditionsview.routeName);
-                  }, onchanged: (value) {
+                  }, onChanged: (value) {
                     isChecked = value;
                     setState(() {});
                   }),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class NewestCoursesHeader extends StatelessWidget {
   const NewestCoursesHeader({
@@ -11,10 +12,10 @@ class NewestCoursesHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomListORGridTextHeader(
-        text: "أحدث الكورسات",
+        text: LocaleKeys.latestCourses,
         trailing: InkWell(
           child: Text(
-            "المزيد",
+            LocaleKeys.seeMore,
             style:
                 AppTextStyles(context).semiBold14.copyWith(color: KMainColor),
           ),

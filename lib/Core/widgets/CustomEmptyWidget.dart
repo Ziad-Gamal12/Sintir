@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomEmptyWidget extends StatelessWidget {
   CustomEmptyWidget({
@@ -21,7 +22,7 @@ class CustomEmptyWidget extends StatelessWidget {
             height: 10,
           ),
           Text(
-            text ?? "المحتوى فارغ",
+            text ?? LocaleKeys.emptyContent,
             style:
                 AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
           ),

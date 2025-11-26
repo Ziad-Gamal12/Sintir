@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TeacherWalletDetailsViewBodyWalletCardHeader extends StatelessWidget {
   const TeacherWalletDetailsViewBodyWalletCardHeader({
@@ -13,7 +14,7 @@ class TeacherWalletDetailsViewBodyWalletCardHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text("المحفظة", style: AppTextStyles(context).bold20),
+        Text(LocaleKeys.wallet, style: AppTextStyles(context).bold20),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
           decoration: BoxDecoration(
@@ -39,11 +40,11 @@ class TeacherWalletDetailsViewBodyWalletCardHeader extends StatelessWidget {
 
   String getStatusBadgeTitle(String status) {
     if (status == BackendEndpoints.walletActive) {
-      return "مفعلة";
+      return LocaleKeys.active;
     } else if (status == BackendEndpoints.walletClosed) {
-      return "مغلقة";
+      return LocaleKeys.walletNotActive;
     } else {
-      return "معلقة";
+      return LocaleKeys.pending;
     }
   }
 }

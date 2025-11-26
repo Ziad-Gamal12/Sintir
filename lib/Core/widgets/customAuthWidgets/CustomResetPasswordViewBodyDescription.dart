@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomResetPasswordViewBodyDescription extends StatelessWidget {
   const CustomResetPasswordViewBodyDescription({
@@ -11,7 +12,7 @@ class CustomResetPasswordViewBodyDescription extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: Text(
-        "أدخل بريدك الإلكتروني وسنرسل لك رابطًا لإعادة تعيين كلمة المرور الخاصة بك.",
+        LocaleKeys.resetPasswordDescription,
         style:
             AppTextStyles(context).semiBold14.copyWith(color: Colors.black54),
         textAlign: TextAlign.center,

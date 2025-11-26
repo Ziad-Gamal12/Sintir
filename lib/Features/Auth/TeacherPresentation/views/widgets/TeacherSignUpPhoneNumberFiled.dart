@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TeacherSignUpPhoneNumberFiled extends StatelessWidget {
   const TeacherSignUpPhoneNumberFiled({
@@ -13,7 +14,7 @@ class TeacherSignUpPhoneNumberFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
-        hintText: "رقم التليفون",
+        hintText: LocaleKeys.phoneNumber,
         prefixIcon: Icons.phone_outlined,
         obscureText: false,
         onSaved: (val) {
@@ -22,9 +23,9 @@ class TeacherSignUpPhoneNumberFiled extends StatelessWidget {
         textInputType: TextInputType.phone,
         validator: (value) {
           if (value!.isEmpty) {
-            return "ادخل رقم التليفون";
+            return LocaleKeys.phoneRequired;
           } else if (value.length != 11) {
-            return "رجاء ادخل رقم تليفون صحيح ";
+            return LocaleKeys.phoneInvalid;
           }
           return null;
         });

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomCourseHorizontalItemPrice extends StatelessWidget {
   const CustomCourseHorizontalItemPrice({
@@ -21,7 +22,7 @@ class CustomCourseHorizontalItemPrice extends StatelessWidget {
         ),
         const SizedBox(width: 4),
         Text(
-          "جنيه",
+          LocaleKeys.priceEgp,
           style: AppTextStyles(context).regular16,
         ),
       ],

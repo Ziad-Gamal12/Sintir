@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:svg_flutter/svg.dart';
 
 class TeacherSigninViewBodyWelcomeSection extends StatelessWidget {
@@ -25,7 +26,7 @@ class TeacherSigninViewBodyWelcomeSection extends StatelessWidget {
         Text.rich(
           TextSpan(children: [
             TextSpan(
-              text: "أهلا بعودتك لـ ",
+              text: LocaleKeys.welcomeBack,
               style: AppTextStyles(context).semiBold24,
             ),
             TextSpan(
@@ -40,7 +41,7 @@ class TeacherSigninViewBodyWelcomeSection extends StatelessWidget {
           height: 8,
         ),
         Text(
-          "سجل دخولك لكي تستطيع استخدام التطبيق",
+          LocaleKeys.loginToContinue,
           style: AppTextStyles(context).regular16,
         ),
       ],

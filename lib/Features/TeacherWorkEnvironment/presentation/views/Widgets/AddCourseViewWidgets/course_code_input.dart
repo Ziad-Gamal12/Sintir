@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseCodeInput extends StatelessWidget {
   final TextEditingController controller;
@@ -10,10 +11,11 @@ class CourseCodeInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomTextField(
       controller: controller,
-      hintText: "كود الدورة",
+      hintText: LocaleKeys.courseCode,
       obscureText: false,
       textInputType: TextInputType.text,
-      validator: (v) => v == null || v.isEmpty ? "ادخل كود الدورة" : null,
+      validator: (v) =>
+          v == null || v.isEmpty ? LocaleKeys.enterCourseCode : null,
     );
   }
 }

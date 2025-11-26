@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomAnimatedDropDownButton.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomSubjectDropdownButton extends StatefulWidget {
   const CustomSubjectDropdownButton({super.key, required this.onValueChange});
@@ -12,28 +13,28 @@ class CustomSubjectDropdownButton extends StatefulWidget {
 class _CustomSubjectDropdownButtonState
     extends State<CustomSubjectDropdownButton> {
   List<String> items = [
-    "اللغة العربية",
-    "اللغة الانجليزية",
-    "اللغة الفرنسية",
-    "اللغة الايطالية",
-    "اللغة الاسبانية",
-    "الرياضيات",
-    "الفيزياء",
-    "الكيمياء",
-    "الاحياء",
-    "البيولوجيا",
-    "العلوم",
-    "الفلسفة",
-    "التاريخ",
-    "الجغرافيا",
-    "علوم الحاسب"
-        "أخرى"
+    "Arabic",
+    "English",
+    "French",
+    "Italian",
+    "Spanish",
+    "Mathematics",
+    "Physics",
+    "Chemistry",
+    "Biology",
+    "Biological Science",
+    "Science",
+    "Philosophy",
+    "History",
+    "Geography",
+    "Computer Science",
+    "Other"
   ];
   @override
   Widget build(BuildContext context) {
     return CustomAnimatedDropDownButton(
       items: items,
-      hintText: "الماده الدراسية",
+      hintText: LocaleKeys.subjectHint,
       onChanged: widget.onValueChange,
     );
   }

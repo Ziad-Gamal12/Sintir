@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomUnAvilableSectionWidget extends StatelessWidget {
   const CustomUnAvilableSectionWidget({
@@ -37,7 +38,7 @@ class CustomUnAvilableSectionWidget extends StatelessWidget {
                     width: 4,
                   ),
                   Text(
-                    "هذا المحتوى مغلق",
+                    LocaleKeys.contentLocked,
                     style: AppTextStyles(context)
                         .semiBold16
                         .copyWith(color: Colors.red.shade700),

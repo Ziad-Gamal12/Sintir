@@ -5,6 +5,7 @@ import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/MyCourses/Presentation/Manager/cubit/my_courses_cubit.dart';
 import 'package:sintir/Features/MyCourses/Presentation/Views/Widgets/MyCoursesViewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class MyCoursesView extends StatelessWidget {
   const MyCoursesView({super.key});
@@ -12,7 +13,7 @@ class MyCoursesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(appBartitle: "الدورات الخاصه بي"),
+      appBar: CustomAppBar(appBartitle: LocaleKeys.myCourses),
       body: BlocProvider(
           create: (context) => MyCoursesCubit(
                 coursesrepo: getIt<Coursesrepo>(),

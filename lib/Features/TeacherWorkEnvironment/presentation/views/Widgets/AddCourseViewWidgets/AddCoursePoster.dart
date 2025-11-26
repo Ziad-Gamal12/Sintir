@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomCachedNetworkImage.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Addcourseposter extends StatelessWidget {
   const Addcourseposter({
@@ -52,7 +53,7 @@ class Addcourseposter extends StatelessWidget {
             ),
             const SizedBox(height: 22),
             Text(
-              "الصورة المصغرة للدورة",
+              LocaleKeys.courseThumbnail,
               textAlign: TextAlign.center,
               style: AppTextStyles(context)
                   .bold13

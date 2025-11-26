@@ -5,6 +5,7 @@ import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_courses_cubit/get_courses_cubit.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/RecentCoursesSectionLoadingWidget.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/leatestCoursesGlideView.dart';
+import 'package:sintir/locale_keys.dart';
 
 class RecentCoursesSection extends StatelessWidget {
   const RecentCoursesSection({super.key});
@@ -29,7 +30,7 @@ class RecentCoursesSection extends StatelessWidget {
               state.resonseEntity.courses.isEmpty) {
             return SliverToBoxAdapter(
               child: CustomEmptyWidget(
-                text: "لا يوجد دورات حديثة",
+                text: LocaleKeys.noNewCourses,
               ),
             );
           } else {

@@ -7,6 +7,7 @@ import 'package:sintir/Core/repos/ResetPaswordRepo/ResetPaswordRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordViewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomResetPasswordView extends StatelessWidget {
   const CustomResetPasswordView({super.key});
@@ -17,7 +18,7 @@ class CustomResetPasswordView extends StatelessWidget {
       create: (context) =>
           CustomResetPasswordCubit(authrepo: getIt<ResetPaswordRepo>()),
       child: Scaffold(
-        appBar: CustomAppBar(appBartitle: "استعادة كلمة المرور"),
+        appBar: CustomAppBar(appBartitle: LocaleKeys.resetPassword),
         body: const CustomResetPasswordViewBody(),
       ),
     );

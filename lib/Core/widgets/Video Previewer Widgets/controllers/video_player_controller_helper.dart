@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:better_player_plus/better_player_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomVideoControllerBetter {
   BetterPlayerController? betterPlayerController;
@@ -17,7 +18,7 @@ class CustomVideoControllerBetter {
   }) async {
     try {
       if (videoUrl == null && file == null) {
-        throw Exception("لا يمكن تشغيل الفيديو: لا يوجد رابط أو ملف");
+        throw Exception(LocaleKeys.videoLoadFailed);
       }
 
       // إعداد مصدر الفيديو
@@ -51,13 +52,13 @@ class CustomVideoControllerBetter {
         errorBuilder: (context, errorMessage) {
           CustomSnackBar.show(
             context,
-            message: "❌ هذا الفيديو غير مدعوم على جهازك أو حدث خطأ",
+            message: LocaleKeys.videoFailed,
             type: SnackType.error,
           );
-          return const Center(
+          return Center(
               child: Text(
-            "❌ فشل تشغيل الفيديو",
-            style: TextStyle(color: Colors.white),
+            LocaleKeys.videoPlayFailed,
+            style: const TextStyle(color: Colors.white),
           ));
         },
       );
@@ -80,7 +81,7 @@ class CustomVideoControllerBetter {
       if (context != null) {
         CustomSnackBar.show(
           context,
-          message: "❌ تعذر تشغيل الفيديو على هذا الجهاز",
+          message: LocaleKeys.videoNotSupported,
           type: SnackType.error,
         );
       }

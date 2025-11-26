@@ -13,6 +13,7 @@ import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/StudentSi
 import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/Student_SigninSocialbuttonssection.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/student_SigninTextfiledsection.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class StudentSigninViewBodyBlocBuilder extends StatefulWidget {
   const StudentSigninViewBodyBlocBuilder({
@@ -85,8 +86,8 @@ class _StudentSigninViewBodyBlocBuilderState
                     GoRouter.of(context).push(StudentSignupView.routeName);
                   }),
                   const SizedBox(height: 32),
-                  const Customsepratedwidget(
-                    centerTitle: "او",
+                  Customsepratedwidget(
+                    centerTitle: LocaleKeys.orSeparator,
                   ),
                   const SizedBox(height: 32),
                   const Student_SigninSocialbuttonssection()

@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
-class Custommycoursesgridheader extends StatelessWidget {
-  const Custommycoursesgridheader({super.key});
+class CustomMyCoursesGridHeader extends StatelessWidget {
+  const CustomMyCoursesGridHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class Custommycoursesgridheader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
-          "كورساتي",
+          LocaleKeys.myCourses,
           style: AppTextStyles(context).bold20.copyWith(color: Colors.black),
         ),
       ],

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/manager/StudentSignIn_Cubit/student_sign_in_cubit.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class StudentSignInCustomButton extends StatelessWidget {
   const StudentSignInCustomButton({
@@ -17,7 +18,7 @@ class StudentSignInCustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Custombutton(
-        text: "تسجيل الدخول",
+        text: LocaleKeys.login,
         color: KMainColor,
         textColor: Colors.white,
         onPressed: () {

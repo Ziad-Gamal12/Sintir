@@ -7,6 +7,7 @@ import 'package:sintir/Core/entities/FireStoreEntities/FireStorePaginateResponse
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
+import 'package:sintir/locale_keys.dart';
 
 class FirebaseFirestoreservice implements DataBaseService {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -90,28 +91,26 @@ class FirebaseFirestoreservice implements DataBaseService {
     switch (e.code) {
       case 'permission-denied':
         throw CustomException(
-          message:
-              "🚨 ليس لديك الإذن اللازم للوصول إلى البيانات. يرجى مراجعة صلاحياتك.",
+          message: LocaleKeys.permissionDenied,
         );
       case 'unavailable':
         throw CustomException(
-          message: "🚨 الخادم غير متوفر حاليا. حاول مرة أخرى لاحقا.",
+          message: LocaleKeys.serverUnavailable,
         );
       case 'invalid-argument':
         throw CustomException(
-          message:
-              "❌ تم تمرير بيانات غير صحيحة. تأكد من المدخلات وحاول مجددًا.",
+          message: LocaleKeys.invalidArgument,
         );
       case 'deadline-exceeded':
         throw CustomException(
-          message: "⏳ انتهت المهلة الزمنية للطلب. حاول مرة أخرى.",
+          message: LocaleKeys.deadlineExceeded,
         );
       case 'resource-exhausted':
         throw CustomException(
-          message: "🚨 تم استهلاك الموارد المتاحة. يرجى المحاولة لاحقًا.",
+          message: LocaleKeys.resourceExhausted,
         );
       default:
-        throw CustomException(message: "❌ حدث خطأ غير متوقع.");
+        throw CustomException(message: LocaleKeys.unexpectedError);
     }
   }
 
@@ -253,7 +252,7 @@ class FirebaseFirestoreservice implements DataBaseService {
       throw _getFireStoreCustomException(e: e);
     } catch (e, s) {
       log(e.toString(), stackTrace: s);
-      throw CustomException(message: "❌ حدث خطأ غير متوقع.");
+      throw CustomException(message: LocaleKeys.unexpectedError);
     }
   }
 
@@ -324,7 +323,7 @@ class FirebaseFirestoreservice implements DataBaseService {
     } on FirebaseException catch (e) {
       throw _getFireStoreCustomException(e: e);
     } catch (e) {
-      throw CustomException(message: "حدث خطأ ما");
+      throw CustomException(message: LocaleKeys.errorOccurredMessage);
     }
   }
 
@@ -361,7 +360,7 @@ class FirebaseFirestoreservice implements DataBaseService {
     } on FirebaseException catch (e) {
       throw _getFireStoreCustomException(e: e);
     } catch (e) {
-      throw CustomException(message: "حدث خطأ ما");
+      throw CustomException(message: LocaleKeys.errorOccurredMessage);
     }
   }
 
@@ -429,7 +428,7 @@ class FirebaseFirestoreservice implements DataBaseService {
     } on FirebaseException catch (e) {
       throw _getFireStoreCustomException(e: e);
     } catch (e) {
-      throw CustomException(message: "حدث خطأ ما");
+      throw CustomException(message: LocaleKeys.errorOccurredMessage);
     }
   }
 }

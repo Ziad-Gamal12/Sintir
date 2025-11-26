@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomChatTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -62,7 +63,7 @@ class _CustomChatTextFieldState extends State<CustomChatTextField> {
         obscureText: false,
         validator: widget.validator,
         decoration: InputDecoration(
-            hintText: "أكتب رسالتك هنا...",
+            hintText: LocaleKeys.hintWriteMessage,
             hintStyle: AppTextStyles(context)
                 .bold13
                 .copyWith(color: Colors.grey.shade500),

@@ -5,6 +5,7 @@ import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetUnSubscribedActionButtons.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseIntroductionView.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomCourseBottomSheetActionButtons extends StatelessWidget {
   const CustomCourseBottomSheetActionButtons({
@@ -18,7 +19,7 @@ class CustomCourseBottomSheetActionButtons extends StatelessWidget {
         .isSubscribed;
     if (isSubscribed == true) {
       return Custombutton(
-          text: "الدخول للكورس",
+          text: LocaleKeys.enterCourse,
           color: Colors.white,
           textColor: Colors.black,
           side: const BorderSide(width: 1, color: Colors.black),

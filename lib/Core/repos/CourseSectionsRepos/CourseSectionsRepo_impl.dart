@@ -20,6 +20,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursefileModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursevedioitemModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseSectionsRepoImpl implements CourseSectionsRepo {
   final DataBaseService datebaseservice;
@@ -53,7 +54,7 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log("add course section error $e $s");
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -81,7 +82,7 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
       );
 
       if (response.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
       if (response.listData!.isEmpty) {
         return right(GetCourseSectionsResonseEntity(
@@ -106,7 +107,7 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (_) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -124,8 +125,7 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
       if (sectionItem is! CourseTestEntity &&
           sectionItem is! CourseVideoItemEntity &&
           sectionItem is! CourseFileEntity) {
-        return left(
-            ServerFailure(message: "العنصر غير معرف, يرجى المحاولة مرة أخرى"));
+        return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
       }
 
       final json = _getSectionItemData(sectionItem);
@@ -146,7 +146,7 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log("add course section error $e $s");
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -201,7 +201,7 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
       );
 
       if (data.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
       if (data.listData!.isEmpty) {
         return right([]);
@@ -213,7 +213,7 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (_) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -245,7 +245,7 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (_) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -267,7 +267,7 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (_) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 }

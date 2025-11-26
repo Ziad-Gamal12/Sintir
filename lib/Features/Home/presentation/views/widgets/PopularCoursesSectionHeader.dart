@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class PopularCoursesSectionHeader extends StatelessWidget {
   const PopularCoursesSectionHeader({
@@ -11,10 +12,10 @@ class PopularCoursesSectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomListORGridTextHeader(
-        text: "الأكثر مشاهدة",
+        text: LocaleKeys.mostViewed,
         trailing: InkWell(
           child: Text(
-            "المزيد",
+            LocaleKeys.seeMore,
             style:
                 AppTextStyles(context).semiBold14.copyWith(color: KMainColor),
           ),

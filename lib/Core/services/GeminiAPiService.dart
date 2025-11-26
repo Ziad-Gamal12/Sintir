@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class GeminiApiService {
   final Dio dio;
@@ -20,7 +21,7 @@ class GeminiApiService {
     } on DioException catch (e) {
       throw DioStatusHandler.handle(e);
     } catch (e) {
-      throw CustomException(message: "حدث خطأ ما");
+      throw CustomException(message: LocaleKeys.unknownError);
     }
   }
 }

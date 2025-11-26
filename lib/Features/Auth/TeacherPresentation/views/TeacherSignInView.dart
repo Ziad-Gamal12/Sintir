@@ -7,6 +7,7 @@ import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/manager/teacher_sign_in/teacher_sign_in_cubit.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherSigninViewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TeacherSignInView extends StatelessWidget {
   static const routeName = "/TeacherLoginView";
@@ -16,7 +17,7 @@ class TeacherSignInView extends StatelessWidget {
     return BlocProvider(
       create: (context) => TeacherSignInCubit(authrepo: getIt<AuthRepo>()),
       child: Scaffold(
-        appBar: CustomAppBar(appBartitle: "تسجيل الدخول"),
+        appBar: CustomAppBar(appBartitle: LocaleKeys.login),
         body: Builder(builder: (context) {
           return const TeacherSigninViewBody();
         }),

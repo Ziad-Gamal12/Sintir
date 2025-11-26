@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseBottomSheetCourseDetailsIsSubscribedBanner extends StatelessWidget {
   const CourseBottomSheetCourseDetailsIsSubscribedBanner({
@@ -14,7 +15,7 @@ class CourseBottomSheetCourseDetailsIsSubscribedBanner extends StatelessWidget {
         color: Colors.green,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Text("مشترك",
+      child: Text(LocaleKeys.subscribed,
           style:
               AppTextStyles(context).regular14.copyWith(color: Colors.white)),
     );

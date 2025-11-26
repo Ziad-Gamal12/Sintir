@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherExtraDataEntity.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/UserPersonalDetailsViewWidgets/CustomUserInfoItem.dart';
+import 'package:sintir/locale_keys.dart';
 
 class UserTeacherInfo extends StatelessWidget {
   final TeacherExtraDataEntity teacher;
@@ -24,7 +25,7 @@ class UserTeacherInfo extends StatelessWidget {
           children: [
             // Title
             Text(
-              "بيانات المعلم",
+              LocaleKeys.teacherData,
               style: styles.semiBold20.copyWith(color: Colors.black),
             ),
 
@@ -33,7 +34,7 @@ class UserTeacherInfo extends StatelessWidget {
             // Subject
             CustomUserInfoItem(
               icon: FontAwesomeIcons.bookOpen,
-              title: "المادة",
+              title: LocaleKeys.teacherSubject,
               value: teacher.subject,
             ),
 
@@ -42,7 +43,7 @@ class UserTeacherInfo extends StatelessWidget {
             // Work Experience
             CustomUserInfoItem(
               icon: FontAwesomeIcons.briefcase,
-              title: "الخبرة",
+              title: LocaleKeys.experienceYears,
               value: " ${teacher.workExperience}",
             ),
           ],

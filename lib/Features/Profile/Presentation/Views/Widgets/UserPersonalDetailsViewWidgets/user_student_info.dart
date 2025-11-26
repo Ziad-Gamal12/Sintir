@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/StudentExtraDataEntity.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/UserPersonalDetailsViewWidgets/CustomUserInfoItem.dart';
+import 'package:sintir/locale_keys.dart';
 
 class UserStudentInfo extends StatelessWidget {
   final StudentExtraDataEntity student;
@@ -24,7 +25,7 @@ class UserStudentInfo extends StatelessWidget {
           children: [
             // Title
             Text(
-              "بيانات الطالب",
+              LocaleKeys.studentData,
               style: styles.semiBold20.copyWith(color: Colors.black),
             ),
 
@@ -33,7 +34,7 @@ class UserStudentInfo extends StatelessWidget {
             // Education Level
             CustomUserInfoItem(
               icon: FontAwesomeIcons.layerGroup,
-              title: "المرحلة الدراسية",
+              title: LocaleKeys.studentEducationLevel,
               value: student.educationLevel,
             ),
 
@@ -42,7 +43,7 @@ class UserStudentInfo extends StatelessWidget {
             // Birth Date
             CustomUserInfoItem(
               icon: FontAwesomeIcons.cakeCandles,
-              title: "تاريخ الميلاد",
+              title: LocaleKeys.studentBirthDate,
               value: student.birthDate,
             ),
           ],

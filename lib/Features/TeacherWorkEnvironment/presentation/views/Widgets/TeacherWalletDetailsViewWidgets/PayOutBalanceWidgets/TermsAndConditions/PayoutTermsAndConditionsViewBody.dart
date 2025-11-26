@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class PayoutTermsAndConditionsViewBody extends StatelessWidget {
   const PayoutTermsAndConditionsViewBody({super.key});
@@ -30,63 +31,32 @@ class PayoutTermsAndConditionsViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Arabic Terms & Conditions text organized into clear sections
-    const introTitle = 'مقدمة';
-    const introBody =
-        'تنظم هذه الشروط والأحكام عملية سحب الأرباح (Payout) للمدرسين داخل تطبيق "سينتير". '
-        'بمجرد طلب السحب فأنت توافق على جميع البنود الواردة في هذه الصفحة.';
+    final introTitle = LocaleKeys.payoutIntroTitle;
+    final introBody = LocaleKeys.payoutIntroBody;
 
-    const methodTitle = 'طريقة السحب';
-    const methodBody =
-        'تتم جميع عمليات السحب من خلال بوابة الدفع "Paymob". يجب إدخال بيانات السحب بشكل صحيح (مثل رقم الحساب أو رقم المحفظة). '
-        'أي خطأ في البيانات قد يؤدي إلى تأخير أو إلغاء عملية التحويل.';
+    final methodTitle = LocaleKeys.payoutMethodTitle;
+    final methodBody = LocaleKeys.payoutMethodBody;
+    final eligibilityTitle = LocaleKeys.payoutEligibilityTitle;
+    final eligibilityBody = LocaleKeys.payoutEligibilityBody;
+    final minimumTitle = LocaleKeys.payoutMinimumTitle;
+    final minimumBody = LocaleKeys.payoutMinimumBody;
 
-    const eligibilityTitle = 'معايير الأهلية';
-    const eligibilityBody =
-        'يحق لك طلب سحب الأرباح في حال تحقق الشروط التالية:\n'
-        '1. إتمام التحقق من الحساب (KYC) إذا طُلب منك ذلك.\n'
-        '2. وجود حساب مدرس نشط على منصة سينتير.\n'
-        '3. أن تكون الأرباح ناتجة عن معاملات شرعية ومقبولة على المنصة.';
+    final processingTitle = LocaleKeys.payoutProcessingTitle;
+    final processingBody = LocaleKeys.payoutProcessingBody;
+    final feesTitle = LocaleKeys.payoutFeesTitle;
+    final feesBody = LocaleKeys.payoutFeesBody;
+    final updateInfoTitle = LocaleKeys.payoutUpdateInfoTitle;
+    final updateInfoBody = LocaleKeys.payoutUpdateInfoBody;
 
-    const minimumTitle = 'الحد الأدنى للسحب';
-    const minimumBody =
-        'الحد الأدنى للسحب يتم تحديده وفقاً لسياسات بوابة الدفع Paymob وسياسات المنصة. '
-        'الطلبات التي تقل عن الحد الأدنى لن تُعالج حتى يجمع الحساب الحد المطلوب.';
+    final refundsTitle = LocaleKeys.payoutRefundsTitle;
+    final refundsBody = LocaleKeys.payoutRefundsBody;
 
-    const processingTitle = 'مدة معالجة الطلبات';
-    const processingBody =
-        'عادةً ما تستغرق عملية السحب من 2 إلى 5 أيام عمل بحسب سرعة Paymob والبنك أو موفر المحفظة. '
-        'قد تحدث تأخيرات إضافية في أيام العطلات الرسمية أو عطلات نهاية الأسبوع.';
-
-    const feesTitle = 'الرسوم والخصومات';
-    const feesBody =
-        '1. يتم خصم نسبة 5% من سعر كل عملية بيع كرسوم منصة قبل احتساب رصيدك القابل للسحب.\n'
-        '2. قد تقوم Paymob أو البنك بخصم رسوم معالجة أو رسوم تحويل إضافية حسب طريقة السحب.\n'
-        '3. أي رسوم بنكية دولية أو رسوم تحويل بين عملات يتحملها المستخدم عند ظهورها.';
-
-    const updateInfoTitle = 'تحديث بيانات السحب';
-    const updateInfoBody =
-        'أنت مسؤول عن التأكد من صحة وتحديث بيانات السحب الخاصة بك. في حال تقديم بيانات خاطئة وتأخر أو ضياع التحويل، '
-        'لن تكون منصة سينتير مسؤولة عن التعويض إلا إذا ثبت تقصير من طرفنا.';
-
-    const refundsTitle = 'حالات الاسترجاع (Refund) والخصم';
-    const refundsBody =
-        'في حال طلب طالب استرجاع لمبلغ تم دفعه أو تم إلغاء عملية دفع، سيتم خصم المبلغ المسترجَع من رصيدك. '
-        'إذا لم يكفِ الرصيد، سيتم خصم المبلغ من دفعاتك المستقبلية.';
-
-    const fraudTitle = 'حالات الاحتيال والمراجعة';
-    const fraudBody =
-        'قد يتم إيقاف أو تجميد أو إلغاء أي عملية سحب إذا رصدت المنصة أو بوابة الدفع نشاطاً مشبوهاً أو احتيالياً. '
-        'تحتفظ المنصة بالحق في تدقيق وتحليل العمليات وطلب مستندات إضافية لإتمام عملية السحب.';
-
-    const supportTitle = 'الدعم والمساعدة';
-    const supportBody =
-        'لأية مشكلات متعلقة بالسحب: تواصل مع دعم سينتير أولاً عبر داخل التطبيق. '
-        'لحالات التحويل الفني أو تأخر الدفع التي تتعلق ببوابة الدفع، قد يُطلب منك التواصل مع دعم Paymob وتقديم رقم العملية.';
-
-    const acceptanceTitle = 'الموافقة';
-    const acceptanceBody =
-        'بطلبك للسحب، تؤكد موافقتك على جميع البنود المذكورة أعلاه. قد تقوم المنصة بتحديث هذه الشروط من وقت لآخر. '
-        'في حال تم تعديل الشروط سيتم إعلامك وقد يُطلب منك إعادة الموافقة على النسخة الجديدة قبل إتمام عمليات السحب المستقبلية.';
+    final fraudTitle = LocaleKeys.payoutFraudTitle;
+    final fraudBody = LocaleKeys.payoutFraudBody;
+    final supportTitle = LocaleKeys.payoutSupportTitle;
+    final supportBody = LocaleKeys.payoutSupportBody;
+    final acceptanceTitle = LocaleKeys.payoutAcceptanceTitle;
+    final acceptanceBody = LocaleKeys.payoutAcceptanceBody;
 
     return Scrollbar(
       child: SingleChildScrollView(

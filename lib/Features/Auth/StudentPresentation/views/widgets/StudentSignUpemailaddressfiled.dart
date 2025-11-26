@@ -2,34 +2,36 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
+import 'package:sintir/Core/widgets/CustomTextFields/CustomEmailTextField.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 
-class StudentSignUpemailaddressfiled extends StatelessWidget {
+class StudentSignUpemailaddressfiled extends StatefulWidget {
   const StudentSignUpemailaddressfiled({
     super.key,
   });
+
+  @override
+  State<StudentSignUpemailaddressfiled> createState() =>
+      _StudentSignUpemailaddressfiledState();
+}
+
+class _StudentSignUpemailaddressfiledState
+    extends State<StudentSignUpemailaddressfiled> {
+  TextEditingController controller = TextEditingController();
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return CustomTextField(
-        hintText: "البريد الأكتروني",
-        prefixIcon: Icons.email_outlined,
-        obscureText: false,
-        onSaved: (val) {
-          context.read<UserEntity>().email = val ?? "";
-        },
-        textInputType: TextInputType.emailAddress,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return "ادخل البريد الأكتروني";
-          } else if (!value.contains("@")) {
-            return "ادخل البريد الأكتروني صحيح";
-          } else if (!RegExp(
-                  r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
-              .hasMatch(value)) {
-            return "ادخل البريد الأكتروني الصحيح";
-          }
-          return null;
-        });
+    return CustomEmailTextField(
+      controller: controller,
+      isIconVisible: true,
+      onSaved: (value) {
+        context.read<UserEntity>().email = value ?? "";
+      },
+    );
   }
 }

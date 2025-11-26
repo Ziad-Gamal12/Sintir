@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
-class Customfavourtitelistheader extends StatelessWidget {
-  const Customfavourtitelistheader({super.key});
+class CustomFavouriteListHeader extends StatelessWidget {
+  const CustomFavouriteListHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class Customfavourtitelistheader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
-          "المفضلة",
+          LocaleKeys.favorites,
           style: AppTextStyles(context).bold20.copyWith(color: Colors.black),
         ),
       ],

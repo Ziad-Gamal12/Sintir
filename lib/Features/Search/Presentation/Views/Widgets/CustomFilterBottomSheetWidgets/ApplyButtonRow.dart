@@ -5,6 +5,7 @@ import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Search/Domain/Entities/CustomFilterEntity.dart';
 import 'package:sintir/Features/Search/Presentation/Views/Widgets/CustomFilterBottomSheetWidgets/ClearFilters.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ApplyButtonRow extends StatelessWidget {
   const ApplyButtonRow({super.key, required this.onFilterChanged});
@@ -25,7 +26,7 @@ class ApplyButtonRow extends StatelessWidget {
             Expanded(
               flex: 4,
               child: Custombutton(
-                text: "فلتره",
+                text: LocaleKeys.filter,
                 color: KMainColor,
                 textColor: Colors.white,
                 onPressed: () {

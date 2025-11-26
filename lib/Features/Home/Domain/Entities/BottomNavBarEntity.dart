@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:sintir/Core/utils/imageAssets.dart';
+import 'package:sintir/locale_keys.dart';
 
 class BottomNavBarEntity {
   final String title;
@@ -14,23 +15,23 @@ class BottomNavBarEntity {
   static List<BottomNavBarEntity> toList() {
     return [
       BottomNavBarEntity(
-        title: "الرئيسية",
+        title: LocaleKeys.home,
         activeIcon: Assets.assetsIconsSVGIconsBottomNavBarHomeActiveIcon,
         inactiveIcon: Assets.assetsIconsSVGIconsBottomNavBarHomeInActiveIcon,
       ),
       BottomNavBarEntity(
-        title: "البحث",
+        title: LocaleKeys.search,
         activeIcon: Assets.assetsIconsSVGIconsBottomNavBarSearchActiveIcon,
         inactiveIcon: Assets.assetsIconsSVGIconsBottomNavBarSearchInActiveIcon,
       ),
       BottomNavBarEntity(
-        title: "المفضلة",
+        title: LocaleKeys.favorites,
         activeIcon: Assets.assetsIconsSVGIconsBottomNavBarFavouriteActiveIcon,
         inactiveIcon:
             Assets.assetsIconsSVGIconsBottomNavBarFavouriteInActiveIcon,
       ),
       BottomNavBarEntity(
-        title: "حسابي",
+        title: LocaleKeys.profile,
         activeIcon: Assets.assetsIconsSVGIconsBottomNavBarProfileActiveIcon,
         inactiveIcon: Assets.assetsIconsSVGIconsBottomNavBarProfileInActiveIcon,
       ),

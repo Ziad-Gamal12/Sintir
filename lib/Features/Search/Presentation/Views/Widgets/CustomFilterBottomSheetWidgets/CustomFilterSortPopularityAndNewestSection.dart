@@ -4,6 +4,7 @@ import 'package:sintir/Features/Search/Domain/Entities/CustomFilterEntity.dart';
 import 'package:sintir/Features/Search/Presentation/Views/Widgets/CustomFilterBottomSheetWidgets/CustomFilterCheckedBoxItem.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseViewWidgets/CustomEducationLevelDropdownButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseViewWidgets/CustomSubjectDropdownButton.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomFilterMoreFilters extends StatefulWidget {
   const CustomFilterMoreFilters({super.key});
@@ -25,12 +26,12 @@ class _CustomFilterMoreFiltersState extends State<CustomFilterMoreFilters> {
                 onChanged: (value) {
                   context.read<CourseFilterEntity>().sortByPopularity = true;
                 },
-                title: "الشعبية"),
+                title: LocaleKeys.mostViewed),
             CustomFilterCheckedBoxItem(
                 onChanged: (value) {
                   context.read<CourseFilterEntity>().sortByNewest = true;
                 },
-                title: "الجديدة")
+                title: LocaleKeys.latestCourses),
           ],
         ),
         const SizedBox(

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class StudentSignUpFirstAndLastNameField extends StatelessWidget {
   const StudentSignUpFirstAndLastNameField({
@@ -18,13 +19,13 @@ class StudentSignUpFirstAndLastNameField extends StatelessWidget {
       children: [
         Expanded(
           child: CustomTextField(
-            hintText: "الأسم الأول",
+            hintText: LocaleKeys.firstName,
             prefixIcon: FontAwesomeIcons.user,
             obscureText: false,
             textInputType: TextInputType.name,
             validator: (value) {
               if (value!.isEmpty) {
-                return "ادخل الأسم الأول";
+                return LocaleKeys.enterFirstName;
               } else {
                 return null;
               }
@@ -37,13 +38,13 @@ class StudentSignUpFirstAndLastNameField extends StatelessWidget {
         const Customsizedbox(width: 10, height: 0),
         Expanded(
           child: CustomTextField(
-              hintText: "الأسم الأخير",
+              hintText: LocaleKeys.lastName,
               prefixIcon: FontAwesomeIcons.user,
               obscureText: false,
               textInputType: TextInputType.name,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return "ادخل الأسم الأخير";
+                  return LocaleKeys.enterLastName;
                 } else {
                   return null;
                 }

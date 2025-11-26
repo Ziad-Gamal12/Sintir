@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
+import 'package:sintir/locale_keys.dart';
 
 class PayOutBalanceBodyTextFields extends StatelessWidget {
   const PayOutBalanceBodyTextFields({
@@ -18,15 +19,15 @@ class PayOutBalanceBodyTextFields extends StatelessWidget {
         Expanded(
           flex: 2,
           child: CustomTextField(
-            hintText: "رقم المحفظه",
+            hintText: LocaleKeys.walletNumberHint,
             controller: phoneController,
             prefixIcon: Icons.wallet,
             obscureText: false,
             validator: (value) {
               if (value!.isEmpty) {
-                return "ادخل رقم المحفظه";
+                return LocaleKeys.enterWalletNumber;
               } else if (value.length != 11) {
-                return "ادخل رقم المحفظه صحيح";
+                return LocaleKeys.enterValidWalletNumber;
               }
               return null;
             },
@@ -38,13 +39,13 @@ class PayOutBalanceBodyTextFields extends StatelessWidget {
         ),
         Expanded(
           child: CustomTextField(
-            hintText: "المبلغ",
+            hintText: LocaleKeys.amountHint,
             controller: amountController,
             obscureText: false,
             prefixIcon: Icons.attach_money,
             validator: (value) {
               if (value!.isEmpty) {
-                return "ادخل المبلغ";
+                return LocaleKeys.enterAmount;
               }
               return null;
             },

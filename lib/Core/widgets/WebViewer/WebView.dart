@@ -21,7 +21,7 @@ class Webviewer extends StatelessWidget {
         course: requirmentsEntity.course,
       ),
       child: Scaffold(
-        appBar: CustomAppBar(appBartitle: "الموقع الالكتروني"),
+        appBar: CustomAppBar(appBartitle: "Web View"),
         body: Webviewbody(response: requirmentsEntity.payMobResponse),
       ),
     );

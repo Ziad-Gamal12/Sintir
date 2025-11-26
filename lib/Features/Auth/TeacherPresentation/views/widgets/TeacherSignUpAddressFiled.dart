@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TeacherSignUpAddressFiled extends StatelessWidget {
   const TeacherSignUpAddressFiled({
@@ -13,7 +14,7 @@ class TeacherSignUpAddressFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
-        hintText: "العنوان",
+        hintText: LocaleKeys.addressHint,
         prefixIcon: Icons.location_on_outlined,
         obscureText: false,
         onSaved: (val) {
@@ -22,7 +23,7 @@ class TeacherSignUpAddressFiled extends StatelessWidget {
         textInputType: TextInputType.streetAddress,
         validator: (value) {
           if (value!.isEmpty) {
-            return "ادخل العنوان";
+            return LocaleKeys.addressRequired;
           }
           return null;
         });

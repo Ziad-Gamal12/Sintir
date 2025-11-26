@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordView.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TeacherLoginViewBodyForgetPasswordText extends StatelessWidget {
   const TeacherLoginViewBodyForgetPasswordText({
@@ -21,7 +22,7 @@ class TeacherLoginViewBodyForgetPasswordText extends StatelessWidget {
             GoRouter.of(context).push(CustomResetPasswordView.routeName);
           },
           child: Text(
-            "نسيت كلمة المرور؟",
+            LocaleKeys.resetPassword,
             style:
                 AppTextStyles(context).semiBold13.copyWith(color: KMainColor),
           ),

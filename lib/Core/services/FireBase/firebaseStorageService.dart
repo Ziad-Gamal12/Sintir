@@ -8,6 +8,7 @@ import 'package:path/path.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
+import 'package:sintir/locale_keys.dart';
 
 class firebasestorageservice implements StorageService {
   final storage = FirebaseStorage.instance;
@@ -23,7 +24,7 @@ class firebasestorageservice implements StorageService {
       return url;
     } catch (e) {
       log("Exception from firebasestorageservice.uploadFile in catch With Firebase Exception: ${e.toString()}");
-      throw CustomException(message: "خطأ في تحميل الصورة");
+      throw CustomException(message: LocaleKeys.uploadImageFailed);
     }
   }
 

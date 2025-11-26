@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeachertermsandconditionsviewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Teachertermsandconditionsview extends StatelessWidget {
   const Teachertermsandconditionsview({super.key});
@@ -10,7 +11,7 @@ class Teachertermsandconditionsview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(appBartitle: "الشروط والاحكام"),
+      appBar: CustomAppBar(appBartitle: LocaleKeys.termsConditions),
       body: const TeachertermsandconditionsviewBody(),
     );
   }

@@ -5,6 +5,7 @@ import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Features/Favorites/presentation/views/Manager/favourites_cubit/favourites_cubit.dart';
 import 'package:sintir/Features/Favorites/presentation/views/widgets/FavoritesviewBodyGridView.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class FavoritesviewBody extends StatelessWidget {
   const FavoritesviewBody({super.key});
@@ -22,7 +23,7 @@ class FavoritesviewBody extends StatelessWidget {
             duration: const Duration(milliseconds: 300),
             child: courses.isEmpty
                 ? CustomEmptyWidget(
-                    text: "قم بإضافة دورات للمفضلة",
+                    text: LocaleKeys.addCoursesToFavorites,
                   )
                 : FavoritesviewBodyGridView(width: width, courses: courses),
           ),

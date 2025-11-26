@@ -6,6 +6,7 @@ import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseViewWidgets/AddCourseViewBody.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseCubit/add_course_cubit.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Addcourseview extends StatefulWidget {
   const Addcourseview({super.key});
@@ -24,7 +25,7 @@ class _AddcourseviewState extends State<Addcourseview> {
           assetspickerrepo: getIt<Assetspickerrepo>()),
       child: Scaffold(
         appBar: CustomAppBar(
-          appBartitle: "اضافة دورة",
+          appBartitle: LocaleKeys.addNewCourse,
         ),
         body: const AddCourseViewBody(),
       ),

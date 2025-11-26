@@ -4,6 +4,7 @@ import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPassCard.dart';
 import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPassIcon.dart';
 import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordViewBodyDescription.dart';
 import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordViewBodyPopUpButton.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomResetPasswordViewBodyBlocBuilder extends StatefulWidget {
   const CustomResetPasswordViewBodyBlocBuilder({super.key});
@@ -61,10 +62,12 @@ class _CustomResetPasswordViewBodyBlocBuilderState
                   const SizedBox(height: 35),
 
                   // Title
-                  Text("إعادة تعيين كلمة المرور",
-                      style: AppTextStyles(context)
-                          .semiBold24
-                          .copyWith(color: Colors.black87)),
+                  Text(
+                    LocaleKeys.resetPassword,
+                    style: AppTextStyles(context)
+                        .semiBold24
+                        .copyWith(color: Colors.black87),
+                  ),
 
                   const SizedBox(height: 14),
 

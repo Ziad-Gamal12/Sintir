@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Search/Domain/Entities/CustomFilterEntity.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomFilterPriceSlider extends StatefulWidget {
   const CustomFilterPriceSlider({super.key});
@@ -22,14 +23,16 @@ class _CustomFilterPriceSliderState extends State<CustomFilterPriceSlider> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("أقل سعر 0", style: AppTextStyles(context).regular13),
+            Text("${LocaleKeys.lowestPrice} 0 ${LocaleKeys.priceEgp}",
+                style: AppTextStyles(context).regular13),
             Row(
               children: [
-                Text("أقصى سعر", style: AppTextStyles(context).regular13),
+                Text(LocaleKeys.highestPrice,
+                    style: AppTextStyles(context).regular13),
                 AnimatedSwitcher(
                   duration: const Duration(milliseconds: 200),
                   child: Text(
-                    "  ${sliderValue.round()} جنيه",
+                    "  ${sliderValue.round()} ${LocaleKeys.priceEgp}",
                     key: ValueKey(sliderValue.round()),
                     style: AppTextStyles(context)
                         .semiBold14

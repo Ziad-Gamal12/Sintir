@@ -7,6 +7,7 @@ import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/manager/StudentSignIn_Cubit/student_sign_in_cubit.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/StudentSignInViewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class StudentSignInView extends StatelessWidget {
   const StudentSignInView({super.key});
@@ -16,7 +17,7 @@ class StudentSignInView extends StatelessWidget {
     return BlocProvider(
       create: (context) => StudentSignInCubit(getIt<AuthRepo>()),
       child: Scaffold(
-        appBar: CustomAppBar(appBartitle: "تسجيل الدخول"),
+        appBar: CustomAppBar(appBartitle: LocaleKeys.login),
         body: const StudentSignInViewBody(),
       ),
     );

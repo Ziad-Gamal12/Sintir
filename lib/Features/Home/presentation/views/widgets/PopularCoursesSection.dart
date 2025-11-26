@@ -6,6 +6,7 @@ import 'package:sintir/Features/Home/presentation/manager/get_courses_cubit/get_
 import 'package:sintir/Features/Home/presentation/views/widgets/HorizentalCoursesListView.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/HorizentalLoadingCoursesListView.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/PopularCoursesSectionHeader.dart';
+import 'package:sintir/locale_keys.dart';
 
 class PopularCoursesSection extends StatelessWidget {
   const PopularCoursesSection({super.key});
@@ -30,7 +31,7 @@ class PopularCoursesSection extends StatelessWidget {
               } else if (state is GetPopularCoursesSuccess) {
                 final courses = state.resonseEntity.courses;
                 if (courses.isEmpty) {
-                  return CustomEmptyWidget(text: "لا يوجد دورات مشهورة");
+                  return CustomEmptyWidget(text: LocaleKeys.noPopularCourses);
                 } else {
                   return HorizentalCoursesListView(courses: courses);
                 }

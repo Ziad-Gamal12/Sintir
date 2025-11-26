@@ -10,6 +10,7 @@ import 'package:sintir/Features/Search/Presentation/Views/Widgets/CustomFilterBo
 import 'package:sintir/Features/Search/Presentation/Views/Widgets/CustomFilterBottomSheetWidgets/FilterSectionCard.dart';
 import 'package:sintir/Features/Search/Presentation/Views/Widgets/CustomFilterBottomSheetWidgets/Header.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomFilterBottomSheetBody extends StatefulWidget {
   const CustomFilterBottomSheetBody({super.key, required this.onFilterChanged});
@@ -40,24 +41,24 @@ class _CustomFilterBottomSheetBodyState
               physics: const BouncingScrollPhysics(),
               children: [
                 const SizedBox(height: 6),
-                const FilterSectionCard(
-                  title: "السعر",
-                  child: CustomFilterPriceSection(),
+                FilterSectionCard(
+                  title: LocaleKeys.price,
+                  child: const CustomFilterPriceSection(),
                 ),
                 const SizedBox(height: 12),
-                const FilterSectionCard(
-                  title: "الأشتراك",
-                  child: CustomFilterSubscribtionSection(),
+                FilterSectionCard(
+                  title: LocaleKeys.subscription,
+                  child: const CustomFilterSubscribtionSection(),
                 ),
                 const SizedBox(height: 12),
-                const FilterSectionCard(
-                  title: "ترتيب حسب السعر",
-                  child: CustomFilterSortByPriceSection(),
+                FilterSectionCard(
+                  title: LocaleKeys.sortByPrice,
+                  child: const CustomFilterSortByPriceSection(),
                 ),
                 const SizedBox(height: 12),
-                const FilterSectionCard(
-                  title: "أضافي",
-                  child: CustomFilterMoreFilters(),
+                FilterSectionCard(
+                  title: LocaleKeys.other,
+                  child: const CustomFilterMoreFilters(),
                 ),
                 const SizedBox(height: 22),
                 ApplyButtonRow(

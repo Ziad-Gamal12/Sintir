@@ -95,9 +95,54 @@ class LocaleKeys {
   static String get exploreContent => 'explore_content'.tr();
   static String get subscribeNow => 'subscribe_now'.tr();
   static String get enterCourse => 'enter_course'.tr();
+  static String get welcomeBackHome => 'welcome_back_home'.tr();
+  static String get latestCourses => 'latest_courses'.tr();
+  static String get home => 'home'.tr();
+  static String get search => 'search'.tr();
+  static String get profile => 'profile'.tr();
   static String get contentLocked => 'content_locked'.tr();
   static String get writeMessageHint => 'write_message_hint'.tr();
   static String get emailHint => 'email_hint'.tr();
+  static String get login => 'login'.tr();
+  static String get firstName => 'first_name'.tr();
+  static String get enterFirstName => 'enter_first_name'.tr();
+  static String get lastName => 'last_name'.tr();
+  static String get male => 'male'.tr();
+  static String get female => 'female'.tr();
+  static String get term1 => 'term_1'.tr();
+  static String get term2 => 'term_2'.tr();
+  static String get term3 => 'term_3'.tr();
+  static String get term4 => 'term_4'.tr();
+  static String get term5 => 'term_5'.tr();
+  static String get term6 => 'term_6'.tr();
+  static String get term7 => 'term_7'.tr();
+  static String get studentTermsIntroTitle => 'student_terms_intro_title'.tr();
+  static String get studentTermsIntroText => 'student_terms_intro_text'.tr();
+
+  static String get studentTermsUsageTitle => 'student_terms_usage_title'.tr();
+  static String get studentTermsUsageText => 'student_terms_usage_text'.tr();
+
+  static String get studentTermsPaymentsTitle =>
+      'student_terms_payments_title'.tr();
+  static String get studentTermsPaymentsText =>
+      'student_terms_payments_text'.tr();
+
+  static String get studentTermsPrivacyTitle =>
+      'student_terms_privacy_title'.tr();
+  static String get studentTermsPrivacyText =>
+      'student_terms_privacy_text'.tr();
+
+  static String get studentTermsChangesTitle =>
+      'student_terms_changes_title'.tr();
+  static String get studentTermsChangesText =>
+      'student_terms_changes_text'.tr();
+  static String get signInGoogle => 'sign_in_google'.tr();
+  static String get signInFacebook => 'sign_in_facebook'.tr();
+  static String get orSeparator => 'or_separator'.tr();
+  static String get enterLastName => 'enter_last_name'.tr();
+  static String get experienceYears => 'experience_years'.tr();
+  static String get enterExperienceYears => 'enter_experience_years'.tr();
+  static String get subjectHint => 'subject_hint'.tr();
   static String get passwordHint => 'password_hint'.tr();
   static String get passwordRequired => 'password_required'.tr();
   static String get passwordMinLength => 'password_min_length'.tr();
@@ -158,7 +203,6 @@ class LocaleKeys {
   static String get noImageSelected => 'no_image_selected'.tr();
   static String get noImageFound => 'no_image_found'.tr();
   static String get uploadImageFailed => 'upload_image_failed'.tr();
-  static String get profile => 'profile'.tr();
   static String get profilePersonalData => 'profile_personal_data'.tr();
   static String get profileMyCourses => 'profile_my_courses'.tr();
   static String get profileFavorites => 'profile_favorites'.tr();
@@ -166,10 +210,32 @@ class LocaleKeys {
   static String get profileMistakes => 'profile_mistakes'.tr();
   static String get profileSettings => 'profile_settings'.tr();
   static String get profileAbout => 'profile_about'.tr();
+  static String get lowestToHighest => 'lowest_to_highest'.tr();
+  static String get highestToLowest => 'highest_to_lowest'.tr();
+  static String get other => 'other'.tr();
+  static String get addCoursesToFavorites => 'add_courses_to_favorites'.tr();
+  static String get workEnvironment => 'work_environment'.tr();
   static String get profileSupport => 'profile_support'.tr();
   static String get profileEmail => 'profile_email'.tr();
   static String get profileGender => 'profile_gender'.tr();
   static String get profileRole => 'profile_role'.tr();
+  static String get courseRequestSentSuccess =>
+      'course_request_sent_success'.tr();
+
+  static String get enterCourseName => 'enter_course_name'.tr();
+  static String get courseName => 'course_name'.tr();
+
+  static String get courseCode => 'course_code'.tr();
+  static String get enterCourseCode => 'enter_course_code'.tr();
+
+  static String get courseDescription => 'course_description'.tr();
+  static String get enterCourseDescription => 'enter_course_description'.tr();
+
+  static String get price => 'price'.tr();
+  static String get enterPrice => 'enter_price'.tr();
+
+  static String get language => 'language'.tr();
+  static String get courseThumbnail => 'course_thumbnail'.tr();
   static String get profileJoinedDate => 'profile_joined_date'.tr();
   static String get profileContact => 'profile_contact'.tr();
   static String get profilePhone => 'profile_phone'.tr();
@@ -187,9 +253,12 @@ class LocaleKeys {
   static String get filter => 'filter'.tr();
   static String get restoreDefaultFilters => 'restore_default_filters'.tr();
   static String get filterCourses => 'filter_courses'.tr();
-  static String get price => 'price'.tr();
   static String get subscription => 'subscription'.tr();
   static String get sortByPrice => 'sort_by_price'.tr();
+  static String get missingFields => 'missing_fields'.tr();
+  static String get missingImage => 'missing_image'.tr();
+  static String get invalidPrice => 'invalid_price'.tr();
+  static String get priceWarning => 'price_warning'.tr();
   static String get moreFilters => 'more_filters'.tr();
   static String get lowestPrice => 'lowest_price'.tr();
   static String get highestPrice => 'highest_price'.tr();

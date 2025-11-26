@@ -7,11 +7,10 @@ import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseIntroductionView.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/SubscribtionView.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseBottomSheetUnSubscribedActionButtons extends StatelessWidget {
-  const CourseBottomSheetUnSubscribedActionButtons({
-    super.key,
-  });
+  const CourseBottomSheetUnSubscribedActionButtons({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,27 +19,31 @@ class CourseBottomSheetUnSubscribedActionButtons extends StatelessWidget {
         return Column(
           children: [
             Custombutton(
-                text: "استكشاف المحتوى",
-                color: Colors.white,
-                textColor: Colors.black,
-                side: const BorderSide(width: 1, color: Colors.black),
-                onPressed: () {
-                  GoRouter.of(context).push(CourseIntroductionView.routeName,
-                      extra: context.read<
-                          DisplayCourseBottomsheetNavigationRequirmentsEntity>());
-                }),
-            const SizedBox(
-              height: 10,
+              text: LocaleKeys.exploreContent,
+              color: Colors.white,
+              textColor: Colors.black,
+              side: const BorderSide(width: 1, color: Colors.black),
+              onPressed: () {
+                GoRouter.of(context).push(
+                  CourseIntroductionView.routeName,
+                  extra: context.read<
+                      DisplayCourseBottomsheetNavigationRequirmentsEntity>(),
+                );
+              },
             ),
+            const SizedBox(height: 10),
             Custombutton(
-                text: "أشترك الأن",
-                color: KSecondaryColor,
-                textColor: Colors.white,
-                onPressed: () {
-                  GoRouter.of(context).push(SubscribtionView.routeName,
-                      extra: context.read<
-                          DisplayCourseBottomsheetNavigationRequirmentsEntity>());
-                }),
+              text: LocaleKeys.subscribeNow,
+              color: KSecondaryColor,
+              textColor: Colors.white,
+              onPressed: () {
+                GoRouter.of(context).push(
+                  SubscribtionView.routeName,
+                  extra: context.read<
+                      DisplayCourseBottomsheetNavigationRequirmentsEntity>(),
+                );
+              },
+            ),
           ],
         );
       },

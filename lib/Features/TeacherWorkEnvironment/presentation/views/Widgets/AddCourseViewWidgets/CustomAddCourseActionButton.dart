@@ -8,6 +8,7 @@ import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseCubit/add_course_cubit.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomAddCourseActionButton extends StatelessWidget {
   const CustomAddCourseActionButton({
@@ -39,7 +40,7 @@ class CustomAddCourseActionButton extends StatelessWidget {
         return Custom_Loading_Widget(
           isLoading: isLoading,
           child: Custombutton(
-            text: "إضافة",
+            text: LocaleKeys.addNewCourse,
             color: KMainColor,
             textColor: Colors.white,
             onPressed: isLoading ? () {} : () => _submitCourse(context),
@@ -50,15 +51,15 @@ class CustomAddCourseActionButton extends StatelessWidget {
   }
 
   void _showMissingFieldsDialog(BuildContext context) {
-    errordialog(context, "هناك خانات ناقصة").show();
+    errordialog(context, LocaleKeys.missingFields).show();
   }
 
   void _showMissingImageDialog(BuildContext context) {
-    errordialog(context, "يرجى إضافة صورة للدورة").show();
+    errordialog(context, LocaleKeys.missingImage).show();
   }
 
   void _showInvalidPriceDialog(BuildContext context) {
-    errordialog(context, "الرجاء إدخال سعر صحيح").show();
+    errordialog(context, LocaleKeys.invalidPrice).show();
   }
 
   void _submitCourse(BuildContext context) {
@@ -100,10 +101,9 @@ class CustomAddCourseActionButton extends StatelessWidget {
       postedDate: DateTime.now(),
     );
 
-    // Show a confirmation warning before actually adding
     warningdialog(
       context,
-      "هام! سيتم خصم نسبه 5% من السعر المحدد عند الأشتراك",
+      LocaleKeys.priceWarning,
       () {
         cubit.addCourse(courseEntity: course, userEntity: getUserData());
       },

@@ -6,6 +6,7 @@ import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/payout_cubit/payout_cubit.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class PayOutBalanceBodButton extends StatelessWidget {
   const PayOutBalanceBodButton({
@@ -27,7 +28,7 @@ class PayOutBalanceBodButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Custombutton(
-      text: "إرسال الأموال",
+      text: LocaleKeys.sendMoney,
       color: KMainColor,
       textColor: Colors.white,
       onPressed: () {
@@ -35,7 +36,7 @@ class PayOutBalanceBodButton extends StatelessWidget {
         if (!isConditionAccepted) {
           CustomSnackBar.show(
             context,
-            message: "قبل استخدام هذه الميزة يجب قبول الشروط والاحكام",
+            message: LocaleKeys.mustAcceptTerms,
             type: SnackType.error,
           );
           return;
@@ -44,7 +45,7 @@ class PayOutBalanceBodButton extends StatelessWidget {
         if (amount == null) {
           CustomSnackBar.show(
             context,
-            message: "المبلغ غير صحيح",
+            message: LocaleKeys.invalidAmount,
             type: SnackType.error,
           );
           return;
@@ -53,7 +54,7 @@ class PayOutBalanceBodButton extends StatelessWidget {
         if (walletEntity.status != BackendEndpoints.walletActive) {
           CustomSnackBar.show(
             context,
-            message: "المحفظة غير مفعلة",
+            message: LocaleKeys.walletNotActive,
             type: SnackType.error,
           );
           return;
@@ -62,7 +63,7 @@ class PayOutBalanceBodButton extends StatelessWidget {
         if (walletEntity.balance < amount) {
           CustomSnackBar.show(
             context,
-            message: "لا يوجد كافة المبلغ في المحفظة",
+            message: LocaleKeys.insufficientBalance,
             type: SnackType.error,
           );
           return;
@@ -71,7 +72,7 @@ class PayOutBalanceBodButton extends StatelessWidget {
         if (!validateIssuer(issuer: issuer, phone: phoneController.text)) {
           CustomSnackBar.show(
             context,
-            message: "رقم المحفظه غير متطابق مع النوع",
+            message: LocaleKeys.walletNumberMismatch,
             type: SnackType.error,
           );
           return;

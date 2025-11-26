@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/UserPersonalDetailsViewWidgets/CustomUserInfoItem.dart';
+import 'package:sintir/locale_keys.dart';
 
 class UserContactInfo extends StatelessWidget {
   final UserEntity user;
@@ -24,7 +25,7 @@ class UserContactInfo extends StatelessWidget {
           children: [
             // Section Title
             Text(
-              "التواصل",
+              LocaleKeys.profileContact,
               style: styles.semiBold20.copyWith(color: Colors.black),
             ),
 
@@ -33,7 +34,7 @@ class UserContactInfo extends StatelessWidget {
             // Email
             CustomUserInfoItem(
               icon: FontAwesomeIcons.solidEnvelope,
-              title: "البريد الإلكتروني",
+              title: LocaleKeys.profileEmail,
               value: user.email,
             ),
 
@@ -42,7 +43,7 @@ class UserContactInfo extends StatelessWidget {
             // Phone Number
             CustomUserInfoItem(
               icon: FontAwesomeIcons.phone,
-              title: "رقم الهاتف",
+              title: LocaleKeys.phoneNumber,
               value: user.phoneNumber,
             ),
 
@@ -51,7 +52,7 @@ class UserContactInfo extends StatelessWidget {
             // Address
             CustomUserInfoItem(
               icon: FontAwesomeIcons.locationDot,
-              title: "العنوان",
+              title: LocaleKeys.profileAddress,
               value: user.address,
             ),
           ],

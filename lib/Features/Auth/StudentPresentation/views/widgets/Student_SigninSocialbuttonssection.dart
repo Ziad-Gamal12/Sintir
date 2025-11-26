@@ -6,6 +6,7 @@ import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/manager/StudentSignIn_Cubit/student_sign_in_cubit.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/customStudentSocialButton.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Student_SigninSocialbuttonssection extends StatelessWidget {
   const Student_SigninSocialbuttonssection({super.key});
@@ -15,7 +16,7 @@ class Student_SigninSocialbuttonssection extends StatelessWidget {
     return Column(
       children: [
         Customstudentsocialbutton(
-          text: "تسجيل بواسطة جوجل",
+          text: LocaleKeys.signInGoogle,
           onPressed: () {
             BlocProvider.of<StudentSignInCubit>(context).signInWithGoogle();
           },
@@ -23,7 +24,7 @@ class Student_SigninSocialbuttonssection extends StatelessWidget {
         ),
         const Customsizedbox(width: 0, height: 16),
         Customstudentsocialbutton(
-          text: "تسجيل بواسطة فيسبوك",
+          text: LocaleKeys.signInFacebook,
           onPressed: () {
             BlocProvider.of<StudentSignInCubit>(context).signInWithFacebook();
           },

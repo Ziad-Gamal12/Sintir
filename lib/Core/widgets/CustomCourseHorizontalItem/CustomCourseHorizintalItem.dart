@@ -3,6 +3,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomCourseHorizontalItem/CustomCourseHorizontalItemPosterUrl.dart';
 import 'package:sintir/Core/widgets/CustomCourseHorizontalItem/CustomCourseHorizontalItemPrice.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomCourseHorizontalItem extends StatefulWidget {
   const CustomCourseHorizontalItem({super.key, required this.course});
@@ -23,10 +24,11 @@ class _CustomCourseHorizontalItemState extends State<CustomCourseHorizontalItem>
   String _postedAgo(DateTime date) {
     final diff = DateTime.now().difference(date);
 
-    if (diff.inDays >= 30) return "${diff.inDays ~/ 30} شهر";
-    if (diff.inDays >= 1) return "${diff.inDays} يوم";
-    if (diff.inHours >= 1) return "${diff.inHours} ساعة";
-    return "${diff.inMinutes} دقيقة";
+    if (diff.inDays >= 30)
+      return "${diff.inDays ~/ 30} ${LocaleKeys.postedMonth}";
+    if (diff.inDays >= 1) return "${diff.inDays} ${LocaleKeys.postedDay}";
+    if (diff.inHours >= 1) return "${diff.inHours} ${LocaleKeys.postedHour}";
+    return "${diff.inMinutes} ${LocaleKeys.postedMinute}";
   }
 
   @override
@@ -110,7 +112,7 @@ class _CustomCourseHorizontalItemState extends State<CustomCourseHorizontalItem>
                             _buildChip(Icons.menu_book_rounded, course.subject),
                             _buildChip(Icons.language_rounded, course.language),
                             _buildChip(Icons.timer,
-                                "منذ ${_postedAgo(course.postedDate)}")
+                                "${LocaleKeys.createdDate} ${_postedAgo(course.postedDate)}")
                           ],
                         ),
                       ),

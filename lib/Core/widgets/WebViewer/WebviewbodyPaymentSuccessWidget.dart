@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class WebviewbodyPaymentSuccessWidget extends StatelessWidget {
   const WebviewbodyPaymentSuccessWidget({
@@ -27,7 +28,7 @@ class WebviewbodyPaymentSuccessWidget extends StatelessWidget {
             height: 10,
           ),
           Text(
-            "تم الاشتراك",
+            LocaleKeys.successSubscribe,
             style: AppTextStyles(context)
                 .bold24
                 .copyWith(color: const Color(0xff009ef2)),

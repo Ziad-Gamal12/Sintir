@@ -17,6 +17,7 @@ import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/ExamResultSolvedQuestionModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/TestResulteModel.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TestItemRepoImpli implements Testitemrepo {
   final StorageService storageService;
@@ -48,7 +49,7 @@ class TestItemRepoImpli implements Testitemrepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log('uploadTestQuestionsImages error: $e', stackTrace: s);
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -70,7 +71,7 @@ class TestItemRepoImpli implements Testitemrepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log('uploadTestQuestionsImages error: $e', stackTrace: s);
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -96,7 +97,7 @@ class TestItemRepoImpli implements Testitemrepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -163,7 +164,7 @@ class TestItemRepoImpli implements Testitemrepo {
       );
 
       if (response.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
 
       if (response.listData!.isEmpty) {
@@ -194,7 +195,7 @@ class TestItemRepoImpli implements Testitemrepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log('getTestResults error: $e', stackTrace: s);
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -224,7 +225,7 @@ class TestItemRepoImpli implements Testitemrepo {
       );
 
       if (response.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
       }
       if (response.listData!.isEmpty) {
         return right(TestResultEntity.empty());
@@ -238,7 +239,7 @@ class TestItemRepoImpli implements Testitemrepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log('getHighestScore error: $e', stackTrace: s);
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -269,7 +270,7 @@ class TestItemRepoImpli implements Testitemrepo {
       );
 
       if (response.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
       }
       if (response.listData!.isEmpty) {
         return right(TestResultEntity.empty());
@@ -283,7 +284,7 @@ class TestItemRepoImpli implements Testitemrepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log('getLowestScore error: $e', stackTrace: s);
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -311,7 +312,7 @@ class TestItemRepoImpli implements Testitemrepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log('getAttendedCount error: $e', stackTrace: s);
-      return left(ServerFailure(message: "حدث خطاء"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -347,7 +348,7 @@ class TestItemRepoImpli implements Testitemrepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log('getFailedStudentsCount error: $e', stackTrace: s);
-      return left(ServerFailure(message: "حدث خطاء"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -383,7 +384,7 @@ class TestItemRepoImpli implements Testitemrepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log('getSuccessedStudentsCount error: $e', stackTrace: s);
-      return left(ServerFailure(message: "حدث خطاء"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -417,7 +418,7 @@ class TestItemRepoImpli implements Testitemrepo {
       );
 
       if (response.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
       }
       if (response.listData!.isEmpty) return right([]);
 
@@ -429,7 +430,7 @@ class TestItemRepoImpli implements Testitemrepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log("error in user results of exam $e", stackTrace: s);
-      return left(ServerFailure(message: "حدث خطاء"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -454,7 +455,7 @@ class TestItemRepoImpli implements Testitemrepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطاء"));
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 

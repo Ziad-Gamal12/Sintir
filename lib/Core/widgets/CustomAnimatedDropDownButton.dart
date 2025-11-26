@@ -2,6 +2,7 @@
 
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomAnimatedDropDownButton extends StatelessWidget {
   CustomAnimatedDropDownButton(
@@ -22,7 +23,7 @@ class CustomAnimatedDropDownButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomDropdown<String>.searchRequest(
       futureRequest: _getFakeRequestData,
-      hintText: hintText ?? 'برجاء الأختيار',
+      hintText: hintText ?? LocaleKeys.chooseOption,
       decoration: CustomDropdownDecoration(
         closedFillColor: const Color(0xffF9FAFA),
         closedBorder: BoxBorder.all(

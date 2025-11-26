@@ -4,6 +4,7 @@ import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/StudentOnboarding/Presentation/Views/StudentOnboardingView.dart';
 import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnboardingView.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ChoosingUserKindButton extends StatelessWidget {
   const ChoosingUserKindButton({
@@ -16,7 +17,8 @@ class ChoosingUserKindButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isStudent = currentPage == 0;
-    final buttonText = "أبدا ك${isStudent ? "طالب" : "معلم"}";
+    final buttonText =
+        "${LocaleKeys.startAsButton} ${isStudent ? LocaleKeys.studentRole : LocaleKeys.teacherRole}";
 
     return Custombutton(
       text: buttonText,

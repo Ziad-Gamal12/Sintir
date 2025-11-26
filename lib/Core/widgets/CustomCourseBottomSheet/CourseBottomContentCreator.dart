@@ -8,6 +8,7 @@ import 'package:sintir/Core/entities/CourseEntities/ContentCreaterEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseContentCreatorListTile.dart';
 import 'package:sintir/Features/ContentCreatorProfile/Presentation/Views/ContentCreatorProfile.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseBottomContentCreator extends StatelessWidget {
   const CourseBottomContentCreator({
@@ -23,7 +24,7 @@ class CourseBottomContentCreator extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "منشئ المحتوى",
+          LocaleKeys.contentCreator,
           style:
               AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
         ),

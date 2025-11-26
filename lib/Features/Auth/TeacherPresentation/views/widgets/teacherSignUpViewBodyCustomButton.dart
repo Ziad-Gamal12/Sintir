@@ -7,6 +7,7 @@ import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/manager/TeacherSignUP/teacher_sign_up_cubit.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TeacherSignUpButton extends StatelessWidget {
   const TeacherSignUpButton({
@@ -23,7 +24,7 @@ class TeacherSignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Custombutton(
-      text: "انشاء حساب",
+      text: LocaleKeys.createAccount,
       color: KMainColor,
       textColor: Colors.white,
       onPressed: () {
@@ -35,12 +36,12 @@ class TeacherSignUpButton extends StatelessWidget {
 
         final subject = user.teacherExtraDataEntity?.subject ?? "";
         if (subject.isEmpty) {
-          errordialog(context, "يجب اختيار المادة").show();
+          errordialog(context, LocaleKeys.mustChooseSubject).show();
           return;
         }
 
         if (!isChecked) {
-          errordialog(context, "قم بقبول الشروط والاحكام").show();
+          errordialog(context, LocaleKeys.mustAcceptTerms).show();
           return;
         }
         cubit.createUserWithEmailAndPassword(

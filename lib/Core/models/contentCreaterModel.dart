@@ -2,6 +2,7 @@
 
 import 'package:sintir/Core/entities/CourseEntities/ContentCreaterEntity.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Contentcreatermodel {
   final String name, profileImageUrl, id, title;
@@ -18,7 +19,8 @@ class Contentcreatermodel {
       name: "${userEntity.firstName} ${userEntity.lastName}",
       profileImageUrl: userEntity.profilePicurl,
       id: userEntity.uid,
-      title: "مدرس/ه  مادة ${userEntity.teacherExtraDataEntity?.subject ?? ""}",
+      title:
+          "${LocaleKeys.teacherRole}${userEntity.teacherExtraDataEntity?.subject ?? ""}",
     );
   }
   factory Contentcreatermodel.fromEntity(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomAnimatedDropDownButton.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomEducationLevelDropdownButton extends StatefulWidget {
   const CustomEducationLevelDropdownButton(
@@ -13,25 +14,24 @@ class CustomEducationLevelDropdownButton extends StatefulWidget {
 class _CustomEducationLevelDropdownButtonState
     extends State<CustomEducationLevelDropdownButton> {
   List<String> items = [
-    "الثالث الثانوي",
-    "الثاني الثانوي",
-    "الاول الثانوي",
-    "الثالث الأعدادي",
-    "الثاني الأعدادي",
-    "الاول الأعدادي",
-    "السادس الأبتدائي",
-    "الخامس الأبتدائي",
-    "الرابع الأبتدائي",
-    "الثالث الأبتدائي",
-    "الثاني الأبتدائي",
-    "الاول الأبتدائي",
-    "أخرى"
+    "1st Grade Primary",
+    "2nd Grade Primary",
+    "3rd Grade Primary",
+    "4th Grade Primary",
+    "5th Grade Primary",
+    "6th Grade Primary",
+    "1st Grade Preparatory",
+    "2nd Grade Preparatory",
+    "3rd Grade Preparatory",
+    "1st Grade Secondary",
+    "2nd Grade Secondary",
+    "3rd Grade Secondary",
   ];
   @override
   Widget build(BuildContext context) {
     return CustomAnimatedDropDownButton(
       items: items,
-      hintText: "المستوى التعليمي",
+      hintText: LocaleKeys.studentEducationLevel,
       onChanged: widget.onValueChange,
     );
   }

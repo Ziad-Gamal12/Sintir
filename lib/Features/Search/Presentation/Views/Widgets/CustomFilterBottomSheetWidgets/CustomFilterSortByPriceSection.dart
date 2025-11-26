@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Features/Search/Domain/Entities/CustomFilterEntity.dart';
 import 'package:sintir/Features/Search/Presentation/Views/Widgets/CustomFilterBottomSheetWidgets/CustomFilterRadioButtonItem.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomFilterSortByPriceSection extends StatefulWidget {
   const CustomFilterSortByPriceSection({super.key});
@@ -28,7 +29,7 @@ class _CustomFilterSortByPriceSectionState
               context.read<CourseFilterEntity>().sortByHighestPrice = false;
             },
             value: "asc",
-            title: "الأقل للأعلى"),
+            title: LocaleKeys.lowestToHighest),
         CustomFilterRadioButtonItem(
             groupValue: sortByPricegroupValue,
             onchange: (value) {
@@ -37,7 +38,7 @@ class _CustomFilterSortByPriceSectionState
               context.read<CourseFilterEntity>().sortByLowestPrice = false;
             },
             value: "desc",
-            title: "الأعلى للأقل"),
+            title: LocaleKeys.highestToLowest),
       ],
     );
   }

@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Managers/Cubits/Custom_reset_password_cubit/Custom_reset_password_cubit.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordViewBodyBlocBuilder.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomResetPasswordViewBody extends StatelessWidget {
   const CustomResetPasswordViewBody({super.key});
@@ -16,11 +17,12 @@ class CustomResetPasswordViewBody extends StatelessWidget {
       listener: (context, state) {
         if (state is CustomResetPasswordSuccess) {
           successdialog(
-              context: context,
-              SuccessMessage: "بنجاح,تم ارسال رسالة تحقق على بريدك الالكتروني",
-              btnOkOnPress: () {
-                GoRouter.of(context).pop();
-              }).show();
+            context: context,
+            SuccessMessage: LocaleKeys.successEmailSent,
+            btnOkOnPress: () {
+              GoRouter.of(context).pop();
+            },
+          ).show();
         } else if (state is CustomResetPasswordFailure) {
           errordialog(context, state.errmessage).show();
         }

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sintir/Features/Search/Domain/Entities/CustomFilterEntity.dart';
 import 'package:sintir/Features/Search/Presentation/Views/Widgets/CustomFilterBottomSheetWidgets/CustomFilterPriceSlider.dart';
 import 'package:sintir/Features/Search/Presentation/Views/Widgets/CustomFilterBottomSheetWidgets/CustomFilterRadioButtonItem.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomFilterPriceSection extends StatefulWidget {
   const CustomFilterPriceSection({super.key});
@@ -30,7 +31,7 @@ class _CustomFilterPriceSectionState extends State<CustomFilterPriceSection> {
                   setState(() => pricegroupValue = value ?? "paid");
                 },
                 value: "paid",
-                title: "مدفوع"),
+                title: LocaleKeys.paid),
             CustomFilterRadioButtonItem(
                 groupValue: pricegroupValue,
                 onchange: (value) {
@@ -39,7 +40,7 @@ class _CustomFilterPriceSectionState extends State<CustomFilterPriceSection> {
                   setState(() => pricegroupValue = value ?? "free");
                 },
                 value: "free",
-                title: "مجاني")
+                title: LocaleKeys.free),
           ],
         ),
         const SizedBox(height: 10),

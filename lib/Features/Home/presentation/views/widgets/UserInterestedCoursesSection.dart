@@ -4,6 +4,7 @@ import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/HorizentalCoursesListView.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/HorizentalLoadingCoursesListView.dart';
+import 'package:sintir/locale_keys.dart';
 
 import '../../manager/get_courses_cubit/get_courses_cubit.dart';
 
@@ -26,7 +27,7 @@ class UserInterestedCoursesSection extends StatelessWidget {
           return SliverToBoxAdapter(
               child: Column(
             children: [
-              CustomListORGridTextHeader(text: "موصى بها"),
+              CustomListORGridTextHeader(text: LocaleKeys.recommended),
               const SizedBox(height: 12),
               const HorizentalLoadingCoursesListView(),
             ],
@@ -35,12 +36,13 @@ class UserInterestedCoursesSection extends StatelessWidget {
           final courses = state.resonseEntity.courses;
           if (courses.isEmpty) {
             return SliverToBoxAdapter(
-                child: CustomEmptyWidget(text: "لا يوجد دورات موصى بها"));
+                child:
+                    CustomEmptyWidget(text: LocaleKeys.noRecommendedCourses));
           } else {
             return SliverToBoxAdapter(
               child: Column(
                 children: [
-                  CustomListORGridTextHeader(text: "موصى بها"),
+                  CustomListORGridTextHeader(text: LocaleKeys.recommended),
                   const SizedBox(height: 12),
                   HorizentalCoursesListView(courses: courses),
                 ],
@@ -51,7 +53,7 @@ class UserInterestedCoursesSection extends StatelessWidget {
           return SliverToBoxAdapter(
               child: Column(
             children: [
-              CustomListORGridTextHeader(text: "موصى بها"),
+              CustomListORGridTextHeader(text: LocaleKeys.recommended),
               const SizedBox(height: 12),
               const HorizentalLoadingCoursesListView(),
             ],

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class StudentsignupBirthdayfield extends StatefulWidget {
   const StudentsignupBirthdayfield({
@@ -73,7 +74,7 @@ class _StudentsignupBirthdayfieldState
         child: ListTile(
           title: Text(
             pickedDate == null
-                ? "تاريخ  الميلاد"
+                ? LocaleKeys.studentBirthDate
                 : "${pickedDate!.day}/${pickedDate!.month}/${pickedDate!.year}",
             style: AppTextStyles(context).bold14.copyWith(
                 color: pickedDate == null

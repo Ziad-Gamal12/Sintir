@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TeacherWalletBalanceDetailsCard extends StatelessWidget {
   final TeacherWalletEntity? wallet;
@@ -31,7 +32,7 @@ class TeacherWalletBalanceDetailsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "الرصيد الحالي",
+            LocaleKeys.walletBalance,
             style:
                 AppTextStyles(context).regular16.copyWith(color: Colors.black),
           ),

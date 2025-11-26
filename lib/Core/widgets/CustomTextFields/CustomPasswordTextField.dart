@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomPasswordVisibleIcon.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomPasswordTextField extends StatefulWidget {
   CustomPasswordTextField({super.key, this.controller, this.hintOrlabalText});
@@ -26,16 +27,16 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
           });
         },
       ),
-      hintText: widget.hintOrlabalText ?? "كلمة المرور",
+      hintText: widget.hintOrlabalText ?? LocaleKeys.passwordHint,
       obscureText: !ispasswordVisible,
       controller: widget.controller,
       textInputType: TextInputType.visiblePassword,
       prefixIcon: Icons.lock_outline,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'رجاء إدخال كلمة المرور';
+          return LocaleKeys.passwordRequired;
         } else if (value.length < 8) {
-          return 'يجب ان تكون كلمة المرور 8 حروف على الاقل';
+          return LocaleKeys.passwordMinLength;
         }
         return null;
       },

@@ -5,6 +5,7 @@ import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/MyMistakes/Domain/Repo/MyMistakesRepo.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Manager/cubit/get_my_mistakes_cubit.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Views/Widgets/GetMyMistakesViewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class MyMistakesView extends StatelessWidget {
   const MyMistakesView({super.key});
@@ -12,7 +13,7 @@ class MyMistakesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(appBartitle: "أخطائي"),
+      appBar: CustomAppBar(appBartitle: LocaleKeys.myMistakesAppbar),
       body: BlocProvider(
         create: (context) => GetMyMistakesCubit(
           myMistakesRepo: getIt.get<MyMistakesRepo>(),
