@@ -5,6 +5,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class AddCourseExamAddQuestionImage extends StatefulWidget {
@@ -69,7 +70,7 @@ class _AddCourseExamAddQuestionImageState
                       width: 10,
                     ),
                     Text(
-                      "صورة السؤال",
+                      LocaleKeys.questionImage,
                       textAlign: TextAlign.center,
                       style: AppTextStyles(context)
                           .semiBold12

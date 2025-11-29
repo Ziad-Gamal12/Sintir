@@ -6,6 +6,7 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseCouponGridViewItemIsExpired.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseCouponGridViewItemIsInActive.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseCouponGridViewItemIsUsed.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseCouponGridViewItemCode extends StatelessWidget {
   const CourseCouponGridViewItemCode({super.key, required this.couponEntity});
@@ -20,7 +21,7 @@ class CourseCouponGridViewItemCode extends StatelessWidget {
             Clipboard.setData(ClipboardData(text: couponEntity.code));
             CustomSnackBar.show(
               context,
-              message: "تم نسخ الكوبون بنجاح",
+              message: LocaleKeys.operationSuccessful,
               type: SnackType.success,
             );
           },
@@ -41,7 +42,7 @@ class CourseCouponGridViewItemCode extends StatelessWidget {
         ),
         if (couponEntity.isExpired)
           const CourseCouponGridViewItemIsExpired()
-        else if (couponEntity.usageLimit == 1)
+        else if (couponEntity.usageLimit == 0)
           const CourseCouponGridViewItemIsUsed()
         else if (couponEntity.isActive == false)
           const CourseCouponGridViewItemIsInActive(),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SubscriberResultsChart extends StatefulWidget {
   final List<TestResultEntity> results;
@@ -19,10 +20,10 @@ class _SubscriberResultsChartState extends State<SubscriberResultsChart> {
   @override
   Widget build(BuildContext context) {
     if (widget.results.isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
-          "لا يوجد نتائج للطالب",
-          style: TextStyle(color: Colors.black54, fontSize: 16),
+          LocaleKeys.noResults,
+          style: const TextStyle(color: Colors.black54, fontSize: 16),
         ),
       );
     }
@@ -47,7 +48,7 @@ class _SubscriberResultsChartState extends State<SubscriberResultsChart> {
             onPressed: () => setState(() => showAverage = !showAverage),
             icon: Icon(showAverage ? Icons.show_chart : Icons.bar_chart,
                 color: KMainColor),
-            label: Text(showAverage ? "عرض النتائج" : "عرض المتوسط",
+            label: Text(showAverage ? LocaleKeys.showMore : LocaleKeys.showLess,
                 style: AppTextStyles(context)
                     .regular16
                     .copyWith(color: KMainColor)),
@@ -110,7 +111,7 @@ class _SubscriberResultsChartState extends State<SubscriberResultsChart> {
                       interval: 1,
                       reservedSize: 20,
                       getTitlesWidget: (value, meta) => Text(
-                        "محاولة ${value.toInt() + 1}",
+                        "${LocaleKeys.attempt} ${value.toInt() + 1}",
                         style: AppTextStyles(context)
                             .regular11
                             .copyWith(color: Colors.black87),
@@ -167,7 +168,7 @@ class _SubscriberResultsChartState extends State<SubscriberResultsChart> {
                     getTooltipItems: (touchedSpots) => touchedSpots
                         .map(
                           (spot) => LineTooltipItem(
-                            "المحاولة: ${spot.x.toInt() + 1}\nالنتيجة: ${spot.y.toStringAsFixed(1)}",
+                            "${LocaleKeys.attempt}: ${spot.x.toInt() + 1}\n ${LocaleKeys.studentScore}: ${spot.y.toStringAsFixed(1)}",
                             const TextStyle(color: Colors.white),
                           ),
                         )

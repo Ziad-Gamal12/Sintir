@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomCourseDetailsBodyCourseInfoTexts extends StatelessWidget {
   const CustomCourseDetailsBodyCourseInfoTexts({
@@ -16,13 +17,13 @@ class CustomCourseDetailsBodyCourseInfoTexts extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "تاريخ النشر (${courseEntity.postedDate})",
+          "${LocaleKeys.createdDate} (${courseEntity.postedDate})",
           style: AppTextStyles(context)
               .regular10
               .copyWith(color: const Color(0xff818181)),
         ),
         Text(
-          "الوصف:",
+          " ${LocaleKeys.descriptionLabel}:",
           style: AppTextStyles(context)
               .semiBold12
               .copyWith(color: const Color(0xff818181)),

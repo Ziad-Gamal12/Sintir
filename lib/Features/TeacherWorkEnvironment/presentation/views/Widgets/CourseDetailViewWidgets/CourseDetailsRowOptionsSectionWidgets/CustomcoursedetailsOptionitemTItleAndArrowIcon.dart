@@ -14,11 +14,14 @@ class CustomcoursedetailsOptionitemTItleAndArrowIcon extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          title,
-          style: AppTextStyles(context).semiBold16.copyWith(
-                color: Colors.black,
-              ),
+        Expanded(
+          child: Text(
+            title,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles(context).semiBold16.copyWith(
+                  color: Colors.black,
+                ),
+          ),
         ),
         Transform.rotate(
           angle: 3.14,

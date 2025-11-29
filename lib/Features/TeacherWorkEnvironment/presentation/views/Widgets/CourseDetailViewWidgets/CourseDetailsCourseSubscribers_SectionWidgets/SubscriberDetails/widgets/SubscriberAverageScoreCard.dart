@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/subuscriber_details_cubit/subuscriber_details_cubit.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SubscriberAverageScoreCard extends StatefulWidget {
   const SubscriberAverageScoreCard({super.key});
@@ -45,7 +46,8 @@ class _SubscriberAverageScoreCardState
               ),
               const SizedBox(height: 10),
               Text(
-                "معدل النتائج",
+                LocaleKeys.averageResults,
+                textAlign: TextAlign.center,
                 style: AppTextStyles(context).bold16,
               ),
             ],

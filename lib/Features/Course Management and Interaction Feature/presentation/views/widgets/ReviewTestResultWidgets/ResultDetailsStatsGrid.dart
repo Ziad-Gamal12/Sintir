@@ -3,6 +3,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestR
 import 'package:sintir/Core/helper/GridHelper.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/ResultDetailsHelper.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/TestResultDetailsRow.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ResultDetailsStatsGrid extends StatelessWidget {
   const ResultDetailsStatsGrid({super.key, required this.testresulteEntity});
@@ -24,19 +25,19 @@ class ResultDetailsStatsGrid extends StatelessWidget {
         Testresultdetailsrow(
           cardColor: Colors.grey.shade200,
           color: Colors.black,
-          headline: "عدد الأسئلة الكلى:",
+          headline: LocaleKeys.totalQuestions,
           value: testresulteEntity.totalQuestions.toString(),
         ),
         Testresultdetailsrow(
           cardColor: Colors.blue.shade100,
           color: Colors.blue.shade700,
-          headline: "عدد الأسئلة التى تم حلها:",
+          headline: LocaleKeys.questionsSolved,
           value: testresulteEntity.questionsSolvedListEntity.length.toString(),
         ),
         Testresultdetailsrow(
           cardColor: Colors.green.shade100,
           color: Colors.green.shade700,
-          headline: "عدد الأسئلة الصحيحة:",
+          headline: LocaleKeys.correctQuestions,
           value: ResultDetailsHelper.getSuccessQuestions(testresulteEntity)
               .length
               .toString(),
@@ -44,7 +45,7 @@ class ResultDetailsStatsGrid extends StatelessWidget {
         Testresultdetailsrow(
           cardColor: Colors.red.shade100,
           color: Colors.red.shade700,
-          headline: "عدد الأسئلة الخاطئة:",
+          headline: LocaleKeys.wrongQuestions,
           value: (testresulteEntity.questionsSolvedListEntity.length -
                   ResultDetailsHelper.getSuccessQuestions(testresulteEntity)
                       .length)

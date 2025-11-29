@@ -8,6 +8,7 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SubscribtionViewBodyActionButton extends StatelessWidget {
   const SubscribtionViewBodyActionButton({
@@ -29,14 +30,14 @@ class SubscribtionViewBodyActionButton extends StatelessWidget {
           builder: (context, state) {
             if (state is IsCouponExistLoading || state is UseCouponLoading) {
               return Text(
-                "جاري تطبيق الكوبون",
+                LocaleKeys.applyingCoupon,
                 style: AppTextStyles(context)
                     .regular16
                     .copyWith(color: Colors.black),
               );
             } else if (state is IsCouponExistSuccess) {
               return Text(
-                "تم تطبيق الكوبون",
+                LocaleKeys.couponApplied,
                 style: AppTextStyles(context)
                     .regular16
                     .copyWith(color: Colors.green),
@@ -62,7 +63,7 @@ class SubscribtionViewBodyActionButton extends StatelessWidget {
             return Custom_Loading_Widget(
               isLoading: state,
               child: Custombutton(
-                text: "اشترك الآن",
+                text: LocaleKeys.subscribeNow,
                 color: KSecondaryColor,
                 textColor: Colors.white,
                 onPressed: () => _handleSubscription(context),

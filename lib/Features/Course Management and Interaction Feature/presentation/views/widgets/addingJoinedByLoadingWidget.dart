@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class addingJoinedByLoadingWidget extends StatelessWidget {
   const addingJoinedByLoadingWidget({
@@ -32,7 +33,7 @@ class addingJoinedByLoadingWidget extends StatelessWidget {
             width: 4,
           ),
           Text(
-            "جارى تسجيل دخولك",
+            LocaleKeys.loggingIn,
             style:
                 AppTextStyles(context).semiBold16.copyWith(color: KMainColor),
           )

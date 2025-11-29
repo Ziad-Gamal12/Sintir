@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/StudentResultCard.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SubscriberResultsSliverListView extends StatelessWidget {
   const SubscriberResultsSliverListView({super.key, required this.testResults});
@@ -11,7 +12,7 @@ class SubscriberResultsSliverListView extends StatelessWidget {
     if (testResults.isEmpty) {
       return SliverToBoxAdapter(
         child: CustomEmptyWidget(
-          text: "لا يوجد نتايج",
+          text: LocaleKeys.noResults,
         ),
       );
     }

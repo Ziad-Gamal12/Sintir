@@ -7,6 +7,7 @@ import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersViewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseDetailsSubscribersView extends StatelessWidget {
   const CourseDetailsSubscribersView({super.key, required this.courseEntity});
@@ -21,7 +22,7 @@ class CourseDetailsSubscribersView extends StatelessWidget {
           course: courseEntity,
           subscribtionRepo: getIt<CourseSubscibtionsRepo>()),
       child: Scaffold(
-        appBar: CustomAppBar(appBartitle: "الطلاب"),
+        appBar: CustomAppBar(appBartitle: LocaleKeys.students),
         body: CourseDetailsSubscribersViewBody(
           courseEntity: courseEntity,
         ),

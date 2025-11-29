@@ -43,6 +43,7 @@ class ScoreStatCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             label,
+            textAlign: TextAlign.center,
             style: AppTextStyles(context).semiBold14,
           ),
         ],

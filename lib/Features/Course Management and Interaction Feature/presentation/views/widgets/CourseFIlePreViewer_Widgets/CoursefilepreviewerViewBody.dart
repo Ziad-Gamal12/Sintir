@@ -12,6 +12,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseFIlePreViewer_Widgets/CourseFileOverView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/addingJoinedByLoadingWidget.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class Coursefilepreviewerviewbody extends StatefulWidget {
@@ -102,7 +103,7 @@ class _CoursefilepreviewerviewbodyState
           if (state is JoinToFileITemSuccess) {
             CustomSnackBar.show(
               context,
-              message: "تم التسجيل بنجاح",
+              message: LocaleKeys.registrationSuccess,
               type: SnackType.success,
             );
           } else if (state is JoinToFileITemFailure) {

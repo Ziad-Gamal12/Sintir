@@ -22,7 +22,7 @@ class CourseDetailsSubscribersGridviewItemSchoolLevel extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            schoolLevel == "" ? "غير محدد" : schoolLevel,
+            schoolLevel == "" ? "_" : schoolLevel,
             overflow: TextOverflow.ellipsis,
             style:
                 AppTextStyles(context).regular16.copyWith(color: Colors.black),

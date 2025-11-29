@@ -13,6 +13,7 @@ import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/AddcoursesectionvedioviewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Addcoursesectionvedioview extends StatelessWidget {
   const Addcoursesectionvedioview(
@@ -39,7 +40,7 @@ class Addcoursesectionvedioview extends StatelessWidget {
       ],
       child: Builder(builder: (context) {
         return Scaffold(
-          appBar: CustomAppBar(appBartitle: "اضافة فيديو"),
+          appBar: CustomAppBar(appBartitle: LocaleKeys.addVideo),
           body: Provider.value(
               value: optionnavigationrequirementsentity,
               child: const Addcoursesectionvedioviewbody()),

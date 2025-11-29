@@ -22,7 +22,7 @@ class CourseDetailsSubscribersGridviewItemPhoneNumber extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            phone == "" ? "غير محدد" : phone,
+            phone == "" ? "_" : phone,
             overflow: TextOverflow.ellipsis,
             style:
                 AppTextStyles(context).regular16.copyWith(color: Colors.black),

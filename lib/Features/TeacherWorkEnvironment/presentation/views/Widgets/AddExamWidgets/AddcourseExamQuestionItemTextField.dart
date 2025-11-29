@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
+import 'package:sintir/locale_keys.dart';
 
 // ignore: must_be_immutable
 class AddcourseExamQuestionItemTextField extends StatelessWidget {
@@ -13,7 +14,7 @@ class AddcourseExamQuestionItemTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomTextField(
         controller: coursetestquestionentity.questionController,
-        hintText: "يرجى كتابه السؤال هنا ...",
+        hintText: LocaleKeys.enterQuestionHere,
         obscureText: false,
         textInputType: TextInputType.text,
         onSaved: (value) {
@@ -21,7 +22,7 @@ class AddcourseExamQuestionItemTextField extends StatelessWidget {
         },
         validator: (value) {
           if (value!.isEmpty) {
-            return "ادخل السؤال";
+            return LocaleKeys.enterQuestion;
           }
           return null;
         });

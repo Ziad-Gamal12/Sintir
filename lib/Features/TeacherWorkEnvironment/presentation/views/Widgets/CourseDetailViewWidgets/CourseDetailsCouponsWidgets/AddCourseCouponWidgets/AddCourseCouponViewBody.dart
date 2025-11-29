@@ -6,6 +6,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/AddCourseCouponWidgets/add_course_coupon_code_field.dart.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 import 'add_course_coupon_button.dart';
 import 'add_course_coupon_discount_field.dart';
@@ -46,7 +47,7 @@ class _AddCourseCouponViewBodyState extends State<AddCourseCouponViewBody> {
           GoRouter.of(context).pop();
           CustomSnackBar.show(
             context,
-            message: "تم اضافة الكوبون بنجاح",
+            message: LocaleKeys.couponAddedSuccessfully,
             type: SnackType.success,
           );
         } else if (state is AddCourseCouponFailure) {

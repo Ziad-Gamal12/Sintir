@@ -6,6 +6,7 @@ import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/manager/GetUserPerviousResultsOfExam/get_user_pervious_results_of_exam_cubit.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/StudentResultCard.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseTestOverViewBodyListView extends StatefulWidget {
   const CourseTestOverViewBodyListView({super.key});
@@ -46,7 +47,7 @@ class _CourseTestOverViewBodyListViewState
       } else if (state is GetUserPerviousResultsOfExamSuccess &&
           results.isEmpty) {
         return SliverToBoxAdapter(
-            child: CustomEmptyWidget(text: 'لا يوجد نتايج سابقة'));
+            child: CustomEmptyWidget(text: LocaleKeys.noResults));
       } else {
         return SliverList.builder(
           itemCount: results.length,

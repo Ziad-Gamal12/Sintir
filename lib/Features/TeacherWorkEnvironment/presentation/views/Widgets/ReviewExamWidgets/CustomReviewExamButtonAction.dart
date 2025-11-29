@@ -5,6 +5,7 @@ import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateExamReviewRequirmentsEntity.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomReviewExamButtonAction extends StatelessWidget {
   const CustomReviewExamButtonAction({
@@ -22,7 +23,7 @@ class CustomReviewExamButtonAction extends StatelessWidget {
               state is QuestionsImagesUploadedingLoading ||
               state is QuestionsSolutionsImagesUploadedingLoading,
           child: Custombutton(
-              text: "اضافة امتحان",
+              text: LocaleKeys.addExam,
               color: KMainColor,
               textColor: Colors.white,
               onPressed: () async {

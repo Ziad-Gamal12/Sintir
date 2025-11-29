@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseCouponGridViewItemIsUsed extends StatelessWidget {
   const CourseCouponGridViewItemIsUsed({
@@ -18,7 +19,7 @@ class CourseCouponGridViewItemIsUsed extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         Text(
-          "تم استخدام الكود",
+          LocaleKeys.codeUsed,
           style: AppTextStyles(context).regular14.copyWith(color: Colors.green),
         ),
       ],

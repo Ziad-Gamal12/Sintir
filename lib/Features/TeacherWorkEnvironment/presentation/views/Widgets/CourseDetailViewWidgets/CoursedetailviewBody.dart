@@ -10,6 +10,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsRowOptionsSectionWidgets/CourseDetailsViewRowOptions.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/UpdateCourseCubit/Update_Course_Cubit.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseDetailViewBody extends StatefulWidget {
   CourseDetailViewBody({super.key, required this.courseEntity});
@@ -45,7 +46,7 @@ class _CourseDetailViewBodyState extends State<CourseDetailViewBody> {
         if (state is UpdateCourseStateSuccess) {
           CustomSnackBar.show(
             context,
-            message: "تم التنفيذ بنجاح",
+            message: LocaleKeys.operationSuccessful,
             type: SnackType.success,
           );
           widget.courseEntity.state = state.courseEntity.state;
@@ -75,7 +76,7 @@ class _CourseDetailViewBodyState extends State<CourseDetailViewBody> {
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height * 0.1),
                 Text(
-                  'التقاصيل',
+                  LocaleKeys.courseDetails,
                   style: AppTextStyles(context).bold20,
                 ),
                 const SizedBox(height: 20),

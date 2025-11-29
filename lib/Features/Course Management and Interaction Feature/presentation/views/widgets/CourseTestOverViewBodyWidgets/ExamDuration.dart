@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ExamDuration extends StatelessWidget {
   const ExamDuration({
@@ -28,7 +29,7 @@ class ExamDuration extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 12),
-        Text("$duration دقيقة", style: textStyle),
+        Text("$duration ${LocaleKeys.durationMinutes}", style: textStyle),
       ],
     );
   }

@@ -8,6 +8,7 @@ import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/CourseIntroductionSuccessViewSubscribeButtonBuilder.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/SubscribtionView.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseIntroductionSuccessViewSubscribeButton extends StatelessWidget {
   const CourseIntroductionSuccessViewSubscribeButton({
@@ -41,7 +42,7 @@ class CourseIntroductionSuccessViewSubscribeButton extends StatelessWidget {
           children: [
             Expanded(
               child: Custombutton(
-                  text: "أشترك الأن",
+                  text: LocaleKeys.subscribeNow,
                   color: KSecondaryColor,
                   textColor: Colors.white,
                   onPressed: () {
@@ -53,7 +54,7 @@ class CourseIntroductionSuccessViewSubscribeButton extends StatelessWidget {
             const SizedBox(
               width: 20,
             ),
-            Text("${course.price} جنيه",
+            Text("${course.price}  ${LocaleKeys.priceEgp}",
                 style:
                     AppTextStyles(context).bold20.copyWith(color: Colors.red))
           ],

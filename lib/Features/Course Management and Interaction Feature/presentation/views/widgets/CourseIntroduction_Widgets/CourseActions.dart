@@ -5,6 +5,7 @@ import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart
 import 'package:sintir/Core/widgets/InfoRow.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseFedBackView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/SendCourseReportView.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseActions extends StatelessWidget {
   final DisplayCourseBottomsheetNavigationRequirmentsEntity requirmentsEntity;
@@ -21,9 +22,9 @@ class CourseActions extends StatelessWidget {
             GoRouter.of(context)
                 .push(Sendcoursereportview.routeName, extra: requirmentsEntity);
           },
-          child: const InfoRow(
+          child: InfoRow(
             icon: FontAwesomeIcons.circleExclamation,
-            label: "تقديم ابلاغ",
+            label: LocaleKeys.submitReport,
           ),
         ),
         const SizedBox(height: 10),
@@ -33,9 +34,9 @@ class CourseActions extends StatelessWidget {
             GoRouter.of(context)
                 .push(Coursefedbackview.routeName, extra: requirmentsEntity);
           },
-          child: const InfoRow(
+          child: InfoRow(
             icon: FontAwesomeIcons.comment,
-            label: "أراء طلاب أخرين",
+            label: LocaleKeys.otherStudentsReviews,
           ),
         ),
       ],

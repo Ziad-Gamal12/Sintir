@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
+import 'package:sintir/locale_keys.dart';
 
 class EditCourseDescriptionField extends StatelessWidget {
   const EditCourseDescriptionField({
@@ -10,9 +11,8 @@ class EditCourseDescriptionField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CourseEntity course = context.read<CourseEntity>();
-
     return CustomTextField(
-      hintText: "يرجى تقديم وصف مختصر للأهداف الرئيسية للدورة..",
+      hintText: LocaleKeys.courseDescription,
       obscureText: false,
       controller: TextEditingController(
         text: course.description,
@@ -24,7 +24,7 @@ class EditCourseDescriptionField extends StatelessWidget {
       textInputType: TextInputType.text,
       validator: (val) {
         if (val == null || val.isEmpty) {
-          return "ادخل وصف الدورة";
+          return LocaleKeys.enterCourseDescription;
         }
         return null;
       },

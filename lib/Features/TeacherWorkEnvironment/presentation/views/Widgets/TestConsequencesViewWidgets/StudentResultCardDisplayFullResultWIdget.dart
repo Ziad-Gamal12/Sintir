@@ -4,6 +4,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestR
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/ReviewTestResultView.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class StudentResultCardAction extends StatelessWidget {
   const StudentResultCardAction({super.key, required this.testResultEntity});
@@ -32,7 +33,7 @@ class StudentResultCardAction extends StatelessWidget {
             const Icon(Icons.visibility_rounded, color: KMainColor, size: 22),
             const SizedBox(width: 6),
             Text(
-              "عرض النتيجة",
+              LocaleKeys.viewResult,
               style: style.regular14.copyWith(color: KMainColor),
             ),
           ],

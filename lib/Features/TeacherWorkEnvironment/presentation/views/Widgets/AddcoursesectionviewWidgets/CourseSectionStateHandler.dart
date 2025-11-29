@@ -3,6 +3,7 @@ import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCu
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseSectionStateHandler {
   final BuildContext context;
@@ -23,7 +24,7 @@ class CourseSectionStateHandler {
       case AddCourseSectionSuccess():
         CustomSnackBar.show(
           context,
-          message: "تم اضافة القسم بنجاح",
+          message: LocaleKeys.sectionAddedSuccessfully,
           type: SnackType.success,
         );
         Navigator.popUntil(context,

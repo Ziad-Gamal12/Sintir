@@ -17,8 +17,7 @@ class CourseInfoCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(flex: 6, child: CourseMetaInfo(requirmentsEntity)),
-            const Spacer(flex: 1),
-            Expanded(flex: 3, child: CourseActions(requirmentsEntity)),
+            Expanded(flex: 4, child: CourseActions(requirmentsEntity)),
           ],
         ),
         const CourseInfoCardCourseDescription(),

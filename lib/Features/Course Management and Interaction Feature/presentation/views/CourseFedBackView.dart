@@ -6,6 +6,7 @@ import 'package:sintir/Core/repos/CourseFeedBacksRepo/CourseFeedBacksRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseFedBack_Widgets/Coursefedbackviewbody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Coursefedbackview extends StatelessWidget {
   const Coursefedbackview({super.key, required this.requirmentsEntity});
@@ -18,7 +19,7 @@ class Coursefedbackview extends StatelessWidget {
         courseFeedBacksRepo: getIt<CourseFeedBacksRepo>(),
       ),
       child: Scaffold(
-        appBar: CustomAppBar(appBartitle: "اراء الطلاب"),
+        appBar: CustomAppBar(appBartitle: LocaleKeys.studentsReviews),
         body: Coursefedbackviewbody(
           requirmentsEntity: requirmentsEntity,
         ),

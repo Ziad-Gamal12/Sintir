@@ -1,4 +1,5 @@
 import 'package:sintir/Core/utils/imageAssets.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Addcoursesectionoptionitem {
   final String title, icon;
@@ -6,11 +7,12 @@ class Addcoursesectionoptionitem {
   static List<Addcoursesectionoptionitem> toList() {
     return [
       Addcoursesectionoptionitem(
-          title: "فديو", icon: Assets.assetsIconsSVGIconsVideoIcon),
+          title: LocaleKeys.video, icon: Assets.assetsIconsSVGIconsVideoIcon),
       Addcoursesectionoptionitem(
-          title: "أمتحان", icon: Assets.assetsIconsSVGIconsExamIcon),
+          title: LocaleKeys.exam, icon: Assets.assetsIconsSVGIconsExamIcon),
       Addcoursesectionoptionitem(
-          title: "ملف", icon: Assets.assetsIconsSVGIconsCustomFileIcon),
+          title: LocaleKeys.file,
+          icon: Assets.assetsIconsSVGIconsCustomFileIcon),
     ];
   }
 }

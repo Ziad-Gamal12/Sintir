@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class StudentInfoTexts extends StatelessWidget {
   const StudentInfoTexts({super.key, required this.testResult});
@@ -23,13 +24,13 @@ class StudentInfoTexts extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         Text(
-          "رقم الطالب: ${testResult.joinedbyentity.uid}",
+          "${LocaleKeys.studentNumber} ${testResult.joinedbyentity.uid}",
           overflow: TextOverflow.ellipsis,
           style: style.regular14.copyWith(color: Colors.grey),
         ),
         const SizedBox(height: 4),
         Text(
-          "تاريخ الانضمام: $joinedDate",
+          "${LocaleKeys.joinedDate}: $joinedDate",
           overflow: TextOverflow.ellipsis,
           style: style.regular14.copyWith(color: Colors.grey),
         ),

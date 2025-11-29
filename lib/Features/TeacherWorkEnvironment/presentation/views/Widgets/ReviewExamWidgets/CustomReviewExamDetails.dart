@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateExamReviewRequirmentsEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TestSummaryCard extends StatelessWidget {
   const TestSummaryCard({
@@ -41,15 +42,17 @@ class TestSummaryCard extends StatelessWidget {
               _buildInfoItem(
                 context: context,
                 icon: Icons.timer_rounded,
-                label: "مدة الامتحان",
-                value: "${courseTestEntity.durationTime} دقيقة",
+                label: LocaleKeys.examDuration,
+                value:
+                    "${courseTestEntity.durationTime} ${LocaleKeys.durationMinutes}",
               ),
               const SizedBox(width: 25),
               _buildInfoItem(
                 context: context,
                 icon: Icons.help_outline_rounded,
-                label: "عدد الأسئلة",
-                value: "${courseTestEntity.questions.length} سؤال",
+                label: LocaleKeys.numberOfQuestions,
+                value:
+                    "${courseTestEntity.questions.length} ${LocaleKeys.questionsCount}",
               ),
             ],
           ),
@@ -87,23 +90,29 @@ class TestSummaryCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                style: AppTextStyles(context)
-                    .regular14
-                    .copyWith(color: Colors.black),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                value,
-                style: AppTextStyles(context)
-                    .semiBold16
-                    .copyWith(color: Colors.black),
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  child: Text(
+                    label,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles(context)
+                        .regular14
+                        .copyWith(color: Colors.black),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  value,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles(context)
+                      .semiBold16
+                      .copyWith(color: Colors.black),
+                ),
+              ],
+            ),
           )
         ],
       ),

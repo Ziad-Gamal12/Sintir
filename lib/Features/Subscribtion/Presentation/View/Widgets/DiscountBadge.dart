@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class DiscountBadge extends StatelessWidget {
   final double percent;
@@ -26,7 +27,7 @@ class DiscountBadge extends StatelessWidget {
           const Icon(FontAwesomeIcons.percent, color: Colors.white, size: 14),
           const SizedBox(width: 6),
           Text(
-            "خصم ${percent.toStringAsFixed(0)}%",
+            "${LocaleKeys.discount} ${percent.toStringAsFixed(0)}%",
             style: AppTextStyles(context).bold14.copyWith(color: Colors.white),
           ),
         ],

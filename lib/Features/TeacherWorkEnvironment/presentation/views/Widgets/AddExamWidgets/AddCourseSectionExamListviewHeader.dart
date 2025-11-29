@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class AddCourseSectionExamListviewHeader extends StatelessWidget {
   const AddCourseSectionExamListviewHeader({
@@ -13,7 +14,7 @@ class AddCourseSectionExamListviewHeader extends StatelessWidget {
         height: 20,
       ),
       Text(
-        "أسئلة الأمتحان",
+        LocaleKeys.examQuestions,
         style: AppTextStyles(context).semiBold20,
       ),
       const SizedBox(

@@ -6,6 +6,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/SubscriberEnrolledDisplayedCoursesListView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/subuscriber_details_cubit/subuscriber_details_cubit.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SubscriberEnrolledCoursesListView extends StatefulWidget {
   const SubscriberEnrolledCoursesListView({super.key});
@@ -35,7 +36,7 @@ class _SubscriberEnrolledCoursesListViewState
         return CustomErrorWidget(errormessage: state.errmessage);
       } else if (state is GetSubscibersEnrolledCoursesForTeacherSuccess &&
           state.courses.isEmpty) {
-        return CustomEmptyWidget(text: "لا يوجد دورات لديه حتى الان");
+        return CustomEmptyWidget(text: LocaleKeys.noCourses);
       } else if (state is GetSubscibersEnrolledCoursesForTeacherSuccess &&
           state.courses.isNotEmpty) {
         return SubscriberEnrolledDisplayedCoursesListView(

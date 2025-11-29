@@ -8,6 +8,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/CourseIntroductionSuccessViewSubscribeButtonBuilder.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/courseIntroductionViewBodyListViewHeader.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseIntroductionSuccessView extends StatelessWidget {
   final List<CourseSectionEntity> sections;
@@ -39,7 +40,7 @@ class CourseIntroductionSuccessView extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 100),
                       child: Text(
-                        "سيتم اضافة المحتوى قريبا ⌛️",
+                        LocaleKeys.contentComingSoon,
                         style: AppTextStyles(context)
                             .semiBold20
                             .copyWith(color: Colors.black),

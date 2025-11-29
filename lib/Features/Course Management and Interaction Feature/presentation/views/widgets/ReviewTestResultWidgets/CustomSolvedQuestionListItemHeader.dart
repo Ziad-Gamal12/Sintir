@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomSolvedQuestionListItemHeader extends StatelessWidget {
   const CustomSolvedQuestionListItemHeader({
@@ -26,7 +27,7 @@ class CustomSolvedQuestionListItemHeader extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
-            "السؤال رقم ${index + 1}/ $length",
+            " ${LocaleKeys.questionNumber} ${index + 1}/ $length",
             style:
                 AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
           ),
@@ -39,7 +40,7 @@ class CustomSolvedQuestionListItemHeader extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
-            isCorrect ? "اجابة صحيحة" : "اجابة خاطئة",
+            isCorrect ? LocaleKeys.correctAnswer : LocaleKeys.wrongAnswer,
             style:
                 AppTextStyles(context).semiBold16.copyWith(color: Colors.white),
           ),

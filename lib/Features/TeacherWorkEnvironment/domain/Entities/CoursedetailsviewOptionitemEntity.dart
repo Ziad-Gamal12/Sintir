@@ -7,6 +7,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReviewsSectionWidgets/CourseDetailsSubscribersReviewsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersView.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CoursedetailsviewOptionitemEntity {
   final String title;
@@ -19,57 +20,56 @@ class CoursedetailsviewOptionitemEntity {
     required this.onTap,
     required this.description,
   });
+
   static List<CoursedetailsviewOptionitemEntity> toList(
       {required BuildContext context, required CourseEntity course}) {
     return [
       CoursedetailsviewOptionitemEntity(
-        title: "المحتوى",
+        title: LocaleKeys.content,
         image: Assets.assetsIconsContentManagement,
-        description: "استعرض دروس واختبارات الكورس بشكل منظم وسهل خطوة بخطوة.",
+        description: LocaleKeys.contentDescription,
         onTap: () {
           GoRouter.of(context)
               .push(CourseDetailsCourseSectionsView.routeName, extra: course);
         },
       ),
       CoursedetailsviewOptionitemEntity(
-          description:
-              "تعرف على الطلاب المشتركين في هذا الكورس وتابع تقدمهم بسهولة.",
-          onTap: () {
-            GoRouter.of(context).push(
-              CourseDetailsSubscribersView.routeName,
-              extra: course,
-            );
-          },
-          title: "الطلاب",
-          image: Assets.assetsImagesStudents),
+        title: LocaleKeys.students,
+        image: Assets.assetsImagesStudents,
+        description: LocaleKeys.studentsDescription,
+        onTap: () {
+          GoRouter.of(context)
+              .push(CourseDetailsSubscribersView.routeName, extra: course);
+        },
+      ),
       CoursedetailsviewOptionitemEntity(
-          description:
-              "اقرأ آراء الطلاب وتقييماتهم حول الكورس لتحصل على فكرة أوضح عن التجربة التعليمية.",
-          onTap: () {
-            GoRouter.of(context).push(
-                CourseDetailsSubscribersReviewsView.routeName,
-                extra: course.id);
-          },
-          title: "أراء الطلاب",
-          image: Assets.assetsIconsFeedback),
+        title: LocaleKeys.studentsReviews,
+        image: Assets.assetsIconsFeedback,
+        description: LocaleKeys.studentsReviewsDescription,
+        onTap: () {
+          GoRouter.of(context).push(
+              CourseDetailsSubscribersReviewsView.routeName,
+              extra: course.id);
+        },
+      ),
       CoursedetailsviewOptionitemEntity(
-          description:
-              "استعرض كوبونات الكورس وفعّل الخصومات الخاصة بالطلاب بسهولة.",
-          onTap: () {
-            GoRouter.of(context)
-                .push(CourseDetailsCouponsView.routeName, extra: course.id);
-          },
-          title: "الخصومات",
-          image: Assets.assetsIconsCoupon),
+        title: LocaleKeys.coupons,
+        image: Assets.assetsIconsCoupon,
+        description: LocaleKeys.couponsDescription,
+        onTap: () {
+          GoRouter.of(context)
+              .push(CourseDetailsCouponsView.routeName, extra: course.id);
+        },
+      ),
       CoursedetailsviewOptionitemEntity(
-          description:
-              "راقب أداء الكورس من خلال تقارير مفصلة توضح التقدم والتفاعل والنتائج.",
-          onTap: () {
-            GoRouter.of(context).push(CourseDetailsCourseReportsView.routeName,
-                extra: course.id);
-          },
-          title: "الأبلاغات",
-          image: Assets.assetsIconsComplain),
+        title: LocaleKeys.reports,
+        image: Assets.assetsIconsComplain,
+        description: LocaleKeys.reportsDescription,
+        onTap: () {
+          GoRouter.of(context)
+              .push(CourseDetailsCourseReportsView.routeName, extra: course.id);
+        },
+      ),
     ];
   }
 }

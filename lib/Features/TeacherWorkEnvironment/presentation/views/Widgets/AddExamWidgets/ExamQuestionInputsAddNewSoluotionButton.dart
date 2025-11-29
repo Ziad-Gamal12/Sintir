@@ -4,6 +4,7 @@ import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ExamQuestionInputsAddNewSoluotionButton extends StatelessWidget {
   const ExamQuestionInputsAddNewSoluotionButton({
@@ -29,7 +30,7 @@ class ExamQuestionInputsAddNewSoluotionButton extends StatelessWidget {
               color: KMainColor,
             ),
             Text(
-              "اضافة جواب",
+              LocaleKeys.addAnswer,
               style:
                   AppTextStyles(context).semiBold14.copyWith(color: KMainColor),
             )

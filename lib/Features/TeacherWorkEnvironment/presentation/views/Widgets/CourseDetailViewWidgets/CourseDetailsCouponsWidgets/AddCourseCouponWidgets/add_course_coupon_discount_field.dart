@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
+import 'package:sintir/locale_keys.dart';
 
 class AddCourseCouponDiscountField extends StatelessWidget {
   const AddCourseCouponDiscountField({super.key});
@@ -9,7 +10,7 @@ class AddCourseCouponDiscountField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
-      hintText: "يرجى كتابه قيمة خصم الكوبون هنا ...",
+      hintText: LocaleKeys.enterCouponDiscountHere,
       obscureText: false,
       prefixIcon: Icons.percent,
       textInputType: TextInputType.number,
@@ -19,7 +20,7 @@ class AddCourseCouponDiscountField extends StatelessWidget {
       },
       validator: (val) {
         if (val == null || val.isEmpty) {
-          return "ادخل قيمة خصم الكوبون";
+          return LocaleKeys.enterCouponDiscount;
         }
         return null;
       },

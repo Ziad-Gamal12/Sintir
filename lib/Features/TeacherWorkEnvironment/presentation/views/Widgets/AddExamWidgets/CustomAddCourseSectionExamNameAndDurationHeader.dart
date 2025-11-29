@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomAddCourseSectionExamNameAndDurationHeader extends StatelessWidget {
   const CustomAddCourseSectionExamNameAndDurationHeader({
@@ -10,7 +11,7 @@ class CustomAddCourseSectionExamNameAndDurationHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
-        "تفاصيل الامتحان",
+        LocaleKeys.examDetails,
         style: AppTextStyles(context).semiBold20,
       ),
       const SizedBox(

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/course_coupons_cubit/course_coupons_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseCouponGridViewItemHeaderSwitcher extends StatefulWidget {
   const CourseCouponGridViewItemHeaderSwitcher({
@@ -28,7 +29,7 @@ class _CourseCouponGridViewItemHeaderSwitcherState
         if (state is UpdateCourseCouponSuccess) {
           CustomSnackBar.show(
             context,
-            message: "تم تعديل الكوبون بنجاح",
+            message: LocaleKeys.operationSuccessful,
             type: SnackType.success,
           );
         } else if (state is UpdateCourseCouponFailure) {

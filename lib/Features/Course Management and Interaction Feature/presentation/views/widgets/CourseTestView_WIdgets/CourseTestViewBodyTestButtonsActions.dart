@@ -8,6 +8,7 @@ import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseTestViewBodyTestButtonsActions extends StatelessWidget {
   const CourseTestViewBodyTestButtonsActions({
@@ -24,7 +25,7 @@ class CourseTestViewBodyTestButtonsActions extends StatelessWidget {
         return Custom_Loading_Widget(
           isLoading: state is AddTestResultLoading,
           child: Custombutton(
-              text: "تسليم الأمتحان",
+              text: LocaleKeys.submitExam,
               color: Colors.red,
               textColor: Colors.white,
               onPressed: () {

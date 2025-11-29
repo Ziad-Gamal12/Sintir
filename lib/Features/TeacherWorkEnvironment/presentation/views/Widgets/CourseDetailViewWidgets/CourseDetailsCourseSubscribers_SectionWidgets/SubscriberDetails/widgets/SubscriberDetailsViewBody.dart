@@ -10,6 +10,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/SubscriberResultsSliverListView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/subuscriber_details_cubit/subuscriber_details_cubit.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SubscriberDetailsViewBody extends StatefulWidget {
   const SubscriberDetailsViewBody({super.key, required this.requirements});
@@ -101,8 +102,8 @@ class _SubscriberDetailsViewBodyState extends State<SubscriberDetailsViewBody> {
               ),
             ),
             SliverToBoxAdapter(
-                child:
-                    Text("النتائج", style: AppTextStyles(context).semiBold20)),
+                child: Text(LocaleKeys.results,
+                    style: AppTextStyles(context).semiBold20)),
             const SliverToBoxAdapter(
               child: SizedBox(
                 height: 10,

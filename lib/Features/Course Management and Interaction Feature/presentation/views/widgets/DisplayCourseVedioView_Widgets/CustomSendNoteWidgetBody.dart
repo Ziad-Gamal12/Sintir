@@ -7,6 +7,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/DisplayCourseVedioView_Widgets/CustomSendNoteWidgetBodyHeader.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/DisplayCourseVedioView_Widgets/CustomSendNoteWidgetBodyTextField.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomSendNoteWidgetBody extends StatefulWidget {
   const CustomSendNoteWidgetBody({
@@ -31,7 +32,7 @@ class _CustomSendNoteWidgetBodyState extends State<CustomSendNoteWidgetBody> {
         if (state is AddVideoNoteSuccess) {
           CustomSnackBar.show(
             context,
-            message: "تم اضافة الملاحظة بنجاح",
+            message: LocaleKeys.noteAddedSuccessfully,
             type: SnackType.success,
           );
           Navigator.pop(context);

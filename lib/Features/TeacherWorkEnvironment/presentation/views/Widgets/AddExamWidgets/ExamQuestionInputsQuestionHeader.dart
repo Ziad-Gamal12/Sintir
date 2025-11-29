@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ExamQuestionInputsQuestionHeader extends StatelessWidget {
   const ExamQuestionInputsQuestionHeader({
@@ -23,7 +24,7 @@ class ExamQuestionInputsQuestionHeader extends StatelessWidget {
         Text.rich(
           TextSpan(children: [
             TextSpan(
-              text: "سؤال رقم ",
+              text: " ${LocaleKeys.questionNumber}",
               style: AppTextStyles(context)
                   .semiBold16
                   .copyWith(color: Colors.black),
@@ -33,7 +34,7 @@ class ExamQuestionInputsQuestionHeader extends StatelessWidget {
               style: AppTextStyles(context).bold16.copyWith(color: Colors.blue),
             ),
             TextSpan(
-              text: " من ",
+              text: " ${LocaleKeys.of} ",
               style: AppTextStyles(context)
                   .regular16
                   .copyWith(color: Colors.black),

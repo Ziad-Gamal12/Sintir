@@ -10,6 +10,7 @@ import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/AddcoursesectionviewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Addcoursesectionview extends StatelessWidget {
   const Addcoursesectionview({super.key, required this.course});
@@ -33,7 +34,7 @@ class Addcoursesectionview extends StatelessWidget {
         getIt<CourseSectionsRepo>(),
       ),
       child: Scaffold(
-        appBar: CustomAppBar(appBartitle: "اضافة محاضرة"),
+        appBar: CustomAppBar(appBartitle: LocaleKeys.addLecture),
         body: Provider.value(
           value: optionnavigationrequirementsentity,
           child: const Addcoursesectionviewbody(),

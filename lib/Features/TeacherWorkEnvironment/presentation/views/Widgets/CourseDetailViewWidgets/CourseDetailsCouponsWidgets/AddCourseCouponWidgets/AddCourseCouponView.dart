@@ -7,6 +7,7 @@ import 'package:sintir/Core/repos/CourseCouponsRepo/CourseCouponsRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/AddCourseCouponWidgets/AddCourseCouponViewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class AddCourseCouponView extends StatefulWidget {
   const AddCourseCouponView({super.key, required this.courseId});
@@ -32,7 +33,7 @@ class _AddCourseCouponViewState extends State<AddCourseCouponView> {
         courseCouponsRepo: getIt<CourseCouponsRepo>(),
       ),
       child: Scaffold(
-        appBar: CustomAppBar(appBartitle: "اضافة كوبون"),
+        appBar: CustomAppBar(appBartitle: LocaleKeys.addCoupon),
         body: Provider.value(
             value: coupon,
             child: AddCourseCouponViewBody(

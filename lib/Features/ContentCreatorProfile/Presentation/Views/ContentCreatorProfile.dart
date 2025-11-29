@@ -6,6 +6,7 @@ import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/ContentCreatorProfile/Presentation/Views/Widgets/ContentCreatorProfileBody.dart';
 import 'package:sintir/Features/ContentCreatorProfile/domain/Repos/ContentCreatorProfileRepo.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ContentCreatorProfile extends StatelessWidget {
   const ContentCreatorProfile({super.key, required this.contentcreaterentity});
@@ -14,7 +15,7 @@ class ContentCreatorProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(appBartitle: "تفاصيل المعلم"),
+        appBar: CustomAppBar(appBartitle: LocaleKeys.teacherDetails),
         body: BlocProvider(
           create: (context) => ContentCreatorCoursesCubit(
             contentCreatorProfileRepo: getIt<ContentCreatorProfileRepo>(),

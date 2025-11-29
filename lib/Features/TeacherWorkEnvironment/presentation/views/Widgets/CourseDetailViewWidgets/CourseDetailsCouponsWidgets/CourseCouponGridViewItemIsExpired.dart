@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseCouponGridViewItemIsExpired extends StatelessWidget {
   const CourseCouponGridViewItemIsExpired({
@@ -18,7 +19,7 @@ class CourseCouponGridViewItemIsExpired extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         Text(
-          "تم انتهاء الكود",
+          LocaleKeys.invalidCoupon,
           style: AppTextStyles(context).regular14.copyWith(color: Colors.red),
         ),
       ],

@@ -4,6 +4,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/helper/ShowBottomSheet.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomAddNewSectionItemBottomSheetChild.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomAddNewCourseSectionItemButton extends StatelessWidget {
   const CustomAddNewCourseSectionItemButton({
@@ -16,7 +17,7 @@ class CustomAddNewCourseSectionItemButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Custombutton(
-        text: "أضافة قسم جديد",
+        text: LocaleKeys.addLecture,
         color: Colors.grey.shade50,
         textColor: Colors.black,
         borderRadius: BorderRadius.circular(8),

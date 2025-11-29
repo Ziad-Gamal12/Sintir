@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class AddCourseCouponExpiryField extends StatelessWidget {
   final DateTime? pickedDate;
@@ -25,7 +26,7 @@ class AddCourseCouponExpiryField extends StatelessWidget {
         child: ListTile(
           title: Text(
             pickedDate == null
-                ? "تاريخ الانتهاء"
+                ? LocaleKeys.expirationDate
                 : "${pickedDate!.day}/${pickedDate!.month}/${pickedDate!.year}",
             style: AppTextStyles(context).bold14.copyWith(
                   color: pickedDate == null

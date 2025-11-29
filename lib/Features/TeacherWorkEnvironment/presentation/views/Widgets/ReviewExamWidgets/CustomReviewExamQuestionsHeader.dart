@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomReviewExamQuestionsHeader extends StatelessWidget {
   const CustomReviewExamQuestionsHeader({
@@ -12,7 +13,7 @@ class CustomReviewExamQuestionsHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "مراجعه اسئلة الأمتحان",
+          LocaleKeys.examQuestions,
           style: AppTextStyles(context).semiBold20,
         ),
         const SizedBox(

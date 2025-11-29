@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
+import 'package:sintir/locale_keys.dart';
 
 class VideoTitleInputField extends StatelessWidget {
   const VideoTitleInputField({super.key, required this.courseVedioItemEntity});
@@ -8,7 +9,7 @@ class VideoTitleInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
-      hintText: "يرجى كتابة اسم الفيديو هنا ...",
+      hintText: LocaleKeys.enterVideoNameHere,
       obscureText: false,
       textInputType: TextInputType.text,
       onSaved: (value) {
@@ -16,7 +17,7 @@ class VideoTitleInputField extends StatelessWidget {
       },
       validator: (value) {
         if (value!.isEmpty) {
-          return "ادخل اسم الفيديو";
+          return LocaleKeys.enterVideoName;
         }
         return null;
       },

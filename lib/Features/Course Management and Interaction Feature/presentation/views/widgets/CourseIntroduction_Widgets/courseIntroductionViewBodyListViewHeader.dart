@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class courseIntroductionViewBodyListViewHeader extends StatelessWidget {
@@ -28,7 +29,7 @@ class courseIntroductionViewBodyListViewHeader extends StatelessWidget {
                 width: 10,
               ),
               Text(
-                "محتوى الكورس",
+                LocaleKeys.courseContent,
                 style: AppTextStyles(context)
                     .semiBold20
                     .copyWith(color: Colors.black),

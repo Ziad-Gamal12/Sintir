@@ -8,6 +8,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomCourseSectionsListViewItem.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomCourseDetailsBodyCourseSections_SliverList extends StatelessWidget {
   const CustomCourseDetailsBodyCourseSections_SliverList({
@@ -32,7 +33,7 @@ class CustomCourseDetailsBodyCourseSections_SliverList extends StatelessWidget {
         if (state is DeleteSectionSuccess) {
           CustomSnackBar.show(
             context,
-            message: "تم حذف القسم بنجاح",
+            message: LocaleKeys.operationSuccessful,
             type: SnackType.success,
           );
         } else if (state is DeleteSectionFailure) {

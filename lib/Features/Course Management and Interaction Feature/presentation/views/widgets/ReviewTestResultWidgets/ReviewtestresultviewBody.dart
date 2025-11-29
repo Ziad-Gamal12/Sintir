@@ -5,6 +5,7 @@ import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/CustomSolvedQuestionSliverList.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/ResultDetails.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Reviewtestresultviewbody extends StatelessWidget {
   const Reviewtestresultviewbody({super.key});
@@ -24,7 +25,7 @@ class Reviewtestresultviewbody extends StatelessWidget {
         ),
         SliverToBoxAdapter(
           child: CustomListORGridTextHeader(
-            text: "أسئلةالأمتحان :",
+            text: "${LocaleKeys.totalQuestions} :",
           ),
         ),
         const SliverToBoxAdapter(

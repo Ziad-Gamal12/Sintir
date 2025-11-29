@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CreatorStats extends StatelessWidget {
   final int coursesCount;
@@ -20,13 +21,13 @@ class CreatorStats extends StatelessWidget {
         _buildStatItem(
           context: context,
           icon: LucideIcons.bookOpen,
-          label: "الدورات",
+          label: LocaleKeys.coursesLabel,
           value: coursesCount.toString(),
         ),
         _buildStatItem(
           context: context,
           icon: LucideIcons.users,
-          label: "الطلاب",
+          label: LocaleKeys.studentsLabel,
           value: subscribersCount.toString(),
         ),
       ],

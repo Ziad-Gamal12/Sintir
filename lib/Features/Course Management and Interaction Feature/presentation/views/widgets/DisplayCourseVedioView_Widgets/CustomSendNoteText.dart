@@ -7,6 +7,7 @@ import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/DisplayCourseVedioView_Widgets/CustomSendNoteWidget.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomSendNoteText extends StatelessWidget {
   const CustomSendNoteText({
@@ -27,11 +28,11 @@ class CustomSendNoteText extends StatelessWidget {
       },
       child: Text.rich(TextSpan(children: [
         TextSpan(
-            text: " لقد واجهنى بعض المشاكل؟  ",
+            text: " ${LocaleKeys.facedSomeIssues}  ",
             style:
                 AppTextStyles(context).regular13.copyWith(color: Colors.black)),
         TextSpan(
-            text: "أرسال ملاحظة",
+            text: LocaleKeys.sendNote,
             style:
                 AppTextStyles(context).bold13.copyWith(color: KSecondaryColor))
       ])),

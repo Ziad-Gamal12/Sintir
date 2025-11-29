@@ -14,6 +14,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseInfoSectionWidgets/edit_course_save_button.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseInfoSectionWidgets/edit_course_title_field.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/UpdateCourseCubit/Update_Course_Cubit.dart';
+import 'package:sintir/locale_keys.dart';
 
 class EditCourseInfoSection extends StatelessWidget {
   EditCourseInfoSection({super.key, required this.course});
@@ -28,7 +29,7 @@ class EditCourseInfoSection extends StatelessWidget {
             GoRouter.of(context).pop();
             CustomSnackBar.show(
               context,
-              message: "تم التعديل بنجاح",
+              message: LocaleKeys.operationSuccessful,
               type: SnackType.success,
             );
           } else if (state is UpdateCourseFailure) {

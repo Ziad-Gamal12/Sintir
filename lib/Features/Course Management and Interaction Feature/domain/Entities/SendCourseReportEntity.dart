@@ -1,3 +1,5 @@
+import 'package:sintir/locale_keys.dart';
+
 class Sendcoursereportentity {
   final String title;
   String? description;
@@ -7,15 +9,15 @@ class Sendcoursereportentity {
     required this.title,
   });
   static List<Sendcoursereportentity> reportReasons = [
-    Sendcoursereportentity(title: "محتوى غير لائق"),
-    Sendcoursereportentity(title: "معلومات خاطئة"),
-    Sendcoursereportentity(title: "عنوان أو وصف مضلل"),
-    Sendcoursereportentity(title: "مشكلات تقنية"),
-    Sendcoursereportentity(title: "انتهاك حقوق الطبع والنشر"),
-    Sendcoursereportentity(title: "محتوى غير ملائم"),
-    Sendcoursereportentity(title: "محتوى ذو جودة منخفضة"),
-    Sendcoursereportentity(title: "مشكلات تتعلق بالسعر"),
-    Sendcoursereportentity(title: "سلوك غير مهني"),
-    Sendcoursereportentity(title: "أخرى"),
+    Sendcoursereportentity(title: LocaleKeys.reportInappropriate),
+    Sendcoursereportentity(title: LocaleKeys.reportWrongInfo),
+    Sendcoursereportentity(title: LocaleKeys.reportMisleading),
+    Sendcoursereportentity(title: LocaleKeys.reportTechnicalIssue),
+    Sendcoursereportentity(title: LocaleKeys.reportCopyright),
+    Sendcoursereportentity(title: LocaleKeys.reportUnfit),
+    Sendcoursereportentity(title: LocaleKeys.reportLowQuality),
+    Sendcoursereportentity(title: LocaleKeys.reportPriceIssue),
+    Sendcoursereportentity(title: LocaleKeys.reportUnprofessional),
+    Sendcoursereportentity(title: LocaleKeys.reportOther),
   ];
 }

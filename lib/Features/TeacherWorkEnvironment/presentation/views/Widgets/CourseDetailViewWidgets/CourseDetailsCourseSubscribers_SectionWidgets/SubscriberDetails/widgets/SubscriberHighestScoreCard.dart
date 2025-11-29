@@ -5,6 +5,7 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/ScoreStatCard.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/StudentResultCard.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/subuscriber_details_cubit/subuscriber_details_cubit.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class SubscriberHighestScoreCard extends StatefulWidget {
@@ -53,7 +54,7 @@ class _SubscriberHighestScoreCardState
               }
             },
             child: ScoreStatCard(
-              label: "أعلى درجة",
+              label: LocaleKeys.highestScore,
               value: state is GetSubscriberHighestScoreSuccess
                   ? state.result.result.toString()
                   : "0",

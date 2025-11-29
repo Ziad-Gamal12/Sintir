@@ -6,6 +6,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseIntroduction_Widgets/CourseIntroductionSuccessViewSubscribeButton.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseIntroductionSuccessViewSubscribeButtonBuilder
     extends StatefulWidget {
@@ -53,7 +54,7 @@ class _CourseIntroductionSuccessViewSubscribeButtonBuilderState
         } else if (state is SubscibeingToCourseSuccess) {
           return Center(
               child: Text(
-            "تم الأشتراك بالكورس بنجاح",
+            LocaleKeys.successSubscribe,
             style:
                 AppTextStyles(context).regular14.copyWith(color: Colors.green),
           ));

@@ -6,6 +6,7 @@ import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseReportsItemEntity.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SendcoursereportviewbodyActionButton extends StatelessWidget {
   const SendcoursereportviewbodyActionButton({
@@ -31,7 +32,7 @@ class SendcoursereportviewbodyActionButton extends StatelessWidget {
           ));
         }
         return Custombutton(
-            text: "ارسال الأبلاغ",
+            text: LocaleKeys.submitReport,
             color: KSecondaryColor,
             textColor: Colors.white,
             onPressed: () {
@@ -43,8 +44,7 @@ class SendcoursereportviewbodyActionButton extends StatelessWidget {
                       reportEntity: context.read<CourseReportEntity>());
                 }
               } else {
-                errordialog(context, "يجب الاشتراك في الدورة لارسال الابلاغ")
-                    .show();
+                errordialog(context, LocaleKeys.mustSubscribeToReport).show();
               }
             });
       },

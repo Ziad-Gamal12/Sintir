@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/Managers/Cubits/course_coupons_cubit/course_coupons_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseCouponGridViewItemExpiry extends StatelessWidget {
   const CourseCouponGridViewItemExpiry(
@@ -18,7 +19,7 @@ class CourseCouponGridViewItemExpiry extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          "تنتهي في: ${couponEntity.expiryDate.day} / ${couponEntity.expiryDate.month} / ${couponEntity.expiryDate.year}",
+          "${LocaleKeys.expiresIn}: ${couponEntity.expiryDate.day} / ${couponEntity.expiryDate.month} / ${couponEntity.expiryDate.year}",
           style: AppTextStyles(context).regular14.copyWith(color: Colors.black),
           overflow: TextOverflow.ellipsis,
         ),

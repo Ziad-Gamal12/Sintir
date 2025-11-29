@@ -8,6 +8,7 @@ import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CoursedetailviewBody.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/UpdateCourseCubit/Update_Course_Cubit.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseDetailView extends StatelessWidget {
   const CourseDetailView({super.key, required this.courseEntity});
@@ -21,7 +22,7 @@ class CourseDetailView extends StatelessWidget {
             assetspickerrepo: getIt<Assetspickerrepo>()),
         child: Scaffold(
             key: Variables.courseDeatilsViewScaffoldKey,
-            appBar: CustomAppBar(appBartitle: "تفاصيل الدورة"),
+            appBar: CustomAppBar(appBartitle: LocaleKeys.courseDetails),
             body: Builder(builder: (context) {
               return CourseDetailViewBody(
                 courseEntity: courseEntity,

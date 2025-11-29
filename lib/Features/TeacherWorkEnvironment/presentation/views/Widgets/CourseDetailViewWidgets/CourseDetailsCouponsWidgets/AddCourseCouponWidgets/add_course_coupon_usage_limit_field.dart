@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
+import 'package:sintir/locale_keys.dart';
 
 class AddCourseCouponUsageLimitField extends StatelessWidget {
   const AddCourseCouponUsageLimitField({super.key});
@@ -9,7 +10,7 @@ class AddCourseCouponUsageLimitField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
-      hintText: "يرجى كتابه عدد الكوبونات هنا ...",
+      hintText: LocaleKeys.enterCouponsCountHere,
       obscureText: false,
       textInputType: TextInputType.number,
       prefixIcon: Icons.numbers,
@@ -19,7 +20,7 @@ class AddCourseCouponUsageLimitField extends StatelessWidget {
       },
       validator: (val) {
         if (val == null || val.isEmpty) {
-          return "ادخل عدد الكوبونات";
+          return LocaleKeys.enterCouponsCount;
         }
         return null;
       },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class EditCourseInfoSectionHeader extends StatelessWidget {
   const EditCourseInfoSectionHeader({
@@ -15,8 +16,9 @@ class EditCourseInfoSectionHeader extends StatelessWidget {
           width: 30,
         ),
         Text(
-          "تعديل بيانات الدورة",
-          style: AppTextStyles(context).bold20.copyWith(color: Colors.black),
+          LocaleKeys.courseDetails,
+          style:
+              AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
         ),
         const Spacer(),
         IconButton(

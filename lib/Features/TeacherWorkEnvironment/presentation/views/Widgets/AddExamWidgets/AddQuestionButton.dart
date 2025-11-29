@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
+import 'package:sintir/locale_keys.dart';
 
 class AddQuestionButton extends StatelessWidget {
   const AddQuestionButton({
@@ -21,7 +22,7 @@ class AddQuestionButton extends StatelessWidget {
           height: 40,
         ),
         Custombutton(
-            text: "اضافة سؤال",
+            text: LocaleKeys.addQuestion,
             color: Colors.blue,
             textColor: Colors.white,
             onPressed: () {

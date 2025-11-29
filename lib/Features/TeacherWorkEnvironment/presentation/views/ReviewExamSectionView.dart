@@ -11,6 +11,7 @@ import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateExamReviewRequirmentsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ReviewExamWidgets/ReviewExamSectionViewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ReviewExamSectionView extends StatelessWidget {
   const ReviewExamSectionView(
@@ -37,7 +38,7 @@ class ReviewExamSectionView extends StatelessWidget {
       child: Provider.value(
         value: navigateExamReviewRequirmentsEntity,
         child: Scaffold(
-          appBar: CustomAppBar(appBartitle: "مراجعه"),
+          appBar: CustomAppBar(appBartitle: LocaleKeys.examReview),
           body: const ReviewExamSectionViewBody(),
         ),
       ),

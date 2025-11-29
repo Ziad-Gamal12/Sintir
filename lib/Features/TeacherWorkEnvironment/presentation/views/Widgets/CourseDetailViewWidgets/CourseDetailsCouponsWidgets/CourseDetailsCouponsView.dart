@@ -6,6 +6,7 @@ import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseDetailsCouponsViewBody.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseDetailsCouponsViewFloatingButton.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseDetailsCouponsView extends StatelessWidget {
   const CourseDetailsCouponsView({super.key, required this.courseId});
@@ -18,7 +19,7 @@ class CourseDetailsCouponsView extends StatelessWidget {
         courseCouponsRepo: getIt<CourseCouponsRepo>(),
       ),
       child: Scaffold(
-        appBar: CustomAppBar(appBartitle: "الخصومات"),
+        appBar: CustomAppBar(appBartitle: LocaleKeys.coupons),
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton:

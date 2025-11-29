@@ -5,6 +5,7 @@ import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/UpdateCourseCubit/Update_Course_Cubit.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class EditCourseSaveButton extends StatelessWidget {
   const EditCourseSaveButton(
@@ -14,7 +15,7 @@ class EditCourseSaveButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Custombutton(
-      text: "حفظ التعديلات",
+      text: LocaleKeys.save,
       color: KMainColor,
       textColor: Colors.white,
       onPressed: () {
@@ -28,7 +29,7 @@ class EditCourseSaveButton extends StatelessWidget {
         } else {
           CustomSnackBar.show(
             context,
-            message: "حدث خطاء في اختيار الملف",
+            message: LocaleKeys.fileSelectionError,
             type: SnackType.error,
           );
         }

@@ -5,6 +5,7 @@ import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCu
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SectionHeaderTile extends StatelessWidget {
   const SectionHeaderTile({
@@ -33,7 +34,7 @@ class SectionHeaderTile extends StatelessWidget {
           image: Assets.assetsIconsSVGIconsSectionIcon,
           trailing: IconButton(
             onPressed: () {
-              warningdialog(context, "هل أنت متاكد من حذف القسم", () {
+              warningdialog(context, LocaleKeys.areYouSureDeleteSection, () {
                 context.read<CourseSectionsCubit>().deleteSection(
                       courseId: courseId,
                       sectionId: sectionId,

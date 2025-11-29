@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseReportsItemEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseDetailsCourseReportsListViewItem extends StatelessWidget {
   const CourseDetailsCourseReportsListViewItem(
@@ -25,7 +26,7 @@ class CourseDetailsCourseReportsListViewItem extends StatelessWidget {
                 children: [
                   Text.rich(TextSpan(children: [
                     TextSpan(
-                      text: "ابلاغ منذ:",
+                      text: "${LocaleKeys.createdDate}:",
                       style: AppTextStyles(context)
                           .semiBold16
                           .copyWith(color: Colors.black),
@@ -43,7 +44,7 @@ class CourseDetailsCourseReportsListViewItem extends StatelessWidget {
                   ),
                   Text.rich(TextSpan(children: [
                     TextSpan(
-                      text: "النوع:",
+                      text: "${LocaleKeys.report}:",
                       style: AppTextStyles(context)
                           .bold14
                           .copyWith(color: Colors.black),
@@ -62,7 +63,7 @@ class CourseDetailsCourseReportsListViewItem extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       TextSpan(children: [
                         TextSpan(
-                          text: "المحتوى:",
+                          text: " ${LocaleKeys.descriptionLabel}:",
                           style: AppTextStyles(context)
                               .bold14
                               .copyWith(color: Colors.black),

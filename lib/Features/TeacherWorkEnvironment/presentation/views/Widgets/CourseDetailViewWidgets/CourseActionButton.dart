@@ -5,6 +5,7 @@ import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/UpdateCourseCubit/Update_Course_Cubit.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseActionButton extends StatelessWidget {
   const CourseActionButton({
@@ -55,7 +56,8 @@ class CourseActionButton extends StatelessWidget {
   bool _isCourseDeleted() =>
       courseEntity.state == BackendEndpoints.courseDeletedState;
 
-  String _getButtonText() => _isCourseDeleted() ? "استعادة" : "حذف";
+  String _getButtonText() =>
+      _isCourseDeleted() ? LocaleKeys.restore : LocaleKeys.delete;
 
   Color _getButtonColor() => _isCourseDeleted() ? Colors.green : Colors.red;
 

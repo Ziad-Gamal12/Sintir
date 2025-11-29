@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SubscribtionViewBodyCourseDetailsTitle extends StatelessWidget {
   const SubscribtionViewBodyCourseDetailsTitle({super.key});
@@ -7,7 +8,7 @@ class SubscribtionViewBodyCourseDetailsTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      "تفاصيل الكورس",
+      LocaleKeys.courseDetails,
       style: AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
     );
   }

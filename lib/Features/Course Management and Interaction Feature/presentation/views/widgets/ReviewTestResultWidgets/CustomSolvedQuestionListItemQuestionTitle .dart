@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomSolvedQuestionListItemQuestionTitle extends StatelessWidget {
   const CustomSolvedQuestionListItemQuestionTitle({
@@ -12,7 +13,7 @@ class CustomSolvedQuestionListItemQuestionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      questionTitle.isEmpty ? "لم يتم العثور على السؤال" : questionTitle,
+      questionTitle.isEmpty ? LocaleKeys.questionNotFound : questionTitle,
       style: AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
     );
   }

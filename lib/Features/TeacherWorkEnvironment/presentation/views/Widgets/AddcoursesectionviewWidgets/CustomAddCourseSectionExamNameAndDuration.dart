@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomAddCourseSectionExamNameAndDuration extends StatelessWidget {
   const CustomAddCourseSectionExamNameAndDuration({
@@ -16,7 +17,7 @@ class CustomAddCourseSectionExamNameAndDuration extends StatelessWidget {
         Expanded(
             flex: 3,
             child: CustomTextField(
-                hintText: "اسم الأختبار",
+                hintText: LocaleKeys.examName,
                 obscureText: false,
                 onSaved: (value) {
                   coursetestentity.title = value!;
@@ -26,7 +27,7 @@ class CustomAddCourseSectionExamNameAndDuration extends StatelessWidget {
                 prefixIcon: Icons.text_snippet_outlined,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "ادخل اسم الأختبار";
+                    return LocaleKeys.enterExamName;
                   }
                   return null;
                 })),
@@ -39,14 +40,14 @@ class CustomAddCourseSectionExamNameAndDuration extends StatelessWidget {
                 onSaved: (value) {
                   coursetestentity.durationTime = int.tryParse(value!) ?? 0;
                 },
-                hintText: "مده الأختبار",
+                hintText: LocaleKeys.examDuration,
                 obscureText: false,
                 controller: Variables.AddExamDuration,
                 textInputType: TextInputType.number,
                 prefixIcon: Icons.timer_outlined,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return "ادخل المده";
+                    return LocaleKeys.enterDuration;
                   }
                   return null;
                 }))

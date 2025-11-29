@@ -5,6 +5,7 @@ import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomChatTextField.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CoursefedbackviewBodyActionButton extends StatelessWidget {
   const CoursefedbackviewBodyActionButton({
@@ -38,13 +39,12 @@ class CoursefedbackviewBodyActionButton extends StatelessWidget {
                       feedback: coursefedbackItemEntity);
                 }
               } else {
-                errordialog(context, "يجب الاشتراك في الدورة لارسال التعليق")
-                    .show();
+                errordialog(context, LocaleKeys.mustSubscribeToComment).show();
               }
             },
             validator: (value) {
               if (value!.isEmpty) {
-                return "لا يمكن ان يكون الحقل فارغ";
+                return LocaleKeys.fieldCannotBeEmpty;
               }
               return null;
             });

@@ -11,6 +11,7 @@ import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseSectionExamViewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class AddcourseSectionExamview extends StatefulWidget {
   const AddcourseSectionExamview(
@@ -38,7 +39,7 @@ class _AddcourseSectionExamviewState extends State<AddcourseSectionExamview>
           assetspickerrepo: getIt<Assetspickerrepo>()),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: CustomAppBar(appBartitle: "اضافة امتحان"),
+        appBar: CustomAppBar(appBartitle: LocaleKeys.addExam),
         body: Provider.value(
           value: widget.optionnavigationrequirementsentity,
           child: const AddCourseSectionExamViewBody(),

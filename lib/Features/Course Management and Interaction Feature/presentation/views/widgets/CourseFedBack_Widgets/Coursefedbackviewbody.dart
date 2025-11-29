@@ -8,6 +8,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseFedBack_Widgets/CourseFedBacksListView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseFedBack_Widgets/CoursefedbackviewBodyActionButton.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Coursefedbackviewbody extends StatefulWidget {
   const Coursefedbackviewbody({super.key, required this.requirmentsEntity});
@@ -64,7 +65,7 @@ class _CoursefedbackviewbodyState extends State<Coursefedbackviewbody> {
           controller.clear();
           CustomSnackBar.show(
             context,
-            message: "تمت التعليق بنجاح!",
+            message: LocaleKeys.commentPostedSuccessfully,
             type: SnackType.success,
           );
         } else if (state is CourseFeedBacksAddFeedBackFailure) {

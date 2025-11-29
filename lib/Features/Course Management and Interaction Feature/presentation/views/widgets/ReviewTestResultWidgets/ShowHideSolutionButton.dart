@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ShowHideSolutionButton extends StatelessWidget {
   const ShowHideSolutionButton({
@@ -37,7 +38,7 @@ class ShowHideSolutionButton extends StatelessWidget {
                 size: 22,
               ),
               Text(
-                isVisible ? "إخفاء الحل" : "عرض الحل",
+                isVisible ? LocaleKeys.showSolution : LocaleKeys.hideSolution,
                 style: AppTextStyles(context)
                     .regular14
                     .copyWith(color: KMainColor),

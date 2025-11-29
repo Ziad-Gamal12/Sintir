@@ -7,6 +7,7 @@ import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
+import 'package:sintir/locale_keys.dart';
 
 class VideoItemStateHandler {
   final BuildContext context;
@@ -27,7 +28,7 @@ class VideoItemStateHandler {
       case AddVideoItemSuccess():
         CustomSnackBar.show(
           context,
-          message: "تم اضافة الفيديو بنجاح",
+          message: LocaleKeys.videoAddedSuccessfully,
           type: SnackType.success,
         );
         Navigator.popUntil(context,
@@ -41,7 +42,7 @@ class VideoItemStateHandler {
       case PickVideoFileFailure():
         CustomSnackBar.show(
           context,
-          message: "حدث خطاء في تحميل الفيديو",
+          message: LocaleKeys.videoUploadError,
           type: SnackType.error,
         );
         break;

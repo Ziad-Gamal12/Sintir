@@ -13,6 +13,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersLoadingGridView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseStudentsCount.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseDetailsSubscribersViewBody extends StatefulWidget {
   const CourseDetailsSubscribersViewBody(
@@ -154,7 +155,7 @@ class _CourseDetailsSubscribersViewBodyState
             else if (state is! GetCourseSubscribersLoading &&
                 state is! SearchSubscribersLoading)
               CustomEmptyWidget(
-                text: "لا يوجد اشخاص مشتركين في هذا الدورة",
+                text: LocaleKeys.noSubscribersInCourse,
               )
             else if (state is SearchSubscribersLoading &&
                 isSearching &&

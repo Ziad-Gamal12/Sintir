@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionSolutionEntity.dart';
 import 'package:sintir/Core/widgets/CustomRadioWidget.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
+import 'package:sintir/locale_keys.dart';
 
 class AddCourseExamAddSolutionItem extends StatelessWidget {
   const AddCourseExamAddSolutionItem({
@@ -29,7 +30,7 @@ class AddCourseExamAddSolutionItem extends StatelessWidget {
         Flexible(
           child: CustomTextField(
             controller: coursetestquestionsolutionentity.solutionController,
-            hintText: "الاجابه",
+            hintText: LocaleKeys.answer,
             obscureText: false,
             textInputType: TextInputType.text,
             onSaved: (value) {
@@ -37,7 +38,7 @@ class AddCourseExamAddSolutionItem extends StatelessWidget {
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return "ادخل الاجابه";
+                return LocaleKeys.enterAnswer;
               }
               return null;
             },

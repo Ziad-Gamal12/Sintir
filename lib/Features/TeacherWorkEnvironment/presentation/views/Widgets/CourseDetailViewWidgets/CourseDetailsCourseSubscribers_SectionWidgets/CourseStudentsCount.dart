@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseStudentsCount extends StatelessWidget {
   final int count;
@@ -13,18 +14,18 @@ class CourseStudentsCount extends StatelessWidget {
         style: AppTextStyles(context).regular16,
         children: [
           TextSpan(
-              text: "عدد المشتركين: ",
+              text: LocaleKeys.subscribersCount,
               style: AppTextStyles(context)
                   .regular16
                   .copyWith(color: Colors.black)),
           TextSpan(
-            text: "$count",
+            text: " $count ",
             style: AppTextStyles(context).semiBold16.copyWith(
                   color: KMainColor,
                 ),
           ),
           TextSpan(
-              text: " شخص",
+              text: LocaleKeys.person,
               style: AppTextStyles(context)
                   .regular16
                   .copyWith(color: Colors.black)),

@@ -34,7 +34,7 @@ class CustomSubscriberDetailsCardInformation extends StatelessWidget {
         ),
         Text(
           subscriberentity.educationLevel == ""
-              ? "غير محدد"
+              ? "_"
               : subscriberentity.educationLevel,
           overflow: TextOverflow.ellipsis,
           style: AppTextStyles(context).regular16,

@@ -7,6 +7,7 @@ import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/ReviewTestResultView.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseTestListener extends StatelessWidget {
   const CourseTestListener({
@@ -29,7 +30,7 @@ class CourseTestListener extends StatelessWidget {
         if (state is JoinToTestItemSuccess) {
           CustomSnackBar.show(
             context,
-            message: "تم التسجيل بنجاح",
+            message: LocaleKeys.registrationSuccess,
             type: SnackType.success,
           );
         } else if (state is JoinToTestItemFailure) {
@@ -41,7 +42,7 @@ class CourseTestListener extends StatelessWidget {
         } else if (state is AddTestResultSuccess) {
           successdialog(
             context: context,
-            SuccessMessage: "تم إنهاء الاختبار بنجاح",
+            SuccessMessage: LocaleKeys.examCompletedSuccess,
             btnOkOnPress: () {
               GoRouter.of(context).pushReplacement(
                 Reviewtestresultview.routeName,

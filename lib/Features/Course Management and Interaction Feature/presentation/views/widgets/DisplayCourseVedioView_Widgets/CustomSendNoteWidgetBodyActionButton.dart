@@ -5,6 +5,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/Cour
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/VideoNoteEntity.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomSendNoteWidgetBodyActionButton extends StatelessWidget {
   const CustomSendNoteWidgetBodyActionButton({
@@ -28,7 +29,7 @@ class CustomSendNoteWidgetBodyActionButton extends StatelessWidget {
           ));
         }
         return Custombutton(
-            text: "ارسال",
+            text: LocaleKeys.send,
             color: KSecondaryColor,
             textColor: Colors.white,
             onPressed: () {

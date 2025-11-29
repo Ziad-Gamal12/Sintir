@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionView.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomAddNewCourseSectionButton extends StatelessWidget {
   const CustomAddNewCourseSectionButton({
@@ -19,9 +20,9 @@ class CustomAddNewCourseSectionButton extends StatelessWidget {
         GoRouter.of(context)
             .push(Addcoursesectionview.routeName, extra: course);
       },
-      child: const Tooltip(
-        message: "اضافة قسم جديد",
-        child: CircleAvatar(
+      child: Tooltip(
+        message: LocaleKeys.addLecture,
+        child: const CircleAvatar(
           backgroundColor: KMainColor,
           radius: 35,
           child: Icon(

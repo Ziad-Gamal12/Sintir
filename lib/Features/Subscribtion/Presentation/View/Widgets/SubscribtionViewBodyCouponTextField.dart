@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/Managers/Cubits/course_coupons_cubit/course_coupons_cubit.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SubscribtionViewBodyCouponTextFieldSection extends StatelessWidget {
   const SubscribtionViewBodyCouponTextFieldSection({
@@ -44,14 +45,14 @@ class _SubscribtionViewBodyCouponTextFieldState
         return Form(
           key: formKey,
           child: CustomTextField(
-            hintText: "كوبون الخصم",
+            hintText: LocaleKeys.couponDiscount,
             obscureText: false,
             textInputType: TextInputType.text,
             prefixIcon: FontAwesomeIcons.tags,
             onSaved: (val) => couponCode = val?.trim() ?? "",
             validator: (val) {
               if (val == null || val.trim().isEmpty) {
-                return "لا يمكن ترك هذا الحقل فارغا";
+                return LocaleKeys.fieldCannotBeEmpty;
               }
               return null;
             },

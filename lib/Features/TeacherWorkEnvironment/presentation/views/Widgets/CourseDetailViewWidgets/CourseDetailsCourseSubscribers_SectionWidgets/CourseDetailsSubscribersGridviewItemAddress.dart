@@ -22,7 +22,7 @@ class CourseDetailsSubscribersGridviewItemAddress extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            address == "" ? "غير محدد" : address,
+            address == "" ? "_" : address,
             overflow: TextOverflow.ellipsis,
             style:
                 AppTextStyles(context).regular16.copyWith(color: Colors.black),

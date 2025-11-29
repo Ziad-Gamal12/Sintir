@@ -5,6 +5,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class AddCourseCouponButton extends StatelessWidget {
   const AddCourseCouponButton(
@@ -21,7 +22,7 @@ class AddCourseCouponButton extends StatelessWidget {
         return Custom_Loading_Widget(
           isLoading: state,
           child: Custombutton(
-            text: "إضافة",
+            text: LocaleKeys.add,
             color: KMainColor,
             textColor: Colors.white,
             onPressed: () {

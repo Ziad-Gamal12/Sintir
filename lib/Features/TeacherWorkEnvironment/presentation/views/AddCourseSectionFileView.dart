@@ -11,6 +11,7 @@ import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ADDCoursSectionFileWidgets/AddcoursesectionfileviewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Addcoursesectionfileview extends StatelessWidget {
   const Addcoursesectionfileview(
@@ -34,7 +35,7 @@ class Addcoursesectionfileview extends StatelessWidget {
                 assetspickerrepo: getIt<Assetspickerrepo>()))
       ],
       child: Scaffold(
-        appBar: CustomAppBar(appBartitle: "اضافة ملف"),
+        appBar: CustomAppBar(appBartitle: LocaleKeys.addFile),
         body: Provider.value(
             value: optionnavigationrequirementsentity,
             child: const AddcoursesectionfileviewBody()),

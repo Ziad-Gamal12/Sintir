@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/locale_keys.dart';
 
 class EmptySectionMessage extends StatelessWidget {
   const EmptySectionMessage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(8.0),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
       child: Text(
-        "لا توجد عناصر بعد، قم بإضافة عنصر جديد.",
-        style: TextStyle(color: Colors.black54),
+        LocaleKeys.emptyContent,
+        style: const TextStyle(color: Colors.black54),
       ),
     );
   }

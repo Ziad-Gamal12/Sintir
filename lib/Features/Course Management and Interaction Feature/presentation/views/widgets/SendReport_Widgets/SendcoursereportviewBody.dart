@@ -8,6 +8,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/SendReport_Widgets/SendReportReasonsGridView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/SendReport_Widgets/SendcoursereportviewbodyActionButton.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/SendReport_Widgets/SendcoursereportviewbodyTextField.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Sendcoursereportviewbody extends StatefulWidget {
   const Sendcoursereportviewbody({
@@ -39,7 +40,7 @@ class _SendcoursereportviewbodyState extends State<Sendcoursereportviewbody> {
         if (state is CourseReportsAddReportSuccess) {
           CustomSnackBar.show(
             context,
-            message: "تم ارسال الابلاغ بنجاح",
+            message: LocaleKeys.reportSentSuccessfully,
             type: SnackType.success,
           );
           Navigator.pop(context);
@@ -57,8 +58,8 @@ class _SendcoursereportviewbodyState extends State<Sendcoursereportviewbody> {
           key: formKey,
           child: CustomScrollView(
             slivers: [
-              const SliverToBoxAdapter(
-                child: CustomHeader(title: "أسباب الابلاغ :"),
+              SliverToBoxAdapter(
+                child: CustomHeader(title: LocaleKeys.reportReasons),
               ),
               Sendreportreasonsgridview(
                 groupValue: reportReson,
@@ -76,7 +77,7 @@ class _SendcoursereportviewbodyState extends State<Sendcoursereportviewbody> {
                     const SizedBox(
                       height: 30,
                     ),
-                    const CustomHeader(title: "وصف الابلاغ :"),
+                    CustomHeader(title: LocaleKeys.reportDescription),
                     const SizedBox(
                       height: 20,
                     ),

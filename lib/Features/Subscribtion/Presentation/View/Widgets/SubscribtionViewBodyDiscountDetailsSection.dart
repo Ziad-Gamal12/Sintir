@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/Managers/Cubits/course_coupons_cubit/course_coupons_cubit.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/DiscountBadge.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/PriceCard.dart';
+import 'package:sintir/locale_keys.dart';
 
 class PremiumSubscriptionPriceSection extends StatelessWidget {
   final int originalPrice;
@@ -43,8 +44,8 @@ class PremiumSubscriptionPriceSection extends StatelessWidget {
             // ORIGINAL PRICE
             PriceCard(
               icon: FontAwesomeIcons.tag,
-              label: "السعر الأصلي",
-              value: "$originalPrice جنيه",
+              label: LocaleKeys.originalPrice,
+              value: "$originalPrice ${LocaleKeys.priceEgp}",
               isOriginal: true,
               showStrike: hasDiscount,
             ),
@@ -77,8 +78,8 @@ class PremiumSubscriptionPriceSection extends StatelessWidget {
               child: PriceCard(
                 key: ValueKey(discountedPrice),
                 icon: FontAwesomeIcons.moneyBillWave,
-                label: "السعر بعد الخصم",
-                value: "$discountedPrice جنيه",
+                label: LocaleKeys.discountedPrice,
+                value: "$discountedPrice ${LocaleKeys.priceEgp}",
                 highlight: hasDiscount,
               ),
             ),

@@ -95,9 +95,7 @@ class _CourseDetailsCouponsViewBodyState
               scrollController: scrollController,
               coupons: coupons);
         } else if (state is! GetCourseCouponsLoading) {
-          return CustomEmptyWidget(
-            text: 'لا يوجد كوبونات حتى الان',
-          );
+          return CustomEmptyWidget();
         } else {
           return const Center(
               child: CircularProgressIndicator(

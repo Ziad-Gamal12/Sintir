@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestView_WIdgets/question_count_circle.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class QuestionStatsRow extends StatelessWidget {
   const QuestionStatsRow({super.key, required this.exam});
@@ -21,17 +22,17 @@ class QuestionStatsRow extends StatelessWidget {
         QuestionCountCircle(
           count: total,
           borderColor: KMainColor,
-          tooltip: "عدد الأسئلة الكلي",
+          tooltip: LocaleKeys.totalQuestions,
         ),
         QuestionCountCircle(
           count: answered,
           borderColor: Colors.green,
-          tooltip: "الأسئلة المجابة",
+          tooltip: LocaleKeys.answeredQuestions,
         ),
         QuestionCountCircle(
           count: unanswered,
           borderColor: Colors.red,
-          tooltip: "الأسئلة غير المجابة",
+          tooltip: LocaleKeys.unansweredQuestions,
         ),
       ],
     );

@@ -7,6 +7,7 @@ import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomAddCourseVideoSectionButton extends StatelessWidget {
   const CustomAddCourseVideoSectionButton({
@@ -27,8 +28,8 @@ class CustomAddCourseVideoSectionButton extends StatelessWidget {
           isLoading: isLoading,
           child: Custombutton(
             text: coursevedioitementity.file == null
-                ? "تحديد فديو"
-                : "إضافة الفديو",
+                ? LocaleKeys.selectVideo
+                : LocaleKeys.addVideoButton,
             color: coursevedioitementity.file == null
                 ? KSecondaryColor
                 : Colors.green,

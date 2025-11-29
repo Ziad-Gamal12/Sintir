@@ -7,6 +7,7 @@ import 'package:sintir/Core/widgets/SensitivePageWrapper.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/PayOutBalanceWidgets/PayOutBalanceBody.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/payout_cubit/payout_cubit.dart';
+import 'package:sintir/locale_keys.dart';
 
 class PayOutBalance extends StatelessWidget {
   const PayOutBalance({super.key, required this.walletEntity});
@@ -20,7 +21,7 @@ class PayOutBalance extends StatelessWidget {
       ),
       child: SensitivePageWrapper(
         child: Scaffold(
-          appBar: CustomAppBar(appBartitle: "سحب رصيد المحفظة"),
+          appBar: CustomAppBar(appBartitle: LocaleKeys.withdrawBalance),
           body: PayOutBalanceBody(walletEntity: walletEntity),
         ),
       ),

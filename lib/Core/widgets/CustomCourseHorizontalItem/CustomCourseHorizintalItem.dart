@@ -82,9 +82,9 @@ class _CustomCourseHorizontalItemState extends State<CustomCourseHorizontalItem>
                       course.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles(context)
-                          .semiBold16
-                          .copyWith(height: 1.3),
+                      style: AppTextStyles(
+                        context,
+                      ).semiBold16.copyWith(height: 1.3),
                     ),
 
                     const SizedBox(height: 6),
@@ -94,9 +94,10 @@ class _CustomCourseHorizontalItemState extends State<CustomCourseHorizontalItem>
                       course.description,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles(context)
-                          .regular14
-                          .copyWith(color: Colors.grey.shade600, height: 1.4),
+                      style: AppTextStyles(context).regular14.copyWith(
+                        color: Colors.grey.shade600,
+                        height: 1.4,
+                      ),
                     ),
 
                     const SizedBox(height: 6),
@@ -111,8 +112,10 @@ class _CustomCourseHorizontalItemState extends State<CustomCourseHorizontalItem>
                             _buildChip(Icons.school_rounded, course.level),
                             _buildChip(Icons.menu_book_rounded, course.subject),
                             _buildChip(Icons.language_rounded, course.language),
-                            _buildChip(Icons.timer,
-                                "${LocaleKeys.createdDate} ${_postedAgo(course.postedDate)}")
+                            _buildChip(
+                              Icons.timer,
+                              "${LocaleKeys.createdDate} ${_postedAgo(course.postedDate)}",
+                            ),
                           ],
                         ),
                       ),
@@ -122,7 +125,8 @@ class _CustomCourseHorizontalItemState extends State<CustomCourseHorizontalItem>
 
                     // Price
                     CustomCourseHorizontalItemPrice(
-                        price: course.price.toDouble())
+                      price: course.price.toDouble(),
+                    ),
                   ],
                 ),
               ),

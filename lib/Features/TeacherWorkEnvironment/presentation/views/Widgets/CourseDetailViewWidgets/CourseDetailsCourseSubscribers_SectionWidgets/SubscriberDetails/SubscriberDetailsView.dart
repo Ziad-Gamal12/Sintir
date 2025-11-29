@@ -14,8 +14,7 @@ class SubscriberDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          CustomAppBar(appBartitle: " الطالب ${requirements.subscriber.name}"),
+      appBar: CustomAppBar(appBartitle: requirements.subscriber.name),
       body: BlocProvider(
         create: (context) => SubscriberDetailsCubit(
           subscribersDetailsRepo: getIt.get<SubscribersDetailsRepo>(),

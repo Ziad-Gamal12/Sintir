@@ -40,7 +40,6 @@ class Sintir extends StatelessWidget {
   Widget build(BuildContext context) {
     final navigatorKey = App_router.navigatorKey;
     Localingo.setNavigatorKey(navigatorKey);
-
     return BlocProvider(
       create: (context) => FavouritesCubit(
         favoritesRepo: getIt<FavoritesRepo>(),
@@ -63,10 +62,6 @@ class Sintir extends StatelessWidget {
         supportedLocales: const [
           Locale('en'),
           Locale('ar'),
-          Locale('fr'),
-          Locale('es'),
-          Locale('de'),
-          Locale('it'),
         ],
         locale: const Locale('en'),
         debugShowCheckedModeBanner: false,

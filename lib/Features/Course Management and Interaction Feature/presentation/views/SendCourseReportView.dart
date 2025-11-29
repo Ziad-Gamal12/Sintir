@@ -8,6 +8,7 @@ import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseReportsItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/SendReport_Widgets/SendcoursereportviewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Sendcoursereportview extends StatefulWidget {
   const Sendcoursereportview({
@@ -35,7 +36,7 @@ class _SendcoursereportviewState extends State<Sendcoursereportview> {
       child: Provider.value(
         value: coursereportsitementity,
         child: Scaffold(
-          appBar: CustomAppBar(appBartitle: "ابلاغ"),
+          appBar: CustomAppBar(appBartitle: LocaleKeys.report),
           body: Sendcoursereportviewbody(
             requirmentsEntity: widget.requirmentsEntity,
           ),

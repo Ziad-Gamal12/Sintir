@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomSendNoteWidgetBodyHeader extends StatelessWidget {
   const CustomSendNoteWidgetBodyHeader({
@@ -25,7 +26,7 @@ class CustomSendNoteWidgetBodyHeader extends StatelessWidget {
           width: 12,
         ),
         Text(
-          "ارسال ملاحظه",
+          LocaleKeys.sendNote,
           style: AppTextStyles(context).semiBold20.copyWith(
                 color: Colors.black,
               ),

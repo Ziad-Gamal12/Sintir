@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseReportsItemEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SendcoursereportviewbodyTextField extends StatelessWidget {
   const SendcoursereportviewbodyTextField({
@@ -12,7 +13,7 @@ class SendcoursereportviewbodyTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomTextField(
         maxLines: 4,
-        hintText: "اكتب ملاحظتك هنا ....",
+        hintText: LocaleKeys.hintWriteMessage,
         obscureText: false,
         onSaved: (val) {
           context.read<CourseReportEntity>().description = val ?? "";
@@ -20,7 +21,7 @@ class SendcoursereportviewbodyTextField extends StatelessWidget {
         textInputType: TextInputType.text,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return "لا يمكن ان يكون الحقل فارغ";
+            return LocaleKeys.writeMessageHint;
           }
           return null;
         });

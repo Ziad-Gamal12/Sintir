@@ -3,6 +3,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestR
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/ResultDetailsHelper.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/StudentStatItem.dart';
+import 'package:sintir/locale_keys.dart';
 
 class StudentResultStatsRow extends StatelessWidget {
   const StudentResultStatsRow({super.key, required this.testResultEntity});
@@ -20,8 +21,8 @@ class StudentResultStatsRow extends StatelessWidget {
         Expanded(
           child: StudentStatItem(
             icon: Assets.assetsIconsGraphBar,
-            title: "نسبة التقييم",
-            value: "$percent%",
+            title: LocaleKeys.evaluationRate,
+            value: "$percent %",
             backgroundColor: Colors.blue.shade50,
           ),
         ),
@@ -29,7 +30,7 @@ class StudentResultStatsRow extends StatelessWidget {
         Expanded(
           child: StudentStatItem(
             icon: Assets.assetsIconsMisionIcon,
-            title: "درجة الطالب",
+            title: LocaleKeys.studentScore,
             value: score,
             backgroundColor: Colors.green.shade50,
           ),

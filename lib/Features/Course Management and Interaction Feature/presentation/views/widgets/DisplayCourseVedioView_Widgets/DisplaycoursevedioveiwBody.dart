@@ -10,6 +10,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/DisplayCourseVedioView_Widgets/CustomSendNoteText.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/addingJoinedByLoadingWidget.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class DisplaycoursevedioveiwBody extends StatefulWidget {
   const DisplaycoursevedioveiwBody({
@@ -57,7 +58,7 @@ class _DisplaycoursevedioveiwBodyState
         if (state is JoinToVideoItemSuccess) {
           CustomSnackBar.show(
             context,
-            message: "تم التسجيل بنجاح",
+            message: LocaleKeys.registrationSuccess,
             type: SnackType.success,
           );
         } else if (state is JoinToVideoItemFailure) {

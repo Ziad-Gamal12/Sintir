@@ -8,6 +8,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNav
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/AddCourseSectionContentOptions.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/AddCourseSectionTextFields.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Addcoursesectionviewbody extends StatelessWidget {
   const Addcoursesectionviewbody({
@@ -29,7 +30,7 @@ class Addcoursesectionviewbody extends StatelessWidget {
               color: Colors.grey,
             ),
             Text(
-              "المحتوى",
+              LocaleKeys.content,
               style:
                   AppTextStyles(context).bold20.copyWith(color: Colors.black),
             ),

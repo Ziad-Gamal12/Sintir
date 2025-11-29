@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class AddCourseSectionFileTextFields extends StatelessWidget {
   const AddCourseSectionFileTextFields({
@@ -13,7 +14,7 @@ class AddCourseSectionFileTextFields extends StatelessWidget {
     return Column(
       children: [
         CustomTextField(
-            hintText: "يرجى كتابه اسم الملف هنا ...",
+            hintText: LocaleKeys.enterFileNameHere,
             obscureText: false,
             textInputType: TextInputType.text,
             onSaved: (value) {
@@ -21,7 +22,7 @@ class AddCourseSectionFileTextFields extends StatelessWidget {
             },
             validator: (value) {
               if (value!.isEmpty) {
-                return "ادخل اسم الملف";
+                return LocaleKeys.enterFileName;
               }
               return null;
             }),
@@ -30,7 +31,7 @@ class AddCourseSectionFileTextFields extends StatelessWidget {
         ),
         CustomTextField(
             maxLines: 4,
-            hintText: "يرجى كتابه وصف الملف هنا ...",
+            hintText: LocaleKeys.enterFileDescriptionHere,
             obscureText: false,
             textInputType: TextInputType.text,
             onSaved: (value) {
@@ -38,7 +39,7 @@ class AddCourseSectionFileTextFields extends StatelessWidget {
             },
             validator: (value) {
               if (value!.isEmpty) {
-                return "ادخل وصف الملف";
+                return LocaleKeys.enterFileDescription;
               }
               return null;
             }),

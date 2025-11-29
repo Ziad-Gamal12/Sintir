@@ -6,6 +6,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomAddNewCourseSectionItemButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/course_section_items_builder.dart.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseSectionItemList extends StatelessWidget {
   const CourseSectionItemList({
@@ -30,7 +31,7 @@ class CourseSectionItemList extends StatelessWidget {
         if (state is DeleteSectionItemSuccess) {
           CustomSnackBar.show(
             context,
-            message: "تم حذف الملف بنجاح",
+            message: LocaleKeys.operationSuccessful,
             type: SnackType.success,
           );
         } else if (state is GetSectionItemsFailure) {

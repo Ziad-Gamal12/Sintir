@@ -5,6 +5,7 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/InfoRow.dart';
 import 'package:sintir/Features/ContentCreatorProfile/Presentation/Views/ContentCreatorProfile.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseMetaInfo extends StatelessWidget {
   final DisplayCourseBottomsheetNavigationRequirmentsEntity requirmentsEntity;
@@ -23,7 +24,7 @@ class CourseMetaInfo extends StatelessWidget {
           child: Text.rich(
             TextSpan(children: [
               TextSpan(
-                text: "تم انشاء بواسطة , ",
+                text: LocaleKeys.createdby,
                 style: AppTextStyles(context)
                     .regular10
                     .copyWith(color: Colors.black),
@@ -41,7 +42,7 @@ class CourseMetaInfo extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Text(
-          "تاريخ النشر (${requirmentsEntity.course.postedDate.day}/${requirmentsEntity.course.postedDate.month}/${requirmentsEntity.course.postedDate.year})",
+          "${LocaleKeys.createdDate} (${requirmentsEntity.course.postedDate.day}/${requirmentsEntity.course.postedDate.month}/${requirmentsEntity.course.postedDate.year})",
           style:
               AppTextStyles(context).regular10.copyWith(color: Colors.black87),
         ),

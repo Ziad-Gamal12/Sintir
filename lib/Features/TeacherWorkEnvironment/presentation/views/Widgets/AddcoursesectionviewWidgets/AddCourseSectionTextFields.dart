@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseSectionTextFields extends StatelessWidget {
   const CourseSectionTextFields({
@@ -14,7 +15,7 @@ class CourseSectionTextFields extends StatelessWidget {
     return Column(
       children: [
         CustomTextField(
-          hintText: "يرجى كتابه اسم المحاضرة هنا ...",
+          hintText: LocaleKeys.enterLectureNameHere,
           obscureText: false,
           controller: Variables.AddCoursesectionNameController,
           textInputType: TextInputType.text,
@@ -24,21 +25,21 @@ class CourseSectionTextFields extends StatelessWidget {
           },
           validator: (value) {
             if (value!.isEmpty) {
-              return "ادخل اسم المحاضرة";
+              return LocaleKeys.enterLectureName;
             }
             return null;
           },
         ),
         const SizedBox(height: 10),
         CustomTextField(
-            hintText: "يرجى كتابه وصف المحاضرة هنا ...",
+            hintText: LocaleKeys.enterLectureDescriptionHere,
             obscureText: false,
             controller: Variables.AddCoursesesectionDescriptionController,
             textInputType: TextInputType.text,
             maxLines: 5,
             validator: (value) {
               if (value!.isEmpty) {
-                return "ادخل وصف المحاضرة";
+                return LocaleKeys.enterLectureDescription;
               }
               return null;
             },

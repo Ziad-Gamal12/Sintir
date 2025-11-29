@@ -19,6 +19,7 @@ import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/Subscribt
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/SubscribtionViewBodyDiscountDetailsSection.dart';
 // Constants
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SubscribtionViewBody extends StatefulWidget {
   const SubscribtionViewBody({super.key, required this.requirmentsEntity});
@@ -36,7 +37,6 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
-        /// Listen for payment-related states
         BlocListener<CourseSubscribtionsCubit, CourseSubscribtionsState>(
           listener: (context, state) {
             switch (state) {
@@ -72,7 +72,7 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
                 if (!coupon.isActive || coupon.isExpired) {
                   CustomSnackBar.show(
                     context,
-                    message: "الكوبون غير صالح",
+                    message: LocaleKeys.invalidCoupon,
                     type: SnackType.error,
                   );
                   return;
@@ -132,7 +132,7 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
               height: 40,
             ),
             Text(
-              "الخصومات",
+              LocaleKeys.discountedPrice,
               style: AppTextStyles(context).semiBold20,
             ),
             const SizedBox(height: 20),

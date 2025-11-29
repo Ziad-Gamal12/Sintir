@@ -4,6 +4,7 @@ import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseInfoCardCourseDescription extends StatefulWidget {
   const CourseInfoCardCourseDescription({
@@ -40,7 +41,7 @@ class _CourseInfoCardCourseDescriptionState
               });
             },
             child: Text(
-              isEllipsis ? "عرض المزيد" : "عرض أقل",
+              isEllipsis ? LocaleKeys.showMore : LocaleKeys.showLess,
               textAlign: TextAlign.left,
               style:
                   AppTextStyles(context).semiBold10.copyWith(color: KMainColor),

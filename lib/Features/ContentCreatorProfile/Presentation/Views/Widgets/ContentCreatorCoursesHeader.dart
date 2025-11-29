@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ContentCreatorCoursesHeader extends StatelessWidget {
   const ContentCreatorCoursesHeader({
@@ -14,7 +15,7 @@ class ContentCreatorCoursesHeader extends StatelessWidget {
         const SizedBox(
           height: 24,
         ),
-        Text("كورساتي", style: AppTextStyles(context).semiBold20),
+        Text(LocaleKeys.coursesLabel, style: AppTextStyles(context).semiBold20),
         const SizedBox(
           height: 12,
         ),

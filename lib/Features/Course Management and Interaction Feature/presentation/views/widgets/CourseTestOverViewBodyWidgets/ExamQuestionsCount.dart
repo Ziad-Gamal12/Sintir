@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ExamQuestionsCount extends StatelessWidget {
   const ExamQuestionsCount({
@@ -27,7 +28,7 @@ class ExamQuestionsCount extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 12),
-        Text("$questionsCount سؤال", style: textStyle),
+        Text("$questionsCount ${LocaleKeys.questionsCount}", style: textStyle),
       ],
     );
   }

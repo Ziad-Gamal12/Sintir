@@ -8,6 +8,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNav
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateExamReviewRequirmentsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ReviewExamSectionView.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class AddCourseSectionExamActionButtons extends StatelessWidget {
   const AddCourseSectionExamActionButtons({
@@ -24,7 +25,7 @@ class AddCourseSectionExamActionButtons extends StatelessWidget {
         right: 16,
         left: 16,
         child: Custombutton(
-            text: "حفظ",
+            text: LocaleKeys.save,
             color: KSecondaryColor,
             textColor: Colors.white,
             onPressed: () {

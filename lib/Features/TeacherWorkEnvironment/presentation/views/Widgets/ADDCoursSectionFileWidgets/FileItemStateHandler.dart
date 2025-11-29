@@ -7,6 +7,7 @@ import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
+import 'package:sintir/locale_keys.dart';
 
 class FileItemStateHandler {
   final BuildContext context;
@@ -33,7 +34,7 @@ class FileItemStateHandler {
       case AddFileItemSuccess():
         CustomSnackBar.show(
           context,
-          message: "تم اضافة الملف بنجاح",
+          message: LocaleKeys.fileAddedSuccessfully,
           type: SnackType.success,
         );
         Navigator.popUntil(context,
@@ -47,7 +48,7 @@ class FileItemStateHandler {
       case PickFileFailure():
         CustomSnackBar.show(
           context,
-          message: "حدث خطاء في اختيار الملف",
+          message: LocaleKeys.fileSelectionError,
           type: SnackType.error,
         );
         break;

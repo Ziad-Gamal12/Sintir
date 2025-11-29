@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseFileOverView extends StatelessWidget {
   const CourseFileOverView({
@@ -27,7 +28,7 @@ class CourseFileOverView extends StatelessWidget {
               bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
       child: Row(
         children: [
-          Text("مجموع الصفحات : $totalPages",
+          Text("${LocaleKeys.totalPages}: $totalPages",
               style: AppTextStyles(context)
                   .semiBold14
                   .copyWith(color: Colors.white)),
