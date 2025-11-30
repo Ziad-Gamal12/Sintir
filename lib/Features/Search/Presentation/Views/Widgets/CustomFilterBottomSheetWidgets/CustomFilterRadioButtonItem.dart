@@ -15,16 +15,21 @@ class CustomFilterRadioButtonItem extends StatelessWidget {
   final String title;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CustomRadioWidget(
-            value: value, onchange: onchange, groupValue: groupValue),
-        const SizedBox(width: 6),
-        Text(
-          title,
-          style: AppTextStyles(context).regular14,
-        )
-      ],
+    return Expanded(
+      child: Row(
+        children: [
+          CustomRadioWidget(
+              value: value, onchange: onchange, groupValue: groupValue),
+          const SizedBox(width: 6),
+          Flexible(
+            child: Text(
+              title,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles(context).regular14,
+            ),
+          )
+        ],
+      ),
     );
   }
 }

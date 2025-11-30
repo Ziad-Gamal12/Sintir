@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:dio/dio.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomException implements Exception {
   final String message;
@@ -11,7 +12,6 @@ class CustomException implements Exception {
   }
 }
 
-/// استثناء مخصص لعرض رسالة مفهومة للمستخدم
 class ApiException implements Exception {
   final String message;
   ApiException(this.message);
@@ -23,41 +23,39 @@ class ApiException implements Exception {
 class DioStatusHandler {
   static ApiException handle(DioException error) {
     if (error.type == DioExceptionType.connectionTimeout) {
-      throw ApiException('انتهت مهلة الاتصال بالخادم. حاول مرة أخرى.');
+      throw ApiException(LocaleKeys.connectionTimeout);
     } else if (error.type == DioExceptionType.sendTimeout) {
-      throw ApiException('انتهت مهلة إرسال البيانات. حاول مرة أخرى.');
+      throw ApiException(LocaleKeys.sendTimeout);
     } else if (error.type == DioExceptionType.receiveTimeout) {
-      throw ApiException('انتهت مهلة استلام البيانات من الخادم.');
+      throw ApiException(LocaleKeys.receiveTimeout);
     } else if (error.type == DioExceptionType.badCertificate) {
-      throw ApiException('فشل التحقق من شهادة الخادم.');
+      throw ApiException(LocaleKeys.badCertificate);
     } else if (error.type == DioExceptionType.cancel) {
-      throw ApiException('تم إلغاء الطلب.');
+      throw ApiException(LocaleKeys.requestCancelled);
     } else if (error.type == DioExceptionType.unknown) {
-      throw ApiException('حدث خطأ غير متوقع. تأكد من الاتصال بالإنترنت.');
+      throw ApiException(LocaleKeys.unknownError);
     } else if (error.type == DioExceptionType.badResponse) {
       final statusCode = error.response?.statusCode ?? 0;
       switch (statusCode) {
         case 400:
-          throw ApiException('الطلب غير صحيح (400).');
+          throw ApiException(LocaleKeys.badRequest);
         case 401:
-          throw ApiException(
-              'غير مصرح لك بالوصول (401). تأكد من تسجيل الدخول.');
+          throw ApiException(LocaleKeys.unauthorized);
         case 403:
-          throw ApiException('ليس لديك صلاحية لتنفيذ هذا الإجراء (403).');
+          throw ApiException(LocaleKeys.forbidden);
         case 404:
-          throw ApiException('العنصر المطلوب غير موجود (404).');
+          throw ApiException(LocaleKeys.notFound);
         case 422:
-          throw ApiException('البيانات المدخلة غير صالحة (422).');
+          throw ApiException(LocaleKeys.unprocessableEntity);
         case 500:
-          throw ApiException('خطأ داخلي في الخادم (500). حاول لاحقًا.');
+          throw ApiException(LocaleKeys.internalServerError);
         case 503:
-          throw ApiException(
-              'الخدمة غير متوفرة حاليًا. الرجاء المحاولة لاحقًا (503).');
+          throw ApiException(LocaleKeys.serviceUnavailable);
         default:
-          throw ApiException('حدث خطأ غير معروف: $statusCode');
+          throw ApiException('${LocaleKeys.unknownStatusCode}$statusCode');
       }
     } else {
-      throw ApiException('حدث خطأ أثناء الاتصال بالخادم.');
+      throw ApiException(LocaleKeys.serverConnectionError);
     }
   }
 }

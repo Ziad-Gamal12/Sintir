@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomVideoControllerErrorWidget extends StatelessWidget {
-  const CustomVideoControllerErrorWidget({
+  CustomVideoControllerErrorWidget({
     super.key,
   });
 
-  final String errorMessage = "لا يمكن تشغيل الفيديو";
+  final String errorMessage = LocaleKeys.videoError;
   @override
   Widget build(BuildContext context) {
     return Container(

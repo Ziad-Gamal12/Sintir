@@ -11,7 +11,11 @@ final class GetPopularCoursesSuccess extends GetCoursesState {
   GetPopularCoursesSuccess({required this.resonseEntity});
 }
 
-final class GetPopularCoursesLoading extends GetCoursesState {}
+final class GetPopularCoursesLoading extends GetCoursesState {
+  final bool isPaginate;
+
+  GetPopularCoursesLoading({required this.isPaginate});
+}
 
 final class GetPopularCoursesFailure extends GetCoursesState {
   final String errmessage;
@@ -25,7 +29,11 @@ final class GetRecentCoursesSuccess extends GetCoursesState {
   GetRecentCoursesSuccess({required this.resonseEntity});
 }
 
-final class GetRecentCoursesLoading extends GetCoursesState {}
+final class GetRecentCoursesLoading extends GetCoursesState {
+  final bool isPaginate;
+
+  GetRecentCoursesLoading({required this.isPaginate});
+}
 
 final class GetRecentCoursesFailure extends GetCoursesState {
   final String errmessage;
@@ -39,7 +47,11 @@ final class GetUserInerestCoursesSuccess extends GetCoursesState {
   GetUserInerestCoursesSuccess({required this.resonseEntity});
 }
 
-final class GetUserInerestCoursesLoading extends GetCoursesState {}
+final class GetUserInerestCoursesLoading extends GetCoursesState {
+  final bool isPaginate;
+
+  GetUserInerestCoursesLoading({required this.isPaginate});
+}
 
 final class GetUserInerestCoursesFailure extends GetCoursesState {
   final String errmessage;

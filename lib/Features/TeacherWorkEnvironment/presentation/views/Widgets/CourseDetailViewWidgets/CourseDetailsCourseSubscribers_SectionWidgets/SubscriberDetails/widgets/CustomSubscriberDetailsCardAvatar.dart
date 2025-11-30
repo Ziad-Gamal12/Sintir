@@ -11,11 +11,12 @@ class CustomSubscriberDetailsCardAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(150),
-      child: CustomCachedNetworkImage(
-        imageUrl: imageUrl,
-      ),
+    return AspectRatio(
+      aspectRatio: 1,
+      child: ClipRRect(
+          borderRadius: BorderRadius.circular(50),
+          child:
+              CustomCachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover)),
     );
   }
 }

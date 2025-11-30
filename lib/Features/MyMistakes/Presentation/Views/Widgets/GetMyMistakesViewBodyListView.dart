@@ -6,6 +6,7 @@ import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/CustomSolvedQuestionListItem.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Manager/cubit/get_my_mistakes_cubit.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Views/Widgets/GetMyMistakesViewBodyListViewLoading.dart';
+import 'package:sintir/locale_keys.dart';
 
 class GetMyMistakesViewBodyListView extends StatefulWidget {
   const GetMyMistakesViewBodyListView(
@@ -31,7 +32,7 @@ class _GetMyMistakesViewBodyListViewState
         return const GetMyMistakesViewBodyListViewLoading();
       } else if (state is GetMyMistakesSuccess && widget.myMistakes.isEmpty) {
         return CustomEmptyWidget(
-          text: "لا يوجد اخطاء لديك حتى الان",
+          text: LocaleKeys.emptyContent,
         );
       } else {
         return ListView.builder(

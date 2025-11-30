@@ -34,14 +34,10 @@ import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/FireBase/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/FireBase/Firebase_FirestoreService.dart';
 import 'package:sintir/Core/services/FireBase/firebaseStorageService.dart';
-import 'package:sintir/Core/services/GeminiAPiService.dart';
 import 'package:sintir/Core/services/Paymob/PayMobService.dart';
 import 'package:sintir/Core/services/Paymob/PaymobPayoutService.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
-import 'package:sintir/Core/services/elevenlabsApi.dart';
-import 'package:sintir/Features/Ai_Teacher/data/repos_impli/AiTeacherRepo_Impli.dart';
-import 'package:sintir/Features/Ai_Teacher/domain/Repos/AITeacherRepo.dart';
 import 'package:sintir/Features/Auth/Data/repos/AuthRepoImpl.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 import 'package:sintir/Features/ContentCreatorProfile/data/Repos/ContentCreatorProfileRepoImpl.dart';
@@ -109,12 +105,6 @@ void setup_Getit() {
   getIt.registerLazySingleton<AuthRepo>(() => AuthRepoImpl(
         databaseservice: getIt(),
         authService: getIt(),
-      ));
-
-  getIt.registerLazySingleton<AiTeacherRepo>(() => AiTeacherRepoImpli(
-        pickerassetsservice: getIt(),
-        geminiApiService: GeminiApiService(dio: getIt()),
-        elevenlabsApi: ElevenlabsApi(dio: getIt()),
       ));
 
   getIt.registerLazySingleton<SearchRepo>(

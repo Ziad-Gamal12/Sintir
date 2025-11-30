@@ -14,6 +14,7 @@ import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Search/Domain/Entities/CustomFilterEntity.dart';
 import 'package:sintir/Features/Search/Domain/Entities/SearchResponse.dart';
 import 'package:sintir/Features/Search/Domain/Repos/SearchRepo.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SearchRepoImpl implements SearchRepo {
   final DataBaseService databaseservice;
@@ -67,8 +68,7 @@ class SearchRepoImpl implements SearchRepo {
       return Left(ServerFailure(message: e.message));
     } catch (e) {
       log(e.toString());
-      return Left(
-          ServerFailure(message: "حدث خطأ ما يرجى المحاولة في وقت لاحق"));
+      return Left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
@@ -283,7 +283,7 @@ class SearchRepoImpl implements SearchRepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log(e.toString(), stackTrace: s);
-      return left(ServerFailure(message: "حدث خطاء"));
+      return left(ServerFailure(message: LocaleKeys.generalError));
     }
   }
 
@@ -308,7 +308,7 @@ class SearchRepoImpl implements SearchRepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log(e.toString(), stackTrace: s);
-      return left(ServerFailure(message: "حدث خطاء"));
+      return left(ServerFailure(message: LocaleKeys.generalError));
     }
   }
 

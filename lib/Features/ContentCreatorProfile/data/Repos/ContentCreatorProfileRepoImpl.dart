@@ -7,6 +7,7 @@ import 'package:sintir/Core/models/CourseModel.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/ContentCreatorProfile/domain/Repos/ContentCreatorProfileRepo.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ContentCreatorProfileRepoImpl implements ContentCreatorProfileRepo {
   final DataBaseService dataBaseService;
@@ -32,7 +33,7 @@ class ContentCreatorProfileRepoImpl implements ContentCreatorProfileRepo {
           ),
           query: query);
       if (response.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
       final List<Map<String, dynamic>> data =
           response.listData! as List<Map<String, dynamic>>;
@@ -68,7 +69,7 @@ class ContentCreatorProfileRepoImpl implements ContentCreatorProfileRepo {
           ),
           query: query);
       if (response.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
       final List<Map<String, dynamic>> data =
           response.listData! as List<Map<String, dynamic>>;

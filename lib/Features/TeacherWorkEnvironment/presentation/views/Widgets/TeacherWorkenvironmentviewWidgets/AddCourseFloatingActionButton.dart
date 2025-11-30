@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseView.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class AddCourseFloatingActionButton extends StatelessWidget {
   const AddCourseFloatingActionButton({
@@ -11,7 +12,7 @@ class AddCourseFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: "اضافة كورس جديد",
+      message: LocaleKeys.addNewCourse,
       child: FloatingActionButton(
         backgroundColor: KMainColor,
         foregroundColor: Colors.white,

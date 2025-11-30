@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateExamReviewRequirmentsEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomTitleAndDescriptionSectionInfo extends StatelessWidget {
   const CustomTitleAndDescriptionSectionInfo({
@@ -18,7 +19,7 @@ class CustomTitleAndDescriptionSectionInfo extends StatelessWidget {
       children: [
         Text.rich(TextSpan(children: [
           TextSpan(
-            text: "عنوان المحاضره: ",
+            text: LocaleKeys.lectureTitle,
             style:
                 AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
           ),
@@ -30,7 +31,7 @@ class CustomTitleAndDescriptionSectionInfo extends StatelessWidget {
         ])),
         Text.rich(TextSpan(children: [
           TextSpan(
-            text: "وصف المحاضره: ",
+            text: LocaleKeys.lectureDescription,
             style:
                 AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
           ),

@@ -41,7 +41,7 @@ class CourseActionButton extends StatelessWidget {
             } else {
               warningdialog(
                 context,
-                "يرجى العلم أنه لن يتم حذف الدورة، ولكن سيتم إخفاؤها فقط.",
+                LocaleKeys.courseDeleteNotice,
                 () => _onTap(context),
               ).show();
             }

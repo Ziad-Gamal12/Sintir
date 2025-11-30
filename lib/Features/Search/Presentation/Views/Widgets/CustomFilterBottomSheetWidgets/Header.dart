@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Header extends StatelessWidget {
   const Header({super.key});
@@ -9,6 +10,9 @@ class Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        const SizedBox(
+          width: 26,
+        ),
         const Spacer(),
         // Drag handle center
         Expanded(
@@ -16,7 +20,7 @@ class Header extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                width: 40,
+                width: 60,
                 height: 4,
                 decoration: BoxDecoration(
                   color: Colors.grey.shade300,
@@ -25,7 +29,7 @@ class Header extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                "فلتر الكورسات",
+                LocaleKeys.filterCourses,
                 style: AppTextStyles(context).semiBold20,
                 textAlign: TextAlign.center,
               ),

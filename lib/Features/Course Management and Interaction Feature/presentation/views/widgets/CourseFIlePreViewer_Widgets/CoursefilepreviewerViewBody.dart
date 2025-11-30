@@ -48,7 +48,7 @@ class _CoursefilepreviewerviewbodyState
         if (mounted) {
           CustomSnackBar.show(
             context,
-            message: "حدث خطاء في تحميل الملف",
+            message: LocaleKeys.fileNotFound,
             type: SnackType.error,
           );
         }

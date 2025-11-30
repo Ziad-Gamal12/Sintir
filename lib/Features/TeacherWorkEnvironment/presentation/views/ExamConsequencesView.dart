@@ -10,6 +10,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TestConse
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/TestConsequencesViewBody.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/get_exam_results_cubit/get_exam_results_cubit.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/test_consequences_cubit/test_consequences_cubit.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TestConsequencesView extends StatelessWidget {
   const TestConsequencesView({super.key, required this.requirements});
@@ -32,7 +33,7 @@ class TestConsequencesView extends StatelessWidget {
       child: SensitivePageWrapper(
         child: Scaffold(
           key: Variables.testConsequencesViewScaffoldKey,
-          appBar: CustomAppBar(appBartitle: "التقارير الخاصة بالاختبار"),
+          appBar: CustomAppBar(appBartitle: LocaleKeys.testReports),
           body: TestConsequencesViewBody(
             requirements: requirements,
           ),

@@ -21,7 +21,7 @@ class LogoutDialog extends StatelessWidget {
       content: Padding(
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 60),
         child: Text(
-          LocaleKeys.logout, // "هل انت متأكد من تسجيل الخروج؟"
+          LocaleKeys.logout,
           style: AppTextStyles(context)
               .semiBold14
               .copyWith(color: Colors.black, fontWeight: FontWeight.w600),
@@ -39,7 +39,7 @@ class LogoutDialog extends StatelessWidget {
                     GoRouter.of(context).go(ChoosingUserKindView.routeName);
                   }
                 },
-                text: LocaleKeys.confirm, // "تأكيد"
+                text: LocaleKeys.confirm,
                 color: Colors.red,
                 textColor: Colors.white,
               ),

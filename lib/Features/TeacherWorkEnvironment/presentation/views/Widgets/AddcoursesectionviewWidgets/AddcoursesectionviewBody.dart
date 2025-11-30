@@ -39,7 +39,12 @@ class Addcoursesectionviewbody extends StatelessWidget {
             ),
             AddCourseSectionContentOptions(
               onSave: () {
-                Variables.AddCourseSectionFormKey.currentState!.save();
+                if (Variables.AddCourseSectionFormKey.currentState != null) {
+                  if (Variables.AddCourseSectionFormKey.currentState!
+                      .validate()) {
+                    Variables.AddCourseSectionFormKey.currentState!.save();
+                  }
+                }
               },
               optionRequirementsEntity:
                   context.read<OptionNavigationRequirementsEntity>(),

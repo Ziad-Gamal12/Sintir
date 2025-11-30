@@ -6,7 +6,6 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
-import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/AddcoursesectionviewBody.dart';
@@ -26,7 +25,7 @@ class Addcoursesectionview extends StatelessWidget {
       section: CourseSectionEntity(
         title: "",
         subtitle: "",
-        id: "${DateTime.now().toIso8601String()}-${Variables.AddCoursesectionNameController.text}",
+        id: "${DateTime.now().toIso8601String()}-Section",
       ),
     );
     return BlocProvider(

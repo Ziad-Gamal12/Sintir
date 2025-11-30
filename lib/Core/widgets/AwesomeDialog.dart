@@ -13,9 +13,9 @@ AwesomeDialog errordialog(
     context: context,
     dialogType: DialogType.error,
     animType: AnimType.bottomSlide,
-    title: LocaleKeys.snackError, // "خطأ"
+    title: LocaleKeys.snackError,
     desc: error,
-    btnOkText: LocaleKeys.confirm, // "حسنا"
+    btnOkText: LocaleKeys.confirm,
     btnOkOnPress: btnOkOnPress,
     btnOkColor: Colors.red,
   );
@@ -30,9 +30,9 @@ AwesomeDialog successdialog({
     context: context,
     dialogType: DialogType.success,
     animType: AnimType.bottomSlide,
-    title: LocaleKeys.snackSuccess, // "نجاح"
+    title: LocaleKeys.snackSuccess,
     desc: SuccessMessage,
-    btnOkText: LocaleKeys.confirm, // "حسنا"
+    btnOkText: LocaleKeys.confirm,
     btnOkOnPress: btnOkOnPress,
     btnOkColor: Colors.green,
   );
@@ -47,9 +47,9 @@ AwesomeDialog warningdialog(
     context: context,
     dialogType: DialogType.warning,
     animType: AnimType.bottomSlide,
-    title: LocaleKeys.snackWarning, // "تحذير"
+    title: LocaleKeys.snackWarning,
     desc: WarningMessage,
-    btnOkText: LocaleKeys.confirm, // "حسنا"
+    btnOkText: LocaleKeys.confirm,
     btnOkOnPress: btnOkOnPress,
     btnOkColor: Colors.yellow.shade800,
   );
@@ -67,7 +67,7 @@ AwesomeDialog infodialog({
     context: context,
     dialogType: DialogType.info,
     animType: AnimType.bottomSlide,
-    title: LocaleKeys.snackInfo, // "معلومات"
+    title: LocaleKeys.snackInfo,
     desc: InfoMessage,
     btnOkOnPress: btnOkOnPress,
     btnOkText: btnOkText ?? LocaleKeys.confirm,

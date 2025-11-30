@@ -15,12 +15,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   AppBar build(BuildContext context) {
     Locale locale = Localizations.localeOf(context);
     return AppBar(
-      leadingWidth: 40,
+      leadingWidth: 50,
       elevation: 0,
       scrolledUnderElevation: 0,
       leading: isPopUp == true
           ? Padding(
-              padding: const EdgeInsets.only(right: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: InkWell(
                 onTap: () {
                   GoRouter.of(context).pop();

@@ -1,11 +1,3 @@
-// refactored and improved AuthRepoImpl
-// Highlights:
-// - better null-safety and error handling
-// - avoids direct FirebaseAuth.instance usage where possible
-// - reloads user to get latest emailVerified state
-// - centralized failure conversion
-// - improved logging and non-throwing cleanup
-
 // ignore_for_file: file_names
 
 import 'dart:convert';
@@ -25,6 +17,7 @@ import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Auth/Data/models/UserModel.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
+import 'package:sintir/locale_keys.dart';
 
 class AuthRepoImpl implements AuthRepo {
   final firebaseAuthService authService;
@@ -35,7 +28,7 @@ class AuthRepoImpl implements AuthRepo {
   Failure _toFailure(Object e, [StackTrace? s]) {
     log('AuthRepoImpl error: $e', stackTrace: s);
     if (e is CustomException) return ServerFailure(message: e.message);
-    return ServerFailure(message: 'حدث خطأ ما');
+    return ServerFailure(message: LocaleKeys.generalError);
   }
 
   @override
@@ -53,9 +46,7 @@ class AuthRepoImpl implements AuthRepo {
       if (fresh.emailVerified == false) {
         await fresh.sendEmailVerification();
         await authService.signout();
-        return Left(ServerFailure(
-            message:
-                '📩 بعتنالك رسالة تأكيد على إيميلك، لو مش لاقيها في الـ Inbox بص في الـ Spam.'));
+        return Left(ServerFailure(message: LocaleKeys.verificationSent));
       }
       final updateDeviceIdResult = await updateDeviceId(uid: fresh.uid);
       if (updateDeviceIdResult.isLeft()) {
@@ -99,7 +90,6 @@ class AuthRepoImpl implements AuthRepo {
       return await storeUserDataInFireStore(
           user: user, userjson: userModel.toMap(), uid: user.uid);
     } on CustomException catch (e) {
-      // attempt cleanup but don't throw further
       await _tryDeleteUser(user);
       return Left(ServerFailure(message: e.message));
     } catch (e, s) {
@@ -108,7 +98,6 @@ class AuthRepoImpl implements AuthRepo {
     }
   }
 
-  // graceful delete attempt for created users. logs failures but doesn't propagate.
   Future<void> _tryDeleteUser(User? user) async {
     if (user == null) return;
     try {
@@ -127,7 +116,7 @@ class AuthRepoImpl implements AuthRepo {
       );
     } catch (e, s) {
       log('Failed to store user locally: $e', stackTrace: s);
-      throw CustomException(message: "حدث خطأ أثناء تخزين المستخدم");
+      throw CustomException(message: LocaleKeys.errorOccurredMessage);
     }
   }
 
@@ -143,7 +132,7 @@ class AuthRepoImpl implements AuthRepo {
       );
 
       if (json.docData == null) {
-        return Left(ServerFailure(message: 'لم يتم العثور على المستخدم'));
+        return Left(ServerFailure(message: LocaleKeys.userNotFound));
       }
 
       final Map<String, dynamic> userJson = json.docData!;
@@ -153,17 +142,21 @@ class AuthRepoImpl implements AuthRepo {
         case BackendEndpoints.activeStatus:
           await storeUserLocally(userJson);
           return const Right(null);
+
         case BackendEndpoints.blockedStatus:
-          return Left(ServerFailure(message: 'لقد تم حظرك من التطبيق'));
+          return Left(ServerFailure(message: LocaleKeys.userBlocked));
+
         case BackendEndpoints.pendingStatus:
-          return Left(
-              ServerFailure(message: 'لقد تم انشاء حسابك بانتظار الموافقة'));
+          return Left(ServerFailure(message: LocaleKeys.userPending));
+
         case BackendEndpoints.rejectedStatus:
-          return Left(ServerFailure(message: 'لقد تم رفض حسابك'));
+          return Left(ServerFailure(message: LocaleKeys.userRejected));
+
         case BackendEndpoints.inActiveStatus:
-          return Left(ServerFailure(message: 'لقد تم تعطيل حسابك'));
+          return Left(ServerFailure(message: LocaleKeys.userInactive));
+
         default:
-          return Left(ServerFailure(message: 'حدث خطأ ما'));
+          return Left(ServerFailure(message: LocaleKeys.generalError));
       }
     } on CustomException catch (e) {
       await authService.signout();
@@ -193,13 +186,6 @@ class AuthRepoImpl implements AuthRepo {
       final userJson = await _userJson(user: user);
       return await storeUserDataInFireStore(
           signOut: false, user: user, userjson: userJson, uid: user.uid);
-    } on CustomException catch (e) {
-      if (isExists == false) {
-        await _tryDeleteUser(user);
-      } else {
-        await authService.signout();
-      }
-      return Left(ServerFailure(message: e.message));
     } catch (e, s) {
       if (isExists == false) {
         await _tryDeleteUser(user);
@@ -226,13 +212,6 @@ class AuthRepoImpl implements AuthRepo {
       final userJson = await _userJson(user: user);
       return await storeUserDataInFireStore(
           signOut: false, user: user, userjson: userJson, uid: user.uid);
-    } on CustomException catch (e) {
-      if (isExists == false) {
-        await _tryDeleteUser(user);
-      } else {
-        await authService.signout();
-      }
-      return Left(ServerFailure(message: e.message));
     } catch (e, s) {
       if (isExists == false) {
         await _tryDeleteUser(user);
@@ -263,15 +242,13 @@ class AuthRepoImpl implements AuthRepo {
         try {
           await user.sendEmailVerification();
         } catch (e) {
-          return Left(ServerFailure(message: "لم يتم ارسال رسالة التحقق"));
+          return Left(ServerFailure(message: LocaleKeys.verificationNotSent));
         }
       }
 
       if (signOut) await authService.signout();
 
       return const Right(null);
-    } on CustomException catch (e) {
-      return Left(ServerFailure(message: e.message));
     } catch (e, s) {
       return Left(_toFailure(e, s));
     }
@@ -287,7 +264,7 @@ class AuthRepoImpl implements AuthRepo {
       User? user = FirebaseAuth.instance.currentUser;
 
       if (user == null) {
-        return Left(ServerFailure(message: 'المستخدم غير موجود'));
+        return Left(ServerFailure(message: LocaleKeys.userNotFound));
       }
 
       Map<String, dynamic> userJson = UserModel.fromEntity(userEntity).toMap();
@@ -295,7 +272,7 @@ class AuthRepoImpl implements AuthRepo {
       bool isValid =
           await authService.checkAccountPassword(password: currentPassword);
       if (!isValid) {
-        return Left(ServerFailure(message: 'كلمة المرور غير صحيحة'));
+        return Left(ServerFailure(message: LocaleKeys.wrongPassword));
       }
 
       if (newPassword != null && newPassword.isNotEmpty) {
@@ -317,12 +294,8 @@ class AuthRepoImpl implements AuthRepo {
 
       await storeUserLocally(userJson);
       return const Right(null);
-    } on CustomException catch (e, s) {
-      log('updateUser CustomException: $e', stackTrace: s);
-      return Left(ServerFailure(message: e.message));
     } catch (e, s) {
-      log('updateUser error: $e', stackTrace: s);
-      return Left(ServerFailure(message: 'حدث خطأ ما'));
+      return Left(ServerFailure(message: LocaleKeys.generalError));
     }
   }
 
@@ -331,8 +304,6 @@ class AuthRepoImpl implements AuthRepo {
     try {
       await authService.resetPassword(email: email);
       return const Right(null);
-    } on CustomException catch (e) {
-      return Left(ServerFailure(message: e.message));
     } catch (e, s) {
       return Left(_toFailure(e, s));
     }
@@ -341,21 +312,21 @@ class AuthRepoImpl implements AuthRepo {
   Future<Map<String, dynamic>> _userJson({required User user}) async {
     return UserModel.fromEntity(
       UserEntity(
-          uid: user.uid,
-          phoneNumber: user.phoneNumber ?? '',
-          firstName: user.displayName ?? '',
-          fullName: user.displayName ?? '',
-          deviceId: await getDeviceId(),
-          joinedDate: DateTime.now().toIso8601String(),
-          profilePicurl:
-              'https://cdn-icons-png.flaticon.com/128/149/149071.png',
-          role: BackendEndpoints.studentRole,
-          lastName: '',
-          email: user.email ?? '',
-          status: BackendEndpoints.activeStatus,
-          address: '',
-          gender: 'غير محدد',
-          teacherExtraDataEntity: null),
+        uid: user.uid,
+        phoneNumber: user.phoneNumber ?? '',
+        firstName: user.displayName ?? '',
+        fullName: user.displayName ?? '',
+        deviceId: await getDeviceId(),
+        joinedDate: DateTime.now().toIso8601String(),
+        profilePicurl: 'https://cdn-icons-png.flaticon.com/128/149/149071.png',
+        role: BackendEndpoints.studentRole,
+        lastName: '',
+        email: user.email ?? '',
+        status: BackendEndpoints.activeStatus,
+        address: '',
+        gender: "",
+        teacherExtraDataEntity: null,
+      ),
     ).toMap();
   }
 
@@ -376,14 +347,13 @@ class AuthRepoImpl implements AuthRepo {
       final deviceId = await getDeviceId();
 
       await databaseservice.updateData(
-          collectionKey: BackendEndpoints.usersCollectionName,
-          doc: uid,
-          data: deviceId,
-          field: 'deviceId');
+        collectionKey: BackendEndpoints.usersCollectionName,
+        doc: uid,
+        data: deviceId,
+        field: 'deviceId',
+      );
 
       return const Right(null);
-    } on CustomException catch (e) {
-      return Left(_toFailure(e));
     } catch (e, s) {
       return Left(_toFailure(e, s));
     }

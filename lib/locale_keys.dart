@@ -420,8 +420,41 @@ class LocaleKeys {
       'enter_coupon_discount_here'.tr();
   static String get areYouSureDeleteSection =>
       'are_you_sure_delete_section'.tr();
+  static String get accountCreatedSuccessfully =>
+      'account_created_successfully'.tr();
+  static String get connectionTimeout => 'connection_timeout'.tr();
+  static String get sendTimeout => 'send_timeout'.tr();
+  static String get receiveTimeout => 'receive_timeout'.tr();
+  static String get badCertificate => 'bad_certificate'.tr();
+  static String get requestCancelled => 'request_cancelled'.tr();
+  static String get badRequest => 'bad_request'.tr();
+  static String get unauthorized => 'unauthorized'.tr();
+  static String get forbidden => 'forbidden'.tr();
+  static String get notFound => 'not_found'.tr();
+  static String get searchplaceholder => 'search_placeholder'.tr();
+  static String get unprocessableEntity => 'unprocessable_entity'.tr();
+  static String get internalServerError => 'internal_server_error'.tr();
+  static String get serviceUnavailable => 'service_unavailable'.tr();
+  static String get unknownStatusCode => 'unknown_status_code'.tr();
+  static String get serverConnectionError => 'server_connection_error'.tr();
+  static String get deviceNotFound => 'device_not_found'.tr();
+  static String get courseDeleteNotice => 'course_delete_notice'.tr();
+  static String get deviceMismatch => 'device_mismatch'.tr();
+  static String get teacherRequestReview => 'teacher_request_review'.tr();
+  static String get favoriteLimitError => 'favorite_limit_error'.tr();
   static String get attempt => 'attempt'.tr();
-
+  static String get verificationSent => 'verification_sent'.tr();
+  static String get errorStoringUser => 'error_storing_user'.tr();
+  static String get userNotFound => 'user_not_found'.tr();
+  static String get userBlocked => 'user_blocked'.tr();
+  static String get userPending => 'user_pending'.tr();
+  static String get userRejected => 'user_rejected'.tr();
+  static String get userInactive => 'user_inactive'.tr();
+  static String get verificationNotSent => 'verification_not_sent'.tr();
+  static String get userNotExist => 'user_not_exist'.tr();
+  static String get wrongPassword => 'wrong_password'.tr();
+  static String get videoReports => 'video_reports'.tr();
+  static String get testReports => 'test_reports'.tr();
   static String get noSubscribersInCourse => 'no_subscribers_in_course'.tr();
   static String get subscribersCount => 'subscribers_count'.tr();
   static String get person => 'person'.tr();

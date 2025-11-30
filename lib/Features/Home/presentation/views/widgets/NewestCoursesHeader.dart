@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
+import 'package:sintir/Features/Home/presentation/views/MoreNewestCoursesView.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -19,7 +23,11 @@ class NewestCoursesHeader extends StatelessWidget {
             style:
                 AppTextStyles(context).semiBold14.copyWith(color: KMainColor),
           ),
-          onTap: () {},
+          onTap: () {
+            log("newest courses");
+
+            GoRouter.of(context).push(MoreNewestCoursesView.routeName);
+          },
         ));
   }
 }

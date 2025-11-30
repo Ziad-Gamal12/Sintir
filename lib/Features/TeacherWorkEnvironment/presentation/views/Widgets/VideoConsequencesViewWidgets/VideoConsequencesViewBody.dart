@@ -7,6 +7,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/VideoConsequencesViewWidgets/VideoSummaryCard.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/get_video_notes_cubit/get_video_notes_cubit.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class VideoConsequencesViewBody extends StatefulWidget {
   const VideoConsequencesViewBody({super.key, required this.requirements});
@@ -92,7 +93,7 @@ class _VideoConsequencesViewBodyState extends State<VideoConsequencesViewBody> {
                     ),
                   ),
                   SliverToBoxAdapter(
-                    child: Text("ملاحظات الفيديو",
+                    child: Text(LocaleKeys.videoNotes,
                         textAlign: TextAlign.center,
                         style: AppTextStyles(context).bold20),
                   ),

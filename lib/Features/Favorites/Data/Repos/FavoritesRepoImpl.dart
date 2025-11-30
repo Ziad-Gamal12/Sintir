@@ -8,6 +8,7 @@ import 'package:sintir/Core/models/CourseModel.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Favorites/Domain/Repos/FavoritesRepo.dart';
+import 'package:sintir/locale_keys.dart';
 
 class FavoritesRepoImpl implements FavoritesRepo {
   final DataBaseService dataBaseService;
@@ -32,7 +33,7 @@ class FavoritesRepoImpl implements FavoritesRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.generalError));
     }
   }
 
@@ -50,7 +51,7 @@ class FavoritesRepoImpl implements FavoritesRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.generalError));
     }
   }
 
@@ -76,7 +77,7 @@ class FavoritesRepoImpl implements FavoritesRepo {
           ),
           query: query);
       if (response.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
       if (response.listData!.isEmpty) {
         return right([]);
@@ -88,7 +89,7 @@ class FavoritesRepoImpl implements FavoritesRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطأ ما"));
+      return left(ServerFailure(message: LocaleKeys.generalError));
     }
   }
 }

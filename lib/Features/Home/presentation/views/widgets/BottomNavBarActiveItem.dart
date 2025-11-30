@@ -26,11 +26,14 @@ class BottomNavBarActiveItem extends StatelessWidget {
                 const SizedBox(
                   width: 10,
                 ),
-                Text(
-                  bottomNavBarEntity.title,
-                  style: AppTextStyles(context)
-                      .regular16
-                      .copyWith(color: const Color.fromARGB(255, 0, 48, 190)),
+                Flexible(
+                  child: Text(
+                    bottomNavBarEntity.title,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles(context)
+                        .regular16
+                        .copyWith(color: const Color.fromARGB(255, 0, 48, 190)),
+                  ),
                 )
               ],
             ))

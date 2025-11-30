@@ -100,7 +100,8 @@ class CoursesrepoImpl implements Coursesrepo {
       );
 
       if (data.listData == null) {
-        return right(GetCoursesResonseEntity(courses: [], hasMore: false));
+        return right(GetCoursesResonseEntity(
+            courses: [], isPaginate: isPaginate, hasMore: false));
       }
 
       if (data.listData!.isNotEmpty && data.lastDocumentSnapshot != null) {
@@ -110,7 +111,9 @@ class CoursesrepoImpl implements Coursesrepo {
       final courses = await compute(_parseCourses, data.listData!);
       return right(
         GetCoursesResonseEntity(
-            courses: courses, hasMore: data.hasMore ?? false),
+            isPaginate: isPaginate,
+            courses: courses,
+            hasMore: data.hasMore ?? false),
       );
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));

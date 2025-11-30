@@ -44,7 +44,7 @@ class ProfileViewBody extends StatelessWidget {
             const SliverToBoxAdapter(child: SizedBox(height: 40)),
             SliverToBoxAdapter(
               child: Custombutton(
-                text: "تسجيل الخروج",
+                text: LocaleKeys.logout,
                 color: Colors.red,
                 textColor: Colors.white,
                 onPressed: () {

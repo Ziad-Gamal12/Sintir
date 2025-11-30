@@ -39,7 +39,7 @@ class _TimerDisplayState extends State<TimerDisplay> {
           final requirements =
               context.read<CourseExamViewNavigationsRequirmentsEntity>();
 
-          widget.stopWatchTimer.onStopTimer(); // ⏹️ نوقف العد
+          widget.stopWatchTimer.onStopTimer();
 
           context.read<TestItemCubit>().addTestResults(
                 context: context,

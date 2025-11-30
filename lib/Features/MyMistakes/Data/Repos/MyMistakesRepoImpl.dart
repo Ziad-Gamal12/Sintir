@@ -9,6 +9,7 @@ import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/ExamResultSolvedQuestionModel.dart';
 import 'package:sintir/Features/MyMistakes/Domain/Entities/GetMyMistakesResponseEntity.dart';
 import 'package:sintir/Features/MyMistakes/Domain/Repo/MyMistakesRepo.dart';
+import 'package:sintir/locale_keys.dart';
 
 class MyMistakesRepoImpl implements MyMistakesRepo {
   final DataBaseService databaseservice;
@@ -37,7 +38,7 @@ class MyMistakesRepoImpl implements MyMistakesRepo {
         query: getMyMistakesQuery,
       );
       if (result.listData == null) {
-        return Left(ServerFailure(message: "البيانات غير موجودة"));
+        return Left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
       if (result.listData!.isEmpty) {
         return Right(GetMyMistakesResponseEntity(
@@ -60,7 +61,7 @@ class MyMistakesRepoImpl implements MyMistakesRepo {
     } on CustomException catch (e) {
       return Left(ServerFailure(message: e.message));
     } catch (e) {
-      return Left(ServerFailure(message: "حدث خطاء غير متوقع"));
+      return Left(ServerFailure(message: LocaleKeys.generalError));
     }
   }
 

@@ -5,6 +5,7 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/ScoreStatCard.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/StudentResultCard.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/test_consequences_cubit/test_consequences_cubit.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ResultsAnalysisCardLowestScoreCard extends StatefulWidget {
@@ -54,7 +55,7 @@ class _ResultsAnalysisCardLowestScoreCardState
               }
             },
             child: ScoreStatCard(
-              label: "أقل درجة",
+              label: LocaleKeys.lowestScore,
               value: state is TestConsequencesGetLowestScorSuccess
                   ? state.testResultEntity.result.toString()
                   : "0",

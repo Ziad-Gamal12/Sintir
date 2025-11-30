@@ -7,6 +7,7 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomContainerSectionItem.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomUnAvilableSectionWidget.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Customtestlistviewitem extends StatelessWidget {
   const Customtestlistviewitem({
@@ -36,9 +37,9 @@ class Customtestlistviewitem extends StatelessWidget {
               child: Customlisttilewidget(
             title: " ${item.title} ",
             image: item.preffixImage,
-            subtitle: " (${item.durationTime} دقائق)",
+            subtitle: " (${item.durationTime} ${LocaleKeys.durationMinutes})",
             trailing: Text(
-              "${item.questions.length} سؤال",
+              "${item.questions.length} ${LocaleKeys.questionsCount}",
               style: AppTextStyles(context)
                   .regular14
                   .copyWith(color: Colors.black),

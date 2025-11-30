@@ -10,6 +10,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/payout_cubit/payout_cubit.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/update_teacher_wallet_cubit/update_teacher_wallet_cubit.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class PayOutBalanceBody extends StatefulWidget {
   const PayOutBalanceBody({super.key, required this.walletEntity});
@@ -63,7 +64,7 @@ class _PayOutBalanceBodyState extends State<PayOutBalanceBody> {
       _setLoading(false);
       CustomSnackBar.show(
         context,
-        message: "تمت العملية بنجاح",
+        message: LocaleKeys.operationSuccessful,
         type: SnackType.success,
       );
     } else if (state is UpdateTeacherWalletFailure) {

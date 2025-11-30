@@ -6,6 +6,7 @@ import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/ContentCreatorProfile/Presentation/Views/Widgets/ContentCreatorCoursesGridDisplayedCourses.dart';
 import 'package:sintir/Features/ContentCreatorProfile/Presentation/Views/Widgets/ContentCreatorCoursesGridLoadingCourses.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ContentCreatorCoursesGrid extends StatefulWidget {
   const ContentCreatorCoursesGrid({super.key});
@@ -29,7 +30,8 @@ class _ContentCreatorCoursesGridState extends State<ContentCreatorCoursesGrid> {
       } else if (state is GetContentCreatorCoursesSuccess &&
           state.coursesList.isEmpty) {
         return SliverToBoxAdapter(
-            child: Center(child: CustomEmptyWidget(text: "لا يوجد دورات")));
+            child: Center(
+                child: CustomEmptyWidget(text: LocaleKeys.emptyContent)));
       } else if (state is GetContentCreatorCoursesSuccess &&
           state.coursesList.isNotEmpty) {
         return ContentCreatorCoursesGridDisplayedCourses(

@@ -7,6 +7,7 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomContainerSectionItem.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomUnAvilableSectionWidget.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomVedioListViewItem extends StatelessWidget {
   const CustomVedioListViewItem(
@@ -37,7 +38,7 @@ class CustomVedioListViewItem extends StatelessWidget {
             title: item.title,
             image: item.preffixImage,
             trailing: Text(
-              "${item.durationTime} دقائق",
+              "${item.durationTime} ${LocaleKeys.durationMinutes}",
               style: AppTextStyles(context)
                   .regular14
                   .copyWith(color: Colors.black),

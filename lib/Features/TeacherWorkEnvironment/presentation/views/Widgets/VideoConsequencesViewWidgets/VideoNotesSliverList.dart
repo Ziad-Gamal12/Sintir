@@ -5,6 +5,7 @@ import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/VideoNoteEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/VideoConsequencesViewWidgets/CustomVideoNote.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/get_video_notes_cubit/get_video_notes_cubit.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class VideoNotesSliverList extends StatefulWidget {
@@ -46,7 +47,7 @@ class _VideoNotesSliverListState extends State<VideoNotesSliverList> {
         } else if (widget.notes.isEmpty && state is GetVideoNotesSuccess) {
           return SliverToBoxAdapter(
             child: Center(
-              child: CustomEmptyWidget(text: "لا يوجد ملاحظات"),
+              child: CustomEmptyWidget(text: LocaleKeys.noNotes),
             ),
           );
         } else {

@@ -9,6 +9,7 @@ import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/TestResulteModel.dart';
 import 'package:sintir/Features/MyResults/Domain/Entities/GetMyResultsResponseEntity.dart';
 import 'package:sintir/Features/MyResults/Domain/Repo/MyResultsRepo.dart';
+import 'package:sintir/locale_keys.dart';
 
 class MyResultsRepoImpl implements MyResultsRepo {
   final DataBaseService dataBaseService;
@@ -37,7 +38,7 @@ class MyResultsRepoImpl implements MyResultsRepo {
         query: getMyResultsQuery,
       );
       if (result.listData == null) {
-        return Left(ServerFailure(message: "البيانات غير موجودة"));
+        return Left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
       if (result.listData!.isEmpty) {
         return Right(GetMyResultsResponseEntity(

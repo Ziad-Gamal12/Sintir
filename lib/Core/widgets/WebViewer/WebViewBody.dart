@@ -29,24 +29,20 @@ class _WebviewbodyState extends State<Webviewbody> {
           onNavigationRequest: (NavigationRequest request) {
             final url = request.url;
 
-            // لو أول مرة نشوف success=true
             if (url.contains("success=true") && !handledSuccess) {
-              handledSuccess = true; // قفلنا العلم
+              handledSuccess = true;
               context.read<CourseSubscribtionsCubit>().subscribeToCourse(
                     amount: widget.response.amount,
                     userEntity: getUserData(),
                     transactionId: widget.response.paymentid,
                   );
-              return NavigationDecision.prevent; // امنع التنقل
+              return NavigationDecision.prevent;
             }
 
-            // لو فيه success=true تاني → تجاهل (يسمح بالـ navigation عادي)
             if (url.contains("success=true") && handledSuccess) {
-              return NavigationDecision
-                  .prevent; // امنع كمان عشان مفيش داعي يفتح لينك success تاني
+              return NavigationDecision.prevent;
             }
 
-            // لو success=false → ممكن تمنع أو تسمح حسب اللي تحب
             if (url.contains("success=false")) {
               return NavigationDecision.prevent;
             }

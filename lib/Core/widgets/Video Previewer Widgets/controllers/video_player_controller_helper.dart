@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:better_player_plus/better_player_plus.dart';
@@ -21,7 +23,6 @@ class CustomVideoControllerBetter {
         throw Exception(LocaleKeys.videoLoadFailed);
       }
 
-      // إعداد مصدر الفيديو
       BetterPlayerDataSource dataSource;
       if (file != null) {
         dataSource = BetterPlayerDataSource(
@@ -35,7 +36,6 @@ class CustomVideoControllerBetter {
         );
       }
 
-      // إعداد التحكم
       BetterPlayerConfiguration betterPlayerConfiguration =
           BetterPlayerConfiguration(
         autoPlay: true,
@@ -68,7 +68,6 @@ class CustomVideoControllerBetter {
 
       await betterPlayerController!.setupDataSource(dataSource);
 
-      // إعلام طول الفيديو
       if (onDurationChanged != null) {
         final duration =
             betterPlayerController!.videoPlayerController?.value.duration;

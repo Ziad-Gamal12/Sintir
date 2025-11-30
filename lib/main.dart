@@ -62,8 +62,9 @@ class Sintir extends StatelessWidget {
         supportedLocales: const [
           Locale('en'),
           Locale('ar'),
+          Locale('fr'),
         ],
-        locale: const Locale('en'),
+        locale: const Locale('ar'),
         debugShowCheckedModeBanner: false,
         routerConfig: App_router.router,
       ),

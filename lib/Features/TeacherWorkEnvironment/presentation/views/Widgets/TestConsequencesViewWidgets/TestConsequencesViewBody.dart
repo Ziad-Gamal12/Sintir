@@ -8,6 +8,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/TestSummaryCard.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/get_exam_results_cubit/get_exam_results_cubit.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TestConsequencesViewBody extends StatefulWidget {
   const TestConsequencesViewBody({super.key, required this.requirements});
@@ -105,7 +106,7 @@ class _TestConsequencesViewBodyState extends State<TestConsequencesViewBody> {
             ),
             SliverToBoxAdapter(
               child: Text(
-                "نتايج الاختبار",
+                LocaleKeys.examResults,
                 textAlign: TextAlign.center,
                 style:
                     AppTextStyles(context).bold24.copyWith(color: Colors.black),

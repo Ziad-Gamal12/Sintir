@@ -11,6 +11,7 @@ import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/manager/student_sign_up_cubit/student_sign_up_cubit.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/StudentSignupViewBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 class StudentSignupView extends StatefulWidget {
   const StudentSignupView({super.key});
@@ -42,7 +43,7 @@ class _StudentSignupViewState extends State<StudentSignupView> {
     return BlocProvider(
       create: (context) => StudentSignUpCubit(getIt<AuthRepo>()),
       child: Scaffold(
-        appBar: CustomAppBar(appBartitle: "انشاء حساب"),
+        appBar: CustomAppBar(appBartitle: LocaleKeys.createAccount),
         body: Provider.value(
             value: userEntity, child: const StudentSignupViewBody()),
       ),

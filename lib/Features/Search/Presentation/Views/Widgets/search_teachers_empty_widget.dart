@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SearchTeachersEmptyWidget extends StatelessWidget {
   const SearchTeachersEmptyWidget({super.key});
@@ -7,7 +8,7 @@ class SearchTeachersEmptyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: CustomEmptyWidget(text: "لا يوجد مدرسين"),
+      child: CustomEmptyWidget(text: LocaleKeys.noTeachers),
     );
   }
 }

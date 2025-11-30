@@ -7,6 +7,7 @@ import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/manager/student_sign_up_cubit/student_sign_up_cubit.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class StudentSignUpViewBodyBlocBuilder_button extends StatelessWidget {
   const StudentSignUpViewBodyBlocBuilder_button({
@@ -22,7 +23,7 @@ class StudentSignUpViewBodyBlocBuilder_button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Custombutton(
-        text: "انشاء حساب",
+        text: LocaleKeys.createAccount,
         color: KMainColor,
         textColor: Colors.white,
         onPressed: () {
@@ -37,7 +38,7 @@ class StudentSignUpViewBodyBlocBuilder_button extends StatelessWidget {
                 password: studentSignUpPasswordController.text,
               );
             } else {
-              errordialog(context, "قم بقبول الشروط والاحكام").show();
+              errordialog(context, LocaleKeys.agreeTerms).show();
             }
           }
         });

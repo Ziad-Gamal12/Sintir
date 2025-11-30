@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/test_consequences_cubit/test_consequences_cubit.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class TestStatsInfoSuccessedCount extends StatefulWidget {
@@ -36,7 +37,7 @@ class _TestStatsInfoSuccessedCountState
           child: Skeletonizer(
             enabled: state is TestConsequencesGetSuccessedCountLoading,
             child: _buildStatColumn(
-                "عدد الطلاب النجاح:",
+                LocaleKeys.studentsPassed,
                 state is TestConsequencesGetSuccessedCountSuccess
                     ? state.count.toString()
                     : "0",

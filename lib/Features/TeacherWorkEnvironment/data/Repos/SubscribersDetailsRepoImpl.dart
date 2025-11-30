@@ -11,6 +11,7 @@ import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/TestResulteModel.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/SubscribersDetailsRepo.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
   final DataBaseService databaseservice;
@@ -42,7 +43,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
         query: query,
       );
       if (response.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
       final List<Map<String, dynamic>> data =
           response.listData! as List<Map<String, dynamic>>;
@@ -52,7 +53,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطاء"));
+      return left(ServerFailure(message: LocaleKeys.generalError));
     }
   }
 
@@ -83,7 +84,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
         query: query,
       );
       if (response.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
       final List<Map<String, dynamic>> data =
           response.listData! as List<Map<String, dynamic>>;
@@ -100,7 +101,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
     } catch (e, s) {
       log(e.toString(), stackTrace: s);
 
-      return left(ServerFailure(message: "حدث خطاء"));
+      return left(ServerFailure(message: LocaleKeys.generalError));
     }
   }
 
@@ -131,7 +132,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
         query: query,
       );
       if (response.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
       final List<Map<String, dynamic>> data =
           response.listData! as List<Map<String, dynamic>>;
@@ -147,7 +148,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
       log(e.toString(), stackTrace: s);
-      return left(ServerFailure(message: "حدث خطاء"));
+      return left(ServerFailure(message: LocaleKeys.generalError));
     }
   }
 
@@ -174,7 +175,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
         query: query,
       );
       if (response.listData == null) {
-        return left(ServerFailure(message: "البيانات غير موجودة"));
+        return left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
       final List<Map<String, dynamic>> data =
           response.listData! as List<Map<String, dynamic>>;
@@ -184,7 +185,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      return left(ServerFailure(message: "حدث خطاء"));
+      return left(ServerFailure(message: LocaleKeys.generalError));
     }
   }
 }

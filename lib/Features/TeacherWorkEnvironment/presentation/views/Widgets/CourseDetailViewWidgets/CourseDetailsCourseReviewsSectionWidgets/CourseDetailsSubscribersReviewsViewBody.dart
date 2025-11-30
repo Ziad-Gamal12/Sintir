@@ -7,6 +7,7 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReviewsSectionWidgets/CourseDetailsSubscriberLoadingReviewsListView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReviewsSectionWidgets/CourseDetailsSubscriberReviewsListView.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseDetailsSubscribersReviewsViewBody extends StatefulWidget {
   const CourseDetailsSubscribersReviewsViewBody({
@@ -93,7 +94,7 @@ class _CourseDetailsSubscribersReviewsViewBodyState
               scrollController: scrollController, reviews: feedbacks);
         } else if (state is! CourseFeedBacksGetFeedBackLoading) {
           return CustomEmptyWidget(
-            text: "لا يوجد تعليقات",
+            text: LocaleKeys.emptyContent,
           );
         } else {
           return const Padding(

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:svg_flutter/svg.dart';
 
 class CustomSearchTextField extends StatelessWidget {
@@ -35,7 +36,7 @@ class CustomSearchTextField extends StatelessWidget {
               const BoxConstraints(minWidth: 20, minHeight: 20),
           filled: true,
           fillColor: Colors.white,
-          hintText: "search for ....",
+          hintText: LocaleKeys.searchplaceholder,
           hintStyle: AppTextStyles(context)
               .regular13
               .copyWith(color: const Color(0xff949D9E)),

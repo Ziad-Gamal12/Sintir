@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/locale_keys.dart';
@@ -17,7 +16,6 @@ class CourseSectionTextFields extends StatelessWidget {
         CustomTextField(
           hintText: LocaleKeys.enterLectureNameHere,
           obscureText: false,
-          controller: Variables.AddCoursesectionNameController,
           textInputType: TextInputType.text,
           onSaved: (value) {
             context.read<OptionNavigationRequirementsEntity>().section.title =
@@ -34,7 +32,6 @@ class CourseSectionTextFields extends StatelessWidget {
         CustomTextField(
             hintText: LocaleKeys.enterLectureDescriptionHere,
             obscureText: false,
-            controller: Variables.AddCoursesesectionDescriptionController,
             textInputType: TextInputType.text,
             maxLines: 5,
             validator: (value) {

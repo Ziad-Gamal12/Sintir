@@ -7,6 +7,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/ResultsAnalysisCardHighestScoreCard.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/ResultsAnalysisCardLowestScoreCard.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/test_consequences_cubit/test_consequences_cubit.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ResultsAnalysisCard extends StatefulWidget {
   const ResultsAnalysisCard({super.key, required this.requirements});
@@ -35,17 +36,21 @@ class _ResultsAnalysisCardState extends State<ResultsAnalysisCard> {
     return CustomCard(
       child: Column(
         children: [
-          Text("تحليل النتائج", style: AppTextStyles(context).bold24),
+          Text(LocaleKeys.resultsAnalysis,
+              style: AppTextStyles(context).bold24),
           const SizedBox(height: 20),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ResultsAnalysisCardHighestScoreCard(),
-              SizedBox(width: 10),
-              AverageScoreCard(),
-              SizedBox(width: 10),
-              ResultsAnalysisCardLowestScoreCard()
-            ],
+          const SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ResultsAnalysisCardHighestScoreCard(),
+                SizedBox(width: 10),
+                AverageScoreCard(),
+                SizedBox(width: 10),
+                ResultsAnalysisCardLowestScoreCard()
+              ],
+            ),
           ),
         ],
       ),

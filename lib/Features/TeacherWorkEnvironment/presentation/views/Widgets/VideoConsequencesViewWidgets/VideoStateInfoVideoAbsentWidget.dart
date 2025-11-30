@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/video_consequences_cubit/video_consequences_cubit.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class VideoStateInfoVideoAbsentWidget extends StatefulWidget {
@@ -30,7 +31,7 @@ class _VideoStateInfoVideoAbsentWidgetState
         return Skeletonizer(
           enabled: state is VideoConsequencesGetVideoAttendedCountLoading ||
               state is VideoConsequencesGetTotalStudentsCountLoading,
-          child: _buildStatColumn("عدد الطلاب الغائبين:",
+          child: _buildStatColumn(LocaleKeys.studentsAbsent,
               getVideoAbsentCount(state: state), context,
               color: Colors.red),
         );

@@ -38,14 +38,16 @@ class AddCourseSectionExamActionButtons extends StatelessWidget {
       OptionNavigationRequirementsEntity optionnavigationrequirementsentity,
       CourseTestEntity courseTestEntity,
       BuildContext context) {
-    if (Variables.AddCourseSectionExamFormKey.currentState!.validate()) {
-      Variables.AddCourseSectionExamFormKey.currentState!.save();
-      GoRouter.of(context).push(ReviewExamSectionView.routeName,
-          extra: NavigateExamReviewRequirmentsEntity(
-              isNewSection: optionnavigationrequirementsentity.isNewSection,
-              coursetestentity: courseTestEntity,
-              section: optionnavigationrequirementsentity.section,
-              courseEntity: optionnavigationrequirementsentity.courseEntity));
+    if (Variables.AddCourseSectionExamFormKey.currentState != null) {
+      if (Variables.AddCourseSectionExamFormKey.currentState!.validate()) {
+        Variables.AddCourseSectionExamFormKey.currentState!.save();
+        GoRouter.of(context).push(ReviewExamSectionView.routeName,
+            extra: NavigateExamReviewRequirmentsEntity(
+                isNewSection: optionnavigationrequirementsentity.isNewSection,
+                coursetestentity: courseTestEntity,
+                section: optionnavigationrequirementsentity.section,
+                courseEntity: optionnavigationrequirementsentity.courseEntity));
+      }
     }
   }
 }

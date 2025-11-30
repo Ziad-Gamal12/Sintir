@@ -6,6 +6,7 @@ import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/TeacherEnvironmenCoursesGridDisplayedCourses.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/TeacherEnvironmentGridLoadingCourses.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TeacherEnvironmentCoursesGrid extends StatefulWidget {
   const TeacherEnvironmentCoursesGrid({super.key, required this.isSearch});
@@ -44,11 +45,13 @@ class _TeacherEnvironmentCoursesGridState
       } else if (state is GetContentCreatorCoursesSuccess &&
           state.coursesList.isEmpty) {
         return SliverToBoxAdapter(
-            child: Center(child: CustomEmptyWidget(text: "لا يوجد دورات")));
+            child: Center(
+                child: CustomEmptyWidget(text: LocaleKeys.emptyContent)));
       } else if (state is SearchContentCreatorCoursesSuccess &&
           state.coursesList.isEmpty) {
         return SliverToBoxAdapter(
-            child: Center(child: CustomEmptyWidget(text: "لا يوجد دورات")));
+            child: Center(
+                child: CustomEmptyWidget(text: LocaleKeys.emptyContent)));
       } else {
         return TeacherEnvironmenCoursesGridDisplayedCourses(
           coursesList: widget.isSearch

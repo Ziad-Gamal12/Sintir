@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/manager/student_sign_up_cubit/student_sign_up_cubit.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/views/BlocBuilder_section/StundetSignUpViewBody_BlocBuilder.dart';
+import 'package:sintir/locale_keys.dart';
 
 class StudentSignupViewBody extends StatelessWidget {
   const StudentSignupViewBody({super.key});
@@ -16,7 +17,7 @@ class StudentSignupViewBody extends StatelessWidget {
         if (state is StudentSignUpSuccess) {
           successdialog(
               context: context,
-              SuccessMessage: "تم انشاء حسابك بنجاح",
+              SuccessMessage: LocaleKeys.accountCreatedSuccessfully,
               btnOkOnPress: () {
                 GoRouter.of(context).pop();
               }).show();

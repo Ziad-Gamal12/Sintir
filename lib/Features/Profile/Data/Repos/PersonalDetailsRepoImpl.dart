@@ -9,6 +9,7 @@ import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 import 'package:sintir/Features/Profile/Domain/Repos/PersonalDetailsRepo.dart';
+import 'package:sintir/locale_keys.dart';
 
 class PersonalDetailsRepoImpl implements PersonalDetailsRepo {
   final Assetspickerrepo assetspickerrepo;
@@ -33,18 +34,18 @@ class PersonalDetailsRepoImpl implements PersonalDetailsRepo {
 
       // user cancelled
       if (result.isLeft()) {
-        return Left(ServerFailure(message: "لم يتم اختيار أي صورة"));
+        return Left(ServerFailure(message: LocaleKeys.noImageSelected));
       }
 
       final file = result.getOrElse(() => File(""));
       if (file == File("") || file.path.isEmpty) {
-        return Left(ServerFailure(message: "لم يتم العثور على الصورة"));
+        return Left(ServerFailure(message: LocaleKeys.noImageFound));
       }
 
       // upload
       final url = await storageService.uploadFile(file: file);
       if (url.isEmpty) {
-        return Left(ServerFailure(message: "فشل رفع الصورة"));
+        return Left(ServerFailure(message: LocaleKeys.uploadImageFailed));
       }
 
       // update DB
@@ -59,7 +60,7 @@ class PersonalDetailsRepoImpl implements PersonalDetailsRepo {
     } on CustomException catch (e) {
       return Left(ServerFailure(message: e.message));
     } catch (e) {
-      return Left(ServerFailure(message: "حدث خطأ غير متوقع"));
+      return Left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 }

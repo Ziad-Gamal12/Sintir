@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/test_consequences_cubit/test_consequences_cubit.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class AverageScoreCard extends StatefulWidget {
@@ -65,7 +66,7 @@ class _AverageScoreCardState extends State<AverageScoreCard> {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  "معدل النتائج",
+                  LocaleKeys.averageResults,
                   style: AppTextStyles(context).bold16,
                 ),
               ],

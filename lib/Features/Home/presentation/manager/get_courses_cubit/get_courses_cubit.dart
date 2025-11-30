@@ -13,7 +13,9 @@ class GetCoursesCubit extends Cubit<GetCoursesState> {
   GetCoursesCubit({required this.coursesrepo}) : super(GetCoursesInitial());
   final Coursesrepo coursesrepo;
   Future<void> getRecentCourses({required bool isPaginate}) async {
-    emit(GetRecentCoursesLoading());
+    emit(GetRecentCoursesLoading(
+      isPaginate: isPaginate,
+    ));
     final result = await coursesrepo.getRecentCourses(
       isPaginate: isPaginate,
     );
@@ -23,7 +25,9 @@ class GetCoursesCubit extends Cubit<GetCoursesState> {
   }
 
   Future<void> getPopularCourses({required bool isPaginate}) async {
-    emit(GetPopularCoursesLoading());
+    emit(GetPopularCoursesLoading(
+      isPaginate: isPaginate,
+    ));
     final result = await coursesrepo.getPopularCourses(
       isPaginate: isPaginate,
     );
@@ -35,7 +39,9 @@ class GetCoursesCubit extends Cubit<GetCoursesState> {
 
   Future<void> getUserInterestedCourses(
       {required bool isPaginate, required UserEntity user}) async {
-    emit(GetUserInerestCoursesLoading());
+    emit(GetUserInerestCoursesLoading(
+      isPaginate: isPaginate,
+    ));
     Either<Failure, GetCoursesResonseEntity>? result;
     if (user.role == BackendEndpoints.teacherRole) {
       result = await coursesrepo.getTeaceherInterestedCourses(

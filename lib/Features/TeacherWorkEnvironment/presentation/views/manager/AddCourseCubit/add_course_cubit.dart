@@ -9,6 +9,7 @@ import 'package:sintir/Core/models/contentCreaterModel.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 part 'add_course_state.dart';
 
@@ -41,7 +42,7 @@ class AddCourseCubitCubit extends Cubit<AddCourseCubitState> {
         });
       });
     } on Exception {
-      emit(AddCourseCubitFailure("حدث خطأ ما"));
+      emit(AddCourseCubitFailure(LocaleKeys.generalError));
     }
   }
 

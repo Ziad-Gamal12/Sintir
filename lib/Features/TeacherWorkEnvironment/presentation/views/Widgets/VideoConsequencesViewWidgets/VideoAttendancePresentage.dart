@@ -4,6 +4,7 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/video_consequences_cubit/video_consequences_cubit.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class VideoAttendancePresentage extends StatefulWidget {
@@ -63,7 +64,9 @@ class _VideoAttendancePresentageState extends State<VideoAttendancePresentage> {
         const SizedBox(
           height: 10,
         ),
-        Text("نسبة الحضور", style: AppTextStyles(context).semiBold16)
+        Text(LocaleKeys.attendanceRate,
+            textAlign: TextAlign.center,
+            style: AppTextStyles(context).semiBold16)
       ],
     );
   }

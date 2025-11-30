@@ -25,17 +25,25 @@ class AddCourseSectionExamViewBody extends StatefulWidget {
 
 class _AddCourseSectionExamViewBodyState
     extends State<AddCourseSectionExamViewBody> {
-  CourseTestEntity coursetestentity = CourseTestEntity(
-    type: "Test",
-    id: "${DateTime.now().toIso8601String()}-Test",
-    questions: [
-      CourseTestQuestionEntity(isOpened: false, questionTitle: "", solutions: [
-        CourseTestQuestionSolutionEntity(answer: "", isCorrect: false)
-      ])
-    ],
-    title: Variables.AddExamName.text,
-    durationTime: int.tryParse(Variables.AddExamDuration.text) ?? 0,
-  );
+  late CourseTestEntity coursetestentity;
+  @override
+  void initState() {
+    super.initState();
+    coursetestentity = CourseTestEntity(
+      type: "Test",
+      id: "${DateTime.now().toIso8601String()}-Test",
+      questions: [
+        CourseTestQuestionEntity(
+            isOpened: false,
+            questionTitle: "",
+            solutions: [
+              CourseTestQuestionSolutionEntity(answer: "", isCorrect: false)
+            ])
+      ],
+      title: "",
+      durationTime: 0,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

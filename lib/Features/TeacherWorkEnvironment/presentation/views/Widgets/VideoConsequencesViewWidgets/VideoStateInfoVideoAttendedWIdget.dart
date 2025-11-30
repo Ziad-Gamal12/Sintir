@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/video_consequences_cubit/video_consequences_cubit.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class VideoStateInfoVideoAttendedWidget extends StatefulWidget {
@@ -24,7 +25,7 @@ class _VideoStateInfoVideoAttendedWidgetState
       builder: (context, state) {
         return Skeletonizer(
           enabled: state is VideoConsequencesGetVideoAttendedCountLoading,
-          child: _buildStatColumn("عدد الطلاب الحاضرين:",
+          child: _buildStatColumn(LocaleKeys.studentsAttended,
               getVideoAttendedCount(state: state), context,
               color: Colors.green),
         );

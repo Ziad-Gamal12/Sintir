@@ -8,6 +8,7 @@ import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseCouponsListView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseCouponsListViewLoading.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseDetailsCouponsViewBody extends StatefulWidget {
   const CourseDetailsCouponsViewBody({super.key, required this.courseId});
@@ -70,7 +71,7 @@ class _CourseDetailsCouponsViewBodyState
           coupons.removeWhere((element) => element.code == state.couponId);
           CustomSnackBar.show(
             context,
-            message: "تم حذف الكوبون بنجاح",
+            message: LocaleKeys.operationSuccessful,
             type: SnackType.success,
           );
           setState(() {});

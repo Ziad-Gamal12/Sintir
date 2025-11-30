@@ -8,6 +8,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/VideoCons
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/VideoConsequencesViewWidgets/VideoConsequencesViewBody.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/get_video_notes_cubit/get_video_notes_cubit.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/video_consequences_cubit/video_consequences_cubit.dart';
+import 'package:sintir/locale_keys.dart';
 
 class VideoConsequencesView extends StatelessWidget {
   const VideoConsequencesView({super.key, required this.requirements});
@@ -30,7 +31,7 @@ class VideoConsequencesView extends StatelessWidget {
         ),
       ],
       child: Scaffold(
-        appBar: CustomAppBar(appBartitle: "التقارير الخاصة بالفيديو"),
+        appBar: CustomAppBar(appBartitle: LocaleKeys.videoReports),
         body: VideoConsequencesViewBody(requirements: requirements),
       ),
     );

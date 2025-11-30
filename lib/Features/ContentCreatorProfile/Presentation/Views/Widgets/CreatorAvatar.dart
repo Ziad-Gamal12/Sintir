@@ -20,13 +20,15 @@ class CreatorAvatar extends StatelessWidget {
         ),
       ),
       child: CircleAvatar(
-        radius: 52,
-        backgroundColor: Colors.white,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(90),
-          child: CustomCachedNetworkImage(imageUrl: imageUrl),
-        ),
-      ),
+          radius: 52,
+          backgroundColor: Colors.white,
+          child: AspectRatio(
+            aspectRatio: 1,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: CustomCachedNetworkImage(
+                    imageUrl: imageUrl, fit: BoxFit.cover)),
+          )),
     );
   }
 }

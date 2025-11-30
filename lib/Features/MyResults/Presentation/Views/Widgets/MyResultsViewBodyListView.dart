@@ -6,6 +6,7 @@ import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/MyResults/Presentation/Manager/cubit/my_results_cubit.dart';
 import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/MyResultsViewBodyListViewLoading.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/StudentResultCard.dart';
+import 'package:sintir/locale_keys.dart';
 
 class MyResultsViewBodyListView extends StatefulWidget {
   const MyResultsViewBodyListView(
@@ -30,7 +31,7 @@ class _MyResultsViewBodyListViewState extends State<MyResultsViewBodyListView> {
         return const MyResultsViewBodyListViewLoading();
       } else if (state is GetMyResultsSuccess && widget.myResults.isEmpty) {
         return CustomEmptyWidget(
-          text: "لا يوجد نتائج لديك حتى الان",
+          text: LocaleKeys.emptyContent,
         );
       } else {
         return ListView.builder(

@@ -5,6 +5,7 @@ import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/StudentResultCard.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/get_exam_results_cubit/get_exam_results_cubit.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class TestResultsSliverListView extends StatefulWidget {
@@ -52,7 +53,7 @@ class _TestResultsSliverListViewState extends State<TestResultsSliverListView> {
             widget.testResults.isEmpty) {
           return SliverToBoxAdapter(
             child: CustomEmptyWidget(
-              text: 'لا يوجد نتايج حتى الان',
+              text: LocaleKeys.noResults,
             ),
           );
         } else {

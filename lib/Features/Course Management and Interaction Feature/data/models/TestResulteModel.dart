@@ -35,7 +35,7 @@ class Testresultemodel {
       solvedQuestions: json['solvedQuestions'],
       joinedby: json['joinedby'],
       result: json['result'],
-      courseId: json['courseId'],
+      courseId: json['courseId'] ?? "",
       questionsSolvedList: (json["questionsSolvedList"] as List<dynamic>)
           .map((e) => e as Map<String, dynamic>)
           .toList(),

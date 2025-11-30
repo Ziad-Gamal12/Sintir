@@ -9,7 +9,6 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestR
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVideoviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebView.dart';
 import 'package:sintir/Core/widgets/customAuthWidgets/CustomResetPasswordView.dart';
-import 'package:sintir/Features/Ai_Teacher/presentation/views/AiTeacherView.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/views/StudentTermsAndConditions_View.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/views/Student_Sign_In_View.dart';
@@ -30,6 +29,9 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/displayCourseVedioVeiw.dart';
 import 'package:sintir/Features/Favorites/presentation/views/FavoritesView.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
+import 'package:sintir/Features/Home/presentation/views/MoreInterestedCoursesView.dart';
+import 'package:sintir/Features/Home/presentation/views/MoreNewestCoursesView.dart';
+import 'package:sintir/Features/Home/presentation/views/MorePopularCoursesView.dart';
 import 'package:sintir/Features/MyCourses/Presentation/Views/MyCoursesView.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Views/MyMistakesView.dart';
 import 'package:sintir/Features/MyResults/Presentation/Views/MyResultsView.dart';
@@ -143,12 +145,6 @@ class App_router {
         path: Homeview.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const Homeview();
-        },
-      ),
-      GoRoute(
-        path: AiTeacherview.routeName,
-        builder: (BuildContext context, GoRouterState state) {
-          return const AiTeacherview();
         },
       ),
       GoRoute(
@@ -442,6 +438,24 @@ class App_router {
         path: PayoutTermsAndConditionsView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const PayoutTermsAndConditionsView();
+        },
+      ),
+      GoRoute(
+        path: MoreNewestCoursesView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const MoreNewestCoursesView();
+        },
+      ),
+      GoRoute(
+        path: MorePopularCoursesView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const MorePopularCoursesView();
+        },
+      ),
+      GoRoute(
+        path: MoreInterestedCoursesView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const MoreInterestedCoursesView();
         },
       ),
     ],

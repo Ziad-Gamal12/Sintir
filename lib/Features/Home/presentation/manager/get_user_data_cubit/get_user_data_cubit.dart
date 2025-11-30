@@ -4,6 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/services/FireBase/FirebaseAuth_Service.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
+import 'package:sintir/locale_keys.dart';
 
 part 'get_user_data_state.dart';
 
@@ -50,13 +51,13 @@ class GetUserDataCubit extends Cubit<GetUserDataState> {
         },
       );
     } catch (e) {
-      emit(GetUserDataFailure(errmessage: "حدث خطأ أثناء جلب بيانات المستخدم"));
+      emit(GetUserDataFailure(errmessage: LocaleKeys.dataNotFound));
     }
   }
 }
 
 class AuthMessages {
-  static const userNotFound = 'المستخدم غير موجود';
-  static const deviceNotFound = 'لم يتم العثور على الرقم التعريفى لهذا الجهاز';
-  static const deviceMismatch = 'تم تسجيل الدخول من جهاز اخر';
+  static String userNotFound = LocaleKeys.userNotFound;
+  static String deviceNotFound = LocaleKeys.deviceNotFound;
+  static String deviceMismatch = LocaleKeys.deviceMismatch;
 }

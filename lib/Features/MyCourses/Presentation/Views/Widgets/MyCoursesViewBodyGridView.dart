@@ -6,6 +6,7 @@ import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/MyCourses/Presentation/Manager/cubit/my_courses_cubit.dart';
 import 'package:sintir/Features/MyCourses/Presentation/Views/Widgets/MyCoursesGridViewLoading.dart';
 import 'package:sintir/Features/MyCourses/Presentation/Views/Widgets/MyCoursesViewBodyMyCoursesGridView.dart';
+import 'package:sintir/locale_keys.dart';
 
 class MyCoursesViewBodyGridView extends StatefulWidget {
   const MyCoursesViewBodyGridView(
@@ -30,7 +31,7 @@ class _MyCoursesViewBodyGridViewState extends State<MyCoursesViewBodyGridView> {
           return const MyCoursesGridViewLoading();
         } else if (state is GetMyCoursesSuccess && widget.myCourses.isEmpty) {
           return CustomEmptyWidget(
-            text: "لا يوجد دورات لديك حتى الان",
+            text: LocaleKeys.emptyContent,
           );
         } else {
           return MyCoursesViewBodyMyCoursesGridView(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
-import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -22,7 +21,6 @@ class CustomAddCourseSectionExamNameAndDuration extends StatelessWidget {
                 onSaved: (value) {
                   coursetestentity.title = value!;
                 },
-                controller: Variables.AddExamName,
                 textInputType: TextInputType.text,
                 prefixIcon: Icons.text_snippet_outlined,
                 validator: (value) {
@@ -42,7 +40,6 @@ class CustomAddCourseSectionExamNameAndDuration extends StatelessWidget {
                 },
                 hintText: LocaleKeys.examDuration,
                 obscureText: false,
-                controller: Variables.AddExamDuration,
                 textInputType: TextInputType.number,
                 prefixIcon: Icons.timer_outlined,
                 validator: (value) {

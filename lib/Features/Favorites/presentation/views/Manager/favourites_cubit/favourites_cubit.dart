@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Features/Favorites/Domain/Repos/FavoritesRepo.dart';
+import 'package:sintir/locale_keys.dart';
 
 part 'favourites_state.dart';
 
@@ -22,7 +23,6 @@ class FavouritesCubit extends Cubit<FavouritesState> {
       (courses) {
         favorites = courses;
 
-        // 🔥 هنا أهم خطوة — بناء map سريعة للبحث
         favoritesMap = {
           for (var c in courses) c.id: true,
         };
@@ -52,7 +52,7 @@ class FavouritesCubit extends Cubit<FavouritesState> {
       );
     } else {
       emit(AddToFavoritesFailureState(
-          errMessage: "لا يمكنك اضافة اكثر من 50 كورس للمفضلة"));
+          errMessage: LocaleKeys.favoriteLimitError));
     }
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class StudentSignUpHaveAnAccountTextWidget extends StatelessWidget {
   const StudentSignUpHaveAnAccountTextWidget({
@@ -16,12 +17,12 @@ class StudentSignUpHaveAnAccountTextWidget extends StatelessWidget {
       },
       child: Text.rich(TextSpan(children: [
         TextSpan(
-            text: "تمتلك حساب بالفعل ؟ ",
+            text: LocaleKeys.loginQuestion,
             style: AppTextStyles(context)
                 .semiBold16
                 .copyWith(color: const Color(0xff949D9E))),
         TextSpan(
-            text: "تسجيل الدخول",
+            text: LocaleKeys.login,
             style:
                 AppTextStyles(context).semiBold16.copyWith(color: KMainColor))
       ])),
