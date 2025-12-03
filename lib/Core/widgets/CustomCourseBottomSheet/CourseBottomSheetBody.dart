@@ -37,6 +37,9 @@ class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return BlocConsumer<CourseSubscribtionsCubit, CourseSubscribtionsState>(
       listener: (context, state) {
         courseBottomSheetBlocListener(state, context);
@@ -50,19 +53,17 @@ class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Poster
                 CourseBottomSheetBodyCoursePoster(),
-                SizedBox(
-                  height: 24,
-                ),
+                SizedBox(height: 24),
+                // Course Details
                 CourseBottomSheetCourseDetails(),
-                SizedBox(
-                  height: 24,
-                ),
+                SizedBox(height: 24),
+                // Content Creator
                 CourseBottomContentCreator(),
-                SizedBox(
-                  height: 24,
-                ),
-                CustomCourseBottomSheetActionButtons()
+                SizedBox(height: 24),
+                // Action Buttons
+                CustomCourseBottomSheetActionButtons(),
               ],
             ),
           ),

@@ -34,6 +34,8 @@ class _CustomCourseHorizontalItemState extends State<CustomCourseHorizontalItem>
   @override
   Widget build(BuildContext context) {
     final course = widget.course;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return AnimatedScale(
       scale: scale,
@@ -44,22 +46,26 @@ class _CustomCourseHorizontalItemState extends State<CustomCourseHorizontalItem>
         curve: Curves.easeOut,
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: isDark ? const Color(0xFF2A2A2A) : Colors.white,
           borderRadius: BorderRadius.circular(18),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade400.withOpacity(.25),
+              color: isDark
+                  ? Colors.black.withOpacity(.4)
+                  : Colors.grey.shade400.withOpacity(.25),
               blurRadius: 14,
               spreadRadius: 1,
               offset: const Offset(0, 5),
             ),
             BoxShadow(
-              color: Colors.white.withOpacity(0.9),
+              color:
+                  isDark ? Colors.grey.shade800 : Colors.white.withOpacity(0.9),
               blurRadius: 8,
               offset: const Offset(-3, -3),
             ),
           ],
-          border: Border.all(color: Colors.grey.shade200),
+          border: Border.all(
+              color: isDark ? Colors.grey.shade700 : Colors.grey.shade200),
         ),
         child: InkWell(
           onTapDown: _onTapDown,
@@ -82,9 +88,8 @@ class _CustomCourseHorizontalItemState extends State<CustomCourseHorizontalItem>
                       course.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles(
-                        context,
-                      ).semiBold16.copyWith(height: 1.3),
+                      style: AppTextStyles(context).semiBold16.copyWith(
+                          height: 1.3, color: isDark ? Colors.white : null),
                     ),
 
                     const SizedBox(height: 6),
@@ -95,9 +100,11 @@ class _CustomCourseHorizontalItemState extends State<CustomCourseHorizontalItem>
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles(context).regular14.copyWith(
-                        color: Colors.grey.shade600,
-                        height: 1.4,
-                      ),
+                            color: isDark
+                                ? Colors.grey.shade300
+                                : Colors.grey.shade600,
+                            height: 1.4,
+                          ),
                     ),
 
                     const SizedBox(height: 6),
@@ -109,12 +116,16 @@ class _CustomCourseHorizontalItemState extends State<CustomCourseHorizontalItem>
                           spacing: 6,
                           runSpacing: 4,
                           children: [
-                            _buildChip(Icons.school_rounded, course.level),
-                            _buildChip(Icons.menu_book_rounded, course.subject),
-                            _buildChip(Icons.language_rounded, course.language),
+                            _buildChip(
+                                Icons.school_rounded, course.level, isDark),
+                            _buildChip(Icons.menu_book_rounded, course.subject,
+                                isDark),
+                            _buildChip(Icons.language_rounded, course.language,
+                                isDark),
                             _buildChip(
                               Icons.timer,
                               "${LocaleKeys.createdDate} ${_postedAgo(course.postedDate)}",
+                              isDark,
                             ),
                           ],
                         ),
@@ -137,21 +148,26 @@ class _CustomCourseHorizontalItemState extends State<CustomCourseHorizontalItem>
     );
   }
 
-  Widget _buildChip(IconData icon, String text) {
+  Widget _buildChip(IconData icon, String text, bool isDark) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: isDark ? const Color(0xFF3A3A3A) : Colors.grey.shade100,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 15, color: Colors.grey.shade700),
+          Icon(icon,
+              size: 15,
+              color: isDark ? Colors.grey.shade300 : Colors.grey.shade700),
           const SizedBox(width: 4),
           Text(
             text,
-            style: TextStyle(fontSize: 12.5, color: Colors.grey.shade700),
+            style: TextStyle(
+              fontSize: 12.5,
+              color: isDark ? Colors.grey.shade300 : Colors.grey.shade700,
+            ),
           ),
         ],
       ),

@@ -21,6 +21,23 @@ class PriceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    final Color baseTextColor = isDark ? Colors.white : Colors.black87;
+    final Color baseIconColor = isDark ? Colors.grey.shade300 : Colors.grey;
+    final Color highlightColor = Colors.green.shade600;
+    final Color containerColor = highlight
+        ? highlightColor.withOpacity(0.12)
+        : (isDark
+            ? Colors.grey.shade800.withOpacity(0.15)
+            : Colors.blueGrey.withOpacity(0.07));
+    final Color borderColor = highlight
+        ? highlightColor.withOpacity(0.9)
+        : (isDark
+            ? Colors.grey.shade700.withOpacity(0.4)
+            : Colors.blueGrey.withOpacity(0.2));
+
     return Stack(
       children: [
         AnimatedContainer(
@@ -28,38 +45,24 @@ class PriceCard extends StatelessWidget {
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            color: highlight
-                ? Colors.green.withOpacity(0.12)
-                : Colors.blueGrey.withOpacity(0.07),
+            color: containerColor,
             border: Border.all(
-              color: highlight
-                  ? Colors.greenAccent
-                  : Colors.blueGrey.withOpacity(0.2),
+              color: borderColor,
               width: highlight ? 1.5 : 1,
             ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(.05),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
           ),
           child: Row(
             children: [
               Icon(icon,
-                  size: 20,
-                  color: highlight ? Colors.green.shade600 : Colors.grey),
+                  size: 20, color: highlight ? highlightColor : baseIconColor),
               const SizedBox(width: 12),
 
-              // PRICE TEXT
+              // PRICE LABEL
               Expanded(
                 child: Text(
                   label,
                   style: AppTextStyles(context).semiBold14.copyWith(
-                      color: highlight
-                          ? Colors.green.shade600
-                          : Colors.black87), // TextStyle(
+                      color: highlight ? highlightColor : baseTextColor),
                 ),
               ),
 
@@ -75,7 +78,7 @@ class PriceCard extends StatelessWidget {
                         (showStrike ? TextDecoration.lineThrough : null),
                     decorationColor: Colors.red,
                     decorationThickness: 2,
-                    color: highlight ? Colors.green.shade600 : Colors.black87,
+                    color: highlight ? highlightColor : baseTextColor,
                   ),
                 ),
               ),
@@ -83,7 +86,7 @@ class PriceCard extends StatelessWidget {
           ),
         ),
 
-        // ANIMATED LINE FOR ORIGINAL PRICE
+        // ANIMATED STRIKE LINE FOR ORIGINAL PRICE
         if (showStrike)
           Positioned.fill(
             child: Align(

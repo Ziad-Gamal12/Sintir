@@ -39,9 +39,7 @@ class CustomVedioListViewItem extends StatelessWidget {
             image: item.preffixImage,
             trailing: Text(
               "${item.durationTime} ${LocaleKeys.durationMinutes}",
-              style: AppTextStyles(context)
-                  .regular14
-                  .copyWith(color: Colors.black),
+              style: AppTextStyles(context).regular14,
             ),
           )),
           CustomUnAvailableSectionWidget(isAvailable: isAvilabe)

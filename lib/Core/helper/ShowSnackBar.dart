@@ -11,7 +11,7 @@ class CustomSnackBar {
     required String message,
     required SnackType type,
   }) {
-    final colorData = _getSnackData(type);
+    final colorData = _getSnackData(type, context);
 
     final snackBar = SnackBar(
       behavior: SnackBarBehavior.floating,
@@ -32,31 +32,32 @@ class CustomSnackBar {
       ..showSnackBar(snackBar);
   }
 
-  static _SnackBarData _getSnackData(SnackType type) {
+  static _SnackBarData _getSnackData(SnackType type, BuildContext context) {
+    final theme = Theme.of(context);
     switch (type) {
       case SnackType.success:
         return _SnackBarData(
           title: LocaleKeys.snackSuccess,
           icon: Icons.check_circle,
-          color: Colors.green,
+          color: Colors.greenAccent.shade700,
         );
       case SnackType.error:
         return _SnackBarData(
           title: LocaleKeys.snackError,
           icon: Icons.error,
-          color: Colors.redAccent,
+          color: Colors.redAccent.shade700,
         );
       case SnackType.warning:
         return _SnackBarData(
           title: LocaleKeys.snackWarning,
           icon: Icons.warning_amber_rounded,
-          color: Colors.orangeAccent,
+          color: Colors.orangeAccent.shade700,
         );
       case SnackType.info:
         return _SnackBarData(
           title: LocaleKeys.snackInfo,
           icon: Icons.info_outline,
-          color: Colors.blueAccent,
+          color: theme.colorScheme.primary,
         );
     }
   }
@@ -86,15 +87,16 @@ class _SnackContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTextStyles(context);
+    final theme = Theme.of(context);
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: const [
+        color: theme.cardColor,
+        boxShadow: [
           BoxShadow(
-            color: Colors.black12,
+            color: theme.shadowColor.withOpacity(0.1),
             blurRadius: 4,
           ),
         ],
@@ -120,7 +122,9 @@ class _SnackContent extends StatelessWidget {
                 Text(title, style: style.semiBold16.copyWith(color: iconColor)),
                 const SizedBox(height: 3),
                 Text(message,
-                    style: style.regular14.copyWith(color: Colors.black87)),
+                    style: style.regular14.copyWith(
+                        color: theme.textTheme.bodyMedium?.color ??
+                            Colors.black87)),
               ],
             ),
           ),

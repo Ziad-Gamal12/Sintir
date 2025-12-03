@@ -16,8 +16,11 @@ class CustomVideoControllerBetter {
     required File? file,
     required VoidCallback? onUpdate,
     ValueChanged<Duration>? onDurationChanged,
-    BuildContext? context,
+    required BuildContext context,
   }) async {
+    final ThemeData theme = Theme.of(context);
+    final bool isDarkMode = theme.brightness == Brightness.dark;
+
     try {
       if (videoUrl == null && file == null) {
         throw Exception(LocaleKeys.videoLoadFailed);
@@ -43,23 +46,43 @@ class CustomVideoControllerBetter {
         allowedScreenSleep: false,
         fit: BoxFit.contain,
         aspectRatio: 16 / 9,
-        controlsConfiguration: const BetterPlayerControlsConfiguration(
+        controlsConfiguration: BetterPlayerControlsConfiguration(
           enablePlaybackSpeed: true,
           enableSkips: true,
           enableFullscreen: true,
           enableMute: true,
+          // Theme-aware colors
+          controlBarColor: theme.colorScheme.surface.withOpacity(0.8),
+          textColor: theme.textTheme.bodyLarge?.color ?? Colors.white,
+          progressBarPlayedColor: theme.colorScheme.primary,
+          progressBarHandleColor: theme.colorScheme.primary,
+          progressBarBufferedColor:
+              theme.textTheme.bodyMedium?.color?.withOpacity(0.5) ??
+                  Colors.white70,
+          progressBarBackgroundColor: theme.dividerColor,
+          liveTextColor: isDarkMode ? Colors.red.shade400 : Colors.redAccent,
+          loadingColor: theme.colorScheme.primary,
+          backgroundColor: theme.colorScheme.surface.withOpacity(0.5),
+          overflowModalColor: theme.cardColor,
+          overflowModalTextColor:
+              theme.textTheme.bodyLarge?.color ?? Colors.white,
+          overflowMenuIconsColor: theme.colorScheme.primary,
         ),
         errorBuilder: (context, errorMessage) {
+          final theme = Theme.of(context);
           CustomSnackBar.show(
             context,
             message: LocaleKeys.videoFailed,
             type: SnackType.error,
           );
           return Center(
-              child: Text(
-            LocaleKeys.videoPlayFailed,
-            style: const TextStyle(color: Colors.white),
-          ));
+            child: Text(
+              LocaleKeys.videoPlayFailed,
+              style: TextStyle(
+                color: theme.textTheme.bodyLarge?.color ?? Colors.white,
+              ),
+            ),
+          );
         },
       );
 
@@ -77,13 +100,11 @@ class CustomVideoControllerBetter {
       isInitialized = true;
       onUpdate?.call();
     } catch (e) {
-      if (context != null) {
-        CustomSnackBar.show(
-          context,
-          message: LocaleKeys.videoNotSupported,
-          type: SnackType.error,
-        );
-      }
+      CustomSnackBar.show(
+        context,
+        message: LocaleKeys.videoNotSupported,
+        type: SnackType.error,
+      );
       isInitialized = false;
       onUpdate?.call();
       debugPrint("⚠️ CustomVideoControllerBetter Error: $e");

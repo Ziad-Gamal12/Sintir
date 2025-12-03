@@ -9,17 +9,26 @@ class CustomListORGridTextHeader extends StatelessWidget {
   final String text;
   MainAxisAlignment? position;
   Widget? trailing;
+
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    // Use the primary text color for the header text
+    final Color textColor = theme.textTheme.headlineSmall!.color!;
+
     return Row(
       mainAxisAlignment: position ?? MainAxisAlignment.start,
       children: [
         Text(
           text,
-          style:
-              AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
+          style: AppTextStyles(context)
+              .semiBold20
+              .copyWith(color: textColor), // Apply theme color
         ),
+
         const Spacer(),
+
+        // Conditional trailing widget
         trailing != null ? trailing! : const SizedBox(),
       ],
     );

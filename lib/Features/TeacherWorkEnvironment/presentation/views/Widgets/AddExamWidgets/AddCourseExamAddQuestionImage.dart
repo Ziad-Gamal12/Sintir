@@ -21,6 +21,13 @@ class _AddCourseExamAddQuestionImageState
     extends State<AddCourseExamAddQuestionImage> {
   @override
   Widget build(BuildContext context) {
+    // Get the current theme to determine text color
+    final ThemeData theme = Theme.of(context);
+    // Use the primary text color, which is usually dark in Light Mode and light in Dark Mode
+    final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
+    // Use cardColor, which is a good default for container backgrounds (e.g., white in light mode, dark gray in dark mode)
+    final Color containerColor = theme.cardColor;
+
     return InkWell(
       onTap: () {
         context.read<TestItemCubit>().pickQuestionImage();
@@ -29,9 +36,9 @@ class _AddCourseExamAddQuestionImageState
         width: double.infinity,
         padding:
             const EdgeInsets.only(top: 20, left: 27, right: 27, bottom: 29),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          color: containerColor,
+          borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(10),
             bottomRight: Radius.circular(10),
           ),
@@ -65,6 +72,7 @@ class _AddCourseExamAddQuestionImageState
                       Assets.assetsIconsAddImageIcon,
                       height: 25,
                       width: 25,
+                      color: primaryTextColor,
                     ),
                     const SizedBox(
                       width: 10,
@@ -74,7 +82,7 @@ class _AddCourseExamAddQuestionImageState
                       textAlign: TextAlign.center,
                       style: AppTextStyles(context)
                           .semiBold12
-                          .copyWith(color: Colors.black),
+                          .copyWith(color: primaryTextColor),
                     )
                   ],
                 ),

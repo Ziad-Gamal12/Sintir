@@ -10,9 +10,11 @@ class CustomcoursedetailsOptionitemIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Image.asset(
       image,
-      color: Colors.black,
+      color: theme.iconTheme.color,
       height: 30,
       width: 30,
     );

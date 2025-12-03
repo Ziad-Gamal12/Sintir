@@ -66,6 +66,11 @@ class _TestConsequencesViewBodyState extends State<TestConsequencesViewBody> {
 
   @override
   Widget build(BuildContext context) {
+    // Fetch theme data for dynamic coloring
+    final Color primaryTextColor =
+        Theme.of(context).textTheme.bodyLarge!.color!;
+    final Color loadingColor = Theme.of(context).colorScheme.primary;
+
     return BlocConsumer<GetExamResultsCubit, GetExamResultsState>(
       listener: (context, state) {
         if (state is GetExamResultsSuccess) {
@@ -108,8 +113,10 @@ class _TestConsequencesViewBodyState extends State<TestConsequencesViewBody> {
               child: Text(
                 LocaleKeys.examResults,
                 textAlign: TextAlign.center,
-                style:
-                    AppTextStyles(context).bold24.copyWith(color: Colors.black),
+                style: AppTextStyles(context)
+                    .bold24
+                    // Use theme-aware color instead of hardcoded Colors.black
+                    .copyWith(color: primaryTextColor),
               ),
             ),
             const SliverToBoxAdapter(
@@ -124,9 +131,10 @@ class _TestConsequencesViewBodyState extends State<TestConsequencesViewBody> {
                 child: Padding(
               padding: const EdgeInsets.only(top: 20),
               child: (state is GetExamResultsLoading && state.isPaginate)
-                  ? const Center(
+                  ? Center(
                       child: CircularProgressIndicator(
-                      color: KMainColor,
+                      // Use theme-aware color instead of hardcoded KMainColor
+                      color: loadingColor,
                     ))
                   : null,
             )),

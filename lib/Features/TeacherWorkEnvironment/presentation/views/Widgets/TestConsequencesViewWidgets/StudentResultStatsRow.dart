@@ -11,6 +11,9 @@ class StudentResultStatsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     final percent = ResultDetailsHelper.getResultPercent(testResultEntity)
         .toStringAsFixed(2);
     final score =
@@ -23,7 +26,8 @@ class StudentResultStatsRow extends StatelessWidget {
             icon: Assets.assetsIconsGraphBar,
             title: LocaleKeys.evaluationRate,
             value: "$percent %",
-            backgroundColor: Colors.blue.shade50,
+            backgroundColor:
+                isDark ? Colors.blue.shade900 : Colors.blue.shade50,
           ),
         ),
         const SizedBox(width: 12),
@@ -32,7 +36,8 @@ class StudentResultStatsRow extends StatelessWidget {
             icon: Assets.assetsIconsMisionIcon,
             title: LocaleKeys.studentScore,
             value: score,
-            backgroundColor: Colors.green.shade50,
+            backgroundColor:
+                isDark ? Colors.amber.shade900 : Colors.green.shade50,
           ),
         ),
       ],

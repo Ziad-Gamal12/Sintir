@@ -10,7 +10,7 @@ class ChoosingUserKindDescription extends StatelessWidget {
     return Text(
       description,
       textAlign: TextAlign.justify,
-      style: AppTextStyles(context).regular14.copyWith(color: Colors.black54),
+      style: AppTextStyles(context).regular14,
     );
   }
 }

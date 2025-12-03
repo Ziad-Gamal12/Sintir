@@ -12,19 +12,26 @@ class StudentResultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.shade100,
+            color: theme.brightness == Brightness.light
+                ? Colors.grey.shade100
+                : Colors.black26,
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
         ],
-        border: Border.all(color: Colors.grey.shade50),
+        border: Border.all(
+          color: theme.brightness == Brightness.light
+              ? Colors.grey.shade50
+              : Colors.white10,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +51,10 @@ class StudentResultCard extends StatelessWidget {
           ),
 
           const SizedBox(height: 18),
-          const Divider(thickness: 0.6),
+          Divider(
+            thickness: 0.6,
+            color: theme.dividerColor,
+          ),
 
           /// Stats
           const Spacer(),

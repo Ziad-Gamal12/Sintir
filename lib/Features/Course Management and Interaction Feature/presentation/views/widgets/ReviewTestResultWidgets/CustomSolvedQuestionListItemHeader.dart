@@ -16,28 +16,33 @@ class CustomSolvedQuestionListItemHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final questionBgColor = theme.colorScheme.surfaceContainerHighest;
+    final statusBgColor =
+        isCorrect ? Colors.green.shade400 : Colors.red.shade400;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
+            color: questionBgColor,
+            borderRadius: BorderRadius.circular(10),
           ),
           child: Text(
-            " ${LocaleKeys.questionNumber} ${index + 1}/ $length",
-            style:
-                AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
+            "${LocaleKeys.questionNumber} ${index + 1}/$length",
+            style: AppTextStyles(context)
+                .semiBold16
+                .copyWith(color: theme.colorScheme.onSurfaceVariant),
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 6),
         Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
           decoration: BoxDecoration(
-            color: isCorrect ? Colors.green : Colors.red,
-            borderRadius: BorderRadius.circular(8),
+            color: statusBgColor,
+            borderRadius: BorderRadius.circular(10),
           ),
           child: Text(
             isCorrect ? LocaleKeys.correctAnswer : LocaleKeys.wrongAnswer,

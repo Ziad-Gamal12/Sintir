@@ -19,13 +19,13 @@ class TeacherOnboardingInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color: Colors.grey[900],
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(16),
           topRight: Radius.circular(16),
         ),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black12,
             blurRadius: 30,
@@ -45,9 +45,7 @@ class TeacherOnboardingInfoCard extends StatelessWidget {
               Text(
                 page.description,
                 textAlign: TextAlign.justify,
-                style: AppTextStyles(context)
-                    .regular14
-                    .copyWith(color: Colors.black54),
+                style: AppTextStyles(context).regular14,
               ),
               const Spacer(),
               TeacherOnBoardingButton(

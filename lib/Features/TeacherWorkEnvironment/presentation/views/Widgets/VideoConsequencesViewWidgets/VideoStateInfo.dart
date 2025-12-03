@@ -56,7 +56,7 @@ class _VideoStateInfoState extends State<VideoStateInfo> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const VideoStateInfoVideoAttendedWidget(),
-                horizontalDivider(),
+                horizontalDivider(context),
                 VideoStateInfoVideoAbsentWidget(
                   videoAbsentCount: totalStudentsCount - attendedCount,
                 )
@@ -68,16 +68,16 @@ class _VideoStateInfoState extends State<VideoStateInfo> {
     );
   }
 
-  Widget verticalDivider() => Container(
+  Widget verticalDivider(BuildContext context) => Container(
         margin: const EdgeInsets.symmetric(horizontal: 10),
         height: 50,
         width: 1,
-        color: Colors.black,
+        color: Theme.of(context).dividerColor,
       );
 
-  Widget horizontalDivider() => Container(
+  Widget horizontalDivider(BuildContext context) => Container(
         margin: const EdgeInsets.symmetric(vertical: 10),
         height: 1,
-        color: Colors.black,
+        color: Theme.of(context).dividerColor,
       );
 }

@@ -11,12 +11,15 @@ class CustomcoursedetailsOptionitemDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Text(
       description,
       maxLines: 3,
-      style: AppTextStyles(context)
-          .regular10
-          .copyWith(color: Colors.black, overflow: TextOverflow.ellipsis),
+      overflow: TextOverflow.ellipsis,
+      style: AppTextStyles(context).regular10.copyWith(
+            color: theme.textTheme.bodyMedium?.color ?? Colors.black,
+          ),
     );
   }
 }

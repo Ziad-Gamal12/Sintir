@@ -7,8 +7,11 @@ import 'package:sintir/Features/Profile/Presentation/Views/Widgets/ProfileItemAc
 class ProfileItemAction extends StatelessWidget {
   const ProfileItemAction({super.key, required this.profileActionsEntity});
   final ProfileActionsEntity profileActionsEntity;
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return InkWell(
       onTap: () {
         GoRouter.of(context).push(profileActionsEntity.routeName);
@@ -20,13 +23,15 @@ class ProfileItemAction extends StatelessWidget {
         ),
         leading: ProfileItemActionLeadingIcon(
             profileActionsEntity: profileActionsEntity),
-        title: Text(profileActionsEntity.title,
-            style: AppTextStyles(context)
-                .semiBold16
-                .copyWith(color: Colors.black)),
-        trailing: const Icon(
+        title: Text(
+          profileActionsEntity.title,
+          style: AppTextStyles(context)
+              .semiBold16
+              .copyWith(color: theme.textTheme.bodyLarge?.color),
+        ),
+        trailing: Icon(
           Icons.arrow_forward_ios,
-          color: Colors.black,
+          color: theme.iconTheme.color,
           size: 20,
         ),
       ),

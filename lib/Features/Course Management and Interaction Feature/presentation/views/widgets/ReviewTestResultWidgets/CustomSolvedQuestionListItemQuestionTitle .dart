@@ -12,9 +12,14 @@ class CustomSolvedQuestionListItemQuestionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final Color textColor = theme.textTheme.bodyLarge!.color!;
+
     return Text(
       questionTitle.isEmpty ? LocaleKeys.questionNotFound : questionTitle,
-      style: AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
+      style: AppTextStyles(context).semiBold20.copyWith(
+            color: textColor,
+          ),
     );
   }
 }

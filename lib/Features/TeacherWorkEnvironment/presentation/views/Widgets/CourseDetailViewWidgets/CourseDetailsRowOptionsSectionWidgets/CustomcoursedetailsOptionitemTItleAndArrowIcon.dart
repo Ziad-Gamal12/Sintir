@@ -11,6 +11,8 @@ class CustomcoursedetailsOptionitemTItleAndArrowIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -19,15 +21,15 @@ class CustomcoursedetailsOptionitemTItleAndArrowIcon extends StatelessWidget {
             title,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles(context).semiBold16.copyWith(
-                  color: Colors.black,
+                  color: theme.textTheme.bodyLarge?.color ?? Colors.black,
                 ),
           ),
         ),
         Transform.rotate(
           angle: 3.14,
-          child: const Icon(
+          child: Icon(
             Icons.arrow_back_ios,
-            color: Colors.black,
+            color: theme.iconTheme.color ?? Colors.black,
             size: 20,
           ),
         )

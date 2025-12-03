@@ -22,19 +22,24 @@ class CourseIntroductionSuccessViewSubscribeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    const priceColor = Colors.red;
+    final backgroundColor = theme.cardColor;
+    const shadowColor = Colors.black12;
+
     return Visibility(
       visible: !widget.isSubscribed,
       child: Container(
         padding: const EdgeInsets.symmetric(
             horizontal: KHorizontalPadding, vertical: 16),
         alignment: Alignment.center,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(16), topRight: Radius.circular(16)),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
-                color: Colors.black12, blurRadius: 30, offset: Offset(0, -15))
+                color: shadowColor, blurRadius: 30, offset: Offset(0, -15))
           ],
         ),
         child: Row(
@@ -51,12 +56,10 @@ class CourseIntroductionSuccessViewSubscribeButton extends StatelessWidget {
                             DisplayCourseBottomsheetNavigationRequirmentsEntity>());
                   }),
             ),
-            const SizedBox(
-              width: 20,
-            ),
+            const SizedBox(width: 20),
             Text("${course.price}  ${LocaleKeys.priceEgp}",
                 style:
-                    AppTextStyles(context).bold20.copyWith(color: Colors.red))
+                    AppTextStyles(context).bold20.copyWith(color: priceColor))
           ],
         ),
       ),

@@ -14,15 +14,26 @@ class CourseCouponGridViewItemExpiry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
+    final Color deleteIconColor = theme.colorScheme.error;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          "${LocaleKeys.expiresIn}: ${couponEntity.expiryDate.day} / ${couponEntity.expiryDate.month} / ${couponEntity.expiryDate.year}",
-          style: AppTextStyles(context).regular14.copyWith(color: Colors.black),
-          overflow: TextOverflow.ellipsis,
+        // Expiry Date Text
+        Expanded(
+          child: Text(
+            "${LocaleKeys.expiresIn}: ${couponEntity.expiryDate.day} / ${couponEntity.expiryDate.month} / ${couponEntity.expiryDate.year}",
+            style: AppTextStyles(context)
+                .regular14
+                .copyWith(color: primaryTextColor),
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
+
+        // Delete Button / Loading Indicator
         BlocSelector<CourseCouponsCubit, CourseCouponsState, bool>(
           selector: (state) {
             return state is DeleteCourseCouponLoading;
@@ -33,6 +44,7 @@ class CourseCouponGridViewItemExpiry extends StatelessWidget {
                 color: Colors.red,
               );
             }
+
             return IconButton(
               onPressed: () {
                 context.read<CourseCouponsCubit>().deleteCourseCoupon(

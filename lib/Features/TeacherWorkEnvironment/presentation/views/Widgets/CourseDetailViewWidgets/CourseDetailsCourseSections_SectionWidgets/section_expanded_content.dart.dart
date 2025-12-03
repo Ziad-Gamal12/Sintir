@@ -17,10 +17,12 @@ class SectionExpandedContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color containerColor = Theme.of(context).cardColor;
+
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: containerColor,
         borderRadius: BorderRadius.circular(8),
       ),
       child: CourseSectionItemList(

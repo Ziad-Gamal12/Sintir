@@ -36,6 +36,7 @@ import 'package:sintir/Features/MyCourses/Presentation/Views/MyCoursesView.dart'
 import 'package:sintir/Features/MyMistakes/Presentation/Views/MyMistakesView.dart';
 import 'package:sintir/Features/MyResults/Presentation/Views/MyResultsView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/ProfileView.dart';
+import 'package:sintir/Features/Profile/Presentation/Views/SettingsView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/UserPersonalDetailsView.dart';
 import 'package:sintir/Features/Search/Presentation/Views/SearchView.dart';
 import 'package:sintir/Features/Splash/Presentation/views/SplashView.dart';
@@ -418,6 +419,12 @@ class App_router {
         builder: (BuildContext context, GoRouterState state) {
           return ContentCreatorProfile(
               contentcreaterentity: state.extra as Contentcreaterentity);
+        },
+      ),
+      GoRoute(
+        path: SettingsView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const SettingsView();
         },
       ),
       GoRoute(

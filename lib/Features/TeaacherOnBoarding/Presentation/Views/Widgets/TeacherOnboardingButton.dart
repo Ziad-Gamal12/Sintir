@@ -35,7 +35,7 @@ class _TeacherOnBoardingButtonState extends State<TeacherOnBoardingButton> {
               totalSteps: 3,
               theme: ProgressButtonTheme(
                 progressColor: KMainColor,
-                backgroundColor: Colors.transparent.withOpacity(.1),
+                backgroundColor: Colors.transparent.withOpacity(.2),
                 strokeWidth: 5,
                 size: 90,
                 iconSize: 50,

@@ -23,6 +23,8 @@ class SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = ExpandableThemeData.of(context);
+
     return GestureDetector(
       onTap: () {
         if (sectionLessons.isEmpty) {

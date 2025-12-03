@@ -25,10 +25,14 @@ class CourseBottomSheet extends StatefulWidget {
 class _CourseBottomSheetState extends State<CourseBottomSheet> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     DisplayCourseBottomsheetNavigationRequirmentsEntity
         bottomsheetnavigationrequirmentsentity =
         DisplayCourseBottomsheetNavigationRequirmentsEntity(
             course: widget.courseEntity, isSubscribed: false);
+
     return BlocProvider(
       create: (context) => CourseSubscribtionsCubit(
         paymobRepo: getIt<PaymobRepo>(),
@@ -39,12 +43,15 @@ class _CourseBottomSheetState extends State<CourseBottomSheet> {
         child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              ),
-              border: Border.all(color: Colors.grey.shade300, width: 1)),
+            color: isDark ? const Color(0xFF1F1F1F) : Colors.white,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+            border: Border.all(
+                color: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+                width: 1),
+          ),
           child: SafeArea(
             child: Provider.value(
               value: bottomsheetnavigationrequirmentsentity,

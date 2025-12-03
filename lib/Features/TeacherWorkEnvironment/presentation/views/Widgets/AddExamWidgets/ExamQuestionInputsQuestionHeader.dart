@@ -15,9 +15,20 @@ class ExamQuestionInputsQuestionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get the current theme data
+    final ThemeData theme = Theme.of(context);
+    // Use the primary color for the main text, which adapts automatically (dark in light mode, light in dark mode)
+    final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
+
+    // Use theme-aware colors for accents
+    final Color iconColor = theme.primaryColor; // Often blue or a strong accent
+    final Color totalCountColor =
+        theme.colorScheme.error; // Often red or a contrasting color
+
     return Row(
       children: [
-        const Icon(FontAwesomeIcons.circleInfo, color: Colors.blue, size: 25),
+        // Use theme-aware color for the icon
+        Icon(FontAwesomeIcons.circleInfo, color: iconColor, size: 25),
         const SizedBox(
           width: 10,
         ),
@@ -27,21 +38,27 @@ class ExamQuestionInputsQuestionHeader extends StatelessWidget {
               text: " ${LocaleKeys.questionNumber}",
               style: AppTextStyles(context)
                   .semiBold16
-                  .copyWith(color: Colors.black),
+                  // Use primaryTextColor instead of hardcoded Colors.black
+                  .copyWith(color: primaryTextColor),
             ),
             TextSpan(
               text: "${index + 1}",
-              style: AppTextStyles(context).bold16.copyWith(color: Colors.blue),
+              // Use theme-aware accent color
+              style: AppTextStyles(context).bold16.copyWith(color: iconColor),
             ),
             TextSpan(
               text: " ${LocaleKeys.of} ",
               style: AppTextStyles(context)
                   .regular16
-                  .copyWith(color: Colors.black),
+                  // Use primaryTextColor instead of hardcoded Colors.black
+                  .copyWith(color: primaryTextColor),
             ),
             TextSpan(
               text: "$totalQuestions",
-              style: AppTextStyles(context).bold16.copyWith(color: Colors.red),
+              // Use theme-aware contrasting color
+              style: AppTextStyles(context)
+                  .bold16
+                  .copyWith(color: totalCountColor),
             ),
           ]),
         ),

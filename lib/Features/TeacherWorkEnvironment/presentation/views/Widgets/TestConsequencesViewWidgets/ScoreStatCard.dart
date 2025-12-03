@@ -17,12 +17,17 @@ class ScoreStatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final Color cardColor = theme.cardColor;
+    final Color borderColor = theme.dividerColor;
+    final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
+
     return Container(
       alignment: Alignment.center,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.grey),
+        color: cardColor,
+        border: Border.all(color: borderColor),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
@@ -33,7 +38,10 @@ class ScoreStatCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text("$total/", style: AppTextStyles(context).semiBold16),
+              Text("$total/",
+                  style: AppTextStyles(context)
+                      .semiBold16
+                      .copyWith(color: primaryTextColor)),
               Text(
                 value,
                 style: AppTextStyles(context).semiBold16.copyWith(color: color),
@@ -44,7 +52,9 @@ class ScoreStatCard extends StatelessWidget {
           Text(
             label,
             textAlign: TextAlign.center,
-            style: AppTextStyles(context).semiBold14,
+            style: AppTextStyles(context)
+                .semiBold14
+                .copyWith(color: primaryTextColor),
           ),
         ],
       ),

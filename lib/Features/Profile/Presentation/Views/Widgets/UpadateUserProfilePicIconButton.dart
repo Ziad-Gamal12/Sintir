@@ -13,6 +13,8 @@ class UpadateUserProfilePicIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return InkWell(
       onTap: () {
         context
@@ -20,10 +22,10 @@ class UpadateUserProfilePicIconButton extends StatelessWidget {
             .updatedUserProfilePic(uid: user.uid);
       },
       child: CircleAvatar(
-        backgroundColor: Colors.grey.shade100,
-        child: const Icon(
+        backgroundColor: theme.cardColor,
+        child: Icon(
           Icons.add_a_photo,
-          color: Colors.black,
+          color: theme.iconTheme.color,
           size: 20,
         ),
       ),

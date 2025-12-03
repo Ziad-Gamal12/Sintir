@@ -33,7 +33,7 @@ class SubscribtionViewBodyActionButton extends StatelessWidget {
                 LocaleKeys.applyingCoupon,
                 style: AppTextStyles(context)
                     .regular16
-                    .copyWith(color: Colors.black),
+                    .copyWith(color: Colors.grey),
               );
             } else if (state is IsCouponExistSuccess) {
               return Text(

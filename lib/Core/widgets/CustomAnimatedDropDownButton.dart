@@ -21,11 +21,21 @@ class CustomAnimatedDropDownButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return CustomDropdown<String>.searchRequest(
       futureRequest: _getFakeRequestData,
       hintText: hintText ?? LocaleKeys.chooseOption,
       decoration: CustomDropdownDecoration(
-        closedFillColor: const Color(0xffF9FAFA),
+        closedShadow: null,
+        expandedShadow: null,
+        searchFieldDecoration: SearchFieldDecoration(
+          fillColor:
+              isDarkMode ? const Color(0xFF2A2A2A) : const Color(0xffD1D1D1),
+        ),
+        expandedFillColor:
+            isDarkMode ? const Color(0xFF2A2A2A) : const Color(0xffD1D1D1),
+        closedFillColor:
+            isDarkMode ? const Color(0xFF2A2A2A) : const Color(0xffD1D1D1),
         closedBorder: BoxBorder.all(
           color: const Color(0xffD1D1D1),
           width: .5,

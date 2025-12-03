@@ -14,7 +14,7 @@ class CustomFavouriteListHeader extends StatelessWidget {
       children: [
         Text(
           LocaleKeys.favorites,
-          style: AppTextStyles(context).bold20.copyWith(color: Colors.black),
+          style: AppTextStyles(context).bold20,
         ),
       ],
     );

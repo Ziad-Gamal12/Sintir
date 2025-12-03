@@ -146,14 +146,6 @@ class Assets {
   /// assets/Icons/SVG_Icons/BottomNavBarSearchInActiveIcon.svg
   static const String assetsIconsSVGIconsBottomNavBarSearchInActiveIcon = "assets/Icons/SVG_Icons/BottomNavBarSearchInActiveIcon.svg";
 
-  /// Assets for assetsIconsSVGIconsBottomNavBarTeacherActiveIcon
-  /// assets/Icons/SVG_Icons/BottomNavBarTeacherActiveIcon.svg
-  static const String assetsIconsSVGIconsBottomNavBarTeacherActiveIcon = "assets/Icons/SVG_Icons/BottomNavBarTeacherActiveIcon.svg";
-
-  /// Assets for assetsIconsSVGIconsBottomNavBarTeacherInActiveIcon
-  /// assets/Icons/SVG_Icons/BottomNavBarTeacherInActiveIcon.svg
-  static const String assetsIconsSVGIconsBottomNavBarTeacherInActiveIcon = "assets/Icons/SVG_Icons/BottomNavBarTeacherInActiveIcon.svg";
-
   /// Assets for assetsIconsSVGIconsCheckedIcon
   /// assets/Icons/SVG_Icons/Checked_icon.svg
   static const String assetsIconsSVGIconsCheckedIcon = "assets/Icons/SVG_Icons/Checked_icon.svg";
@@ -170,6 +162,10 @@ class Assets {
   /// assets/Icons/SVG_Icons/CustomFileIcon.svg
   static const String assetsIconsSVGIconsCustomFileIcon = "assets/Icons/SVG_Icons/CustomFileIcon.svg";
 
+  /// Assets for assetsIconsSVGIconsEgyptFlag
+  /// assets/Icons/SVG_Icons/EgyptFlag.svg
+  static const String assetsIconsSVGIconsEgyptFlag = "assets/Icons/SVG_Icons/EgyptFlag.svg";
+
   /// Assets for assetsIconsSVGIconsErrorIcon
   /// assets/Icons/SVG_Icons/errorIcon.svg
   static const String assetsIconsSVGIconsErrorIcon = "assets/Icons/SVG_Icons/errorIcon.svg";
@@ -181,6 +177,10 @@ class Assets {
   /// Assets for assetsIconsSVGIconsFaceBookIcons
   /// assets/Icons/SVG_Icons/faceBookIcons.svg
   static const String assetsIconsSVGIconsFaceBookIcons = "assets/Icons/SVG_Icons/faceBookIcons.svg";
+
+  /// Assets for assetsIconsSVGIconsFranceFlage
+  /// assets/Icons/SVG_Icons/FranceFlage.svg
+  static const String assetsIconsSVGIconsFranceFlage = "assets/Icons/SVG_Icons/FranceFlage.svg";
 
   /// Assets for assetsIconsSVGIconsGoogle
   /// assets/Icons/SVG_Icons/google.svg
@@ -205,6 +205,10 @@ class Assets {
   /// Assets for assetsIconsSVGIconsTelephone
   /// assets/Icons/SVG_Icons/telephone.svg
   static const String assetsIconsSVGIconsTelephone = "assets/Icons/SVG_Icons/telephone.svg";
+
+  /// Assets for assetsIconsSVGIconsUSAFlag
+  /// assets/Icons/SVG_Icons/USAFlag.svg
+  static const String assetsIconsSVGIconsUSAFlag = "assets/Icons/SVG_Icons/USAFlag.svg";
 
   /// Assets for assetsIconsSVGIconsUserAvatar
   /// assets/Icons/SVG_Icons/userAvatar.svg

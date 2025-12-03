@@ -31,57 +31,76 @@ class _CustomSolvedQuestionListItemState
   Widget build(BuildContext context) {
     final hasSolutionImage =
         widget.examResultSolvedQuestionEntity.solutionImageUrl.isNotEmpty;
+
+    // Colors based on correctness
+    final borderColor = widget.examResultSolvedQuestionEntity.isCorrect
+        ? Colors.green.shade400
+        : Colors.red.shade400;
+    final backgroundColor = Theme.of(context).brightness == Brightness.dark
+        ? Colors.grey[900]
+        : Colors.grey.shade50;
+
     return AspectRatio(
       aspectRatio: 2 / 1.4,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
         decoration: BoxDecoration(
-          color: Colors.grey.shade50,
-          border: Border.all(
-            color: widget.examResultSolvedQuestionEntity.isCorrect
-                ? Colors.green
-                : Colors.red,
-            width: 1,
-          ),
-          borderRadius: BorderRadius.circular(10),
+          color: backgroundColor,
+          border: Border.all(color: borderColor, width: 1.2),
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.03),
+              blurRadius: 6,
+              offset: const Offset(0, 3),
+            ),
+          ],
         ),
         child: Stack(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomSolvedQuestionListItemHeader(
-                  index: widget.index,
-                  length: widget.length,
-                  isCorrect: widget.examResultSolvedQuestionEntity.isCorrect,
-                ),
-                const SizedBox(height: 16),
-                CustomSolvedQuestionListItemQuestionTitle(
-                  questionTitle:
-                      widget.examResultSolvedQuestionEntity.questionTitle,
-                ),
-                const SizedBox(height: 12),
-                Expanded(
-                  child: CustomSolvedQuestionListItemContent(
-                    examResultSolvedQuestionEntity:
-                        widget.examResultSolvedQuestionEntity,
+            Positioned.fill(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomSolvedQuestionListItemHeader(
+                    index: widget.index,
+                    length: widget.length,
+                    isCorrect: widget.examResultSolvedQuestionEntity.isCorrect,
                   ),
-                ),
-              ],
+                  const SizedBox(height: 14),
+                  CustomSolvedQuestionListItemQuestionTitle(
+                    questionTitle:
+                        widget.examResultSolvedQuestionEntity.questionTitle,
+                  ),
+                  const SizedBox(height: 12),
+                  Expanded(
+                    child: CustomSolvedQuestionListItemContent(
+                      examResultSolvedQuestionEntity:
+                          widget.examResultSolvedQuestionEntity,
+                    ),
+                  ),
+                ],
+              ),
             ),
             if (isSolutionVisible)
-              SolutionImageOverlay(
-                imageUrl:
-                    widget.examResultSolvedQuestionEntity.solutionImageUrl,
+              Positioned.fill(
+                child: SolutionImageOverlay(
+                  imageUrl:
+                      widget.examResultSolvedQuestionEntity.solutionImageUrl,
+                ),
               ),
             if (hasSolutionImage)
-              ShowHideSolutionButton(
-                isVisible: isSolutionVisible,
-                onTap: () {
-                  setState(() {
-                    isSolutionVisible = !isSolutionVisible;
-                  });
-                },
+              Positioned(
+                top: 8,
+                right: 8,
+                child: ShowHideSolutionButton(
+                  isVisible: isSolutionVisible,
+                  onTap: () {
+                    setState(() {
+                      isSolutionVisible = !isSolutionVisible;
+                    });
+                  },
+                ),
               ),
           ],
         ),

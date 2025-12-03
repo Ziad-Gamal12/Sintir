@@ -111,7 +111,7 @@ class _PayOutBalanceBodyState extends State<PayOutBalanceBody> {
                 thickness: 1,
                 indent: 80,
                 endIndent: 80,
-                color: Colors.black,
+                color: Colors.grey,
               ),
               const SizedBox(height: 20),
 

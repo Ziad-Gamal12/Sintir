@@ -11,15 +11,19 @@ class ProfileItemActionLeadingIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = profileActionsEntity.getColor(context);
+
     return Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: profileActionsEntity.color == null
-              ? Colors.grey.shade50
-              : profileActionsEntity.color?.withOpacity(.05),
-        ),
-        child: Icon(profileActionsEntity.icon,
-            color: profileActionsEntity.color ?? Colors.black, size: 24));
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: color.withOpacity(0.08), // subtle background for both themes
+      ),
+      child: Icon(
+        profileActionsEntity.icon,
+        color: color,
+        size: 24,
+      ),
+    );
   }
 }

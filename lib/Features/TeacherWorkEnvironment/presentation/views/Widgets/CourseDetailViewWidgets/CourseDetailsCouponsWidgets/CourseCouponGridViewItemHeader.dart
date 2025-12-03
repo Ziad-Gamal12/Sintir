@@ -17,6 +17,9 @@ class CourseCouponGridViewItemHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color primaryTextColor =
+        Theme.of(context).textTheme.bodyLarge!.color!;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -25,7 +28,7 @@ class CourseCouponGridViewItemHeader extends StatelessWidget {
         Text(LocaleKeys.coupon,
             style: AppTextStyles(context)
                 .semiBold24
-                .copyWith(color: Colors.black)),
+                .copyWith(color: primaryTextColor)),
         const Spacer(),
         CourseCouponGridViewItemHeaderSwitcher(
             courseID: courseID, couponEntity: couponEntity),

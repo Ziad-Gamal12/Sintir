@@ -18,6 +18,9 @@ class _VideoStateInfoVideoAbsentWidgetState
     extends State<VideoStateInfoVideoAbsentWidget> {
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final Color errorColor = theme.colorScheme.error;
+
     return BlocBuilder<VideoConsequencesCubit, VideoConsequencesState>(
       buildWhen: (previous, current) {
         return current is VideoConsequencesGetVideoAttendedCountSuccess ||
@@ -32,8 +35,8 @@ class _VideoStateInfoVideoAbsentWidgetState
           enabled: state is VideoConsequencesGetVideoAttendedCountLoading ||
               state is VideoConsequencesGetTotalStudentsCountLoading,
           child: _buildStatColumn(LocaleKeys.studentsAbsent,
-              getVideoAbsentCount(state: state), context,
-              color: Colors.red),
+              getVideoAbsentCount(state: state, context: context), context,
+              color: errorColor),
         );
       },
     );
@@ -41,6 +44,7 @@ class _VideoStateInfoVideoAbsentWidgetState
 
   String getVideoAbsentCount({
     required VideoConsequencesState state,
+    required BuildContext context,
   }) {
     if (state is VideoConsequencesGetVideoAttendedCountFailure) {
       return state.errMessage;
@@ -53,15 +57,38 @@ class _VideoStateInfoVideoAbsentWidgetState
 
   Widget _buildStatColumn(String label, String value, BuildContext context,
       {Color color = Colors.black}) {
+    final ThemeData theme = Theme.of(context);
+    final Color labelColor = theme.textTheme.bodyLarge!.color!;
+    final Color errorColor = theme.colorScheme.error;
+
+    // Check if the value is an error message from the state
+    final String? failureMessage1 = (context
+            .read<VideoConsequencesCubit>()
+            .state is VideoConsequencesGetVideoAttendedCountFailure)
+        ? (context.read<VideoConsequencesCubit>().state
+                as VideoConsequencesGetVideoAttendedCountFailure)
+            .errMessage
+        : null;
+    final String? failureMessage2 = (context
+            .read<VideoConsequencesCubit>()
+            .state is VideoConsequencesGetTotalStudentsCountFailure)
+        ? (context.read<VideoConsequencesCubit>().state
+                as VideoConsequencesGetTotalStudentsCountFailure)
+            .errMessage
+        : null;
+
+    final bool isError = value == failureMessage1 || value == failureMessage2;
+
+    final Color valueColor = isError ? errorColor : color;
+
     return Column(
       children: [
         Text(label,
-            style: AppTextStyles(context)
-                .semiBold14
-                .copyWith(color: Colors.black)),
+            style:
+                AppTextStyles(context).semiBold14.copyWith(color: labelColor)),
         const SizedBox(height: 10),
         Text(value,
-            style: AppTextStyles(context).bold14.copyWith(color: color)),
+            style: AppTextStyles(context).bold14.copyWith(color: valueColor)),
       ],
     );
   }

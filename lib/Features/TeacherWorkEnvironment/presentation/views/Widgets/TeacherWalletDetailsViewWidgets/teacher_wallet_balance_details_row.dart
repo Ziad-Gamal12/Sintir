@@ -15,13 +15,21 @@ class TeacherWalletBalanceDetailsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Row(
       children: [
-        Icon(icon, color: Colors.black, size: 20),
+        Icon(icon, color: theme.iconTheme.color, size: 20),
         const SizedBox(width: 10),
-        Text(title, style: const TextStyle(color: Colors.black)),
+        Text(title,
+            style: AppTextStyles(context)
+                .regular16
+                .copyWith(color: theme.textTheme.bodyMedium?.color)),
         const Spacer(),
-        Text(value, style: AppTextStyles(context).semiBold16),
+        Text(value,
+            style: AppTextStyles(context)
+                .semiBold16
+                .copyWith(color: theme.textTheme.bodyMedium?.color)),
       ],
     );
   }

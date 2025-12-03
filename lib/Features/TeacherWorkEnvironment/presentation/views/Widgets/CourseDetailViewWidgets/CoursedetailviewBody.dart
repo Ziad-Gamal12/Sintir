@@ -77,7 +77,8 @@ class _CourseDetailViewBodyState extends State<CourseDetailViewBody> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.1),
                 Text(
                   LocaleKeys.courseDetails,
-                  style: AppTextStyles(context).bold20,
+                  style: AppTextStyles(context).bold20.copyWith(
+                      color: Theme.of(context).textTheme.bodyLarge?.color),
                 ),
                 const SizedBox(height: 20),
               ],

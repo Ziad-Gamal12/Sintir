@@ -15,7 +15,7 @@ class QuestionTitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       '${index + 1}- $title',
-      style: AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
+      style: AppTextStyles(context).semiBold16,
       textAlign: TextAlign.right,
     );
   }

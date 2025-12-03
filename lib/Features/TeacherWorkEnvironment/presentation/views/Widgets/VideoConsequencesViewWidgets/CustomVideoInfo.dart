@@ -12,6 +12,10 @@ class CustomVideoInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final Color titleColor = theme.textTheme.bodyLarge!.color!;
+    final Color idColor = theme.textTheme.bodySmall!.color!.withOpacity(0.7);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -19,8 +23,7 @@ class CustomVideoInfo extends StatelessWidget {
         Text(
           video.title,
           textAlign: TextAlign.center,
-          style:
-              AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
+          style: AppTextStyles(context).semiBold20.copyWith(color: titleColor),
         ),
         const SizedBox(
           height: 10,
@@ -28,7 +31,7 @@ class CustomVideoInfo extends StatelessWidget {
         Text(
           video.id,
           textAlign: TextAlign.center,
-          style: AppTextStyles(context).regular14.copyWith(color: Colors.grey),
+          style: AppTextStyles(context).regular14.copyWith(color: idColor),
         ),
       ],
     );

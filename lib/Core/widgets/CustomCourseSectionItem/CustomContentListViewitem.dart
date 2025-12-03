@@ -42,6 +42,8 @@ class _CustomContentListViewitemState extends State<CustomContentListViewitem> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return ExpandableNotifier(
       controller: _controller,
       child: BlocConsumer<CourseSectionsCubit, CourseSectionsState>(
@@ -62,7 +64,9 @@ class _CustomContentListViewitemState extends State<CustomContentListViewitem> {
         builder: (context, state) => ContentContainer(
           child: ExpandablePanel(
             controller: _controller,
-            theme: const ExpandableThemeData(hasIcon: false),
+            theme: const ExpandableThemeData(
+              hasIcon: false,
+            ),
             header: SectionHeader(
               sectionItem: widget.sectionItem,
               course: widget.course,

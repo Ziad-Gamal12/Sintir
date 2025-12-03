@@ -14,15 +14,19 @@ class CourseBottomSheetUnSubscribedActionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return BlocBuilder<CourseSubscribtionsCubit, CourseSubscribtionsState>(
       builder: (context, state) {
         return Column(
           children: [
             Custombutton(
               text: LocaleKeys.exploreContent,
-              color: Colors.white,
-              textColor: Colors.black,
-              side: const BorderSide(width: 1, color: Colors.black),
+              color: isDark ? const Color(0xFF2A2A2A) : Colors.white,
+              textColor: isDark ? Colors.white : Colors.black,
+              side: BorderSide(
+                  width: 1, color: isDark ? Colors.white70 : Colors.black),
               onPressed: () {
                 GoRouter.of(context).push(
                   CourseIntroductionView.routeName,

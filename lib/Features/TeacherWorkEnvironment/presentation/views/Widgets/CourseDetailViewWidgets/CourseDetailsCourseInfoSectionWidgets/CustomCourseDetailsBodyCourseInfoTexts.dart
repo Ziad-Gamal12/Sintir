@@ -13,6 +13,9 @@ class CustomCourseDetailsBodyCourseInfoTexts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textColor = theme.textTheme.bodyMedium?.color ?? Colors.grey;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -20,13 +23,13 @@ class CustomCourseDetailsBodyCourseInfoTexts extends StatelessWidget {
           "${LocaleKeys.createdDate} (${courseEntity.postedDate})",
           style: AppTextStyles(context)
               .regular10
-              .copyWith(color: const Color(0xff818181)),
+              .copyWith(color: textColor.withOpacity(0.7)),
         ),
         Text(
           " ${LocaleKeys.descriptionLabel}:",
           style: AppTextStyles(context)
               .semiBold12
-              .copyWith(color: const Color(0xff818181)),
+              .copyWith(color: textColor.withOpacity(0.8)),
         ),
         Text(
           courseEntity.description,
@@ -34,7 +37,7 @@ class CustomCourseDetailsBodyCourseInfoTexts extends StatelessWidget {
           maxLines: 6,
           style: AppTextStyles(context)
               .regular10
-              .copyWith(color: const Color(0xff818181)),
+              .copyWith(color: textColor.withOpacity(0.7)),
         ),
       ],
     );

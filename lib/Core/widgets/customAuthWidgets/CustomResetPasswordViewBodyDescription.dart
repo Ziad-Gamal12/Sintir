@@ -13,8 +13,7 @@ class CustomResetPasswordViewBodyDescription extends StatelessWidget {
       width: double.infinity,
       child: Text(
         LocaleKeys.resetPasswordDescription,
-        style:
-            AppTextStyles(context).semiBold14.copyWith(color: Colors.black54),
+        style: AppTextStyles(context).semiBold14,
         textAlign: TextAlign.center,
       ),
     );

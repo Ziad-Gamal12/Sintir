@@ -17,6 +17,10 @@ class _TestStatsInfoAttendedStudentCountState
     extends State<TestStatsInfoAttendedStudentCount> {
   @override
   Widget build(BuildContext context) {
+    final Color primaryTextColor =
+        Theme.of(context).textTheme.bodyLarge!.color!;
+    final Color errorColor = Theme.of(context).colorScheme.error;
+
     return BlocBuilder<TestConsequencesCubit, TestConsequencesState>(
       buildWhen: (previous, current) {
         return current is TestConsequencesGetAttendedCountSuccess ||
@@ -28,7 +32,7 @@ class _TestStatsInfoAttendedStudentCountState
           return Expanded(
               child: Text(
             state.errMessage,
-            style: AppTextStyles(context).regular14.copyWith(color: Colors.red),
+            style: AppTextStyles(context).regular14.copyWith(color: errorColor),
           ));
         }
         return Expanded(
@@ -39,7 +43,9 @@ class _TestStatsInfoAttendedStudentCountState
               state is TestConsequencesGetAttendedCountSuccess
                   ? state.count.toString()
                   : "0",
-              context),
+              context,
+              // Use primary text color for the value, as it represents a default count
+              color: primaryTextColor),
         ));
       },
     );
@@ -47,12 +53,13 @@ class _TestStatsInfoAttendedStudentCountState
 
   Widget _buildStatColumn(String label, String value, BuildContext context,
       {Color color = Colors.black}) {
+    final Color labelColor = Theme.of(context).textTheme.bodyLarge!.color!;
+
     return Column(
       children: [
         Text(label,
-            style: AppTextStyles(context)
-                .semiBold14
-                .copyWith(color: Colors.black)),
+            style:
+                AppTextStyles(context).semiBold14.copyWith(color: labelColor)),
         const SizedBox(height: 10),
         Text(value,
             style: AppTextStyles(context).bold14.copyWith(color: color)),

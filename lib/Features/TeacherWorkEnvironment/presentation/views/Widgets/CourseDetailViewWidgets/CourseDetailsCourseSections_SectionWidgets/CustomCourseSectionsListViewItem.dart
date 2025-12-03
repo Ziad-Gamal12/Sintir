@@ -52,6 +52,8 @@ class _CustomCourseDetailsSectionsListViewItemState
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return BlocListener<CourseSectionsCubit, CourseSectionsState>(
       listener: customCourseDetailsSectionsListViewItemListener,
       child: Container(
@@ -59,14 +61,14 @@ class _CustomCourseDetailsSectionsListViewItemState
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade100,
+              color: theme.shadowColor.withOpacity(0.05),
               blurRadius: 7,
               spreadRadius: 1,
             ),
           ],
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.grey, width: .5),
-          color: Colors.grey.shade100,
+          border: Border.all(color: theme.dividerColor, width: 0.5),
+          color: theme.cardColor,
         ),
         child: ExpandablePanel(
           controller: _controller,

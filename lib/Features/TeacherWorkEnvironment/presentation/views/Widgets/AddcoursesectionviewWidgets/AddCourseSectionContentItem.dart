@@ -6,26 +6,29 @@ import 'package:svg_flutter/svg.dart';
 class AddCourseSectionContentItem extends StatelessWidget {
   const AddCourseSectionContentItem({super.key, required this.item});
   final Addcoursesectionoptionitem item;
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Column(
       children: [
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: const [
+            color: theme.cardColor,
+            boxShadow: [
               BoxShadow(
-                color: Colors.black12,
+                color: theme.shadowColor.withOpacity(0.1),
                 blurRadius: 4,
               ),
             ],
-            border: Border.all(color: Colors.grey.shade300, width: 1.5),
+            border: Border.all(color: theme.dividerColor, width: 1.5),
             shape: BoxShape.circle,
           ),
           child: SvgPicture.asset(
             item.icon,
-            color: Colors.black,
+            color: theme.iconTheme.color,
             height: 28,
             width: 28,
           ),
@@ -35,8 +38,9 @@ class AddCourseSectionContentItem extends StatelessWidget {
         ),
         Text(
           item.title,
-          style:
-              AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
+          style: AppTextStyles(context)
+              .semiBold16
+              .copyWith(color: theme.textTheme.bodyMedium?.color),
         )
       ],
     );

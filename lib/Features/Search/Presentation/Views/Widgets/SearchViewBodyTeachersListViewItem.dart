@@ -13,10 +13,13 @@ class SearchViewBodyTeachersListViewItem extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 30,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(45),
-            child: CustomCachedNetworkImage(
-                imageUrl: contentcreaterentity.profileImageUrl),
+          child: AspectRatio(
+            aspectRatio: 1,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(45),
+              child: CustomCachedNetworkImage(
+                  imageUrl: contentcreaterentity.profileImageUrl),
+            ),
           ),
         ),
         const SizedBox(

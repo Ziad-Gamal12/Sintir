@@ -9,7 +9,7 @@ class SubscribtionViewBodyCourseDetailsTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       LocaleKeys.courseDetails,
-      style: AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
+      style: AppTextStyles(context).semiBold20,
     );
   }
 }

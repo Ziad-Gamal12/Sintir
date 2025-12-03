@@ -25,6 +25,8 @@ class _FilterSectionCardState extends State<FilterSectionCard> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    bool isDark = theme.brightness == Brightness.dark;
     return GestureDetector(
       onTapDown: _onTapDown,
       onTapUp: _onTapUp,
@@ -35,19 +37,19 @@ class _FilterSectionCardState extends State<FilterSectionCard> {
         padding: const EdgeInsets.all(12),
         margin: const EdgeInsets.symmetric(horizontal: 2),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: isDark ? Colors.grey[900] : Colors.white,
           borderRadius: BorderRadius.circular(14),
           boxShadow: _pressed
               ? [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.06),
+                    color: theme.shadowColor.withOpacity(0.06),
                     blurRadius: 6,
                     offset: const Offset(0, 3),
                   )
                 ]
               : [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
+                    color: theme.shadowColor.withOpacity(0.08),
                     blurRadius: 12,
                     offset: const Offset(0, 6),
                   )
@@ -56,7 +58,10 @@ class _FilterSectionCardState extends State<FilterSectionCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.title, style: AppTextStyles(context).semiBold16),
+            Text(widget.title,
+                style: AppTextStyles(context).semiBold16.copyWith(
+                      color: theme.textTheme.bodyLarge?.color,
+                    )),
             const SizedBox(height: 10),
             widget.child,
           ],

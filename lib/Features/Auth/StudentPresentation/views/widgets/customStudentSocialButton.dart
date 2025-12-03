@@ -15,12 +15,20 @@ class Customstudentsocialbutton extends StatelessWidget {
       required this.text});
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return MaterialButton(
       height: 54,
       minWidth: double.infinity,
       shape: RoundedRectangleBorder(
-          side: const BorderSide(color: Color(0xffDDDFDF), width: 1),
-          borderRadius: BorderRadius.circular(16)),
+        side: BorderSide(
+          color:
+              isDark ? Colors.white.withOpacity(.15) : const Color(0xffDDDFDF),
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(16),
+      ),
       onPressed: onPressed,
       child: Padding(
         padding: const EdgeInsets.all(17),
@@ -32,15 +40,13 @@ class Customstudentsocialbutton extends StatelessWidget {
               width: 20,
               height: 20,
             ),
-            const SizedBox(
-              width: 53,
-            ),
+            const SizedBox(width: 40),
             Text(
               text,
-              style: AppTextStyles(context)
-                  .semiBold16
-                  .copyWith(color: const Color(0xff0C0D0D)),
-            )
+              style: AppTextStyles(context).semiBold16.copyWith(
+                    color: isDark ? Colors.white : const Color(0xff0C0D0D),
+                  ),
+            ),
           ],
         ),
       ),

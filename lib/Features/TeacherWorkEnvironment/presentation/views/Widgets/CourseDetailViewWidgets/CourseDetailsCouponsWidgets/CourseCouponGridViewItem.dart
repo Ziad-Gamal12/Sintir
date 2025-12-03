@@ -12,20 +12,37 @@ class CourseCouponGridViewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final Color cardColor = theme.cardColor;
+    final Color borderColor = theme.dividerColor;
+    final bool isDarkMode = theme.brightness == Brightness.dark;
+
+    // Adjusted shadow for theme compatibility
+    final List<BoxShadow> boxShadows = isDarkMode
+        ? [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.4),
+              blurRadius: 10,
+              spreadRadius: 1,
+              offset: const Offset(0, 3),
+            ),
+          ]
+        : [
+            BoxShadow(
+              color: Colors.grey.shade100,
+              blurRadius: 10,
+              spreadRadius: 1,
+              offset: const Offset(0, 3),
+            ),
+          ];
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardColor,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade100,
-            blurRadius: 10,
-            spreadRadius: 1,
-            offset: const Offset(0, 3),
-          ),
-        ],
-        border: Border.all(color: Colors.grey.shade300, width: .5),
+        boxShadow: boxShadows,
+        border: Border.all(color: borderColor.withOpacity(0.5), width: .5),
       ),
       child: Column(
         children: [

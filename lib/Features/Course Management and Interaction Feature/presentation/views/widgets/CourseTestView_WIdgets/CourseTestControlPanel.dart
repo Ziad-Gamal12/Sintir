@@ -16,13 +16,16 @@ class CourseTestControlPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Colors.grey.shade50,
+        color: isDark ? const Color(0xFF1E1E1E) : Colors.grey.shade50,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.shade200,
+            color: isDark ? Colors.grey.shade900 : Colors.grey.shade200,
             blurRadius: 50,
             spreadRadius: 1,
             offset: const Offset(5, 15),
@@ -32,12 +35,8 @@ class CourseTestControlPanel extends StatelessWidget {
       ),
       child: Column(
         children: [
-          /// Displays question stats (total, answered, unanswered)
           QuestionStatsRow(exam: exam),
-
           const SizedBox(height: 12),
-
-          /// Displays timer + test action buttons
           TestTimerAndActionsRow(stopWatchTimer: stopWatchTimer),
         ],
       ),

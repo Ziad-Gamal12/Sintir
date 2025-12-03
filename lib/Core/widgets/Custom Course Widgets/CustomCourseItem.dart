@@ -24,21 +24,21 @@ class _CustomCourseItemState extends State<CustomCourseItem> {
   @override
   Widget build(BuildContext context) {
     final course = widget.courseItem;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return GestureDetector(
-      onTap: () {
-        widget.ontap();
-      },
+      onTap: widget.ontap,
       child: Container(
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: Colors.white,
-          boxShadow: const [
+          color: isDark ? const Color(0xFF1F1F1F) : Colors.white,
+          boxShadow: [
             BoxShadow(
-              color: Colors.black12,
+              color: isDark ? Colors.black12 : Colors.black12,
               blurRadius: 12,
-              offset: Offset(0, 4),
+              offset: const Offset(0, 4),
             )
           ],
         ),

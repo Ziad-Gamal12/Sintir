@@ -2,7 +2,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
 class SubscriberResultsChart extends StatefulWidget {
@@ -15,28 +14,59 @@ class SubscriberResultsChart extends StatefulWidget {
 }
 
 class _SubscriberResultsChartState extends State<SubscriberResultsChart> {
+  // Toggle: false = Individual Scores, true = Average Line
   bool showAverage = false;
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final Color secondaryTextColor = theme.textTheme.bodyMedium!.color!;
+    final Color chartBackgroundColor = theme.cardColor;
+    final Color gridColor = theme.dividerColor.withOpacity(0.5);
+    final Color mainColor = theme.colorScheme.primary;
+
     if (widget.results.isEmpty) {
       return Center(
         child: Text(
           LocaleKeys.noResults,
-          style: const TextStyle(color: Colors.black54, fontSize: 16),
+          style: AppTextStyles(context)
+              .regular16
+              .copyWith(color: secondaryTextColor),
         ),
       );
     }
-    List<TestResultEntity> results = [];
-    if (widget.results.length > 6) {
-      results = widget.results.sublist(0, 6);
-    } else {
-      results = widget.results;
-    }
-    final values = results.map((e) => (e.result ?? 0).toDouble()).toList();
-    final maxValue =
-        values.isNotEmpty ? values.reduce((a, b) => a > b ? a : b) + 5 : 10;
-    final avgValue = values.isNotEmpty
+
+    // Use the last 6 results for the chart visualization (most recent attempts)
+    // We reverse the list to get the most recent, then reverse back to chronological order for the chart (x-axis)
+    List<TestResultEntity> recentResults = widget.results.reversed.toList();
+    List<TestResultEntity> displayedResults = recentResults.length > 6
+        ? recentResults
+            .sublist(0, 6)
+            .reversed // Get last 6, then reverse to original chronological order
+            .toList()
+        : recentResults.reversed.toList(); // Use all if 6 or less
+
+    // Values for plotting
+    final List<double> values =
+        displayedResults.map((e) => (e.result ?? 0).toDouble()).toList();
+
+    // Calculate max value for Y-axis (adds padding of 5 above the highest score)
+    // Ensures maxY is at least 10 if all scores are low/zero.
+    final double maxScoreValue =
+        values.isNotEmpty ? values.reduce((a, b) => a > b ? a : b) : 0;
+
+    // Y-Axis Maximum: Ensure it ends nicely on a multiple of 5 (the interval)
+    double calculatedMaxY = maxScoreValue + 5;
+    calculatedMaxY = (calculatedMaxY / 5).ceil() * 5.0;
+    final double chartMaxY = showAverage
+        ? (values.isNotEmpty
+            ? (values.reduce((a, b) => a > b ? a : b) + 5)
+                .clamp(10, double.infinity)
+            : 10)
+        : calculatedMaxY;
+
+    // Calculate average value of the displayed results
+    final double avgValue = values.isNotEmpty
         ? values.reduce((a, b) => a + b) / values.length
         : 0.0;
 
@@ -46,12 +76,15 @@ class _SubscriberResultsChartState extends State<SubscriberResultsChart> {
           alignment: Alignment.centerRight,
           child: TextButton.icon(
             onPressed: () => setState(() => showAverage = !showAverage),
-            icon: Icon(showAverage ? Icons.show_chart : Icons.bar_chart,
-                color: KMainColor),
-            label: Text(showAverage ? LocaleKeys.showMore : LocaleKeys.showLess,
+            icon: Icon(
+                showAverage ? Icons.show_chart : Icons.stacked_line_chart,
+                color: mainColor),
+            // Corrected button text for clarity:
+            label: Text(
+                showAverage ? LocaleKeys.results : LocaleKeys.averageResults,
                 style: AppTextStyles(context)
                     .regular16
-                    .copyWith(color: KMainColor)),
+                    .copyWith(color: mainColor)),
           ),
         ),
         const SizedBox(height: 8),
@@ -60,11 +93,11 @@ class _SubscriberResultsChartState extends State<SubscriberResultsChart> {
           child: Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: chartBackgroundColor,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: theme.shadowColor.withOpacity(0.1),
                   blurRadius: 10,
                   spreadRadius: 2,
                 ),
@@ -78,46 +111,55 @@ class _SubscriberResultsChartState extends State<SubscriberResultsChart> {
             ),
             child: LineChart(
               LineChartData(
+                // X-axis configuration
                 minX: 0,
-                maxX: values.length - 1,
+                maxX: (values.length - 1).toDouble().clamp(0, double.infinity),
+
+                // Y-axis configuration
                 minY: 0,
-                maxY: showAverage ? avgValue + 5 : maxValue.toDouble(),
+                // Use the calculated maximum Y for better fit and interval alignment
+                maxY: chartMaxY,
+
+                // Grid Lines
                 gridData: FlGridData(
                   show: true,
                   drawVerticalLine: true,
-                  horizontalInterval: 5,
+                  horizontalInterval: 5, // Interval remains 5
                   verticalInterval: 1,
                   getDrawingHorizontalLine: (value) => FlLine(
-                    color: Colors.grey.shade200,
+                    color: gridColor,
                     strokeWidth: 1,
                   ),
                   getDrawingVerticalLine: (value) => FlLine(
-                    color: Colors.grey.shade200,
+                    color: gridColor,
                     strokeWidth: 1,
                   ),
                 ),
+
+                // Axis Titles
                 titlesData: FlTitlesData(
                   topTitles: const AxisTitles(
-                      sideTitles: SideTitles(
-                    showTitles: false,
-                  )),
+                      sideTitles: SideTitles(showTitles: false)),
                   rightTitles: const AxisTitles(
-                      sideTitles: SideTitles(
-                    showTitles: false,
-                  )),
+                      sideTitles: SideTitles(showTitles: false)),
+
+                  // Bottom Titles (Attempt number)
                   bottomTitles: AxisTitles(
                     sideTitles: SideTitles(
                       showTitles: true,
                       interval: 1,
                       reservedSize: 20,
                       getTitlesWidget: (value, meta) => Text(
+                        // Displaying 'Attempt 1', 'Attempt 2', etc.
                         "${LocaleKeys.attempt} ${value.toInt() + 1}",
                         style: AppTextStyles(context)
                             .regular11
-                            .copyWith(color: Colors.black87),
+                            .copyWith(color: secondaryTextColor),
                       ),
                     ),
                   ),
+
+                  // Left Titles (Score value)
                   leftTitles: AxisTitles(
                     sideTitles: SideTitles(
                       showTitles: true,
@@ -127,49 +169,74 @@ class _SubscriberResultsChartState extends State<SubscriberResultsChart> {
                         value.toInt().toString(),
                         style: AppTextStyles(context)
                             .regular11
-                            .copyWith(color: Colors.black87),
+                            .copyWith(color: secondaryTextColor),
                       ),
                     ),
                   ),
                 ),
+
                 borderData: FlBorderData(show: false),
+
+                // Data Lines
                 lineBarsData: [
                   LineChartBarData(
-                    isCurved: true,
-                    barWidth: 4,
+                    isCurved:
+                        !showAverage, // Only curve if showing individual scores
+                    barWidth: 3,
+
+                    // Spots data: show average line or individual scores
                     spots: showAverage
                         ? [
                             FlSpot(0, avgValue),
-                            FlSpot(values.length - 1, avgValue)
+                            FlSpot(
+                                (values.length - 1)
+                                    .toDouble()
+                                    .clamp(0, double.infinity),
+                                avgValue)
                           ]
                         : List.generate(values.length,
                             (i) => FlSpot(i.toDouble(), values[i])),
-                    color: Colors.blueAccent,
-                    gradient: const LinearGradient(
-                      colors: [Colors.blueAccent, Colors.greenAccent],
-                    ),
+
+                    color: showAverage ? Colors.redAccent : mainColor,
+                    gradient: showAverage
+                        ? null
+                        : LinearGradient(
+                            colors: [mainColor, mainColor.withOpacity(0.7)],
+                          ),
+
+                    // Area below the line
                     belowBarData: BarAreaData(
-                      show: true,
+                      show:
+                          !showAverage, // Only show area for individual scores
                       gradient: LinearGradient(
                         colors: [
-                          Colors.blueAccent.withOpacity(0.3),
-                          Colors.greenAccent.withOpacity(0.3)
+                          mainColor.withOpacity(0.3),
+                          mainColor.withOpacity(0.05)
                         ],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),
                     ),
-                    dotData: const FlDotData(show: true),
+
+                    // Dots on the line
+                    dotData: FlDotData(
+                        show:
+                            !showAverage), // Only show dots for individual scores
                   ),
                 ],
+
+                // Tooltip when touching the chart
                 lineTouchData: LineTouchData(
                   handleBuiltInTouches: true,
                   touchTooltipData: LineTouchTooltipData(
                     getTooltipItems: (touchedSpots) => touchedSpots
                         .map(
                           (spot) => LineTooltipItem(
-                            "${LocaleKeys.attempt}: ${spot.x.toInt() + 1}\n ${LocaleKeys.studentScore}: ${spot.y.toStringAsFixed(1)}",
-                            const TextStyle(color: Colors.white),
+                            // Display either the score or the average value
+                            showAverage
+                                ? "${LocaleKeys.averageResults}: ${spot.y.toStringAsFixed(1)}"
+                                : "${LocaleKeys.attempt}: ${spot.x.toInt() + 1}\n ${LocaleKeys.studentScore}: ${spot.y.toStringAsFixed(1)}",
+                            TextStyle(color: chartBackgroundColor),
                           ),
                         )
                         .toList(),

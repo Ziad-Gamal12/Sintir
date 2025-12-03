@@ -55,7 +55,7 @@ class _VideoNotesSliverListState extends State<VideoNotesSliverList> {
               itemCount: widget.notes.length,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 20),
                   child: CustomVideoNote(
                     note: widget.notes[index],
                   ),

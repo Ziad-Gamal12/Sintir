@@ -73,9 +73,6 @@ class CustomTextField extends StatelessWidget {
       obscureText: obscureText,
       validator: validator,
       maxLines: maxLines,
-      style: AppTextStyles(context).semiBold14.copyWith(
-            color: const Color(0xFF1C1C1E),
-          ),
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: AppTextStyles(context)
@@ -97,9 +94,6 @@ class CustomTextField extends StatelessWidget {
         errorBorder: errorBorder,
         focusedErrorBorder: errorBorder,
         disabledBorder: disabledBorder,
-
-        filled: true,
-        fillColor: const Color(0xFFF8F9FB),
 
         contentPadding: const EdgeInsets.symmetric(
           vertical: 16,

@@ -16,6 +16,8 @@ class CourseItemDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = AppTextStyles(context);
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,17 +28,19 @@ class CourseItemDetails extends StatelessWidget {
           maxLines: 1,
           textAlign: TextAlign.right,
           overflow: TextOverflow.ellipsis,
-          style: styles.semiBold12.copyWith(color: Colors.black),
+          style: styles.semiBold12.copyWith(
+            color: isDark ? Colors.white : Colors.black,
+          ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         Text(
           courseItem.description,
           maxLines: 2,
           textAlign: TextAlign.right,
           overflow: TextOverflow.ellipsis,
-          style: styles.regular10.copyWith(color: Colors.grey),
+          style: styles.regular10.copyWith(
+            color: isDark ? Colors.white70 : Colors.grey,
+          ),
         ),
         const Spacer(),
         if (courseItem.contentcreaterentity != null)

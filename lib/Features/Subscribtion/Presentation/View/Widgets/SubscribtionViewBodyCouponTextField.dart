@@ -57,15 +57,15 @@ class _SubscribtionViewBodyCouponTextFieldState
               return null;
             },
             suffixIcon: isLoading
-                ? const SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(strokeWidth: 2),
+                ? const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: FittedBox(
+                        child: CircularProgressIndicator(strokeWidth: 2)),
                   )
                 : IconButton(
                     icon: const Icon(
                       FontAwesomeIcons.magnifyingGlass,
-                      color: Colors.black,
+                      color: Colors.grey,
                       size: 20,
                     ),
                     onPressed: () {

@@ -63,6 +63,9 @@ class _CustomAddFavouriteIconState extends State<CustomAddFavouriteIcon>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     bool isFav = context.select<FavouritesCubit, bool>(
       (cubit) => cubit.favoritesMap.containsKey(widget.courseEntity.id),
     );
@@ -81,7 +84,9 @@ class _CustomAddFavouriteIconState extends State<CustomAddFavouriteIcon>
         scale: _scaleAnimation,
         child: CircleAvatar(
           radius: 18,
-          backgroundColor: Colors.transparent.withOpacity(.4),
+          backgroundColor: isDark
+              ? Colors.white.withOpacity(.1)
+              : Colors.black.withOpacity(.1),
           child: IconButton(
             onPressed: () => _handleTap(isFav),
             icon: AnimatedSwitcher(
@@ -93,7 +98,11 @@ class _CustomAddFavouriteIconState extends State<CustomAddFavouriteIcon>
                 child: Icon(
                   isFav ? FontAwesomeIcons.solidHeart : FontAwesomeIcons.heart,
                   key: ValueKey<bool>(isFav),
-                  color: isFav ? Colors.red : Colors.white,
+                  color: isFav
+                      ? Colors.red
+                      : isDark
+                          ? Colors.white
+                          : Colors.black,
                 ),
               ),
             ),

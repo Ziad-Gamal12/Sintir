@@ -29,8 +29,7 @@ class CustomSendNoteText extends StatelessWidget {
       child: Text.rich(TextSpan(children: [
         TextSpan(
             text: " ${LocaleKeys.facedSomeIssues}  ",
-            style:
-                AppTextStyles(context).regular13.copyWith(color: Colors.black)),
+            style: AppTextStyles(context).regular13),
         TextSpan(
             text: LocaleKeys.sendNote,
             style:

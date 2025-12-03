@@ -16,12 +16,21 @@ class CustomAddNewCourseSectionItemButton extends StatelessWidget {
   final CourseSectionEntity section;
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final bool isDarkMode = theme.brightness == Brightness.dark;
+
+    final Color buttonColor = theme.cardColor; // Background
+    final Color textColor = theme.textTheme.bodyLarge!.color!; // Text
+
+    final Color borderColor =
+        isDarkMode ? Colors.grey.shade700 : Colors.grey.shade300;
+
     return Custombutton(
         text: LocaleKeys.addLecture,
-        color: Colors.grey.shade50,
-        textColor: Colors.black,
+        color: buttonColor,
+        textColor: textColor,
         borderRadius: BorderRadius.circular(8),
-        side: BorderSide(color: Colors.grey.shade300),
+        side: BorderSide(color: borderColor),
         onPressed: () {
           showCustomBottomSheet(
             context: context,

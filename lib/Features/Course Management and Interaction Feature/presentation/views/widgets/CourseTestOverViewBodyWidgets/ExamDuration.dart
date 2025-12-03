@@ -12,8 +12,12 @@ class ExamDuration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textStyle =
-        AppTextStyles(context).regular14.copyWith(color: Colors.black);
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textStyle = AppTextStyles(context).regular14.copyWith(
+          color: isDark ? Colors.white70 : Colors.black87,
+        );
+
     return Row(
       children: [
         Container(
@@ -22,9 +26,9 @@ class ExamDuration extends StatelessWidget {
             color: Colors.blueAccent.withOpacity(.2),
             shape: BoxShape.circle,
           ),
-          child: const Icon(
+          child: Icon(
             Icons.timer,
-            color: Colors.black,
+            color: isDark ? Colors.white70 : Colors.black,
             size: 20,
           ),
         ),

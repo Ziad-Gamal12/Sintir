@@ -18,6 +18,8 @@ class ProfileViewBodyUserInfo extends StatefulWidget {
 class _ProfileViewBodyUserInfoState extends State<ProfileViewBodyUserInfo> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return BlocBuilder<UserPersonalDetailsCubit, UserPersonalDetailsState>(
       builder: (context, state) {
         UserEntity user = getUserData();
@@ -27,11 +29,15 @@ class _ProfileViewBodyUserInfoState extends State<ProfileViewBodyUserInfo> {
           leading: UserAvatar(profilePicurl: user.profilePicurl),
           title: Text(
             "${user.firstName} ${user.lastName}",
-            style: AppTextStyles(context).bold16.copyWith(color: Colors.black),
+            style: AppTextStyles(context)
+                .bold16
+                .copyWith(color: theme.textTheme.bodyLarge?.color),
           ),
           subtitle: Text(
             user.email,
-            style: AppTextStyles(context).light14.copyWith(color: Colors.black),
+            style: AppTextStyles(context)
+                .light14
+                .copyWith(color: theme.textTheme.bodyMedium?.color),
           ),
           trailing: UpadateUserProfilePicIconButton(user: user),
         );

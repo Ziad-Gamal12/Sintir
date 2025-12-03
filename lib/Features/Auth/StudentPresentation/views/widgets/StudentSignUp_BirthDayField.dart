@@ -7,9 +7,8 @@ import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/locale_keys.dart';
 
 class StudentsignupBirthdayfield extends StatefulWidget {
-  const StudentsignupBirthdayfield({
-    super.key,
-  });
+  const StudentsignupBirthdayfield({super.key});
+
   @override
   State<StudentsignupBirthdayfield> createState() =>
       _StudentsignupBirthdayfieldState();
@@ -18,6 +17,7 @@ class StudentsignupBirthdayfield extends StatefulWidget {
 class _StudentsignupBirthdayfieldState
     extends State<StudentsignupBirthdayfield> {
   DateTime? pickedDate;
+
   showdatepicker() {
     showDatePicker(
       context: context,
@@ -25,26 +25,37 @@ class _StudentsignupBirthdayfieldState
       lastDate: DateTime(2025),
       initialEntryMode: DatePickerEntryMode.calendar,
       builder: (context, child) {
+        final theme = Theme.of(context);
+        final isDark = theme.brightness == Brightness.dark;
+
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: Colors.blue,
-              onPrimary: Colors.white,
-              onSurface: Colors.black87,
-            ),
+            colorScheme: isDark
+                ? const ColorScheme.dark(
+                    primary: Color(0xFF4E7EFF),
+                    onPrimary: Colors.white,
+                    onSurface: Colors.white70,
+                  )
+                : const ColorScheme.light(
+                    primary: Color(0xFF4E7EFF),
+                    onPrimary: Colors.white,
+                    onSurface: Colors.black87,
+                  ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor: const Color(0xFF4E7EFF), // Buttons color
+                foregroundColor: const Color(0xFF4E7EFF),
                 textStyle: const TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 15,
                 ),
               ),
             ),
-            dialogTheme: const DialogThemeData(backgroundColor: Colors.white),
+            dialogTheme: DialogThemeData(
+              backgroundColor: isDark ? const Color(0xFF1F1F1F) : Colors.white,
+            ),
           ),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(18), // Premium rounded corners
+            borderRadius: BorderRadius.circular(18),
             child: child!,
           ),
         );
@@ -61,29 +72,34 @@ class _StudentsignupBirthdayfieldState
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return InkWell(
-      onTap: () {
-        showdatepicker();
-      },
+      onTap: showdatepicker,
       child: Container(
         height: 56,
         width: double.infinity,
         decoration: BoxDecoration(
-            color: const Color(0xffF9FAFA),
-            borderRadius: BorderRadius.circular(12)),
+            color: isDark ? const Color(0xFF2A2A2A) : const Color(0xffF9FAFA),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+                color: isDark ? Colors.grey.shade700 : const Color(0xffF9FAFA),
+                width: 2)),
         child: ListTile(
           title: Text(
             pickedDate == null
                 ? LocaleKeys.studentBirthDate
                 : "${pickedDate!.day}/${pickedDate!.month}/${pickedDate!.year}",
             style: AppTextStyles(context).bold14.copyWith(
-                color: pickedDate == null
-                    ? const Color(0xffAEAEB2)
-                    : Colors.grey.shade700),
+                  color: pickedDate == null
+                      ? (isDark ? Colors.white54 : const Color(0xffAEAEB2))
+                      : (isDark ? Colors.white70 : Colors.grey.shade700),
+                ),
           ),
-          leading: const Icon(
+          leading: Icon(
             Icons.date_range_outlined,
-            color: Color(0xFF6C6C70),
+            color: isDark ? Colors.white70 : const Color(0xFF6C6C70),
           ),
         ),
       ),

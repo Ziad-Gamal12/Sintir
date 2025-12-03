@@ -44,19 +44,19 @@ class _TestStatsInfoState extends State<TestStatsInfo> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const TestStatsInfoAttendedStudentCount(),
-            verticalDivider(),
+            verticalDivider(context),
             const Expanded(
               child: TestAttendancePresentage(),
             ),
           ],
         ),
-        horizontalDivider(),
+        horizontalDivider(context),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const TestStatsInfoSuccessedCount(),
-            verticalDivider(),
+            verticalDivider(context),
             const TestStatsInfoFailedCount(),
           ],
         ),
@@ -64,16 +64,16 @@ class _TestStatsInfoState extends State<TestStatsInfo> {
     );
   }
 
-  Widget verticalDivider() => Container(
+  Widget verticalDivider(BuildContext context) => Container(
         margin: const EdgeInsets.symmetric(horizontal: 10),
         height: 50,
         width: 1,
-        color: Colors.black,
+        color: Theme.of(context).dividerColor,
       );
 
-  Widget horizontalDivider() => Container(
+  Widget horizontalDivider(BuildContext context) => Container(
         margin: const EdgeInsets.symmetric(vertical: 20),
         height: 1,
-        color: Colors.black,
+        color: Theme.of(context).dividerColor,
       );
 }

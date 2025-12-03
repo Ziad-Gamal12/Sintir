@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/video_consequences_cubit/video_consequences_cubit.dart';
-import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -19,6 +18,12 @@ class VideoAttendancePresentage extends StatefulWidget {
 class _VideoAttendancePresentageState extends State<VideoAttendancePresentage> {
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final Color primaryColor = theme.colorScheme.primary;
+    final Color errorColor = theme.colorScheme.error;
+    final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
+    final Color backgroundColor = theme.dividerColor.withOpacity(0.5);
+
     return Column(
       children: [
         BlocBuilder<VideoConsequencesCubit, VideoConsequencesState>(
@@ -34,12 +39,12 @@ class _VideoAttendancePresentageState extends State<VideoAttendancePresentage> {
               return Text(state.errMessage,
                   style: AppTextStyles(context)
                       .regular14
-                      .copyWith(color: Colors.red));
+                      .copyWith(color: errorColor));
             } else if (state is VideoConsequencesGetTotalStudentsCountFailure) {
               return Text(state.errMessage,
                   style: AppTextStyles(context)
                       .regular14
-                      .copyWith(color: Colors.red));
+                      .copyWith(color: errorColor));
             }
             return Skeletonizer(
               enabled: state is VideoConsequencesGetVideoAttendedCountLoading ||
@@ -53,9 +58,10 @@ class _VideoAttendancePresentageState extends State<VideoAttendancePresentage> {
                   "${widget.percentage.toStringAsFixed(2)} %",
                   style: AppTextStyles(context)
                       .semiBold16
-                      .copyWith(color: Colors.black),
+                      .copyWith(color: primaryTextColor),
                 ),
-                progressColor: KMainColor,
+                progressColor: primaryColor,
+                backgroundColor: backgroundColor,
                 circularStrokeCap: CircularStrokeCap.round,
               ),
             );
@@ -66,7 +72,9 @@ class _VideoAttendancePresentageState extends State<VideoAttendancePresentage> {
         ),
         Text(LocaleKeys.attendanceRate,
             textAlign: TextAlign.center,
-            style: AppTextStyles(context).semiBold16)
+            style: AppTextStyles(context)
+                .semiBold16
+                .copyWith(color: primaryTextColor))
       ],
     );
   }

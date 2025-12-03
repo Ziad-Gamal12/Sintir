@@ -9,7 +9,7 @@ class ChoosingUserKindTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: AppTextStyles(context).bold32.copyWith(color: Colors.black),
+      style: AppTextStyles(context).bold32,
     );
   }
 }

@@ -40,20 +40,36 @@ class CreatorStats extends StatelessWidget {
     required String value,
     required BuildContext context,
   }) {
+    final ThemeData theme = Theme.of(context);
+    final Color primaryColor =
+        theme.colorScheme.primary; // Use primary color for icons and values
+    final Color secondaryTextColor =
+        theme.textTheme.bodyMedium!.color!; // Use muted color for the label
+
     return Column(
       children: [
-        Icon(icon, size: 22, color: Colors.blueAccent),
+        Icon(icon,
+            size: 22,
+            color: primaryColor), // Use theme primary color for the icon
         const SizedBox(height: 4),
         AnimatedSwitcher(
             duration: const Duration(milliseconds: 500),
             switchInCurve: Curves.easeOutBack,
             switchOutCurve: Curves.easeIn,
             key: ValueKey(value),
-            child: Text(value, style: AppTextStyles(context).semiBold16)),
-        Text(label,
-            style: AppTextStyles(context)
-                .regular14
-                .copyWith(color: Colors.black54)),
+            child: Text(
+              value,
+              style: AppTextStyles(context).semiBold16.copyWith(
+                    color:
+                        primaryColor, // Use theme primary color for the value
+                  ),
+            )),
+        Text(
+          label,
+          style: AppTextStyles(context).regular14.copyWith(
+              color:
+                  secondaryTextColor), // Use theme secondary text color for the label
+        ),
       ],
     );
   }

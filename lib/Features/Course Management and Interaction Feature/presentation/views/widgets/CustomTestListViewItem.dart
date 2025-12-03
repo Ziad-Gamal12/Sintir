@@ -40,9 +40,7 @@ class Customtestlistviewitem extends StatelessWidget {
             subtitle: " (${item.durationTime} ${LocaleKeys.durationMinutes})",
             trailing: Text(
               "${item.questions.length} ${LocaleKeys.questionsCount}",
-              style: AppTextStyles(context)
-                  .regular14
-                  .copyWith(color: Colors.black),
+              style: AppTextStyles(context).regular14,
             ),
           )),
         ),

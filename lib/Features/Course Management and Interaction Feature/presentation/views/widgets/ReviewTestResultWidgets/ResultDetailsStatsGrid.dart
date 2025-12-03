@@ -11,6 +11,15 @@ class ResultDetailsStatsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    Color adjustCardColor(Color lightColor, Color darkColor) =>
+        isDark ? darkColor : lightColor;
+
+    Color adjustTextColor(Color lightColor, Color darkColor) =>
+        isDark ? darkColor : lightColor;
+
     return GridView(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -23,28 +32,31 @@ class ResultDetailsStatsGrid extends StatelessWidget {
       ),
       children: [
         Testresultdetailsrow(
-          cardColor: Colors.grey.shade200,
-          color: Colors.black,
+          cardColor:
+              adjustCardColor(Colors.grey.shade200, Colors.grey.shade800),
+          color: adjustTextColor(Colors.black, Colors.white),
           headline: LocaleKeys.totalQuestions,
           value: testresulteEntity.totalQuestions.toString(),
         ),
         Testresultdetailsrow(
-          cardColor: Colors.blue.shade100,
-          color: Colors.blue.shade700,
+          cardColor:
+              adjustCardColor(Colors.blue.shade100, Colors.blue.shade900),
+          color: adjustTextColor(Colors.blue.shade700, Colors.blue.shade300),
           headline: LocaleKeys.questionsSolved,
           value: testresulteEntity.questionsSolvedListEntity.length.toString(),
         ),
         Testresultdetailsrow(
-          cardColor: Colors.green.shade100,
-          color: Colors.green.shade700,
+          cardColor:
+              adjustCardColor(Colors.green.shade100, Colors.green.shade900),
+          color: adjustTextColor(Colors.green.shade700, Colors.green.shade300),
           headline: LocaleKeys.correctQuestions,
           value: ResultDetailsHelper.getSuccessQuestions(testresulteEntity)
               .length
               .toString(),
         ),
         Testresultdetailsrow(
-          cardColor: Colors.red.shade100,
-          color: Colors.red.shade700,
+          cardColor: adjustCardColor(Colors.red.shade100, Colors.red.shade900),
+          color: adjustTextColor(Colors.red.shade700, Colors.red.shade300),
           headline: LocaleKeys.wrongQuestions,
           value: (testresulteEntity.questionsSolvedListEntity.length -
                   ResultDetailsHelper.getSuccessQuestions(testresulteEntity)

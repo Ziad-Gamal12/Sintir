@@ -11,21 +11,26 @@ class TeacherWalletBalanceDetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
       width: double.infinity,
       alignment: Alignment.center,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.lightBlue.shade100,
+        color: theme.cardColor, // يعتمد على الـ theme
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.shade100,
+            color: theme.shadowColor.withOpacity(0.1),
             blurRadius: 10,
             spreadRadius: 2,
           ),
         ],
-        border: Border.all(color: Colors.grey.shade100, width: 1),
+        border: Border.all(
+          color: theme.dividerColor,
+          width: 1,
+        ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -33,8 +38,9 @@ class TeacherWalletBalanceDetailsCard extends StatelessWidget {
         children: [
           Text(
             LocaleKeys.walletBalance,
-            style:
-                AppTextStyles(context).regular16.copyWith(color: Colors.black),
+            style: AppTextStyles(context)
+                .regular16
+                .copyWith(color: theme.textTheme.bodyMedium?.color),
           ),
           const SizedBox(height: 10),
           Text(

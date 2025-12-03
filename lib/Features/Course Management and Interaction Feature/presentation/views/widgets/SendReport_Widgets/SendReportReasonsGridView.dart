@@ -31,9 +31,7 @@ class Sendreportreasonsgridview extends StatelessWidget {
                 child: Text(
                   Sendcoursereportentity.reportReasons[index].title,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles(context)
-                      .semiBold12
-                      .copyWith(color: Colors.black),
+                  style: AppTextStyles(context).semiBold12,
                 ),
               )
             ],

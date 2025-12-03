@@ -17,12 +17,13 @@ class SectionExpanded extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocBuilder<CourseSectionsCubit, CourseSectionsState>(
       builder: (context, state) {
         return Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: theme.cardColor,
             borderRadius: BorderRadius.circular(8),
           ),
           child: state is GetSectionItemsLoading &&

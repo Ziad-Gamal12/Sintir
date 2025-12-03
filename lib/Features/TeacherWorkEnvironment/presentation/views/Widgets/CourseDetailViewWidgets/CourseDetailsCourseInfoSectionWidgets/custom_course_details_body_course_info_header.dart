@@ -14,6 +14,8 @@ class CustomCourseDetailsBodyCourseInfoHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -24,7 +26,7 @@ class CustomCourseDetailsBodyCourseInfoHeader extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles(context)
                   .semiBold20
-                  .copyWith(color: Colors.black),
+                  .copyWith(color: theme.textTheme.bodyLarge?.color),
             ),
           ),
         ),
@@ -37,9 +39,9 @@ class CustomCourseDetailsBodyCourseInfoHeader extends StatelessWidget {
               context: context,
             );
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.edit,
-            color: Colors.black,
+            color: theme.iconTheme.color,
           ),
         ),
       ],

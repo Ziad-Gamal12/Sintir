@@ -25,7 +25,7 @@ class TeacherWorkenvironmentviewBodyWalletSectionHeader
         ),
         Text(
           LocaleKeys.wallet,
-          style: AppTextStyles(context).bold20.copyWith(color: Colors.black),
+          style: AppTextStyles(context).bold20,
         ),
         const Spacer(),
         InkWell(

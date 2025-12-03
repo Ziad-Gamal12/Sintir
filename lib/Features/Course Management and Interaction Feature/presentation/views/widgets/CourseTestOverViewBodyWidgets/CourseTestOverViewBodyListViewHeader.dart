@@ -9,9 +9,14 @@ class CourseTestOverViewBodyListViewHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Text(
       LocaleKeys.previousResults,
-      style: AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
+      style: AppTextStyles(context)
+          .semiBold20
+          .copyWith(color: isDark ? Colors.white : Colors.black),
     );
   }
 }

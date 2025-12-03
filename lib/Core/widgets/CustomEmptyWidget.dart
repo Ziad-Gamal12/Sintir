@@ -23,8 +23,7 @@ class CustomEmptyWidget extends StatelessWidget {
           ),
           Text(
             text ?? LocaleKeys.emptyContent,
-            style:
-                AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
+            style: AppTextStyles(context).semiBold16,
           ),
         ],
       ),

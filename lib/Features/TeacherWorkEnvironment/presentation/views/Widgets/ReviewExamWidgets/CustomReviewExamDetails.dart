@@ -12,28 +12,51 @@ class TestSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Fetch theme data
+    final ThemeData theme = Theme.of(context);
+    final Color cardColor = theme.cardColor;
+    final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
+    final bool isDarkMode = theme.brightness == Brightness.dark;
+
+    // Define main card shadow based on theme
+    final List<BoxShadow> mainShadow = isDarkMode
+        ? [
+            BoxShadow(
+              color: Colors.white.withOpacity(0.05),
+              blurRadius: 8,
+              offset: const Offset(0, 5),
+            )
+          ]
+        : const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10,
+              offset: Offset(0, 10),
+            )
+          ];
+
+    // Read entity from context
     CourseTestEntity courseTestEntity =
         context.read<NavigateExamReviewRequirmentsEntity>().coursetestentity;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        // Use theme-aware color
+        color: cardColor,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 10,
-            offset: Offset(0, 10),
-          )
-        ],
+        // Use theme-aware shadow
+        boxShadow: mainShadow,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             courseTestEntity.title,
-            style:
-                AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
+            style: AppTextStyles(context)
+                .semiBold20
+                // Use primaryTextColor
+                .copyWith(color: primaryTextColor),
           ),
           const SizedBox(height: 18),
           Row(
@@ -61,31 +84,54 @@ class TestSummaryCard extends StatelessWidget {
     );
   }
 
+  // Helper widget updated for dark mode
   Widget _buildInfoItem({
     required IconData icon,
     required String label,
     required String value,
     required BuildContext context,
   }) {
+    // Fetch theme data inside the helper
+    final ThemeData theme = Theme.of(context);
+    final Color iconBoxColor = theme.cardColor;
+    final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
+    // Use the primary/accent color for the icon itself
+    final Color iconColor = theme.primaryColor;
+    final bool isDarkMode = theme.brightness == Brightness.dark;
+
+    // Define nested container shadow based on theme
+    final List<BoxShadow> nestedShadow = isDarkMode
+        ? [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.4),
+              blurRadius: 8,
+              offset: const Offset(0, 5),
+            )
+          ]
+        : const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10,
+              offset: Offset(0, 10),
+            )
+          ];
+
     return Expanded(
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.white,
+              // Use theme-aware color for the icon container
+              color: iconBoxColor,
               borderRadius: BorderRadius.circular(14),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10,
-                  offset: Offset(0, 10),
-                )
-              ],
+              // Use theme-aware shadow for the icon container
+              boxShadow: nestedShadow,
             ),
             child: Icon(
               icon,
-              color: Colors.black,
+              // Use theme-aware color for the icon
+              color: iconColor,
               size: 22,
             ),
           ),
@@ -100,7 +146,8 @@ class TestSummaryCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles(context)
                         .regular14
-                        .copyWith(color: Colors.black),
+                        // Use theme-aware text color for the label
+                        .copyWith(color: primaryTextColor.withOpacity(0.7)),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -109,7 +156,8 @@ class TestSummaryCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles(context)
                       .semiBold16
-                      .copyWith(color: Colors.black),
+                      // Use theme-aware text color for the value
+                      .copyWith(color: primaryTextColor),
                 ),
               ],
             ),

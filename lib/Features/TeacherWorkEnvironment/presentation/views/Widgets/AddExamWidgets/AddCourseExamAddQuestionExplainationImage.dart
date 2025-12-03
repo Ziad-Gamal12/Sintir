@@ -9,9 +9,13 @@ import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class AddCourseExamAddQuestionExplainationImage extends StatefulWidget {
-  const AddCourseExamAddQuestionExplainationImage(
-      {super.key, required this.coursetestquestionentity});
+  const AddCourseExamAddQuestionExplainationImage({
+    super.key,
+    required this.coursetestquestionentity,
+  });
+
   final CourseTestQuestionEntity coursetestquestionentity;
+
   @override
   State<AddCourseExamAddQuestionExplainationImage> createState() =>
       _AddCourseExamAddQuestionExplainationImageState();
@@ -21,6 +25,8 @@ class _AddCourseExamAddQuestionExplainationImageState
     extends State<AddCourseExamAddQuestionExplainationImage> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return InkWell(
       onTap: () {
         context.read<TestItemCubit>().pickQuestionSolutionImage();
@@ -29,21 +35,18 @@ class _AddCourseExamAddQuestionExplainationImageState
         width: double.infinity,
         padding:
             const EdgeInsets.only(top: 20, left: 27, right: 27, bottom: 29),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          color: theme.cardColor,
+          borderRadius: const BorderRadius.only(
             bottomLeft: Radius.circular(10),
             bottomRight: Radius.circular(10),
           ),
         ),
         child: BlocBuilder<TestItemCubit, TestItemState>(
           buildWhen: (previous, current) {
-            if (current is PickQuestionSolutionImageFailure ||
+            return current is PickQuestionSolutionImageFailure ||
                 current is PickQuestionSolutionImageSuccess ||
-                current is PickQuestionSolutionImageLoading) {
-              return true;
-            }
-            return false;
+                current is PickQuestionSolutionImageLoading;
           },
           builder: (context, state) {
             if (state is PickQuestionSolutionImageFailure) {
@@ -65,17 +68,16 @@ class _AddCourseExamAddQuestionExplainationImageState
                       Assets.assetsIconsAddImageIcon,
                       height: 25,
                       width: 25,
+                      color: theme.iconTheme.color,
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
+                    const SizedBox(width: 10),
                     Text(
                       LocaleKeys.answerImage,
                       textAlign: TextAlign.center,
                       style: AppTextStyles(context)
                           .semiBold12
-                          .copyWith(color: Colors.black),
-                    )
+                          .copyWith(color: theme.textTheme.bodyMedium?.color),
+                    ),
                   ],
                 ),
               );

@@ -13,10 +13,15 @@ class UserBasicInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = AppTextStyles(context);
+    final ThemeData theme = Theme.of(context);
+    final Color cardColor = theme.cardColor;
+    final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
+    final Color iconColor =
+        theme.colorScheme.primary; // A distinct color for icons/emphasis
 
     return Card(
       elevation: 4,
-      color: Colors.white,
+      color: cardColor, // Use theme card color
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
@@ -28,7 +33,8 @@ class UserBasicInfo extends StatelessWidget {
             // Full Name
             Text(
               user.fullName,
-              style: styles.semiBold20.copyWith(color: Colors.black),
+              style: styles.semiBold20.copyWith(
+                  color: primaryTextColor), // Use theme primary text color
             ),
 
             const SizedBox(height: 16),

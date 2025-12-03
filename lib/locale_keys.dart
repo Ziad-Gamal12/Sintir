@@ -25,6 +25,8 @@ class LocaleKeys {
   static String get chooseOption => 'choose_option'.tr();
 
   static String get shared => 'shared'.tr();
+  static String get darkMode => 'darkMode'.tr();
+
   static String get videoLoadFailed => 'video_load_failed'.tr();
   static String get myCourses => 'my_courses'.tr();
   static String get totalPages => 'total_pages'.tr();

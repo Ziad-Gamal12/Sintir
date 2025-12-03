@@ -27,11 +27,21 @@ class _PremiumVideoPlayerState extends State<PremiumVideoPlayer> {
   final CustomVideoControllerBetter _controller = CustomVideoControllerBetter();
   bool _isLoading = true;
   bool _hasError = false;
+  bool _didInitVideo = false; // Flag to prevent repeated calls
 
   @override
   void initState() {
     super.initState();
-    _initVideo();
+  }
+
+  // 💡 FIX: Move initialization from initState to didChangeDependencies
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_didInitVideo) {
+      _initVideo();
+      _didInitVideo = true;
+    }
   }
 
   Future<void> _initVideo() async {

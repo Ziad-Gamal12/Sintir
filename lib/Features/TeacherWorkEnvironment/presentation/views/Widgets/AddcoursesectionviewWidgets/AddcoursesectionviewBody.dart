@@ -14,8 +14,11 @@ class Addcoursesectionviewbody extends StatelessWidget {
   const Addcoursesectionviewbody({
     super.key,
   });
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Form(
       key: Variables.AddCourseSectionFormKey,
       child: Padding(
@@ -25,14 +28,15 @@ class Addcoursesectionviewbody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const CourseSectionTextFields(),
-            const Divider(
+            Divider(
               height: 40,
-              color: Colors.grey,
+              color: theme.dividerColor,
             ),
             Text(
               LocaleKeys.content,
-              style:
-                  AppTextStyles(context).bold20.copyWith(color: Colors.black),
+              style: AppTextStyles(context)
+                  .bold20
+                  .copyWith(color: theme.textTheme.bodyMedium?.color),
             ),
             const SizedBox(
               height: 20,

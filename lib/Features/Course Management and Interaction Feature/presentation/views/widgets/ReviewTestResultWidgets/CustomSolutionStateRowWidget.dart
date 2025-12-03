@@ -9,6 +9,9 @@ class CustomSolutionStateRowWidget extends StatelessWidget {
   final String title;
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final Color textColor = theme.textTheme.bodyLarge!.color!;
+
     return Row(children: [
       Customsolutionstatecheckboxwidget(
         isCorrect: isCorrect,
@@ -18,7 +21,7 @@ class CustomSolutionStateRowWidget extends StatelessWidget {
       ),
       Text(
         title,
-        style: AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
+        style: AppTextStyles(context).semiBold16.copyWith(color: textColor),
       )
     ]);
   }

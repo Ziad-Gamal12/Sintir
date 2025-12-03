@@ -38,6 +38,13 @@ class _ContentCreatorDetailsState extends State<ContentCreatorDetails>
   @override
   Widget build(BuildContext context) {
     final creator = widget.contentcreaterentity;
+    final ThemeData theme = Theme.of(context);
+    final Color cardBackgroundColor = theme.cardColor;
+    final Color shadowColor = theme.shadowColor;
+
+    // Hardcoded gradient colors for the separator line
+    const Color gradientStartColor = Color(0xff7F5AFF);
+    const Color gradientEndColor = Color(0xff5F9BFF);
 
     final subscribersCount = context
         .watch<ContentCreatorCoursesCubit>()
@@ -52,11 +59,12 @@ class _ContentCreatorDetailsState extends State<ContentCreatorDetails>
       child: Container(
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: cardBackgroundColor, // Use theme card color
           borderRadius: BorderRadius.circular(26),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.06),
+              // Use theme shadow color
+              color: shadowColor.withOpacity(0.1),
               blurRadius: 20,
               spreadRadius: 2,
               offset: const Offset(0, 8),
@@ -82,10 +90,11 @@ class _ContentCreatorDetailsState extends State<ContentCreatorDetails>
               width: 120,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(40),
+                // Keep hardcoded gradient since it defines the brand style here
                 gradient: const LinearGradient(
                   colors: [
-                    Color(0xff7F5AFF),
-                    Color(0xff5F9BFF),
+                    gradientStartColor,
+                    gradientEndColor,
                   ],
                 ),
               ),

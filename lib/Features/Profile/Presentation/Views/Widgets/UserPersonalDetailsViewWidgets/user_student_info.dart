@@ -13,10 +13,15 @@ class UserStudentInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = AppTextStyles(context);
+    final ThemeData theme = Theme.of(context);
+    final Color cardColor = theme.cardColor;
+    final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
+    final Color iconColor =
+        theme.colorScheme.primary; // Consistent color for icons
 
     return Card(
       elevation: 4,
-      color: Colors.white,
+      color: cardColor, // Use theme card color
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -26,7 +31,8 @@ class UserStudentInfo extends StatelessWidget {
             // Title
             Text(
               LocaleKeys.studentData,
-              style: styles.semiBold20.copyWith(color: Colors.black),
+              style: styles.semiBold20.copyWith(
+                  color: primaryTextColor), // Use theme primary text color
             ),
 
             const SizedBox(height: 16),
@@ -34,6 +40,7 @@ class UserStudentInfo extends StatelessWidget {
             // Education Level
             CustomUserInfoItem(
               icon: FontAwesomeIcons.layerGroup,
+              iconColor: iconColor, // Pass theme color for consistency
               title: LocaleKeys.studentEducationLevel,
               value: student.educationLevel,
             ),
@@ -43,6 +50,7 @@ class UserStudentInfo extends StatelessWidget {
             // Birth Date
             CustomUserInfoItem(
               icon: FontAwesomeIcons.cakeCandles,
+              iconColor: iconColor, // Pass theme color for consistency
               title: LocaleKeys.studentBirthDate,
               value: student.birthDate,
             ),

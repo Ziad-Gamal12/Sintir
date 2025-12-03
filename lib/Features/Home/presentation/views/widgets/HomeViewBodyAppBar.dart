@@ -3,7 +3,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
-import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
@@ -30,8 +29,7 @@ class HomeViewBodyAppBar extends StatelessWidget {
       title: Text.rich(TextSpan(children: [
         TextSpan(
           text: LocaleKeys.welcomeBackHome,
-          style:
-              AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
+          style: AppTextStyles(context).semiBold20,
         ),
         TextSpan(
           text: getUserData().firstName,
@@ -40,17 +38,6 @@ class HomeViewBodyAppBar extends StatelessWidget {
               .copyWith(color: KSecondaryColor),
         ),
       ])),
-      trailing: SizedBox(
-        width: 88,
-        child: InkWell(
-          onTap: () {},
-          child: Image.asset(
-            Assets.assetsIconsNotificationIcon,
-            height: 25,
-            width: 25,
-          ),
-        ),
-      ),
     );
   }
 }

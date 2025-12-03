@@ -10,8 +10,8 @@ class CustomSubscriberDetailsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 5,
-      color: Colors.white,
+      elevation: 2,
+      color: Theme.of(context).cardColor,
       child: Padding(
           padding: const EdgeInsets.all(16),
           child: Row(

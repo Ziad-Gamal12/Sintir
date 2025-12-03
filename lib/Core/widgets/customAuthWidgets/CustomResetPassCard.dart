@@ -19,15 +19,21 @@ class _CustomResetPassCardState extends State<CustomResetPassCard> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(22),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            Colors.white.withOpacity(.8),
-            Colors.white.withOpacity(.6),
-          ],
+          colors: isDarkMode
+              ? [
+                  Colors.grey.withOpacity(.2),
+                  Colors.grey.withOpacity(.1),
+                ]
+              : [
+                  Colors.white.withOpacity(.8),
+                  Colors.white.withOpacity(.6),
+                ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),

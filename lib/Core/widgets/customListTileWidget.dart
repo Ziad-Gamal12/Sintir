@@ -16,6 +16,13 @@ class Customlisttilewidget extends StatelessWidget {
   Widget? trailing;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final titleColor =
+        theme.brightness == Brightness.dark ? Colors.white : Colors.black;
+    final subtitleColor = theme.brightness == Brightness.dark
+        ? Colors.grey[400]
+        : const Color(0xffAAAAAA);
+
     return ListTile(
       minLeadingWidth: 24,
       titleAlignment: ListTileTitleAlignment.center,
@@ -25,7 +32,7 @@ class Customlisttilewidget extends StatelessWidget {
         title,
         overflow: TextOverflow.ellipsis,
         maxLines: 1,
-        style: AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
+        style: AppTextStyles(context).semiBold16.copyWith(color: titleColor),
       ),
       leading: SizedBox(
         width: 40,
@@ -33,6 +40,7 @@ class Customlisttilewidget extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: SvgPicture.asset(
               image,
+              color: titleColor,
               fit: BoxFit.fill,
               height: 30,
               width: 30,
@@ -43,7 +51,7 @@ class Customlisttilewidget extends StatelessWidget {
               subtitle!,
               style: AppTextStyles(context)
                   .regular13
-                  .copyWith(color: const Color(0xffAAAAAA)),
+                  .copyWith(color: subtitleColor),
             )
           : null,
       trailing: trailing,

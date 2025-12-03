@@ -15,21 +15,27 @@ class InfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textColor =
+        theme.brightness == Brightness.dark ? Colors.white70 : Colors.black87;
+    final headlineColor =
+        theme.brightness == Brightness.dark ? Colors.white : Colors.black;
+
     return Row(
       children: [
         headline == null
-            ? Icon(icon, color: Colors.black87, size: 18)
+            ? Icon(icon, color: textColor, size: 18)
             : Text(
                 headline!,
                 style: AppTextStyles(context)
                     .semiBold12
-                    .copyWith(color: Colors.black),
+                    .copyWith(color: headlineColor),
               ),
         const SizedBox(width: 8),
         Text(
           label,
           style: textStyle ??
-              AppTextStyles(context).regular10.copyWith(color: Colors.black87),
+              AppTextStyles(context).regular10.copyWith(color: textColor),
         ),
       ],
     );

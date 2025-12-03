@@ -10,11 +10,18 @@ class SubscriberAnalysisSection extends StatelessWidget {
   final List<TestResultEntity> results;
   @override
   Widget build(BuildContext context) {
+    final Color primaryTextColor =
+        Theme.of(context).textTheme.bodyLarge!.color!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(LocaleKeys.performanceAnalysis,
-            style: AppTextStyles(context).semiBold20),
+        Text(
+          LocaleKeys.performanceAnalysis,
+          style: AppTextStyles(context)
+              .semiBold20
+              .copyWith(color: primaryTextColor),
+        ),
         const SizedBox(height: 20),
         SubscriberResultsChart(results: results),
         const SizedBox(height: 20),

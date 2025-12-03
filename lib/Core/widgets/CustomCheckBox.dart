@@ -17,6 +17,8 @@ class _CustomcheckboxState extends State<Customcheckbox> {
   bool isChecked = false;
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return InkWell(
       onTap: () {
         isChecked = !isChecked;
@@ -31,12 +33,10 @@ class _CustomcheckboxState extends State<Customcheckbox> {
         decoration: ShapeDecoration(
           shape: RoundedRectangleBorder(
             side: BorderSide(
-                width: 1.50,
-                color:
-                    isChecked ? Colors.transparent : const Color(0xFFDCDEDE)),
+                width: 1.50, color: getBorderColor(isDark: isDarkMode)),
             borderRadius: BorderRadius.circular(8),
           ),
-          color: isChecked ? KMainColor : Colors.white,
+          color: getFilledColor(isDark: isDarkMode),
         ),
         child: isChecked
             ? SvgPicture.asset(
@@ -45,5 +45,29 @@ class _CustomcheckboxState extends State<Customcheckbox> {
             : const SizedBox(),
       ),
     );
+  }
+
+  Color getFilledColor({required bool isDark}) {
+    if (isChecked) {
+      return KMainColor;
+    } else {
+      if (isDark) {
+        return const Color(0xFF2A2A2A);
+      } else {
+        return Colors.white;
+      }
+    }
+  }
+
+  Color getBorderColor({required bool isDark}) {
+    if (isChecked) {
+      return Colors.transparent;
+    } else {
+      if (isDark) {
+        return const Color(0xFF2A2A2A);
+      } else {
+        return const Color(0xFFDCDEDE);
+      }
+    }
   }
 }

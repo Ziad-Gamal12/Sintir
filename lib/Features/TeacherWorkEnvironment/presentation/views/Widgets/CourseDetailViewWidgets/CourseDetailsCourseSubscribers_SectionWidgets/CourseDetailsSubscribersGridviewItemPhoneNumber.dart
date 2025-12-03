@@ -11,11 +11,15 @@ class CourseDetailsSubscribersGridviewItemPhoneNumber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final Color iconColor = theme.textTheme.bodyLarge!.color!;
+    final Color textColor = theme.textTheme.bodyLarge!.color!;
+
     return Row(
       children: [
-        const Icon(
+        Icon(
           Icons.phone,
-          color: Colors.black,
+          color: iconColor,
         ),
         const SizedBox(
           width: 5,
@@ -24,8 +28,7 @@ class CourseDetailsSubscribersGridviewItemPhoneNumber extends StatelessWidget {
           child: Text(
             phone == "" ? "_" : phone,
             overflow: TextOverflow.ellipsis,
-            style:
-                AppTextStyles(context).regular16.copyWith(color: Colors.black),
+            style: AppTextStyles(context).regular16.copyWith(color: textColor),
           ),
         ),
       ],

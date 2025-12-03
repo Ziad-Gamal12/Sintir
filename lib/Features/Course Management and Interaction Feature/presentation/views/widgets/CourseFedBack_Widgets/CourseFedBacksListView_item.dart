@@ -9,10 +9,11 @@ class CoursefedbackslistviewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: ListTile(
@@ -21,14 +22,17 @@ class CoursefedbackslistviewItem extends StatelessWidget {
         minLeadingWidth: 60,
         title: Text(
           item.name,
-          style:
-              AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
+          style: AppTextStyles(context)
+              .semiBold16
+              .copyWith(color: theme.textTheme.bodyLarge?.color),
         ),
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 5),
           child: Text(
             item.fedBack,
-            style: AppTextStyles(context).light14.copyWith(color: Colors.black),
+            style: AppTextStyles(context)
+                .light14
+                .copyWith(color: theme.textTheme.bodyMedium?.color),
           ),
         ),
         leading: ClipRRect(
@@ -41,7 +45,7 @@ class CoursefedbackslistviewItem extends StatelessWidget {
           "${item.datePosted.year}/${item.datePosted.month}/${item.datePosted.day}",
           style: AppTextStyles(context)
               .regular14
-              .copyWith(color: const Color(0xff818181)),
+              .copyWith(color: theme.textTheme.bodySmall?.color),
         ),
       ),
     );

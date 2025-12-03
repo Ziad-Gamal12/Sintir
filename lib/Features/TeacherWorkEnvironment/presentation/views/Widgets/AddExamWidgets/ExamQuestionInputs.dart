@@ -18,10 +18,14 @@ class ExamQuestionInputs extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
+    // Fetch the theme's card color for the container background
+    final Color containerColor = Theme.of(context).cardColor;
+
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        // Use theme-aware color instead of hardcoded Colors.white
+        color: containerColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -35,6 +39,7 @@ class ExamQuestionInputs extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
+          // Note: AddcourseExamQuestionItemTextField needs to be theme-aware internally (text/border color)
           AddcourseExamQuestionItemTextField(
             coursetestquestionentity: coursetestquestionentity,
           ),
@@ -44,6 +49,7 @@ class ExamQuestionInputs extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              // Note: CustomQuestionSolutionsList needs to be theme-aware internally
               CustomQuestionSolutionsList(
                 question: coursetestquestionentity,
                 coursetestentity: courseTestEntity,
@@ -51,6 +57,7 @@ class ExamQuestionInputs extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
+              // Note: ExamQuestionInputsAddNewSoluotionButton needs to be theme-aware internally
               ExamQuestionInputsAddNewSoluotionButton(
                   coursetestquestionentity: coursetestquestionentity)
             ],

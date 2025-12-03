@@ -14,17 +14,29 @@ class LogoutDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = Theme.of(context).brightness == Brightness.dark;
+    final ThemeData theme = Theme.of(context);
+    final bool isDark = theme.brightness == Brightness.dark;
+
+    // Theme-aware colors
+    final Color dialogBackgroundColor =
+        theme.dialogTheme.backgroundColor ?? theme.cardColor;
+    final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
+    const Color confirmButtonColor = Colors.red;
+    final Color confirmTextColor = theme.colorScheme.onError;
+    final Color cancelButtonColor = theme.scaffoldBackgroundColor;
+    final Color cancelTextColor = primaryTextColor;
+    final BorderSide cancelButtonBorder = BorderSide(color: theme.dividerColor);
+
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      backgroundColor: isDark ? Colors.grey.shade900 : Colors.white,
+      backgroundColor: dialogBackgroundColor,
       content: Padding(
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 60),
         child: Text(
           LocaleKeys.logout,
           style: AppTextStyles(context)
               .semiBold14
-              .copyWith(color: Colors.black, fontWeight: FontWeight.w600),
+              .copyWith(color: primaryTextColor, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
       ),
@@ -40,8 +52,8 @@ class LogoutDialog extends StatelessWidget {
                   }
                 },
                 text: LocaleKeys.confirm,
-                color: Colors.red,
-                textColor: Colors.white,
+                color: confirmButtonColor,
+                textColor: confirmTextColor,
               ),
             ),
             const SizedBox(width: 10),
@@ -50,10 +62,10 @@ class LogoutDialog extends StatelessWidget {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                text: LocaleKeys.cancel, // "لا أرغب"
-                color: isDark ? Colors.grey.shade900 : Colors.white,
-                textColor: Colors.black,
-                side: const BorderSide(color: Colors.black),
+                text: LocaleKeys.cancel,
+                color: cancelButtonColor,
+                textColor: cancelTextColor,
+                side: cancelButtonBorder,
               ),
             ),
           ],

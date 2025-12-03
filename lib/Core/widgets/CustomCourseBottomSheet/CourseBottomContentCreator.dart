@@ -14,23 +14,27 @@ class CourseBottomContentCreator extends StatelessWidget {
   const CourseBottomContentCreator({
     super.key,
   });
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     Contentcreaterentity courseContentCreater = context
         .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
         .course
         .contentcreaterentity!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           LocaleKeys.contentCreator,
-          style:
-              AppTextStyles(context).semiBold16.copyWith(color: Colors.black),
+          style: AppTextStyles(context)
+              .semiBold16
+              .copyWith(color: isDark ? Colors.white : Colors.black),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         InkWell(
           onTap: () {
             GoRouter.of(context).push(ContentCreatorProfile.routeName,
@@ -38,13 +42,14 @@ class CourseBottomContentCreator extends StatelessWidget {
           },
           child: Card(
             elevation: 4,
-            color: Colors.white,
+            color: isDark ? const Color(0xFF2A2A2A) : Colors.white,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
               child: CourseContentCreatorListTile(
-                  title: courseContentCreater.name,
-                  subtitle: courseContentCreater.title,
-                  image: courseContentCreater.profileImageUrl),
+                title: courseContentCreater.name,
+                subtitle: courseContentCreater.title,
+                image: courseContentCreater.profileImageUrl,
+              ),
             ),
           ),
         ),

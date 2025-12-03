@@ -22,15 +22,13 @@ class CourseBottomSheetCourseDetailsPrice extends StatelessWidget {
         TextSpan(
           children: [
             TextSpan(
-              text: "${LocaleKeys.coursePriceLabel} : ",
-              style: AppTextStyles(context)
-                  .semiBold20
-                  .copyWith(color: Colors.black),
+              text: LocaleKeys.coursePriceLabel,
+              style: AppTextStyles(context).semiBold20,
             ),
             TextSpan(
               text: " $price ${LocaleKeys.priceEgp} ",
               style: AppTextStyles(context)
-                  .bold20
+                  .semiBold20
                   .copyWith(color: KSecondaryColor),
             ),
           ],

@@ -64,9 +64,7 @@ class _CustomResetPasswordViewBodyBlocBuilderState
                   // Title
                   Text(
                     LocaleKeys.resetPassword,
-                    style: AppTextStyles(context)
-                        .semiBold24
-                        .copyWith(color: Colors.black87),
+                    style: AppTextStyles(context).semiBold24,
                   ),
 
                   const SizedBox(height: 14),

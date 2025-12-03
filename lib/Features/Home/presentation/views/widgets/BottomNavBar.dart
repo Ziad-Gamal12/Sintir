@@ -16,18 +16,29 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     final items = BottomNavBarEntity.toList();
+    final theme = Theme.of(context);
 
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color:
+            theme.bottomNavigationBarTheme.backgroundColor ?? theme.cardColor,
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(25),
           topRight: Radius.circular(25),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: theme.brightness == Brightness.light
+                ? Colors.black.withOpacity(0.05)
+                : Colors.black.withOpacity(0.3),
+            blurRadius: 8,
+          ),
+        ],
       ),
       child: Row(
         children: List.generate(items.length, (index) {

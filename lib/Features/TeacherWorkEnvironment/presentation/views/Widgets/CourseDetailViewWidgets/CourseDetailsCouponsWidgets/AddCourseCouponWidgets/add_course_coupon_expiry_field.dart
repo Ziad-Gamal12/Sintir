@@ -14,29 +14,43 @@ class AddCourseCouponExpiryField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final Color defaultTextColor =
+        theme.textTheme.bodyMedium!.color!.withOpacity(0.7);
+    final Color selectedTextColor = theme.textTheme.bodyLarge!.color!;
+    final Color iconColor = defaultTextColor;
+    final Color fillColor = theme.brightness == Brightness.dark
+        ? theme.inputDecorationTheme.fillColor ?? Colors.grey.shade800
+        : const Color(0xffF9FAFA); // Original light mode color or theme default
+
+    final Color titleColor =
+        pickedDate == null ? defaultTextColor : selectedTextColor;
+
+    final String dateText = pickedDate == null
+        ? LocaleKeys.expirationDate
+        : "${pickedDate!.day}/${pickedDate!.month}/${pickedDate!.year}";
+
     return InkWell(
       onTap: onTap,
       child: Container(
         height: 56,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: const Color(0xffF9FAFA),
-          borderRadius: BorderRadius.circular(4),
+          color: fillColor,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: theme.dividerColor.withOpacity(0.5)),
         ),
         child: ListTile(
+          dense: true,
           title: Text(
-            pickedDate == null
-                ? LocaleKeys.expirationDate
-                : "${pickedDate!.day}/${pickedDate!.month}/${pickedDate!.year}",
+            dateText,
             style: AppTextStyles(context).bold14.copyWith(
-                  color: pickedDate == null
-                      ? const Color(0xffAEAEB2)
-                      : Colors.grey.shade700,
+                  color: titleColor,
                 ),
           ),
-          leading: const Icon(
+          leading: Icon(
             Icons.date_range_outlined,
-            color: Color(0xffAEAEB2),
+            color: iconColor,
           ),
         ),
       ),

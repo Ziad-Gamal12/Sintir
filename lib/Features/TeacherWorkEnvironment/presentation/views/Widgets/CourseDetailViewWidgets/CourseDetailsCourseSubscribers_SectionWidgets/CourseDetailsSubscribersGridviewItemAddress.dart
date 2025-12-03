@@ -11,11 +11,15 @@ class CourseDetailsSubscribersGridviewItemAddress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final Color iconColor = theme.textTheme.bodyLarge!.color!;
+    final Color textColor = theme.textTheme.bodyLarge!.color!;
+
     return Row(
       children: [
-        const Icon(
+        Icon(
           Icons.location_on,
-          color: Colors.black,
+          color: iconColor,
         ),
         const SizedBox(
           width: 5,
@@ -24,8 +28,7 @@ class CourseDetailsSubscribersGridviewItemAddress extends StatelessWidget {
           child: Text(
             address == "" ? "_" : address,
             overflow: TextOverflow.ellipsis,
-            style:
-                AppTextStyles(context).regular16.copyWith(color: Colors.black),
+            style: AppTextStyles(context).regular16.copyWith(color: textColor),
           ),
         ),
       ],

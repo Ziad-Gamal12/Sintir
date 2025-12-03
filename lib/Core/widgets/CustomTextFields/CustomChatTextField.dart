@@ -48,12 +48,12 @@ class _CustomChatTextFieldState extends State<CustomChatTextField> {
     var border = OutlineInputBorder(
         borderSide: BorderSide.none, borderRadius: BorderRadius.circular(20));
     return Container(
-      decoration: BoxDecoration(boxShadow: [
+      decoration: const BoxDecoration(boxShadow: [
         BoxShadow(
-          color: Colors.grey.shade200,
+          color: Colors.black12,
           spreadRadius: 5,
           blurRadius: 10,
-          offset: const Offset(0, 8),
+          offset: Offset(0, 8),
         ),
       ]),
       child: TextFormField(
@@ -63,32 +63,31 @@ class _CustomChatTextFieldState extends State<CustomChatTextField> {
         obscureText: false,
         validator: widget.validator,
         decoration: InputDecoration(
-            hintText: LocaleKeys.hintWriteMessage,
-            hintStyle: AppTextStyles(context)
-                .bold13
-                .copyWith(color: Colors.grey.shade500),
-            suffixIcon: widget.isLoading == true
-                ? const CircularProgressIndicator(
-                    color: KMainColor,
-                  )
-                : IconButton(
-                    icon: Icon(
-                      FontAwesomeIcons.paperPlane,
-                      size: 24,
-                      color: isChatTextFieldEmpty == true
-                          ? const Color(0xffAEAEB2)
-                          : Colors.black,
-                    ),
-                    onPressed: () {
-                      widget.onPressed();
-                    },
+          hintText: LocaleKeys.hintWriteMessage,
+          hintStyle: AppTextStyles(context)
+              .bold13
+              .copyWith(color: Colors.grey.shade500),
+          suffixIcon: widget.isLoading == true
+              ? const CircularProgressIndicator(
+                  color: KMainColor,
+                )
+              : IconButton(
+                  icon: Icon(
+                    FontAwesomeIcons.paperPlane,
+                    size: 24,
+                    color: isChatTextFieldEmpty == true
+                        ? const Color(0xffAEAEB2)
+                        : Colors.black,
                   ),
-            border: border,
-            focusedBorder: border,
-            enabledBorder: border,
-            filled: true,
-            focusColor: const Color(0xfff4f4f4),
-            fillColor: const Color(0xfff4f4f4)),
+                  onPressed: () {
+                    widget.onPressed();
+                  },
+                ),
+          border: border,
+          focusedBorder: border,
+          enabledBorder: border,
+          filled: true,
+        ),
       ),
     );
   }

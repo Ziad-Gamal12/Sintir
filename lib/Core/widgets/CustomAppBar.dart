@@ -14,6 +14,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   AppBar build(BuildContext context) {
     Locale locale = Localizations.localeOf(context);
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return AppBar(
       leadingWidth: 50,
       elevation: 0,
@@ -31,6 +32,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     Assets.assetsIconsSVGIconsArrowLeftBack,
                     height: 20,
                     width: 20,
+                    color: isDarkMode == true ? Colors.white : null,
                   ),
                 ),
               ),
@@ -38,7 +40,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           : const SizedBox.shrink(),
       title: Text(
         appBartitle,
-        style: AppTextStyles(context).bold19.copyWith(color: Colors.black),
+        style: AppTextStyles(context).bold19,
       ),
       centerTitle: true,
     );

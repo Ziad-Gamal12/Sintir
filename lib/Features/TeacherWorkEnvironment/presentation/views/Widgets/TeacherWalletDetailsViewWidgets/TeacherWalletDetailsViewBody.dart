@@ -39,7 +39,7 @@ class TeacherWalletDetailsViewBody extends StatelessWidget {
           Divider(
             color: Colors.grey.shade300,
             thickness: 1,
-            height: 20,
+            height: 40,
           ),
           const TeacherWalletBalanceDetails(),
           const Spacer(),

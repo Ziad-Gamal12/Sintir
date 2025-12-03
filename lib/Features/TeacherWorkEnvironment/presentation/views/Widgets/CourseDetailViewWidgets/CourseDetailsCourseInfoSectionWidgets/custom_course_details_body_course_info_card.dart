@@ -14,8 +14,10 @@ class CustomCourseDetailsBodyCourseInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Card(
-      color: Colors.white,
+      color: theme.cardColor, // يعتمد على الثيم (Light / Dark)
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(

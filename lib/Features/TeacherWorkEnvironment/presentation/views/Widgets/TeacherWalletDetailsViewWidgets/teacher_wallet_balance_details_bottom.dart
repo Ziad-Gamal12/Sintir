@@ -12,13 +12,18 @@ class TeacherWalletBalanceDetailsBottom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.cardColor, // يعتمد على theme
         borderRadius: BorderRadius.circular(8.0),
-        border: Border.all(color: Colors.grey.shade100, width: 1),
+        border: Border.all(
+          color: theme.dividerColor, // يعتمد على theme
+          width: 1,
+        ),
       ),
       child: Column(
         children: [
@@ -27,13 +32,13 @@ class TeacherWalletBalanceDetailsBottom extends StatelessWidget {
             title: LocaleKeys.totalEarned,
             value: "${wallet?.totalEarned.toStringAsFixed(2) ?? 0} EGP",
           ),
-          Divider(color: Colors.grey.shade300, height: 20),
+          Divider(color: theme.dividerColor, height: 20),
           TeacherWalletBalanceDetailsRow(
             icon: FontAwesomeIcons.clock,
             title: LocaleKeys.pendingBalance,
             value: "${wallet?.payoutPending.toStringAsFixed(2) ?? 0} EGP",
           ),
-          Divider(color: Colors.grey.shade300, height: 20),
+          Divider(color: theme.dividerColor, height: 20),
           TeacherWalletBalanceDetailsRow(
             icon: FontAwesomeIcons.wallet,
             title: LocaleKeys.currency,

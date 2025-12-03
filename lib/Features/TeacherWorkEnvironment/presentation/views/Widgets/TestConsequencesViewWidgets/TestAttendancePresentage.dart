@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/test_consequences_cubit/test_consequences_cubit.dart';
-import 'package:sintir/constant.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class TestAttendancePresentage extends StatefulWidget {
@@ -21,6 +20,11 @@ class _TestAttendancePresentageState extends State<TestAttendancePresentage> {
   int totalStudents = 0;
   @override
   Widget build(BuildContext context) {
+    final Color primaryColor = Theme.of(context).colorScheme.primary;
+    final Color textColor = Theme.of(context).textTheme.bodyLarge!.color!;
+    final Color backgroundColor =
+        Theme.of(context).dividerColor.withOpacity(0.5);
+
     return BlocConsumer<TestConsequencesCubit, TestConsequencesState>(
       listenWhen: (previous, current) {
         if (current is TestConsequencesGetAttendedCountFailure ||
@@ -66,9 +70,11 @@ class _TestAttendancePresentageState extends State<TestAttendancePresentage> {
               totalStudents == 0
                   ? "0%"
                   : " ${(attendedCount / totalStudents * 100).toInt()}%",
-              style: AppTextStyles(context).semiBold16,
+              style:
+                  AppTextStyles(context).semiBold16.copyWith(color: textColor),
             ),
-            progressColor: KMainColor,
+            progressColor: primaryColor,
+            backgroundColor: backgroundColor,
             circularStrokeCap: CircularStrokeCap.round,
           ),
         );

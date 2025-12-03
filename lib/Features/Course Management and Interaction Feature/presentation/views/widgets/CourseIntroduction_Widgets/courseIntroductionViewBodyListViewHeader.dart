@@ -30,9 +30,7 @@ class courseIntroductionViewBodyListViewHeader extends StatelessWidget {
               ),
               Text(
                 LocaleKeys.courseContent,
-                style: AppTextStyles(context)
-                    .semiBold20
-                    .copyWith(color: Colors.black),
+                style: AppTextStyles(context).semiBold20,
                 textAlign: TextAlign.start,
               ),
             ],

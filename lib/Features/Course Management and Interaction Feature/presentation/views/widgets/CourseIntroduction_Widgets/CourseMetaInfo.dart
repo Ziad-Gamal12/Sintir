@@ -25,9 +25,7 @@ class CourseMetaInfo extends StatelessWidget {
             TextSpan(children: [
               TextSpan(
                 text: LocaleKeys.createdby,
-                style: AppTextStyles(context)
-                    .regular10
-                    .copyWith(color: Colors.black),
+                style: AppTextStyles(context).regular10,
               ),
               TextSpan(
                 text: requirmentsEntity.course.contentcreaterentity?.name,
@@ -43,8 +41,7 @@ class CourseMetaInfo extends StatelessWidget {
         const SizedBox(height: 10),
         Text(
           "${LocaleKeys.createdDate} (${requirmentsEntity.course.postedDate.day}/${requirmentsEntity.course.postedDate.month}/${requirmentsEntity.course.postedDate.year})",
-          style:
-              AppTextStyles(context).regular10.copyWith(color: Colors.black87),
+          style: AppTextStyles(context).regular10,
         ),
         const SizedBox(height: 10),
         InfoRow(

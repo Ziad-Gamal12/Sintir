@@ -17,6 +17,11 @@ class _TestStatsInfoSuccessedCountState
     extends State<TestStatsInfoSuccessedCount> {
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
+    const Color successColor = Colors.green;
+    final Color errorColor = theme.colorScheme.error;
+
     return BlocBuilder<TestConsequencesCubit, TestConsequencesState>(
       buildWhen: (previous, current) {
         return current is TestConsequencesGetSuccessedCountSuccess ||
@@ -29,7 +34,7 @@ class _TestStatsInfoSuccessedCountState
             child: Text(
               state.errMessage,
               style:
-                  AppTextStyles(context).regular14.copyWith(color: Colors.red),
+                  AppTextStyles(context).regular14.copyWith(color: errorColor),
             ),
           );
         }
@@ -42,7 +47,7 @@ class _TestStatsInfoSuccessedCountState
                     ? state.count.toString()
                     : "0",
                 context,
-                color: Colors.green),
+                color: successColor),
           ),
         );
       },
@@ -51,12 +56,13 @@ class _TestStatsInfoSuccessedCountState
 
   Widget _buildStatColumn(String label, String value, BuildContext context,
       {Color color = Colors.black}) {
+    final Color labelColor = Theme.of(context).textTheme.bodyLarge!.color!;
+
     return Column(
       children: [
         Text(label,
-            style: AppTextStyles(context)
-                .semiBold14
-                .copyWith(color: Colors.black)),
+            style:
+                AppTextStyles(context).semiBold14.copyWith(color: labelColor)),
         const SizedBox(height: 10),
         Text(value,
             style: AppTextStyles(context).bold14.copyWith(color: color)),

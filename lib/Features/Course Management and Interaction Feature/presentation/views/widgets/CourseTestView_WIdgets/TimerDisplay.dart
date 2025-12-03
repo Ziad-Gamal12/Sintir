@@ -59,11 +59,11 @@ class _TimerDisplayState extends State<TimerDisplay> {
     return currentMinutes / totalTime;
   }
 
-  Color getProgressColor(double progress) {
+  Color getProgressColor(double progress, bool isDark) {
     if (progress < .25) {
-      return Colors.red;
+      return Colors.redAccent;
     } else if (progress < .5) {
-      return Colors.yellow;
+      return Colors.yellowAccent;
     } else {
       return KMainColor;
     }
@@ -72,7 +72,6 @@ class _TimerDisplayState extends State<TimerDisplay> {
   @override
   void dispose() {
     _rawTimeStream.drain();
-
     super.dispose();
   }
 
@@ -80,6 +79,8 @@ class _TimerDisplayState extends State<TimerDisplay> {
   Widget build(BuildContext context) {
     final test =
         context.read<CourseExamViewNavigationsRequirmentsEntity>().test;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return SizedBox(
       height: MediaQuery.of(context).size.width * .16,
@@ -89,7 +90,7 @@ class _TimerDisplayState extends State<TimerDisplay> {
         children: [
           CircleAvatar(
             radius: MediaQuery.of(context).size.width * .09,
-            backgroundColor: Colors.white,
+            backgroundColor: isDark ? const Color(0xFF2A2A2A) : Colors.white,
             child: StreamBuilder<int>(
               stream: widget.timerStream,
               builder: (context, snap) {
@@ -103,9 +104,9 @@ class _TimerDisplayState extends State<TimerDisplay> {
                 );
                 return Text(
                   displayTime,
-                  style: AppTextStyles(context)
-                      .regular13
-                      .copyWith(color: Colors.black),
+                  style: AppTextStyles(context).regular13.copyWith(
+                        color: isDark ? Colors.white70 : Colors.black87,
+                      ),
                 );
               },
             ),
@@ -118,7 +119,7 @@ class _TimerDisplayState extends State<TimerDisplay> {
                   _calculateProgress(rawTime, test.durationTime * 1.0);
               return CircularProgressIndicator(
                 strokeWidth: 8,
-                color: getProgressColor(progress),
+                color: getProgressColor(progress, isDark),
                 value: progress,
               );
             },

@@ -12,20 +12,38 @@ class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
   final SubscriberEntity subscriber;
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final Color cardColor = theme.cardColor;
+    final Color borderColor = theme.dividerColor;
+    final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
+    final bool isDarkMode = theme.brightness == Brightness.dark;
+
+    // Adjusted shadow for theme compatibility
+    final List<BoxShadow> boxShadows = isDarkMode
+        ? [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.4),
+              blurRadius: 7,
+              spreadRadius: 1,
+              offset: const Offset(0, 3),
+            ),
+          ]
+        : [
+            BoxShadow(
+              color: Colors.grey.shade100,
+              blurRadius: 7,
+              spreadRadius: 1,
+              offset: const Offset(0, 3),
+            ),
+          ];
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardColor,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade100,
-            blurRadius: 7,
-            spreadRadius: 1,
-            offset: const Offset(0, 3),
-          ),
-        ],
-        border: Border.all(color: Colors.grey.shade300, width: .5),
+        boxShadow: boxShadows,
+        border: Border.all(color: borderColor.withOpacity(0.5), width: .5),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -38,7 +56,9 @@ class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
           ),
           Text(
             subscriber.name,
-            style: AppTextStyles(context).semiBold20,
+            style: AppTextStyles(context)
+                .semiBold20
+                .copyWith(color: primaryTextColor),
           ),
           const Spacer(),
           CourseDetailsSubscribersGridviewItemPhoneNumber(

@@ -1,30 +1,40 @@
 import 'package:flutter/material.dart';
 
 showCustomBottomSheet({required Widget child, required BuildContext context}) {
+  final theme = Theme.of(context);
+
   showBottomSheet(
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-          side: BorderSide(color: Colors.grey)),
-      backgroundColor: Colors.white,
-      context: context,
-      builder: (context) => child);
+    context: context,
+    backgroundColor: theme.cardColor,
+    shape: RoundedRectangleBorder(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(20),
+        topRight: Radius.circular(20),
+      ),
+      side: BorderSide(color: theme.dividerColor),
+    ),
+    builder: (context) => child,
+  );
 }
 
-showCustomModalBottomSheet(
-    {required Widget child, required BuildContext context}) {
+showCustomModalBottomSheet({
+  required Widget child,
+  required BuildContext context,
+}) {
+  final theme = Theme.of(context);
+
   showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      isDismissible: true,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-          side: BorderSide(color: Colors.grey)),
-      backgroundColor: Colors.white,
-      builder: (context) => child);
+    context: context,
+    isScrollControlled: true,
+    isDismissible: true,
+    backgroundColor: theme.cardColor,
+    shape: RoundedRectangleBorder(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(20),
+        topRight: Radius.circular(20),
+      ),
+      side: BorderSide(color: theme.dividerColor),
+    ),
+    builder: (context) => child,
+  );
 }

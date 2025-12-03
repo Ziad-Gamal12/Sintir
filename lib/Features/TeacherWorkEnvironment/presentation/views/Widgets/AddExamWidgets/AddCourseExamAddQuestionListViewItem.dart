@@ -19,6 +19,37 @@ class AddCourseExamAddQuestionListViewItem extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
+    // 💡 Fetching theme colors dynamically for Dark Mode compatibility
+    final ThemeData theme = Theme.of(context);
+    final bool isDarkMode = theme.brightness == Brightness.dark;
+
+    // Use a theme-aware color for the container background
+    final Color containerColor = theme.cardColor;
+
+    // Use a theme-aware color for the border and divider
+    // In Dark Mode, a lighter shade is needed; in Light Mode, a darker shade.
+    final Color borderColor =
+        isDarkMode ? Colors.grey.shade600 : Colors.grey.shade300;
+
+    // Adjust shadow for Dark Mode: typically, shadows are less intense or omitted.
+    final List<BoxShadow> boxShadows = isDarkMode
+        ? [
+            // Lighter/fewer shadow in dark mode for a flat look
+            const BoxShadow(
+              color: Colors.white10,
+              blurRadius: 2,
+              offset: Offset(0, 2),
+            ),
+          ]
+        : const [
+            // Standard shadow for light mode
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 4,
+              offset: Offset(0, 4),
+            ),
+          ];
+
     return Dismissible(
       key: ObjectKey(coursetestquestionentity),
       onDismissed: (direction) => removeQuestionItem(context),
@@ -26,15 +57,9 @@ class AddCourseExamAddQuestionListViewItem extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 4,
-              offset: Offset(0, 4),
-            ),
-          ],
-          color: Colors.white,
-          border: Border.all(color: Colors.grey.shade300, width: 1),
+          boxShadow: boxShadows,
+          color: containerColor,
+          border: Border.all(color: borderColor, width: 1),
         ),
         child: Column(
           children: [
@@ -44,14 +69,14 @@ class AddCourseExamAddQuestionListViewItem extends StatelessWidget {
               courseTestEntity: coursetestentity,
             ),
             Divider(
-              color: Colors.grey.shade300,
+              color: borderColor,
               thickness: 1,
             ),
             AddCourseExamAddQuestionImage(
               coursetestquestionentity: coursetestquestionentity,
             ),
             Divider(
-              color: Colors.grey.shade300,
+              color: borderColor,
               thickness: 1,
             ),
             AddCourseExamAddQuestionExplainationImage(

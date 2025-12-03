@@ -41,9 +41,7 @@ class CourseIntroductionSuccessView extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 100),
                       child: Text(
                         LocaleKeys.contentComingSoon,
-                        style: AppTextStyles(context)
-                            .semiBold20
-                            .copyWith(color: Colors.black),
+                        style: AppTextStyles(context).semiBold20,
                       ),
                     ),
                   ),

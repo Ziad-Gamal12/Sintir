@@ -17,20 +17,25 @@ class StudentOnboardingInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.cardColor, // ← يدعم Light / Dark
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.shade200,
-            blurRadius: 60,
+            color: isDarkMode
+                ? Colors.black.withOpacity(0.3)
+                : Colors.grey.shade300,
+            blurRadius: 40,
             spreadRadius: 3,
-            offset: const Offset(5, 10),
+            offset: const Offset(0, 8),
           )
         ],
       ),
@@ -38,25 +43,32 @@ class StudentOnboardingInfoCard extends StatelessWidget {
         valueListenable: currentPageNotifier,
         builder: (context, currentPage, _) {
           final page = pages[currentPage];
+
           return Column(
             children: [
               page.title,
               const SizedBox(height: 20),
+
+              // Description Text
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 37),
                 child: Text(
                   page.description,
                   textAlign: TextAlign.justify,
-                  style: AppTextStyles(context)
-                      .regular13
-                      .copyWith(color: const Color(0xff4E5556)),
+                  style: AppTextStyles(context).regular13.copyWith(
+                        color:
+                            theme.textTheme.bodyMedium!.color!.withOpacity(0.8),
+                      ),
                 ),
               ),
+
               const Spacer(),
+
               StudentOnboardingButton(
                 currentPageNotifier: currentPageNotifier,
                 pageController: pageController,
               ),
+
               const SizedBox(height: 20),
             ],
           );

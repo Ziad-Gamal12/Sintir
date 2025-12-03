@@ -9,14 +9,21 @@ class SubscriberEnrolledCoursesHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color primaryTextColor =
+        Theme.of(context).textTheme.bodyLarge!.color!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(
           height: 20,
         ),
-        Text(LocaleKeys.studentSubscriptions,
-            style: AppTextStyles(context).semiBold20),
+        Text(
+          LocaleKeys.studentSubscriptions,
+          style: AppTextStyles(context)
+              .semiBold20
+              .copyWith(color: primaryTextColor),
+        ),
         const SizedBox(
           height: 10,
         ),

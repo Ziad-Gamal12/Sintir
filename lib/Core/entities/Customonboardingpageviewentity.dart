@@ -22,9 +22,7 @@ class CustomOnBoardingPageViewEntity {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(LocaleKeys.welcomeTo,
-                    style: AppTextStyles(context)
-                        .semiBold24
-                        .copyWith(color: const Color(0xff000000))),
+                    style: AppTextStyles(context).semiBold24),
                 Text(" SINTIR ",
                     style: AppTextStyles(context)
                         .semiBold24
@@ -35,9 +33,7 @@ class CustomOnBoardingPageViewEntity {
             description: LocaleKeys.description1),
         CustomOnBoardingPageViewEntity(
           title: Text(LocaleKeys.learnEasySafe,
-              style: AppTextStyles(context)
-                  .semiBold24
-                  .copyWith(color: const Color(0xff000000))),
+              style: AppTextStyles(context).semiBold24),
           image: Assets.assetsImagesSVGImagesStudentOnboardingTwo,
           description: LocaleKeys.description2,
         ),
@@ -45,9 +41,7 @@ class CustomOnBoardingPageViewEntity {
           description: LocaleKeys.description3,
           image: Assets.assetsImagesSVGImagesStudentOnboardingThree,
           title: Text(LocaleKeys.startLearningJourneyTitle,
-              style: AppTextStyles(context)
-                  .semiBold24
-                  .copyWith(color: const Color(0xff000000))),
+              style: AppTextStyles(context).semiBold24),
         ),
       ];
 
@@ -61,9 +55,7 @@ class CustomOnBoardingPageViewEntity {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(LocaleKeys.welcomeTo,
-                  style: AppTextStyles(context)
-                      .semiBold24
-                      .copyWith(color: const Color(0xff000000))),
+                  style: AppTextStyles(context).semiBold24),
               Text(" SINTIR ",
                   style: AppTextStyles(context)
                       .semiBold24
@@ -75,17 +67,13 @@ class CustomOnBoardingPageViewEntity {
           description: LocaleKeys.teacherFeaturesDescription,
           image: Assets.assetsImagesSVGImagesTeacherOnboarding2,
           title: Text(LocaleKeys.teacherFeaturesTitle,
-              style: AppTextStyles(context)
-                  .semiBold24
-                  .copyWith(color: const Color(0xff000000))),
+              style: AppTextStyles(context).semiBold24),
         ),
         CustomOnBoardingPageViewEntity(
           description: LocaleKeys.teacherStartTodayDescription,
           image: Assets.assetsImagesSVGImagesTeacherOnboarding3,
           title: Text(LocaleKeys.teacherStartTodayTitle,
-              style: AppTextStyles(context)
-                  .semiBold24
-                  .copyWith(color: const Color(0xff000000))),
+              style: AppTextStyles(context).semiBold24),
         ),
       ];
 }

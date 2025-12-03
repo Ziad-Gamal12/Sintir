@@ -8,11 +8,13 @@ class CustomResetPassIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.all(20),
+      alignment: AlignmentGeometry.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.white,
+        color: isDarkMode ? Colors.grey[900] : Colors.white,
         border: Border.all(
           color: Colors.blue.withOpacity(.25),
           width: 1.2,

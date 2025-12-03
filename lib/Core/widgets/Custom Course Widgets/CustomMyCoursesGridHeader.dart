@@ -14,7 +14,7 @@ class CustomMyCoursesGridHeader extends StatelessWidget {
       children: [
         Text(
           LocaleKeys.myCourses,
-          style: AppTextStyles(context).bold20.copyWith(color: Colors.black),
+          style: AppTextStyles(context).bold20,
         ),
       ],
     );

@@ -11,16 +11,18 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final requirmentsEntity =
         context.read<DisplayCourseBottomsheetNavigationRequirmentsEntity>();
+    final theme = Theme.of(context);
+
     return IntrinsicHeight(
       child: Container(
           width: double.infinity,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: theme.colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.shade200,
+                color: theme.shadowColor.withOpacity(0.1),
                 blurRadius: 50,
                 spreadRadius: 1,
                 offset: const Offset(5, 15),
@@ -30,10 +32,10 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
-            spacing: 32,
             children: [
               CoursePosterImage(
                   imageUrl: requirmentsEntity.course.posterUrl ?? ""),
+              const SizedBox(height: 32),
               CourseInfoCard(requirmentsEntity: requirmentsEntity),
             ],
           )),

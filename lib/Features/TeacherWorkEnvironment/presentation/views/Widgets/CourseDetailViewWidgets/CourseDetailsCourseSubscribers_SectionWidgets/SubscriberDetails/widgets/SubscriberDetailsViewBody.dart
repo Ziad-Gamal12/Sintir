@@ -27,25 +27,28 @@ class _SubscriberDetailsViewBodyState extends State<SubscriberDetailsViewBody> {
   void initState() {
     super.initState();
     final cubit = context.read<SubscriberDetailsCubit>();
+    // Call services with a small delay to prevent multiple state emissions clashing
+    // or to ensure the context is fully available, although `addPostFrameCallback`
+    // already helps with the latter. We maintain the original structure for logic.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       cubit.getSubscibersEnrolledCoursesForTeacher(
         subscriberId: widget.requirements.subscriber.id,
         contentCreatorId: widget.requirements.contentCreatorId,
       );
-      Future.delayed(const Duration(seconds: 1), () {
+      Future.delayed(const Duration(milliseconds: 500), () {
         cubit.getSubscriberResults(
           subscriberId: widget.requirements.subscriber.id,
           courseId: widget.requirements.courseId,
         );
       });
 
-      Future.delayed(const Duration(seconds: 1), () {
+      Future.delayed(const Duration(milliseconds: 1000), () {
         cubit.getSubscriberHighestScore(
           subscriberId: widget.requirements.subscriber.id,
           courseId: widget.requirements.courseId,
         );
       });
-      Future.delayed(const Duration(seconds: 1), () {
+      Future.delayed(const Duration(milliseconds: 1500), () {
         cubit.getSubscriberLowestScore(
           subscriberId: widget.requirements.subscriber.id,
           courseId: widget.requirements.courseId,
@@ -57,10 +60,16 @@ class _SubscriberDetailsViewBodyState extends State<SubscriberDetailsViewBody> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    final ThemeData theme = Theme.of(context);
+    final Color dividerColor = theme.dividerColor;
+    final Color headerTextColor = theme.textTheme.bodyLarge!.color!;
+
     return BlocConsumer<SubscriberDetailsCubit, SubscriberDetailsState>(
       listener: (context, state) {
         if (state is GetSubscriberResultsSuccess) {
+          // Update results list when results are successfully fetched
           results = state.results;
+          // Calculate average score after getting all results
           context.read<SubscriberDetailsCubit>().getSubscriberAverageScore();
         }
       },
@@ -71,44 +80,61 @@ class _SubscriberDetailsViewBodyState extends State<SubscriberDetailsViewBody> {
         ),
         child: CustomScrollView(
           slivers: [
+            // Subscriber Details Card
             SliverToBoxAdapter(
               child: CustomSubscriberDetailsCard(
                 subscriberentity: widget.requirements.subscriber,
               ),
             ),
+
+            // Enrolled Courses Header
             const SliverToBoxAdapter(
               child: SubscriberEnrolledCoursesHeader(),
             ),
+
+            // Enrolled Courses List
             SliverToBoxAdapter(
               child: SizedBox(
                   height: height * .28,
                   child: const SubscriberEnrolledCoursesListView()),
             ),
-            const SliverToBoxAdapter(
+
+            // Divider 1
+            SliverToBoxAdapter(
               child: Divider(
                 height: 40,
-                color: Color(0xffE5E5EA),
+                color: dividerColor,
               ),
             ),
+
+            // Analysis Section (Highest, Lowest, Average Scores)
             SliverToBoxAdapter(
               child: SubscriberAnalysisSection(
                 results: results,
               ),
             ),
-            const SliverToBoxAdapter(
+
+            // Divider 2
+            SliverToBoxAdapter(
               child: Divider(
                 height: 40,
-                color: Color(0xffE5E5EA),
+                color: dividerColor,
               ),
             ),
+
+            // Test Results Header
             SliverToBoxAdapter(
                 child: Text(LocaleKeys.results,
-                    style: AppTextStyles(context).semiBold20)),
+                    style: AppTextStyles(context)
+                        .semiBold20
+                        .copyWith(color: headerTextColor))),
             const SliverToBoxAdapter(
               child: SizedBox(
                 height: 10,
               ),
             ),
+
+            // Test Results List
             SubscriberResultsSliverListView(testResults: results),
           ],
         ),

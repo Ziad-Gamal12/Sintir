@@ -17,25 +17,51 @@ class CustomReviewExamQuestionListItem extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
+    // Fetch theme data
+    final ThemeData theme = Theme.of(context);
+    final bool isDarkMode = theme.brightness == Brightness.dark;
+
+    // Use theme-aware colors
+    final Color containerColor = theme.cardColor;
+    final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
+
+    // Adjust border color based on mode
+    final Color borderColor =
+        isDarkMode ? Colors.grey.shade600 : Colors.grey.shade400;
+
+    // Adjust shadow for Dark Mode
+    final List<BoxShadow> boxShadows = isDarkMode
+        ? [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              blurRadius: 5,
+              spreadRadius: 1,
+              offset: const Offset(0, 2),
+            ),
+          ]
+        : [
+            BoxShadow(
+              color: Colors.grey.shade100,
+              blurRadius: 10,
+              spreadRadius: 2,
+              offset: const Offset(0, 3),
+            ),
+          ];
+
     return Container(
       padding: const EdgeInsets.all(16),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.grey.shade400, width: .5),
+        color: containerColor,
+        border: Border.all(color: borderColor, width: .5),
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade100,
-            blurRadius: 10,
-            spreadRadius: 2,
-            offset: const Offset(0, 3),
-          ),
-        ],
+        // Use theme-aware shadows
+        boxShadow: boxShadows,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // ExamQuestionInputsQuestionHeader is already theme-aware
           ExamQuestionInputsQuestionHeader(
               index: index, totalQuestions: totalQuestions),
           const SizedBox(
@@ -43,8 +69,10 @@ class CustomReviewExamQuestionListItem extends StatelessWidget {
           ),
           Text(
             "${question.questionTitle}؟",
-            style:
-                AppTextStyles(context).semiBold20.copyWith(color: Colors.black),
+            style: AppTextStyles(context)
+                .semiBold20
+                // Use primaryTextColor instead of hardcoded Colors.black
+                .copyWith(color: primaryTextColor),
           ),
           const SizedBox(
             height: 10,
@@ -53,6 +81,7 @@ class CustomReviewExamQuestionListItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
+                // CustomReviewQuestionSolutionList needs to be theme-aware internally
                 child: Customreviewquestionsolutionlist(
                   solutions: question.solutions,
                 ),
@@ -61,6 +90,7 @@ class CustomReviewExamQuestionListItem extends StatelessWidget {
                 width: 10,
               ),
               Expanded(
+                  // CustomReviewQuestionImage needs to be theme-aware internally
                   child:
                       CustomReviewQuestionImage(imageFile: question.imageFile))
             ],

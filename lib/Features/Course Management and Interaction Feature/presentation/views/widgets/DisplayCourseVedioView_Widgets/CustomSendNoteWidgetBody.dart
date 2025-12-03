@@ -25,8 +25,11 @@ class CustomSendNoteWidgetBody extends StatefulWidget {
 
 class _CustomSendNoteWidgetBodyState extends State<CustomSendNoteWidgetBody> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return BlocListener<VideoItemCubit, VideoItemState>(
       listener: (context, state) {
         if (state is AddVideoNoteSuccess) {
@@ -52,19 +55,21 @@ class _CustomSendNoteWidgetBodyState extends State<CustomSendNoteWidgetBody> {
           height: MediaQuery.sizeOf(context).height * .35,
           width: double.infinity,
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              ),
-              border: Border.all(color: Colors.grey, width: 1)),
+            color: theme.cardColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+            border: Border.all(
+              color: theme.dividerColor,
+              width: 1,
+            ),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const CustomSendNoteWidgetBodyHeader(),
-              const SizedBox(
-                height: 16,
-              ),
+              const SizedBox(height: 16),
               const CustomSendNoteWidgetBodyTextField(),
               const Spacer(),
               CustomSendNoteWidgetBodyActionButton(

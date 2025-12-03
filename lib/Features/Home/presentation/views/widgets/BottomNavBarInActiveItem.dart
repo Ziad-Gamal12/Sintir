@@ -8,9 +8,13 @@ class BottomNavBarInActiveItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final color =
+        theme.brightness == Brightness.light ? Colors.black87 : Colors.white70;
+
     return SvgPicture.asset(
       bottomNavBarEntity.inactiveIcon,
-      color: Colors.black,
+      color: color,
     );
   }
 }

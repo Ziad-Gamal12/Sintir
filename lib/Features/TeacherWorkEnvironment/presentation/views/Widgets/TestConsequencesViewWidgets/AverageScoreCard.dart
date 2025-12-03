@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/test_consequences_cubit/test_consequences_cubit.dart';
-import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -19,6 +18,13 @@ class _AverageScoreCardState extends State<AverageScoreCard> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final Color cardColor = theme.cardColor;
+    final Color borderColor = theme.dividerColor;
+    final Color primaryColor = theme.colorScheme.primary;
+    final Color errorColor = theme.colorScheme.error;
+    final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
+
     return BlocConsumer<TestConsequencesCubit, TestConsequencesState>(
       listener: (context, state) {
         if (state is TestConsequencesGetHighestScorSuccess) {
@@ -34,7 +40,7 @@ class _AverageScoreCardState extends State<AverageScoreCard> {
               state.errMessage,
               overflow: TextOverflow.ellipsis,
               style:
-                  AppTextStyles(context).regular14.copyWith(color: Colors.red),
+                  AppTextStyles(context).regular14.copyWith(color: errorColor),
             ),
           );
         } else if (state is TestConsequencesGetHighestScorFailure) {
@@ -43,7 +49,7 @@ class _AverageScoreCardState extends State<AverageScoreCard> {
               state.errMessage,
               overflow: TextOverflow.ellipsis,
               style:
-                  AppTextStyles(context).regular14.copyWith(color: Colors.red),
+                  AppTextStyles(context).regular14.copyWith(color: errorColor),
             ),
           );
         }
@@ -53,21 +59,24 @@ class _AverageScoreCardState extends State<AverageScoreCard> {
           child: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: Colors.grey),
+              color: cardColor,
+              border: Border.all(color: borderColor),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Column(
               children: [
                 Text(
                   "${(highestScore + lowestScore) / 2}",
-                  style:
-                      AppTextStyles(context).bold24.copyWith(color: KMainColor),
+                  style: AppTextStyles(context)
+                      .bold24
+                      .copyWith(color: primaryColor),
                 ),
                 const SizedBox(height: 10),
                 Text(
                   LocaleKeys.averageResults,
-                  style: AppTextStyles(context).bold16,
+                  style: AppTextStyles(context)
+                      .bold16
+                      .copyWith(color: primaryTextColor),
                 ),
               ],
             ),
