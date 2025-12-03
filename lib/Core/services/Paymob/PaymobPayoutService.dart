@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
@@ -9,7 +10,6 @@ class PaymobPayoutService {
   final Dio dio;
   final Uuid _uuid = const Uuid();
 
-  /// Base URL for Payout API
   static const String _baseUrl =
       "https://stagingpayouts.paymobsolutions.com/api/secure/";
 
@@ -17,20 +17,45 @@ class PaymobPayoutService {
       : dio = dio ??
             Dio(
               BaseOptions(
-                connectTimeout: const Duration(seconds: 20),
-                receiveTimeout: const Duration(seconds: 20),
+                connectTimeout: const Duration(seconds: 30),
+                receiveTimeout: const Duration(seconds: 30),
               ),
             );
 
-  /// Step 1: Generate Access Token
+  String _getBasicAuthHeader() {
+    const clientId = PayMobPayOutClientID;
+    const clientSecret = PayMobPayOutClientSecret;
+    final credentials = base64Encode(utf8.encode('$clientId:$clientSecret'));
+    return "Basic $credentials";
+  }
+
+  CustomException _handleDioError(DioException e, String defaultMessage) {
+    String errorMessage = defaultMessage;
+
+    final statusCode = e.response?.statusCode ?? 0;
+
+    // Log the detailed error message, including the URL and response data
+    log("API Error [HTTP $statusCode]: $defaultMessage");
+    log("Request URL: ${e.requestOptions.uri}");
+    log("Response Data: ${e.response?.data}");
+
+    if (e.response?.data is Map) {
+      errorMessage = e.response!.data["error_description"] ??
+          e.response!.data["message"] ??
+          defaultMessage;
+    } else if (e.response?.data is String) {
+      errorMessage = e.response!.data.toString();
+    }
+
+    return CustomException(
+      message: "$errorMessage (HTTP $statusCode)",
+    );
+  }
+
   Future<Map<String, dynamic>> generateAccessToken() async {
     try {
-      const clientId = PayMobPayOutClientID;
-      const clientSecret = PayMobPayOutClientSecret;
       const username = PayMobPayOutUsername;
       const password = PayMobPayOutPassword;
-
-      final credentials = base64Encode(utf8.encode('$clientId:$clientSecret'));
 
       final body = {
         "grant_type": "password",
@@ -38,55 +63,44 @@ class PaymobPayoutService {
         "password": password,
       };
 
-      final encodedBody = body.entries
-          .map((e) =>
-              "${Uri.encodeQueryComponent(e.key)}=${Uri.encodeQueryComponent(e.value)}")
-          .join("&");
-
-      final response = await Dio().post(
+      final response = await dio.post(
         "${_baseUrl}o/token/",
-        data: encodedBody,
+        data: body,
         options: Options(
           contentType: Headers.formUrlEncodedContentType,
           headers: {
-            "Authorization": "Basic $credentials",
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        ),
-      );
-
-      return response.data;
-    } on DioException catch (e, s) {
-      throw CustomException(message: "Failed to generate access token");
-    }
-  }
-
-  /// Step 2: Refresh Access Token
-  Future<Map<String, dynamic>> refreshAccessToken(String refreshToken) async {
-    try {
-      const clientId = PayMobPayOutClientID;
-      const clientSecret = PayMobPayOutClientSecret;
-      final credentials = base64Encode(utf8.encode('$clientId:$clientSecret'));
-
-      final response = await dio.post(
-        "${_baseUrl}o/token/",
-        data: {
-          "grant_type": "refresh_token",
-          "refresh_token": refreshToken,
-        },
-        options: Options(
-          headers: {
-            "Authorization": "Basic $credentials",
-            "Content-Type": "application/x-www-form-urlencoded",
+            "Authorization": _getBasicAuthHeader(),
           },
         ),
       );
 
       return response.data;
     } on DioException catch (e) {
-      throw CustomException(
-          message:
-              e.response?.data?["error_description"] ?? "Token refresh failed");
+      throw _handleDioError(e, "Failed to generate initial access token.");
+    }
+  }
+
+  Future<Map<String, dynamic>> refreshAccessToken(String refreshToken) async {
+    try {
+      final body = {
+        "grant_type": "refresh_token",
+        "refresh_token": refreshToken,
+      };
+
+      final response = await dio.post(
+        "${_baseUrl}o/token/",
+        data: body,
+        options: Options(
+          contentType: Headers.formUrlEncodedContentType,
+          headers: {
+            "Authorization": _getBasicAuthHeader(),
+          },
+        ),
+      );
+
+      return response.data;
+    } on DioException catch (e) {
+      throw _handleDioError(e, "Token refresh failed.");
     }
   }
 
@@ -101,7 +115,7 @@ class PaymobPayoutService {
       final response = await dio.post(
         "${_baseUrl}disburse/",
         data: {
-          "issuer": issuer.toLowerCase(), // e.g. vodafone, etisalat, aman...
+          "issuer": issuer.toLowerCase(),
           "amount": amount,
           "msisdn": receiverMobile,
           "client_reference_id": clientReferenceId ?? _uuid.v4(),
@@ -114,11 +128,15 @@ class PaymobPayoutService {
         ),
       );
 
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        throw CustomException(
+            message:
+                "Disbursement failed with status code ${response.statusCode}");
+      }
+
       return response.data;
     } on DioException catch (e) {
-      throw CustomException(
-        message: "Failed to make disbursement",
-      );
+      throw _handleDioError(e, "Failed to make disbursement.");
     }
   }
 
@@ -126,10 +144,19 @@ class PaymobPayoutService {
   Future<Map<String, dynamic>> getDisbursementStatus({
     required String accessToken,
     required String transactionId,
+    bool isBankTransaction = false,
   }) async {
+    const path = "transaction/inquire/";
+
     try {
+      final requestBody = {
+        "transactions_ids_list": [transactionId],
+        "bank_transactions": isBankTransaction,
+      };
+
       final response = await dio.get(
-        "${_baseUrl}disbursement_status/?transaction_id=$transactionId",
+        "$_baseUrl$path",
+        data: requestBody,
         options: Options(
           headers: {
             "Authorization": "Bearer $accessToken",
@@ -138,11 +165,24 @@ class PaymobPayoutService {
         ),
       );
 
+      if (response.data is Map &&
+          response.data.containsKey('results') &&
+          response.data['results'] is List &&
+          (response.data['results'] as List).isNotEmpty) {
+        return response.data['results'][0];
+      }
+
+      if (response.data is Map) {
+        return response.data;
+      }
+      log(response.data.toString());
       return response.data;
-    } on DioException catch (e, s) {
-      throw CustomException(
-          message:
-              e.response?.data?["error_description"] ?? "Failed to get status");
+    } on DioException catch (e) {
+      log(e.toString());
+      throw _handleDioError(e, "Failed to get status.");
+    } catch (e) {
+      log(e.toString());
+      throw CustomException(message: e.toString());
     }
   }
 }

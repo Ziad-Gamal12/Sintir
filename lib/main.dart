@@ -78,7 +78,6 @@ class Sintir extends StatelessWidget {
                 darkTheme: AppTheme.dark,
                 themeMode: themeMode,
                 localizationsDelegates: const [
-                  // AppLocalizations is required for your Localingo setup
                   AppLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,
                   GlobalWidgetsLocalizations.delegate,

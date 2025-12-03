@@ -377,7 +377,7 @@ class App_router {
         path: PayOutBalance.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return PayOutBalance(
-            walletEntity: state.extra as TeacherWalletEntity,
+            currentWallet: state.extra as TeacherWalletEntity,
           );
         },
       ),

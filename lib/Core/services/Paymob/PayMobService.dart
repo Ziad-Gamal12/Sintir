@@ -26,9 +26,9 @@ class PayMobService {
   Future<Map<String, dynamic>> createPaymentIntention({
     required int amountCents,
     required String currency,
-    required int integrationId,
+    required List<int> integrationIds,
     required Map<String, dynamic> billingData,
-    required List<Map<String, dynamic>> items, // List of items>
+    required List<Map<String, dynamic>> items,
   }) async {
     try {
       final response = await dio.post(
@@ -37,7 +37,7 @@ class PayMobService {
           "amount": amountCents,
           "currency": currency,
           "items": items,
-          "payment_methods": [integrationId],
+          "payment_methods": integrationIds,
           "billing_data": billingData,
         },
         options: Options(

@@ -25,6 +25,11 @@ class ContentCreatorProfileRepoImpl implements ContentCreatorProfileRepo {
             "operator": "==",
             "value": userId,
           },
+          {
+            "field": "state",
+            "operator": "==",
+            "value": BackendEndpoints.coursePublishedState,
+          },
         ],
       };
       final response = await dataBaseService.getData(
@@ -60,6 +65,11 @@ class ContentCreatorProfileRepoImpl implements ContentCreatorProfileRepo {
             "field": "contentcreaterentity.id",
             "operator": "==",
             "value": userId,
+          },
+          {
+            "field": "state",
+            "operator": "==",
+            "value": BackendEndpoints.coursePublishedState,
           },
         ],
       };

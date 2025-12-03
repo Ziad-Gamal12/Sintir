@@ -34,7 +34,12 @@ class PaymobRepoImp implements PaymobRepo {
         amountCents: (amount.toInt() * 100).toInt(),
         currency: "EGP",
         items: [items],
-        integrationId: PaymobWalletsIntegrationID,
+        integrationIds: [
+          PaymobWalletsIntegrationID,
+          PaymobOnlineCardIntegrationID,
+          PaymobAcceptKioskIntegrationID,
+          PaymobCashCollectionIntegrationID
+        ],
         billingData: billingData,
       );
 

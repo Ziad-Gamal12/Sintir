@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/repos/PaymobPayoutRepo/PaymobPayoutRepo.dart';
+import 'package:sintir/Core/repos/PaymobPayoutRepo/PayoutRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Core/widgets/SensitivePageWrapper.dart';
@@ -10,19 +10,24 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manage
 import 'package:sintir/locale_keys.dart';
 
 class PayOutBalance extends StatelessWidget {
-  const PayOutBalance({super.key, required this.walletEntity});
-  final TeacherWalletEntity walletEntity;
+  const PayOutBalance({
+    super.key,
+    required this.currentWallet,
+  });
   static const String routeName = "/PayOutBalance";
+  final TeacherWalletEntity currentWallet;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PayoutCubit(
-        payoutRepo: getIt<PaymobPayoutRepo>(),
+        payoutRepo: getIt<PayoutRepo>(),
       ),
       child: SensitivePageWrapper(
         child: Scaffold(
           appBar: CustomAppBar(appBartitle: LocaleKeys.withdrawBalance),
-          body: PayOutBalanceBody(walletEntity: walletEntity),
+          body: PayOutBalanceBody(
+            currentWallet: currentWallet,
+          ),
         ),
       ),
     );

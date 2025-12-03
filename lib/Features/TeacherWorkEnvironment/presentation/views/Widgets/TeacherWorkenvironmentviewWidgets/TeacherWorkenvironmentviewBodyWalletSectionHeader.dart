@@ -30,7 +30,8 @@ class TeacherWorkenvironmentviewBodyWalletSectionHeader
         const Spacer(),
         InkWell(
             onTap: () {
-              GoRouter.of(context).push(TeacherWalletDetailsView.routeName);
+              GoRouter.of(context)
+                  .push(TeacherWalletDetailsView.routeName, extra: status);
             },
             child: Text(LocaleKeys.viewDetails,
                 style: AppTextStyles(context).regular16)),

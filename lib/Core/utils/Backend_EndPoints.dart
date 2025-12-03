@@ -19,6 +19,7 @@ class BackendEndpoints {
   static String getTeacherDataCollectionName = "Teachers";
   static String addStudentDataCollectionName = "Students";
   static String setStudentDataTableName = "Students";
+  static String transactionsSubCollection = "Transactions";
   static String setTeacherDataTableName = "Teachers";
   static String addSectionToTeacherCollection = "Teachers";
   static String updateCourseSectionCollection = "Courses";

@@ -5,20 +5,20 @@ import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
 class TeacherWalletBalanceDetailsCard extends StatelessWidget {
-  final TeacherWalletEntity? wallet;
-
-  const TeacherWalletBalanceDetailsCard({super.key, required this.wallet});
-
+  const TeacherWalletBalanceDetailsCard({
+    super.key,
+    required this.wallet,
+  });
+  final TeacherWalletEntity wallet;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return Container(
       width: double.infinity,
       alignment: Alignment.center,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: theme.cardColor, // يعتمد على الـ theme
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -44,7 +44,7 @@ class TeacherWalletBalanceDetailsCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            "${wallet?.balance.toStringAsFixed(2) ?? 0}  ${LocaleKeys.priceEgp}",
+            "${wallet.balance.toStringAsFixed(2) ?? 0}  ${LocaleKeys.priceEgp}",
             style: AppTextStyles(context).bold32.copyWith(color: KMainColor),
           ),
         ],

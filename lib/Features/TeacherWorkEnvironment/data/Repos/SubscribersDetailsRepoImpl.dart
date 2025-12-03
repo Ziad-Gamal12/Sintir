@@ -31,6 +31,11 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
             "operator": "==",
             "value": contentCreatorId,
           },
+          {
+            "field": "state",
+            "operator": "==",
+            "value": BackendEndpoints.coursePublishedState,
+          }
         ]
       };
       FireStoreRequirmentsEntity requirmentsEntity = FireStoreRequirmentsEntity(

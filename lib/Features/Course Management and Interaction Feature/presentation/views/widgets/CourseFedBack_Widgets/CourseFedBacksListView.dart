@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseFeedBacksCubit/course_feed_backs_cubit.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CoursefedbackItemEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseFedBack_Widgets/CourseFedBacksListView_item.dart';
 import 'package:sintir/constant.dart';
 
@@ -10,7 +11,7 @@ class Coursefedbackslistview extends StatelessWidget {
       {super.key,
       required this.courseFedBacks,
       required this.scrollController});
-  final List courseFedBacks;
+  final List<CoursefeedbackItemEntity> courseFedBacks;
   final ScrollController scrollController;
   @override
   Widget build(BuildContext context) {

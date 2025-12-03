@@ -17,20 +17,24 @@ class TeacherOnboardingInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final ColorScheme colorScheme = theme.colorScheme;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       decoration: BoxDecoration(
-        color: Colors.grey[900],
+        color: colorScheme.surface,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(16),
           topRight: Radius.circular(16),
         ),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Colors.black12,
+            color: colorScheme.shadow
+                .withOpacity(theme.brightness == Brightness.dark ? 0.4 : 0.15),
             blurRadius: 30,
             spreadRadius: 3,
-            offset: Offset(5, 10),
+            offset: const Offset(5, 10),
           )
         ],
       ),
@@ -45,7 +49,10 @@ class TeacherOnboardingInfoCard extends StatelessWidget {
               Text(
                 page.description,
                 textAlign: TextAlign.justify,
-                style: AppTextStyles(context).regular14,
+                style: AppTextStyles(context).regular14.copyWith(
+                      color: colorScheme
+                          .onSurface, // Text color that contrasts with the surface
+                    ),
               ),
               const Spacer(),
               TeacherOnBoardingButton(

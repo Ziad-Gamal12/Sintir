@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 
-abstract class PaymobPayoutRepo {
+abstract class PayoutRepo {
   Future<Either<Failure, String>> sendDisbursement({
     required String receiverMobile,
     required double amount,

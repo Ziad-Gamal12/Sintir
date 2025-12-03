@@ -59,7 +59,7 @@ class _CoursefedbackviewbodyState extends State<Coursefedbackviewbody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CourseFeedBacksCubit, CourseFeedBacksState>(
+    return BlocConsumer<CourseFeedBacksCubit, CourseFeedBacksState>(
       listener: (context, state) {
         if (state is CourseFeedBacksAddFeedBackSuccess) {
           controller.clear();
@@ -84,7 +84,7 @@ class _CoursefedbackviewbodyState extends State<Coursefedbackviewbody> {
           setState(() {});
         }
       },
-      child: Form(
+      builder: (context, state) => Form(
         key: formKey,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),

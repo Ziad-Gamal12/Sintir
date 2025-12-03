@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 
 import 'teacher_wallet_balance_details_bottom.dart';
 import 'teacher_wallet_balance_details_card.dart';
 
 class TeacherWalletBalanceDetails extends StatelessWidget {
-  const TeacherWalletBalanceDetails({super.key});
-
+  const TeacherWalletBalanceDetails({super.key, required this.wallet});
+  final TeacherWalletEntity wallet;
   @override
   Widget build(BuildContext context) {
-    final TeacherWalletEntity? wallet =
-        getUserData().teacherExtraDataEntity?.wallet;
-
     return SizedBox(
       width: double.infinity,
       child: AspectRatio(
@@ -21,7 +17,9 @@ class TeacherWalletBalanceDetails extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             Positioned.fill(
-              child: TeacherWalletBalanceDetailsCard(wallet: wallet),
+              child: TeacherWalletBalanceDetailsCard(
+                wallet: wallet,
+              ),
             ),
             Positioned(
               bottom: 0,

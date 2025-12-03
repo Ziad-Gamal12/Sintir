@@ -18,8 +18,8 @@ import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo_impl.dart';
 import 'package:sintir/Core/repos/File-Item-Repo/FileItemRepo.dart';
 import 'package:sintir/Core/repos/File-Item-Repo/FileItemRepoImpli.dart';
-import 'package:sintir/Core/repos/PaymobPayoutRepo/PaymobPayoutRepo.dart';
-import 'package:sintir/Core/repos/PaymobPayoutRepo/PaymobPayoutRepoImpl.dart';
+import 'package:sintir/Core/repos/PaymobPayoutRepo/PayoutRepo.dart';
+import 'package:sintir/Core/repos/PaymobPayoutRepo/PayoutRepoImpl.dart';
 import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
 import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepoImp.dart';
 import 'package:sintir/Core/repos/ResetPaswordRepo/ResetPaswordRepo.dart';
@@ -28,6 +28,8 @@ import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo
 import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepoImpli.dart';
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo-Impli.dart';
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
+import 'package:sintir/Core/repos/TranscationsRepo/TranscationsRepo.dart';
+import 'package:sintir/Core/repos/TranscationsRepo/TranscationsRepoImpl.dart';
 import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepo.dart';
 import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepoImpli.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
@@ -97,8 +99,8 @@ void setup_Getit() {
 
   getIt.registerLazySingleton<PaymobRepo>(
       () => PaymobRepoImp(payMobService: PayMobService()));
-  getIt.registerLazySingleton<PaymobPayoutRepo>(
-      () => PaymobPayoutRepoImpl(service: PaymobPayoutService()));
+  getIt.registerLazySingleton<PayoutRepo>(
+      () => PayoutRepoImpl(service: PaymobPayoutService()));
 
   getIt.registerLazySingleton<ResetPaswordRepo>(
       () => ResetPaswordRepoImp(authService: getIt<firebaseAuthService>()));
@@ -133,4 +135,7 @@ void setup_Getit() {
           storageService: getIt<StorageService>(),
           authRepo: getIt<AuthRepo>(),
           assetspickerrepo: getIt<Assetspickerrepo>()));
+
+  getIt.registerLazySingleton<TranscationsRepo>(
+      () => TranscationsRepoImpl(dataBaseService: getIt<DataBaseService>()));
 }
