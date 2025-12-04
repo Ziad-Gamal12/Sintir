@@ -9,7 +9,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sintir/Core/Managers/Cubits/LocalizationCubit/LocaleCubit.dart';
 import 'package:sintir/Core/Themes/app_theme.dart';
 import 'package:sintir/Core/Themes/theme_cubit.dart';
-import 'package:sintir/Core/services/BlocObserver.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/App_router.dart';
@@ -22,23 +21,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final appDocDir = await getApplicationDocumentsDirectory();
-
   final storage = await HydratedStorage.build(
     storageDirectory: HydratedStorageDirectory(appDocDir.path),
   );
-
   HydratedBloc.storage = storage;
-
   await Future.wait([
     Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     ),
     shared_preferences_Services.init()
   ]);
-
   setup_Getit();
-  Bloc.observer = Custom_Blocobserver();
-
   runApp(
     const Portal(
       child: PrivacyWrapper(

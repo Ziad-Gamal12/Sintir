@@ -45,11 +45,11 @@ class TransactionAmountAndStatus extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 if (isLoading)
-                  const SizedBox(
+                  SizedBox(
                     width: 24,
                     height: 24,
                     child: CircularProgressIndicator(
-                      color: Colors.red,
+                      color: statusColor,
                       strokeWidth: 2.5,
                     ),
                   )

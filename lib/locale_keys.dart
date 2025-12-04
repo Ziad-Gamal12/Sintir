@@ -47,6 +47,8 @@ class LocaleKeys {
   static String get snackSuccess => 'snack_success'.tr();
   static String get snackError => 'snack_error'.tr();
   static String get snackWarning => 'snack_warning'.tr();
+  static String get aboutUsDescription => 'about_us_description'.tr();
+
   static String get snackInfo => 'snack_info'.tr();
   static String get teacherSubjectTitle => 'teacher_subject_title'.tr();
   static String get imageNotFound => 'image_not_found'.tr();

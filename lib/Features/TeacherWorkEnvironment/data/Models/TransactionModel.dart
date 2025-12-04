@@ -9,11 +9,13 @@ class TransactionModel {
   final String? issuer;
   final String? mobile;
   final String? status;
+  final bool? isReconciled;
   TransactionModel(
       {required this.transactionId,
       required this.createdAt,
       required this.amount,
       required this.currency,
+      required this.isReconciled,
       required this.issuer,
       required this.mobile,
       required this.status});
@@ -24,6 +26,7 @@ class TransactionModel {
       createdAt: (json['created_at'] as Timestamp).toDate(),
       amount: json['amount'],
       currency: json['currency'],
+      isReconciled: json['isReconciled'],
       issuer: json['issuer'],
       mobile: json['mobile'],
       status: json['status'],
@@ -35,6 +38,7 @@ class TransactionModel {
       createdAt: entity.createdAt,
       amount: entity.amount,
       currency: entity.currency,
+      isReconciled: entity.isReconciled,
       issuer: entity.issuer,
       mobile: entity.mobileNumber,
       status: entity.status,
@@ -43,6 +47,7 @@ class TransactionModel {
   TransactionEntity toEntity() {
     return TransactionEntity(
       transactionId: transactionId,
+      isReconciled: isReconciled,
       createdAt: createdAt,
       amount: amount,
       currency: currency,
@@ -57,6 +62,7 @@ class TransactionModel {
       'transaction_id': transactionId,
       'created_at': createdAt,
       'amount': amount,
+      'isReconciled': isReconciled,
       'currency': currency,
       'issuer': issuer,
       'mobile': mobile,

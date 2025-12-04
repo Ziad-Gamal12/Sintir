@@ -4,6 +4,7 @@ import 'package:sintir/Features/Favorites/presentation/views/FavoritesView.dart'
 import 'package:sintir/Features/MyCourses/Presentation/Views/MyCoursesView.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Views/MyMistakesView.dart';
 import 'package:sintir/Features/MyResults/Presentation/Views/MyResultsView.dart';
+import 'package:sintir/Features/Profile/Presentation/Views/AboutUsView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/SettingsView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/UserPersonalDetailsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
@@ -76,16 +77,10 @@ class ProfileActionsEntity {
     ProfileActionsEntity(
       title: LocaleKeys.profileAbout,
       icon: FontAwesomeIcons.circleInfo,
-      routeName: "",
-    ),
-    ProfileActionsEntity(
-      title: LocaleKeys.profileSupport,
-      icon: FontAwesomeIcons.circleQuestion,
-      routeName: "",
+      routeName: AboutUsView.routeName,
     ),
   ];
 
-  /// Get color based on current theme if not specified
   Color getColor(BuildContext context) {
     return color ?? Theme.of(context).colorScheme.primary;
   }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
@@ -47,7 +45,6 @@ class CourseCouponsRepoImp implements CourseCouponsRepo {
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
-      log(e.toString(), stackTrace: s);
       return left(ServerFailure(message: LocaleKeys.couponAddError));
     }
   }
@@ -67,8 +64,7 @@ class CourseCouponsRepoImp implements CourseCouponsRepo {
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.couponDeleteError));
     }
   }
@@ -93,8 +89,7 @@ class CourseCouponsRepoImp implements CourseCouponsRepo {
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.couponUpdateError));
     }
   }
@@ -150,8 +145,7 @@ class CourseCouponsRepoImp implements CourseCouponsRepo {
       );
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.fetchCouponsError));
     }
   }
@@ -189,8 +183,7 @@ class CourseCouponsRepoImp implements CourseCouponsRepo {
       return updateCourseCoupon(courseID: courseID, coupon: coupon);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }

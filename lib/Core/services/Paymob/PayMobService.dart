@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class PayMobService {
   final Dio dio;
@@ -49,11 +48,10 @@ class PayMobService {
 
       return response.data;
     } on DioException catch (e) {
-      log(e.response.toString());
       throw CustomException(
           message: e.response?.data?["message"] ?? "Payment intention error");
     } catch (e) {
-      throw CustomException(message: "Unexpected error occurred");
+      throw CustomException(message: LocaleKeys.errorOccurredMessage);
     }
   }
 

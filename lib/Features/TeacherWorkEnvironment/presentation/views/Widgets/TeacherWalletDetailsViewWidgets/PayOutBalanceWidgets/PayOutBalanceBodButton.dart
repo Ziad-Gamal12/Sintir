@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
@@ -36,7 +34,6 @@ class PayOutBalanceBodButton extends StatelessWidget {
 
     void handleWithdrawal() {
       if (!formKey.currentState!.validate()) return;
-      log('isConditionAccepted: ${walletEntity.balance}');
       if (!isConditionAccepted) {
         CustomSnackBar.show(
           context,

@@ -6,13 +6,14 @@ class TransactionEntity {
   final String? issuer;
   final String? mobileNumber;
   final String? status;
-
+  final bool? isReconciled;
   TransactionEntity(
       {required this.transactionId,
       required this.createdAt,
       required this.amount,
       required this.currency,
       required this.issuer,
+      required this.isReconciled,
       required this.mobileNumber,
       required this.status});
 
@@ -23,6 +24,7 @@ class TransactionEntity {
     String? currency,
     String? issuer,
     String? mobileNumber,
+    bool? isReconciled,
     String? status,
   }) {
     return TransactionEntity(
@@ -30,6 +32,7 @@ class TransactionEntity {
       createdAt: createdAt ?? this.createdAt,
       amount: amount ?? this.amount,
       currency: currency ?? this.currency,
+      isReconciled: isReconciled ?? this.isReconciled,
       issuer: issuer ?? this.issuer,
       mobileNumber: mobileNumber ?? this.mobileNumber,
       status: status ?? this.status,

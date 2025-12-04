@@ -6,8 +6,20 @@ abstract class TranscationsRepo {
   Future<Either<Failure, void>> storeTransaction(
       {required TransactionEntity transaction, required String userId});
 
-  Future<Either<Failure, void>> reconcileTransactionStatus(
-      {required String transactionId,
+  Future<Either<Failure, void>> reconcileTransaction(
+      {required TransactionEntity transaction,
       required String userId,
       required String newStatus});
+  Future<void> reStoreTransactionAfterFailure(
+      {required double amount, required String userId});
+  Future<void> deducteFromTeacherWallet(
+      {required double amount, required String userId});
+  Future<void> updateTransactionStatus(
+      {required String userId,
+      required String status,
+      required String transactionId});
+  Future<void> updateTransactionIsReconciled(
+      {required String userId,
+      required bool value,
+      required String transactionId});
 }

@@ -1,7 +1,5 @@
 // ignore_for_file: file_names
 
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStorePaginateResponse.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
@@ -250,8 +248,7 @@ class FirebaseFirestoreservice implements DataBaseService {
       );
     } on FirebaseException catch (e) {
       throw _getFireStoreCustomException(e: e);
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
+    } catch (e) {
       throw CustomException(message: LocaleKeys.unexpectedError);
     }
   }

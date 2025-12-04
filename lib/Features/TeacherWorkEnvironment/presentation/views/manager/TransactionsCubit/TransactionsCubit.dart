@@ -37,63 +37,78 @@ class TransactionsCubit extends Cubit<TransactionsState> {
         (r) => emit(StoreTransactionSuccess()));
   }
 
+  // Helper function to handle consistent error emission
+  void _emitFailure({
+    required String transactionId,
+    required String message,
+  }) {
+    emit(ReconcileTransactionFailure(
+      transactionId: transactionId,
+      errMessage: message,
+    ));
+  }
+
   Future<void> reconcileTransactionStatus({
     required TransactionEntity transaction,
     required String userId,
   }) async {
-    emit(ReconcileTransactionLoading(
-        transactionId: transaction.transactionId ?? ""));
-
-    try {
-      final statusCheckResult = await paymobPayoutRepo.getDisbursementStatus(
-        transactionId: transaction.transactionId ?? '',
+    final transactionId = transaction.transactionId ?? "";
+    if (transactionId.isEmpty) {
+      return _emitFailure(
+        transactionId: transactionId,
+        message: 'Cannot reconcile: Transaction ID is missing.',
       );
-
-      await statusCheckResult.fold(
-        (failure) {
-          emit(ReconcileTransactionFailure(
-            transactionId: transaction.transactionId ?? '',
-            errMessage: 'Paymob check failed: ${failure.message}',
-          ));
-        },
-        (paymobStatusResponse) async {
-          final newStatus =
-              paymobStatusResponse["disbursement_status"].toUpperCase();
-
-          final updateStatusResult =
-              await transcationsRepo.reconcileTransactionStatus(
-            transactionId: transaction.transactionId ?? '',
-            userId: userId,
-            newStatus: newStatus,
-          );
-
-          await updateStatusResult.fold(
-            (failure) {
-              emit(ReconcileTransactionFailure(
-                transactionId: transaction.transactionId ?? "",
-                errMessage:
-                    'DB update failed: ${failure.message}. Paymob status: $newStatus',
-              ));
-            },
-            (r) async {
-              if (newStatus == 'FAILED' || newStatus == 'REJECTED') {
-                emit(ReconcileTransactionFailure(
-                  transactionId: transaction.transactionId ?? "",
-                  errMessage: paymobStatusResponse["status_description"],
-                ));
-              } else {
-                emit(ReconcileTransactionSuccess(
-                    transactionId: transaction.transactionId ?? ""));
-              }
-            },
-          );
-        },
-      );
-    } catch (e) {
-      emit(ReconcileTransactionFailure(
-        transactionId: transaction.transactionId ?? "",
-        errMessage: 'An unknown error occurred during reconciliation.',
-      ));
     }
+
+    emit(ReconcileTransactionLoading(transactionId: transactionId));
+
+    final statusCheckResult = await paymobPayoutRepo.getDisbursementStatus(
+      transactionId: transactionId,
+    );
+
+    await statusCheckResult.fold(
+      (failure) {
+        _emitFailure(
+          transactionId: transactionId,
+          message: 'Paymob status check failed: ${failure.message}',
+        );
+      },
+      (paymobStatusResponse) async {
+        final newStatus =
+            (paymobStatusResponse["disbursement_status"] as String?)
+                    ?.toUpperCase() ??
+                'UNKNOWN';
+        final statusDescription =
+            (paymobStatusResponse["status_description"] as String?) ??
+                'No description provided.';
+
+        final updateStatusResult = await transcationsRepo.reconcileTransaction(
+          transaction: transaction,
+          userId: userId,
+          newStatus: newStatus,
+        );
+
+        await updateStatusResult.fold(
+          (dbFailure) {
+            _emitFailure(
+              transactionId: transactionId,
+              message:
+                  'DB status update failed: ${dbFailure.message}. Paymob status: $newStatus ($statusDescription)',
+            );
+          },
+          (_) async {
+            if (newStatus == 'FAILED' || newStatus == 'REJECTED') {
+              _emitFailure(
+                transactionId: transactionId,
+                message:
+                    'Transaction failed. Balance restored. Reason: $statusDescription',
+              );
+            } else {
+              emit(ReconcileTransactionSuccess(transactionId: transactionId));
+            }
+          },
+        );
+      },
+    );
   }
 }

@@ -1,6 +1,5 @@
 // ignore_for_file: camel_case_types, depend_on_referenced_packages, file_names, await_only_futures
 
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -23,7 +22,6 @@ class firebasestorageservice implements StorageService {
           await ref.putFile(file).then((p0) => p0.ref.getDownloadURL());
       return url;
     } catch (e) {
-      log("Exception from firebasestorageservice.uploadFile in catch With Firebase Exception: ${e.toString()}");
       throw CustomException(message: LocaleKeys.uploadImageFailed);
     }
   }

@@ -1,6 +1,4 @@
 // Refactored TestItemRepoImpli.dart
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
@@ -23,7 +21,6 @@ class TestItemRepoImpli implements Testitemrepo {
   final StorageService storageService;
   final DataBaseService databaseservice;
 
-  // Keep last document for pagination (single per repository instance)
   DocumentSnapshot? lastTestResultDoc;
 
   TestItemRepoImpli({
@@ -45,10 +42,8 @@ class TestItemRepoImpli implements Testitemrepo {
       }
       return right(null);
     } on CustomException catch (e) {
-      log('uploadTestQuestionsImages CustomException: ${e.message}');
       return left(ServerFailure(message: e.message));
     } catch (e, s) {
-      log('uploadTestQuestionsImages error: $e', stackTrace: s);
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
@@ -67,10 +62,8 @@ class TestItemRepoImpli implements Testitemrepo {
       }
       return right(null);
     } on CustomException catch (e) {
-      log('uploadTestQuestionsImages CustomException: ${e.message}');
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log('uploadTestQuestionsImages error: $e', stackTrace: s);
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
@@ -191,10 +184,8 @@ class TestItemRepoImpli implements Testitemrepo {
       return right(GetExamResultsReponseEntity(
           results: results, hasMore: hasMore, isPaginate: isPaginate));
     } on CustomException catch (e) {
-      log('getTestResults CustomException: ${e.message}');
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log('getTestResults error: $e', stackTrace: s);
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
@@ -235,10 +226,8 @@ class TestItemRepoImpli implements Testitemrepo {
           Testresultemodel.fromJson(response.listData![0]).toEntity();
       return right(result);
     } on CustomException catch (e) {
-      log('getHighestScore CustomException: ${e.message}');
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log('getHighestScore error: $e', stackTrace: s);
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
@@ -280,10 +269,8 @@ class TestItemRepoImpli implements Testitemrepo {
           Testresultemodel.fromJson(response.listData![0]).toEntity();
       return right(result);
     } on CustomException catch (e) {
-      log('getLowestScore CustomException: ${e.message}');
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log('getLowestScore error: $e', stackTrace: s);
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
@@ -308,10 +295,8 @@ class TestItemRepoImpli implements Testitemrepo {
       );
       return right(response);
     } on CustomException catch (e) {
-      log('getAttendedCount CustomException: ${e.message}');
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log('getAttendedCount error: $e', stackTrace: s);
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
@@ -344,10 +329,8 @@ class TestItemRepoImpli implements Testitemrepo {
 
       return right(response);
     } on CustomException catch (e) {
-      log('getFailedStudentsCount CustomException: ${e.message}');
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log('getFailedStudentsCount error: $e', stackTrace: s);
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
@@ -380,10 +363,8 @@ class TestItemRepoImpli implements Testitemrepo {
 
       return right(response);
     } on CustomException catch (e) {
-      log('getSuccessedStudentsCount CustomException: ${e.message}');
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log('getSuccessedStudentsCount error: $e', stackTrace: s);
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
@@ -423,13 +404,10 @@ class TestItemRepoImpli implements Testitemrepo {
       if (response.listData!.isEmpty) return right([]);
 
       final listData = response.listData! as List<Map<String, dynamic>>;
-      // For typical small user-history lists, compute is unnecessary
       return right(_parseTestResults(listData));
     } on CustomException catch (e) {
-      log('getUserResultsOfExam CustomException: ${e.message}');
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log("error in user results of exam $e", stackTrace: s);
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }

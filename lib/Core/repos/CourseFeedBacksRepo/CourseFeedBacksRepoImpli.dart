@@ -1,7 +1,5 @@
 // ignore_for_file: file_names
 
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart'; // compute
@@ -54,7 +52,6 @@ class CourseFeedBacksRepoImpli implements CourseFeedBacksRepo {
 
   final Map<String, dynamic> _baseGetCourseFeedBacksQuery = {
     "startAfter": null,
-    "orderBy": "likesCount",
     "limit": 10,
   };
 
@@ -66,7 +63,8 @@ class CourseFeedBacksRepoImpli implements CourseFeedBacksRepo {
     try {
       final Map<String, dynamic> query =
           Map<String, dynamic>.from(_baseGetCourseFeedBacksQuery);
-      query["startAfter"] = isPaginate ? _getCourseFeedBacksLastDoc : null;
+      query["startAfter"] =
+          isPaginate == true ? _getCourseFeedBacksLastDoc : null;
       final FireStoreResponse response = await databaseservice.getData(
         query: query,
         requirements: FireStoreRequirmentsEntity(
@@ -106,8 +104,7 @@ class CourseFeedBacksRepoImpli implements CourseFeedBacksRepo {
           isPaginate: isPaginate,
         ),
       );
-    } on CustomException catch (e, s) {
-      log("error $e $s");
+    } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
@@ -124,7 +121,6 @@ List<CoursefeedbackItemEntity> _parseCourseFeedbacks(
           Coursefeedbacksmodel.fromJson(item).toEntity();
       results.add(entity);
     } catch (e) {
-      log(e.toString());
       throw CustomException(message: LocaleKeys.unexpectedError);
     }
   }

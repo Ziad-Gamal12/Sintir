@@ -37,15 +37,15 @@ class _PayOutBalanceBodyState extends State<PayOutBalanceBody> {
   @override
   void initState() {
     super.initState();
-    // Initialize a dummy transaction. It will be fully populated on submission.
     _currentTransaction = TransactionEntity(
         amount: 0.0,
         issuer: issuer,
+        isReconciled: false,
         mobileNumber: "",
-        transactionId: "", // Will be updated by PayoutCubit success
+        transactionId: "",
         currency: "EGP",
         createdAt: DateTime.now(),
-        status: "PENDING"); // Default to PENDING status
+        status: "PENDING");
   }
 
   @override
@@ -55,7 +55,6 @@ class _PayOutBalanceBodyState extends State<PayOutBalanceBody> {
     super.dispose();
   }
 
-  // 1. Handles the response from the Paymob API call (PayoutCubit)
   void _handlePayoutState(BuildContext context, PayoutState state) {
     if (state is PayoutLoading) {
       _setLoading(true);

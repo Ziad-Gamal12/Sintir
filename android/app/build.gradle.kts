@@ -45,6 +45,7 @@ buildTypes {
         isMinifyEnabled = false
         isShrinkResources = false
     }
+    
 }
 }
 

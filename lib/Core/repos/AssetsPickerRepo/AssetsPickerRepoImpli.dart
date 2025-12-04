@@ -1,6 +1,5 @@
 // ignore_for_file: file_names
 
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -70,7 +69,6 @@ class Assetspickerrepoimpli implements Assetspickerrepo {
         return left(ServerFailure(message: LocaleKeys.fileNotFound));
       }
     } catch (e) {
-      log(e.toString());
       return left(ServerFailure(message: e.toString()));
     }
   }

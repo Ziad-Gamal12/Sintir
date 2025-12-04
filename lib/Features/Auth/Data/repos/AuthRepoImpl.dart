@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,7 +25,6 @@ class AuthRepoImpl implements AuthRepo {
   AuthRepoImpl({required this.authService, required this.databaseservice});
 
   Failure _toFailure(Object e, [StackTrace? s]) {
-    log('AuthRepoImpl error: $e', stackTrace: s);
     if (e is CustomException) return ServerFailure(message: e.message);
     return ServerFailure(message: LocaleKeys.generalError);
   }
@@ -102,9 +100,7 @@ class AuthRepoImpl implements AuthRepo {
     if (user == null) return;
     try {
       await user.delete();
-    } catch (e, s) {
-      log('Failed to delete user during cleanup: $e', stackTrace: s);
-    }
+    } catch (e) {}
   }
 
   Future<void> storeUserLocally(Map<String, dynamic> userJson) async {
@@ -114,8 +110,7 @@ class AuthRepoImpl implements AuthRepo {
         key: BackendEndpoints.storeUserLocaly,
         value: userJsonString,
       );
-    } catch (e, s) {
-      log('Failed to store user locally: $e', stackTrace: s);
+    } catch (e) {
       throw CustomException(message: LocaleKeys.errorOccurredMessage);
     }
   }
@@ -161,10 +156,9 @@ class AuthRepoImpl implements AuthRepo {
     } on CustomException catch (e) {
       await authService.signout();
       return Left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
+    } catch (e) {
       await authService.signout();
-      return Left(_toFailure(e, s));
+      return Left(_toFailure(e));
     }
   }
 
@@ -336,8 +330,7 @@ class AuthRepoImpl implements AuthRepo {
       String? mobileDeviceIdentifier =
           await MobileDeviceIdentifier().getDeviceId();
       return mobileDeviceIdentifier ?? '';
-    } catch (e, s) {
-      log('Failed to fetch device id: $e', stackTrace: s);
+    } catch (e) {
       return '';
     }
   }

@@ -44,9 +44,15 @@ class TeacherWalletBalanceDetailsCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            "${wallet.balance.toStringAsFixed(2) ?? 0}  ${LocaleKeys.priceEgp}",
+            wallet.balance.toStringAsFixed(2),
             style: AppTextStyles(context).bold32.copyWith(color: KMainColor),
           ),
+          Text(
+            LocaleKeys.priceEgp,
+            style: AppTextStyles(context)
+                .semiBold16
+                .copyWith(color: theme.textTheme.bodyMedium?.color),
+          )
         ],
       ),
     );

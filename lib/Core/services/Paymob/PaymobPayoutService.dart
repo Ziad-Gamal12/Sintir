@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
@@ -33,11 +32,6 @@ class PaymobPayoutService {
     String errorMessage = defaultMessage;
 
     final statusCode = e.response?.statusCode ?? 0;
-
-    // Log the detailed error message, including the URL and response data
-    log("API Error [HTTP $statusCode]: $defaultMessage");
-    log("Request URL: ${e.requestOptions.uri}");
-    log("Response Data: ${e.response?.data}");
 
     if (e.response?.data is Map) {
       errorMessage = e.response!.data["error_description"] ??
@@ -175,13 +169,11 @@ class PaymobPayoutService {
       if (response.data is Map) {
         return response.data;
       }
-      log(response.data.toString());
+
       return response.data;
     } on DioException catch (e) {
-      log(e.toString());
       throw _handleDioError(e, "Failed to get status.");
     } catch (e) {
-      log(e.toString());
       throw CustomException(message: e.toString());
     }
   }

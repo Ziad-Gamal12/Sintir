@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
@@ -35,24 +36,98 @@ class TranscationsRepoImpl implements TranscationsRepo {
   }
 
   @override
-  Future<Either<Failure, void>> reconcileTransactionStatus(
-      {required String transactionId,
+  Future<Either<Failure, void>> reconcileTransaction(
+      {required TransactionEntity transaction,
       required String userId,
       required String newStatus}) async {
     try {
-      await dataBaseService.updateData(
-        collectionKey: BackendEndpoints.usersCollectionName,
-        field: "status",
-        doc: userId,
-        subCollectionKey: BackendEndpoints.transactionsSubCollection,
-        subDocId: transactionId,
-        data: newStatus,
-      );
-      return right(null);
+      await updateTransactionStatus(
+          userId: userId,
+          status: newStatus,
+          transactionId: transaction.transactionId ?? "");
+      if (newStatus.toUpperCase() == "REJECTED" ||
+          newStatus.toUpperCase() == "CANCELLED" ||
+          newStatus.toUpperCase() == "FAILED") {
+        if (transaction.isReconciled == false) {
+          await reStoreTransactionAfterFailure(
+              amount: transaction.amount ?? 0, userId: userId);
+          await updateTransactionIsReconciled(
+              userId: userId,
+              value: true,
+              transactionId: transaction.transactionId ?? "");
+        }
+        return right(null);
+      } else if (newStatus.toUpperCase() == "COMPLETED" ||
+          newStatus.toUpperCase() == "APPROVED" ||
+          newStatus.toUpperCase() == "SUCCESS") {
+        if (transaction.isReconciled == true) {
+          await updateTransactionIsReconciled(
+              userId: userId,
+              value: false,
+              transactionId: transaction.transactionId ?? "");
+          await deducteFromTeacherWallet(
+            amount: transaction.amount ?? 0,
+            userId: userId,
+          );
+        }
+        return right(null);
+      } else {
+        return right(null);
+      }
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
+  }
+
+  @override
+  Future<void> reStoreTransactionAfterFailure(
+      {required double amount, required String userId}) async {
+    await dataBaseService.updateData(
+        collectionKey: BackendEndpoints.usersCollectionName,
+        field: "teacherExtraData.wallet.balance",
+        doc: userId,
+        data: FieldValue.increment(amount));
+  }
+
+  @override
+  Future<void> deducteFromTeacherWallet(
+      {required double amount, required String userId}) async {
+    await dataBaseService.updateData(
+        collectionKey: BackendEndpoints.usersCollectionName,
+        field: "teacherExtraData.wallet.balance",
+        doc: userId,
+        data: FieldValue.increment(-amount));
+  }
+
+  @override
+  Future<void> updateTransactionIsReconciled(
+      {required String userId,
+      required bool value,
+      required String transactionId}) async {
+    await dataBaseService.updateData(
+      collectionKey: BackendEndpoints.usersCollectionName,
+      field: "isReconciled",
+      doc: userId,
+      subCollectionKey: BackendEndpoints.transactionsSubCollection,
+      subDocId: transactionId,
+      data: value,
+    );
+  }
+
+  @override
+  Future<void> updateTransactionStatus(
+      {required String userId,
+      required String status,
+      required String transactionId}) async {
+    await dataBaseService.updateData(
+      collectionKey: BackendEndpoints.usersCollectionName,
+      field: "status",
+      doc: userId,
+      subCollectionKey: BackendEndpoints.transactionsSubCollection,
+      subDocId: transactionId,
+      data: status,
+    );
   }
 }

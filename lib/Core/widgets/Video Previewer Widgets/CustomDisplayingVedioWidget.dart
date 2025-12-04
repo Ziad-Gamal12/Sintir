@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:better_player_plus/better_player_plus.dart';
@@ -55,8 +54,7 @@ class _PremiumVideoPlayerState extends State<PremiumVideoPlayer> {
         },
         onDurationChanged: widget.onDurationChanged ?? (_) {},
       );
-    } catch (e, s) {
-      log("PremiumVideoPlayer Error: $e", stackTrace: s);
+    } catch (e) {
       if (mounted) {
         setState(() {
           _isLoading = false;

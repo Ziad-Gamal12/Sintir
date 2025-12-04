@@ -35,10 +35,13 @@ class CoursefedbackslistviewItem extends StatelessWidget {
                 .copyWith(color: theme.textTheme.bodyMedium?.color),
           ),
         ),
-        leading: ClipRRect(
-          borderRadius: BorderRadius.circular(50),
-          child: CustomCachedNetworkImage(
-            imageUrl: item.userImage,
+        leading: AspectRatio(
+          aspectRatio: 1,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: CustomCachedNetworkImage(
+              imageUrl: item.userImage,
+            ),
           ),
         ),
         trailing: Text(

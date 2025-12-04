@@ -1,7 +1,5 @@
 // ignore_for_file: file_names
 
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
@@ -50,10 +48,8 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
 
       return right(null);
     } on CustomException catch (e) {
-      log("add course section error $e");
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log("add course section error $e $s");
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
@@ -144,8 +140,7 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log("add course section error $e $s");
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }

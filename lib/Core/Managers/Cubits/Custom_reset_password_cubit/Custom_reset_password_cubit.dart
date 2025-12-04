@@ -1,7 +1,5 @@
 // ignore_for_file: file_names, depend_on_referenced_packages
 
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
@@ -21,7 +19,6 @@ class CustomResetPasswordCubit extends Cubit<CustomResetPasswordState> {
     } on CustomException catch (e) {
       emit(CustomResetPasswordFailure(errmessage: e.message));
     } catch (e) {
-      log("Exception from TeacherResetPasswordCubit.sendResetPasswordEmail in catch With Firebase Exception: ${e.toString()}");
       emit(CustomResetPasswordFailure(errmessage: e.toString()));
     }
   }

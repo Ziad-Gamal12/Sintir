@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
@@ -103,9 +101,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
       return right(testResult);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
-
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.generalError));
     }
   }
@@ -151,8 +147,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
       return right(testResult);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.generalError));
     }
   }

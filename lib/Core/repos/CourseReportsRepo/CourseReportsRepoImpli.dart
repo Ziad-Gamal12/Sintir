@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
@@ -38,8 +36,7 @@ class CourseReportsRepoimpli implements CourseReportsRepo {
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
@@ -94,8 +91,7 @@ class CourseReportsRepoimpli implements CourseReportsRepo {
       );
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }

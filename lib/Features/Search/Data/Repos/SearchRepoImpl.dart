@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sintir/Core/entities/CourseEntities/ContentCreaterEntity.dart';
@@ -38,7 +36,6 @@ class SearchRepoImpl implements SearchRepo {
       final searchTeachersResponse = results[1];
       final searchCoursesByContentCreatorResponse = results[2];
 
-      // Merge & remove duplicates by using map with IDs as keys
       final allCoursesMap = {
         for (var course in [
           ...searchCoursesResponse.fetchedTeachersCoursesList,
@@ -64,15 +61,11 @@ class SearchRepoImpl implements SearchRepo {
         ),
       );
     } on CustomException catch (e) {
-      log(e.toString());
       return Left(ServerFailure(message: e.message));
     } catch (e) {
-      log(e.toString());
       return Left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
-
-  // ---------------------- SEARCH COURSES ----------------------
 
   @override
   Future<SearchResponse> searchCourses(
@@ -278,11 +271,9 @@ class SearchRepoImpl implements SearchRepo {
           fetchedTeachersList: response.fetchedTeachersList);
 
       return right(searchResponse);
-    } on CustomException catch (e, s) {
-      log(e.toString(), stackTrace: s);
+    } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.generalError));
     }
   }
@@ -306,8 +297,7 @@ class SearchRepoImpl implements SearchRepo {
       return right(searchResponse);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.generalError));
     }
   }

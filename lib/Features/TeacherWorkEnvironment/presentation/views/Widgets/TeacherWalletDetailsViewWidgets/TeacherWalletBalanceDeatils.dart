@@ -12,7 +12,7 @@ class TeacherWalletBalanceDetails extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: AspectRatio(
-        aspectRatio: 2 / 1.4,
+        aspectRatio: 2 / 1.5,
         child: Stack(
           clipBehavior: Clip.none,
           children: [

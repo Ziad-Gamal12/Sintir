@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
@@ -24,8 +22,6 @@ class NewestCoursesHeader extends StatelessWidget {
                 AppTextStyles(context).semiBold14.copyWith(color: KMainColor),
           ),
           onTap: () {
-            log("newest courses");
-
             GoRouter.of(context).push(MoreNewestCoursesView.routeName);
           },
         ));

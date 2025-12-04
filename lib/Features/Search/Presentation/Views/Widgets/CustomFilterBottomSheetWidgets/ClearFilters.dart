@@ -12,13 +12,14 @@ class ClearFilters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Tooltip(
       message: LocaleKeys.restoreDefaultFilters,
       child: Container(
         alignment: Alignment.center,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
+        decoration: BoxDecoration(
+          color: isDark ? Colors.grey[900] : Colors.white,
+          boxShadow: const [
             BoxShadow(
               color: Colors.black12,
               blurRadius: 6,
