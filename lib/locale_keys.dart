@@ -214,6 +214,9 @@ class LocaleKeys {
   static String get profileMistakes => 'profile_mistakes'.tr();
   static String get addExamDetailsTitle => 'AddExamDetailsTitle'.tr();
   static String get examQuestionsTitle => 'ExamQuestionsTitle'.tr();
+  static String get yes => 'Yes'.tr();
+  static String get no => 'No'.tr();
+  static String get unlimited => 'Unlimited'.tr();
   static String get examAttemptsCount => 'ExamAttemptsCount'.tr();
   static String get hideResultAfterSubmit => 'HideResultAfterSubmit'.tr();
   static String get examReviewTitle => 'ExamReviewTitle'.tr();
