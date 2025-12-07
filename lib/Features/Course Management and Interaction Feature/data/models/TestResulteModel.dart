@@ -12,6 +12,8 @@ class Testresultemodel {
   final int result;
   final bool isPassed;
   final String courseId;
+  final String sectionId;
+  final String testId;
   final List<Map<String, dynamic>> questionsSolvedList;
 
   Testresultemodel({
@@ -19,6 +21,8 @@ class Testresultemodel {
     required this.joinedDate,
     required this.totalQuestions,
     required this.isPassed,
+    required this.sectionId,
+    required this.testId,
     required this.solvedQuestions,
     required this.joinedby,
     required this.courseId,
@@ -31,6 +35,8 @@ class Testresultemodel {
       serialNumber: json['serialNumber'],
       joinedDate: (json['joinedDate'] as Timestamp).toDate(),
       totalQuestions: json['totalQuestions'],
+      sectionId: json['sectionId'],
+      testId: json['testId'],
       isPassed: json['isPassed'],
       solvedQuestions: json['solvedQuestions'],
       joinedby: json['joinedby'],
@@ -47,6 +53,8 @@ class Testresultemodel {
     return Testresultemodel(
       serialNumber: entity.serialNumber,
       joinedDate: entity.joinedDate,
+      sectionId: entity.sectionId,
+      testId: entity.testId,
       isPassed: entity.isPassed,
       courseId: entity.courseId,
       totalQuestions: entity.totalQuestions,
@@ -63,6 +71,8 @@ class Testresultemodel {
     return TestResultEntity(
       serialNumber: serialNumber,
       joinedDate: joinedDate,
+      sectionId: sectionId,
+      testId: testId,
       isPassed: isPassed,
       totalQuestions: totalQuestions,
       solvedQuestions: solvedQuestions,
@@ -84,6 +94,8 @@ class Testresultemodel {
         "isPassed": isPassed,
         "result": result,
         "courseId": courseId,
+        "sectionId": sectionId,
+        "testId": testId,
         "questionsSolvedList": questionsSolvedList,
       };
 }

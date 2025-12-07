@@ -1,43 +1,81 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
+import 'package:sintir/Core/helper/ShowBottomSheet.dart';
+import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
+import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/UpdateTestInfoBottomSheet/UpdateTestInfoBottomSheet.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/update_test_cubit/update_test_cubit.dart';
 
 class CustomTestInfo extends StatelessWidget {
   const CustomTestInfo({
     super.key,
     required this.test,
+    required this.courseId,
+    required this.sectionId,
   });
 
   final CourseTestEntity test;
-
+  final String courseId;
+  final String sectionId;
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    // Primary text color (dark in light mode, light in dark mode)
     final Color titleColor = theme.textTheme.bodyLarge!.color!;
-    // Secondary text color (suitable for less important details like IDs)
     final Color idColor = theme.textTheme.bodySmall!.color!.withOpacity(0.7);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
+    return Row(
       children: [
-        Text(
-          test.title,
-          textAlign: TextAlign.center,
-          style: AppTextStyles(context)
-              .semiBold20
-              // Use theme-aware color instead of hardcoded Colors.black
-              .copyWith(color: titleColor),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                test.title,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles(context)
+                    .semiBold20
+                    .copyWith(color: titleColor),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                test.id,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style:
+                    AppTextStyles(context).regular14.copyWith(color: idColor),
+              ),
+            ],
+          ),
         ),
         const SizedBox(
-          height: 10,
+          width: 10,
         ),
-        Text(
-          test.id,
-          textAlign: TextAlign.center,
-          style: AppTextStyles(context).regular14.copyWith(color: idColor),
-        ),
+        IconButton(
+            onPressed: () {
+              showCustomBottomSheet(
+                child: BlocProvider(
+                  create: (context) => UpdateTestCubit(
+                    testitemrepo: getIt<Testitemrepo>(),
+                  ),
+                  child: UpdateTestInfoBottomSheet(
+                    courseId: courseId,
+                    sectionId: sectionId,
+                    coursetestentity: test,
+                  ),
+                ),
+                context: context,
+              );
+            },
+            icon: Icon(
+              Icons.settings,
+              color: theme.iconTheme.color,
+            ))
       ],
     );
   }

@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:dartz/dartz.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/entities/FetchDataResponses/GetExamResultsReponseEntity.dart';
@@ -18,6 +19,11 @@ abstract class Testitemrepo {
       required String userUID,
       required String sectionId,
       required String sectionItemId});
+  Future<Either<Failure, void>> updateTest({
+    required CourseTestEntity test,
+    required String courseId,
+    required String sectionId,
+  });
   Future<Either<Failure, GetExamResultsReponseEntity>> getTestResults(
       {required String courseId,
       required String sectionId,

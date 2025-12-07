@@ -33,10 +33,7 @@ class ReviewExamSectionViewBodyListener {
     } else if (state is AddTestItemSuccess) {
       CustomSnackBar.show(context,
           message: LocaleKeys.operationSuccessful, type: SnackType.success);
-      context
-          .read<NavigateExamReviewRequirmentsEntity>()
-          .coursetestentity
-          .dispose();
+
       Navigator.popUntil(context,
           ModalRoute.withName(CourseDetailsCourseSectionsView.routeName));
     }

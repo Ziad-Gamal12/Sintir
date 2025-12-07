@@ -5,10 +5,10 @@ import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCu
 import 'package:sintir/Core/Managers/Cubits/file_item_cubit/file_item_cubit.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ADDCoursSectionFileWidgets/AddCourseSectionFileTextFields.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ADDCoursSectionFileWidgets/CustomAddCourseSectionFileActionButton.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/ADDCoursSectionFileWidgets/FileItemStateHandler.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/CourseSectionStateHandler.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCoursSectionFileWidgets/AddCourseSectionFileTextFields.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCoursSectionFileWidgets/CustomAddCourseSectionFileActionButton.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCoursSectionFileWidgets/FileItemStateHandler.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionViewWidgets/CourseSectionStateHandler.dart';
 import 'package:sintir/constant.dart';
 
 class AddcoursesectionfileviewBody extends StatefulWidget {

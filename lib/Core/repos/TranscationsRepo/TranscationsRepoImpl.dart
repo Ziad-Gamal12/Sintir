@@ -85,9 +85,11 @@ class TranscationsRepoImpl implements TranscationsRepo {
   Future<void> reStoreTransactionAfterFailure(
       {required double amount, required String userId}) async {
     await dataBaseService.updateData(
-        collectionKey: BackendEndpoints.usersCollectionName,
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.usersCollectionName,
+          docId: userId,
+        ),
         field: "teacherExtraData.wallet.balance",
-        doc: userId,
         data: FieldValue.increment(amount));
   }
 
@@ -95,9 +97,11 @@ class TranscationsRepoImpl implements TranscationsRepo {
   Future<void> deducteFromTeacherWallet(
       {required double amount, required String userId}) async {
     await dataBaseService.updateData(
-        collectionKey: BackendEndpoints.usersCollectionName,
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.usersCollectionName,
+          docId: userId,
+        ),
         field: "teacherExtraData.wallet.balance",
-        doc: userId,
         data: FieldValue.increment(-amount));
   }
 
@@ -107,11 +111,13 @@ class TranscationsRepoImpl implements TranscationsRepo {
       required bool value,
       required String transactionId}) async {
     await dataBaseService.updateData(
-      collectionKey: BackendEndpoints.usersCollectionName,
+      requirements: FireStoreRequirmentsEntity(
+        collection: BackendEndpoints.usersCollectionName,
+        docId: userId,
+        subCollection: BackendEndpoints.transactionsSubCollection,
+        subDocId: transactionId,
+      ),
       field: "isReconciled",
-      doc: userId,
-      subCollectionKey: BackendEndpoints.transactionsSubCollection,
-      subDocId: transactionId,
       data: value,
     );
   }
@@ -122,11 +128,13 @@ class TranscationsRepoImpl implements TranscationsRepo {
       required String status,
       required String transactionId}) async {
     await dataBaseService.updateData(
-      collectionKey: BackendEndpoints.usersCollectionName,
+      requirements: FireStoreRequirmentsEntity(
+        collection: BackendEndpoints.usersCollectionName,
+        docId: userId,
+        subCollection: BackendEndpoints.transactionsSubCollection,
+        subDocId: transactionId,
+      ),
       field: "status",
-      doc: userId,
-      subCollectionKey: BackendEndpoints.transactionsSubCollection,
-      subDocId: transactionId,
       data: status,
     );
   }

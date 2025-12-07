@@ -1,17 +1,15 @@
 // ignore_for_file: must_be_immutable, file_names
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionSolutionEntity.dart';
 import 'package:sintir/Core/utils/Variables.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseSectionExamActionButtons.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseSectionExamListview.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseSectionExamListviewHeader.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddQuestionButton.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/CustomAddCourseSectionExamNameAndDurationHeader.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/CustomAddCourseSectionExamNameAndDuration.dart';
-import 'package:sintir/constant.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/CustomAddExamStepsPageView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/CustomAddExamStepsRow.dart';
 
 class AddCourseSectionExamViewBody extends StatefulWidget {
   const AddCourseSectionExamViewBody({
@@ -26,11 +24,19 @@ class AddCourseSectionExamViewBody extends StatefulWidget {
 class _AddCourseSectionExamViewBodyState
     extends State<AddCourseSectionExamViewBody> {
   late CourseTestEntity coursetestentity;
+  final GlobalKey<FormState> examDetailsFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> questionsFormKey = GlobalKey<FormState>();
+  final PageController pageController = PageController();
+
+  final ValueNotifier<int> currentIndexNotifier = ValueNotifier<int>(0);
+
   @override
   void initState() {
     super.initState();
     coursetestentity = CourseTestEntity(
       type: "Test",
+      showResult: true,
+      numberOfAttempts: null,
       id: "${DateTime.now().toIso8601String()}-Test",
       questions: [
         CourseTestQuestionEntity(
@@ -43,42 +49,62 @@ class _AddCourseSectionExamViewBodyState
       title: "",
       durationTime: 0,
     );
+    pageController.addListener(() {
+      int next = pageController.page?.round() ?? 0;
+      if (currentIndexNotifier.value != next) {
+        currentIndexNotifier.value = next;
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    currentIndexNotifier.dispose();
+    coursetestentity.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final requirements = context.watch<OptionNavigationRequirementsEntity>();
     return Form(
       key: Variables.AddCourseSectionExamFormKey,
-      child: Stack(
+      child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: KHorizontalPadding,
-              vertical: 10,
-            ),
-            child: CustomScrollView(
-              slivers: [
-                const SliverToBoxAdapter(
-                  child: CustomAddCourseSectionExamNameAndDurationHeader(),
-                ),
-                SliverToBoxAdapter(
-                  child: CustomAddCourseSectionExamNameAndDuration(
-                    coursetestentity: coursetestentity,
-                  ),
-                ),
-                const SliverToBoxAdapter(
-                    child: AddCourseSectionExamListviewHeader()),
-                AddCourseSectionExamListview(
-                  coursetestentity: coursetestentity,
-                ),
-                SliverToBoxAdapter(
-                  child: AddQuestionButton(coursetestentity: coursetestentity),
-                )
-              ],
+          ValueListenableBuilder<int>(
+            valueListenable: currentIndexNotifier,
+            builder: (_, index, __) => CustomAddExamStepsRow(
+              pageController: pageController,
+              currentStep: index,
             ),
           ),
-          AddCourseSectionExamActionButtons(
-            courseTestEntity: coursetestentity,
+          Expanded(
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: CustomAddExamStepsPageView(
+                    pageController: pageController,
+                    courseEntity: requirements.courseEntity,
+                    courseTestEntity: coursetestentity,
+                    isNewSection: requirements.isNewSection,
+                    section: requirements.section,
+                    examDetailsFormKey: examDetailsFormKey,
+                    questionsFormKey: questionsFormKey,
+                  ),
+                ),
+                ValueListenableBuilder<int>(
+                  valueListenable: currentIndexNotifier,
+                  builder: (_, index, __) => AddCourseSectionExamActionButtons(
+                    currentStep: index,
+                    examDetailsFormKey: examDetailsFormKey,
+                    questionsFormKey: questionsFormKey,
+                    pageController: pageController,
+                    courseTestEntity: coursetestentity,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

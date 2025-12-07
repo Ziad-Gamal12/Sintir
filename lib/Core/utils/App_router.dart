@@ -49,7 +49,6 @@ import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNav
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/SubscriberDetailsNavigationRequirements.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TestConsequencesViewRequirements.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/VideoConsequencesViewRequirements.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateExamReviewRequirmentsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionExamView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionFileView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionVedioView.dart';
@@ -58,7 +57,6 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCou
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/CourseDetailView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ExamConsequencesView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/PayOutBalance.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ReviewExamSectionView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWalletDetailsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/VideoConsequencesView.dart';
@@ -243,15 +241,6 @@ class App_router {
           return AddcourseSectionExamview(
             optionnavigationrequirementsentity:
                 state.extra as OptionNavigationRequirementsEntity,
-          );
-        },
-      ),
-      GoRoute(
-        path: ReviewExamSectionView.routeName,
-        builder: (BuildContext context, GoRouterState state) {
-          return ReviewExamSectionView(
-            navigateExamReviewRequirmentsEntity:
-                state.extra as NavigateExamReviewRequirmentsEntity,
           );
         },
       ),

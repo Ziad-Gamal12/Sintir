@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
+import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
@@ -50,11 +51,12 @@ class PersonalDetailsRepoImpl implements PersonalDetailsRepo {
 
       // update DB
       await dataBaseService.updateData(
-        collectionKey: BackendEndpoints.usersCollectionName,
-        field: "profilePicurl",
-        data: url,
-        doc: uid,
-      );
+          field: "profilePicurl",
+          data: url,
+          requirements: FireStoreRequirmentsEntity(
+            collection: BackendEndpoints.usersCollectionName,
+            docId: uid,
+          ));
       await authRepo.fetchUserAndStoreLocally(uid: uid);
       return const Right(null);
     } on CustomException catch (e) {

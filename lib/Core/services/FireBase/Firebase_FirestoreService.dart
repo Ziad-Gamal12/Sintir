@@ -289,39 +289,45 @@ class FirebaseFirestoreservice implements DataBaseService {
 
   @override
   Future<void> updateData({
-    required String collectionKey,
-    required doc,
     required dynamic data,
+    required FireStoreRequirmentsEntity requirements,
     String? field,
-    String? subCollectionKey,
-    String? subDocId,
   }) async {
     try {
-      if (subCollectionKey != null) {
-        final target = firestore
-            .collection(collectionKey)
-            .doc(doc)
-            .collection(subCollectionKey)
-            .doc(subDocId);
+      DocumentReference<Map<String, dynamic>> target =
+          _resolveUpdateTarget(requirements);
 
-        if (field == null) {
-          await target.update(data);
-        } else {
-          await target.update({field: data});
-        }
-      } else {
-        final target = firestore.collection(collectionKey).doc(doc);
-        if (field == null) {
-          await target.update(data);
-        } else {
-          await target.update({field: data});
-        }
-      }
+      final Map<String, dynamic> updatePayload =
+          (field == null) ? data as Map<String, dynamic> : {field: data};
+      await target.update(updatePayload);
     } on FirebaseException catch (e) {
       throw _getFireStoreCustomException(e: e);
     } catch (e) {
       throw CustomException(message: LocaleKeys.errorOccurredMessage);
     }
+  }
+
+  DocumentReference<Map<String, dynamic>> _resolveUpdateTarget(
+      FireStoreRequirmentsEntity req) {
+    if (req.collection == null || req.docId == null) {
+      throw Exception("Cannot update without collection and docId");
+    }
+
+    var ref = firestore.collection(req.collection!).doc(req.docId!);
+
+    if (req.subCollection != null && req.subDocId != null) {
+      ref = ref.collection(req.subCollection!).doc(req.subDocId!);
+
+      if (req.subCollection2 != null && req.sub2DocId != null) {
+        ref = ref.collection(req.subCollection2!).doc(req.sub2DocId!);
+
+        if (req.subCollection3 != null && req.sub3DocId != null) {
+          ref = ref.collection(req.subCollection3!).doc(req.sub3DocId!);
+        }
+      }
+    }
+
+    return ref;
   }
 
   @override

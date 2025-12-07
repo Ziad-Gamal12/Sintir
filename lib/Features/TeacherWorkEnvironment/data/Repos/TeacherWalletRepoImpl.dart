@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
@@ -18,9 +19,11 @@ class TeacherWalletRepoImpl implements TeacherWalletRepo {
       {required String teacherId, required double balance}) async {
     try {
       await databaseservice.updateData(
-        collectionKey: BackendEndpoints.usersCollectionName,
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.usersCollectionName,
+          docId: teacherId,
+        ),
         field: "teacherExtraData.wallet.balance",
-        doc: teacherId,
         data: balance,
       );
       await authRepo.fetchUserAndStoreLocally(uid: teacherId);

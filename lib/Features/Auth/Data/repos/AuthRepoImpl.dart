@@ -36,30 +36,37 @@ class AuthRepoImpl implements AuthRepo {
   }) async {
     try {
       User user = await authService.signInWithEmailAndPassword(email, password);
-
       await user.reload();
-
       User? fresh = FirebaseAuth.instance.currentUser ?? user;
-
       if (fresh.emailVerified == false) {
         await fresh.sendEmailVerification();
         await authService.signout();
         return Left(ServerFailure(message: LocaleKeys.verificationSent));
+      } else {
+        final updateDeviceIdResult = await updateDeviceId(uid: fresh.uid);
+        if (updateDeviceIdResult.isLeft()) {
+          await authService.signout();
+          return updateDeviceIdResult;
+        }
+        final result = await fetchUserAndStoreLocally(uid: fresh.uid);
+        if (result.isLeft()) {
+          await authService.signout();
+          return result;
+        }
+        return const Right(null);
       }
-      final updateDeviceIdResult = await updateDeviceId(uid: fresh.uid);
-      if (updateDeviceIdResult.isLeft()) {
-        await authService.signout();
-        return updateDeviceIdResult;
+    } on FirebaseAuthException catch (e) {
+      await authService.signout();
+      if (e.code == 'too-many-requests') {
+        return Left(ServerFailure(message: LocaleKeys.tooManyRequests));
       }
-      final result = await fetchUserAndStoreLocally(uid: fresh.uid);
-      if (result.isLeft()) {
-        await authService.signout();
-        return result;
-      }
-      return const Right(null);
+      return Left(
+          ServerFailure(message: e.message ?? LocaleKeys.errorOccurredMessage));
     } on CustomException catch (e) {
+      await authService.signout();
       return Left(ServerFailure(message: e.message));
     } catch (e, s) {
+      await authService.signout();
       return Left(_toFailure(e, s));
     }
   }
@@ -340,8 +347,10 @@ class AuthRepoImpl implements AuthRepo {
       final deviceId = await getDeviceId();
 
       await databaseservice.updateData(
-        collectionKey: BackendEndpoints.usersCollectionName,
-        doc: uid,
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.usersCollectionName,
+          docId: uid,
+        ),
         data: deviceId,
         field: 'deviceId',
       );

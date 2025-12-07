@@ -15,7 +15,9 @@ class AddCourseSectionExamListviewHeader extends StatelessWidget {
       ),
       Text(
         LocaleKeys.examQuestions,
-        style: AppTextStyles(context).semiBold20,
+        style: AppTextStyles(context).semiBold20.copyWith(
+              color: Theme.of(context).textTheme.titleLarge?.color,
+            ),
       ),
       const SizedBox(
         height: 10,

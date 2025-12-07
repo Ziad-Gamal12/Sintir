@@ -13,7 +13,7 @@ class AppTheme {
     useMaterial3: true,
     colorScheme: const ColorScheme.light().copyWith(
       primary: KMainColor,
-      secondary: KMainColor,
+      secondary: KSecondaryColor,
       surface: Colors.white,
       onSurface: Colors.black,
     ),
@@ -58,10 +58,9 @@ class AppTheme {
     scaffoldBackgroundColor: const Color(0xFF121212),
     useMaterial3: true,
 
-    // MAIN COLOR SYSTEM FOR DARK MODE
     colorScheme: const ColorScheme.dark().copyWith(
       primary: KMainColor,
-      secondary: KMainColor,
+      secondary: KSecondaryColor,
       surface: const Color(0xFF1E1E1E),
       onSurface: Colors.white,
     ),

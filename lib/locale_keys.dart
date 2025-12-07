@@ -212,6 +212,11 @@ class LocaleKeys {
   static String get profileFavorites => 'profile_favorites'.tr();
   static String get profileResults => 'profile_results'.tr();
   static String get profileMistakes => 'profile_mistakes'.tr();
+  static String get addExamDetailsTitle => 'AddExamDetailsTitle'.tr();
+  static String get examQuestionsTitle => 'ExamQuestionsTitle'.tr();
+  static String get examAttemptsCount => 'ExamAttemptsCount'.tr();
+  static String get hideResultAfterSubmit => 'HideResultAfterSubmit'.tr();
+  static String get examReviewTitle => 'ExamReviewTitle'.tr();
   static String get profileSettings => 'profile_settings'.tr();
   static String get profileAbout => 'profile_about'.tr();
   static String get lowestToHighest => 'lowest_to_highest'.tr();

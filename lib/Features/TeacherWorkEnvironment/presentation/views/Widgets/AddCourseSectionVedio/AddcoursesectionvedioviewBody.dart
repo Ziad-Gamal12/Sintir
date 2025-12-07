@@ -9,7 +9,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/VideoItemStateHandler.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/VideoPreviewWidget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/VideoTitleInputField.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/CourseSectionStateHandler.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionViewWidgets/CourseSectionStateHandler.dart';
 import 'package:sintir/constant.dart';
 
 class Addcoursesectionvedioviewbody extends StatefulWidget {

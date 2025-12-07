@@ -27,19 +27,23 @@ class StudentSignUpViewBodyBlocBuilder_button extends StatelessWidget {
         color: KMainColor,
         textColor: Colors.white,
         onPressed: () {
-          if (stundentSignUpFormKey.currentState!.validate()) {
-            stundentSignUpFormKey.currentState!.save();
-            context.read<UserEntity>().fullName =
-                "${context.read<UserEntity>().firstName} ${context.read<UserEntity>().lastName}";
-            if (isTermsAndConditionChecked) {
-              BlocProvider.of<StudentSignUpCubit>(context)
-                  .createUserWithEmailAndPassword(
-                userEntity: context.read<UserEntity>(),
-                password: studentSignUpPasswordController.text,
-              );
-            } else {
-              errordialog(context, LocaleKeys.agreeTerms).show();
+          if (stundentSignUpFormKey.currentState != null) {
+            if (stundentSignUpFormKey.currentState!.validate()) {
+              stundentSignUpFormKey.currentState!.save();
+              context.read<UserEntity>().fullName =
+                  "${context.read<UserEntity>().firstName} ${context.read<UserEntity>().lastName}";
+              if (isTermsAndConditionChecked) {
+                BlocProvider.of<StudentSignUpCubit>(context)
+                    .createUserWithEmailAndPassword(
+                  userEntity: context.read<UserEntity>(),
+                  password: studentSignUpPasswordController.text,
+                );
+              } else {
+                errordialog(context, LocaleKeys.agreeTerms).show();
+              }
             }
+          } else {
+            errordialog(context, LocaleKeys.errorOccurredMessage).show();
           }
         });
   }

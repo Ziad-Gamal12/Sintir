@@ -12,13 +12,11 @@ class TestSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Fetch theme data
     final ThemeData theme = Theme.of(context);
     final Color cardColor = theme.cardColor;
     final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
     final bool isDarkMode = theme.brightness == Brightness.dark;
 
-    // Define main card shadow based on theme
     final List<BoxShadow> mainShadow = isDarkMode
         ? [
             BoxShadow(
@@ -40,7 +38,7 @@ class TestSummaryCard extends StatelessWidget {
         context.read<NavigateExamReviewRequirmentsEntity>().coursetestentity;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       decoration: BoxDecoration(
         // Use theme-aware color
         color: cardColor,
@@ -91,15 +89,12 @@ class TestSummaryCard extends StatelessWidget {
     required String value,
     required BuildContext context,
   }) {
-    // Fetch theme data inside the helper
     final ThemeData theme = Theme.of(context);
     final Color iconBoxColor = theme.cardColor;
     final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
-    // Use the primary/accent color for the icon itself
     final Color iconColor = theme.primaryColor;
     final bool isDarkMode = theme.brightness == Brightness.dark;
 
-    // Define nested container shadow based on theme
     final List<BoxShadow> nestedShadow = isDarkMode
         ? [
             BoxShadow(
@@ -120,12 +115,12 @@ class TestSummaryCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12,
+            ),
             decoration: BoxDecoration(
-              // Use theme-aware color for the icon container
               color: iconBoxColor,
               borderRadius: BorderRadius.circular(14),
-              // Use theme-aware shadow for the icon container
               boxShadow: nestedShadow,
             ),
             child: Icon(

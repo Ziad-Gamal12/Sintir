@@ -16,11 +16,13 @@ class CourseTestListener extends StatelessWidget {
     required this.stopWatchTimer,
     required this.builder,
     required this.courseId,
+    required this.sectionId,
   });
 
   final CourseTestEntity test;
   final dynamic stopWatchTimer;
   final String courseId;
+  final String sectionId;
   final Widget Function(BuildContext context, TestItemState state) builder;
 
   @override
@@ -50,6 +52,7 @@ class CourseTestListener extends StatelessWidget {
                       courseId: courseId,
                       context: context,
                       test: test,
+                      sectionId: sectionId,
                       user: getUserData(),
                     ),
               );

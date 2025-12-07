@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/ExamResultSolvedQuestionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
@@ -13,6 +14,7 @@ import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CourseTestModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/ExamResultSolvedQuestionModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/TestResulteModel.dart';
 import 'package:sintir/locale_keys.dart';
@@ -136,7 +138,6 @@ class TestItemRepoImpli implements Testitemrepo {
     required bool isPaginate,
   }) async {
     try {
-      // build query map locally per call (thread-safe)
       final Map<String, dynamic> query = {
         "orderBy": "joinedDate",
         "limit": 10,
@@ -450,9 +451,34 @@ class TestItemRepoImpli implements Testitemrepo {
 
     return myMistakes;
   }
+
+  @override
+  Future<Either<Failure, void>> updateTest(
+      {required CourseTestEntity test,
+      required String courseId,
+      required String sectionId}) async {
+    try {
+      await databaseservice.updateData(
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.coursesCollection,
+          docId: courseId,
+          subCollection: BackendEndpoints.sectionsSubCollection,
+          subDocId: sectionId,
+          subCollection2: BackendEndpoints.sectionItemsSubCollection,
+          sub2DocId: test.id,
+        ),
+        data: Coursetestmodel.fromEntity(test).toJson(),
+      );
+
+      return right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
+    }
+  }
 }
 
-// parsing function — top-level remains the same so compute can call it
 List<TestResultEntity> _parseTestResults(List<Map<String, dynamic>> data) {
   return data.map((e) => Testresultemodel.fromJson(e).toEntity()).toList();
 }

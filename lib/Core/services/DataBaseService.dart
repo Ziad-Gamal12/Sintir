@@ -19,13 +19,11 @@ abstract class DataBaseService {
   Future<bool> isFeildExists(
       {required String key, required String feild, required String feildValue});
 
-  Future<void> updateData(
-      {required String collectionKey,
-      required doc,
-      required dynamic data,
-      required String field,
-      String? subCollectionKey,
-      String? subDocId});
+  Future<void> updateData({
+    required dynamic data,
+    required FireStoreRequirmentsEntity requirements,
+    String? field,
+  });
   Future<void> deleteDoc(
       {required String collectionKey,
       required String docId,

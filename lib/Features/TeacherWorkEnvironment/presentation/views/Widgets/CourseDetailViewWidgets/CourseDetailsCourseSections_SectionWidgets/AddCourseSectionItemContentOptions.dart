@@ -5,7 +5,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNav
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionExamView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionFileView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionVedioView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/AddCourseSectionContentItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionViewWidgets/AddCourseSectionContentItem.dart';
 
 class AddCourseSectionItemContentOptions extends StatelessWidget {
   const AddCourseSectionItemContentOptions(

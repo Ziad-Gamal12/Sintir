@@ -155,11 +155,14 @@ class TestItemCubit extends Cubit<TestItemState> {
       {required BuildContext context,
       required CourseTestEntity test,
       required String courseId,
+      required String sectionId,
       required UserEntity user}) {
     return TestResultEntity(
         isPassed: getResult(test: test) >= (test.questions.length / 2),
         joinedDate: DateTime.now(),
         serialNumber: "${DateTime.now().toString()}-Result",
+        testId: test.id,
+        sectionId: sectionId,
         joinedbyentity: JoinedByEntity(
           uid: user.uid,
           name: user.fullName,
@@ -185,6 +188,7 @@ class TestItemCubit extends Cubit<TestItemState> {
         userUID: userId,
         testResult: getTestResults(
           context: context,
+          sectionId: sectionId,
           test: test,
           user: getUserData(),
           courseId: courseId,

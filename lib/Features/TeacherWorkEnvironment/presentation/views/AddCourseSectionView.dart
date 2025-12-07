@@ -8,7 +8,7 @@ import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddcoursesectionviewWidgets/AddcoursesectionviewBody.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionViewWidgets/AddcoursesectionviewBody.dart';
 import 'package:sintir/locale_keys.dart';
 
 class Addcoursesectionview extends StatelessWidget {

@@ -69,6 +69,8 @@ class _CourseTestViewBodyState extends State<CourseTestViewBody> {
         context.read<CourseExamViewNavigationsRequirmentsEntity>();
 
     return CourseTestListener(
+      sectionId:
+          context.read<CourseExamViewNavigationsRequirmentsEntity>().sectionId,
       test: courseExamViewNavigationsRequirmentsEntity.test,
       stopWatchTimer: stopWatchTimer,
       courseId: courseExamViewNavigationsRequirmentsEntity.course.id,

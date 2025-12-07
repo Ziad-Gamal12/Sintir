@@ -15,7 +15,11 @@ class TestSummaryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          CustomTestInfo(test: requirements.test),
+          CustomTestInfo(
+            test: requirements.test,
+            courseId: requirements.courseID,
+            sectionId: requirements.sectionID,
+          ),
           const SizedBox(height: 20),
           TestStatsInfo(
             requirements: requirements,

@@ -64,9 +64,11 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
     int delta = 1,
   }) async {
     await databaseService.updateData(
-      collectionKey: BackendEndpoints.coursesCollection,
+      requirements: FireStoreRequirmentsEntity(
+        collection: BackendEndpoints.coursesCollection,
+        docId: courseId,
+      ),
       field: "studentsCount",
-      doc: courseId,
       data: FieldValue.increment(delta),
     );
   }
@@ -111,9 +113,11 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
 
     for (final entry in updates.entries) {
       await databaseService.updateData(
-        collectionKey: BackendEndpoints.usersCollectionName,
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.usersCollectionName,
+          docId: teacherId,
+        ),
         field: entry.key,
-        doc: teacherId,
         data: entry.value,
       );
     }

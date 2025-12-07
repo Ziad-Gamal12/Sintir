@@ -22,14 +22,12 @@ class PaymobRepoImp implements PaymobRepo {
     required double amount,
   }) async {
     try {
-      /// 1. Build Billing Data
       final billingData =
           Billingdatamodel.fromEntity(entity: getBillingEntity(user: user))
               .toJson();
       final items =
           Orderitemmodel.fromCourseEntity(course, amount.toInt()).toJson();
 
-      /// 2. Create Intention
       final response = await payMobService.createPaymentIntention(
         amountCents: (amount.toInt() * 100).toInt(),
         currency: "EGP",
@@ -60,18 +58,17 @@ class PaymobRepoImp implements PaymobRepo {
     }
   }
 
-  /// Converts UserEntity to BillingDataEntity
   Billingdataentity getBillingEntity({required UserEntity user}) {
     return Billingdataentity(
       apartment: "NA",
       building: "NA",
-      city: user.address,
+      city: user.address.isEmpty ? "NA" : user.address,
       country: "EG",
       email: user.email,
       floor: "NA",
-      firstName: user.firstName,
-      lastName: user.lastName,
-      phoneNumber: user.phoneNumber,
+      firstName: user.firstName.isEmpty ? "NA" : user.firstName,
+      lastName: user.lastName.isEmpty ? user.firstName : user.lastName,
+      phoneNumber: user.phoneNumber.isEmpty ? "NA" : user.phoneNumber,
       street: "NA",
     );
   }

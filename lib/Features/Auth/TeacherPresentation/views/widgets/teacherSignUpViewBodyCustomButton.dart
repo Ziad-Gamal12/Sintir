@@ -28,26 +28,30 @@ class TeacherSignUpButton extends StatelessWidget {
       color: KMainColor,
       textColor: Colors.white,
       onPressed: () {
-        if (!formKey.currentState!.validate()) return;
+        if (formKey.currentState != null) {
+          if (!formKey.currentState!.validate()) return;
+          formKey.currentState!.save();
+          final cubit = context.read<TeacherSignUpCubit>();
+          final user = context.read<UserEntity>();
+          user.fullName = "${user.firstName} ${user.lastName}";
+          final subject = user.teacherExtraDataEntity?.subject ?? "";
+          if (subject.isEmpty) {
+            errordialog(context, LocaleKeys.mustChooseSubject).show();
+            return;
+          }
 
-        final cubit = context.read<TeacherSignUpCubit>();
-        final user = context.read<UserEntity>();
-        user.fullName = "${user.firstName} ${user.lastName}";
-
-        final subject = user.teacherExtraDataEntity?.subject ?? "";
-        if (subject.isEmpty) {
-          errordialog(context, LocaleKeys.mustChooseSubject).show();
+          if (!isChecked) {
+            errordialog(context, LocaleKeys.mustAcceptTerms).show();
+            return;
+          }
+          cubit.createUserWithEmailAndPassword(
+            userentity: user,
+            password: teacherSignUpPasswordController.text,
+          );
+        } else {
+          errordialog(context, LocaleKeys.errorOccurredMessage).show();
           return;
         }
-
-        if (!isChecked) {
-          errordialog(context, LocaleKeys.mustAcceptTerms).show();
-          return;
-        }
-        cubit.createUserWithEmailAndPassword(
-          userentity: user,
-          password: teacherSignUpPasswordController.text,
-        );
       },
     );
   }
