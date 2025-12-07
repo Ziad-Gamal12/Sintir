@@ -60,8 +60,6 @@ class TestSummaryCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 24),
-
-          // Data Grid
           GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -110,7 +108,6 @@ class TestSummaryCard extends StatelessWidget {
   }) {
     final theme = Theme.of(context);
     final primaryColor = theme.primaryColor;
-
     return Row(
       children: [
         Icon(icon, size: 20, color: primaryColor.withOpacity(0.6)),

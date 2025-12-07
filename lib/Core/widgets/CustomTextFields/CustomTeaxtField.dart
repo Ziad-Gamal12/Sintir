@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable, file_names
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
@@ -7,17 +5,17 @@ import 'package:sintir/constant.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
-  IconData? prefixIcon;
-  Widget? suffixIcon;
+  final IconData? prefixIcon;
+  final Widget? suffixIcon;
   final bool obscureText;
-  TextEditingController? controller;
+  final TextEditingController? controller;
   final TextInputType textInputType;
   final String? Function(String?)? validator;
-  List<TextInputFormatter>? inputFormatters;
-  Function(String?)? onSaved;
-  int maxLines;
+  final List<TextInputFormatter>? inputFormatters;
+  final Function(String?)? onSaved;
+  final int maxLines;
 
-  CustomTextField({
+  const CustomTextField({
     super.key,
     this.inputFormatters,
     required this.hintText,
@@ -33,37 +31,14 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final baseBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: const BorderSide(
-        color: Color(0xFFE4E6E8),
-        width: .5,
-      ),
-    );
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
 
-    final focusedBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: const BorderSide(
-        color: KMainColor,
-        width: 1,
-      ),
-    );
-
-    final errorBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: const BorderSide(
-        color: Color(0xFFE03131),
-        width: 1,
-      ),
-    );
-
-    final disabledBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(16),
-      borderSide: const BorderSide(
-        color: Color(0xFFCED4DA),
-        width: 1,
-      ),
-    );
+    // Premium Border Logic: adaptive to brightness
+    final Color borderColor =
+        isDarkMode ? Colors.white10 : const Color(0xFFE4E6E8);
+    final Color fillBg =
+        isDarkMode ? Colors.white.withOpacity(0.05) : const Color(0xFFF8F9FA);
 
     return TextFormField(
       onSaved: onSaved,
@@ -73,31 +48,52 @@ class CustomTextField extends StatelessWidget {
       obscureText: obscureText,
       validator: validator,
       maxLines: maxLines,
+      style: AppTextStyles(context).semiBold14.copyWith(
+            color: theme.textTheme.bodyLarge?.color,
+          ),
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: AppTextStyles(context)
-            .semiBold14
-            .copyWith(color: const Color(0xFFB1B1B5)),
+        hintStyle: AppTextStyles(context).regular14.copyWith(
+              color: theme.hintColor.withOpacity(0.5),
+            ),
 
-        prefixIcon: Icon(
-          prefixIcon,
-          size: 24,
-          color: const Color(0xFF6C6C70),
-        ),
+        filled: true,
+        fillColor: fillBg,
+        prefixIcon: prefixIcon != null
+            ? Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Icon(
+                  prefixIcon,
+                  size: 20,
+                  color: theme.primaryColor.withOpacity(0.7),
+                ),
+              )
+            : null,
+        prefixIconConstraints: const BoxConstraints(minWidth: 40, minHeight: 0),
 
         suffixIcon: suffixIcon,
 
-        // Borders
-        enabledBorder: baseBorder,
-        border: baseBorder,
-        focusedBorder: focusedBorder,
-        errorBorder: errorBorder,
-        focusedErrorBorder: errorBorder,
-        disabledBorder: disabledBorder,
+        // Modern Borders
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide(color: borderColor, width: 1),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: KMainColor, width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: Colors.redAccent, width: 1),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: Colors.redAccent, width: 1.5),
+        ),
 
         contentPadding: const EdgeInsets.symmetric(
-          vertical: 16,
-          horizontal: 16,
+          vertical: 18,
+          horizontal: 20,
         ),
       ),
     );

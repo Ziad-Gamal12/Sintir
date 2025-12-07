@@ -19,59 +19,62 @@ class _CustomAddCourseSectionExamNameAndDurationState
     extends State<CustomAddCourseSectionExamNameAndDuration> {
   late TextEditingController titleController;
   late TextEditingController durationController;
+
   @override
   void initState() {
     super.initState();
     titleController =
         TextEditingController(text: widget.coursetestentity.title);
     durationController = TextEditingController(
-        text: widget.coursetestentity.durationTime.toString());
+        text: widget.coursetestentity.durationTime == 0
+            ? ""
+            : widget.coursetestentity.durationTime.toString());
   }
 
   @override
   void dispose() {
-    super.dispose();
     titleController.dispose();
     durationController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomTextField(
-            controller: titleController,
-            hintText: LocaleKeys.examName,
-            obscureText: false,
-            onSaved: (value) {
-              widget.coursetestentity.title = value!;
-            },
-            textInputType: TextInputType.text,
-            prefixIcon: Icons.text_snippet_outlined,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return LocaleKeys.enterExamName;
-              }
-              return null;
-            }),
-        const SizedBox(
-          height: 20,
+          controller: titleController,
+          hintText: LocaleKeys.examName,
+          obscureText: false,
+          onSaved: (value) => widget.coursetestentity.title = value!,
+          textInputType: TextInputType.text,
+          prefixIcon: Icons.assignment_rounded,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return LocaleKeys.enterExamName;
+            }
+            return null;
+          },
         ),
+        const SizedBox(height: 24),
+
+        // Premium Duration Field
         CustomTextField(
-            controller: durationController,
-            onSaved: (value) {
-              widget.coursetestentity.durationTime = int.tryParse(value!) ?? 0;
-            },
-            hintText: LocaleKeys.examDuration,
-            obscureText: false,
-            textInputType: TextInputType.number,
-            prefixIcon: Icons.timer_outlined,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return LocaleKeys.enterDuration;
-              }
-              return null;
-            })
+          controller: durationController,
+          hintText: LocaleKeys.examDuration,
+          obscureText: false,
+          textInputType: TextInputType.number,
+          onSaved: (value) =>
+              widget.coursetestentity.durationTime = int.tryParse(value!) ?? 0,
+          prefixIcon: Icons.av_timer_rounded,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return LocaleKeys.enterDuration;
+            }
+            return null;
+          },
+        ),
       ],
     );
   }

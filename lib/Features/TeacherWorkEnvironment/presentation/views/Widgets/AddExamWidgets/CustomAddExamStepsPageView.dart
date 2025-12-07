@@ -59,6 +59,7 @@ class _CustomAddExamStepsPageViewState
   @override
   Widget build(BuildContext context) {
     return PageView(
+      physics: const NeverScrollableScrollPhysics(),
       controller: widget.pageController,
       children: steps,
     );
