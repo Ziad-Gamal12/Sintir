@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/manager/GetUserPerviousResultsOfExam/get_user_pervious_results_of_exam_cubit.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/manager/TestOverViewCubit/TestOverViewCubit.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestOverViewBodyWidgets/CourseTestOverViewBodyListView.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestOverViewBodyWidgets/CourseTestOverViewBodyListViewHeader.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CourseTestOverViewBodyWidgets/OverviewHeaderCard.dart';
@@ -24,7 +24,7 @@ class _CourseTestOverViewBodyState extends State<CourseTestOverViewBody> {
   @override
   void initState() {
     super.initState();
-    final cubit = context.read<GetUserPerviousResultsOfExamCubit>();
+    final cubit = context.read<TestOverViewCubit>();
     final entity = widget.navigationRequirements;
 
     cubit.getUserPerviousResultsOfExam(

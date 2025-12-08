@@ -59,4 +59,15 @@ abstract class Testitemrepo {
     required TestResultEntity testResult,
     required String userUID,
   });
+  Future<Either<Failure, bool>> checkIfTheResultHidden({
+    required String courseId,
+    required String sectionId,
+    required String testId,
+  });
+  Future<Either<Failure, bool>> hasReachedMaxAttempts({
+    required String courseId,
+    required String sectionId,
+    required CourseTestEntity test,
+    required String userId,
+  });
 }

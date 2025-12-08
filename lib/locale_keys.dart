@@ -216,6 +216,10 @@ class LocaleKeys {
   static String get examQuestionsTitle => 'ExamQuestionsTitle'.tr();
   static String get yes => 'Yes'.tr();
   static String get no => 'No'.tr();
+  static String get maxAttemptsReached => 'MaxAttemptsReached'.tr();
+  static String get secureEncryptedProtected => 'SecureEncryptedProtected'.tr();
+  static String get resultHiddenByTeacher => 'ResultHiddenByTeacher'.tr();
+  static String get resultWillBeShown => 'ResultWillBeShown'.tr();
   static String get unlimited => 'Unlimited'.tr();
   static String get examAttemptsCount => 'ExamAttemptsCount'.tr();
   static String get hideResultAfterSubmit => 'HideResultAfterSubmit'.tr();

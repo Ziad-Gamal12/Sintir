@@ -477,6 +477,82 @@ class TestItemRepoImpli implements Testitemrepo {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> checkIfTheResultHidden(
+      {required String courseId,
+      required String sectionId,
+      required String testId}) async {
+    try {
+      final response = await databaseservice.getData(
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.coursesCollection,
+          docId: courseId,
+          subCollection: BackendEndpoints.sectionsSubCollection,
+          subDocId: sectionId,
+          subCollection2: BackendEndpoints.sectionItemsSubCollection,
+          sub2DocId: testId,
+        ),
+      );
+      if (response.docData == null) {
+        return right(false);
+      }
+      if (response.docData?["type"] == "Test") {
+        CourseTestEntity test =
+            Coursetestmodel.fromJson(response.docData!).toEntity();
+        return right(!test.showResult);
+      }
+      return right(false);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> hasReachedMaxAttempts(
+      {required String courseId,
+      required String sectionId,
+      required CourseTestEntity test,
+      required String userId}) async {
+    try {
+      final query = {
+        "filters": [
+          {"field": "joinedby.uid", "operator": "==", "value": userId}
+        ],
+        "orderBy": "joinedDate",
+        "descending": true,
+      };
+      final count = await databaseservice.getCollectionItemsCount(
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.coursesCollection,
+          docId: courseId,
+          subCollection: BackendEndpoints.sectionsSubCollection,
+          subDocId: sectionId,
+          subCollection2: BackendEndpoints.sectionItemsSubCollection,
+          sub2DocId: test.id,
+          subCollection3: BackendEndpoints.testResultsSubCollection,
+        ),
+        query: query,
+      );
+      if (test.numberOfAttempts == null) {
+        return right(false);
+      } else {
+        bool hasReachedMaxAttempts = false;
+        if (count >= test.numberOfAttempts!) {
+          hasReachedMaxAttempts = true;
+        } else {
+          hasReachedMaxAttempts = false;
+        }
+        return right(hasReachedMaxAttempts);
+      }
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
+    }
+  }
 }
 
 List<TestResultEntity> _parseTestResults(List<Map<String, dynamic>> data) {
