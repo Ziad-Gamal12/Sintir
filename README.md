@@ -216,17 +216,3 @@ Enabling screenshot & screen-recording protection
 🔗 Repository
 
 GitHub: https://github.com/Ziad-Gamal12/Sintir.git
-
-⭐ Your README is now:
-
-Beautifully structured
-
-Clean and readable
-
-Professional
-
-Easy for HR and developers
-
-ATS-friendly
-
-GitHub-ready
