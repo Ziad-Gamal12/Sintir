@@ -1,111 +1,111 @@
- Sintir – Educational Mobile Platform (Flutter)
+📘 Sintir – Educational Mobile Platform (Flutter)
 
-Sintir is a scalable and flexible educational platform built with Flutter, designed to support both students and teachers.
-The app provides a complete learning environment that includes courses, videos, exams, files, payments, feedback, reports, and analytics, along with a full teacher workspace for managing online classes.
+Sintir is a scalable and flexible educational platform built with Flutter, designed for both students and teachers.
+It delivers a complete learning environment that includes courses, videos, exams, files, payments, reports, analytics, and a full teacher workspace.
 
- Demo
+🚀 Demo
 
-APK (temporary preview until publishing):
-Download APK (https://drive.google.com/file/d/1dAe2gH98RGZ38Em0jMGJV67vPL8RVt6r/view?usp=sharing)
+APK (Temporary Preview Until Publishing):
+👉 Download (https://drive.google.com/file/d/1dAe2gH98RGZ38Em0jMGJV67vPL8RVt6r/view?usp=sharing)
 
-(Replace the link above when ready)
+🧩 Main Features
+👨‍🎓 Student Features
 
- Main Features
- Student Features
-
-Email verification & secure sign-in
+Email verification & secure authentication
 
 Explore courses by category, price, rating, recency, and educational level
 
-View course details with subscription options
+Course subscription with applied coupons
 
-Apply coupons for discounted prices
+Payments via Paymob (wallets + credit cards) through WebView
 
-Pay using Paymob (wallets + credit cards) via WebView
+Video lecture player
 
-Watch video lectures
+PDF viewer
 
-Read PDF files
+Quiz & exam viewer
 
-View quizzes & exam details
+Submit answers with:
 
-Submit answers with result summary (correct/incorrect count, explanation images, mistakes tracking)
+Correct/incorrect summary
 
-Attempts limit logic (fixed/unlimited)
+Explanation images
 
-Locked result visibility when hidden by the teacher
+Mistakes tracking
 
-Add notes, ask questions, send reports
+Attempts limit (fixed or unlimited)
 
-Add feedback & view others' feedback
+Hidden results (if teacher disables visibility)
 
-Wishlist for courses
+Notes, questions, reports
 
-Profile management (photo update, personal info, language switch, dark/light mode)
+Course feedback system
 
-Prevent screenshots & screen recording
+Add to wishlist
 
-Smart logic for one-device login enforcement
+Full profile management (photo, info, theme, language)
 
- Teacher Features
+Screenshot & screen-recording protection
+
+One-device login restriction logic
+
+👨‍🏫 Teacher Features
 
 Dedicated teacher onboarding
 
-Teacher workspace with:
+Teacher dashboard with:
 
 3D credit card view
 
-Total earnings, balance, and transaction history
+Total earnings, balance & transaction history
 
-Withdraw & refund logic (processed by admin activation)
+Withdraw & refund logic (admin-activated)
 
-Full course creation & management
+Full course management:
 
-Add and edit:
+Videos
 
-Video lectures
-
-PDF files
+PDFs
 
 Exams & questions
 
 Attempts count
 
-Show/hide results
+Result visibility toggle
 
-Exam duration
+Exam timer
 
-Course coupons system (create, activate/deactivate)
+Coupon system (create/activate/deactivate)
 
-Students list (per course) with:
+Students list (per course):
 
 Search
 
-Student details
+Student profile
 
 Subscription history
 
-Performance analytics chart (avg/highest/lowest)
+Performance analytics chart
 
-All student exam results
+All exam results
 
-Video consequences view:
+Video analytics:
 
 Notes from students
 
-Watching analytics
+Viewing statistics
 
-Exam consequences:
+Exam analytics:
 
-Attendance counts and percentages
+Attendance percentage
 
-Success/failure distribution
+Success/failure rate
 
-Highest & lowest scores
+Highest and lowest scores
 
- Tech Stack
+🛠 Tech Stack
 
-Flutter & Dart
+Flutter + Dart
 
 Bloc / Cubit (State Management)
 
@@ -121,31 +121,31 @@ Paymob API
 
 Chewie + Video Player
 
-PDFX for PDF reading
+PDFX
 
 GetIt (Dependency Injection)
 
- Tech Highlights
+⚙️ Technical Highlights
 
-Clean architecture with feature-based modularization
+Clean Architecture with feature-based modules
 
-Separation into: Core / Features / Data / Domain / Presentation
+Layered structure (Core / Data / Domain / Presentation)
 
-Pagination for heavy course/exam data
+Efficient pagination for large datasets
 
-UI rebuilding optimization using advanced Bloc patterns
+Optimized Bloc rebuild patterns
 
-Preventing screenshots & screen recording
+Screenshot/screen-recording prevention
 
-Scalable data storage and refactoring
+Strong data refactoring & scalability
 
-One-device login restriction logic
+One-device login restriction
 
-Multi-language support (AR / EN / FR)
+Multi-language support (AR/EN/FR)
 
-Smooth performance on low-end devices
+High performance on low-end devices
 
- Folder Structure 
+📁 Folder Structure
 lib/
  ├── core/
  │   ├── errors/
@@ -177,44 +177,56 @@ lib/
  ├── injections.dart
  └── main.dart
 
- Installation & Setup
-1. Clone the repository
+🧰 Installation & Setup
+1. Clone the Repository
 git clone https://github.com/Ziad-Gamal12/Sintir.git
 
-2. Install dependencies
+2. Install Dependencies
 flutter pub get
 
-3. Add your Firebase configuration
+3. Add Firebase Files
 
-Place your:
+google-services.json → Android
 
-google-services.json (Android)
+GoogleService-Info.plist → iOS
 
-GoogleService-Info.plist (iOS)
-
-4. Run the app
+4. Run the App
 flutter run
 
- Challenges & Solutions
+🧗 Challenges & Solutions
 
-Managing huge, multi-role data structure (student + teacher)
+Managing a large, multi-role system (Student + Teacher)
 
-Implementing scalable architecture for 70+ screens
+Architecting 70+ screens with long-term scalability
 
-Designing UI/UX from scratch using Figma without pre-existing design
+Designing UI/UX manually in Figma from scratch
 
-Applying pagination & isolation for performance
+Implementing effective pagination & performance isolation
 
-Handling heavy views (exams, videos, analytics) efficiently
+Optimizing heavy views (videos, exams, analytics)
 
-Implementing result visibility, attempts limit, and dynamic exam logic
+Building dynamic exam logic with attempts & hidden results
 
-Creating a full course management system
+Designing full course management for teachers
 
-Solving one-device login complexity
+Implementing one-device login security
 
-Implementing safe mode (prevent screenshots/recording)
+Enabling screenshot & screen-recording protection
 
-Repository
+🔗 Repository
 
 GitHub: https://github.com/Ziad-Gamal12/Sintir.git
+
+⭐ Your README is now:
+
+Beautifully structured
+
+Clean and readable
+
+Professional
+
+Easy for HR and developers
+
+ATS-friendly
+
+GitHub-ready
