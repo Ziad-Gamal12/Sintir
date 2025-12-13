@@ -1,94 +1,218 @@
-# 🎓 Sinitr – Educational Mobile App (Work in Progress)
+📘 Sintir – Educational Mobile Platform (Flutter)
 
-Sinitr is an **educational platform** built with **Flutter** that connects **teachers** and **students** in one ecosystem.  
-It supports learning through video, PDF, quizzes, and AI-powered interactions with plans to extend into a **3D AI Teacher avatar**.  
+Sintir is a scalable and flexible educational platform built with Flutter, designed for both students and teachers.
+It delivers a complete learning environment that includes courses, videos, exams, files, payments, reports, analytics, and a full teacher workspace.
 
-⚠️ **Note:** The app is still under active development. Features, UI, and performance will continue to evolve before production release.  
+🚀 Demo
 
----
+APK (Temporary Preview Until Publishing):
+👉 Download (https://drive.google.com/file/d/1dAe2gH98RGZ38Em0jMGJV67vPL8RVt6r/view?usp=sharing)
 
-## ✨ Core Features
-- **Splash Screen** – Animated introduction  
-- **Role Selection** – Choose between Student or Teacher role  
-- **Teacher Onboarding** – Guided flow for educators  
-- **Student Onboarding** – Guided flow for learners  
-- **Teacher Authentication** – Secure login & registration  
-- **Student Authentication** – Secure login & registration  
-- **Home Dashboard** – Personalized student/teacher experience  
-- **AI Teacher (Beta)** – Interactive voice-based assistant (future upgrade: 3D avatar)  
-- **Teacher Profile** – Manage courses & professional info  
-- **Student Profile** – Track progress & enrolled courses  
-- **Teacher Work Environment** – Full course creation & management tools  
-- **Course Management**  
-  - Add/edit/delete sections  
-  - Upload **videos, PDFs, audio files**  
-  - Create **MCQ quizzes & timed tests**  
-- **Course Details (Student View)** – Study content, take quizzes, track results  
-- **Books Library** – Manage course assets & documents  
-- **Favorites** – Save and revisit important lessons  
-- **Payment Logic (WIP)** – Handle subscriptions & course purchases  
+🧩 Main Features
+👨‍🎓 Student Features
 
----
+Email verification & secure authentication
 
-## 🛠️ Tech Stack
-- **Flutter & Dart** – Cross-platform development  
-- **Bloc / Cubit** – State management  
-- **Firebase Auth** – Teacher & Student authentication  
-- **Firebase Firestore** – Real-time courses, quizzes & subscriptions  
-- **Firebase Storage** – Multimedia course content (PDFs, videos, audio)  
-- **GoRouter** – Role-based navigation  
-- **Video Player + Chewie** – Cached video playback  
-- **PDFX** – In-app PDF viewer  
-- **Speech_to_text** – AI Teacher & voice quizzes  
-- **StopWatchTimer** – Timed assessments  
-- **Lottie Animations** – Smooth onboarding/UI animations  
-- **WebView** – Embedded web resources  
-- **Payment Integration (In Progress)**  
+Explore courses by category, price, rating, recency, and educational level
 
----
+Course subscription with applied coupons
 
-## 📂 Repository Overview
+Payments via Paymob (wallets + credit cards) through WebView
+
+Video lecture player
+
+PDF viewer
+
+Quiz & exam viewer
+
+Submit answers with:
+
+Correct/incorrect summary
+
+Explanation images
+
+Mistakes tracking
+
+Attempts limit (fixed or unlimited)
+
+Hidden results (if teacher disables visibility)
+
+Notes, questions, reports
+
+Course feedback system
+
+Add to wishlist
+
+Full profile management (photo, info, theme, language)
+
+Screenshot & screen-recording protection
+
+One-device login restriction logic
+
+👨‍🏫 Teacher Features
+
+Dedicated teacher onboarding
+
+Teacher dashboard with:
+
+3D credit card view
+
+Total earnings, balance & transaction history
+
+Withdraw & refund logic (admin-activated)
+
+Full course management:
+
+Videos
+
+PDFs
+
+Exams & questions
+
+Attempts count
+
+Result visibility toggle
+
+Exam timer
+
+Coupon system (create/activate/deactivate)
+
+Students list (per course):
+
+Search
+
+Student profile
+
+Subscription history
+
+Performance analytics chart
+
+All exam results
+
+Video analytics:
+
+Notes from students
+
+Viewing statistics
+
+Exam analytics:
+
+Attendance percentage
+
+Success/failure rate
+
+Highest and lowest scores
+
+🛠 Tech Stack
+
+Flutter + Dart
+
+Bloc / Cubit (State Management)
+
+GoRouter (Navigation)
+
+Firebase Authentication
+
+Firebase Firestore
+
+Firebase Storage
+
+Paymob API
+
+Chewie + Video Player
+
+PDFX
+
+GetIt (Dependency Injection)
+
+⚙️ Technical Highlights
+
+Clean Architecture with feature-based modules
+
+Layered structure (Core / Data / Domain / Presentation)
+
+Efficient pagination for large datasets
+
+Optimized Bloc rebuild patterns
+
+Screenshot/screen-recording prevention
+
+Strong data refactoring & scalability
+
+One-device login restriction
+
+Multi-language support (AR/EN/FR)
+
+High performance on low-end devices
+
+📁 Folder Structure
 lib/
-├── Core/ # Core utilities & constants
-├── Features/ # App Features
-│ ├── Ai_Teacher/ # AI Teacher feature
-│ ├── Books_Library/ # Course library
-│ ├── ChoosingUserKind/ # Role selection
-│ ├── Course Management/ # Teacher course tools
-│ ├── Favorites/ # Favorites management
-│ ├── Home/ # Home dashboard
-│ ├── Splash/ # Splash & onboarding
-│ ├── StudenetAuth/ # Student authentication
-│ ├── StudentOnboarding/ # Student onboarding
-│ ├── StudentProfile/ # Student profile
-│ ├── TeacherAuth/ # Teacher authentication
-│ ├── TeaacherOnBoarding/# Teacher onboarding
-│ ├── TeacherProfile/ # Teacher profile
-│ ├── TeacherWorkEnv/ # Teacher workspace
-│ └── tasks/ # Task/assignment UI
-└── main.dart # App entry point
+ ├── core/
+ │   ├── errors/
+ │   ├── constants/
+ │   ├── theme/
+ │   ├── utils/
+ │   ├── widgets/
+ │   └── services/
+ │
+ ├── features/
+ │   ├── auth/
+ │   │   ├── data/
+ │   │   ├── domain/
+ │   │   └── presentation/
+ │   │
+ │   ├── courses/
+ │   │   ├── data/
+ │   │   ├── domain/
+ │   │   └── presentation/
+ │   │
+ │   ├── exams/
+ │   ├── videos/
+ │   ├── files/
+ │   ├── teacher/
+ │   ├── student/
+ │   └── profile/
+ │
+ ├── router/
+ ├── injections.dart
+ └── main.dart
 
+🧰 Installation & Setup
+1. Clone the Repository
+git clone https://github.com/Ziad-Gamal12/Sintir.git
 
----
+2. Install Dependencies
+flutter pub get
 
-## 🚧 Development Status
-- ✅ Teacher & Student onboarding/auth flows  
-- ✅ Course management (sections, videos, PDFs, quizzes)  
-- ✅ AI Teacher (Beta) with voice interaction  
-- ✅ Favorites & library integration  
-- ✅ Payment process logic (in progress)  
-- 🔜 3D AI Teacher avatar  
-- 🔜 Gamification & badges system  
-- 🔜 Performance optimizations & caching  
-- 🔜 Production release  
+3. Add Firebase Files
 
----
+google-services.json → Android
 
-👨‍💻 Author
-Ziad Gamal
+GoogleService-Info.plist → iOS
 
-🌐 https://ziadgamal.vercel.app/
+4. Run the App
+flutter run
 
-📧 ziadgemy123@gmail.com
+🧗 Challenges & Solutions
 
-🔗 https://www.linkedin.com/in/ziad-gamal-54b052375/
+Managing a large, multi-role system (Student + Teacher)
+
+Architecting 70+ screens with long-term scalability
+
+Designing UI/UX manually in Figma from scratch
+
+Implementing effective pagination & performance isolation
+
+Optimizing heavy views (videos, exams, analytics)
+
+Building dynamic exam logic with attempts & hidden results
+
+Designing full course management for teachers
+
+Implementing one-device login security
+
+Enabling screenshot & screen-recording protection
+
+🔗 Repository
+
+GitHub: https://github.com/Ziad-Gamal12/Sintir.git
