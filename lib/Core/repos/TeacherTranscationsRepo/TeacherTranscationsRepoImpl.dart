@@ -1,18 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
+import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
-import 'package:sintir/Core/repos/TranscationsRepo/TranscationsRepo.dart';
+import 'package:sintir/Core/models/TransactionModel.dart';
+import 'package:sintir/Core/repos/TeacherTranscationsRepo/TeacherTranscationsRepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/data/Models/TransactionModel.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TransactionEntity.dart';
 import 'package:sintir/locale_keys.dart';
 
-class TranscationsRepoImpl implements TranscationsRepo {
+class TeacherTranscationsRepoImpl implements TeacherTranscationsRepo {
   final DataBaseService dataBaseService;
-  TranscationsRepoImpl({required this.dataBaseService});
+  TeacherTranscationsRepoImpl({required this.dataBaseService});
 
   @override
   Future<Either<Failure, void>> storeTransaction(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TransactionEntity.dart';
 
 class TransactionStatusAndDate extends StatelessWidget {
   const TransactionStatusAndDate({

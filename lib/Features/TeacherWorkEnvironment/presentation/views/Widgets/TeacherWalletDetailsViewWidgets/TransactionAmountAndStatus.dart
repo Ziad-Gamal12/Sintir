@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TransactionEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/TransactionsCubit/TransactionsCubit.dart';
+import 'package:sintir/Core/entities/TransactionEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/WithDrawTeacherBalanceCubit/WithDrawTeacherBalanceCubit.dart';
 
 class TransactionAmountAndStatus extends StatelessWidget {
   const TransactionAmountAndStatus({
@@ -19,7 +19,8 @@ class TransactionAmountAndStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TransactionsCubit, TransactionsState>(
+    return BlocBuilder<WithDrawTeacherBalanceCubit,
+        WithDrawTeacherBalanceState>(
       builder: (context, state) {
         final isLoading = state is ReconcileTransactionLoading &&
             state.transactionId == transaction.transactionId;
@@ -57,7 +58,7 @@ class TransactionAmountAndStatus extends StatelessWidget {
                   IconButton(
                     onPressed: () {
                       context
-                          .read<TransactionsCubit>()
+                          .read<WithDrawTeacherBalanceCubit>()
                           .reconcileTransactionStatus(
                             userId: teacherId,
                             transaction: transaction,

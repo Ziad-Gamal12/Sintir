@@ -51,6 +51,9 @@ class PaymobRepoImp implements PaymobRepo {
       return right(PayMobResponse(
         url: checkoutUrl,
         paymentid: clientSecret,
+        currency: "EGP",
+        issuer: "Paymob",
+        mobileNumber: user.phoneNumber,
         amount: amount,
       ));
     } catch (e) {

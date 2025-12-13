@@ -1,22 +1,22 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Core/repos/PaymobPayoutRepo/PayoutRepo.dart';
-import 'package:sintir/Core/repos/TranscationsRepo/TranscationsRepo.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TransactionEntity.dart';
+import 'package:sintir/Core/repos/TeacherTranscationsRepo/TeacherTranscationsRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/TeacherWalletRepo.dart';
 
 part 'TransactionsState.dart';
 
-class TransactionsCubit extends Cubit<TransactionsState> {
+class WithDrawTeacherBalanceCubit extends Cubit<WithDrawTeacherBalanceState> {
   // Added PaymobPayoutRepo for status checking
-  TransactionsCubit({
+  WithDrawTeacherBalanceCubit({
     required this.teacherWalletRepo,
     required this.transcationsRepo,
     required this.paymobPayoutRepo,
   }) : super(UpdateTeacherWalletInitial());
 
   final TeacherWalletRepo teacherWalletRepo;
-  final TranscationsRepo transcationsRepo;
+  final TeacherTranscationsRepo transcationsRepo;
   final PayoutRepo paymobPayoutRepo;
 
   Future<void> updateTeacherWalletBalance(

@@ -17,9 +17,12 @@ class LocaleKeys {
   static String get teacherFeaturesTitle => 'teacher_features_title'.tr();
   static String get teacherFeaturesDescription =>
       'teacher_features_description'.tr();
+  static String get myPayments => 'MyPayments'.tr();
   static String get teacherStartTodayTitle => 'teacher_start_today_title'.tr();
   static String get teacherStartTodayDescription =>
       'teacher_start_today_description'.tr();
+  static String get notAvailable => "notAvailable".tr();
+  static String get transactionId => "transactionId".tr();
   static String get resetPassword => 'reset_password'.tr();
   static String get descriptionLabel => 'description_label'.tr();
   static String get chooseOption => 'choose_option'.tr();

@@ -20,6 +20,7 @@ class BackendEndpoints {
   static String addStudentDataCollectionName = "Students";
   static String setStudentDataTableName = "Students";
   static String transactionsSubCollection = "Transactions";
+  static String transactionsCollection = "Transactions";
   static String setTeacherDataTableName = "Teachers";
   static String addSectionToTeacherCollection = "Teachers";
   static String updateCourseSectionCollection = "Courses";
@@ -63,4 +64,6 @@ class BackendEndpoints {
   static String chieckIsStudentPhoneNumberExistCollectionName = "Students";
   static String isLogined = "isLogined";
   static String joinedDateKey = "joinedDate";
+  static String payMentMethod = "PayMent";
+  static String payOutMethod = "PayOut";
 }

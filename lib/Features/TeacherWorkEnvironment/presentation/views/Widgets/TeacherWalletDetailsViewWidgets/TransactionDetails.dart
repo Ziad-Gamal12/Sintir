@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TransactionEntity.dart';
+import 'package:sintir/Core/entities/TransactionEntity.dart';
 
 class TransactionDetails extends StatelessWidget {
   const TransactionDetails({

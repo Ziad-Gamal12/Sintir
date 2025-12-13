@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart'; // for compute
@@ -7,9 +9,11 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
 import 'package:sintir/Core/entities/FetchDataResponses/GetCourseSubscribersEntity.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
+import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/models/CourseModel.dart';
+import 'package:sintir/Core/models/TransactionModel.dart';
 import 'package:sintir/Core/models/subscripersIDSModel.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
@@ -32,6 +36,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       {required CourseEntity course,
       required UserEntity userEntity,
       required String transactionId,
+      required TransactionEntity transactionEntity,
       required double amount}) async {
     try {
       final subscriber = _buildSubscriberEntity(userEntity);
@@ -46,13 +51,19 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
           amount: amount,
           transactionId: transactionId,
         ),
+        storeSubscribtionTransaction(
+            courseID: course.id,
+            userID: userEntity.uid,
+            transaction: transactionEntity)
       ]);
 
       return right(null);
-    } on CustomException catch (e) {
+    } on CustomException catch (e, s) {
+      log(e.toString(), stackTrace: s);
       await _rollbackUserCourse(course, userEntity);
       return left(ServerFailure(message: e.message));
     } catch (e) {
+      log(e.toString());
       await _rollbackUserCourse(course, userEntity);
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
@@ -87,7 +98,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
     return SubscriberEntity(
       id: user.uid,
       name: user.firstName,
-      gender: user.gender,
+      gender: user.gender.isEmpty ? "" : user.gender,
       phone: user.phoneNumber,
       educationLevel: user.studentExtraDataEntity?.educationLevel ?? "",
       imageUrl: user.profilePicurl,
@@ -302,6 +313,46 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
         hasMore: hasMore,
         isPaginate: isPaginate,
       ));
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> storeSubscribtionTransaction(
+      {required String courseID,
+      required String userID,
+      required TransactionEntity transaction}) async {
+    try {
+      Map<String, dynamic> json =
+          TransactionModel.fromEntity(transaction).toJson();
+      await Future.wait([
+        databaseService.setData(
+          data: json,
+          requirements: FireStoreRequirmentsEntity(
+              collection: BackendEndpoints.coursesCollection,
+              docId: courseID,
+              subCollection: BackendEndpoints.transactionsSubCollection,
+              subDocId: transaction.transactionId),
+        ),
+        databaseService.setData(
+            data: json,
+            requirements: FireStoreRequirmentsEntity(
+                collection: BackendEndpoints.usersCollectionName,
+                docId: userID,
+                subCollection: BackendEndpoints.transactionsSubCollection,
+                subDocId: transaction.transactionId)),
+        databaseService.setData(
+            data: json,
+            requirements: FireStoreRequirmentsEntity(
+              collection: BackendEndpoints.transactionsCollection,
+              docId: transaction.transactionId,
+            )),
+      ]);
+
+      return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {

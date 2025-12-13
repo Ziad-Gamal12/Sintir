@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:better_player_plus/better_player_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
-import 'package:sintir/Core/widgets/Video%20Previewer%20Widgets/controllers/video_player_controller_helper.dart';
+import 'package:sintir/Core/widgets/VideoPreviewerWidgets/controllers/video_player_controller_helper.dart';
 import 'package:sintir/locale_keys.dart';
 
 class PremiumVideoPlayer extends StatefulWidget {
@@ -26,14 +26,12 @@ class _PremiumVideoPlayerState extends State<PremiumVideoPlayer> {
   final CustomVideoControllerBetter _controller = CustomVideoControllerBetter();
   bool _isLoading = true;
   bool _hasError = false;
-  bool _didInitVideo = false; // Flag to prevent repeated calls
-
+  bool _didInitVideo = false;
   @override
   void initState() {
     super.initState();
   }
 
-  // 💡 FIX: Move initialization from initState to didChangeDependencies
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();

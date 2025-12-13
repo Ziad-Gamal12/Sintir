@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TransactionEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/PayOutBalanceWidgets/PayOutBalanceBodButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/PayOutBalanceWidgets/PayOutBalanceBodyConditionsRow.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/PayOutBalanceWidgets/PayOutBalanceBodyTextFields.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/PayOutBalanceWidgets/SelecteIssuerDropDownButton.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/TransactionsCubit/TransactionsCubit.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/WithDrawTeacherBalanceCubit/WithDrawTeacherBalanceCubit.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/payout_cubit/payout_cubit.dart';
 import 'package:sintir/constant.dart';
 
@@ -40,6 +41,7 @@ class _PayOutBalanceBodyState extends State<PayOutBalanceBody> {
     _currentTransaction = TransactionEntity(
         amount: 0.0,
         issuer: issuer,
+        method: BackendEndpoints.payOutMethod,
         isReconciled: false,
         mobileNumber: "",
         transactionId: "",
@@ -82,11 +84,12 @@ class _PayOutBalanceBodyState extends State<PayOutBalanceBody> {
     }
   }
 
-  void _handleUpdateWalletState(BuildContext context, TransactionsState state) {
+  void _handleUpdateWalletState(
+      BuildContext context, WithDrawTeacherBalanceState state) {
     if (state is UpdateTeacherWalletLoading) {
       _setLoading(true);
     } else if (state is UpdateTeacherWalletSuccess) {
-      context.read<TransactionsCubit>().storeTransaction(
+      context.read<WithDrawTeacherBalanceCubit>().storeTransaction(
             transaction: _currentTransaction,
             userId: widget.currentWallet.teacherId,
           );
@@ -145,7 +148,7 @@ class _PayOutBalanceBodyState extends State<PayOutBalanceBody> {
       return;
     }
 
-    context.read<TransactionsCubit>().updateTeacherWalletBalance(
+    context.read<WithDrawTeacherBalanceCubit>().updateTeacherWalletBalance(
           teacherId: walletEntity.teacherId,
           balance: walletEntity.balance - amountToSubtract,
         );
@@ -158,7 +161,7 @@ class _PayOutBalanceBodyState extends State<PayOutBalanceBody> {
     return MultiBlocListener(
       listeners: [
         BlocListener<PayoutCubit, PayoutState>(listener: _handlePayoutState),
-        BlocListener<TransactionsCubit, TransactionsState>(
+        BlocListener<WithDrawTeacherBalanceCubit, WithDrawTeacherBalanceState>(
           listener: _handleUpdateWalletState,
         ),
       ],

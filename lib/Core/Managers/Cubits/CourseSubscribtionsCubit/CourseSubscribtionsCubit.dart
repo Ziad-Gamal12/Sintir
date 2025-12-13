@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/FetchDataResponses/GetCourseSubscribersEntity.dart';
+import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
 import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
@@ -23,12 +24,13 @@ class CourseSubscribtionsCubit extends Cubit<CourseSubscribtionsState> {
 
   void subscribeToCourse(
       {required UserEntity userEntity,
-      required String transactionId,
+      required TransactionEntity transactionEntity,
       required double amount}) async {
     emit(SubscibeingToCourseLoading());
     var result = await subscribtionRepo.subscribeToCourse(
         amount: amount,
-        transactionId: transactionId,
+        transactionId: transactionEntity.transactionId ?? "",
+        transactionEntity: transactionEntity,
         course: course,
         userEntity: userEntity);
     result.fold((failure) {

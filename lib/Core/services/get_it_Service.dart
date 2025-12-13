@@ -26,10 +26,10 @@ import 'package:sintir/Core/repos/ResetPaswordRepo/ResetPaswordRepo.dart';
 import 'package:sintir/Core/repos/ResetPaswordRepo/ResetPaswordRepoImp.dart';
 import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
 import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepoImpli.dart';
+import 'package:sintir/Core/repos/TeacherTranscationsRepo/TeacherTranscationsRepo.dart';
+import 'package:sintir/Core/repos/TeacherTranscationsRepo/TeacherTranscationsRepoImpl.dart';
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo-Impli.dart';
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
-import 'package:sintir/Core/repos/TranscationsRepo/TranscationsRepo.dart';
-import 'package:sintir/Core/repos/TranscationsRepo/TranscationsRepoImpl.dart';
 import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepo.dart';
 import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepoImpli.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
@@ -50,6 +50,8 @@ import 'package:sintir/Features/MyMistakes/Data/Repos/MyMistakesRepoImpl.dart';
 import 'package:sintir/Features/MyMistakes/Domain/Repo/MyMistakesRepo.dart';
 import 'package:sintir/Features/MyResults/Data/Repo/MyResultsRepoImpl.dart';
 import 'package:sintir/Features/MyResults/Domain/Repo/MyResultsRepo.dart';
+import 'package:sintir/Features/MyTransactions/Data/Repos/MyTransactionsRepImpl.dart';
+import 'package:sintir/Features/MyTransactions/Domain/Repos/MyTransactionsRep.dart';
 import 'package:sintir/Features/Profile/Data/Repos/PersonalDetailsRepoImpl.dart';
 import 'package:sintir/Features/Profile/Domain/Repos/PersonalDetailsRepo.dart';
 import 'package:sintir/Features/Search/Data/Repos/SearchRepoImpl.dart';
@@ -136,6 +138,9 @@ void setup_Getit() {
           authRepo: getIt<AuthRepo>(),
           assetspickerrepo: getIt<Assetspickerrepo>()));
 
-  getIt.registerLazySingleton<TranscationsRepo>(
-      () => TranscationsRepoImpl(dataBaseService: getIt<DataBaseService>()));
+  getIt.registerLazySingleton<TeacherTranscationsRepo>(() =>
+      TeacherTranscationsRepoImpl(dataBaseService: getIt<DataBaseService>()));
+
+  getIt.registerLazySingleton<MyTransactionsRepo>(
+      () => MyTransactionsRepoImpl(dataBaseService: getIt<DataBaseService>()));
 }

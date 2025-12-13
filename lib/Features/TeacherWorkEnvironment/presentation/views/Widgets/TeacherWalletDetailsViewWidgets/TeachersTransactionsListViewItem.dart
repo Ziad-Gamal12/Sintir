@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TransactionEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TransactionAmountAndStatus.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TransactionDetails.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TransactionStatusAndDate.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/TransactionsCubit/TransactionsCubit.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/WithDrawTeacherBalanceCubit/WithDrawTeacherBalanceCubit.dart';
 
 class TeachersTransactionsListViewItem extends StatelessWidget {
   const TeachersTransactionsListViewItem({
@@ -49,7 +49,8 @@ class TeachersTransactionsListViewItem extends StatelessWidget {
     final statusIcon = _getStatusIcon(transaction.status ?? "");
     final regularTextStyle = AppTextStyles(context).regular14;
 
-    return BlocConsumer<TransactionsCubit, TransactionsState>(
+    return BlocConsumer<WithDrawTeacherBalanceCubit,
+        WithDrawTeacherBalanceState>(
       listener: (context, state) {
         if (state is ReconcileTransactionFailure &&
             state.transactionId == transaction.transactionId) {

@@ -35,6 +35,7 @@ import 'package:sintir/Features/Home/presentation/views/MorePopularCoursesView.d
 import 'package:sintir/Features/MyCourses/Presentation/Views/MyCoursesView.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Views/MyMistakesView.dart';
 import 'package:sintir/Features/MyResults/Presentation/Views/MyResultsView.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/MyTransactionsView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/AboutUsView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/ProfileView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/SettingsView.dart';
@@ -459,6 +460,12 @@ class App_router {
         path: AboutUsView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const AboutUsView();
+        },
+      ),
+      GoRoute(
+        path: MyTransactionsView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const MyTransactionsView();
         },
       ),
     ],

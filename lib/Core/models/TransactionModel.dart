@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TransactionEntity.dart';
+import 'package:sintir/Core/entities/TransactionEntity.dart';
 
 class TransactionModel {
   final String? transactionId;
@@ -10,12 +10,14 @@ class TransactionModel {
   final String? mobile;
   final String? status;
   final bool? isReconciled;
+  final String method;
   TransactionModel(
       {required this.transactionId,
       required this.createdAt,
       required this.amount,
       required this.currency,
       required this.isReconciled,
+      required this.method,
       required this.issuer,
       required this.mobile,
       required this.status});
@@ -25,6 +27,7 @@ class TransactionModel {
       transactionId: json['transaction_id'],
       createdAt: (json['created_at'] as Timestamp).toDate(),
       amount: json['amount'],
+      method: json['method'] ?? "",
       currency: json['currency'],
       isReconciled: json['isReconciled'],
       issuer: json['issuer'],
@@ -38,6 +41,7 @@ class TransactionModel {
       createdAt: entity.createdAt,
       amount: entity.amount,
       currency: entity.currency,
+      method: entity.method,
       isReconciled: entity.isReconciled,
       issuer: entity.issuer,
       mobile: entity.mobileNumber,
@@ -49,6 +53,7 @@ class TransactionModel {
       transactionId: transactionId,
       isReconciled: isReconciled,
       createdAt: createdAt,
+      method: method,
       amount: amount,
       currency: currency,
       issuer: issuer,
@@ -67,6 +72,7 @@ class TransactionModel {
       'issuer': issuer,
       'mobile': mobile,
       'status': status,
+      'method': method
     };
   }
 }

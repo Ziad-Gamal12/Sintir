@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localingo/app_localizations.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/ExamResultSolvedQuestionEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/CustomSolvedQuestionListItemContent.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/CustomSolvedQuestionListItemHeader.dart';
@@ -39,6 +40,7 @@ class _CustomSolvedQuestionListItemState
     final backgroundColor = Theme.of(context).brightness == Brightness.dark
         ? Colors.grey[900]
         : Colors.grey.shade50;
+    String locale = AppLocalizations.of(context).locale.languageCode;
 
     return AspectRatio(
       aspectRatio: 2 / 1.4,
@@ -92,7 +94,8 @@ class _CustomSolvedQuestionListItemState
             if (hasSolutionImage)
               Positioned(
                 top: 8,
-                right: 8,
+                right: locale == 'ar' ? null : 8,
+                left: locale == 'ar' ? 8 : null,
                 child: ShowHideSolutionButton(
                   isVisible: isSolutionVisible,
                   onTap: () {

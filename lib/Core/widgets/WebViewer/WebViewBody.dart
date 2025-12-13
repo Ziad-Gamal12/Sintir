@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
+import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
+import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebviewbodyPaymentSuccessWidget.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobResponse.dart';
@@ -11,14 +13,13 @@ import 'package:webview_flutter/webview_flutter.dart';
 class Webviewbody extends StatefulWidget {
   const Webviewbody({super.key, required this.response});
   final PayMobResponse response;
-
   @override
   State<Webviewbody> createState() => _WebviewbodyState();
 }
 
 class _WebviewbodyState extends State<Webviewbody> {
   late WebViewController controller;
-  bool handledSuccess = false; // flag to know if success handled before
+  bool handledSuccess = false;
 
   @override
   void initState() {
@@ -31,10 +32,21 @@ class _WebviewbodyState extends State<Webviewbody> {
 
             if (url.contains("success=true") && !handledSuccess) {
               handledSuccess = true;
+              TransactionEntity transaction = TransactionEntity(
+                amount: widget.response.amount,
+                method: BackendEndpoints.payMentMethod,
+                createdAt: DateTime.now(),
+                currency: widget.response.currency,
+                isReconciled: false,
+                issuer: widget.response.issuer,
+                mobileNumber: widget.response.mobileNumber,
+                status: "Success",
+                transactionId: widget.response.paymentid,
+              );
               context.read<CourseSubscribtionsCubit>().subscribeToCourse(
                     amount: widget.response.amount,
                     userEntity: getUserData(),
-                    transactionId: widget.response.paymentid,
+                    transactionEntity: transaction,
                   );
               return NavigationDecision.prevent;
             }
