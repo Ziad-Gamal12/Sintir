@@ -76,8 +76,8 @@ class _CustomChatTextFieldState extends State<CustomChatTextField> {
                     FontAwesomeIcons.paperPlane,
                     size: 24,
                     color: isChatTextFieldEmpty == true
-                        ? const Color(0xffAEAEB2)
-                        : Colors.black,
+                        ? const Color.fromARGB(255, 153, 153, 153)
+                        : Colors.grey.shade300,
                   ),
                   onPressed: () {
                     widget.onPressed();

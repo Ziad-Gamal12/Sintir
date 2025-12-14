@@ -26,9 +26,21 @@ class LocaleKeys {
   static String get resetPassword => 'reset_password'.tr();
   static String get descriptionLabel => 'description_label'.tr();
   static String get chooseOption => 'choose_option'.tr();
-
+  static String get support => 'support'.tr();
   static String get shared => 'shared'.tr();
   static String get darkMode => 'darkMode'.tr();
+  static String get addTicket => 'addTicket'.tr();
+  static String get ticketSentSuccess => 'ticketSentSuccess'.tr();
+  static String get senderData => 'senderData'.tr();
+  static String get fullName => 'fullName'.tr();
+  static String get enterName => 'enterName'.tr();
+  static String get problemDetails => 'problemDetails'.tr();
+  static String get problemTitleHint => 'problemTitleHint'.tr();
+  static String get problemTitleRequired => 'problemTitleRequired'.tr();
+  static String get problemDescriptionHint => 'problemDescriptionHint'.tr();
+  static String get problemDescriptionRequired =>
+      'problemDescriptionRequired'.tr();
+  static String get selectTicketCategory => 'selectTicketCategory'.tr();
 
   static String get videoLoadFailed => 'video_load_failed'.tr();
   static String get myCourses => 'my_courses'.tr();

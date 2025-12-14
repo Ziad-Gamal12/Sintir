@@ -8,6 +8,7 @@ import 'package:sintir/Features/MyTransactions/Presentation/Views/MyTransactions
 import 'package:sintir/Features/Profile/Presentation/Views/AboutUsView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/SettingsView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/UserPersonalDetailsView.dart';
+import 'package:sintir/Features/Support/Presentation/Views/MySupportTicketsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
@@ -81,6 +82,10 @@ class ProfileActionsEntity {
       icon: FontAwesomeIcons.gear,
       routeName: SettingsView.routeName,
     ),
+    ProfileActionsEntity(
+        title: "الدعم",
+        icon: Icons.support_agent,
+        routeName: MySupportTicketsView.routeName),
     ProfileActionsEntity(
       title: LocaleKeys.profileAbout,
       icon: FontAwesomeIcons.circleInfo,

@@ -45,6 +45,10 @@ import 'package:sintir/Features/Splash/Presentation/views/SplashView.dart';
 import 'package:sintir/Features/StudentOnboarding/Presentation/Views/StudentOnboardingView.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobWebViewRequirmentsEntity.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/SubscribtionView.dart';
+import 'package:sintir/Features/Support/Domain/Entities/SupportTicketEntity.dart';
+import 'package:sintir/Features/Support/Presentation/Views/AddSupportTicketView.dart';
+import 'package:sintir/Features/Support/Presentation/Views/MySupportTicketsView.dart';
+import 'package:sintir/Features/Support/Presentation/Views/SupportTicketChatView.dart';
 import 'package:sintir/Features/TeaacherOnBoarding/Presentation/Views/TeacherOnboardingView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/SubscriberDetailsNavigationRequirements.dart';
@@ -466,6 +470,26 @@ class App_router {
         path: MyTransactionsView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const MyTransactionsView();
+        },
+      ),
+      GoRoute(
+        path: MySupportTicketsView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const MySupportTicketsView();
+        },
+      ),
+      GoRoute(
+        path: AddSupportTicketView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const AddSupportTicketView();
+        },
+      ),
+      GoRoute(
+        path: SupportTicketChatView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return SupportTicketChatView(
+            supportTicketEntity: state.extra as SupportTicketEntity,
+          );
         },
       ),
     ],

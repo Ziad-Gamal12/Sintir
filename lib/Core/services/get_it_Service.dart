@@ -56,6 +56,8 @@ import 'package:sintir/Features/Profile/Data/Repos/PersonalDetailsRepoImpl.dart'
 import 'package:sintir/Features/Profile/Domain/Repos/PersonalDetailsRepo.dart';
 import 'package:sintir/Features/Search/Data/Repos/SearchRepoImpl.dart';
 import 'package:sintir/Features/Search/Domain/Repos/SearchRepo.dart';
+import 'package:sintir/Features/Support/Data/Repos/SupportTicketsRepoImpl.dart';
+import 'package:sintir/Features/Support/Domain/Repos/SupportTicketsRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/SubscribersDetailsRepoImpl.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/TeacherWalletRepoImpl.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/SubscribersDetailsRepo.dart';
@@ -143,4 +145,7 @@ void setup_Getit() {
 
   getIt.registerLazySingleton<MyTransactionsRepo>(
       () => MyTransactionsRepoImpl(dataBaseService: getIt<DataBaseService>()));
+
+  getIt.registerLazySingleton<SupportTicketsRepo>(
+      () => SupportTicketsRepoImpl(dataBaseService: getIt<DataBaseService>()));
 }

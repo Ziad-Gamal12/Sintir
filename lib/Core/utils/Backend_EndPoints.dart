@@ -42,6 +42,7 @@ class BackendEndpoints {
   static String getPopularCoursesCollection = "Courses";
   static String addCourseSectionCollection = "Courses";
   static String coursesCollection = "Courses";
+  static String supportTicketsCollection = "Tickets";
   static String courseSectionsSubCollection = "Sections";
   static String sectionItemsSubCollection = "Items";
   static String subscribetoCourseCollection = "Courses";
@@ -66,4 +67,14 @@ class BackendEndpoints {
   static String joinedDateKey = "joinedDate";
   static String payMentMethod = "PayMent";
   static String payOutMethod = "PayOut";
+  static String open = 'OPEN';
+  static String pending = 'PENDING';
+  static String inProgress = 'IN_PROGRESS';
+  static String waitingForCustomer = 'WAITING_FOR_CUSTOMER';
+  static String urgent = 'URGENT';
+  static String highPriority = 'HIGH_PRIORITY';
+  static String resolved = 'RESOLVED';
+  static String closed = 'CLOSED';
+  static String complete = 'COMPLETE';
+  static String draft = 'DRAFT';
 }
