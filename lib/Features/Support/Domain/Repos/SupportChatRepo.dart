@@ -1,0 +1,16 @@
+import 'package:dartz/dartz.dart';
+import 'package:sintir/Core/errors/Failures.dart';
+import 'package:sintir/Features/Support/Domain/Entities/SupportChatMessageEntity.dart';
+
+abstract class SupportChatRepo {
+  Future<Either<Failure, void>> sendMessage(
+      {required SupportChatMessageEntity message, required String ticketId});
+
+  Future<Either<Failure, void>> removeMessage(
+      {required String messageId, required String ticketId});
+
+  Future<Either<Failure, void>> updateMessageContent(
+      {required String newMessageContent,
+      required String ticketId,
+      required String messageId});
+}

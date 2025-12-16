@@ -1,40 +1,44 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sintir/Features/Support/Data/Models/SupportSenderModel.dart';
-import 'package:sintir/Features/Support/Domain/Entities/CustomSupportTicketChatEntity.dart';
+import 'package:sintir/Features/Support/Domain/Entities/SupportChatMessageEntity.dart';
 
-class CustomSupportTicketChatModel {
+class SupportChatMessageModel {
   final String message;
   final Map<String, dynamic> sender;
   final String? image;
   final DateTime createdAt;
+  final String id;
 
-  CustomSupportTicketChatModel(
+  SupportChatMessageModel(
       {required this.message,
       required this.sender,
+      required this.id,
       required this.image,
       required this.createdAt});
-  factory CustomSupportTicketChatModel.fromJson(Map<String, dynamic> json) {
-    return CustomSupportTicketChatModel(
+  factory SupportChatMessageModel.fromJson(Map<String, dynamic> json) {
+    return SupportChatMessageModel(
       message: json['message'],
       sender: json['sender'],
+      id: json['id'],
       image: json['image'],
       createdAt: (json['createdAt'] as Timestamp).toDate(),
     );
   }
-  factory CustomSupportTicketChatModel.fromEntity(
-      CustomSupportTicketChatEntity entity) {
-    return CustomSupportTicketChatModel(
+  factory SupportChatMessageModel.fromEntity(SupportChatMessageEntity entity) {
+    return SupportChatMessageModel(
       message: entity.message,
       sender: SupportSenderModel.fromEntity(entity.sender).toJson(),
       image: entity.image,
+      id: entity.id,
       createdAt: entity.createdAt,
     );
   }
-  CustomSupportTicketChatEntity toEntity() {
-    return CustomSupportTicketChatEntity(
+  SupportChatMessageEntity toEntity() {
+    return SupportChatMessageEntity(
       message: message,
       sender: SupportSenderModel.fromJson(sender).toEntity(),
       image: image,
+      id: id,
       createdAt: createdAt,
     );
   }
@@ -44,6 +48,7 @@ class CustomSupportTicketChatModel {
       'message': message,
       'sender': sender,
       'image': image,
+      'id': id,
       'createdAt': createdAt,
     };
   }

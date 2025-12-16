@@ -1,14 +1,16 @@
 import 'package:sintir/Features/Support/Domain/Entities/SupportSenderEntity.dart';
 
-class CustomSupportTicketChatEntity {
+class SupportChatMessageEntity {
   String message;
   final SupportSenderEntity sender;
   String? image;
   final DateTime createdAt;
+  final String id;
 
-  CustomSupportTicketChatEntity(
+  SupportChatMessageEntity(
       {required this.sender,
       required this.createdAt,
       required this.message,
+      required this.id,
       this.image});
 }

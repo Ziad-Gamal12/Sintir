@@ -43,6 +43,7 @@ class BackendEndpoints {
   static String addCourseSectionCollection = "Courses";
   static String coursesCollection = "Courses";
   static String supportTicketsCollection = "Tickets";
+  static String supportTicketMessagesSubCollection = "Messages";
   static String courseSectionsSubCollection = "Sections";
   static String sectionItemsSubCollection = "Items";
   static String subscribetoCourseCollection = "Courses";
