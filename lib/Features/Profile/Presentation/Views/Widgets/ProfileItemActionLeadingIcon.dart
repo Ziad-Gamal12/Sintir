@@ -5,24 +5,29 @@ class ProfileItemActionLeadingIcon extends StatelessWidget {
   const ProfileItemActionLeadingIcon({
     super.key,
     required this.profileActionsEntity,
+    this.size = 22.0,
   });
 
   final ProfileActionsEntity profileActionsEntity;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
     final color = profileActionsEntity.getColor(context);
 
     return Container(
-      padding: const EdgeInsets.all(12),
+      width: 44,
+      height: 44,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: color.withOpacity(0.08), // subtle background for both themes
+        color: color.withValues(alpha: 0.1),
       ),
-      child: Icon(
-        profileActionsEntity.icon,
-        color: color,
-        size: 24,
+      child: Center(
+        child: Icon(
+          profileActionsEntity.icon,
+          color: color,
+          size: size,
+        ),
       ),
     );
   }

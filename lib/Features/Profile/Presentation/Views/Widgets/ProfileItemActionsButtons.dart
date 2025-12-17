@@ -27,9 +27,8 @@ class _ProfileItemActionsButtonsState extends State<ProfileItemActionsButtons> {
     return Column(
       children: [
         ...actions().map((e) => ProfileItemAction(profileActionsEntity: e)),
-        Divider(
-          color: Colors.grey.shade300,
-          height: 40,
+        const SizedBox(
+          height: 32,
         ),
         ...ProfileActionsEntity.appCoreActions
             .map((e) => ProfileItemAction(profileActionsEntity: e)),

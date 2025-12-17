@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable, file_names
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,88 +5,99 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
-class CustomChatTextField extends StatefulWidget {
+class CustomChatTextField extends StatelessWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator;
-  List<TextInputFormatter>? inputFormatters;
+  final List<TextInputFormatter>? inputFormatters;
   final VoidCallback onPressed;
-  bool? isLoading;
-  CustomChatTextField(
-      {super.key,
-      this.inputFormatters,
-      required this.onPressed,
-      this.isLoading,
-      required this.controller,
-      required this.validator});
+  final void Function(String?)? onSaved;
+  final bool isLoading;
 
-  @override
-  State<CustomChatTextField> createState() => _CustomChatTextFieldState();
-}
-
-class _CustomChatTextFieldState extends State<CustomChatTextField> {
-  bool isChatTextFieldEmpty = true;
-  getisChatTextFieldEmpty() {
-    widget.controller.addListener(() {
-      setState(() {
-        isChatTextFieldEmpty = widget.controller.text.isEmpty;
-      });
-    });
-  }
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      getisChatTextFieldEmpty();
-    });
-    super.initState();
-  }
+  const CustomChatTextField({
+    super.key,
+    this.inputFormatters,
+    required this.onPressed,
+    this.isLoading = false,
+    this.onSaved,
+    required this.controller,
+    required this.validator,
+  });
 
   @override
   Widget build(BuildContext context) {
-    var border = OutlineInputBorder(
-        borderSide: BorderSide.none, borderRadius: BorderRadius.circular(20));
+    final border = OutlineInputBorder(
+      borderSide: BorderSide.none,
+      borderRadius: BorderRadius.circular(24),
+    );
     return Container(
-      decoration: const BoxDecoration(boxShadow: [
-        BoxShadow(
-          color: Colors.black12,
-          spreadRadius: 5,
-          blurRadius: 10,
-          offset: Offset(0, 8),
-        ),
-      ]),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            spreadRadius: 2,
+            blurRadius: 15,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
       child: TextFormField(
-        inputFormatters: widget.inputFormatters,
-        controller: widget.controller,
-        keyboardType: TextInputType.text,
-        obscureText: false,
-        validator: widget.validator,
+        inputFormatters: inputFormatters,
+        controller: controller,
+        onSaved: onSaved,
+        validator: validator,
+        maxLines: 5,
+        minLines: 1,
+        style:
+            AppTextStyles(context).bold13.copyWith(fontWeight: FontWeight.w500),
         decoration: InputDecoration(
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           hintText: LocaleKeys.hintWriteMessage,
           hintStyle: AppTextStyles(context)
               .bold13
-              .copyWith(color: Colors.grey.shade500),
-          suffixIcon: widget.isLoading == true
-              ? const CircularProgressIndicator(
-                  color: KMainColor,
-                )
-              : IconButton(
-                  icon: Icon(
-                    FontAwesomeIcons.paperPlane,
-                    size: 24,
-                    color: isChatTextFieldEmpty == true
-                        ? const Color.fromARGB(255, 153, 153, 153)
-                        : Colors.grey.shade300,
-                  ),
-                  onPressed: () {
-                    widget.onPressed();
-                  },
-                ),
+              .copyWith(color: Colors.grey.shade400),
+          filled: true,
+          fillColor: Colors.transparent,
           border: border,
           focusedBorder: border,
           enabledBorder: border,
-          filled: true,
+          suffixIcon: _buildSuffixIcon(),
         ),
       ),
+    );
+  }
+
+  Widget _buildSuffixIcon() {
+    if (isLoading) {
+      return const Padding(
+        padding: EdgeInsets.all(12.0),
+        child: SizedBox(
+          height: 20,
+          width: 20,
+          child: CircularProgressIndicator(strokeWidth: 2, color: KMainColor),
+        ),
+      );
+    }
+
+    return ValueListenableBuilder<TextEditingValue>(
+      valueListenable: controller,
+      builder: (context, value, child) {
+        final bool isNotEmpty = value.text.trim().isNotEmpty;
+        return AnimatedSwitcher(
+          duration: const Duration(milliseconds: 200),
+          child: IconButton(
+            key: ValueKey<bool>(isNotEmpty),
+            icon: Icon(
+              FontAwesomeIcons.paperPlane,
+              size: 20,
+              color: isNotEmpty ? KMainColor : Colors.grey.shade400,
+            ),
+            onPressed: isNotEmpty ? onPressed : null,
+          ),
+        );
+      },
     );
   }
 }

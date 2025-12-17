@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Features/Support/Presentation/Views/Widgets/SupportTicketChatViewWidgets/CustomChatTextField.dart';
+import 'package:sintir/Features/Support/Domain/Entities/SupportTicketEntity.dart';
+import 'package:sintir/Features/Support/Presentation/Views/Widgets/SupportTicketChatViewWidgets/CustomSupportChatSendMessageSection.dart';
+import 'package:sintir/Features/Support/Presentation/Views/Widgets/SupportTicketChatViewWidgets/SupportChatMessagesListView.dart';
 
-class SupportTicketChatViewBody extends StatefulWidget {
-  const SupportTicketChatViewBody({super.key});
-
-  @override
-  State<SupportTicketChatViewBody> createState() =>
-      _SupportTicketChatViewBodyState();
-}
-
-class _SupportTicketChatViewBodyState extends State<SupportTicketChatViewBody> {
+class SupportTicketChatViewBody extends StatelessWidget {
+  const SupportTicketChatViewBody(
+      {super.key, required this.supportTicketEntity});
+  final SupportTicketEntity supportTicketEntity;
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Positioned.fill(child: Container()),
-        const Positioned(
-            left: 0, right: 0, bottom: 0, child: CustomSupportChatTextField())
+        Positioned.fill(
+            child: SupportChatMessagesListView(
+          ticketID: supportTicketEntity.id,
+        )),
+        Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: CustomSupportChatSendMessageSection(
+              ticketId: supportTicketEntity.id,
+            ))
       ],
     );
   }

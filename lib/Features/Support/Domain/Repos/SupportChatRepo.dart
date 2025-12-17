@@ -12,5 +12,7 @@ abstract class SupportChatRepo {
   Future<Either<Failure, void>> updateMessageContent(
       {required String newMessageContent,
       required String ticketId,
+      String? iamgeUrl,
       required String messageId});
+  Future<Either<Failure, String>> pickAndUplaodImage();
 }

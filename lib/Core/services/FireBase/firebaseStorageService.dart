@@ -11,7 +11,7 @@ import 'package:sintir/locale_keys.dart';
 
 class firebasestorageservice implements StorageService {
   final storage = FirebaseStorage.instance;
-  final Pickerassetsservice pickerassetsservice;
+  final PickerAssetsService pickerassetsservice;
   firebasestorageservice({required this.pickerassetsservice});
   @override
   Future<String> uploadFile({required File file}) async {

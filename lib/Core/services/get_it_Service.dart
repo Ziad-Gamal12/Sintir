@@ -56,7 +56,9 @@ import 'package:sintir/Features/Profile/Data/Repos/PersonalDetailsRepoImpl.dart'
 import 'package:sintir/Features/Profile/Domain/Repos/PersonalDetailsRepo.dart';
 import 'package:sintir/Features/Search/Data/Repos/SearchRepoImpl.dart';
 import 'package:sintir/Features/Search/Domain/Repos/SearchRepo.dart';
+import 'package:sintir/Features/Support/Data/Repos/SupportChatRepoImpl.dart';
 import 'package:sintir/Features/Support/Data/Repos/SupportTicketsRepoImpl.dart';
+import 'package:sintir/Features/Support/Domain/Repos/SupportChatRepo.dart';
 import 'package:sintir/Features/Support/Domain/Repos/SupportTicketsRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/SubscribersDetailsRepoImpl.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/TeacherWalletRepoImpl.dart';
@@ -68,7 +70,7 @@ final getIt = GetIt.instance;
 void setup_Getit() {
   getIt.registerLazySingleton<Dio>(() => Dio());
   getIt.registerLazySingleton<firebaseAuthService>(() => firebaseAuthService());
-  getIt.registerLazySingleton<Pickerassetsservice>(() => Pickerassetsservice());
+  getIt.registerLazySingleton<PickerAssetsService>(() => PickerAssetsService());
   getIt
       .registerLazySingleton<DataBaseService>(() => FirebaseFirestoreservice());
   getIt.registerLazySingleton<firebasestorageservice>(
@@ -148,4 +150,9 @@ void setup_Getit() {
 
   getIt.registerLazySingleton<SupportTicketsRepo>(
       () => SupportTicketsRepoImpl(dataBaseService: getIt<DataBaseService>()));
+
+  getIt.registerLazySingleton<SupportChatRepo>(() => SupportChatRepoImpl(
+      dataBaseService: getIt<DataBaseService>(),
+      pickerassetsservice: getIt<PickerAssetsService>(),
+      storageService: getIt<StorageService>()));
 }

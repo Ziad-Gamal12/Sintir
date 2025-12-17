@@ -19,7 +19,7 @@ class MyTransactionLoadingListView extends StatelessWidget {
                 vertical: 12,
               ),
               child: AspectRatio(
-                aspectRatio: 2 / 1,
+                aspectRatio: 2 / 1.1,
                 child: Skeletonizer(
                   enabled: true,
                   child: MyTransactionListViewItem(

@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 
-class Pickerassetsservice {
+class PickerAssetsService {
   final ImagePicker picker = ImagePicker();
 
   Future<File?> getImage({required ImageSource source}) async {

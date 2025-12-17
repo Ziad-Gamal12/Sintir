@@ -63,14 +63,18 @@ class _AddSupportTicketViewBodyState extends State<AddSupportTicketViewBody> {
             value: supportTicketEntity,
             child: Form(
               key: supportTicketFormKey,
-              child: Column(
-                children: [
-                  const AddSupportTicketInputs(),
-                  const Spacer(),
-                  CustomAddSupportTicketActionButton(
-                    formKey: supportTicketFormKey,
-                  )
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const AddSupportTicketInputs(),
+                    const SizedBox(
+                      height: 32,
+                    ),
+                    CustomAddSupportTicketActionButton(
+                      formKey: supportTicketFormKey,
+                    )
+                  ],
+                ),
               ),
             ),
           ),

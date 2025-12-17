@@ -10,7 +10,7 @@ import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/locale_keys.dart';
 
 class Assetspickerrepoimpli implements Assetspickerrepo {
-  final Pickerassetsservice pickerassetsservice;
+  final PickerAssetsService pickerassetsservice;
 
   Assetspickerrepoimpli({required this.pickerassetsservice});
 

@@ -12,28 +12,42 @@ class ProfileItemAction extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return InkWell(
-      onTap: () {
-        GoRouter.of(context).push(profileActionsEntity.routeName);
-      },
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 8,
-        ),
-        leading: ProfileItemActionLeadingIcon(
-            profileActionsEntity: profileActionsEntity),
-        title: Text(
-          profileActionsEntity.title,
-          style: AppTextStyles(context)
-              .semiBold16
-              .copyWith(color: theme.textTheme.bodyLarge?.color),
-        ),
-        trailing: Icon(
-          Icons.arrow_forward_ios,
-          color: theme.iconTheme.color,
-          size: 20,
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            onTap: () => context.push(profileActionsEntity.routeName),
+            visualDensity: VisualDensity.compact,
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            leading: ProfileItemActionLeadingIcon(
+              profileActionsEntity: profileActionsEntity,
+            ),
+            title: Text(
+              profileActionsEntity.title,
+              style: AppTextStyles(context).semiBold16.copyWith(
+                    color: theme.colorScheme.onSurface,
+                  ),
+            ),
+            trailing: Icon(
+              Icons.chevron_right_rounded,
+              color: theme.colorScheme.outline,
+              size: 24,
+            ),
+          ),
+          const SizedBox(
+            height: 6,
+          ),
+          Divider(
+            height: 2,
+            thickness: 0.5,
+            color: theme.dividerColor.withOpacity(0.1),
+            indent: 56,
+            endIndent: 16,
+          ),
+        ],
       ),
     );
   }

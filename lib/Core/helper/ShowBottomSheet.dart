@@ -11,7 +11,7 @@ showCustomBottomSheet({required Widget child, required BuildContext context}) {
         topLeft: Radius.circular(20),
         topRight: Radius.circular(20),
       ),
-      side: BorderSide(color: theme.dividerColor),
+      side: BorderSide(color: theme.dividerColor.withOpacity(0.5)),
     ),
     builder: (context) => child,
   );

@@ -16,7 +16,7 @@ class MyTransactionSliverListView extends StatelessWidget {
                 vertical: 12,
               ),
               child: AspectRatio(
-                aspectRatio: 2 / 1,
+                aspectRatio: 2 / 1.1,
                 child: MyTransactionListViewItem(
                     transactionEntity: transactions[index]),
               ));
