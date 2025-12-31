@@ -1,7 +1,5 @@
 // ignore_for_file: file_names
 
-import 'dart:convert';
-
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobile_device_identifier/mobile_device_identifier.dart';
@@ -11,7 +9,7 @@ import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/FireBase/FirebaseAuth_Service.dart';
-import 'package:sintir/Core/services/Shared_preferences.dart';
+import 'package:sintir/Core/services/HiveService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Auth/Data/models/UserModel.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
@@ -112,10 +110,9 @@ class AuthRepoImpl implements AuthRepo {
 
   Future<void> storeUserLocally(Map<String, dynamic> userJson) async {
     try {
-      String userJsonString = jsonEncode(userJson);
-      await shared_preferences_Services.stringSetter(
+      await Hive_Services.jsonSetter(
         key: BackendEndpoints.storeUserLocaly,
-        value: userJsonString,
+        value: userJson,
       );
     } catch (e) {
       throw CustomException(message: LocaleKeys.errorOccurredMessage);
