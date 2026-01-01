@@ -3,6 +3,7 @@
 class SubscriberEntity {
   final String id;
   final String name, gender, phone, educationLevel, imageUrl, address;
+  final DateTime? joinedDate;
 
   SubscriberEntity(
       {required this.id,
@@ -10,6 +11,7 @@ class SubscriberEntity {
       required this.gender,
       required this.phone,
       required this.educationLevel,
+      required this.joinedDate,
       required this.imageUrl,
       required this.address});
   static SubscriberEntity empty() => SubscriberEntity(
@@ -18,6 +20,7 @@ class SubscriberEntity {
         gender: 'loading',
         phone: 'loading',
         educationLevel: 'loading',
+        joinedDate: DateTime.now(),
         imageUrl: 'loading',
         address: 'loading',
       );

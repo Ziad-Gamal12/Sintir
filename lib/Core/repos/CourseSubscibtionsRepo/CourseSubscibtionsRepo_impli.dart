@@ -13,8 +13,8 @@ import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/models/CourseModel.dart';
+import 'package:sintir/Core/models/SubscriberModel.dart';
 import 'package:sintir/Core/models/TransactionModel.dart';
-import 'package:sintir/Core/models/subscripersIDSModel.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
@@ -90,7 +90,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
     FireStoreRequirmentsEntity requirements,
   ) async {
     final data =
-        Subscripersidsmodel.fromEntit(subscriberentity: subscriber).toJson();
+        SubscriberModel.fromEntit(subscriberentity: subscriber).toJson();
     await databaseService.setData(data: data, requirements: requirements);
   }
 
@@ -98,6 +98,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
     return SubscriberEntity(
       id: user.uid,
       name: user.firstName,
+      joinedDate: DateTime.now(),
       gender: user.gender.isEmpty ? "" : user.gender,
       phone: user.phoneNumber,
       educationLevel: user.studentExtraDataEntity?.educationLevel ?? "",
@@ -362,7 +363,5 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
 }
 
 List<SubscriberEntity> _parseSubscribers(List<dynamic> rawList) {
-  return rawList
-      .map((e) => Subscripersidsmodel.fromJson(e).toEntity())
-      .toList();
+  return rawList.map((e) => SubscriberModel.fromJson(e).toEntity()).toList();
 }

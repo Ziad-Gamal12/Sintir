@@ -22,7 +22,6 @@ class _ContentCreatorDetailsState extends State<ContentCreatorDetails>
   @override
   void initState() {
     super.initState();
-
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 600),
