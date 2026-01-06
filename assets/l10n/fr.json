@@ -330,6 +330,8 @@
   "noMessagesYet": "Aucun message pour le moment",
   "deleteMessage": "Supprimer le message",
   "updatedMessage": "Modifier le message",
+  "permissionError": 
+   "Vous n'avez pas la possibilité de supprimer ou de restaurer ce cours. Veuillez contacter le support.",
   "messageUpdatedSuccess": "Message mis à jour avec succès",
   "addTicket": "Ajouter un ticket",
   "ticketSentSuccess": "Votre ticket a été envoyé et nous vous contacterons dans les plus brefs délais",

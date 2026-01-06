@@ -40,6 +40,7 @@ class LocaleKeys {
   static String get problemDescriptionHint => 'problemDescriptionHint'.tr();
   static String get problemDescriptionRequired =>
       'problemDescriptionRequired'.tr();
+  static String get permissionError => 'permissionError'.tr();
   static String get selectTicketCategory => 'selectTicketCategory'.tr();
   static String get messageDeletedSuccess => 'messageDeletedSuccess'.tr();
 

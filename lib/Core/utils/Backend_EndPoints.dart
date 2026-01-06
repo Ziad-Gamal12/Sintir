@@ -54,7 +54,7 @@ class BackendEndpoints {
   static String getCoursesfromUserDocSubCollectioName = "Courses";
   static String coursePublishedState = "Published";
   static String coursePendingState = "Pending";
-  static String courseDeletedState = "Deleted";
+  static String courseDeletedState = "DeletedByTeacher";
   static String coursedeclinedState = "Declined";
   static String userKind = "kind";
   static String checkIsTeacherExistCollectionName = "Teachers";

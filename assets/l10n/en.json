@@ -318,6 +318,8 @@
   "noMessagesYet": "No messages yet.",
   "deleteMessage": "Delete Message",
   "updatedMessage": "Edit Message",
+  "permissionError": 
+   "You don't have the ability to delete or restore this course. Please contact support for assistance.",
   "messageUpdatedSuccess": "Message Updated Successfully",
  "addTicket": "Add Ticket",
   "ticketSentSuccess": "Your ticket has been sent and we will contact you as soon as possible",

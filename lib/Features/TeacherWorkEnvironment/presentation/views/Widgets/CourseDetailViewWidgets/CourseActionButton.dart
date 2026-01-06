@@ -38,12 +38,15 @@ class CourseActionButton extends StatelessWidget {
           onPressed: () {
             if (_isCourseDeleted()) {
               _onTap(context);
-            } else {
+            } else if (courseEntity.state ==
+                BackendEndpoints.coursePublishedState) {
               warningdialog(
                 context,
                 LocaleKeys.courseDeleteNotice,
                 () => _onTap(context),
               ).show();
+            } else {
+              errordialog(context, LocaleKeys.permissionError).show();
             }
           },
         );
@@ -65,7 +68,6 @@ class CourseActionButton extends StatelessWidget {
     courseEntity.state = _isCourseDeleted()
         ? BackendEndpoints.coursePublishedState
         : BackendEndpoints.courseDeletedState;
-
     context.read<UpdateCourseCubit>().updateCourseState(
           courseEntity: courseEntity,
         );
