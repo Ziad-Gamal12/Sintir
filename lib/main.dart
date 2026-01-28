@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -9,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sintir/Core/Managers/Cubits/LocalizationCubit/LocaleCubit.dart';
 import 'package:sintir/Core/Themes/app_theme.dart';
 import 'package:sintir/Core/Themes/theme_cubit.dart';
+import 'package:sintir/Core/services/HiveService.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/App_router.dart';
@@ -19,17 +21,20 @@ import 'package:sintir/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  final appDocDir = await getApplicationDocumentsDirectory();
   final storage = await HydratedStorage.build(
-    storageDirectory: HydratedStorageDirectory(appDocDir.path),
+    storageDirectory: kIsWeb
+        ? HydratedStorageDirectory.web
+        : HydratedStorageDirectory(
+            (await getApplicationDocumentsDirectory()).path,
+          ),
   );
   HydratedBloc.storage = storage;
   await Future.wait([
     Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     ),
-    shared_preferences_Services.init()
+    shared_preferences_Services.init(),
+    Hive_Services.init(),
   ]);
   setup_Getit();
   runApp(

@@ -9,9 +9,10 @@ abstract class Hive_Services {
   static late Box _box;
 
   static Future<void> init() async {
+    await Hive.initFlutter();
+
     const secureStorage = FlutterSecureStorage();
 
-    // 1. Check if we already have an encryption key
     var containsEncryptionKey = await secureStorage.containsKey(
       key: 'encryptionKey',
     );

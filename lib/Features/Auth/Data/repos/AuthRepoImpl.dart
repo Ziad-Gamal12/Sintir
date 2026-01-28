@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobile_device_identifier/mobile_device_identifier.dart';
@@ -61,9 +63,11 @@ class AuthRepoImpl implements AuthRepo {
       return Left(
           ServerFailure(message: e.message ?? LocaleKeys.errorOccurredMessage));
     } on CustomException catch (e) {
+      log(e.message);
       await authService.signout();
       return Left(ServerFailure(message: e.message));
     } catch (e, s) {
+      log(e.toString(), stackTrace: s);
       await authService.signout();
       return Left(_toFailure(e, s));
     }
@@ -133,7 +137,6 @@ class AuthRepoImpl implements AuthRepo {
       if (json.docData == null) {
         return Left(ServerFailure(message: LocaleKeys.userNotFound));
       }
-
       final Map<String, dynamic> userJson = json.docData!;
       final UserEntity userEntity = UserModel.fromJson(userJson).toEntity();
 
@@ -159,8 +162,10 @@ class AuthRepoImpl implements AuthRepo {
       }
     } on CustomException catch (e) {
       await authService.signout();
+      log(e.message);
       return Left(ServerFailure(message: e.message));
     } catch (e) {
+      log(e.toString());
       await authService.signout();
       return Left(_toFailure(e));
     }
