@@ -36,7 +36,7 @@ class _StudentSignupViewState extends State<StudentSignupView> {
       profilePicurl: "https://cdn-icons-png.flaticon.com/128/149/149071.png",
       status: BackendEndpoints.activeStatus,
       role: BackendEndpoints.studentRole,
-      joinedDate: DateTime.now().toString(),
+      joinedDate: DateTime.now(),
       fullName: "");
   @override
   Widget build(BuildContext context) {

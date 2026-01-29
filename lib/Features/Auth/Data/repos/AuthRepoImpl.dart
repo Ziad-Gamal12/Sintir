@@ -320,7 +320,7 @@ class AuthRepoImpl implements AuthRepo {
         firstName: user.displayName ?? '',
         fullName: user.displayName ?? '',
         deviceId: await getDeviceId(),
-        joinedDate: DateTime.now().toIso8601String(),
+        joinedDate: DateTime.now(),
         profilePicurl: 'https://cdn-icons-png.flaticon.com/128/149/149071.png',
         role: BackendEndpoints.studentRole,
         lastName: '',

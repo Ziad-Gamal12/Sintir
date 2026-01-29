@@ -16,7 +16,7 @@ class UserEntity {
   final String profilePicurl;
   final String status;
   final String role;
-  final String joinedDate;
+  final DateTime joinedDate;
 
   UserEntity(
       {required this.uid,
@@ -46,6 +46,6 @@ class UserEntity {
       profilePicurl: "https://cdn-icons-png.flaticon.com/128/149/149071.png",
       status: "empty",
       role: "empty",
-      joinedDate: "empty",
+      joinedDate: DateTime.now(),
       fullName: "empty");
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/UserPersonalDetailsViewWidgets/CustomUserInfoItem.dart';
@@ -16,8 +17,6 @@ class UserBasicInfo extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     final Color cardColor = theme.cardColor;
     final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
-    final Color iconColor =
-        theme.colorScheme.primary; // A distinct color for icons/emphasis
 
     return Card(
       elevation: 4,
@@ -68,7 +67,7 @@ class UserBasicInfo extends StatelessWidget {
             CustomUserInfoItem(
               icon: FontAwesomeIcons.calendarCheck,
               title: LocaleKeys.profileJoinedDate,
-              value: user.joinedDate,
+              value: DateFormat('yyyy-MM-dd').format(user.joinedDate),
             ),
           ],
         ),

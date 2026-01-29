@@ -51,7 +51,7 @@ class _TeacherSignUpViewState extends State<TeacherSignUpView> {
         profilePicurl: "https://cdn-icons-png.flaticon.com/128/149/149071.png",
         status: BackendEndpoints.pendingStatus,
         role: BackendEndpoints.teacherRole,
-        joinedDate: DateTime.now().toString(),
+        joinedDate: DateTime.now(),
         fullName: "");
     super.initState();
   }

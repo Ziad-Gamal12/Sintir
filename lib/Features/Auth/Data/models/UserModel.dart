@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sintir/Features/Auth/Data/models/StudentExtraDataModel.dart';
 import 'package:sintir/Features/Auth/Data/models/TeacherExtraDataModel.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
@@ -17,7 +18,7 @@ class UserModel {
   final String profilePicurl;
   final String status;
   final String role;
-  final String joinedDate;
+  final DateTime joinedDate;
 
   UserModel(
       {required this.uid,
@@ -52,7 +53,7 @@ class UserModel {
       profilePicurl: json['profilePicurl'],
       status: json['status'],
       role: json['role'],
-      joinedDate: json['joinedDate'],
+      joinedDate: (json['joinedDate'] as Timestamp).toDate(),
     );
   }
   factory UserModel.fromEntity(UserEntity entity) {
