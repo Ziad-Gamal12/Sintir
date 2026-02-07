@@ -3,11 +3,6 @@
 Sintir is a scalable and flexible educational platform built with Flutter, designed for both students and teachers.
 It delivers a complete learning environment that includes courses, videos, exams, files, payments, reports, analytics, and a full teacher workspace.
 
-🚀 Demo
-
-APK (Temporary Preview Until Publishing):
-👉 Download (https://drive.google.com/file/d/1dAe2gH98RGZ38Em0jMGJV67vPL8RVt6r/view?usp=sharing)
-
 🧩 Main Features
 👨‍🎓 Student Features
 
