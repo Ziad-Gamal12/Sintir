@@ -14,7 +14,7 @@ class firebasestorageservice implements StorageService {
   final PickerAssetsService pickerassetsservice;
   firebasestorageservice({required this.pickerassetsservice});
   @override
-  Future<String> uploadFile({required File file}) async {
+  Future<String> uploadFile({required File file, String? bucketname}) async {
     try {
       String filePath = basename(file.path);
       var ref = storage.ref(filePath);

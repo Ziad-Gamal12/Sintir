@@ -1,8 +1,8 @@
 import 'package:sintir/Features/Auth/Domain/Entities/StudentExtraDataEntity.dart';
 
 class StudentExtraDataModel {
-  final String educationLevel;
-  final String birthDate;
+  final String? educationLevel;
+  final String? birthDate;
 
   StudentExtraDataModel(
       {required this.educationLevel, required this.birthDate});
@@ -13,7 +13,7 @@ class StudentExtraDataModel {
       StudentExtraDataModel(
           educationLevel: entity.educationLevel, birthDate: entity.birthDate);
   StudentExtraDataEntity toEntity() => StudentExtraDataEntity(
-      educationLevel: educationLevel, birthDate: birthDate);
+      educationLevel: educationLevel ?? "", birthDate: birthDate ?? "");
   Map<String, dynamic> toMap() {
     return {
       'educationLevel': educationLevel,

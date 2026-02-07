@@ -2,8 +2,8 @@ import 'package:sintir/Features/Auth/Data/models/TeacherWalletModel.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherExtraDataEntity.dart';
 
 class TeacherExtraDataModel {
-  final String subject;
-  final String workExperience;
+  final String? subject;
+  final String? workExperience;
   final Map<String, dynamic> wallet;
   TeacherExtraDataModel(
       {required this.wallet,
@@ -27,8 +27,8 @@ class TeacherExtraDataModel {
   TeacherExtraDataEntity toEntity() {
     return TeacherExtraDataEntity(
       wallet: TeacherWalletModel.fromJson(wallet).toEntity(),
-      subject: subject,
-      workExperience: workExperience,
+      subject: subject ?? "",
+      workExperience: workExperience ?? "",
     );
   }
 

@@ -8,6 +8,7 @@ import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
+import 'package:sintir/Core/utils/SupabaseBuckets.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 import 'package:sintir/Features/Profile/Domain/Repos/PersonalDetailsRepo.dart';
 import 'package:sintir/locale_keys.dart';
@@ -44,7 +45,8 @@ class PersonalDetailsRepoImpl implements PersonalDetailsRepo {
       }
 
       // upload
-      final url = await storageService.uploadFile(file: file);
+      final url = await storageService.uploadFile(
+          file: file, bucketname: SupabaseBuckets.Users.name);
       if (url.isEmpty) {
         return Left(ServerFailure(message: LocaleKeys.uploadImageFailed));
       }

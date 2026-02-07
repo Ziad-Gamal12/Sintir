@@ -9,6 +9,7 @@ import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
+import 'package:sintir/Core/utils/SupabaseBuckets.dart';
 import 'package:sintir/Features/Support/Data/Models/SupportChatMessageModel.dart';
 import 'package:sintir/Features/Support/Domain/Entities/SupportChatMessageEntity.dart';
 import 'package:sintir/Features/Support/Domain/Repos/SupportChatRepo.dart';
@@ -109,7 +110,8 @@ class SupportChatRepoImpl implements SupportChatRepo {
       if (file == null) {
         return Left(ServerFailure(message: LocaleKeys.imageNotFound));
       }
-      String url = await storageService.uploadFile(file: file);
+      String url = await storageService.uploadFile(
+          file: file, bucketname: SupabaseBuckets.Support.name);
 
       return right(url);
     } on CustomException catch (e) {

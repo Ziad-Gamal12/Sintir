@@ -40,13 +40,16 @@ class CourseItemDetailsContentCreatorCard extends StatelessWidget {
             imagepath: contentcreaterentity.profileImageUrl,
           ),
           const SizedBox(width: 10),
-          Text(
-            contentcreaterentity.name,
-            maxLines: 2,
-            textAlign: TextAlign.right,
-            overflow: TextOverflow.ellipsis,
-            style: styles.semiBold12.copyWith(
-              color: isDark ? Colors.white : Colors.black,
+          Expanded(
+            flex: 6,
+            child: Text(
+              contentcreaterentity.name,
+              maxLines: 2,
+              textAlign: TextAlign.right,
+              overflow: TextOverflow.ellipsis,
+              style: styles.semiBold12.copyWith(
+                color: isDark ? Colors.white : Colors.black,
+              ),
             ),
           ),
           const Spacer(),

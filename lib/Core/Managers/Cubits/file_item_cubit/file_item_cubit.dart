@@ -55,8 +55,9 @@ class FileItemCubit extends Cubit<FileItemState> {
     required CourseFileEntity coursefileEntity,
   }) async {
     emit(UplaodFileLoading());
-    var result =
-        await fileItemRepo.uploadFile(coursefileEntity: coursefileEntity);
+    var result = await fileItemRepo.uploadFile(
+      coursefileEntity: coursefileEntity,
+    );
     result.fold((failure) {
       emit(UplaodFileFailure(errMessage: failure.message));
     }, (url) {

@@ -12,6 +12,7 @@ import 'package:sintir/Core/Themes/app_theme.dart';
 import 'package:sintir/Core/Themes/theme_cubit.dart';
 import 'package:sintir/Core/services/HiveService.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
+import 'package:sintir/Core/services/SupabaseStorageServices.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/App_router.dart';
 import 'package:sintir/Core/widgets/PrivacyWrapper.dart';
@@ -33,6 +34,7 @@ void main() async {
     Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     ),
+    SupabaseStorageServices.initSupabase(),
     shared_preferences_Services.init(),
     Hive_Services.init(),
   ]);

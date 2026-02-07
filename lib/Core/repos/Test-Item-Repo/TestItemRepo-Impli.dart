@@ -14,6 +14,7 @@ import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
+import 'package:sintir/Core/utils/SupabaseBuckets.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CourseTestModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/ExamResultSolvedQuestionModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/TestResulteModel.dart';
@@ -38,7 +39,8 @@ class TestItemRepoImpli implements Testitemrepo {
       for (CourseTestQuestionEntity question in questions) {
         final file = question.imageFile;
         if (file != null) {
-          final url = await storageService.uploadFile(file: file);
+          final url = await storageService.uploadFile(
+              file: file, bucketname: SupabaseBuckets.Courses.name);
           question.imageUrl = url;
         }
       }
@@ -58,7 +60,8 @@ class TestItemRepoImpli implements Testitemrepo {
       for (CourseTestQuestionEntity question in questions) {
         final file = question.solutionFile;
         if (file != null) {
-          final url = await storageService.uploadFile(file: file);
+          final url = await storageService.uploadFile(
+              file: file, bucketname: SupabaseBuckets.Courses.name);
           question.solutionImageUrl = url;
         }
       }

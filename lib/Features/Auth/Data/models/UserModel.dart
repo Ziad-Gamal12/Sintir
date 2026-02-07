@@ -5,12 +5,12 @@ import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 
 class UserModel {
   final String uid;
-  final String firstName;
-  final String lastName;
-  final String fullName;
+  final String? firstName;
+  final String? lastName;
+  final String? fullName;
   final String email;
-  final String address;
-  final String phoneNumber;
+  final String? address;
+  final String? phoneNumber;
   final String? deviceId;
   Map<String, dynamic>? studentExtraData;
   Map<String, dynamic>? teacherExtraData;
@@ -53,7 +53,9 @@ class UserModel {
       profilePicurl: json['profilePicurl'],
       status: json['status'],
       role: json['role'],
-      joinedDate: (json['joinedDate'] as Timestamp).toDate(),
+      joinedDate: (json['joinedDate'] is DateTime
+          ? json['joinedDate']
+          : (json['joinedDate'] as Timestamp).toDate()),
     );
   }
   factory UserModel.fromEntity(UserEntity entity) {
@@ -85,10 +87,10 @@ class UserModel {
   UserEntity toEntity() {
     return UserEntity(
       uid: uid,
-      firstName: firstName,
-      fullName: fullName,
+      firstName: firstName ?? "",
+      fullName: fullName ?? "",
       deviceId: deviceId ?? "",
-      lastName: lastName,
+      lastName: lastName ?? "",
       email: email,
       studentExtraDataEntity: studentExtraData != null
           ? StudentExtraDataModel.fromJson(studentExtraData!).toEntity()
@@ -96,8 +98,8 @@ class UserModel {
       teacherExtraDataEntity: teacherExtraData != null
           ? TeacherExtraDataModel.fromJson(teacherExtraData!).toEntity()
           : null,
-      address: address,
-      phoneNumber: phoneNumber,
+      address: address ?? "",
+      phoneNumber: phoneNumber ?? "",
       gender: gender,
       profilePicurl: profilePicurl,
       status: status,

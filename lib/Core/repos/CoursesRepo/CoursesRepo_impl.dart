@@ -16,6 +16,7 @@ import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
+import 'package:sintir/Core/utils/SupabaseBuckets.dart';
 import 'package:sintir/locale_keys.dart';
 
 class CoursesrepoImpl implements Coursesrepo {
@@ -70,7 +71,8 @@ class CoursesrepoImpl implements Coursesrepo {
   @override
   Future<Either<Failure, String>> uplaodFile({required File file}) async {
     try {
-      final url = await storageService.uploadFile(file: file);
+      final url = await storageService.uploadFile(
+          file: file, bucketname: SupabaseBuckets.Courses.name);
       return right(url);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));

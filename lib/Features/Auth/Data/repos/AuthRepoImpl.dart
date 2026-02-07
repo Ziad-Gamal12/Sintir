@@ -138,13 +138,12 @@ class AuthRepoImpl implements AuthRepo {
         return Left(ServerFailure(message: LocaleKeys.userNotFound));
       }
       final Map<String, dynamic> userJson = json.docData!;
-      final UserEntity userEntity = UserModel.fromJson(userJson).toEntity();
+      final UserModel userEntity = UserModel.fromJson(userJson);
 
       switch (userEntity.status) {
         case BackendEndpoints.activeStatus:
-          await storeUserLocally(userJson);
+          await storeUserLocally(userEntity.toMap());
           return const Right(null);
-
         case BackendEndpoints.blockedStatus:
           return Left(ServerFailure(message: LocaleKeys.userBlocked));
 

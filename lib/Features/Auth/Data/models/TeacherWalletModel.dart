@@ -1,15 +1,15 @@
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 
 class TeacherWalletModel {
-  final int walletId;
-  final String teacherId;
-  final double balance;
-  final double totalEarned;
-  final double payoutPending;
-  final String currency;
-  final String status;
-  final String createdAt;
-  final String updatedAt;
+  final int? walletId;
+  final String? teacherId;
+  final double? balance;
+  final double? totalEarned;
+  final double? payoutPending;
+  final String? currency;
+  final String? status;
+  final String? createdAt;
+  final String? updatedAt;
   final String? lastTransactionId;
 
   TeacherWalletModel(
@@ -55,15 +55,15 @@ class TeacherWalletModel {
 
   TeacherWalletEntity toEntity() {
     return TeacherWalletEntity(
-      walletId: walletId,
-      teacherId: teacherId,
-      balance: balance,
-      totalEarned: totalEarned,
-      payoutPending: payoutPending,
-      currency: currency,
-      status: status,
-      createdAt: createdAt,
-      updatedAt: updatedAt,
+      walletId: walletId ?? 0,
+      teacherId: teacherId ?? "",
+      balance: balance ?? 0.0,
+      totalEarned: totalEarned ?? 0.0,
+      payoutPending: payoutPending ?? 0.0,
+      currency: currency ?? "",
+      status: status ?? "",
+      createdAt: createdAt ?? "",
+      updatedAt: updatedAt ?? "",
       lastTransactionId: lastTransactionId,
     );
   }

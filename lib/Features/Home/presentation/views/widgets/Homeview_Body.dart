@@ -51,10 +51,12 @@ class _HomeViewBodyState extends State<HomeViewBody>
         } else if (state is GetUserDataSuccess) {
           final cubit = context.read<GetCoursesCubit>();
           final favCubit = context.read<FavouritesCubit>();
-          await Future.wait([
-            cubit.fetchAllHomeData(context),
-            favCubit.getFavorites(userId: user.uid)
-          ]);
+          if (mounted) {
+            await Future.wait([
+              cubit.fetchAllHomeData(context),
+              favCubit.getFavorites(userId: user.uid)
+            ]);
+          }
         }
       },
       child: Customrefreshwidget(
