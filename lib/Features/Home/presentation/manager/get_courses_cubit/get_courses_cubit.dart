@@ -39,23 +39,32 @@ class GetCoursesCubit extends Cubit<GetCoursesState> {
 
   Future<void> getUserInterestedCourses(
       {required bool isPaginate, required UserEntity user}) async {
-    emit(GetUserInerestCoursesLoading(
-      isPaginate: isPaginate,
-    ));
     Either<Failure, GetCoursesResonseEntity>? result;
     if (user.role == BackendEndpoints.teacherRole) {
+      emit(GetUserInerestCoursesLoading(
+        isPaginate: isPaginate,
+      ));
       result = await coursesrepo.getTeaceherInterestedCourses(
         isPaginate: isPaginate,
         subject: user.teacherExtraDataEntity?.subject ?? "",
       );
     } else if (user.role == BackendEndpoints.studentRole) {
+      emit(GetUserInerestCoursesLoading(
+        isPaginate: isPaginate,
+      ));
       result = await coursesrepo.getStudentInterestedCourses(
         isPaginate: isPaginate,
         educationlevel: user.studentExtraDataEntity?.educationLevel ?? "",
       );
+    } else {
+      emit(GetUserInerestCoursesSuccess(
+          resonseEntity: GetCoursesResonseEntity(
+              courses: [], hasMore: false, isPaginate: isPaginate)));
+
+      return;
     }
 
-    result?.fold(
+    result.fold(
         (failure) =>
             emit(GetUserInerestCoursesFailure(errmessage: failure.message)),
         (response) =>
