@@ -83,7 +83,7 @@ class ProfileActionsEntity {
       routeName: SettingsView.routeName,
     ),
     ProfileActionsEntity(
-        title: "الدعم",
+        title: LocaleKeys.profileSupport,
         icon: Icons.support_agent,
         routeName: MySupportTicketsView.routeName),
     ProfileActionsEntity(

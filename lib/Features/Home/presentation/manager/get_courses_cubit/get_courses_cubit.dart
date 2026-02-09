@@ -56,18 +56,13 @@ class GetCoursesCubit extends Cubit<GetCoursesState> {
         isPaginate: isPaginate,
         educationlevel: user.studentExtraDataEntity?.educationLevel ?? "",
       );
-    } else {
-      emit(GetUserInerestCoursesSuccess(
-          resonseEntity: GetCoursesResonseEntity(
-              courses: [], hasMore: false, isPaginate: isPaginate)));
-
-      return;
     }
-
-    result.fold(
-        (failure) =>
-            emit(GetUserInerestCoursesFailure(errmessage: failure.message)),
-        (response) =>
-            emit(GetUserInerestCoursesSuccess(resonseEntity: response)));
+    if (result != null) {
+      result.fold(
+          (failure) =>
+              emit(GetUserInerestCoursesFailure(errmessage: failure.message)),
+          (response) =>
+              emit(GetUserInerestCoursesSuccess(resonseEntity: response)));
+    }
   }
 }

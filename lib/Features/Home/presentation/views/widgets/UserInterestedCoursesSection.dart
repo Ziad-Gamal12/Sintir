@@ -66,7 +66,7 @@ class UserInterestedCoursesSection extends StatelessWidget {
               ),
             );
           }
-        } else {
+        } else if (state is GetUserInerestCoursesLoading) {
           return SliverToBoxAdapter(
               child: Column(
             children: [
@@ -85,6 +85,8 @@ class UserInterestedCoursesSection extends StatelessWidget {
               const HorizentalLoadingCoursesListView(),
             ],
           ));
+        } else {
+          return const SliverToBoxAdapter(child: SizedBox());
         }
       },
     );
