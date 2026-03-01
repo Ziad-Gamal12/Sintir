@@ -40,7 +40,7 @@ class Coursetestmodel {
         showResult: coursetestentity.showResult,
         title: coursetestentity.title,
         questions: coursetestentity.questions
-            .map((e) => Coursetestquestionmodel.fromEntity(e).toJson())
+            .map((e) => CourseTestQuestionModel.fromEntity(e).toJson())
             .toList(),
       );
   CourseTestEntity toEntity() {
@@ -52,7 +52,7 @@ class Coursetestmodel {
       showResult: showResult,
       title: title,
       questions: questions
-          .map((e) => Coursetestquestionmodel.fromJson(e).toEntity())
+          .map((e) => CourseTestQuestionModel.fromJson(e).toEntity())
           .toList(),
     );
   }

@@ -19,7 +19,7 @@ class Customsolvedquestionsliverlist extends StatelessWidget {
             child: CustomSolvedQuestionListItem(
               index: index,
               length: examResult.length,
-              examResultSolvedQuestionEntity: examResult[index],
+              questionEntity: examResult[index],
             ),
           );
         });

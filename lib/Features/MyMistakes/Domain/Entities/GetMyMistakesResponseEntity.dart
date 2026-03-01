@@ -1,11 +1,11 @@
-import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/ExamResultSolvedQuestionEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/QuestionMistakeEntity.dart';
 
 class GetMyMistakesResponseEntity {
-  final List<ExamResultSolvedQuestionEntity> questionsSolvedListEntity;
+  final List<QuestionMistakeEntity> myMistakesList;
   final bool hasMore;
   final bool isPaginate;
   GetMyMistakesResponseEntity({
-    required this.questionsSolvedListEntity,
+    required this.myMistakesList,
     required this.hasMore,
     required this.isPaginate,
   });

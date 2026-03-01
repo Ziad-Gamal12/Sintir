@@ -10,6 +10,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNav
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseSectionExamActionButtons.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/CustomAddExamStepsPageView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/CustomAddExamStepsRow.dart';
+import 'package:uuid/uuid.dart';
 
 class AddCourseSectionExamViewBody extends StatefulWidget {
   const AddCourseSectionExamViewBody({
@@ -41,6 +42,7 @@ class _AddCourseSectionExamViewBodyState
       questions: [
         CourseTestQuestionEntity(
             isOpened: false,
+            questionId: const Uuid().v4(),
             questionTitle: "",
             solutions: [
               CourseTestQuestionSolutionEntity(answer: "", isCorrect: false)
@@ -61,7 +63,6 @@ class _AddCourseSectionExamViewBodyState
   void dispose() {
     pageController.dispose();
     currentIndexNotifier.dispose();
-    coursetestentity.dispose();
     super.dispose();
   }
 

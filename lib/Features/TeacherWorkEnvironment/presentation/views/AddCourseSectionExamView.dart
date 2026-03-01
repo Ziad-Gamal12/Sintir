@@ -11,6 +11,7 @@ import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
+import 'package:sintir/Features/MyMistakes/Domain/Repo/MyMistakesRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/AddCourseSectionExamViewBody.dart';
 import 'package:sintir/locale_keys.dart';
@@ -38,6 +39,7 @@ class _AddcourseSectionExamviewState extends State<AddcourseSectionExamview>
       providers: [
         BlocProvider<TestItemCubit>(
           create: (context) => TestItemCubit(
+            myMistakesRepo: getIt<MyMistakesRepo>(),
             sectionItemsActionsRepo: getIt<SectionItemsActionsRepo>(),
             testitemrepo: getIt<Testitemrepo>(),
             assetspickerrepo: getIt<Assetspickerrepo>(),

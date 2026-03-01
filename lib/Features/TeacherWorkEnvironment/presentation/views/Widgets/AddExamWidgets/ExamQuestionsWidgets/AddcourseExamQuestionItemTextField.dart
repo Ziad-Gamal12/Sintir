@@ -13,7 +13,6 @@ class AddcourseExamQuestionItemTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
-        controller: coursetestquestionentity.questionController,
         hintText: LocaleKeys.enterQuestionHere,
         obscureText: false,
         textInputType: TextInputType.text,
@@ -21,9 +20,6 @@ class AddcourseExamQuestionItemTextField extends StatelessWidget {
           coursetestquestionentity.questionTitle = value!;
         },
         validator: (value) {
-          if (value!.isEmpty) {
-            return LocaleKeys.enterQuestion;
-          }
           return null;
         });
   }

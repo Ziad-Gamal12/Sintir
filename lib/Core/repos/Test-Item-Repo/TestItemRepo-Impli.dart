@@ -5,18 +5,20 @@ import 'package:flutter/foundation.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/ExamResultSolvedQuestionEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/MistakeProgressEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/QuestionMistakeEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/entities/FetchDataResponses/GetExamResultsReponseEntity.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
+import 'package:sintir/Core/models/QuestionMistakeModel.dart';
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/utils/SupabaseBuckets.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CourseTestModel.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/ExamResultSolvedQuestionModel.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/TestResulteModel.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -165,7 +167,6 @@ class TestItemRepoImpli implements Testitemrepo {
       }
 
       if (response.listData!.isEmpty) {
-        // When not paginating, ensure lastTestResultDoc cleared so subsequent paginations start fresh
         if (!isPaginate) lastTestResultDoc = null;
         return right(
           GetExamResultsReponseEntity(
@@ -180,7 +181,6 @@ class TestItemRepoImpli implements Testitemrepo {
       final bool hasMore = response.hasMore ?? false;
       final listData = response.listData! as List<Map<String, dynamic>>;
 
-      // only use compute for large lists (cheap heuristic)
       final results = (listData.length > 100)
           ? await compute(_parseTestResults, listData)
           : _parseTestResults(listData);
@@ -417,21 +417,50 @@ class TestItemRepoImpli implements Testitemrepo {
   }
 
   @override
-  Future<Either<Failure, void>> storeMyMistakes(
-      {required TestResultEntity testResult, required String userUID}) async {
+  Future<Either<Failure, void>> storeMyMistakes({
+    required TestResultEntity testResult,
+    required String userUID,
+  }) async {
     try {
-      for (ExamResultSolvedQuestionEntity question
-          in _getMyMistakes(questions: testResult.questionsSolvedListEntity)) {
-        await databaseservice.setData(
-          requirements: FireStoreRequirmentsEntity(
-            collection: BackendEndpoints.usersCollectionName,
-            docId: userUID,
-            subCollection: BackendEndpoints.myMistakesSubCollection,
-            subDocId: question.hashCode.toString(),
-          ),
-          data: Examresultsolvedquestionmodel.fromEntity(question).toJson(),
+      final mistakes = _getMyMistakes(
+          questions: testResult.questionsSolvedListEntity,
+          courseId: testResult.courseId,
+          sectionId: testResult.sectionId);
+      await Future.wait(mistakes.map((mistake) async {
+        final String questionId = mistake.progress.questionId;
+
+        if (questionId.isEmpty) return;
+        final docPath = FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.usersCollectionName,
+          docId: userUID,
+          subCollection: BackendEndpoints.myMistakesSubCollection,
+          subDocId: questionId,
         );
-      }
+        final existingData =
+            await databaseservice.getData(requirements: docPath);
+
+        if (existingData.docData != null) {
+          final currentMistake =
+              QuestionMistakeModel.fromJson(existingData.docData!).toEntity();
+          final updatedMistake = mistake.copyWith(
+            progress: mistake.progress.copyWith(
+              wrongCount: currentMistake.progress.wrongCount + 1,
+              correctStreak: 0,
+              lastAnsweredAt: DateTime.now(),
+              status: MistakeStatus.active,
+            ),
+          );
+          await databaseservice.setData(
+            requirements: docPath,
+            data: QuestionMistakeModel.fromEntity(updatedMistake).toJson(),
+          );
+        } else {
+          await databaseservice.setData(
+            requirements: docPath,
+            data: QuestionMistakeModel.fromEntity(mistake).toJson(),
+          );
+        }
+      }));
 
       return right(null);
     } on CustomException catch (e) {
@@ -441,14 +470,26 @@ class TestItemRepoImpli implements Testitemrepo {
     }
   }
 
-  List<ExamResultSolvedQuestionEntity> _getMyMistakes({
+  List<QuestionMistakeEntity> _getMyMistakes({
     required List<ExamResultSolvedQuestionEntity> questions,
+    required String courseId,
+    required String sectionId,
   }) {
-    final List<ExamResultSolvedQuestionEntity> myMistakes = [];
+    final List<QuestionMistakeEntity> myMistakes = [];
 
     for (final question in questions) {
-      if (!question.isCorrect) {
-        myMistakes.add(question);
+      if (question.isCorrect == false) {
+        myMistakes.add(QuestionMistakeEntity(
+          courseId: courseId,
+          sectionId: sectionId,
+          question: question,
+          progress: MistakeProgressEntity(
+              questionId: question.question.questionId,
+              lastAnsweredAt: DateTime.now(),
+              correctStreak: 0,
+              wrongCount: 1,
+              status: MistakeStatus.active),
+        ));
       }
     }
 

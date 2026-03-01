@@ -62,7 +62,7 @@ class Testresultemodel {
       joinedby: JoinedbyModel.fromEntity(entity.joinedbyentity).toJson(),
       result: entity.result,
       questionsSolvedList: entity.questionsSolvedListEntity
-          .map((e) => Examresultsolvedquestionmodel.fromEntity(e).toJson())
+          .map((e) => ExamResultSolvedQuestionModel.fromEntity(e).toJson())
           .toList(),
     );
   }
@@ -80,7 +80,7 @@ class Testresultemodel {
       joinedbyentity: JoinedbyModel.fromJson(joinedby).toEntity(),
       result: result,
       questionsSolvedListEntity: questionsSolvedList
-          .map((e) => Examresultsolvedquestionmodel.fromJson(e).toEntity())
+          .map((e) => ExamResultSolvedQuestionModel.fromJson(e).toEntity())
           .toList(),
     );
   }

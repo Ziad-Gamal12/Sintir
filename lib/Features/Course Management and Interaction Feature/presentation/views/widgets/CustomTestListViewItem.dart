@@ -30,7 +30,10 @@ class Customtestlistviewitem extends StatelessWidget {
               ? item.ontap(
                   context: context,
                   item: CourseExamViewNavigationsRequirmentsEntity(
-                      test: item, sectionId: section.id, course: course),
+                      isCourseExam: true,
+                      test: item,
+                      sectionId: section.id,
+                      courseId: course.id),
                   course: course)
               : null,
           child: Customcontainersectionitem(

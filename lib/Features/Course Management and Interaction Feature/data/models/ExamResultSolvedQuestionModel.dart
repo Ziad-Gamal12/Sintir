@@ -1,53 +1,30 @@
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/ExamResultSolvedQuestionEntity.dart';
+import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursetestquestionModel.dart';
 
-class Examresultsolvedquestionmodel {
-  final String selectedAnswer,
-      rightAnswer,
-      questionTitle,
-      imageUrl,
-      solutionImageUrl;
+class ExamResultSolvedQuestionModel {
+  final Map<String, dynamic> question;
   final bool isCorrect;
 
-  Examresultsolvedquestionmodel(
-      {required this.selectedAnswer,
-      required this.rightAnswer,
-      required this.questionTitle,
-      required this.solutionImageUrl,
-      required this.imageUrl,
-      required this.isCorrect});
+  ExamResultSolvedQuestionModel(
+      {required this.question, required this.isCorrect});
 
-  factory Examresultsolvedquestionmodel.fromJson(Map<String, dynamic> json) =>
-      Examresultsolvedquestionmodel(
-          selectedAnswer: json["selectedAnswer"],
-          imageUrl: json["imageUrl"],
-          rightAnswer: json["rightAnswer"],
-          questionTitle: json["questionTitle"],
-          solutionImageUrl: json["solutionImageUrl"] ?? "",
+  factory ExamResultSolvedQuestionModel.fromJson(Map<String, dynamic> json) =>
+      ExamResultSolvedQuestionModel(
+          question: json["question"] as Map<String, dynamic>,
           isCorrect: json["isCorrect"]);
 
-  factory Examresultsolvedquestionmodel.fromEntity(
+  factory ExamResultSolvedQuestionModel.fromEntity(
           ExamResultSolvedQuestionEntity entity) =>
-      Examresultsolvedquestionmodel(
-          selectedAnswer: entity.selectedAnswer,
-          imageUrl: entity.imageUrl,
-          questionTitle: entity.questionTitle,
-          rightAnswer: entity.rightAnswer,
-          solutionImageUrl: entity.solutionImageUrl,
+      ExamResultSolvedQuestionModel(
+          question:
+              CourseTestQuestionModel.fromEntity(entity.question).toJson(),
           isCorrect: entity.isCorrect);
   ExamResultSolvedQuestionEntity toEntity() => ExamResultSolvedQuestionEntity(
-      selectedAnswer: selectedAnswer,
-      questionTitle: questionTitle,
-      imageUrl: imageUrl,
-      solutionImageUrl: solutionImageUrl,
-      rightAnswer: rightAnswer,
+      question: CourseTestQuestionModel.fromJson(question).toEntity(),
       isCorrect: isCorrect);
 
   Map<String, dynamic> toJson() => {
-        "selectedAnswer": selectedAnswer,
-        "rightAnswer": rightAnswer,
         "isCorrect": isCorrect,
-        "questionTitle": questionTitle,
-        "solutionImageUrl": solutionImageUrl,
-        "imageUrl": imageUrl
+        "question": question,
       };
 }

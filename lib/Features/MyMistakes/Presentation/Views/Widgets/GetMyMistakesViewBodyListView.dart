@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/ExamResultSolvedQuestionEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/QuestionMistakeEntity.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/CustomSolvedQuestionListItem.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Manager/cubit/get_my_mistakes_cubit.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Views/Widgets/GetMyMistakesViewBodyListViewLoading.dart';
+import 'package:sintir/Features/MyMistakes/Presentation/Views/Widgets/MyMistakeCardItem.dart';
 import 'package:sintir/locale_keys.dart';
 
 class GetMyMistakesViewBodyListView extends StatefulWidget {
   const GetMyMistakesViewBodyListView(
       {super.key, required this.myMistakes, required this.scrollController});
-  final List<ExamResultSolvedQuestionEntity> myMistakes;
+  final List<QuestionMistakeEntity> myMistakes;
   final ScrollController scrollController;
   @override
   State<GetMyMistakesViewBodyListView> createState() =>
@@ -44,10 +44,10 @@ class _GetMyMistakesViewBodyListViewState
             padding: const EdgeInsets.only(bottom: 20),
             child: index == widget.myMistakes.length
                 ? const GetMyMistakesViewBodyListViewLoading()
-                : CustomSolvedQuestionListItem(
+                : MyMistakeCardItem(
                     index: index,
                     length: widget.myMistakes.length,
-                    examResultSolvedQuestionEntity: widget.myMistakes[index],
+                    mistakeEntity: widget.myMistakes[index],
                   ),
           ),
         );

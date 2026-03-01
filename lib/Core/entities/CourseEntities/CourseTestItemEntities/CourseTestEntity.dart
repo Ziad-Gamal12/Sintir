@@ -8,6 +8,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestR
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseTestOverviewView.dart';
+import 'package:uuid/uuid.dart';
 
 class CourseTestEntity {
   int durationTime;
@@ -68,6 +69,7 @@ class CourseTestEntity {
 
   void addQuestion(CourseTestQuestionEntity? question) {
     question ??= CourseTestQuestionEntity(
+      questionId: const Uuid().v4(),
       isOpened: false,
       questionTitle: "",
       solutions: [
@@ -75,17 +77,5 @@ class CourseTestEntity {
       ],
     );
     questions.add(question);
-  }
-
-  void removeQuestion(CourseTestQuestionEntity question) {
-    question.questionController.dispose();
-    questions.remove(question);
-  }
-
-  void dispose() {
-    for (CourseTestQuestionEntity question in questions) {
-      question.dispose();
-      question.disposeSolutions();
-    }
   }
 }

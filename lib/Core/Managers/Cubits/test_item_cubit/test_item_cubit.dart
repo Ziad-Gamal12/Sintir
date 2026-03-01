@@ -17,6 +17,7 @@ import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
+import 'package:sintir/Features/MyMistakes/Domain/Repo/MyMistakesRepo.dart';
 
 part 'test_item_state.dart';
 
@@ -24,9 +25,11 @@ class TestItemCubit extends Cubit<TestItemState> {
   TestItemCubit(
       {required this.testitemrepo,
       required this.sectionItemsActionsRepo,
+      required this.myMistakesRepo,
       required this.assetspickerrepo})
       : super(TestItemInitial());
   final Testitemrepo testitemrepo;
+  final MyMistakesRepo myMistakesRepo;
   final SectionItemsActionsRepo sectionItemsActionsRepo;
   final Assetspickerrepo assetspickerrepo;
 
@@ -38,7 +41,7 @@ class TestItemCubit extends Cubit<TestItemState> {
   void removeQuestion(
       {required CourseTestEntity coursetestentity,
       required CourseTestQuestionEntity question}) {
-    coursetestentity.removeQuestion(question);
+    coursetestentity.questions.remove(question);
     emit(AddCourseSectionTestQuestionRemoved());
   }
 
@@ -125,25 +128,18 @@ class TestItemCubit extends Cubit<TestItemState> {
     return result;
   }
 
-  List<ExamResultSolvedQuestionEntity> getSolvedQuestionsnums(
+  List<ExamResultSolvedQuestionEntity> getSolvedQuestions(
       {required CourseTestEntity test}) {
     List<ExamResultSolvedQuestionEntity> numbers = [];
-    for (var element in test.questions) {
+    for (CourseTestQuestionEntity element in test.questions) {
       if (element.selectedSolution != null) {
         numbers.add(ExamResultSolvedQuestionEntity(
-          solutionImageUrl: element.solutionImageUrl ?? "",
-          imageUrl: element.imageUrl ?? "",
-          questionTitle: element.questionTitle ?? "null",
+          question: element,
           isCorrect: element.selectedSolution ==
               element.solutions
                   .where((element) => element.isCorrect)
                   .first
                   .answer,
-          rightAnswer: element.solutions
-              .where((element) => element.isCorrect)
-              .first
-              .answer,
-          selectedAnswer: element.selectedSolution ?? "null",
         ));
       }
     }
@@ -171,9 +167,9 @@ class TestItemCubit extends Cubit<TestItemState> {
         ),
         courseId: courseId,
         result: getResult(test: test),
-        solvedQuestions: getSolvedQuestionsnums(test: test).length,
+        solvedQuestions: getSolvedQuestions(test: test).length,
         totalQuestions: test.questions.length,
-        questionsSolvedListEntity: getSolvedQuestionsnums(test: test));
+        questionsSolvedListEntity: getSolvedQuestions(test: test));
   }
 
   void addTestResults(
@@ -181,10 +177,26 @@ class TestItemCubit extends Cubit<TestItemState> {
       required String courseId,
       required String sectionId,
       required String sectionItemId,
+      required bool isCourseExam,
       required String userId,
       required BuildContext context}) async {
     emit(AddTestResultLoading());
-    Either<Failure, void> result = await testitemrepo.addTestResult(
+    Either<Failure, void> result;
+    if (isCourseExam) {
+      result = await testitemrepo.addTestResult(
+          userUID: userId,
+          testResult: getTestResults(
+            context: context,
+            sectionId: sectionId,
+            test: test,
+            user: getUserData(),
+            courseId: courseId,
+          ),
+          courseId: courseId,
+          sectionId: sectionId,
+          sectionItemId: sectionItemId);
+    } else {
+      result = await myMistakesRepo.storeTestMyMistakesExamResult(
         userUID: userId,
         testResult: getTestResults(
           context: context,
@@ -193,9 +205,8 @@ class TestItemCubit extends Cubit<TestItemState> {
           user: getUserData(),
           courseId: courseId,
         ),
-        courseId: courseId,
-        sectionId: sectionId,
-        sectionItemId: sectionItemId);
+      );
+    }
     result.fold((failure) {
       emit(AddTestResultFailure(errMessage: failure.message));
     }, (sucUpdateCourseSectionsFailurecess) {

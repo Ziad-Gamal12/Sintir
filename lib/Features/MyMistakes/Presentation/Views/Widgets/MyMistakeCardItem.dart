@@ -1,39 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:localingo/app_localizations.dart';
-import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/ExamResultSolvedQuestionEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/QuestionMistakeEntity.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/CustomSolvedQuestionListItemContent.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/CustomSolvedQuestionListItemHeader.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/CustomSolvedQuestionListItemQuestionTitle%20.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/ShowHideSolutionButton.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/SolutionImageOverlay.dart';
 
-class CustomSolvedQuestionListItem extends StatefulWidget {
-  const CustomSolvedQuestionListItem({
+class MyMistakeCardItem extends StatefulWidget {
+  const MyMistakeCardItem({
     super.key,
-    required this.questionEntity,
+    required this.mistakeEntity,
     required this.index,
     required this.length,
   });
 
-  final ExamResultSolvedQuestionEntity questionEntity;
+  final QuestionMistakeEntity mistakeEntity;
   final int index;
   final int length;
 
   @override
-  State<CustomSolvedQuestionListItem> createState() =>
-      _CustomSolvedQuestionListItemState();
+  State<MyMistakeCardItem> createState() => _MyMistakeCardItemState();
 }
 
-class _CustomSolvedQuestionListItemState
-    extends State<CustomSolvedQuestionListItem> {
+class _MyMistakeCardItemState extends State<MyMistakeCardItem> {
   bool isSolutionVisible = false;
 
   @override
   Widget build(BuildContext context) {
     final hasSolutionImage =
-        widget.questionEntity.question.imageUrl?.isNotEmpty;
+        widget.mistakeEntity.question.question.imageUrl?.isNotEmpty;
 
-    final borderColor = widget.questionEntity.isCorrect
+    final borderColor = widget.mistakeEntity.question.isCorrect
         ? Colors.green.shade400
         : Colors.red.shade400;
     final backgroundColor = Theme.of(context).brightness == Brightness.dark
@@ -66,17 +64,19 @@ class _CustomSolvedQuestionListItemState
                   CustomSolvedQuestionListItemHeader(
                     index: widget.index,
                     length: widget.length,
-                    isCorrect: widget.questionEntity.isCorrect,
+                    isCorrect: widget.mistakeEntity.question.isCorrect,
                   ),
                   const SizedBox(height: 14),
                   CustomSolvedQuestionListItemQuestionTitle(
                     questionTitle:
-                        widget.questionEntity.question.questionTitle ?? '_',
+                        widget.mistakeEntity.question.question.questionTitle ??
+                            '_',
                   ),
                   const SizedBox(height: 12),
                   Expanded(
                     child: CustomSolvedQuestionListItemContent(
-                      examResultSolvedQuestionEntity: widget.questionEntity,
+                      examResultSolvedQuestionEntity:
+                          widget.mistakeEntity.question,
                     ),
                   ),
                 ],
@@ -85,7 +85,7 @@ class _CustomSolvedQuestionListItemState
             if (isSolutionVisible)
               Positioned.fill(
                 child: SolutionImageOverlay(
-                  imageUrl: widget.questionEntity.question.imageUrl!,
+                  imageUrl: widget.mistakeEntity.question.question.imageUrl!,
                 ),
               ),
             if (hasSolutionImage ?? false)

@@ -31,7 +31,7 @@ class _CourseTestOverViewBodyJoinExamButtonState
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<TestOverViewCubit>().hasReachedMaxAttempts(
             courseId:
-                widget.courseExamViewNavigationsRequirmentsEntity.course.id,
+                widget.courseExamViewNavigationsRequirmentsEntity.courseId,
             sectionId:
                 widget.courseExamViewNavigationsRequirmentsEntity.sectionId,
             test: widget.courseExamViewNavigationsRequirmentsEntity.test,

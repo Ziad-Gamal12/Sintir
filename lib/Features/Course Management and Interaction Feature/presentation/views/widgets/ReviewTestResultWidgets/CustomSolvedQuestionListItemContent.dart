@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionSolutionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/ExamResultSolvedQuestionEntity.dart';
 import 'package:sintir/Core/widgets/CustomCachedNetworkImage.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/CustomSolutionStateWidget.dart';
@@ -19,19 +20,27 @@ class CustomSolvedQuestionListItemContent extends StatelessWidget {
         Expanded(
           child: Customsolutionstatewidget(
             isCorrect: examResultSolvedQuestionEntity.isCorrect,
-            rightAnswer: examResultSolvedQuestionEntity.rightAnswer,
-            selectedAnswer: examResultSolvedQuestionEntity.selectedAnswer,
+            rightAnswer: examResultSolvedQuestionEntity.question.solutions
+                .firstWhere(
+                  (solution) => solution.isCorrect == true,
+                  orElse: () => CourseTestQuestionSolutionEntity(
+                      answer: "Null", isCorrect: false),
+                )
+                .answer,
+            selectedAnswer:
+                examResultSolvedQuestionEntity.question.selectedSolution ?? '',
           ),
         ),
         const SizedBox(width: 8),
-        if (examResultSolvedQuestionEntity.imageUrl.isNotEmpty)
+        if (examResultSolvedQuestionEntity.question.imageUrl?.isNotEmpty ??
+            false)
           Expanded(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: AspectRatio(
                 aspectRatio: 1,
                 child: CustomCachedNetworkImage(
-                  imageUrl: examResultSolvedQuestionEntity.imageUrl,
+                  imageUrl: examResultSolvedQuestionEntity.question.imageUrl!,
                 ),
               ),
             ),

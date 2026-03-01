@@ -44,10 +44,11 @@ class _TimerDisplayState extends State<TimerDisplay> {
           context.read<TestItemCubit>().addTestResults(
                 context: context,
                 test: requirements.test,
+                isCourseExam: requirements.isCourseExam,
                 userId: getUserData().uid,
                 sectionId: requirements.sectionId,
                 sectionItemId: requirements.test.id,
-                courseId: requirements.course.id,
+                courseId: requirements.courseId,
               );
         }
       }

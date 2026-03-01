@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/ExamResultSolvedQuestionEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/CustomSolvedQuestionListItem.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/QuestionMistakeEntity.dart';
+import 'package:sintir/Features/MyMistakes/Presentation/Views/Widgets/MyMistakeCardItem.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class GetMyMistakesViewBodyListViewLoading extends StatelessWidget {
@@ -11,16 +11,15 @@ class GetMyMistakesViewBodyListViewLoading extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: ExamResultSolvedQuestionEntity.empty().length,
+      itemCount: QuestionMistakeEntity.empty().length,
       itemBuilder: (context, index) => Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Skeletonizer(
             enabled: true,
-            child: CustomSolvedQuestionListItem(
+            child: MyMistakeCardItem(
               index: index,
-              length: ExamResultSolvedQuestionEntity.empty().length,
-              examResultSolvedQuestionEntity:
-                  ExamResultSolvedQuestionEntity.empty()[index],
+              length: QuestionMistakeEntity.empty().length,
+              mistakeEntity: QuestionMistakeEntity.empty()[index],
             )),
       ),
     );

@@ -39,8 +39,7 @@ class _CourseTestViewBodyState extends State<CourseTestViewBody> {
     context.read<TestItemCubit>().joinToTestItem(
           courseId: context
               .read<CourseExamViewNavigationsRequirmentsEntity>()
-              .course
-              .id,
+              .courseId,
           sectionId: context
               .read<CourseExamViewNavigationsRequirmentsEntity>()
               .sectionId,
@@ -73,7 +72,7 @@ class _CourseTestViewBodyState extends State<CourseTestViewBody> {
           context.read<CourseExamViewNavigationsRequirmentsEntity>().sectionId,
       test: courseExamViewNavigationsRequirmentsEntity.test,
       stopWatchTimer: stopWatchTimer,
-      courseId: courseExamViewNavigationsRequirmentsEntity.course.id,
+      courseId: courseExamViewNavigationsRequirmentsEntity.courseId,
       builder: (context, state) {
         return Stack(
           children: [

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/ExamResultSolvedQuestionEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/QuestionMistakeEntity.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Manager/cubit/get_my_mistakes_cubit.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Views/Widgets/GetMyMistakesViewBodyListView.dart';
@@ -15,7 +15,7 @@ class GetMyMistakesViewBody extends StatefulWidget {
 
 class _GetMyMistakesViewBodyState extends State<GetMyMistakesViewBody> {
   late ScrollController scrollController;
-  List<ExamResultSolvedQuestionEntity> myMistakes = [];
+  List<QuestionMistakeEntity> myMistakes = [];
   bool hasMore = true;
 
   @override
@@ -59,11 +59,10 @@ class _GetMyMistakesViewBodyState extends State<GetMyMistakesViewBody> {
         listener: (context, state) {
           if (state is GetMyMistakesSuccess) {
             if (state.getMyMistakesResponseEntity.isPaginate) {
-              myMistakes.addAll(
-                  state.getMyMistakesResponseEntity.questionsSolvedListEntity);
+              myMistakes
+                  .addAll(state.getMyMistakesResponseEntity.myMistakesList);
             } else {
-              myMistakes =
-                  state.getMyMistakesResponseEntity.questionsSolvedListEntity;
+              myMistakes = state.getMyMistakesResponseEntity.myMistakesList;
             }
             hasMore = state.getMyMistakesResponseEntity.hasMore;
             setState(() {});

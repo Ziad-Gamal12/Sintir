@@ -28,7 +28,7 @@ class _CourseTestOverViewBodyState extends State<CourseTestOverViewBody> {
     final entity = widget.navigationRequirements;
 
     cubit.getUserPerviousResultsOfExam(
-      courseId: entity.course.id,
+      courseId: entity.courseId,
       sectionId: entity.sectionId,
       examId: entity.test.id,
       userId: getUserData().uid,

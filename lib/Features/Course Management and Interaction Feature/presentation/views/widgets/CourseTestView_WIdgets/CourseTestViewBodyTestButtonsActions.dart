@@ -30,12 +30,13 @@ class CourseTestViewBodyTestButtonsActions extends StatelessWidget {
               textColor: Colors.white,
               onPressed: () {
                 context.read<TestItemCubit>().addTestResults(
+                    isCourseExam: requirements.isCourseExam,
                     context: context,
                     test: requirements.test,
                     userId: userData.uid,
                     sectionId: requirements.sectionId,
                     sectionItemId: requirements.test.id,
-                    courseId: requirements.course.id);
+                    courseId: requirements.courseId);
               }),
         );
       },
