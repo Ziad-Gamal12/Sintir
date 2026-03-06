@@ -5,11 +5,12 @@ import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Featur
 class QuestionMistakeModel {
   final Map<String, dynamic> question;
   final Map<String, dynamic> progress;
-  final String courseId, sectionId;
+  final String courseId, sectionId, courseSubject;
 
   QuestionMistakeModel(
       {required this.question,
       required this.progress,
+      required this.courseSubject,
       required this.courseId,
       required this.sectionId});
 
@@ -19,6 +20,7 @@ class QuestionMistakeModel {
       progress: json['progress'],
       courseId: json['courseId'] ?? "",
       sectionId: json['sectionId'] ?? "",
+      courseSubject: json['courseSubject'] ?? "",
     );
   }
   factory QuestionMistakeModel.fromEntity(QuestionMistakeEntity entity) {
@@ -28,12 +30,14 @@ class QuestionMistakeModel {
       progress: MistakeProgressModel.fromEntity(entity.progress).toJson(),
       courseId: entity.courseId,
       sectionId: entity.sectionId,
+      courseSubject: entity.courseSubject,
     );
   }
   QuestionMistakeEntity toEntity() {
     return QuestionMistakeEntity(
         question: ExamResultSolvedQuestionModel.fromJson(question).toEntity(),
         progress: MistakeProgressModel.fromJson(progress).toEntity(),
+        courseSubject: courseSubject,
         courseId: courseId,
         sectionId: sectionId);
   }
@@ -44,6 +48,7 @@ class QuestionMistakeModel {
       'courseId': courseId,
       'sectionId': sectionId,
       'progress': progress,
+      'courseSubject': courseSubject,
     };
   }
 }

@@ -1,4 +1,3 @@
-// Refactored TestItemRepoImpli.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
@@ -49,7 +48,7 @@ class TestItemRepoImpli implements Testitemrepo {
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
@@ -425,7 +424,9 @@ class TestItemRepoImpli implements Testitemrepo {
       final mistakes = _getMyMistakes(
           questions: testResult.questionsSolvedListEntity,
           courseId: testResult.courseId,
+          courseSubject: testResult.courseSubject,
           sectionId: testResult.sectionId);
+
       await Future.wait(mistakes.map((mistake) async {
         final String questionId = mistake.progress.questionId;
 
@@ -474,26 +475,24 @@ class TestItemRepoImpli implements Testitemrepo {
     required List<ExamResultSolvedQuestionEntity> questions,
     required String courseId,
     required String sectionId,
+    required String courseSubject,
   }) {
-    final List<QuestionMistakeEntity> myMistakes = [];
-
-    for (final question in questions) {
-      if (question.isCorrect == false) {
-        myMistakes.add(QuestionMistakeEntity(
-          courseId: courseId,
-          sectionId: sectionId,
-          question: question,
-          progress: MistakeProgressEntity(
-              questionId: question.question.questionId,
-              lastAnsweredAt: DateTime.now(),
-              correctStreak: 0,
-              wrongCount: 1,
-              status: MistakeStatus.active),
-        ));
-      }
-    }
-
-    return myMistakes;
+    return questions
+        .where((q) => q.isCorrect == false)
+        .map((q) => QuestionMistakeEntity(
+              courseId: courseId,
+              sectionId: sectionId,
+              courseSubject: courseSubject,
+              question: q,
+              progress: MistakeProgressEntity(
+                questionId: q.question.questionId,
+                lastAnsweredAt: DateTime.now(),
+                correctStreak: 0,
+                wrongCount: 1,
+                status: MistakeStatus.active,
+              ),
+            ))
+        .toList();
   }
 
   @override
@@ -555,12 +554,15 @@ class TestItemRepoImpli implements Testitemrepo {
   }
 
   @override
-  Future<Either<Failure, bool>> hasReachedMaxAttempts(
-      {required String courseId,
-      required String sectionId,
-      required CourseTestEntity test,
-      required String userId}) async {
+  Future<Either<Failure, bool>> hasReachedMaxAttempts({
+    required String courseId,
+    required String sectionId,
+    required CourseTestEntity test,
+    required String userId,
+  }) async {
     try {
+      if (test.numberOfAttempts == null) return right(false);
+
       final query = {
         "filters": [
           {"field": "joinedby.uid", "operator": "==", "value": userId}
@@ -580,17 +582,8 @@ class TestItemRepoImpli implements Testitemrepo {
         ),
         query: query,
       );
-      if (test.numberOfAttempts == null) {
-        return right(false);
-      } else {
-        bool hasReachedMaxAttempts = false;
-        if (count >= test.numberOfAttempts!) {
-          hasReachedMaxAttempts = true;
-        } else {
-          hasReachedMaxAttempts = false;
-        }
-        return right(hasReachedMaxAttempts);
-      }
+
+      return right(count >= test.numberOfAttempts!);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {

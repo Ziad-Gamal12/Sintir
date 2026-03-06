@@ -53,7 +53,6 @@ class MyMistakesRepoImpl implements MyMistakesRepo {
 
       _lastDoc = result.lastDocumentSnapshot;
 
-      // Use compute() here if listData.length > 50 to keep UI 60fps
       final mistakes = listData
           .map((e) => QuestionMistakeModel.fromJson(e).toEntity())
           .toList();

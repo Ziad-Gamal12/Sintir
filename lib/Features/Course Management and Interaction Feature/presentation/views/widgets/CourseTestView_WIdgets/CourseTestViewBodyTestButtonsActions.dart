@@ -31,8 +31,8 @@ class CourseTestViewBodyTestButtonsActions extends StatelessWidget {
               onPressed: () {
                 context.read<TestItemCubit>().addTestResults(
                     isCourseExam: requirements.isCourseExam,
-                    context: context,
                     test: requirements.test,
+                    courseSubject: requirements.courseSubject,
                     userId: userData.uid,
                     sectionId: requirements.sectionId,
                     sectionItemId: requirements.test.id,

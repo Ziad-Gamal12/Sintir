@@ -34,16 +34,13 @@ class _TimerDisplayState extends State<TimerDisplay> {
       final remainingSeconds = rawTime / 1000;
       if (remainingSeconds <= 0 && !_resultSent) {
         _resultSent = true;
-
         if (mounted) {
           final requirements =
               context.read<CourseExamViewNavigationsRequirmentsEntity>();
-
           widget.stopWatchTimer.onStopTimer();
-
           context.read<TestItemCubit>().addTestResults(
-                context: context,
                 test: requirements.test,
+                courseSubject: requirements.courseSubject,
                 isCourseExam: requirements.isCourseExam,
                 userId: getUserData().uid,
                 sectionId: requirements.sectionId,

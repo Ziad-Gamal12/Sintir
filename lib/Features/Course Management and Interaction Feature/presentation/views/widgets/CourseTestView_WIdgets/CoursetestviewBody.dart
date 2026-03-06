@@ -36,21 +36,26 @@ class _CourseTestViewBodyState extends State<CourseTestViewBody> {
   }
 
   void _initializeTest(CourseTestEntity test) {
-    context.read<TestItemCubit>().joinToTestItem(
-          courseId: context
-              .read<CourseExamViewNavigationsRequirmentsEntity>()
-              .courseId,
-          sectionId: context
-              .read<CourseExamViewNavigationsRequirmentsEntity>()
-              .sectionId,
-          sectionItemId: test.id,
-          joinedByEntity: JoinedByEntity(
-            uid: getUserData().uid,
-            name: getUserData().fullName,
-            imageUrl: getUserData().profilePicurl,
-            joinedDate: DateTime.now(),
-          ),
-        );
+    final requirements =
+        context.read<CourseExamViewNavigationsRequirmentsEntity>();
+
+    if (requirements.isCourseExam) {
+      context.read<TestItemCubit>().joinToTestItem(
+            courseId: context
+                .read<CourseExamViewNavigationsRequirmentsEntity>()
+                .courseId,
+            sectionId: context
+                .read<CourseExamViewNavigationsRequirmentsEntity>()
+                .sectionId,
+            sectionItemId: test.id,
+            joinedByEntity: JoinedByEntity(
+              uid: getUserData().uid,
+              name: getUserData().fullName,
+              imageUrl: getUserData().profilePicurl,
+              joinedDate: DateTime.now(),
+            ),
+          );
+    }
 
     test.questions.first.isOpened = true;
     stopWatchTimer.onStartTimer();
@@ -66,10 +71,12 @@ class _CourseTestViewBodyState extends State<CourseTestViewBody> {
   Widget build(BuildContext context) {
     final courseExamViewNavigationsRequirmentsEntity =
         context.read<CourseExamViewNavigationsRequirmentsEntity>();
-
     return CourseTestListener(
       sectionId:
           context.read<CourseExamViewNavigationsRequirmentsEntity>().sectionId,
+      courseSubject: context
+          .read<CourseExamViewNavigationsRequirmentsEntity>()
+          .courseSubject,
       test: courseExamViewNavigationsRequirmentsEntity.test,
       stopWatchTimer: stopWatchTimer,
       courseId: courseExamViewNavigationsRequirmentsEntity.courseId,

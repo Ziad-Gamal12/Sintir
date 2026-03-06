@@ -10,8 +10,7 @@ import 'package:sintir/locale_keys.dart';
 
 class GetMyMistakesViewBodyListView extends StatefulWidget {
   const GetMyMistakesViewBodyListView(
-      {super.key, required this.myMistakes, required this.scrollController});
-  final List<QuestionMistakeEntity> myMistakes;
+      {super.key, required this.scrollController});
   final ScrollController scrollController;
   @override
   State<GetMyMistakesViewBodyListView> createState() =>
@@ -24,13 +23,15 @@ class _GetMyMistakesViewBodyListViewState
   Widget build(BuildContext context) {
     return BlocBuilder<GetMyMistakesCubit, GetMyMistakesState>(
         builder: (context, state) {
+      List<QuestionMistakeEntity> myMistakes =
+          context.read<GetMyMistakesCubit>().myMistakes;
       if (state is GetMyMistakesFailure) {
         return Center(child: CustomErrorWidget(errormessage: state.errmessage));
       } else if (state is GetMyMistakesLoading &&
-          widget.myMistakes.isEmpty &&
+          myMistakes.isEmpty &&
           state.isPaginate == false) {
         return const GetMyMistakesViewBodyListViewLoading();
-      } else if (state is GetMyMistakesSuccess && widget.myMistakes.isEmpty) {
+      } else if (state is GetMyMistakesSuccess && myMistakes.isEmpty) {
         return CustomEmptyWidget(
           text: LocaleKeys.emptyContent,
         );
@@ -38,16 +39,16 @@ class _GetMyMistakesViewBodyListViewState
         return ListView.builder(
           controller: widget.scrollController,
           itemCount: state is GetMyMistakesLoading && state.isPaginate
-              ? widget.myMistakes.length + 1
-              : widget.myMistakes.length,
+              ? myMistakes.length + 1
+              : myMistakes.length,
           itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.only(bottom: 20),
-            child: index == widget.myMistakes.length
+            child: index == myMistakes.length
                 ? const GetMyMistakesViewBodyListViewLoading()
                 : MyMistakeCardItem(
                     index: index,
-                    length: widget.myMistakes.length,
-                    mistakeEntity: widget.myMistakes[index],
+                    length: myMistakes.length,
+                    mistakeEntity: myMistakes[index],
                   ),
           ),
         );

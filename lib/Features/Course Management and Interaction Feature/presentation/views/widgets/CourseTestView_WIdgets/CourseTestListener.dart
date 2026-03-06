@@ -15,6 +15,7 @@ class CourseTestListener extends StatelessWidget {
     required this.test,
     required this.stopWatchTimer,
     required this.builder,
+    required this.courseSubject,
     required this.courseId,
     required this.sectionId,
   });
@@ -22,6 +23,7 @@ class CourseTestListener extends StatelessWidget {
   final CourseTestEntity test;
   final dynamic stopWatchTimer;
   final String courseId;
+  final String courseSubject;
   final String sectionId;
   final Widget Function(BuildContext context, TestItemState state) builder;
 
@@ -48,10 +50,10 @@ class CourseTestListener extends StatelessWidget {
             btnOkOnPress: () {
               GoRouter.of(context).pushReplacement(
                 Reviewtestresultview.routeName,
-                extra: context.read<TestItemCubit>().getTestResults(
+                extra: context.read<TestItemCubit>().prepareTestResultObject(
                       courseId: courseId,
-                      context: context,
                       test: test,
+                      courseSubject: courseSubject,
                       sectionId: sectionId,
                       user: getUserData(),
                     ),

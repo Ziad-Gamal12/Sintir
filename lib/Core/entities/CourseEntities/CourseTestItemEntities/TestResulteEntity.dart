@@ -13,6 +13,7 @@ class TestResultEntity {
   final String courseId;
   final String sectionId;
   final String testId;
+  final String courseSubject;
   TestResultEntity(
       {required this.serialNumber,
       required this.joinedDate,
@@ -23,6 +24,7 @@ class TestResultEntity {
       required this.testId,
       required this.joinedbyentity,
       required this.courseId,
+      required this.courseSubject,
       required this.result,
       required this.questionsSolvedListEntity});
   static TestResultEntity empty() {
@@ -31,6 +33,7 @@ class TestResultEntity {
       joinedDate: DateTime.now(),
       sectionId: "00000",
       testId: "00000",
+      courseSubject: "",
       totalQuestions: 0,
       courseId: "00000",
       solvedQuestions: 0,

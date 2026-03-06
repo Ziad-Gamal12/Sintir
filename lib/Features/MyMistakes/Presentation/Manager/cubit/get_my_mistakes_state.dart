@@ -11,11 +11,18 @@ final class GetMyMistakesLoading extends GetMyMistakesState {
 }
 
 final class GetMyMistakesSuccess extends GetMyMistakesState {
-  final GetMyMistakesResponseEntity getMyMistakesResponseEntity;
-  GetMyMistakesSuccess({required this.getMyMistakesResponseEntity});
+  final List<QuestionMistakeEntity> myMistakesList;
+  final Map<String, List<QuestionMistakeEntity>> groupedMistakes;
+  GetMyMistakesSuccess(
+      {required this.myMistakesList, required this.groupedMistakes});
 }
 
 final class GetMyMistakesFailure extends GetMyMistakesState {
   final String errmessage;
   GetMyMistakesFailure({required this.errmessage});
+}
+
+final class CreateCustomExamSuccess extends GetMyMistakesState {
+  final CourseExamViewNavigationsRequirmentsEntity requirements;
+  CreateCustomExamSuccess({required this.requirements});
 }

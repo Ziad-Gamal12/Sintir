@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/QuestionMistakeEntity.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Manager/cubit/get_my_mistakes_cubit.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Views/Widgets/GetMyMistakesViewBodyListView.dart';
@@ -15,8 +14,6 @@ class GetMyMistakesViewBody extends StatefulWidget {
 
 class _GetMyMistakesViewBodyState extends State<GetMyMistakesViewBody> {
   late ScrollController scrollController;
-  List<QuestionMistakeEntity> myMistakes = [];
-  bool hasMore = true;
 
   @override
   void initState() {
@@ -40,7 +37,7 @@ class _GetMyMistakesViewBodyState extends State<GetMyMistakesViewBody> {
   bool _canFetchMore() {
     if (scrollController.position.pixels >=
             scrollController.position.maxScrollExtent - 200 &&
-        hasMore &&
+        context.read<GetMyMistakesCubit>().hasMore &&
         context.read<GetMyMistakesCubit>().state is! GetMyMistakesLoading) {
       return true;
     }
@@ -55,26 +52,12 @@ class _GetMyMistakesViewBodyState extends State<GetMyMistakesViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<GetMyMistakesCubit, GetMyMistakesState>(
-        listener: (context, state) {
-          if (state is GetMyMistakesSuccess) {
-            if (state.getMyMistakesResponseEntity.isPaginate) {
-              myMistakes
-                  .addAll(state.getMyMistakesResponseEntity.myMistakesList);
-            } else {
-              myMistakes = state.getMyMistakesResponseEntity.myMistakesList;
-            }
-            hasMore = state.getMyMistakesResponseEntity.hasMore;
-            setState(() {});
-          }
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: KHorizontalPadding, vertical: KVerticalPadding),
-          child: GetMyMistakesViewBodyListView(
-            myMistakes: myMistakes,
-            scrollController: scrollController,
-          ),
-        ));
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+          horizontal: KHorizontalPadding, vertical: KVerticalPadding),
+      child: GetMyMistakesViewBodyListView(
+        scrollController: scrollController,
+      ),
+    );
   }
 }

@@ -26,16 +26,22 @@ class addingJoinedByLoadingWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const CircularProgressIndicator(
-            color: KMainColor,
+          const SizedBox(
+            height: 40,
+            width: 40,
+            child: CircularProgressIndicator(
+              color: KMainColor,
+            ),
           ),
           const SizedBox(
             width: 4,
           ),
-          Text(
-            LocaleKeys.loggingIn,
-            style:
-                AppTextStyles(context).semiBold16.copyWith(color: KMainColor),
+          Expanded(
+            child: Text(
+              LocaleKeys.loggingIn,
+              style:
+                  AppTextStyles(context).semiBold16.copyWith(color: KMainColor),
+            ),
           )
         ],
       ),

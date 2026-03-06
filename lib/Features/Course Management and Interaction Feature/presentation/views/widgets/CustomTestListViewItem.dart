@@ -32,6 +32,7 @@ class Customtestlistviewitem extends StatelessWidget {
                   item: CourseExamViewNavigationsRequirmentsEntity(
                       isCourseExam: true,
                       test: item,
+                      courseSubject: course.subject,
                       sectionId: section.id,
                       courseId: course.id),
                   course: course)

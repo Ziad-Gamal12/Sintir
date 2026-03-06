@@ -5,11 +5,12 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Mista
 class QuestionMistakeEntity {
   final ExamResultSolvedQuestionEntity question;
   final MistakeProgressEntity progress;
-  final String courseId, sectionId;
+  final String courseId, sectionId, courseSubject;
   QuestionMistakeEntity(
       {required this.question,
       required this.progress,
       required this.courseId,
+      required this.courseSubject,
       required this.sectionId});
 
   static List<QuestionMistakeEntity> empty() => List.generate(
@@ -17,6 +18,7 @@ class QuestionMistakeEntity {
       (index) => QuestionMistakeEntity(
           courseId: "123456789",
           sectionId: "123456789",
+          courseSubject: "",
           question: ExamResultSolvedQuestionEntity(
               question: CourseTestQuestionEntity(
                   questionId: "123456789",
@@ -32,9 +34,23 @@ class QuestionMistakeEntity {
       String? sectionId}) {
     return QuestionMistakeEntity(
       courseId: courseId ?? this.courseId,
+      courseSubject: courseSubject,
       sectionId: sectionId ?? this.sectionId,
       question: question ?? this.question,
       progress: progress ?? this.progress,
     );
+  }
+}
+
+extension MistakeGrouping on List<QuestionMistakeEntity> {
+  Map<String, List<QuestionMistakeEntity>> groupByCourseSubject() {
+    final Map<String, List<QuestionMistakeEntity>> grouped = {};
+    for (var mistake in this) {
+      if (!grouped.containsKey(mistake.courseSubject)) {
+        grouped[mistake.courseSubject] = [];
+      }
+      grouped[mistake.courseSubject]!.add(mistake);
+    }
+    return grouped;
   }
 }

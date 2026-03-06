@@ -64,7 +64,6 @@ class _CourseTestLayoutState extends State<CourseTestLayout> {
 
               const Spacer(),
 
-              /// Control panel (timer + stats + buttons)
               CourseTestControlPanel(
                   stopWatchTimer: widget.stopWatchTimer, exam: widget.test),
             ],

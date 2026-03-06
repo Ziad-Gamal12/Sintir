@@ -147,71 +147,77 @@ class TestItemCubit extends Cubit<TestItemState> {
     return numbers;
   }
 
-  TestResultEntity getTestResults(
-      {required BuildContext context,
-      required CourseTestEntity test,
-      required String courseId,
-      required String sectionId,
-      required UserEntity user}) {
+  TestResultEntity prepareTestResultObject({
+    required CourseTestEntity test,
+    required String courseId,
+    required String courseSubject,
+    required String sectionId,
+    required UserEntity user,
+  }) {
+    final solvedQuestions = getSolvedQuestions(test: test);
+    final score = getResult(test: test);
+
     return TestResultEntity(
-        isPassed: getResult(test: test) >= (test.questions.length / 2),
+      isPassed: score >= (test.questions.length / 2),
+      courseSubject: courseSubject,
+      joinedDate: DateTime.now(),
+      serialNumber: "${DateTime.now().millisecondsSinceEpoch}-Result",
+      testId: test.id,
+      sectionId: sectionId,
+      courseId: courseId,
+      result: score,
+      solvedQuestions: solvedQuestions.length,
+      totalQuestions: test.questions.length,
+      questionsSolvedListEntity: solvedQuestions,
+      joinedbyentity: JoinedByEntity(
+        uid: user.uid,
+        name: user.fullName,
+        imageUrl: user.profilePicurl,
         joinedDate: DateTime.now(),
-        serialNumber: "${DateTime.now().toString()}-Result",
-        testId: test.id,
-        sectionId: sectionId,
-        joinedbyentity: JoinedByEntity(
-          uid: user.uid,
-          name: user.fullName,
-          imageUrl: user.profilePicurl,
-          joinedDate: DateTime.now(),
-        ),
-        courseId: courseId,
-        result: getResult(test: test),
-        solvedQuestions: getSolvedQuestions(test: test).length,
-        totalQuestions: test.questions.length,
-        questionsSolvedListEntity: getSolvedQuestions(test: test));
+      ),
+    );
   }
 
-  void addTestResults(
-      {required CourseTestEntity test,
-      required String courseId,
-      required String sectionId,
-      required String sectionItemId,
-      required bool isCourseExam,
-      required String userId,
-      required BuildContext context}) async {
+  void addTestResults({
+    required CourseTestEntity test,
+    required String courseId,
+    required String courseSubject,
+    required String sectionId,
+    required String sectionItemId,
+    required bool isCourseExam,
+    required String userId,
+  }) async {
     emit(AddTestResultLoading());
-    Either<Failure, void> result;
+
+    // Prepare result once
+    final testResult = prepareTestResultObject(
+      test: test,
+      courseId: courseId,
+      courseSubject: courseSubject,
+      sectionId: sectionId,
+      user: getUserData(),
+    );
+
+    final Either<Failure, void> result;
+
     if (isCourseExam) {
       result = await testitemrepo.addTestResult(
-          userUID: userId,
-          testResult: getTestResults(
-            context: context,
-            sectionId: sectionId,
-            test: test,
-            user: getUserData(),
-            courseId: courseId,
-          ),
-          courseId: courseId,
-          sectionId: sectionId,
-          sectionItemId: sectionItemId);
+        userUID: userId,
+        testResult: testResult,
+        courseId: courseId,
+        sectionId: sectionId,
+        sectionItemId: sectionItemId,
+      );
     } else {
       result = await myMistakesRepo.storeTestMyMistakesExamResult(
         userUID: userId,
-        testResult: getTestResults(
-          context: context,
-          sectionId: sectionId,
-          test: test,
-          user: getUserData(),
-          courseId: courseId,
-        ),
+        testResult: testResult,
       );
     }
-    result.fold((failure) {
-      emit(AddTestResultFailure(errMessage: failure.message));
-    }, (sucUpdateCourseSectionsFailurecess) {
-      emit(AddTestResultSuccess());
-    });
+    result.fold(
+      (failure) => emit(AddTestResultFailure(errMessage: failure.message)),
+      (_) => emit(AddTestResultSuccess()),
+    );
   }
 
   void joinToTestItem({

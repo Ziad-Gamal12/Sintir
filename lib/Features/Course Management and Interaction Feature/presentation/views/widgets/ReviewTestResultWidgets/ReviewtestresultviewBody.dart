@@ -26,10 +26,14 @@ class _ReviewtestresultviewbodyState extends State<Reviewtestresultviewbody> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       TestResultEntity testResult = context.read<TestResultEntity>();
-      context.read<CheckIfResultHiddenCubit>().checkIfResultHidden(
-          testId: testResult.testId,
-          sectionId: testResult.sectionId,
-          courseId: testResult.courseId);
+      if (testResult.testId.isNotEmpty &&
+          testResult.sectionId.isNotEmpty &&
+          testResult.courseId.isNotEmpty) {
+        context.read<CheckIfResultHiddenCubit>().checkIfResultHidden(
+            testId: testResult.testId,
+            sectionId: testResult.sectionId,
+            courseId: testResult.courseId);
+      }
     });
   }
 
