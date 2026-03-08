@@ -1,109 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:localingo/app_localizations.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/QuestionMistakeEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/CustomSolvedQuestionListItemContent.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/CustomSolvedQuestionListItemHeader.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/CustomSolvedQuestionListItemQuestionTitle%20.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/ShowHideSolutionButton.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/ReviewTestResultWidgets/SolutionImageOverlay.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
-class MyMistakeCardItem extends StatefulWidget {
-  const MyMistakeCardItem({
-    super.key,
-    required this.mistakeEntity,
-    required this.index,
-    required this.length,
-  });
+import 'MistakeCardFooter.dart';
+import 'MistakeCardHeader.dart';
+import 'MistakeSolutionReview.dart';
 
-  final QuestionMistakeEntity mistakeEntity;
-  final int index;
-  final int length;
-
-  @override
-  State<MyMistakeCardItem> createState() => _MyMistakeCardItemState();
-}
-
-class _MyMistakeCardItemState extends State<MyMistakeCardItem> {
-  bool isSolutionVisible = false;
+class MyMistakeCardItem extends StatelessWidget {
+  final QuestionMistakeEntity mistake;
+  const MyMistakeCardItem({super.key, required this.mistake});
 
   @override
   Widget build(BuildContext context) {
-    final hasSolutionImage =
-        widget.mistakeEntity.question.question.imageUrl?.isNotEmpty;
+    final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    final borderColor = widget.mistakeEntity.question.isCorrect
-        ? Colors.green.shade400
-        : Colors.red.shade400;
-    final backgroundColor = Theme.of(context).brightness == Brightness.dark
-        ? Colors.grey[900]
-        : Colors.grey.shade50;
-    String locale = AppLocalizations.of(context).locale.languageCode;
+    final String correctAnswer = mistake.question.question.solutions.isNotEmpty
+        ? mistake.question.question.solutions
+            .firstWhere((s) => s.isCorrect,
+                orElse: () => mistake.question.question.solutions.first)
+            .answer
+        : LocaleKeys.noSolution; // Localized fallback
 
-    return AspectRatio(
-      aspectRatio: 2 / 1.4,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          border: Border.all(color: borderColor, width: 1.2),
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.03),
-              blurRadius: 6,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomSolvedQuestionListItemHeader(
-                    index: widget.index,
-                    length: widget.length,
-                    isCorrect: widget.mistakeEntity.question.isCorrect,
-                  ),
-                  const SizedBox(height: 14),
-                  CustomSolvedQuestionListItemQuestionTitle(
-                    questionTitle:
-                        widget.mistakeEntity.question.question.questionTitle ??
-                            '_',
-                  ),
-                  const SizedBox(height: 12),
-                  Expanded(
-                    child: CustomSolvedQuestionListItemContent(
-                      examResultSolvedQuestionEntity:
-                          widget.mistakeEntity.question,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            if (isSolutionVisible)
-              Positioned.fill(
-                child: SolutionImageOverlay(
-                  imageUrl: widget.mistakeEntity.question.question.imageUrl!,
-                ),
-              ),
-            if (hasSolutionImage ?? false)
-              Positioned(
-                top: 8,
-                right: locale == 'ar' ? null : 8,
-                left: locale == 'ar' ? 8 : null,
-                child: ShowHideSolutionButton(
-                  isVisible: isSolutionVisible,
-                  onTap: () {
-                    setState(() {
-                      isSolutionVisible = !isSolutionVisible;
-                    });
-                  },
-                ),
-              ),
-          ],
-        ),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isDarkMode ? Colors.white.withOpacity(0.05) : Colors.white,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(
+            color: isDarkMode ? Colors.white10 : Colors.grey.shade200),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          MistakeCardHeader(
+            subject: mistake.courseSubject,
+            status: mistake.progress.status,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            mistake.question.question.questionTitle ?? LocaleKeys.noTitle,
+            style: AppTextStyles(context).bold16,
+          ),
+          const SizedBox(height: 16),
+          MistakeSolutionReview(
+            selectedAnswer: mistake.question.question.selectedSolution ??
+                LocaleKeys.notSolved,
+            correctAnswer: correctAnswer,
+          ),
+          const SizedBox(height: 16),
+          const Divider(height: 1, thickness: 0.5),
+          const SizedBox(height: 16),
+          MistakeCardFooter(
+            wrongCount: mistake.progress.wrongCount,
+            correctStreak: mistake.progress.correctStreak,
+          ),
+        ],
       ),
     );
   }

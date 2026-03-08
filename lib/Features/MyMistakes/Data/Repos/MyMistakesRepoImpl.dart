@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/MistakeProgressEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/QuestionMistakeEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
@@ -150,5 +151,34 @@ class MyMistakesRepoImpl implements MyMistakesRepo {
       ),
       data: json,
     );
+  }
+
+  @override
+  Future<Either<Failure, List<QuestionMistakeEntity>>> getAllActiveMistakes(
+      {required String userUID}) async {
+    try {
+      final result = await databaseservice.getData(
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.usersCollectionName,
+          docId: userUID,
+          subCollection: BackendEndpoints.myMistakesSubCollection,
+        ),
+      );
+
+      final listData = result.listData as List<Map<String, dynamic>>? ?? [];
+
+      if (listData.isEmpty) {
+        return const Right([]);
+      }
+      final mistakes = listData
+          .map((e) => QuestionMistakeModel.fromJson(e).toEntity())
+          .toList();
+
+      return Right(mistakes);
+    } on CustomException catch (e) {
+      return Left(ServerFailure(message: e.message));
+    } catch (e) {
+      return Left(ServerFailure(message: LocaleKeys.generalError));
+    }
   }
 }

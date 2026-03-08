@@ -6,6 +6,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/MistakeProgressEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/QuestionMistakeEntity.dart';
 import 'package:sintir/Features/MyMistakes/Domain/Repo/MyMistakesRepo.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:uuid/uuid.dart';
 
 part 'get_my_mistakes_state.dart';
@@ -18,7 +19,6 @@ class GetMyMistakesCubit extends Cubit<GetMyMistakesState> {
 
   // Data Storage
   List<QuestionMistakeEntity> myMistakes = [];
-  Map<String, List<QuestionMistakeEntity>> groupedMistakes = {};
   bool hasMore = true;
 
   // --- 1. Fetching Logic ---
@@ -39,64 +39,77 @@ class GetMyMistakesCubit extends Cubit<GetMyMistakesState> {
           myMistakes = data.myMistakesList;
         }
         hasMore = data.hasMore;
-        _groupMistakesBySubject();
-
         emit(GetMyMistakesSuccess(
           myMistakesList: List.from(myMistakes),
-          groupedMistakes: Map.from(groupedMistakes),
         ));
       },
     );
   }
 
-  void _groupMistakesBySubject() {
-    groupedMistakes = MistakeGrouping(myMistakes).groupByCourseSubject();
-  }
-
   void createOwnExam({
     int questionLimit = 20,
     String? courseSubject,
-  }) {
-    List<QuestionMistakeEntity> sourceList = courseSubject == null
-        ? myMistakes
-        : (groupedMistakes[courseSubject] ?? []);
+    required String userUID,
+  }) async {
+    emit(CreateCustomExamLoading());
 
-    List<CourseTestQuestionEntity> examQuestions = sourceList
-        .where((e) =>
-            e.progress.status == MistakeStatus.active ||
-            e.progress.status == MistakeStatus.improving)
-        .map((e) => e.question.question)
-        .toList();
+    final result = await myMistakesRepo.getAllActiveMistakes(userUID: userUID);
 
-    examQuestions.shuffle();
+    result.fold(
+      (failure) => emit(CreateCustomExamFailure(errmessage: failure.message)),
+      (allMistakes) {
+        // 1. Filter by subject
+        List<QuestionMistakeEntity> filteredList = courseSubject == null
+            ? allMistakes
+            : allMistakes
+                .where((m) => m.courseSubject == courseSubject)
+                .toList();
 
-    if (examQuestions.length > questionLimit) {
-      examQuestions = examQuestions.sublist(0, questionLimit);
-    }
+        // 2. Filter by status (Only Active/Improving - never Mastered)
+        List<CourseTestQuestionEntity> examQuestions = filteredList
+            .where((e) =>
+                e.progress.status == MistakeStatus.active ||
+                e.progress.status == MistakeStatus.improving)
+            .map((e) => e.question.question)
+            .toList();
 
-    if (examQuestions.isEmpty) {
-      emit(GetMyMistakesFailure(
-          errmessage: "لا يوجد أسئلة متاحة حالياً لإنشاء إمتحان"));
-      return;
-    }
+        // 3. Logic Safety Check
+        if (examQuestions.isEmpty) {
+          emit(
+              CreateCustomExamFailure(errmessage: LocaleKeys.errorNoQuestions));
+          return;
+        }
 
-    final requirements = CourseExamViewNavigationsRequirmentsEntity(
-      courseId: "",
-      isCourseExam: false,
-      courseSubject: courseSubject ?? "",
-      sectionId: "",
-      test: CourseTestEntity(
-        id: const Uuid().v4(),
-        questions: examQuestions,
-        title: courseSubject == null
-            ? "إمتحان شامل للأخطاء"
-            : "مراجعة أخطاء في $courseSubject",
-        durationTime: _calculateSmartDuration(examQuestions.length),
-        showResult: true,
-        numberOfAttempts: null,
-      ),
+        // 4. Randomize and Limit
+        examQuestions.shuffle();
+        if (examQuestions.length > questionLimit) {
+          examQuestions = examQuestions.sublist(0, questionLimit);
+        }
+
+        // 5. Build Localized Title
+        final String examTitle = courseSubject == null
+            ? LocaleKeys.generalExamTitle
+            : LocaleKeys.subjectExamTitle;
+
+        // 6. Build Requirements
+        final requirements = CourseExamViewNavigationsRequirmentsEntity(
+          courseId: "",
+          isCourseExam: false,
+          courseSubject: courseSubject ?? "General",
+          sectionId: "",
+          test: CourseTestEntity(
+            id: const Uuid().v4(),
+            questions: examQuestions,
+            title: examTitle,
+            durationTime: _calculateSmartDuration(examQuestions.length),
+            showResult: true,
+            numberOfAttempts: null,
+          ),
+        );
+
+        emit(CreateCustomExamSuccess(requirements: requirements));
+      },
     );
-    emit(CreateCustomExamSuccess(requirements: requirements));
   }
 
   int _calculateSmartDuration(int questionCount) {

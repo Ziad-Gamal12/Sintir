@@ -10,6 +10,38 @@ class LocaleKeys {
   static String get description1 => 'description_1'.tr();
   static String get learnEasySafe => 'learn_easy_safe'.tr();
   static String get description2 => 'description_2'.tr();
+  static String get myMistakesTitle => 'my_mistakes.app_bar_title'.tr();
+  static String get createOwnExam => 'my_mistakes.create_own_exam'.tr();
+  static String get selectSubject => 'my_mistakes.select_subject'.tr();
+  static String get questionCount => 'my_mistakes.question_count'.tr();
+  static String get questionsLabel => 'my_mistakes.questions_label'.tr();
+
+  static String get noteTitle => 'my_mistakes.note_title'.tr();
+  static String get noteBody => 'my_mistakes.note_body'.tr();
+
+  static String get myMistakesstatusActive => 'my_mistakes.status_active'.tr();
+  static String get statusImproving => 'my_mistakes.status_improving'.tr();
+  static String get statusMastered => 'my_mistakes.status_mastered'.tr();
+
+  static String get yourAnswer => 'my_mistakes.your_answer'.tr();
+  static String get correctAnswer => 'my_mistakes.correct_answer'.tr();
+  static String get totalMistakes => 'my_mistakes.total_mistakes'.tr();
+
+  static String get noTitle => 'my_mistakes.no_title'.tr();
+  static String get noSolution => 'my_mistakes.no_solution'.tr();
+  static String get notSolved => 'my_mistakes.not_solved'.tr();
+  static String get subjectGeneral => 'my_mistakes.subject_general'.tr();
+  static String get viewHeadline => 'my_mistakes.view_headline'.tr();
+  static String get viewSubHeadline => 'my_mistakes.view_sub_headline'.tr();
+  static String get questionsHeader => 'my_mistakes.questions_header'.tr();
+  static String get questionUnit => 'my_mistakes.question_unit'.tr();
+  static String get selectSubjectTitle =>
+      'my_mistakes.select_subject_title'.tr();
+  static String get errorNoQuestions => 'my_mistakes.error_no_questions'.tr();
+  static String get generalExamTitle => 'my_mistakes.general_exam_title'.tr();
+  static String get subjectExamTitle => 'my_mistakes.subject_exam_title'.tr();
+  static String get createButton => 'my_mistakes.create_button'.tr();
+  static String get errorEmptyFields => 'my_mistakes.error_empty_fields'.tr();
   static String get startLearningJourneyTitle =>
       'start_learning_journey_title'.tr();
   static String get description3 => 'description_3'.tr();
@@ -349,7 +381,6 @@ class LocaleKeys {
   static String get questionImage => 'question_image'.tr();
   static String get answerImage => 'answer_image'.tr();
   static String get discount => 'discount'.tr();
-  static String get correctAnswer => 'correct_answer'.tr();
   static String get wrongAnswer => 'wrong_answer'.tr();
   static String get questionNotFound => 'question_not_found'.tr();
   static String get hideSolution => 'hide_solution'.tr();

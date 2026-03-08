@@ -17,9 +17,7 @@ class GetMyMistakesViewBodyListViewLoading extends StatelessWidget {
         child: Skeletonizer(
             enabled: true,
             child: MyMistakeCardItem(
-              index: index,
-              length: QuestionMistakeEntity.empty().length,
-              mistakeEntity: QuestionMistakeEntity.empty()[index],
+              mistake: QuestionMistakeEntity.empty()[index],
             )),
       ),
     );

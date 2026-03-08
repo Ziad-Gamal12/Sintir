@@ -46,9 +46,7 @@ class _GetMyMistakesViewBodyListViewState
             child: index == myMistakes.length
                 ? const GetMyMistakesViewBodyListViewLoading()
                 : MyMistakeCardItem(
-                    index: index,
-                    length: myMistakes.length,
-                    mistakeEntity: myMistakes[index],
+                    mistake: myMistakes[index],
                   ),
           ),
         );
