@@ -16,8 +16,15 @@ class MistakeCardHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _buildSubjectBadge(context),
-        _buildStatusBadge(context),
+        Flexible(
+          flex: 2,
+          child: _buildSubjectBadge(context),
+        ),
+        const SizedBox(width: 12),
+        Flexible(
+          flex: 1,
+          child: _buildStatusBadge(context),
+        ),
       ],
     );
   }
@@ -30,7 +37,9 @@ class MistakeCardHeader extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
-        subject.isEmpty ? LocaleKeys.subjectGeneral : subject, // Localized
+        subject.isEmpty ? LocaleKeys.subjectGeneral : subject,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
         style: AppTextStyles(context).bold13.copyWith(color: KMainColor),
       ),
     );
@@ -46,12 +55,17 @@ class MistakeCardHeader extends StatelessWidget {
     final (color, label) = statusMap[status] ?? (Colors.grey, "...");
 
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         CircleAvatar(radius: 4, backgroundColor: color),
         const SizedBox(width: 6),
-        Text(
-          label,
-          style: AppTextStyles(context).regular13.copyWith(color: color),
+        Flexible(
+          child: Text(
+            label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles(context).regular13.copyWith(color: color),
+          ),
         ),
       ],
     );

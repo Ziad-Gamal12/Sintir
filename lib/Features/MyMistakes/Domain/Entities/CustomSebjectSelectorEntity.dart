@@ -1,3 +1,5 @@
+import 'package:sintir/locale_keys.dart';
+
 class CustomSubjectSelectorEntity {
   final String subjectLabel;
   final String subjectValue;
@@ -8,28 +10,41 @@ class CustomSubjectSelectorEntity {
   });
 
   static List<CustomSubjectSelectorEntity> getSubjects() {
-    final Map<String, String> subjectsMap = {
-      "Arabic": "اللغة العربية",
-      "English": "اللغة الإنجليزية",
-      "French": "اللغة الفرنسية",
-      "Italian": "اللغة الإيطالية",
-      "Spanish": "اللغة الإسبانية",
-      "Mathematics": "الرياضيات",
-      "Physics": "الفيزياء",
-      "Chemistry": "الكيمياء",
-      "Biology": "الأحياء",
-      "Biological Science": "العلوم البيولوجية",
-      "Science": "العلوم",
-      "Philosophy": "الفلسفة",
-      "History": "التاريخ",
-      "Geography": "الجغرافيا",
-      "Computer Science": "حاسب آلي",
-      "Other": "أخرى",
-    };
-
-    return subjectsMap.entries
-        .map((e) => CustomSubjectSelectorEntity(
-            subjectLabel: e.value, subjectValue: e.key))
-        .toList();
+    return [
+      CustomSubjectSelectorEntity(
+          subjectLabel: LocaleKeys.arabic, subjectValue: "Arabic"),
+      CustomSubjectSelectorEntity(
+          subjectLabel: LocaleKeys.english, subjectValue: "English"),
+      CustomSubjectSelectorEntity(
+          subjectLabel: LocaleKeys.french, subjectValue: "French"),
+      CustomSubjectSelectorEntity(
+          subjectLabel: LocaleKeys.italian, subjectValue: "Italian"),
+      CustomSubjectSelectorEntity(
+          subjectLabel: LocaleKeys.spanish, subjectValue: "Spanish"),
+      CustomSubjectSelectorEntity(
+          subjectLabel: LocaleKeys.mathematics, subjectValue: "Mathematics"),
+      CustomSubjectSelectorEntity(
+          subjectLabel: LocaleKeys.physics, subjectValue: "Physics"),
+      CustomSubjectSelectorEntity(
+          subjectLabel: LocaleKeys.chemistry, subjectValue: "Chemistry"),
+      CustomSubjectSelectorEntity(
+          subjectLabel: LocaleKeys.biology, subjectValue: "Biology"),
+      CustomSubjectSelectorEntity(
+          subjectLabel: LocaleKeys.biologicalScience,
+          subjectValue: "Biological Science"),
+      CustomSubjectSelectorEntity(
+          subjectLabel: LocaleKeys.science, subjectValue: "Science"),
+      CustomSubjectSelectorEntity(
+          subjectLabel: LocaleKeys.philosophy, subjectValue: "Philosophy"),
+      CustomSubjectSelectorEntity(
+          subjectLabel: LocaleKeys.history, subjectValue: "History"),
+      CustomSubjectSelectorEntity(
+          subjectLabel: LocaleKeys.geography, subjectValue: "Geography"),
+      CustomSubjectSelectorEntity(
+          subjectLabel: LocaleKeys.computerScience,
+          subjectValue: "Computer Science"),
+      CustomSubjectSelectorEntity(
+          subjectLabel: LocaleKeys.other, subjectValue: "Other"),
+    ];
   }
 }
