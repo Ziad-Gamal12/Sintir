@@ -25,8 +25,11 @@ class SearchTeachersList extends StatelessWidget {
                 GoRouter.of(context).push(ContentCreatorProfile.routeName,
                     extra: teachersList[index]);
               },
-              child: SearchViewBodyTeachersListViewItem(
-                contentcreaterentity: teachersList[index],
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: SearchViewBodyTeachersListViewItem(
+                  contentcreaterentity: teachersList[index],
+                ),
               ),
             ),
           );

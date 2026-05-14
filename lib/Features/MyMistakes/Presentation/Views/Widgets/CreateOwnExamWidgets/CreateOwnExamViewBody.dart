@@ -1,13 +1,14 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/courseTestView.dart';
-import 'package:sintir/Features/MyMistakes/Presentation/Manager/cubit/get_my_mistakes_cubit.dart';
+import 'package:sintir/Features/MyMistakes/Domain/Repo/MyMistakesRepo.dart';
+import 'package:sintir/Features/MyMistakes/Presentation/Manager/create_my_exam_bloc/create_my_exam_bloc.dart';
+import 'package:sintir/Features/MyMistakes/Presentation/Manager/get_my_mistakes_cubit/get_my_mistakes_cubit.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Views/Widgets/CreateOwnExamWidgets/CreateOwnExamViewHeadLine.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Views/Widgets/CreateOwnExamWidgets/CreateOwnExamWarningNote.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Views/Widgets/CreateOwnExamWidgets/CustomQuestionCountSection.dart';
@@ -30,7 +31,6 @@ class _CreateOwnExamViewBodyState extends State<CreateOwnExamViewBody> {
     final ThemeData theme = Theme.of(context);
     return BlocListener<GetMyMistakesCubit, GetMyMistakesState>(
       listener: (context, state) {
-        log("CreateOwnExamViewBody state: $state");
         if (state is CreateCustomExamSuccess) {
           GoRouter.of(context)
               .push(Coursetestview.routename, extra: state.requirements);
@@ -55,11 +55,16 @@ class _CreateOwnExamViewBodyState extends State<CreateOwnExamViewBody> {
               children: [
                 CreateOwnExamViewHeadLine(theme: theme),
                 const SizedBox(height: 48),
-                CustomSelectExamSubjectsSection(onSubjectSelected: (val) {
-                  setState(() {
-                    selectedSubject = val;
-                  });
-                }),
+                BlocProvider(
+                  create: (context) => CreateMyExamBloc(
+                      myMistakesRepo: getIt.get<MyMistakesRepo>()),
+                  child:
+                      CustomSelectExamSubjectsSection(onSubjectSelected: (val) {
+                    setState(() {
+                      selectedSubject = val;
+                    });
+                  }),
+                ),
                 const SizedBox(height: 48),
                 CustomQuestionCountSection(onCountChanged: (val) {
                   setState(() {

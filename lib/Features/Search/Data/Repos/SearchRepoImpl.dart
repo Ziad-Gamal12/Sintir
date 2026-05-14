@@ -139,8 +139,6 @@ class SearchRepoImpl implements SearchRepo {
     );
   }
 
-  // ---------------------- SEARCH TEACHERS ----------------------
-
   @override
   Future<SearchResponse> searchTeachers({
     required String? keyword,
@@ -163,7 +161,6 @@ class SearchRepoImpl implements SearchRepo {
       ],
     };
     searchTeachersQuery["searchValue"] = keyword;
-
     final response = await databaseservice.getData(
       requirements: FireStoreRequirmentsEntity(
         collection: BackendEndpoints.usersCollectionName,

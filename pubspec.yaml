@@ -32,6 +32,7 @@ dependencies:
   awesome_dialog: ^3.2.1
   better_player_plus: ^1.1.5
   bloc: ^9.0.1
+  bloc_concurrency: ^0.3.0
   cached_network_image: ^3.4.1
   circular_progress_button: ^0.0.5
   cloud_firestore: ^6.0.2

@@ -43,7 +43,7 @@ class Contentcreatermodel {
         name: data["fullName"] ?? "unknown",
         profileImageUrl: data["profilePicurl"],
         id: data["uid"],
-        title: data["teacherExtraData"]["subject"]);
+        title: data["teacherExtraData"]["subject"] ?? "_");
   }
   Contentcreaterentity toEntity() {
     return Contentcreaterentity(

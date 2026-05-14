@@ -7,7 +7,10 @@ import 'package:sintir/Features/MyMistakes/Domain/Entities/GetMyMistakesResponse
 abstract class MyMistakesRepo {
   Future<Either<Failure, GetMyMistakesResponseEntity>> getMyMistakes(
       {required String userUID, required bool isPaginate});
- Future<Either<Failure, List<QuestionMistakeEntity>>> getAllActiveMistakes({required String userUID});
+  Future<Either<Failure, List<QuestionMistakeEntity>>> getAllActiveMistakes(
+      {required String userUID});
   Future<Either<Failure, void>> storeTestMyMistakesExamResult(
       {required TestResultEntity testResult, required String userUID});
+  Future<Either<Failure, int>> getSubjectTotalMistakes(
+      {required String userUID, required String subjectId});
 }

@@ -28,6 +28,8 @@ class SearchViewBodyTeachersListViewItem extends StatelessWidget {
         Text(
           contentcreaterentity.name,
           style: AppTextStyles(context).regular14,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         )
       ],
     );

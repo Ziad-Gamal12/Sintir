@@ -33,7 +33,7 @@ import 'package:sintir/Features/Home/presentation/views/MoreInterestedCoursesVie
 import 'package:sintir/Features/Home/presentation/views/MoreNewestCoursesView.dart';
 import 'package:sintir/Features/Home/presentation/views/MorePopularCoursesView.dart';
 import 'package:sintir/Features/MyCourses/Presentation/Views/MyCoursesView.dart';
-import 'package:sintir/Features/MyMistakes/Presentation/Manager/cubit/get_my_mistakes_cubit.dart';
+import 'package:sintir/Features/MyMistakes/Presentation/Manager/get_my_mistakes_cubit/get_my_mistakes_cubit.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Views/CreateOwnExamView.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Views/MyMistakesView.dart';
 import 'package:sintir/Features/MyResults/Presentation/Views/MyResultsView.dart';

@@ -181,4 +181,31 @@ class MyMistakesRepoImpl implements MyMistakesRepo {
       return Left(ServerFailure(message: LocaleKeys.generalError));
     }
   }
+
+  @override
+  Future<Either<Failure, int>> getSubjectTotalMistakes(
+      {required String userUID, required String subjectId}) async {
+    try {
+      final response = await databaseservice.getCollectionItemsCount(
+          requirements: FireStoreRequirmentsEntity(
+            collection: BackendEndpoints.usersCollectionName,
+            docId: userUID,
+            subCollection: BackendEndpoints.myMistakesSubCollection,
+          ),
+          query: {
+            "filters": [
+              {
+                "field": "courseSubject",
+                "operator": "==",
+                "value": subjectId,
+              }
+            ]
+          });
+      return Right(response);
+    } on CustomException catch (e) {
+      return Left(ServerFailure(message: e.message));
+    } catch (e) {
+      return Left(ServerFailure(message: LocaleKeys.generalError));
+    }
+  }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
-import 'package:sintir/Features/MyMistakes/Presentation/Manager/cubit/get_my_mistakes_cubit.dart';
+import 'package:sintir/Features/MyMistakes/Presentation/Manager/get_my_mistakes_cubit/get_my_mistakes_cubit.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Views/Widgets/GetMyMistakesViewBodyListView.dart';
 import 'package:sintir/constant.dart';
 
