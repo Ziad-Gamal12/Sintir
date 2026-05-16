@@ -39,6 +39,14 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       required TransactionEntity transactionEntity,
       required double amount}) async {
     try {
+      if (course.contentcreaterentity?.id == userEntity.uid) {
+        return left(
+            ServerFailure(message: LocaleKeys.cannotSubscribeOwnCourseMessage));
+      }
+      if (course.state != BackendEndpoints.coursePublishedState) {
+        return left(
+            ServerFailure(message: LocaleKeys.courseNotPublishedMessage));
+      }
       final subscriber = _buildSubscriberEntity(userEntity);
 
       await Future.wait([
@@ -113,26 +121,31 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
     required double amount,
     required String transactionId,
   }) async {
-    if (teacherId.isEmpty) return;
+    try {
+      if (teacherId.isEmpty) return;
 
-    final double netAmount = amount - (amount * 0.05);
-    final updates = {
-      "teacherExtraData.wallet.balance": FieldValue.increment(netAmount),
-      "teacherExtraData.wallet.last_transaction_id": transactionId,
-      "teacherExtraData.wallet.updated_at": DateTime.now().toIso8601String(),
-      "teacherExtraData.wallet.total_earned": FieldValue.increment(netAmount),
-    };
+      final double netAmount = amount - (amount * 0.05);
+      final updates = {
+        "teacherExtraData.wallet.balance": FieldValue.increment(netAmount),
+        "teacherExtraData.wallet.last_transaction_id": transactionId,
+        "teacherExtraData.wallet.updated_at": DateTime.now().toIso8601String(),
+        "teacherExtraData.wallet.total_earned": FieldValue.increment(netAmount),
+      };
 
-    for (final entry in updates.entries) {
-      await databaseService.updateData(
-        requirements: FireStoreRequirmentsEntity(
-          collection: BackendEndpoints.usersCollectionName,
-          docId: teacherId,
-        ),
-        field: entry.key,
-        data: entry.value,
-      );
+      for (final entry in updates.entries) {
+        await databaseService.updateData(
+          requirements: FireStoreRequirmentsEntity(
+            collection: BackendEndpoints.usersCollectionName,
+            docId: teacherId,
+          ),
+          field: entry.key,
+          data: entry.value,
+        );
+      }
+    } on CustomException catch (e) {
+      return;
     }
+    return;
   }
 
   FireStoreRequirmentsEntity _buildSubscriberReq(

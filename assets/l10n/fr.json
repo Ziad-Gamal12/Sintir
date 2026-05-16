@@ -39,6 +39,8 @@
     "question_unit": "Questions",
     "select_subject_title": "Choisir la matière",
     "create_button": "Créer l'examen",
+  "cannotSubscribeOwnCourseMessage": "Vous ne pouvez pas vous inscrire à votre propre cours.",
+    "courseNotPublishedMessage": "Ce cours n'est pas encore publié.",
     "error_empty_fields": "Veuillez sélectionner une matière et un nombre de questions",
     "error_no_questions": "Pas assez de questions trouvées pour créer cet examen",
     "general_exam_title": "Examen complet des erreurs",

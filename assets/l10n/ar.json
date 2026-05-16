@@ -71,6 +71,8 @@
     "subject_exam_title": "مراجعة أخطاء في",
   "duration_minutes": "دقائق",
   "questions_count": "أسئلة",
+  "cannotSubscribeOwnCourseMessage": "لا يمكنك الاشتراك في الدورة التدريبية الخاصة بك.",
+  "courseNotPublishedMessage": "هذه الدورة التدريبية غير منشورة بعد.",
   "min_price": "الحد الأدنى للسعر",
   "max_price": "ماكس السعر",
   "coupon": "قسيمة",

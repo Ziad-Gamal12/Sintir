@@ -56,6 +56,10 @@ class LocaleKeys {
   static String get subjectExamTitle => 'subject_exam_title'.tr();
   static String get createButton => 'create_button'.tr();
   static String get errorEmptyFields => 'error_empty_fields'.tr();
+  static String get cannotSubscribeOwnCourseMessage =>
+      'cannotSubscribeOwnCourseMessage'.tr();
+  static String get courseNotPublishedMessage =>
+      'courseNotPublishedMessage'.tr();
   static String get startLearningJourneyTitle =>
       'start_learning_journey_title'.tr();
   static String get description3 => 'description_3'.tr();

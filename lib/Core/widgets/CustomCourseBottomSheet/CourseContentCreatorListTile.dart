@@ -32,15 +32,12 @@ class CourseContentCreatorListTile extends StatelessWidget {
             .semiBold16
             .copyWith(color: isDark ? Colors.white : Colors.black),
       ),
-      leading: SizedBox(
-        width: 40,
-        child: Align(
-          alignment: Alignment.centerRight,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: CustomCachedNetworkImage(
-              imageUrl: image,
-            ),
+      leading: AspectRatio(
+        aspectRatio: 1,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30),
+          child: CustomCachedNetworkImage(
+            imageUrl: image,
           ),
         ),
       ),
