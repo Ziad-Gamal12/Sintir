@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 
 class PriceCard extends StatelessWidget {
-  final IconData icon;
+  final FaIconData icon;
   final String label;
   final String value;
   final bool highlight;
@@ -28,15 +29,15 @@ class PriceCard extends StatelessWidget {
     final Color baseIconColor = isDark ? Colors.grey.shade300 : Colors.grey;
     final Color highlightColor = Colors.green.shade600;
     final Color containerColor = highlight
-        ? highlightColor.withOpacity(0.12)
+        ? highlightColor.withValues(alpha: 0.12)
         : (isDark
-            ? Colors.grey.shade800.withOpacity(0.15)
-            : Colors.blueGrey.withOpacity(0.07));
+            ? Colors.grey.shade800.withValues(alpha: 0.15)
+            : Colors.blueGrey.withValues(alpha: 0.07));
     final Color borderColor = highlight
-        ? highlightColor.withOpacity(0.9)
+        ? highlightColor.withValues(alpha: 0.9)
         : (isDark
-            ? Colors.grey.shade700.withOpacity(0.4)
-            : Colors.blueGrey.withOpacity(0.2));
+            ? Colors.grey.shade700.withValues(alpha: 0.4)
+            : Colors.blueGrey.withValues(alpha: 0.2));
 
     return Stack(
       children: [
@@ -53,7 +54,7 @@ class PriceCard extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Icon(icon,
+              FaIcon(icon,
                   size: 20, color: highlight ? highlightColor : baseIconColor),
               const SizedBox(width: 12),
 
@@ -99,9 +100,9 @@ class PriceCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Colors.red.withOpacity(.0),
-                      Colors.red.withOpacity(.8),
-                      Colors.red.withOpacity(.0),
+                      Colors.red.withValues(alpha: .0),
+                      Colors.red.withValues(alpha: .8),
+                      Colors.red.withValues(alpha: .0),
                     ],
                   ),
                 ),

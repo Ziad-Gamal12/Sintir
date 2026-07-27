@@ -44,7 +44,7 @@ class CourseCouponsRepoImp implements CourseCouponsRepo {
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e, s) {
+    } catch (e) {
       return left(ServerFailure(message: LocaleKeys.couponAddError));
     }
   }

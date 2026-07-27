@@ -29,7 +29,7 @@ class MySupportTicketsListViewItem extends StatelessWidget {
           // Premium, diffused shadow
           boxShadow: [
             BoxShadow(
-              color: theme.shadowColor.withOpacity(0.08),
+              color: theme.shadowColor.withValues(alpha: 0.08),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),

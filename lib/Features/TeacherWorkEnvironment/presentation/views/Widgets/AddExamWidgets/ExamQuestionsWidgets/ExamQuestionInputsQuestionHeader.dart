@@ -27,8 +27,7 @@ class ExamQuestionInputsQuestionHeader extends StatelessWidget {
 
     return Row(
       children: [
-        // Use theme-aware color for the icon
-        Icon(FontAwesomeIcons.circleInfo, color: iconColor, size: 25),
+        FaIcon(FontAwesomeIcons.circleInfo, color: iconColor, size: 25),
         const SizedBox(
           width: 10,
         ),
@@ -38,24 +37,20 @@ class ExamQuestionInputsQuestionHeader extends StatelessWidget {
               text: " ${LocaleKeys.questionNumber}",
               style: AppTextStyles(context)
                   .semiBold16
-                  // Use primaryTextColor instead of hardcoded Colors.black
                   .copyWith(color: primaryTextColor),
             ),
             TextSpan(
               text: "${index + 1}",
-              // Use theme-aware accent color
               style: AppTextStyles(context).bold16.copyWith(color: iconColor),
             ),
             TextSpan(
               text: " ${LocaleKeys.of} ",
               style: AppTextStyles(context)
                   .regular16
-                  // Use primaryTextColor instead of hardcoded Colors.black
                   .copyWith(color: primaryTextColor),
             ),
             TextSpan(
               text: "$totalQuestions",
-              // Use theme-aware contrasting color
               style: AppTextStyles(context)
                   .bold16
                   .copyWith(color: totalCountColor),

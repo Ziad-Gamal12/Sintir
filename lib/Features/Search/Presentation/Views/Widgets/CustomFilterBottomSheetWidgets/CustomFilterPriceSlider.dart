@@ -49,7 +49,7 @@ class _CustomFilterPriceSliderState extends State<CustomFilterPriceSlider> {
             activeTrackColor: KMainColor,
             inactiveTrackColor: Colors.grey.shade300,
             thumbColor: KMainColor,
-            overlayColor: KMainColor.withOpacity(0.12),
+            overlayColor: KMainColor.withValues(alpha: 0.12),
             valueIndicatorTextStyle: const TextStyle(color: Colors.white),
           ),
           child: Slider(

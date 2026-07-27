@@ -26,11 +26,6 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
 
   CourseSubscriptionsRepoImpl({required this.databaseService});
 
-  /// Subscribe a user to a course:
-  /// 1. Add course to user's course list.
-  /// 2. Add user as a subscriber.
-  /// 3. Update course subscriber count.
-  /// 4. Update teacher wallet (balance, transactionId, lastUpdated).
   @override
   Future<Either<Failure, void>> subscribeToCourse(
       {required CourseEntity course,
@@ -77,7 +72,6 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
     }
   }
 
-  /// Increment or decrement subscribers count
   Future<void> _updateCourseSubscriberCount({
     required String courseId,
     int delta = 1,
@@ -92,7 +86,6 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
     );
   }
 
-  /// Add new subscriber to course
   Future<void> _addSubscriber(
     SubscriberEntity subscriber,
     FireStoreRequirmentsEntity requirements,
@@ -115,7 +108,6 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
     );
   }
 
-  /// Update teacher wallet (balance, transaction id, last updated)
   Future<void> _updateTeacherWalletBatch({
     required String teacherId,
     required double amount,
@@ -142,7 +134,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
           data: entry.value,
         );
       }
-    } on CustomException catch (e) {
+    } on CustomException {
       return;
     }
     return;
@@ -211,8 +203,6 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
-
-  /// ============= Subscribers Pagination =============
 
   DocumentSnapshot? _lastSubscribersDoc;
   final Map<String, dynamic> _baseQuery = {"startAfter": null, "limit": 10};

@@ -22,7 +22,7 @@ class _VideoAttendancePresentageState extends State<VideoAttendancePresentage> {
     final Color primaryColor = theme.colorScheme.primary;
     final Color errorColor = theme.colorScheme.error;
     final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
-    final Color backgroundColor = theme.dividerColor.withOpacity(0.5);
+    final Color backgroundColor = theme.dividerColor.withValues(alpha: 0.5);
 
     return Column(
       children: [

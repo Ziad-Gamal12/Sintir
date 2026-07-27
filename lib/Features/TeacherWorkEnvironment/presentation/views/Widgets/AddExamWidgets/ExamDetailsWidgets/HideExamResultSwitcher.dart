@@ -35,9 +35,10 @@ class _HideExamResultSwitcherState extends State<HideExamResultSwitcher> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final isDark = theme.brightness == Brightness.dark;
-    final activeBg = colorScheme.primary.withOpacity(isDark ? 0.15 : 0.05);
+    final activeBg =
+        colorScheme.primary.withValues(alpha: isDark ? 0.15 : 0.05);
     final inactiveBorder =
-        isDark ? Colors.white10 : Colors.black.withOpacity(0.05);
+        isDark ? Colors.white10 : Colors.black.withValues(alpha: 0.05);
 
     return InkWell(
       onTap: _handleToggle,
@@ -103,7 +104,7 @@ class _CustomToggle extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         color: isActive
             ? activeColor
-            : theme.unselectedWidgetColor.withOpacity(0.2),
+            : theme.unselectedWidgetColor.withValues(alpha: 0.2),
       ),
       child: AnimatedAlign(
         duration: const Duration(milliseconds: 250),

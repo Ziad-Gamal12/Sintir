@@ -22,7 +22,7 @@ class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
     final List<BoxShadow> boxShadows = isDarkMode
         ? [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.4),
+              color: Colors.grey.withValues(alpha: 0.4),
               blurRadius: 7,
               spreadRadius: 1,
               offset: const Offset(0, 3),
@@ -43,7 +43,8 @@ class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
         color: cardColor,
         borderRadius: BorderRadius.circular(20),
         boxShadow: boxShadows,
-        border: Border.all(color: borderColor.withOpacity(0.5), width: .5),
+        border:
+            Border.all(color: borderColor.withValues(alpha: 0.5), width: .5),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

@@ -49,7 +49,7 @@ class CustomHiddenResultWidget extends StatelessWidget {
           shape: BoxShape.circle,
           gradient: RadialGradient(
             colors: [
-              color.withOpacity(opacity),
+              color.withValues(alpha: opacity),
               Colors.transparent,
             ],
           ),
@@ -87,7 +87,7 @@ class CustomHiddenResultWidget extends StatelessWidget {
                       .textTheme
                       .bodyMedium
                       ?.color
-                      ?.withOpacity(0.55),
+                      ?.withValues(alpha: 0.55),
                   height: 1.6,
                 ),
           ),
@@ -110,7 +110,7 @@ class CustomHiddenResultWidget extends StatelessWidget {
             shape: BoxShape.circle,
             gradient: RadialGradient(
               colors: [
-                primary.withOpacity(0.10),
+                primary.withValues(alpha: 0.10),
                 Colors.transparent,
               ],
             ),
@@ -138,7 +138,9 @@ class CustomHiddenResultWidget extends StatelessWidget {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      isDark ? Colors.white12 : Colors.black.withOpacity(0.05),
+                      isDark
+                          ? Colors.white12
+                          : Colors.black.withValues(alpha: 0.05),
                       Colors.transparent,
                     ],
                   ),
@@ -153,12 +155,12 @@ class CustomHiddenResultWidget extends StatelessWidget {
           padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: primary.withOpacity(0.15),
+            color: primary.withValues(alpha: 0.15),
             boxShadow: [
               BoxShadow(
                 blurRadius: 20,
                 offset: const Offset(0, 8),
-                color: primary.withOpacity(0.25),
+                color: primary.withValues(alpha: 0.25),
               ),
             ],
           ),
@@ -186,7 +188,7 @@ class CustomHiddenResultWidget extends StatelessWidget {
               fontSize: 10,
               fontWeight: FontWeight.w600,
               letterSpacing: 2.8,
-              color: primary.withOpacity(0.6),
+              color: primary.withValues(alpha: 0.6),
             ),
           ),
           const SizedBox(width: 10),

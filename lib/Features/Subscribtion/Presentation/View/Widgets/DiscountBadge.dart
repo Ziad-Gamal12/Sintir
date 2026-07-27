@@ -24,7 +24,7 @@ class DiscountBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(FontAwesomeIcons.percent, color: Colors.white, size: 14),
+          const FaIcon(FontAwesomeIcons.percent, color: Colors.white, size: 14),
           const SizedBox(width: 6),
           Text(
             "${LocaleKeys.discount} ${percent.toStringAsFixed(0)}%",

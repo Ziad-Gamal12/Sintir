@@ -14,7 +14,7 @@ class BottomClipperWidget extends StatelessWidget {
         clipper: WaveClipperTwo(reverse: true, flip: true),
         child: Container(
           height: 100,
-          color: Colors.white.withOpacity(0.3), // Semi-transparent wave
+          color: Colors.white.withValues(alpha: 0.3), // Semi-transparent wave
         ),
       ),
     );

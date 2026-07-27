@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 
 class TeacherWalletBalanceDetailsRow extends StatelessWidget {
-  final IconData icon;
+  final FaIconData icon;
   final String title;
   final String value;
 
@@ -19,7 +20,7 @@ class TeacherWalletBalanceDetailsRow extends StatelessWidget {
 
     return Row(
       children: [
-        Icon(icon, color: theme.iconTheme.color, size: 20),
+        FaIcon(icon, color: theme.iconTheme.color, size: 20),
         const SizedBox(width: 10),
         Text(title,
             style: AppTextStyles(context)

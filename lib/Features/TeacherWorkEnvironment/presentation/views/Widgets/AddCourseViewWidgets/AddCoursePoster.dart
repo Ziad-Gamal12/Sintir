@@ -34,12 +34,12 @@ class Addcourseposter extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     // Use background color that contrasts well with the main content area (often card color, but might need a slight shade difference for border/contrast if the main background is also white/card color).
     // Using theme.cardColor for the background and theme.dividerColor for border/text shade.
-    final Color placeholderColor = theme.colorScheme.onSurface
-        .withOpacity(0.05); // A light shade for the placeholder background
+    final Color placeholderColor = theme.colorScheme.onSurface.withValues(
+        alpha: 0.05); // A light shade for the placeholder background
     final Color iconColor = theme.colorScheme
         .primary; // Use primary color for the icon if it's not provided via asset
-    final Color textColor =
-        theme.textTheme.bodyMedium!.color!.withOpacity(0.6); // Muted text color
+    final Color textColor = theme.textTheme.bodyMedium!.color!
+        .withValues(alpha: 0.6); // Muted text color
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -47,7 +47,7 @@ class Addcourseposter extends StatelessWidget {
         color: placeholderColor,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: theme.dividerColor.withOpacity(0.5),
+          color: theme.dividerColor.withValues(alpha: 0.5),
           width: 1,
         ),
       ),

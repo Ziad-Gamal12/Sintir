@@ -22,7 +22,7 @@ class SupportChatListMessageItem extends StatelessWidget {
 
     final Color bubbleColor = isMe
         ? theme.primaryColor
-        : theme.colorScheme.surfaceContainerHighest.withOpacity(0.5);
+        : theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5);
 
     final Color textColor =
         isMe ? Colors.white : theme.colorScheme.onSurfaceVariant;

@@ -21,7 +21,7 @@ class CustomTrashIcon extends StatelessWidget {
     }
     return IconButton(
         onPressed: onpressed,
-        icon: const Icon(
+        icon: const FaIcon(
           FontAwesomeIcons.trash,
           color: Colors.red,
         ));

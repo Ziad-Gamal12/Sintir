@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
@@ -45,7 +46,7 @@ class CourseMetaInfo extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         InfoRow(
-          icon: Icons.language,
+          icon: FontAwesomeIcons.language,
           label: requirmentsEntity.course.language,
         ),
       ],

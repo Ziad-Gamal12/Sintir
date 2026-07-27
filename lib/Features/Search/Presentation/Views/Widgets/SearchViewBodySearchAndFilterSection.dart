@@ -38,7 +38,7 @@ class SearchViewBodySearchAndFilterSection extends StatelessWidget {
                   ),
                   context: context);
             },
-            icon: const Icon(
+            icon: const FaIcon(
               FontAwesomeIcons.barsStaggered,
               size: 25,
             ))

@@ -23,8 +23,9 @@ class Customstudentsocialbutton extends StatelessWidget {
       minWidth: double.infinity,
       shape: RoundedRectangleBorder(
         side: BorderSide(
-          color:
-              isDark ? Colors.white.withOpacity(.15) : const Color(0xffDDDFDF),
+          color: isDark
+              ? Colors.white.withValues(alpha: .15)
+              : const Color(0xffDDDFDF),
           width: 1,
         ),
         borderRadius: BorderRadius.circular(16),

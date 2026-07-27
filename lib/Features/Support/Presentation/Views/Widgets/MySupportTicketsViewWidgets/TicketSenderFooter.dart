@@ -26,7 +26,7 @@ class TicketSenderFooter extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(
-              color: theme.dividerColor.withOpacity(0.5),
+              color: theme.dividerColor.withValues(alpha: 0.5),
               width: 1.0,
             ),
           ),
@@ -62,13 +62,14 @@ class TicketSenderFooter extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           decoration: BoxDecoration(
-            color: theme.primaryColor.withOpacity(0.05), // Subtle background
+            color:
+                theme.primaryColor.withValues(alpha: 0.05), // Subtle background
             borderRadius: BorderRadius.circular(4),
           ),
           child: Text(
             sender.role,
             style: textStyles.regular14.copyWith(
-              color: theme.primaryColor.withOpacity(0.8),
+              color: theme.primaryColor.withValues(alpha: 0.8),
               fontSize: 11,
               fontWeight: FontWeight.w600,
             ),

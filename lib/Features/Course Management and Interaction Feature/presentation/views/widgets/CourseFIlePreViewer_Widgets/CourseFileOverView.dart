@@ -42,7 +42,7 @@ class CourseFileOverView extends StatelessWidget {
                           duration: const Duration(microseconds: 500),
                           curve: Curves.linear);
                     },
-                    icon: const Icon(FontAwesomeIcons.arrowRight,
+                    icon: const FaIcon(FontAwesomeIcons.arrowRight,
                         color: Colors.white)),
                 const SizedBox(
                   width: 10,
@@ -62,7 +62,7 @@ class CourseFileOverView extends StatelessWidget {
                           duration: const Duration(microseconds: 500),
                           curve: Curves.linear);
                     },
-                    icon: const Icon(
+                    icon: const FaIcon(
                       FontAwesomeIcons.arrowLeft,
                       color: Colors.white,
                     )),

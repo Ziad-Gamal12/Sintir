@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWalletBalanceDeatils.dart';
@@ -31,7 +32,7 @@ class TeacherWalletDetailsSection extends StatelessWidget {
         ),
         Divider(
           // 1. Themed Divider
-          color: colorScheme.onSurface.withOpacity(0.1),
+          color: colorScheme.onSurface.withValues(alpha: 0.1),
           thickness: 1,
           height: 40,
         ),
@@ -40,27 +41,27 @@ class TeacherWalletDetailsSection extends StatelessWidget {
         ),
         Divider(
           // 3. Themed Divider
-          color: colorScheme.onSurface.withOpacity(0.05),
+          color: colorScheme.onSurface.withValues(alpha: 0.05),
           height: 20,
         ),
         Column(
           children: [
             TeacherWalletBalanceDetailsRow(
-              icon: Icons.calendar_month_outlined,
+              icon: FontAwesomeIcons.calendar,
               title: LocaleKeys.createdDate,
               value: wallet.createdAt,
             ),
             Divider(
-              color: colorScheme.onSurface.withOpacity(0.05),
+              color: colorScheme.onSurface.withValues(alpha: 0.05),
               height: 20,
             ),
             TeacherWalletBalanceDetailsRow(
-              icon: Icons.calendar_month_outlined,
+              icon: FontAwesomeIcons.calendar,
               title: LocaleKeys.updatedDate,
               value: wallet.updatedAt,
             ),
             Divider(
-              color: colorScheme.onSurface.withOpacity(0.05),
+              color: colorScheme.onSurface.withValues(alpha: 0.05),
               height: 20,
             ),
           ],

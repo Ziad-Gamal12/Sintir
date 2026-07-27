@@ -16,12 +16,12 @@ class CustomResetPassIcon extends StatelessWidget {
         shape: BoxShape.circle,
         color: isDarkMode ? Colors.grey[900] : Colors.white,
         border: Border.all(
-          color: Colors.blue.withOpacity(.25),
+          color: Colors.blue.withValues(alpha: .25),
           width: 1.2,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.blueAccent.withOpacity(.1),
+            color: Colors.blueAccent.withValues(alpha: .1),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),

@@ -63,7 +63,7 @@ class _ContentCreatorDetailsState extends State<ContentCreatorDetails>
           boxShadow: [
             BoxShadow(
               // Use theme shadow color
-              color: shadowColor.withOpacity(0.1),
+              color: shadowColor.withValues(alpha: 0.1),
               blurRadius: 20,
               spreadRadius: 2,
               offset: const Offset(0, 8),

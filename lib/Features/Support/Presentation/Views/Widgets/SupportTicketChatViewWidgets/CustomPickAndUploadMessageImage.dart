@@ -34,7 +34,8 @@ class CustomPickAndUploadMessageImage extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              color: theme.colorScheme.surfaceContainerHighest.withOpacity(0.3),
+              color: theme.colorScheme.surfaceContainerHighest
+                  .withValues(alpha: 0.3),
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),

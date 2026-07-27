@@ -40,7 +40,7 @@ class QuickPickSelector extends StatelessWidget {
                 color: isSelected
                     ? KMainColor
                     : (isDarkMode
-                        ? Colors.white.withOpacity(0.05)
+                        ? Colors.white.withValues(alpha: 0.05)
                         : Colors.grey.shade100),
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(
@@ -52,7 +52,8 @@ class QuickPickSelector extends StatelessWidget {
                 boxShadow: isSelected
                     ? [
                         BoxShadow(
-                          color: KMainColor.withOpacity(isDarkMode ? 0.3 : 0.2),
+                          color: KMainColor.withValues(
+                              alpha: isDarkMode ? 0.3 : 0.2),
                           blurRadius: 10,
                           offset: const Offset(0, 4),
                         )

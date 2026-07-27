@@ -15,8 +15,8 @@ class AboutUSDescription extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: isDark
-            ? Colors.white.withOpacity(0.03)
-            : Colors.black.withOpacity(0.02),
+            ? Colors.white.withValues(alpha: 0.03)
+            : Colors.black.withValues(alpha: 0.02),
       ),
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -27,8 +27,8 @@ class AboutUSDescription extends StatelessWidget {
                 height: 1.75,
                 letterSpacing: 0.2,
                 color: isDark
-                    ? Colors.white.withOpacity(0.85)
-                    : Colors.black.withOpacity(0.75),
+                    ? Colors.white.withValues(alpha: 0.85)
+                    : Colors.black.withValues(alpha: 0.75),
               ),
           textAlign: TextAlign.justify,
         ),

@@ -13,7 +13,7 @@ class CustomCard extends StatelessWidget {
     final List<BoxShadow> boxShadows = isDarkMode
         ? [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.4),
+              color: Colors.grey.withValues(alpha: 0.4),
               blurRadius: 10,
               spreadRadius: 1,
               offset: const Offset(2, 5),

@@ -27,23 +27,23 @@ class _CustomResetPassCardState extends State<CustomResetPassCard> {
         gradient: LinearGradient(
           colors: isDarkMode
               ? [
-                  Colors.grey.withOpacity(.2),
-                  Colors.grey.withOpacity(.1),
+                  Colors.grey.withValues(alpha: .2),
+                  Colors.grey.withValues(alpha: .1),
                 ]
               : [
-                  Colors.white.withOpacity(.8),
-                  Colors.white.withOpacity(.6),
+                  Colors.white.withValues(alpha: .8),
+                  Colors.white.withValues(alpha: .6),
                 ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(22),
         border: Border.all(
-          color: Colors.blue.withOpacity(.2),
+          color: Colors.blue.withValues(alpha: .2),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.blueAccent.withOpacity(.05),
+            color: Colors.blueAccent.withValues(alpha: .05),
             blurRadius: 25,
             offset: const Offset(0, 10),
           ),

@@ -12,12 +12,13 @@ class CreateOwnExamWarningNote extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color:
-            isDarkMode ? Colors.amber.withOpacity(0.05) : Colors.amber.shade50,
+        color: isDarkMode
+            ? Colors.amber.withValues(alpha: 0.05)
+            : Colors.amber.shade50,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: isDarkMode
-              ? Colors.amber.withOpacity(0.2)
+              ? Colors.amber.withValues(alpha: 0.2)
               : Colors.amber.shade200,
           width: 1,
         ),

@@ -20,7 +20,7 @@ class CourseDetailsSubscriberReviewsListViewItem extends StatelessWidget {
     final Color titleColor = theme.textTheme.bodyLarge!.color!;
     final Color subtitleColor = theme.textTheme.bodyMedium!.color!;
     final Color trailingColor =
-        theme.textTheme.bodySmall!.color!.withOpacity(0.7);
+        theme.textTheme.bodySmall!.color!.withValues(alpha: 0.7);
 
     return Container(
       padding: const EdgeInsets.all(10),

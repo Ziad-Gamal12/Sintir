@@ -23,7 +23,7 @@ class ExamDuration extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Colors.blueAccent.withOpacity(.2),
+            color: Colors.blueAccent.withValues(alpha: .2),
             shape: BoxShape.circle,
           ),
           child: Icon(

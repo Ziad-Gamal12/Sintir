@@ -41,7 +41,7 @@ class SectionHeaderTile extends StatelessWidget {
                     );
               }).show();
             },
-            icon: const Icon(FontAwesomeIcons.trashCan),
+            icon: const FaIcon(FontAwesomeIcons.trashCan),
           ),
         ),
       ),

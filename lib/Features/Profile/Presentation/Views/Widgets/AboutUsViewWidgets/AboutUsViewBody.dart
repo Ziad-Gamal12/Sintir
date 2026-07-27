@@ -35,8 +35,8 @@ class AboutUsViewBody extends StatelessWidget {
         border: Border.all(
           width: 1.4,
           color: isDark
-              ? Colors.white.withOpacity(0.08)
-              : Colors.black.withOpacity(0.05),
+              ? Colors.white.withValues(alpha: 0.08)
+              : Colors.black.withValues(alpha: 0.05),
         ),
 
         gradient: LinearGradient(
@@ -46,7 +46,7 @@ class AboutUsViewBody extends StatelessWidget {
                   const Color(0xff0f0f0f),
                 ]
               : [
-                  Colors.white.withOpacity(0.95),
+                  Colors.white.withValues(alpha: 0.95),
                   Colors.grey.shade100,
                 ],
           begin: Alignment.topLeft,
@@ -57,8 +57,8 @@ class AboutUsViewBody extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: isDark
-                ? Colors.black.withOpacity(0.45)
-                : Colors.grey.withOpacity(0.25),
+                ? Colors.black.withValues(alpha: 0.45)
+                : Colors.grey.withValues(alpha: 0.25),
             offset: const Offset(0, 28),
             blurRadius: 40,
             spreadRadius: -4,

@@ -30,8 +30,8 @@ class TeacherOnboardingInfoCard extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: colorScheme.shadow
-                .withOpacity(theme.brightness == Brightness.dark ? 0.4 : 0.15),
+            color: colorScheme.shadow.withValues(
+                alpha: theme.brightness == Brightness.dark ? 0.4 : 0.15),
             blurRadius: 30,
             spreadRadius: 3,
             offset: const Offset(5, 10),

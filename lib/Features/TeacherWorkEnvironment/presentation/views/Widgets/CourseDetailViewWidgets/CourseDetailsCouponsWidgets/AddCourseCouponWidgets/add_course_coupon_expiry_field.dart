@@ -16,7 +16,7 @@ class AddCourseCouponExpiryField extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final Color defaultTextColor =
-        theme.textTheme.bodyMedium!.color!.withOpacity(0.7);
+        theme.textTheme.bodyMedium!.color!.withValues(alpha: 0.7);
     final Color selectedTextColor = theme.textTheme.bodyLarge!.color!;
     final Color iconColor = defaultTextColor;
     final Color fillColor = theme.brightness == Brightness.dark
@@ -38,7 +38,7 @@ class AddCourseCouponExpiryField extends StatelessWidget {
         decoration: BoxDecoration(
           color: fillColor,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: theme.dividerColor.withOpacity(0.5)),
+          border: Border.all(color: theme.dividerColor.withValues(alpha: 0.5)),
         ),
         child: ListTile(
           dense: true,

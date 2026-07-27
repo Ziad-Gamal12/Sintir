@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/Managers/Cubits/course_coupons_cubit/course_coupons_cubit.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/locale_keys.dart';
@@ -48,7 +47,7 @@ class _SubscribtionViewBodyCouponTextFieldState
             hintText: LocaleKeys.couponDiscount,
             obscureText: false,
             textInputType: TextInputType.text,
-            prefixIcon: FontAwesomeIcons.tags,
+            prefixIcon: Icons.tag,
             onSaved: (val) => couponCode = val?.trim() ?? "",
             validator: (val) {
               if (val == null || val.trim().isEmpty) {
@@ -64,7 +63,7 @@ class _SubscribtionViewBodyCouponTextFieldState
                   )
                 : IconButton(
                     icon: const Icon(
-                      FontAwesomeIcons.magnifyingGlass,
+                      Icons.search,
                       color: Colors.grey,
                       size: 20,
                     ),

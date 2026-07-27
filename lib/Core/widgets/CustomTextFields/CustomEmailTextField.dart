@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable, file_names
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -19,7 +18,7 @@ class CustomEmailTextField extends StatelessWidget {
     return CustomTextField(
         controller: controller,
         hintText: LocaleKeys.emailHint,
-        prefixIcon: isIconVisible ? FontAwesomeIcons.envelope : null,
+        prefixIcon: isIconVisible ? Icons.email : null,
         onSaved: onSaved,
         obscureText: false,
         textInputType: TextInputType.emailAddress,

@@ -23,7 +23,7 @@ class _TestAttendancePresentageState extends State<TestAttendancePresentage> {
     final Color primaryColor = Theme.of(context).colorScheme.primary;
     final Color textColor = Theme.of(context).textTheme.bodyLarge!.color!;
     final Color backgroundColor =
-        Theme.of(context).dividerColor.withOpacity(0.5);
+        Theme.of(context).dividerColor.withValues(alpha: 0.5);
 
     return BlocConsumer<TestConsequencesCubit, TestConsequencesState>(
       listenWhen: (previous, current) {

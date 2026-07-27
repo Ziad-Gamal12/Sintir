@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -41,16 +41,12 @@ class CreatorStats extends StatelessWidget {
     required BuildContext context,
   }) {
     final ThemeData theme = Theme.of(context);
-    final Color primaryColor =
-        theme.colorScheme.primary; // Use primary color for icons and values
-    final Color secondaryTextColor =
-        theme.textTheme.bodyMedium!.color!; // Use muted color for the label
+    final Color primaryColor = theme.colorScheme.primary;
+    final Color secondaryTextColor = theme.textTheme.bodyMedium!.color!;
 
     return Column(
       children: [
-        Icon(icon,
-            size: 22,
-            color: primaryColor), // Use theme primary color for the icon
+        Icon(icon, size: 22, color: primaryColor),
         const SizedBox(height: 4),
         AnimatedSwitcher(
             duration: const Duration(milliseconds: 500),
@@ -60,15 +56,14 @@ class CreatorStats extends StatelessWidget {
             child: Text(
               value,
               style: AppTextStyles(context).semiBold16.copyWith(
-                    color:
-                        primaryColor, // Use theme primary color for the value
+                    color: primaryColor,
                   ),
             )),
         Text(
           label,
-          style: AppTextStyles(context).regular14.copyWith(
-              color:
-                  secondaryTextColor), // Use theme secondary text color for the label
+          style: AppTextStyles(context)
+              .regular14
+              .copyWith(color: secondaryTextColor),
         ),
       ],
     );

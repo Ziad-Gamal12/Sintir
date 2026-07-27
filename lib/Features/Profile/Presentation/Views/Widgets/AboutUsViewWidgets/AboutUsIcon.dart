@@ -14,13 +14,13 @@ class AboutUsIcon extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: isDark
-            ? Colors.white.withOpacity(0.05)
-            : Colors.black.withOpacity(0.05),
+            ? Colors.white.withValues(alpha: 0.05)
+            : Colors.black.withValues(alpha: 0.05),
         boxShadow: [
           BoxShadow(
             color: isDark
-                ? Colors.blueAccent.withOpacity(.25)
-                : Colors.blueAccent.withOpacity(.3),
+                ? Colors.blueAccent.withValues(alpha: .25)
+                : Colors.blueAccent.withValues(alpha: .3),
             blurRadius: 20,
             spreadRadius: -2,
             offset: const Offset(0, 6),

@@ -130,7 +130,7 @@ class VideoItemRepoImpli implements VideoItemRepo {
       bool hasMore = response.hasMore ?? false;
       return right(GetVideoItemNotesResponseEntity(
           notes: notes, hasMore: hasMore, isPaginate: isPaginate));
-    } on CustomException catch (e, s) {
+    } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));

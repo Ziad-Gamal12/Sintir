@@ -45,7 +45,7 @@ class MistakeSolutionReview extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: color.withOpacity(isDarkMode ? 0.1 : 0.05),
+        color: color.withValues(alpha: isDarkMode ? 0.1 : 0.05),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(

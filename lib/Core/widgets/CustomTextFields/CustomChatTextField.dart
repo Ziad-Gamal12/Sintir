@@ -35,7 +35,7 @@ class CustomChatTextField extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             spreadRadius: 2,
             blurRadius: 15,
             offset: const Offset(0, 4),
@@ -89,7 +89,7 @@ class CustomChatTextField extends StatelessWidget {
           duration: const Duration(milliseconds: 200),
           child: IconButton(
             key: ValueKey<bool>(isNotEmpty),
-            icon: Icon(
+            icon: FaIcon(
               FontAwesomeIcons.paperPlane,
               size: 20,
               color: isNotEmpty ? KMainColor : Colors.grey.shade400,

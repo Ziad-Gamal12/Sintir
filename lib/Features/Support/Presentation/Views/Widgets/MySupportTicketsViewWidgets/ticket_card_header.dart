@@ -43,7 +43,8 @@ class TicketCardHeader extends StatelessWidget {
               Text(
                 dateString,
                 style: textStyles.regular14.copyWith(
-                  color: theme.textTheme.bodySmall?.color?.withOpacity(0.6),
+                  color:
+                      theme.textTheme.bodySmall?.color?.withValues(alpha: 0.6),
                   fontWeight: FontWeight.w500,
                   fontSize: 13,
                 ),
@@ -52,7 +53,8 @@ class TicketCardHeader extends StatelessWidget {
               Text(
                 '#${ticket.id.toUpperCase()}',
                 style: textStyles.regular14.copyWith(
-                  color: theme.textTheme.bodySmall?.color?.withOpacity(0.4),
+                  color:
+                      theme.textTheme.bodySmall?.color?.withValues(alpha: 0.4),
                   fontWeight: FontWeight.w400,
                   fontSize: 11,
                 ),

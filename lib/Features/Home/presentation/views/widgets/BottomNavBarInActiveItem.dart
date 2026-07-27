@@ -14,6 +14,7 @@ class BottomNavBarInActiveItem extends StatelessWidget {
 
     return SvgPicture.asset(
       bottomNavBarEntity.inactiveIcon,
+      height: 30,
       color: color,
     );
   }

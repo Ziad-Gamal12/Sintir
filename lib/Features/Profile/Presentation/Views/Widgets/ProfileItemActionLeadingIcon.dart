@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Features/Profile/Domain/Entities/ProfileActionsEntity.dart';
 
 class ProfileItemActionLeadingIcon extends StatelessWidget {
@@ -23,7 +24,7 @@ class ProfileItemActionLeadingIcon extends StatelessWidget {
         color: color.withValues(alpha: 0.1),
       ),
       child: Center(
-        child: Icon(
+        child: FaIcon(
           profileActionsEntity.icon,
           color: color,
           size: size,

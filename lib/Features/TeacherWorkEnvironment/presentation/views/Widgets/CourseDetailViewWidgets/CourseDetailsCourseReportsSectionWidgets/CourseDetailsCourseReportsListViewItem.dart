@@ -15,7 +15,8 @@ class CourseDetailsCourseReportsListViewItem extends StatelessWidget {
     final Color borderColor = theme.dividerColor;
     final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
     final Color secondaryTextColor = theme.textTheme.bodySmall!.color!;
-    final Color descriptionColor = theme.colorScheme.error.withOpacity(0.8);
+    final Color descriptionColor =
+        theme.colorScheme.error.withValues(alpha: 0.8);
 
     return Container(
         padding: const EdgeInsets.all(10),

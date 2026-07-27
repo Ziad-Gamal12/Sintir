@@ -25,12 +25,12 @@ class CustomAddExamStepsRow extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 20,
             offset: const Offset(0, 10),
           )
         ],
-        border: Border.all(color: theme.dividerColor.withOpacity(0.05)),
+        border: Border.all(color: theme.dividerColor.withValues(alpha: 0.05)),
       ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -103,7 +103,7 @@ class CustomAddExamStepsRow extends StatelessWidget {
             ? primary
             : (isSelected
                 ? theme.cardColor
-                : theme.dividerColor.withOpacity(0.1)),
+                : theme.dividerColor.withValues(alpha: 0.1)),
         border: Border.all(
           color: isSelected ? primary : Colors.transparent,
           width: 2,
@@ -111,7 +111,7 @@ class CustomAddExamStepsRow extends StatelessWidget {
         boxShadow: isSelected
             ? [
                 BoxShadow(
-                    color: primary.withOpacity(0.3),
+                    color: primary.withValues(alpha: 0.3),
                     blurRadius: 12,
                     offset: const Offset(0, 4))
               ]
@@ -136,7 +136,7 @@ class CustomAddExamStepsRow extends StatelessWidget {
       child: Container(
         height: 2,
         width: (count - 1) * 120.0,
-        color: Colors.grey.withOpacity(0.1),
+        color: Colors.grey.withValues(alpha: 0.1),
       ),
     );
   }

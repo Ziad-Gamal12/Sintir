@@ -50,14 +50,16 @@ class TransactionCardFooter extends StatelessWidget {
                   dateString,
                   style: textStyles.regular14.copyWith(
                     fontWeight: FontWeight.w500,
-                    color: theme.textTheme.bodyLarge!.color!.withOpacity(0.8),
+                    color: theme.textTheme.bodyLarge!.color!
+                        .withValues(alpha: 0.8),
                   ),
                 ),
                 Text(
                   timeString,
                   style: textStyles.regular14.copyWith(
                     fontSize: 11,
-                    color: theme.textTheme.bodySmall!.color!.withOpacity(0.6),
+                    color: theme.textTheme.bodySmall!.color!
+                        .withValues(alpha: 0.6),
                   ),
                 ),
               ],
@@ -74,7 +76,8 @@ class TransactionCardFooter extends StatelessWidget {
               child: Text(
                 '${LocaleKeys.transactionId}: ${transactionEntity.transactionId!}',
                 style: textStyles.regular14.copyWith(
-                  color: theme.textTheme.bodySmall!.color!.withOpacity(0.4),
+                  color:
+                      theme.textTheme.bodySmall!.color!.withValues(alpha: 0.4),
                 ),
               ),
             ),

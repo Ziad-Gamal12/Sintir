@@ -31,7 +31,7 @@ class StudentOnboardingInfoCard extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: isDarkMode
-                ? Colors.black.withOpacity(0.3)
+                ? Colors.black.withValues(alpha: 0.3)
                 : Colors.grey.shade300,
             blurRadius: 40,
             spreadRadius: 3,
@@ -56,8 +56,8 @@ class StudentOnboardingInfoCard extends StatelessWidget {
                   page.description,
                   textAlign: TextAlign.justify,
                   style: AppTextStyles(context).regular13.copyWith(
-                        color:
-                            theme.textTheme.bodyMedium!.color!.withOpacity(0.8),
+                        color: theme.textTheme.bodyMedium!.color!
+                            .withValues(alpha: 0.8),
                       ),
                 ),
               ),

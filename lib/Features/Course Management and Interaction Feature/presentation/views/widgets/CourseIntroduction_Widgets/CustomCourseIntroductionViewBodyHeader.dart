@@ -22,7 +22,7 @@ class CustomCourseIntroductionViewBodyHeader extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: theme.shadowColor.withOpacity(0.1),
+                color: theme.shadowColor.withValues(alpha: 0.1),
                 blurRadius: 50,
                 spreadRadius: 1,
                 offset: const Offset(5, 15),

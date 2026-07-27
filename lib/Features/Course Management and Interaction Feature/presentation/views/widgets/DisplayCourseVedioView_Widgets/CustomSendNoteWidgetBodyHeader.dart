@@ -16,7 +16,7 @@ class CustomSendNoteWidgetBodyHeader extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: theme.primaryColor.withOpacity(.1),
+            color: theme.primaryColor.withValues(alpha: .1),
           ),
           padding: const EdgeInsets.all(8),
           child: Icon(

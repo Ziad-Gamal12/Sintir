@@ -23,13 +23,13 @@ class CustomCourseDetailsBodyCourseInfoTexts extends StatelessWidget {
           "${LocaleKeys.createdDate} (${courseEntity.postedDate})",
           style: AppTextStyles(context)
               .regular10
-              .copyWith(color: textColor.withOpacity(0.7)),
+              .copyWith(color: textColor.withValues(alpha: 0.7)),
         ),
         Text(
           " ${LocaleKeys.descriptionLabel}:",
           style: AppTextStyles(context)
               .semiBold12
-              .copyWith(color: textColor.withOpacity(0.8)),
+              .copyWith(color: textColor.withValues(alpha: 0.8)),
         ),
         Text(
           courseEntity.description,
@@ -37,7 +37,7 @@ class CustomCourseDetailsBodyCourseInfoTexts extends StatelessWidget {
           maxLines: 6,
           style: AppTextStyles(context)
               .regular10
-              .copyWith(color: textColor.withOpacity(0.7)),
+              .copyWith(color: textColor.withValues(alpha: 0.7)),
         ),
       ],
     );

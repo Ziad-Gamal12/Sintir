@@ -16,7 +16,6 @@ class CourseCouponGridViewItemExpiry extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
-    final Color deleteIconColor = theme.colorScheme.error;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -50,7 +49,7 @@ class CourseCouponGridViewItemExpiry extends StatelessWidget {
                 context.read<CourseCouponsCubit>().deleteCourseCoupon(
                     couponID: couponEntity.code, courseID: courseId);
               },
-              icon: const Icon(
+              icon: const FaIcon(
                 FontAwesomeIcons.trash,
                 color: Colors.red,
                 size: 20,

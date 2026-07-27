@@ -41,8 +41,8 @@ class _StudentOnboardingButtonState extends State<StudentOnboardingButton> {
             theme: ProgressButtonTheme(
               progressColor: KMainColor,
               backgroundColor: isDark
-                  ? Colors.white.withOpacity(.08)
-                  : Colors.black.withOpacity(.06),
+                  ? Colors.white.withValues(alpha: .08)
+                  : Colors.black.withValues(alpha: .06),
               strokeWidth: 5,
               size: 90,
               iconSize: 50,

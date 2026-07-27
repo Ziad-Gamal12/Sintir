@@ -23,12 +23,12 @@ class MyTransactionListViewItem extends StatelessWidget {
         color: theme.cardColor,
         borderRadius: BorderRadius.circular(16.0),
         border: Border.all(
-          color: theme.dividerColor.withOpacity(0.2),
+          color: theme.dividerColor.withValues(alpha: 0.2),
           width: 0.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: theme.shadowColor.withOpacity(0.04),
+            color: theme.shadowColor.withValues(alpha: 0.04),
             blurRadius: 6,
             offset: const Offset(0, 3),
           ),

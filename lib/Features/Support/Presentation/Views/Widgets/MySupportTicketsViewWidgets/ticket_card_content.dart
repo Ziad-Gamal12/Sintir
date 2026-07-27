@@ -49,7 +49,7 @@ class TicketCardContent extends StatelessWidget {
         Text(
           ticket.description,
           style: textStyles.regular14.copyWith(
-            color: theme.textTheme.bodyMedium?.color?.withOpacity(0.75),
+            color: theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.75),
             height: 1.4,
           ),
           maxLines: 2,

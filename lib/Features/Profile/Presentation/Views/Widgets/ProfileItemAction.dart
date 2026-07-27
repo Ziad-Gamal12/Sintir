@@ -43,7 +43,7 @@ class ProfileItemAction extends StatelessWidget {
           Divider(
             height: 2,
             thickness: 0.5,
-            color: theme.dividerColor.withOpacity(0.1),
+            color: theme.dividerColor.withValues(alpha: 0.1),
             indent: 56,
             endIndent: 16,
           ),

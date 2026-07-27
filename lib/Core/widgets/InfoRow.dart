@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 
 class InfoRow extends StatelessWidget {
-  final IconData? icon;
+  final FaIconData? icon;
   final String label;
   final TextStyle? textStyle;
   final String? headline;
@@ -24,7 +25,7 @@ class InfoRow extends StatelessWidget {
     return Row(
       children: [
         headline == null
-            ? Icon(icon, color: textColor, size: 18)
+            ? FaIcon(icon, color: textColor, size: 18)
             : Text(
                 headline!,
                 style: AppTextStyles(context)

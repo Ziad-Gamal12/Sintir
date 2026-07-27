@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 
 class CreatorNameTitle extends StatelessWidget {
@@ -28,16 +28,13 @@ class CreatorNameTitle extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(LucideIcons.user2,
-                size: 22,
-                color:
-                    primaryTextColor), // Use primary text color for the user icon
+            Icon(LucideIcons.user2, size: 22, color: primaryTextColor),
             const SizedBox(width: 6),
             Text(
               name,
               style: AppTextStyles(context)
                   .semiBold20
-                  .copyWith(color: primaryTextColor), // Use primary text color
+                  .copyWith(color: primaryTextColor),
             ),
           ],
         ),

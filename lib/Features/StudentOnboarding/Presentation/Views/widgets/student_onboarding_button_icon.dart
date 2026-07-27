@@ -12,7 +12,7 @@ class StudentOnboardingButtonIcon extends StatelessWidget {
       radius: 35,
       child: Padding(
         padding: EdgeInsets.all(2),
-        child: Icon(
+        child: FaIcon(
           FontAwesomeIcons.arrowLeft,
           color: Colors.white,
           size: 30,

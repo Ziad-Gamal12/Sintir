@@ -48,20 +48,20 @@ class CustomAnimatedDropDownButton extends StatelessWidget {
       hintBuilder: (context, hint, enabled) => Text(
         hint,
         style: AppTextStyles(context).regular14.copyWith(
-              color: theme.hintColor.withOpacity(0.5),
+              color: theme.hintColor.withValues(alpha: 0.5),
             ),
       ),
       decoration: CustomDropdownDecoration(
         closedShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDarkMode ? 0.2 : 0.03),
+            color: Colors.black.withValues(alpha: isDarkMode ? 0.2 : 0.03),
             blurRadius: 10,
             offset: const Offset(0, 4),
           )
         ],
         expandedShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, 10),
           )
@@ -81,7 +81,7 @@ class CustomAnimatedDropDownButton extends StatelessWidget {
           width: 1.2,
         ),
         expandedBorder: BoxBorder.all(
-          color: theme.primaryColor.withOpacity(0.5),
+          color: theme.primaryColor.withValues(alpha: 0.5),
           width: 1.2,
         ),
         closedBorderRadius: const BorderRadius.all(Radius.circular(14)),

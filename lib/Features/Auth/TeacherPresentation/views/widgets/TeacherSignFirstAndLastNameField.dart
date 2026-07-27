@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
@@ -22,7 +21,7 @@ class TeacherSignFirstAndLastNameField extends StatelessWidget {
           Expanded(
             child: CustomTextField(
                 hintText: LocaleKeys.firstName,
-                prefixIcon: FontAwesomeIcons.user,
+                prefixIcon: Icons.person,
                 obscureText: false,
                 textInputType: TextInputType.name,
                 onSaved: (val) {
@@ -40,7 +39,7 @@ class TeacherSignFirstAndLastNameField extends StatelessWidget {
           Expanded(
             child: CustomTextField(
                 hintText: LocaleKeys.lastName,
-                prefixIcon: FontAwesomeIcons.user,
+                prefixIcon: Icons.person,
                 obscureText: false,
                 onSaved: (val) {
                   context.read<UserEntity>().lastName = val ?? "";

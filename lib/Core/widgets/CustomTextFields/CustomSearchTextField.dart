@@ -30,7 +30,8 @@ class CustomSearchTextField extends StatelessWidget {
         borderRadius: BorderRadius.circular(14), // Modern rounded corners
         boxShadow: [
           BoxShadow(
-            color: isDark ? Colors.black26 : Colors.black.withOpacity(0.04),
+            color:
+                isDark ? Colors.black26 : Colors.black.withValues(alpha: 0.04),
             blurRadius: 15,
             offset: const Offset(0, 8),
           ),
@@ -49,7 +50,7 @@ class CustomSearchTextField extends StatelessWidget {
           prefixIconConstraints: const BoxConstraints(minWidth: 50),
           hintText: LocaleKeys.searchplaceholder,
           hintStyle: AppTextStyles(context).regular14.copyWith(
-                color: theme.hintColor.withOpacity(0.5),
+                color: theme.hintColor.withValues(alpha: 0.5),
               ),
           prefixIcon: Padding(
             padding: const EdgeInsets.only(left: 4),

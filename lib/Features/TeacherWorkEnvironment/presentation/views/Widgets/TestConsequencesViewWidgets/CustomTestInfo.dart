@@ -23,7 +23,8 @@ class CustomTestInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final Color titleColor = theme.textTheme.bodyLarge!.color!;
-    final Color idColor = theme.textTheme.bodySmall!.color!.withOpacity(0.7);
+    final Color idColor =
+        theme.textTheme.bodySmall!.color!.withValues(alpha: 0.7);
 
     return Row(
       children: [

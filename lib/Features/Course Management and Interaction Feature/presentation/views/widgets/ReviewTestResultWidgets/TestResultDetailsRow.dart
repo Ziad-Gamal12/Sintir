@@ -24,7 +24,7 @@ class Testresultdetailsrow extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
+              FaIcon(
                 FontAwesomeIcons.circleInfo,
                 color: color,
                 size: 20,

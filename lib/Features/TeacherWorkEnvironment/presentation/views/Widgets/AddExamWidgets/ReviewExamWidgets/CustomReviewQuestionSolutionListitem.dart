@@ -21,11 +21,11 @@ class CustomReviewQuestionSolutionListItem extends StatelessWidget {
     final Color correctColor = Colors.green.shade600;
     final Color correctBackgroundColor = isCorrect
         ? Colors.green
-            .withOpacity(theme.brightness == Brightness.dark ? 0.2 : 0.1)
+            .withValues(alpha: theme.brightness == Brightness.dark ? 0.2 : 0.1)
         : Colors.transparent;
     final Color correctBorderColor = isCorrect
-        ? correctColor
-            .withOpacity(theme.brightness == Brightness.dark ? 0.5 : 1.0)
+        ? correctColor.withValues(
+            alpha: theme.brightness == Brightness.dark ? 0.5 : 1.0)
         : Colors.transparent;
 
     return Container(

@@ -34,8 +34,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
         boxShadow: [
           BoxShadow(
             color: theme.brightness == Brightness.light
-                ? Colors.black.withOpacity(0.05)
-                : Colors.black.withOpacity(0.3),
+                ? Colors.black.withValues(alpha: 0.05)
+                : Colors.black.withValues(alpha: 0.3),
             blurRadius: 8,
           ),
         ],

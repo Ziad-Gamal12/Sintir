@@ -22,7 +22,7 @@ class ShowHideSolutionButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
         decoration: BoxDecoration(
-          color: theme.cardColor.withOpacity(0.85),
+          color: theme.cardColor.withValues(alpha: 0.85),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: theme.primaryColor, width: 1),
         ),

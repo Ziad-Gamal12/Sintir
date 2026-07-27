@@ -23,10 +23,10 @@ class TestSummaryCard extends StatelessWidget {
         color: theme.cardColor,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-            color: theme.dividerColor.withOpacity(isDark ? 0.1 : 0.05)),
+            color: theme.dividerColor.withValues(alpha: isDark ? 0.1 : 0.05)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.4 : 0.08),
+            color: Colors.black.withValues(alpha: isDark ? 0.4 : 0.08),
             blurRadius: 30,
             offset: const Offset(0, 15),
           ),
@@ -41,7 +41,7 @@ class TestSummaryCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: colorScheme.primary.withOpacity(0.1),
+                  color: colorScheme.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(Icons.assignment_turned_in_rounded,
@@ -110,7 +110,7 @@ class TestSummaryCard extends StatelessWidget {
     final primaryColor = theme.primaryColor;
     return Row(
       children: [
-        Icon(icon, size: 20, color: primaryColor.withOpacity(0.6)),
+        Icon(icon, size: 20, color: primaryColor.withValues(alpha: 0.6)),
         const SizedBox(width: 12),
         Expanded(
           child: Column(

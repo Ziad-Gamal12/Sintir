@@ -61,7 +61,7 @@ class _CustomCourseDetailsSectionsListViewItemState
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: theme.shadowColor.withOpacity(0.05),
+              color: theme.shadowColor.withValues(alpha: 0.05),
               blurRadius: 7,
               spreadRadius: 1,
             ),

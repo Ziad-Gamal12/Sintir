@@ -20,7 +20,7 @@ class UserBasicInfo extends StatelessWidget {
 
     return Card(
       elevation: 4,
-      color: cardColor, // Use theme card color
+      color: cardColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
@@ -32,8 +32,7 @@ class UserBasicInfo extends StatelessWidget {
             // Full Name
             Text(
               user.fullName,
-              style: styles.semiBold20.copyWith(
-                  color: primaryTextColor), // Use theme primary text color
+              style: styles.semiBold20.copyWith(color: primaryTextColor),
             ),
 
             const SizedBox(height: 16),

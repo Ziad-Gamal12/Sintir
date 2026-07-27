@@ -27,7 +27,7 @@ class CustomRemoveSolutionItem extends StatelessWidget {
             solution: e.value,
             question: question);
       },
-      icon: const Icon(
+      icon: const FaIcon(
         FontAwesomeIcons.trashCan,
         color: Colors.red,
       ),

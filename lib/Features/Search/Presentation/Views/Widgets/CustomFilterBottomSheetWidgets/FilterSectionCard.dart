@@ -42,14 +42,14 @@ class _FilterSectionCardState extends State<FilterSectionCard> {
           boxShadow: _pressed
               ? [
                   BoxShadow(
-                    color: theme.shadowColor.withOpacity(0.06),
+                    color: theme.shadowColor.withValues(alpha: 0.06),
                     blurRadius: 6,
                     offset: const Offset(0, 3),
                   )
                 ]
               : [
                   BoxShadow(
-                    color: theme.shadowColor.withOpacity(0.08),
+                    color: theme.shadowColor.withValues(alpha: 0.08),
                     blurRadius: 12,
                     offset: const Offset(0, 6),
                   )

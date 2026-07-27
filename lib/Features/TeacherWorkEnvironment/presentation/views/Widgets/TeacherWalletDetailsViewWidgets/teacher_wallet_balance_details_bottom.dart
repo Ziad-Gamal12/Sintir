@@ -18,17 +18,17 @@ class TeacherWalletBalanceDetailsBottom extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: theme.cardColor, // يعتمد على theme
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(8.0),
         border: Border.all(
-          color: theme.dividerColor, // يعتمد على theme
+          color: theme.dividerColor,
           width: 1,
         ),
       ),
       child: Column(
         children: [
           TeacherWalletBalanceDetailsRow(
-            icon: Icons.show_chart_outlined,
+            icon: FontAwesomeIcons.dollarSign,
             title: LocaleKeys.totalEarned,
             value: "${wallet?.totalEarned.toStringAsFixed(2) ?? 0} EGP",
           ),

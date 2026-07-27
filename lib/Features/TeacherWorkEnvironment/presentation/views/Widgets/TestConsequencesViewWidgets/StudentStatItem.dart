@@ -29,21 +29,21 @@ class StudentStatItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         gradient: LinearGradient(
           colors: [
-            backgroundColor.withOpacity(0.85),
-            isDark ? Colors.white10 : Colors.white.withOpacity(0.4),
+            backgroundColor.withValues(alpha: 0.85),
+            isDark ? Colors.white10 : Colors.white.withValues(alpha: 0.4),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         boxShadow: [
           BoxShadow(
-            color: backgroundColor.withOpacity(isDark ? 0.2 : 0.35),
+            color: backgroundColor.withValues(alpha: isDark ? 0.2 : 0.35),
             blurRadius: 25,
             offset: const Offset(0, 12),
           ),
         ],
         border: Border.all(
-          color: isDark ? Colors.white10 : Colors.white.withOpacity(0.3),
+          color: isDark ? Colors.white10 : Colors.white.withValues(alpha: 0.3),
           width: 0.8,
         ),
       ),

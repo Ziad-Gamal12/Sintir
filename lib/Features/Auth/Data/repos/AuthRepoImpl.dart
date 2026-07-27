@@ -296,7 +296,7 @@ class AuthRepoImpl implements AuthRepo {
 
       await storeUserLocally(userJson);
       return const Right(null);
-    } catch (e, s) {
+    } catch (e) {
       return Left(ServerFailure(message: LocaleKeys.generalError));
     }
   }

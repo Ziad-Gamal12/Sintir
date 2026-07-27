@@ -25,7 +25,7 @@ class PickerAssetsService {
   }
 
   Future<File?> getFile() async {
-    FilePickerResult? file = await FilePicker.platform.pickFiles();
+    FilePickerResult? file = await FilePicker.pickFiles();
     if (file == null) return null;
     File file1 = File(file.files.single.path!);
     return file1;

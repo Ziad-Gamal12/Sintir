@@ -15,7 +15,7 @@ import 'package:sintir/locale_keys.dart';
 
 class ProfileActionsEntity {
   final String title;
-  final IconData icon;
+  final FaIconData icon;
   final String routeName;
   final Color? color;
 
@@ -84,7 +84,7 @@ class ProfileActionsEntity {
     ),
     ProfileActionsEntity(
         title: LocaleKeys.profileSupport,
-        icon: Icons.support_agent,
+        icon: FontAwesomeIcons.headset,
         routeName: MySupportTicketsView.routeName),
     ProfileActionsEntity(
       title: LocaleKeys.profileAbout,

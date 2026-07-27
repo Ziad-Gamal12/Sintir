@@ -52,17 +52,17 @@ class CustomVideoControllerBetter {
           enableFullscreen: true,
           enableMute: true,
           // Theme-aware colors
-          controlBarColor: theme.colorScheme.surface.withOpacity(0.8),
+          controlBarColor: theme.colorScheme.surface.withValues(alpha: 0.8),
           textColor: theme.textTheme.bodyLarge?.color ?? Colors.white,
           progressBarPlayedColor: theme.colorScheme.primary,
           progressBarHandleColor: theme.colorScheme.primary,
           progressBarBufferedColor:
-              theme.textTheme.bodyMedium?.color?.withOpacity(0.5) ??
+              theme.textTheme.bodyMedium?.color?.withValues(alpha: 0.5) ??
                   Colors.white70,
           progressBarBackgroundColor: theme.dividerColor,
           liveTextColor: isDarkMode ? Colors.red.shade400 : Colors.redAccent,
           loadingColor: theme.colorScheme.primary,
-          backgroundColor: theme.colorScheme.surface.withOpacity(0.5),
+          backgroundColor: theme.colorScheme.surface.withValues(alpha: 0.5),
           overflowModalColor: theme.cardColor,
           overflowModalTextColor:
               theme.textTheme.bodyLarge?.color ?? Colors.white,

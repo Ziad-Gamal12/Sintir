@@ -37,7 +37,7 @@ class ProfileViewBody extends StatelessWidget {
 
                 // 2. Subtle Divider
                 Divider(
-                  color: theme.dividerColor.withOpacity(0.1),
+                  color: theme.dividerColor.withValues(alpha: 0.1),
                   thickness: 1,
                 ),
 

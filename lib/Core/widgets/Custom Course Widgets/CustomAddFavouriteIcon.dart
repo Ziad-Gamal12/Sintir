@@ -85,8 +85,8 @@ class _CustomAddFavouriteIconState extends State<CustomAddFavouriteIcon>
         child: CircleAvatar(
           radius: 18,
           backgroundColor: isDark
-              ? Colors.white.withOpacity(.1)
-              : Colors.black.withOpacity(.1),
+              ? Colors.white.withValues(alpha: .1)
+              : Colors.black.withValues(alpha: .1),
           child: IconButton(
             onPressed: () => _handleTap(isFav),
             icon: AnimatedSwitcher(
@@ -95,7 +95,7 @@ class _CustomAddFavouriteIconState extends State<CustomAddFavouriteIcon>
                   ScaleTransition(scale: animation, child: child),
               child: FittedBox(
                 fit: BoxFit.scaleDown,
-                child: Icon(
+                child: FaIcon(
                   isFav ? FontAwesomeIcons.solidHeart : FontAwesomeIcons.heart,
                   key: ValueKey<bool>(isFav),
                   color: isFav

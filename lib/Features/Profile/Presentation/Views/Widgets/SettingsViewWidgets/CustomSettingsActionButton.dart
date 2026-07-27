@@ -23,7 +23,7 @@ class CustomSettingsActionButton extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     final Color contentColor =
-        isDark ? Colors.white.withOpacity(0.9) : Colors.black87;
+        isDark ? Colors.white.withValues(alpha: 0.9) : Colors.black87;
 
     // Use surface container for dark mode to ensure visibility without harshness
     final Color backgroundColor =
@@ -38,8 +38,8 @@ class CustomSettingsActionButton extends StatelessWidget {
             BoxShadow(
               // The key to soft shadows: low opacity (0.03 - 0.1) and high blur (15-30)
               color: isDark
-                  ? Colors.black.withOpacity(0.3)
-                  : theme.primaryColor.withOpacity(0.05),
+                  ? Colors.black.withValues(alpha: 0.3)
+                  : theme.primaryColor.withValues(alpha: 0.05),
               blurRadius: 25,
               spreadRadius: 1,
               offset:
@@ -61,8 +61,8 @@ class CustomSettingsActionButton extends StatelessWidget {
                   border: Border.all(
                     // Almost invisible border just to catch the light
                     color: isDark
-                        ? Colors.white.withOpacity(0.08)
-                        : Colors.black.withOpacity(0.03),
+                        ? Colors.white.withValues(alpha: 0.08)
+                        : Colors.black.withValues(alpha: 0.03),
                     width: 1.5,
                   ),
                 ),
@@ -70,7 +70,7 @@ class CustomSettingsActionButton extends StatelessWidget {
                   children: [
                     if (leadingIcon != null) ...[
                       Icon(leadingIcon,
-                          color: contentColor.withOpacity(0.6), size: 22),
+                          color: contentColor.withValues(alpha: 0.6), size: 22),
                       const SizedBox(width: 16),
                     ],
                     Expanded(
@@ -102,7 +102,7 @@ class CustomSettingsActionButton extends StatelessWidget {
     return Icon(
       Icons.chevron_right_rounded,
       size: 26,
-      color: color.withOpacity(0.2),
+      color: color.withValues(alpha: 0.2),
     );
   }
 }

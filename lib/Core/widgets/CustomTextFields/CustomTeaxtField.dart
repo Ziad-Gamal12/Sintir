@@ -37,8 +37,9 @@ class CustomTextField extends StatelessWidget {
     // Premium Border Logic: adaptive to brightness
     final Color borderColor =
         isDarkMode ? Colors.white10 : const Color(0xFFE4E6E8);
-    final Color fillBg =
-        isDarkMode ? Colors.white.withOpacity(0.05) : const Color(0xFFF8F9FA);
+    final Color fillBg = isDarkMode
+        ? Colors.white.withValues(alpha: 0.05)
+        : const Color(0xFFF8F9FA);
 
     return TextFormField(
       onSaved: onSaved,
@@ -54,7 +55,7 @@ class CustomTextField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: AppTextStyles(context).regular14.copyWith(
-              color: theme.hintColor.withOpacity(0.5),
+              color: theme.hintColor.withValues(alpha: 0.5),
             ),
 
         filled: true,
@@ -65,7 +66,7 @@ class CustomTextField extends StatelessWidget {
                 child: Icon(
                   prefixIcon,
                   size: 20,
-                  color: theme.primaryColor.withOpacity(0.7),
+                  color: theme.primaryColor.withValues(alpha: 0.7),
                 ),
               )
             : null,

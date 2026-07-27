@@ -24,8 +24,9 @@ class _CustomCourseHorizontalItemState extends State<CustomCourseHorizontalItem>
   String _postedAgo(DateTime date) {
     final diff = DateTime.now().difference(date);
 
-    if (diff.inDays >= 30)
+    if (diff.inDays >= 30) {
       return "${diff.inDays ~/ 30} ${LocaleKeys.postedMonth}";
+    }
     if (diff.inDays >= 1) return "${diff.inDays} ${LocaleKeys.postedDay}";
     if (diff.inHours >= 1) return "${diff.inHours} ${LocaleKeys.postedHour}";
     return "${diff.inMinutes} ${LocaleKeys.postedMinute}";
@@ -51,15 +52,16 @@ class _CustomCourseHorizontalItemState extends State<CustomCourseHorizontalItem>
           boxShadow: [
             BoxShadow(
               color: isDark
-                  ? Colors.black.withOpacity(.4)
-                  : Colors.grey.shade400.withOpacity(.25),
+                  ? Colors.black.withValues(alpha: .4)
+                  : Colors.grey.shade400.withValues(alpha: .25),
               blurRadius: 14,
               spreadRadius: 1,
               offset: const Offset(0, 5),
             ),
             BoxShadow(
-              color:
-                  isDark ? Colors.grey.shade800 : Colors.white.withOpacity(0.9),
+              color: isDark
+                  ? Colors.grey.shade800
+                  : Colors.white.withValues(alpha: 0.9),
               blurRadius: 8,
               offset: const Offset(-3, -3),
             ),

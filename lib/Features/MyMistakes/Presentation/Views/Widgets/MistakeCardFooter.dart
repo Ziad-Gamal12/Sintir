@@ -42,7 +42,8 @@ class MistakeCardFooter extends StatelessWidget {
           child: Icon(
             Icons.offline_bolt_rounded,
             size: 20,
-            color: isAchieved ? Colors.amber : Colors.grey.withOpacity(0.3),
+            color:
+                isAchieved ? Colors.amber : Colors.grey.withValues(alpha: 0.3),
           ),
         );
       }),

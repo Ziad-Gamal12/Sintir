@@ -17,7 +17,7 @@ class CustomUnAvilableSectionWidget extends StatelessWidget {
       child: Positioned.fill(
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.transparent.withOpacity(.28),
+              color: Colors.transparent.withValues(alpha: .28),
               borderRadius: BorderRadius.circular(8)),
           alignment: Alignment.center,
           child: IntrinsicWidth(

@@ -22,7 +22,7 @@ class _SubscriberResultsChartState extends State<SubscriberResultsChart> {
     final ThemeData theme = Theme.of(context);
     final Color secondaryTextColor = theme.textTheme.bodyMedium!.color!;
     final Color chartBackgroundColor = theme.cardColor;
-    final Color gridColor = theme.dividerColor.withOpacity(0.5);
+    final Color gridColor = theme.dividerColor.withValues(alpha: 0.5);
     final Color mainColor = theme.colorScheme.primary;
 
     if (widget.results.isEmpty) {
@@ -97,7 +97,7 @@ class _SubscriberResultsChartState extends State<SubscriberResultsChart> {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: theme.shadowColor.withOpacity(0.1),
+                  color: theme.shadowColor.withValues(alpha: 0.1),
                   blurRadius: 10,
                   spreadRadius: 2,
                 ),
@@ -201,7 +201,10 @@ class _SubscriberResultsChartState extends State<SubscriberResultsChart> {
                     gradient: showAverage
                         ? null
                         : LinearGradient(
-                            colors: [mainColor, mainColor.withOpacity(0.7)],
+                            colors: [
+                              mainColor,
+                              mainColor.withValues(alpha: 0.7)
+                            ],
                           ),
 
                     // Area below the line
@@ -210,8 +213,8 @@ class _SubscriberResultsChartState extends State<SubscriberResultsChart> {
                           !showAverage, // Only show area for individual scores
                       gradient: LinearGradient(
                         colors: [
-                          mainColor.withOpacity(0.3),
-                          mainColor.withOpacity(0.05)
+                          mainColor.withValues(alpha: 0.3),
+                          mainColor.withValues(alpha: 0.05)
                         ],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,

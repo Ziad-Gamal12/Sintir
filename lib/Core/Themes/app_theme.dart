@@ -107,7 +107,7 @@ class AppTheme {
 
     // DIVIDERS
     dividerTheme: DividerThemeData(
-      color: Colors.white.withOpacity(0.12),
+      color: Colors.white.withValues(alpha: 0.12),
       thickness: 1,
     ),
 
