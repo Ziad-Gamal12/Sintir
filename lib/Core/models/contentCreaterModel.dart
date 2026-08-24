@@ -50,7 +50,7 @@ class Contentcreatermodel {
         name: name, profileImageUrl: profileImageUrl, id: id, title: title);
   }
 
-  toJson() {
+  Map<String, String> toJson() {
     return {
       "name": name,
       "profileImageUrl": profileImageUrl,

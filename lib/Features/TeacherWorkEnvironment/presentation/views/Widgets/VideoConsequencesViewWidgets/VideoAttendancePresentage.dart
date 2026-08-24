@@ -53,9 +53,9 @@ class _VideoAttendancePresentageState extends State<VideoAttendancePresentage> {
                 radius: 45,
                 lineWidth: 10.0,
                 animation: true,
-                percent: widget.percentage / 100,
+                percent: (widget.percentage / 100).clamp(0.0, 1.0),
                 center: Text(
-                  "${widget.percentage.toStringAsFixed(2)} %",
+                  "${(widget.percentage).clamp(0.0, 100.0).toStringAsFixed(2)} %",
                   style: AppTextStyles(context)
                       .semiBold16
                       .copyWith(color: primaryTextColor),

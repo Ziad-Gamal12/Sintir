@@ -51,7 +51,8 @@ class _VideoStateInfoVideoAbsentWidgetState
     } else if (state is VideoConsequencesGetTotalStudentsCountFailure) {
       return state.errMessage;
     } else {
-      return widget.videoAbsentCount.toString();
+      return widget.videoAbsentCount.clamp(0, double.infinity).toString();
+      
     }
   }
 
@@ -61,7 +62,6 @@ class _VideoStateInfoVideoAbsentWidgetState
     final Color labelColor = theme.textTheme.bodyLarge!.color!;
     final Color errorColor = theme.colorScheme.error;
 
-    // Check if the value is an error message from the state
     final String? failureMessage1 = (context
             .read<VideoConsequencesCubit>()
             .state is VideoConsequencesGetVideoAttendedCountFailure)

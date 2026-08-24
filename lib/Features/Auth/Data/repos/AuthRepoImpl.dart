@@ -4,7 +4,6 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mobile_device_identifier/mobile_device_identifier.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStorePaginateResponse.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
@@ -17,6 +16,7 @@ import 'package:sintir/Features/Auth/Data/models/UserModel.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 import 'package:sintir/locale_keys.dart';
+import 'package:unique_device_identifier/unique_device_identifier.dart';
 
 class AuthRepoImpl implements AuthRepo {
   final firebaseAuthService authService;
@@ -61,7 +61,8 @@ class AuthRepoImpl implements AuthRepo {
         return Left(ServerFailure(message: LocaleKeys.tooManyRequests));
       }
       return Left(
-          ServerFailure(message: e.message ?? LocaleKeys.errorOccurredMessage));
+        ServerFailure(message: e.message ?? LocaleKeys.errorOccurredMessage),
+      );
     } on CustomException catch (e) {
       log(e.message);
       await authService.signout();
@@ -95,7 +96,10 @@ class AuthRepoImpl implements AuthRepo {
       final userModel = UserModel.fromEntity(userEntity);
 
       return await storeUserDataInFireStore(
-          user: user, userjson: userModel.toMap(), uid: user.uid);
+        user: user,
+        userjson: userModel.toMap(),
+        uid: user.uid,
+      );
     } on CustomException catch (e) {
       await _tryDeleteUser(user);
       return Left(ServerFailure(message: e.message));
@@ -124,8 +128,9 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<Failure, void>> fetchUserAndStoreLocally(
-      {required String uid}) async {
+  Future<Either<Failure, void>> fetchUserAndStoreLocally({
+    required String uid,
+  }) async {
     try {
       FireStoreResponse json = await databaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
@@ -187,7 +192,11 @@ class AuthRepoImpl implements AuthRepo {
 
       final userJson = await _userJson(user: user);
       return await storeUserDataInFireStore(
-          signOut: false, user: user, userjson: userJson, uid: user.uid);
+        signOut: false,
+        user: user,
+        userjson: userJson,
+        uid: user.uid,
+      );
     } catch (e, s) {
       if (isExists == false) {
         await _tryDeleteUser(user);
@@ -213,7 +222,11 @@ class AuthRepoImpl implements AuthRepo {
 
       final userJson = await _userJson(user: user);
       return await storeUserDataInFireStore(
-          signOut: false, user: user, userjson: userJson, uid: user.uid);
+        signOut: false,
+        user: user,
+        userjson: userJson,
+        uid: user.uid,
+      );
     } catch (e, s) {
       if (isExists == false) {
         await _tryDeleteUser(user);
@@ -271,8 +284,9 @@ class AuthRepoImpl implements AuthRepo {
 
       Map<String, dynamic> userJson = UserModel.fromEntity(userEntity).toMap();
 
-      bool isValid =
-          await authService.checkAccountPassword(password: currentPassword);
+      bool isValid = await authService.checkAccountPassword(
+        password: currentPassword,
+      );
       if (!isValid) {
         return Left(ServerFailure(message: LocaleKeys.wrongPassword));
       }
@@ -286,11 +300,12 @@ class AuthRepoImpl implements AuthRepo {
       }
 
       final result = await storeUserDataInFireStore(
-          user: user,
-          userjson: userJson,
-          uid: user.uid,
-          signOut: false,
-          checkVerified: false);
+        user: user,
+        userjson: userJson,
+        uid: user.uid,
+        signOut: false,
+        checkVerified: false,
+      );
 
       if (result.isLeft()) return result;
 
@@ -335,9 +350,7 @@ class AuthRepoImpl implements AuthRepo {
   @override
   Future<String> getDeviceId() async {
     try {
-      String? mobileDeviceIdentifier =
-          await MobileDeviceIdentifier().getDeviceId();
-      return mobileDeviceIdentifier ?? '';
+      return await UniqueDeviceIdentifier.getUniqueIdentifier() ?? '';
     } catch (e) {
       return '';
     }

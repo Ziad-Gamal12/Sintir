@@ -76,11 +76,6 @@ void setup_Getit() {
   getIt.registerLazySingleton<firebaseAuthService>(() => firebaseAuthService());
   getIt
       .registerLazySingleton<DataBaseService>(() => FirebaseFirestoreservice());
-
-  getIt.registerLazySingleton<firebasestorageservice>(
-      () => firebasestorageservice(
-            pickerassetsservice: getIt(),
-          ));
   getIt.registerLazySingleton<SupabaseStorageServices>(
       () => SupabaseStorageServices());
   getIt.registerLazySingleton<StorageService>(

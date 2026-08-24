@@ -8,7 +8,6 @@ import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -198,26 +197,6 @@ class firebaseAuthService {
     final bytes = utf8.encode(input);
     final digest = sha256.convert(bytes);
     return digest.toString();
-  }
-
-  Future<User> signInWithApple() async {
-    final rawNonce = generateNonce();
-    final nonce = sha256ofString(rawNonce);
-
-    final appleCredential = await SignInWithApple.getAppleIDCredential(
-      scopes: [
-        AppleIDAuthorizationScopes.email,
-        AppleIDAuthorizationScopes.fullName,
-      ],
-      nonce: nonce,
-    );
-
-    final oauthCredential = OAuthProvider("apple.com")
-        .credential(idToken: appleCredential.identityToken, rawNonce: rawNonce);
-
-    final UserCredential userCredential =
-        await FirebaseAuth.instance.signInWithCredential(oauthCredential);
-    return userCredential.user!;
   }
 
   Future<void> deleteUSer() async {

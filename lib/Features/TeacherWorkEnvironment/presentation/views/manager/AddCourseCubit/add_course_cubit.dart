@@ -21,39 +21,51 @@ class AddCourseCubitCubit extends Cubit<AddCourseCubitState> {
   final Coursesrepo coursesrepo;
   final Assetspickerrepo assetspickerrepo;
   File? coursePosterImage;
-  addCourse(
-      {required CourseEntity courseEntity,
-      required UserEntity userEntity}) async {
+  Future<void> addCourse({
+    required CourseEntity courseEntity,
+    required UserEntity userEntity,
+  }) async {
     emit(AddCourseCubitLoading());
     try {
-      courseEntity.contentcreaterentity =
-          Contentcreatermodel.fromTeacherEntity(userEntity: userEntity)
-              .toEntity();
-      final posterResult =
-          await coursesrepo.uplaodFile(file: coursePosterImage!);
-      posterResult.fold((failure) {
-        emit(AddCourseCubitFailure(failure.message));
-      }, (url) async {
-        courseEntity.posterUrl = url;
-        final result = await coursesrepo.addCourse(courseEntity: courseEntity);
-        result.fold((failure) => emit(AddCourseCubitFailure(failure.message)),
+      courseEntity.contentcreaterentity = Contentcreatermodel.fromTeacherEntity(
+        userEntity: userEntity,
+      ).toEntity();
+      final posterResult = await coursesrepo.uplaodFile(
+        file: coursePosterImage!,
+      );
+      posterResult.fold(
+        (failure) {
+          emit(AddCourseCubitFailure(failure.message));
+        },
+        (url) async {
+          courseEntity.posterUrl = url;
+          final result = await coursesrepo.addCourse(
+            courseEntity: courseEntity,
+          );
+          result.fold(
+            (failure) => emit(AddCourseCubitFailure(failure.message)),
             (success) {
-          emit(AddCourseCubitSuccess());
-        });
-      });
+              emit(AddCourseCubitSuccess());
+            },
+          );
+        },
+      );
     } on Exception {
       emit(AddCourseCubitFailure(LocaleKeys.generalError));
     }
   }
 
-  pickCoursePosterImage() async {
+  Future<void> pickCoursePosterImage() async {
     emit(AddCourseCubitAssetLoading());
     final result = await assetspickerrepo.pickImageFromGallery();
-    result.fold((failure) {
-      emit(AddCourseCubitFailure(failure.message));
-    }, (file) {
-      coursePosterImage = file;
-      emit(AddCourseCubitAssetPicked(file: coursePosterImage));
-    });
+    result.fold(
+      (failure) {
+        emit(AddCourseCubitFailure(failure.message));
+      },
+      (file) {
+        coursePosterImage = file;
+        emit(AddCourseCubitAssetPicked(file: coursePosterImage));
+      },
+    );
   }
 }

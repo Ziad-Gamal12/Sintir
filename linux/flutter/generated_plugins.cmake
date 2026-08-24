@@ -8,6 +8,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   gtk
   restart_app
   rive_native
+  unique_device_identifier
   url_launcher_linux
 )
 

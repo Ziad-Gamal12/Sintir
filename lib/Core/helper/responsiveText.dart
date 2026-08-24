@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-getresposiveTet({required BuildContext context, required double basesize}) {
+double getresposiveTet({required BuildContext context, required double basesize}) {
   double scaleFactor = getScaleFactor(context);
   double responsiveFontSize = basesize * scaleFactor;
   double lowerLimit = responsiveFontSize * .8;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-showCustomBottomSheet({required Widget child, required BuildContext context}) {
+void showCustomBottomSheet({required Widget child, required BuildContext context}) {
   final theme = Theme.of(context);
 
   showBottomSheet(
@@ -17,7 +17,7 @@ showCustomBottomSheet({required Widget child, required BuildContext context}) {
   );
 }
 
-showCustomModalBottomSheet({
+void showCustomModalBottomSheet({
   required Widget child,
   required BuildContext context,
 }) {

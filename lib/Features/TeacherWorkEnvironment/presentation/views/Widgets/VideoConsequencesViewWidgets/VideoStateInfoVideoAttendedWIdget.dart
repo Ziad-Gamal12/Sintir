@@ -17,7 +17,6 @@ class _VideoStateInfoVideoAttendedWidgetState
     extends State<VideoStateInfoVideoAttendedWidget> {
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
     const Color successColor = Colors.green;
 
     return BlocBuilder<VideoConsequencesCubit, VideoConsequencesState>(
@@ -41,9 +40,8 @@ class _VideoStateInfoVideoAttendedWidgetState
     required BuildContext context,
   }) {
     if (state is VideoConsequencesGetVideoAttendedCountSuccess) {
-      return state.count.toString();
+      return state.count.clamp(0, double.infinity).toString();
     } else if (state is VideoConsequencesGetVideoAttendedCountFailure) {
-      // Return error message and ensure it's displayed in error color in _buildStatColumn
       return state.errMessage;
     } else {
       return "0";
@@ -56,14 +54,9 @@ class _VideoStateInfoVideoAttendedWidgetState
     final Color labelColor = theme.textTheme.bodyLarge!.color!;
     final Color errorColor = theme.colorScheme.error;
 
-    // Check if the value is an error message to use the error color
-    final bool isError = value ==
-            (context.read<VideoConsequencesCubit>().state
-                is VideoConsequencesGetVideoAttendedCountFailure)
-        ? true
-        : false;
+    final bool isError = (context.read<VideoConsequencesCubit>().state
+        is VideoConsequencesGetVideoAttendedCountFailure);
 
-    // If it's an error message, override the default or passed color with errorColor
     final Color valueColor = isError ? errorColor : color;
 
     return Column(
