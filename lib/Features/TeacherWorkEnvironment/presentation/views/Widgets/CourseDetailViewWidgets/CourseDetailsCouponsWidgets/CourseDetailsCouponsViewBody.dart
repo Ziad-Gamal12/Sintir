@@ -5,7 +5,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseCouponsListView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseCouponsGridView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseCouponsListViewLoading.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
@@ -89,9 +89,9 @@ class _CourseDetailsCouponsViewBodyState
             child: CustomErrorWidget(errormessage: state.errmessage),
           );
         } else if (state is GetCourseCouponsLoading && coupons.isEmpty) {
-          return const CourseCouponsListViewLoading();
+          return const CourseCouponsGridViewLoading();
         } else if (coupons.isNotEmpty) {
-          return CourseCouponsListView(
+          return CourseCouponsGridView(
               courseId: widget.courseId,
               scrollController: scrollController,
               coupons: coupons);

@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sintir/Core/entities/FetchDataResponses/GetCourseReportsResponseEntity.dart';
 import 'package:sintir/Core/repos/CourseReportsRepo/CourseReportsRepo.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseReportsItemEntity.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/CourseReportsItemEntity.dart';
 
 part 'course_reports_state.dart';
 

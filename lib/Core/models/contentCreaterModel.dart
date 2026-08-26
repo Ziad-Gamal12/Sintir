@@ -20,7 +20,7 @@ class Contentcreatermodel {
       profileImageUrl: userEntity.profilePicurl,
       id: userEntity.uid,
       title:
-          "${LocaleKeys.teacherRole}${userEntity.teacherExtraDataEntity?.subject ?? ""}",
+          "${LocaleKeys.teacherRole} ${userEntity.teacherExtraDataEntity?.subject ?? ""}",
     );
   }
   factory Contentcreatermodel.fromEntity(

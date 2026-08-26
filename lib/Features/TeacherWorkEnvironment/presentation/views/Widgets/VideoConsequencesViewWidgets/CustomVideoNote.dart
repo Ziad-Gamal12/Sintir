@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomCachedNetworkImage.dart';
 import 'package:sintir/Core/widgets/CustomCard.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/VideoNoteEntity.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/VideoNoteEntity.dart';
 
 class CustomVideoNote extends StatelessWidget {
   const CustomVideoNote({super.key, required this.note});

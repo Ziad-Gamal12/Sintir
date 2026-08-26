@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/errors/Failures.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/JoinedByEntity.dart';
 
 abstract class SectionItemsActionsRepo {
   Future<Either<Failure, void>> addSectionItem({

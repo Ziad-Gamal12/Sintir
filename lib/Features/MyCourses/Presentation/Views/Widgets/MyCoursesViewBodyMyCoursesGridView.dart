@@ -5,7 +5,7 @@ import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/GridHelper.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/CourseIntroductionView.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/CourseIntroductionView.dart';
 import 'package:sintir/Features/MyCourses/Presentation/Manager/cubit/my_courses_cubit.dart';
 import 'package:sintir/Features/MyCourses/Presentation/Views/Widgets/MyCoursesGridViewLoading.dart';
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Features/Home/Domain/Entities/BottomNavBarEntity.dart';
+import 'package:sintir/Features/Home/presentation/manager/cubit/bottom_nav_cubit.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/BottomNavBarItem.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -40,25 +42,33 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
         ],
       ),
-      child: Row(
-        children: List.generate(items.length, (index) {
-          final isSelected = index == currentIndex;
-          return Expanded(
-            flex: isSelected ? 3 : 2,
-            child: InkWell(
-              onTap: () {
-                widget.onPageChanged(index);
-                setState(() {
-                  currentIndex = index;
-                });
-              },
-              child: BottomNavBarItem(
-                isSelected: isSelected,
-                bottomNavBarEntity: items[index],
-              ),
-            ),
+      child: BlocBuilder<BottomNavCubit, BottomNavState>(
+        builder: (context, state) {
+          currentIndex =
+              context.read<BottomNavCubit>().state is BottomNavChanged
+                  ? (context.read<BottomNavCubit>()).currentIndex
+                  : 0;
+          return Row(
+            children: List.generate(items.length, (index) {
+              final isSelected = index == currentIndex;
+              return Expanded(
+                flex: isSelected ? 3 : 2,
+                child: InkWell(
+                  onTap: () {
+                    widget.onPageChanged(index);
+                    setState(() {
+                      currentIndex = index;
+                    });
+                  },
+                  child: BottomNavBarItem(
+                    isSelected: isSelected,
+                    bottomNavBarEntity: items[index],
+                  ),
+                ),
+              );
+            }),
           );
-        }),
+        },
       ),
     );
   }

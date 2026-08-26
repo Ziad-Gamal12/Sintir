@@ -6,15 +6,16 @@ class GridHelper {
     return 2;
   }
 
-  static double getAspectRatio({required double maxWidth}) {
-    final crossAxisCount = getCrossAxisCount(maxWidth);
-    final freeSpaceCount = crossAxisCount - 1;
+  static double getAspectRatio(
+      {required double maxWidth, double? ratio, int? crossAxisCount}) {
+    final crossCount = crossAxisCount ?? getCrossAxisCount(maxWidth);
+    final freeSpaceCount = crossCount - 1;
     const spacing = 10.0;
 
     final freeSpaceWidth = spacing * freeSpaceCount;
     final availableWidth = maxWidth - freeSpaceWidth;
-    final itemWidth = availableWidth / crossAxisCount;
-    final itemHeight = itemWidth / 0.75;
+    final itemWidth = availableWidth / crossCount;
+    final itemHeight = itemWidth / (ratio ?? .75);
 
     return itemWidth / itemHeight;
   }

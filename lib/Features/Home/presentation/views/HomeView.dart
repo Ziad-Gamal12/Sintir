@@ -7,6 +7,7 @@ import 'package:sintir/Core/services/FireBase/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 import 'package:sintir/Features/Favorites/presentation/views/FavoritesView.dart';
+import 'package:sintir/Features/Home/presentation/manager/cubit/bottom_nav_cubit.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_courses_cubit/get_courses_cubit.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_user_data_cubit/get_user_data_cubit.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/BottomNavBar.dart';
@@ -23,16 +24,6 @@ class Homeview extends StatefulWidget {
 }
 
 class _HomeviewState extends State<Homeview> {
-  int currentIndex = 0;
-  List<Widget> screens = [
-    const HomeViewBody(),
-    const SearchView(),
-    Favoritesview(
-      isPopUp: false,
-    ),
-    const ProfileView()
-  ];
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -43,19 +34,26 @@ class _HomeviewState extends State<Homeview> {
         BlocProvider(
             create: (context) => GetUserDataCubit(
                 authService: getIt<firebaseAuthService>(),
-                authRepo: getIt<AuthRepo>()))
+                authRepo: getIt<AuthRepo>())),
+        BlocProvider(create: (context) => BottomNavCubit()),
       ],
-      child: Scaffold(
-        bottomNavigationBar: BottomNavBar(
-          onPageChanged: (index) {
-            setState(() {
-              currentIndex = index;
-            });
-          },
-        ),
-        body: SafeArea(
-            child: IndexedStack(index: currentIndex, children: screens)),
-      ),
+      child: Builder(builder: (context) {
+        return Scaffold(
+          bottomNavigationBar: BottomNavBar(
+            onPageChanged: (index) {
+              context.read<BottomNavCubit>().changeIndex(index);
+            },
+          ),
+          body: BlocBuilder<BottomNavCubit, BottomNavState>(
+            builder: (context, state) {
+              return SafeArea(
+                  child: IndexedStack(
+                      index: context.read<BottomNavCubit>().currentIndex,
+                      children: context.read<BottomNavCubit>().screens));
+            },
+          ),
+        );
+      }),
     );
   }
 }

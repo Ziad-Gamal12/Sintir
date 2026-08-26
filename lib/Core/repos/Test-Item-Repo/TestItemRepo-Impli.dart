@@ -17,8 +17,8 @@ import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/utils/SupabaseBuckets.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CourseTestModel.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/TestResulteModel.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/CourseTestModel.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/TestResulteModel.dart';
 import 'package:sintir/locale_keys.dart';
 
 class TestItemRepoImpli implements Testitemrepo {

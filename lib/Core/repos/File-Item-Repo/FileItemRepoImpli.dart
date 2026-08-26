@@ -3,7 +3,7 @@ import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/File-Item-Repo/FileItemRepo.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/SupabaseBuckets.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/locale_keys.dart';
 
 class FileItemRepoImpli implements FileItemRepo {

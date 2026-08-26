@@ -1,0 +1,28 @@
+import 'package:flutter/material.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/ReviewTestResultWidgets/customSolutionStateCheckBoxWidget.dart';
+
+class CustomSolutionStateRowWidget extends StatelessWidget {
+  const CustomSolutionStateRowWidget(
+      {super.key, required this.isCorrect, required this.title});
+  final bool isCorrect;
+  final String title;
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final Color textColor = theme.textTheme.bodyLarge!.color!;
+
+    return Row(children: [
+      Customsolutionstatecheckboxwidget(
+        isCorrect: isCorrect,
+      ),
+      const SizedBox(
+        width: 5,
+      ),
+      Text(
+        title,
+        style: AppTextStyles(context).semiBold16.copyWith(color: textColor),
+      )
+    ]);
+  }
+}

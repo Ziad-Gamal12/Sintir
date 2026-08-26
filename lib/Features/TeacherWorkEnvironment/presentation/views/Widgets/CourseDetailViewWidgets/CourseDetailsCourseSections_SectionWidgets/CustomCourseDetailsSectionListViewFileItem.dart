@@ -6,8 +6,8 @@ import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/widgets/CustomTrashIcon.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomContainerSectionItem.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/CourseFileEntity.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/CustomContainerSectionItem.dart';
 
 class CustomCourseDetailsSectionListViewFileItem extends StatelessWidget {
   const CustomCourseDetailsSectionListViewFileItem(

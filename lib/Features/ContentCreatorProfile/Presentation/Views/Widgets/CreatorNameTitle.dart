@@ -15,13 +15,10 @@ class CreatorNameTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    // Determine primary and secondary text/icon colors from the theme
     final Color primaryTextColor = theme.textTheme.titleLarge!.color!;
     final Color secondaryTextColor = theme.textTheme.bodyMedium!.color!;
-    final Color primaryIconColor =
-        theme.colorScheme.primary; // Use primary for strong icons
-    final Color verificationColor = theme.colorScheme
-        .secondary; // Use secondary or a specific success/accent color for verification icon
+
+    final Color verificationColor = theme.colorScheme.secondary;
 
     return Column(
       children: [
@@ -42,16 +39,13 @@ class CreatorNameTitle extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(LucideIcons.badgeCheck,
-                size: 20,
-                color:
-                    verificationColor), // Use theme color for badge/verification
+            Icon(LucideIcons.badgeCheck, size: 20, color: verificationColor),
             const SizedBox(width: 6),
             Text(
               title,
-              style: AppTextStyles(context).regular16.copyWith(
-                  color:
-                      secondaryTextColor), // Use secondary text color for the title
+              style: AppTextStyles(context)
+                  .regular16
+                  .copyWith(color: secondaryTextColor),
             ),
           ],
         ),

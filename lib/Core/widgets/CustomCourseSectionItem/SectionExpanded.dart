@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/presentation/views/widgets/CustomSectionListView.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/CustomSectionListView.dart';
 import 'package:sintir/constant.dart';
 
 class SectionExpanded extends StatelessWidget {

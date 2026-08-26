@@ -184,8 +184,6 @@ class SearchRepoImpl implements SearchRepo {
     );
   }
 
-  // ---------------------- SEARCH COURSES BY CONTENT CREATOR ----------------------
-
   @override
   Future<SearchResponse> searchCoursesByContentCreatorName(
       {required String keyword,

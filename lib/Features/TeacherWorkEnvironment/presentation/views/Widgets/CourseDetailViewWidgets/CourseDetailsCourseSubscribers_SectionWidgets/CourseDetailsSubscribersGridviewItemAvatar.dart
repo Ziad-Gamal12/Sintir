@@ -8,14 +8,15 @@ class CourseDetailsSubscribersGridviewItemAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipOval(
-      child: Container(
-        width: 80,
-        height: 80,
-        color: Colors.grey.shade100,
-        child: CustomCachedNetworkImage(
-          imageUrl: imageUrl,
-          fit: BoxFit.cover,
+    return AspectRatio(
+      aspectRatio: 1,
+      child: ClipOval(
+        child: Container(
+          color: Colors.grey.shade100,
+          child: CustomCachedNetworkImage(
+            imageUrl: imageUrl,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/QuestionMistakeEntity.dart';
 import 'package:sintir/Core/models/MistakeProgressModel.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/ExamResultSolvedQuestionModel.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/ExamResultSolvedQuestionModel.dart';
 
 class QuestionMistakeModel {
   final Map<String, dynamic> question;

@@ -11,7 +11,7 @@ import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/models/QuestionMistakeModel.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/TestResulteModel.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/TestResulteModel.dart';
 import 'package:sintir/Features/MyMistakes/Domain/Entities/GetMyMistakesResponseEntity.dart';
 import 'package:sintir/Features/MyMistakes/Domain/Repo/MyMistakesRepo.dart';
 import 'package:sintir/locale_keys.dart';

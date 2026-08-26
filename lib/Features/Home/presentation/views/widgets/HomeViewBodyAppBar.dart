@@ -2,27 +2,35 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/Home/presentation/manager/cubit/bottom_nav_cubit.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
 class HomeViewBodyAppBar extends StatelessWidget {
-  const HomeViewBodyAppBar({super.key});
-
+  const HomeViewBodyAppBar({
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: SizedBox(
-        width: 60,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(80),
-          child: CachedNetworkImage(
-            imageUrl: getUserData().profilePicurl,
-            height: 80,
-            width: 80,
-            fit: BoxFit.cover,
+      leading: InkWell(
+        onTap: () {
+          context.read<BottomNavCubit>().navigateToProfile();
+        },
+        child: SizedBox(
+          width: 60,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(80),
+            child: CachedNetworkImage(
+              imageUrl: getUserData().profilePicurl,
+              height: 80,
+              width: 80,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
       ),

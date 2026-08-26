@@ -34,6 +34,7 @@ class SubscribtionView extends StatelessWidget {
       ],
       child: SensitivePageWrapper(
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: CustomAppBar(appBartitle: LocaleKeys.subscription),
           body: SubscribtionViewBody(
             requirmentsEntity: requirmentsEntity,

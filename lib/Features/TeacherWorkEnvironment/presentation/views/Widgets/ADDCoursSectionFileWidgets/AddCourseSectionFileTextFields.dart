@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/locale_keys.dart';
 
 class AddCourseSectionFileTextFields extends StatelessWidget {

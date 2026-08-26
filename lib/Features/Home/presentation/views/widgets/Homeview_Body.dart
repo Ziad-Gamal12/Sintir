@@ -64,7 +64,7 @@ class _HomeViewBodyState extends State<HomeViewBody>
           final getUserDataCubit = context.read<GetUserDataCubit>();
           getUserDataCubit.fetchUserData();
         },
-        child: const HomeViewBodyBuilder(),
+        child: HomeViewBodyBuilder(),
       ),
     );
   }

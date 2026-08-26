@@ -11,8 +11,8 @@ class SearchViewBodyTeachersListViewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CircleAvatar(
-          radius: 30,
+        Expanded(
+          flex: 3,
           child: AspectRatio(
             aspectRatio: 1,
             child: ClipRRect(
@@ -25,11 +25,13 @@ class SearchViewBodyTeachersListViewItem extends StatelessWidget {
         const SizedBox(
           height: 5,
         ),
-        Text(
-          contentcreaterentity.name,
-          style: AppTextStyles(context).regular14,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+        Expanded(
+          child: Text(
+            contentcreaterentity.name,
+            style: AppTextStyles(context).regular14,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         )
       ],
     );

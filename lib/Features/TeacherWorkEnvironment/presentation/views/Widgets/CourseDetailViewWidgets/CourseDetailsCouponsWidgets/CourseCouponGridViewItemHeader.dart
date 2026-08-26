@@ -21,17 +21,24 @@ class CourseCouponGridViewItemHeader extends StatelessWidget {
         Theme.of(context).textTheme.bodyLarge!.color!;
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         const CourseCouponGridViewItemImage(),
-        const SizedBox(width: 10),
-        Text(LocaleKeys.coupon,
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            LocaleKeys.coupon,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: AppTextStyles(context)
                 .semiBold24
-                .copyWith(color: primaryTextColor)),
-        const Spacer(),
+                .copyWith(color: primaryTextColor),
+          ),
+        ),
+        const SizedBox(width: 8),
         CourseCouponGridViewItemHeaderSwitcher(
-            courseID: courseID, couponEntity: couponEntity),
+          courseID: courseID,
+          couponEntity: couponEntity,
+        ),
       ],
     );
   }

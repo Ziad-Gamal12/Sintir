@@ -4,29 +4,26 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/constant.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class CourseCouponsListViewLoading extends StatelessWidget {
-  const CourseCouponsListViewLoading({super.key});
+class CourseCouponsGridViewLoading extends StatelessWidget {
+  const CourseCouponsGridViewLoading({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return GridView.builder(
         itemCount: getFakeLoadingCoupons().length,
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 320,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+            childAspectRatio: 1.35),
         padding: const EdgeInsets.symmetric(
             vertical: KVerticalPadding, horizontal: KHorizontalPadding),
         itemBuilder: (context, index) {
           return Skeletonizer(
-              enabled: true,
-              child: AspectRatio(
-                aspectRatio: 2 / 1.4,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                  ),
-                  child: CourseCouponGridViewItem(
-                      courseId: "",
-                      couponEntity: getFakeLoadingCoupons()[index]),
-                ),
-              ));
+            enabled: true,
+            child: CourseCouponGridViewItem(
+                courseId: "", couponEntity: getFakeLoadingCoupons()[index]),
+          );
         });
   }
 

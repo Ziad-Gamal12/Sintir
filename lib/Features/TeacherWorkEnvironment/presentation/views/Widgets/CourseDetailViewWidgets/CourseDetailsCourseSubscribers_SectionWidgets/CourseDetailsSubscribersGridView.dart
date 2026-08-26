@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
-import 'package:sintir/Core/helper/GridHelper.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/SubscriberDetailsNavigationRequirements.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersGridviewItem.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/SubscriberDetailsView.dart';
@@ -15,13 +14,12 @@ class CourseDetailsSubscribersGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount:
-              GridHelper.getCrossAxisCount(MediaQuery.of(context).size.width),
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20,
-          childAspectRatio: GridHelper.getAspectRatio(
-              maxWidth: MediaQuery.of(context).size.width)),
+      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 300,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+        childAspectRatio: .68,
+      ),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: subscribers.length,

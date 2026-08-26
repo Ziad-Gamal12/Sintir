@@ -71,7 +71,7 @@ class _SearchViewBodyState extends State<SearchViewBody> {
                 ),
               ),
               const SliverToBoxAdapter(
-                  child: Divider(height: 24, color: Color(0xffE5E5EA))),
+                  child: Divider(height: 32, color: Color(0xffE5E5EA))),
               const SliverToBoxAdapter(
                 child: SearchViewBodySearchViewBodyCoursesListHeader(),
               ),

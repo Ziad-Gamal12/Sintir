@@ -8,12 +8,12 @@ import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CourseTestModel.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursefileModel.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/CoursevedioitemModel.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/data/models/JoinedByModel.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/CourseFileEntity.dart';
-import 'package:sintir/Features/Course%20Management%20and%20Interaction%20Feature/domain/Entities/JoinedByEntity.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/CourseTestModel.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/CoursefileModel.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/CoursevedioitemModel.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/JoinedByModel.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/CourseFileEntity.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/JoinedByEntity.dart';
 import 'package:sintir/locale_keys.dart';
 
 class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {

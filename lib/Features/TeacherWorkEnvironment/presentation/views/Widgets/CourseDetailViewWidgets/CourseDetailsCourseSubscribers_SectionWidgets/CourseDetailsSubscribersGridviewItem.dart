@@ -4,7 +4,6 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersGridviewItemAddress.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersGridviewItemAvatar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersGridviewItemPhoneNumber.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersGridviewItemSchoolLevel.dart';
 
 class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
   const CourseDetailsSubscribersGridviewItem(
@@ -18,7 +17,6 @@ class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
     final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
     final bool isDarkMode = theme.brightness == Brightness.dark;
 
-    // Adjusted shadow for theme compatibility
     final List<BoxShadow> boxShadows = isDarkMode
         ? [
             BoxShadow(
@@ -50,30 +48,42 @@ class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CourseDetailsSubscribersGridviewItemAvatar(
-              imageUrl: subscriber.imageUrl),
+          SizedBox(
+            height: 90,
+            width: 90,
+            child: CourseDetailsSubscribersGridviewItemAvatar(
+                imageUrl: subscriber.imageUrl),
+          ),
           const SizedBox(
-            height: 10,
+            height: 12,
           ),
-          Text(
-            subscriber.name,
-            style: AppTextStyles(context)
-                .semiBold20
-                .copyWith(color: primaryTextColor),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  subscriber.name,
+                  style: AppTextStyles(context)
+                      .semiBold16
+                      .copyWith(color: primaryTextColor),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                CourseDetailsSubscribersGridviewItemPhoneNumber(
+                    phone: subscriber.phone),
+                const SizedBox(
+                  height: 8,
+                ),
+                CourseDetailsSubscribersGridviewItemAddress(
+                    address: subscriber.address),
+              ],
+            ),
           ),
-          const Spacer(),
-          CourseDetailsSubscribersGridviewItemPhoneNumber(
-              phone: subscriber.phone),
-          const SizedBox(
-            height: 5,
-          ),
-          CourseDetailsSubscribersGridviewItemSchoolLevel(
-              schoolLevel: subscriber.educationLevel),
-          const SizedBox(
-            height: 5,
-          ),
-          CourseDetailsSubscribersGridviewItemAddress(
-              address: subscriber.address),
         ],
       ),
     );
