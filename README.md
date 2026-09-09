@@ -20,15 +20,15 @@ Sintir simplifies digital education for both students and teachers through a mod
 |:---:|:---:|:---:|
 | ![Add Course](Screenshots/Screenshot_2025-12-11-18-21-53-34_f9966819976412588049618dad4b8aef.jpg) | ![Add Exam](Screenshots/Screenshot_2025-12-11-18-22-38-28_f9966819976412588049618dad4b8aef.jpg) | ![Taking Exam](Screenshots/Screenshot_2025-12-11-18-40-44-30_f9966819976412588049618dad4b8aef.jpg) |
 
-| Result After Exam |
-|:---:|
-| ![Result](Screenshots/Screenshot_2025-12-11-18-25-29-19_f9966819976412588049618dad4b8aef.jpg) |
+| Before Joining the Exam | Result After Exam |
+|:---:|:---:|
+| ![Before Exam](Screenshots/Screenshot_2025-12-11-18-40-39-97_f9966819976412588049618dad4b8aef.jpg) | ![Result](Screenshots/Screenshot_2025-12-11-18-25-29-19_f9966819976412588049618dad4b8aef.jpg) |
 
 ---
 
-##  Features
+## ✨ Features
 
-### For Students
+### For Students 🧑‍🎓
 - Browse and search courses with advanced filters (price, subscription status, education level, sorting)
 - Save favorite courses
 - Enroll in and access course content (videos, files, exams)
@@ -136,7 +136,7 @@ feature_name/
 
 ---
 
-## 👤 Author
+##  Author
 
 **Ziad Gamal**
 - GitHub: [@Ziad-Gamal12](https://github.com/Ziad-Gamal12)
