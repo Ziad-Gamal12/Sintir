@@ -1,213 +1,108 @@
-📘 Sintir – Educational Mobile Platform (Flutter)
+🎓 Sintir
+
+A digital learning platform connecting teachers and students — course management, live content, exams, and progress tracking, all in one app.
+
+Sintir simplifies digital education for both students and teachers through a modern, organized, and easy-to-use experience. Teachers can create and manage courses, upload lectures and exams, and track student performance. Students can browse courses, take exams, track their results, and follow their learning journey — all in one place.
+
+Onboarding	Home	Search
+Show Image	Show Image	Show Image
+Course Details	Add Exam	Results Analytics
+Show Image	Show Image	Show Image
+Wallet & Transactions	Take Exam	Settings
+Show Image	Show Image	Show Image
+
+✨ Features
+
+For Students
+Browse and search courses with advanced filters (price, subscription status, education level, sorting)
+Save favorite courses
+Enroll in and access course content (videos, files, exams)
+Take timed exams with question navigation and submission tracking
+View detailed results and performance analytics
+Review personal mistakes with correct answers highlighted
+Rate and review teachers
+Track subscriptions and manage account details
+
+For Teachers 
+Create and manage courses (title, description, price, subject, education level, language)
+Organize content by weeks and lectures (videos, files, exams)
+Build multi-step exams with images, multiple answers, and attempt limits
+Track detailed analytics per video/exam: attendance rate, student notes, performance charts
+Manage a personal wallet — view balance, earnings, transaction history, and withdraw funds via PayMob
+Create and manage discount coupons for courses
+View and manage enrolled students
+Handle content reports and moderation
+Read and respond to student ratings and reviews
+
+General
+ Full dark mode support
+ Multi-language support (Arabic, English, French)
+ Authentication via Email/Password, Google, and Facebook
+ Secure payments and payouts through PayMob
+ Rich performance dashboards for both roles
+
+ Tech Stack
+Framework: Flutter (Dart)
+State Management: Bloc / Cubit
+Architecture: Clean Architecture (feature-based modules)
+Backend: Firebase
+Payments: PayMob Payment Gateway
+Design: Figma
+
+ Architecture
+
+Sintir follows Clean Architecture with a feature-first folder structure. Each feature is self-contained with its own presentation, domain, and data layers, which keeps the codebase scalable and easy to navigate.
 
-Sintir is a scalable and flexible educational platform built with Flutter, designed for both students and teachers.
-It delivers a complete learning environment that includes courses, videos, exams, files, payments, reports, analytics, and a full teacher workspace.
-
-🧩 Main Features
-👨‍🎓 Student Features
-
-Email verification & secure authentication
-
-Explore courses by category, price, rating, recency, and educational level
-
-Course subscription with applied coupons
-
-Payments via Paymob (wallets + credit cards) through WebView
-
-Video lecture player
-
-PDF viewer
-
-Quiz & exam viewer
-
-Submit answers with:
-
-Correct/incorrect summary
-
-Explanation images
-
-Mistakes tracking
-
-Attempts limit (fixed or unlimited)
-
-Hidden results (if teacher disables visibility)
-
-Notes, questions, reports
-
-Course feedback system
-
-Add to wishlist
-
-Full profile management (photo, info, theme, language)
-
-Screenshot & screen-recording protection
-
-One-device login restriction logic
-
-👨‍🏫 Teacher Features
-
-Dedicated teacher onboarding
-
-Teacher dashboard with:
-
-3D credit card view
-
-Total earnings, balance & transaction history
-
-Withdraw & refund logic (admin-activated)
-
-Full course management:
-
-Videos
-
-PDFs
-
-Exams & questions
-
-Attempts count
-
-Result visibility toggle
-
-Exam timer
-
-Coupon system (create/activate/deactivate)
-
-Students list (per course):
-
-Search
-
-Student profile
-
-Subscription history
-
-Performance analytics chart
-
-All exam results
-
-Video analytics:
-
-Notes from students
-
-Viewing statistics
-
-Exam analytics:
-
-Attendance percentage
-
-Success/failure rate
-
-Highest and lowest scores
-
-🛠 Tech Stack
-
-Flutter + Dart
-
-Bloc / Cubit (State Management)
-
-GoRouter (Navigation)
-
-Firebase Authentication
-
-Firebase Firestore
-
-Firebase Storage
-
-Paymob API
-
-Chewie + Video Player
-
-PDFX
-
-GetIt (Dependency Injection)
-
-⚙️ Technical Highlights
-
-Clean Architecture with feature-based modules
-
-Layered structure (Core / Data / Domain / Presentation)
-
-Efficient pagination for large datasets
-
-Optimized Bloc rebuild patterns
-
-Screenshot/screen-recording prevention
-
-Strong data refactoring & scalability
-
-One-device login restriction
-
-Multi-language support (AR/EN/FR)
-
-High performance on low-end devices
-
-📁 Folder Structure
 lib/
- ├── core/
- │   ├── errors/
- │   ├── constants/
- │   ├── theme/
- │   ├── utils/
- │   ├── widgets/
- │   └── services/
- │
- ├── features/
- │   ├── auth/
- │   │   ├── data/
- │   │   ├── domain/
- │   │   └── presentation/
- │   │
- │   ├── courses/
- │   │   ├── data/
- │   │   ├── domain/
- │   │   └── presentation/
- │   │
- │   ├── exams/
- │   ├── videos/
- │   ├── files/
- │   ├── teacher/
- │   ├── student/
- │   └── profile/
- │
- ├── router/
- ├── injections.dart
- └── main.dart
+├── Auth/
+├── ChoosingUserKind/
+├── ContentCreatorProfile/
+├── CourseManagementAndInteractionFeature/
+├── Favorites/
+├── Home/
+├── MyCourses/
+├── MyMistakes/
+├── MyResults/
+├── MyTransactions/
+├── Profile/
+├── Search/
+├── Splash/
+├── StudentOnboarding/
+├── Subscribtion/
+├── Support/
+├── TeacherOnBoarding/
+└── TeacherWorkEnvironment/
 
-🧰 Installation & Setup
-1. Clone the Repository
-git clone https://github.com/Ziad-Gamal12/Sintir.git
+Each feature folder typically follows the pattern:
 
-2. Install Dependencies
-flutter pub get
+feature_name/
+├── Data/           # Models, repositories, data sources
+├── Domain/         # Entities, use cases, repository interfaces
+└── Presentation/   # Views, Cubits/Blocs, widgets
 
-3. Add Firebase Files
+Getting Started
 
-google-services.json → Android
+Prerequisites
+Flutter SDK installed
+A configured Firebase project
+A PayMob account (for payment features)
+Installation
+Clone the repository
+bash
+   git clone https://github.com/Ziad-Gamal12/Sintir.git
+   cd Sintir
+Install dependencies
+bash
+   flutter pub get
+Set up Firebase
+Add your google-services.json (Android) to android/app/
+Add your GoogleService-Info.plist (iOS) to ios/Runner/
+Run the app
+bash
+   flutter run
+👤 Author
 
-GoogleService-Info.plist → iOS
+Ziad Gamal
 
-4. Run the App
-flutter run
-
-🧗 Challenges & Solutions
-
-Managing a large, multi-role system (Student + Teacher)
-
-Architecting 70+ screens with long-term scalability
-
-Designing UI/UX manually in Figma from scratch
-
-Implementing effective pagination & performance isolation
-
-Optimizing heavy views (videos, exams, analytics)
-
-Building dynamic exam logic with attempts & hidden results
-
-Designing full course management for teachers
-
-Implementing one-device login security
-
-Enabling screenshot & screen-recording protection
-
-🔗 Repository
-
-GitHub: https://github.com/Ziad-Gamal12/Sintir.git
+GitHub: @Ziad-Gamal12
+<p align="center">Built with ❤️ using Flutter</p>
