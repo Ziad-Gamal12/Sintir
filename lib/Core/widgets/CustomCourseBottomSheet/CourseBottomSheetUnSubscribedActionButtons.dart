@@ -19,35 +19,56 @@ class CourseBottomSheetUnSubscribedActionButtons extends StatelessWidget {
 
     return BlocBuilder<CourseSubscribtionsCubit, CourseSubscribtionsState>(
       builder: (context, state) {
-        return Column(
+        return Row(
           children: [
-            Custombutton(
-              text: LocaleKeys.exploreContent,
-              color: isDark ? const Color(0xFF2A2A2A) : Colors.white,
-              textColor: isDark ? Colors.white : Colors.black,
-              side: BorderSide(
-                  width: 1, color: isDark ? Colors.white70 : Colors.black),
-              onPressed: () {
-                GoRouter.of(context).push(
-                  CourseIntroductionView.routeName,
-                  extra: context.read<
-                      DisplayCourseBottomsheetNavigationRequirmentsEntity>(),
-                );
-              },
+            Expanded(
+              flex: 3,
+              child: Custombutton(
+                text: LocaleKeys.subscribeNow,
+                color: KSecondaryColor,
+                textColor: Colors.white,
+                onPressed: () {
+                  GoRouter.of(context).push(
+                    SubscribtionView.routeName,
+                    extra: context.read<
+                        DisplayCourseBottomsheetNavigationRequirmentsEntity>(),
+                  );
+                },
+              ),
             ),
-            const SizedBox(height: 10),
-            Custombutton(
-              text: LocaleKeys.subscribeNow,
-              color: KSecondaryColor,
-              textColor: Colors.white,
-              onPressed: () {
-                GoRouter.of(context).push(
-                  SubscribtionView.routeName,
-                  extra: context.read<
-                      DisplayCourseBottomsheetNavigationRequirmentsEntity>(),
-                );
-              },
-            ),
+            const SizedBox(width: 10),
+            Expanded(
+                child: Material(
+              color: Colors.transparent,
+              child: Ink(
+                height: 46,
+                width: 46,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(
+                        alpha: isDark ? 0.25 : 0.08,
+                      ),
+                      blurRadius: 8,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(14),
+                  onTap: () => GoRouter.of(context).push(
+                    CourseIntroductionView.routeName,
+                    extra: context.read<
+                        DisplayCourseBottomsheetNavigationRequirmentsEntity>(),
+                  ),
+                  child: const Icon(
+                    Icons.arrow_forward_rounded,
+                  ),
+                ),
+              ),
+            ))
           ],
         );
       },

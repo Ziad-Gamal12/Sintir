@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWalletBalanceDeatils.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWalletDetailsViewBodyWalletCardHeader.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/EarningsSummarySection/EarningsSummarySection.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWallet/CustomTeacherCardItem.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/teacher_wallet_balance_details_row.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/CustomTeacherCardItem.dart';
 import 'package:sintir/locale_keys.dart';
 
 class TeacherWalletDetailsSection extends StatelessWidget {
@@ -24,11 +23,8 @@ class TeacherWalletDetailsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TeacherWalletDetailsViewBodyWalletCardHeader(
-          status: wallet.status,
-        ),
         CustomTeacherCardItem(
-          user: user,
+          wallet: wallet,
         ),
         Divider(
           // 1. Themed Divider
@@ -36,8 +32,8 @@ class TeacherWalletDetailsSection extends StatelessWidget {
           thickness: 1,
           height: 40,
         ),
-        TeacherWalletBalanceDetails(
-          wallet: wallet,
+        EarningsSummarySection(
+          teacherWallet: wallet,
         ),
         Divider(
           // 3. Themed Divider

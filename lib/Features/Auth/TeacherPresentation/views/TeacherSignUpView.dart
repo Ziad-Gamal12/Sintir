@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:sintir/Core/Enums/currency_enum.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
@@ -43,7 +44,7 @@ class _TeacherSignUpViewState extends State<TeacherSignUpView> {
                 balance: 0,
                 totalEarned: 0,
                 payoutPending: 0,
-                currency: "EGP",
+                currency: Currency.egp.name,
                 status: BackendEndpoints.walletSuspended,
                 createdAt: DateTime.now().toIso8601String(),
                 updatedAt: DateTime.now().toIso8601String())),

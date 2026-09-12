@@ -5,10 +5,7 @@ import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/Auth/Data/models/UserModel.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWalletDetailsSection.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeachersTransactionsListView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/WithDrawBalanceActionButton.dart';
-import 'package:sintir/constant.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWalletDetailsViewBodyBuilder.dart';
 
 class TeacherWalletDetailsViewBody extends StatefulWidget {
   const TeacherWalletDetailsViewBody({
@@ -26,7 +23,6 @@ class _TeacherWalletDetailsViewBodyState
   @override
   void initState() {
     super.initState();
-
     walletStream = FirebaseFirestore.instance
         .collection(BackendEndpoints.usersCollectionName)
         .doc(teacherId)
@@ -61,42 +57,19 @@ class _TeacherWalletDetailsViewBodyState
                   CustomErrorWidget(errormessage: "Wallet document is empty."),
             );
           }
-
           UserEntity user = UserModel.fromJson(data).toEntity();
-
           final wallet = user.teacherExtraDataEntity?.wallet;
-
-          return Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: KHorizontalPadding, vertical: KVerticalPadding),
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: CustomScrollView(
-                      slivers: [
-                        SliverToBoxAdapter(
-                          child: TeacherWalletDetailsSection(
-                              wallet: wallet!,
-                              user: user,
-                              colorScheme: colorScheme),
-                        ),
-                        TeachersTransactionsListView(
-                          teacherId: teacherId,
-                        ),
-                        const SliverToBoxAdapter(
-                          child: SizedBox(height: 100),
-                        )
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                      bottom: 20,
-                      right: 16,
-                      left: 16,
-                      child: WithDrawBalanceActionButton(
-                          colorScheme: colorScheme, wallet: wallet))
-                ],
-              ));
+          if (wallet == null) {
+            return const Center(
+              child: CustomErrorWidget(
+                  errormessage: "Wallet data not found for user"),
+            );
+          }
+          return TeacherWalletDetailsViewBodyBuilder(
+              wallet: wallet,
+              user: user,
+              colorScheme: colorScheme,
+              teacherId: teacherId);
         });
   }
 }

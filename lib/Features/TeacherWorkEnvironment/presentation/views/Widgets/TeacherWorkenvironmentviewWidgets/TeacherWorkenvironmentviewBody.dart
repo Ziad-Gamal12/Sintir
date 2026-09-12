@@ -7,7 +7,7 @@ import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomMyCoursesGridHeader.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomSearchTextField.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/CustomTeacherCardItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWallet/CustomTeacherCardItem.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/TeacherEnvironmentCoursesGrid.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/TeacherWorkenvironmentviewBodyWalletSectionHeader.dart';
 import 'package:sintir/constant.dart';
@@ -77,9 +77,7 @@ class _TeacherWorkenvironmentviewBodyState
             ),
           ),
           SliverToBoxAdapter(
-            child: TeacherWorkenvironmentviewBodyWalletSectionHeader(
-              status: user.teacherExtraDataEntity!.wallet.status,
-            ),
+            child: TeacherWorkenvironmentviewBodyWalletSectionHeader(),
           ),
           const SliverToBoxAdapter(
             child: SizedBox(
@@ -88,7 +86,7 @@ class _TeacherWorkenvironmentviewBodyState
           ),
           SliverToBoxAdapter(
             child: CustomTeacherCardItem(
-              user: user,
+              wallet: user.teacherExtraDataEntity?.wallet,
             ),
           ),
           const SliverToBoxAdapter(

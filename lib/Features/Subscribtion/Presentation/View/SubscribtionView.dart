@@ -8,7 +8,6 @@ import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.
 import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
-import 'package:sintir/Core/widgets/SensitivePageWrapper.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/SubscribtionViewBody.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -32,13 +31,11 @@ class SubscribtionView extends StatelessWidget {
               CourseCouponsCubit(courseCouponsRepo: getIt<CourseCouponsRepo>()),
         )
       ],
-      child: SensitivePageWrapper(
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: CustomAppBar(appBartitle: LocaleKeys.subscription),
-          body: SubscribtionViewBody(
-            requirmentsEntity: requirmentsEntity,
-          ),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: CustomAppBar(appBartitle: LocaleKeys.subscription),
+        body: SubscribtionViewBody(
+          requirmentsEntity: requirmentsEntity,
         ),
       ),
     );

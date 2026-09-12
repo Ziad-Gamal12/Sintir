@@ -15,14 +15,11 @@ class LocaleKeys {
   static String get selectSubject => 'select_subject'.tr();
   static String get questionCount => 'question_count'.tr();
   static String get questionsLabel => 'questions_label'.tr();
-
   static String get noteTitle => 'note_title'.tr();
   static String get noteBody => 'note_body'.tr();
-
   static String get myMistakesstatusActive => 'mistake_status_active'.tr();
   static String get statusImproving => 'status_improving'.tr();
   static String get statusMastered => 'status_mastered'.tr();
-
   static String get yourAnswer => 'your_answer'.tr();
   static String get correctAnswer => 'correct_answer'.tr();
   static String get totalMistakes => 'total_mistakes'.tr();
@@ -93,15 +90,10 @@ class LocaleKeys {
   static String get permissionError => 'permissionError'.tr();
   static String get selectTicketCategory => 'selectTicketCategory'.tr();
   static String get messageDeletedSuccess => 'messageDeletedSuccess'.tr();
-
   static String get noMessagesYet => 'noMessagesYet'.tr();
-
   static String get deleteMessage => 'deleteMessage'.tr();
-
   static String get updatedMessage => 'updatedMessage'.tr();
-
   static String get messageUpdatedSuccess => 'messageUpdatedSuccess'.tr();
-
   static String get videoLoadFailed => 'video_load_failed'.tr();
   static String get myCourses => 'my_courses'.tr();
   static String get totalPages => 'total_pages'.tr();

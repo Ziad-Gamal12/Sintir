@@ -17,6 +17,10 @@ class AppTextStyles {
         fontWeight: FontWeight.w400,
         fontSize: getresposiveTet(context: context, basesize: 11),
       );
+  TextStyle get regular12 => TextStyle(
+        fontWeight: FontWeight.w400,
+        fontSize: getresposiveTet(context: context, basesize: 12),
+      );
 
   TextStyle get regular13 => TextStyle(
         fontWeight: FontWeight.w400,
@@ -119,7 +123,10 @@ class AppTextStyles {
         fontWeight: FontWeight.w700,
         fontSize: getresposiveTet(context: context, basesize: 24),
       );
-
+  TextStyle get bold30 => TextStyle(
+        fontWeight: FontWeight.w700,
+        fontSize: getresposiveTet(context: context, basesize: 30),
+      );
   TextStyle get bold32 => TextStyle(
         fontWeight: FontWeight.w700,
         fontSize: getresposiveTet(context: context, basesize: 32),

@@ -37,9 +37,6 @@ class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-
     return BlocConsumer<CourseSubscribtionsCubit, CourseSubscribtionsState>(
       listener: (context, state) {
         courseBottomSheetBlocListener(state, context);
@@ -50,21 +47,19 @@ class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
           child: const Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: KHorizontalPadding, vertical: KVerticalPadding),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Poster
-                CourseBottomSheetBodyCoursePoster(),
-                SizedBox(height: 24),
-                // Course Details
-                CourseBottomSheetCourseDetails(),
-                SizedBox(height: 24),
-                // Content Creator
-                CourseBottomContentCreator(),
-                SizedBox(height: 24),
-                // Action Buttons
-                CustomCourseBottomSheetActionButtons(),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CourseBottomSheetBodyCoursePoster(),
+                  SizedBox(height: 24),
+                  CourseBottomSheetCourseDetails(),
+                  SizedBox(height: 24),
+                  CourseBottomContentCreator(),
+                  SizedBox(height: 24),
+                  CustomCourseBottomSheetActionButtons(),
+                ],
+              ),
             ),
           ),
         );
