@@ -40,7 +40,8 @@ class CustomTeacherCardItem extends StatelessWidget {
                       currency: wallet!.currency,
                       balance: wallet!.balance.toStringAsFixed(2),
                       theme: theme),
-                  TeacherWalletWithDrawButton(isCompact: isCompact)
+                  TeacherWalletWithDrawButton(
+                      isCompact: isCompact, wallet: wallet!),
                 ],
               )
             : Center(

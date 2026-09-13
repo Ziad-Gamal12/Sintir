@@ -3,7 +3,7 @@ import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWalletDetailsSection.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeachersTransactionsListView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/WithDrawBalanceActionButton.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeachersTransactionsListViewHeader.dart';
 import 'package:sintir/constant.dart';
 
 class TeacherWalletDetailsViewBodyBuilder extends StatelessWidget {
@@ -25,30 +25,20 @@ class TeacherWalletDetailsViewBodyBuilder extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.symmetric(
             horizontal: KHorizontalPadding, vertical: KVerticalPadding),
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: TeacherWalletDetailsSection(
-                        wallet: wallet, user: user, colorScheme: colorScheme),
-                  ),
-                  TeachersTransactionsListView(
-                    teacherId: teacherId,
-                  ),
-                  const SliverToBoxAdapter(
-                    child: SizedBox(height: 100),
-                  )
-                ],
-              ),
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: TeacherWalletDetailsSection(
+                  wallet: wallet, user: user, colorScheme: colorScheme),
             ),
-            Positioned(
-                bottom: 20,
-                right: 16,
-                left: 16,
-                child: WithDrawBalanceActionButton(
-                    colorScheme: colorScheme, wallet: wallet))
+            SliverToBoxAdapter(child: SizedBox(height: 20)),
+            SliverToBoxAdapter(child: TeachersTransactionsListViewHeader()),
+            TeachersTransactionsListView(
+              teacherId: teacherId,
+            ),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 100),
+            )
           ],
         ));
   }

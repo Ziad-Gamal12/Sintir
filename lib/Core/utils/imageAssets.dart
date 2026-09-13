@@ -126,6 +126,10 @@ class Assets {
   /// assets/Icons/SVG_Icons/SectionIcon.svg
   static const String assetsIconsSVGIconsSectionIcon = "assets/Icons/SVG_Icons/SectionIcon.svg";
 
+  /// Assets for assetsIconsSVGIconsSecuirtyBadge
+  /// assets/Icons/SVG_Icons/SecuirtyBadge.svg
+  static const String assetsIconsSVGIconsSecuirtyBadge = "assets/Icons/SVG_Icons/SecuirtyBadge.svg";
+
   /// Assets for assetsIconsSVGIconsUSAFlag
   /// assets/Icons/SVG_Icons/USAFlag.svg
   static const String assetsIconsSVGIconsUSAFlag = "assets/Icons/SVG_Icons/USAFlag.svg";

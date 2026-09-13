@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/Enums/currency_enum.dart';
 import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/WithDrawTeacherBalanceCubit/WithDrawTeacherBalanceCubit.dart';
 
@@ -27,16 +28,14 @@ class TransactionAmountAndStatus extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Transaction Amount
             Text(
-              'EGP ${transaction.amount?.toStringAsFixed(2) ?? '0.00'}',
+              '${transaction.amount?.toStringAsFixed(2) ?? '0.00'} ${currencyFromString(transaction.currency ?? '').symbol}',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: statusColor,
               ),
             ),
-
             Column(
               children: [
                 Icon(

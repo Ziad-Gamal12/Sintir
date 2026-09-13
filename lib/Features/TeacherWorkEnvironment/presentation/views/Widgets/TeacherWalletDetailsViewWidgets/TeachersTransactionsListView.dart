@@ -10,11 +10,9 @@ import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeachersTransactionsListViewItem.dart';
 import 'package:sintir/locale_keys.dart';
 
-// 1. Define Constant for Padding
 const _kItemPadding = EdgeInsets.symmetric(vertical: 20);
 
 class TeachersTransactionsListView extends StatefulWidget {
-  // teacherId is required, good.
   const TeachersTransactionsListView({super.key, required this.teacherId});
   final String teacherId;
   @override
@@ -31,7 +29,7 @@ class _TeachersTransactionsListViewState
     super.initState();
     transactionsStream = FirebaseFirestore.instance
         .collection(BackendEndpoints.usersCollectionName)
-        .doc(widget.teacherId) // Using the passed teacherId
+        .doc(widget.teacherId)
         .collection(BackendEndpoints.transactionsSubCollection)
         .orderBy("created_at", descending: true)
         .where("method", isEqualTo: BackendEndpoints.payOutMethod)
@@ -55,7 +53,6 @@ class _TeachersTransactionsListViewState
                   errormessage: LocaleKeys.errorOccurredMessage));
         }
 
-        // Handle data state
         if (snapshot.hasData) {
           final documents = snapshot.data!.docs;
 
@@ -83,7 +80,6 @@ class _TeachersTransactionsListViewState
 
           return SliverList.builder(
             itemCount: transactions.length,
-            // 4. Using the extracted constant for padding
             itemBuilder: (context, index) {
               return Padding(
                 padding: _kItemPadding,

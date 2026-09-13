@@ -26,6 +26,17 @@ extension CurrencyExtension on Currency {
         return '€';
     }
   }
+
+  String get name {
+    switch (this) {
+      case Currency.egp:
+        return 'جنية مصري ($code)';
+      case Currency.usd:
+        return 'دولار أمريكي ($code)';
+      case Currency.eur:
+        return 'يورو ($code)';
+    }
+  }
 }
 
 Currency currencyFromString(String currencyString) {

@@ -18,7 +18,6 @@ class TeachersTransactionsListViewItem extends StatelessWidget {
   final TransactionEntity transaction;
   final String teacherId;
 
-  // Helper Methods (Kept in main class for centralizing status logic)
   Color _getStatusColor(String status) {
     final lowerStatus = status.toLowerCase();
     if (lowerStatus == 'success' || lowerStatus == 'completed') {

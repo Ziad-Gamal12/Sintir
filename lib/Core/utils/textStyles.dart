@@ -83,7 +83,10 @@ class AppTextStyles {
         fontWeight: FontWeight.w600,
         fontSize: getresposiveTet(context: context, basesize: 32),
       );
-
+  TextStyle get bold12 => TextStyle(
+        fontWeight: FontWeight.w700,
+        fontSize: getresposiveTet(context: context, basesize: 12),
+      );
   TextStyle get bold13 => TextStyle(
         fontWeight: FontWeight.w700,
         fontSize: getresposiveTet(context: context, basesize: 13),
