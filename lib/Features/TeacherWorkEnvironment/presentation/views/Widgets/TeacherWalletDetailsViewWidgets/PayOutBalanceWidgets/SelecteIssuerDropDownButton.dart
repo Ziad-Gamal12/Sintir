@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomAnimatedDropDownButton.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TeacherWalletTransactionIssuer.dart';
 import 'package:sintir/locale_keys.dart';
 
 class SelecteIssuerDropDownButton extends StatefulWidget {
@@ -13,7 +14,8 @@ class SelecteIssuerDropDownButton extends StatefulWidget {
 
 class _SelecteIssuerDropDownButtonState
     extends State<SelecteIssuerDropDownButton> {
-  List<String> items = ["vodafone", "etisalat", "orange", "we"];
+  List<String> items =
+      TeacherWalletTransactionIssuer.values.map(((e) => e.name)).toList();
 
   @override
   Widget build(BuildContext context) {

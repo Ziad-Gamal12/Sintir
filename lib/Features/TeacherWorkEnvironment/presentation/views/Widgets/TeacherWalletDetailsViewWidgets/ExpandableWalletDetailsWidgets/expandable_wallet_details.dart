@@ -71,15 +71,12 @@ class _ExpandableWalletDetailsState extends State<ExpandableWalletDetails> {
 
   Widget _buildDetails(BuildContext context) {
     final locale = Localizations.localeOf(context).toString();
+
     return Column(
       children: [
         WalletDetailRow.text(
           label: 'رقم المحفظة',
-          value: String.fromCharCodes(
-            widget.wallet.walletId.toString().codeUnits,
-            0,
-            8,
-          ),
+          value: widget.wallet.walletId.toString(),
         ),
         WalletDetailRow.text(
           label: 'العملة',
@@ -106,7 +103,7 @@ class _ExpandableWalletDetailsState extends State<ExpandableWalletDetails> {
         WalletDetailRow.text(
           label: 'آخر تحديث',
           value: DateFormat(
-            'yMMMMd، h:mm a',
+            'd MMMM yyyy، h:mm a',
             locale,
           ).format(
             DateTime.parse(widget.wallet.updatedAt),
@@ -114,15 +111,18 @@ class _ExpandableWalletDetailsState extends State<ExpandableWalletDetails> {
         ),
         WalletDetailRow.text(
           label: 'رقم آخر معاملة',
-          value: String.fromCharCodes(
-            widget.wallet.lastTransactionId?.codeUnits ??
-                'لا توجد معاملات'.codeUnits,
-            0,
-            8,
-          ),
+          value: _formatTruncatedId(widget.wallet.lastTransactionId),
           showDivider: false,
         ),
       ],
     );
+  }
+
+  String _formatTruncatedId(String? id) {
+    if (id == null || id.isEmpty) return '';
+    if (id.length <= 8) return id;
+    final start = id.substring(0, 4);
+    final end = id.substring(id.length - 4);
+    return '$start......$end';
   }
 }

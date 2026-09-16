@@ -44,7 +44,7 @@ class TeacherTranscationsRepoImpl implements TeacherTranscationsRepo {
       await updateTransactionStatus(
           userId: userId,
           status: newStatus,
-          transactionId: transaction.transactionId ?? "");
+          transactionId: transaction.transactionId);
       if (newStatus.toUpperCase() == "REJECTED" ||
           newStatus.toUpperCase() == "CANCELLED" ||
           newStatus.toUpperCase() == "FAILED") {
@@ -54,7 +54,7 @@ class TeacherTranscationsRepoImpl implements TeacherTranscationsRepo {
           await updateTransactionIsReconciled(
               userId: userId,
               value: true,
-              transactionId: transaction.transactionId ?? "");
+              transactionId: transaction.transactionId);
         }
         return right(null);
       } else if (newStatus.toUpperCase() == "COMPLETED" ||
@@ -64,7 +64,7 @@ class TeacherTranscationsRepoImpl implements TeacherTranscationsRepo {
           await updateTransactionIsReconciled(
               userId: userId,
               value: false,
-              transactionId: transaction.transactionId ?? "");
+              transactionId: transaction.transactionId);
           await deducteFromTeacherWallet(
             amount: transaction.amount ?? 0,
             userId: userId,

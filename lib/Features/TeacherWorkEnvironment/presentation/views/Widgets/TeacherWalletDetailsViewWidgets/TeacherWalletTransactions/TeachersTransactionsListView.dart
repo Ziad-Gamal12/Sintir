@@ -7,7 +7,8 @@ import 'package:sintir/Core/models/TransactionModel.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeachersTransactionsListViewItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TeacherWalletTransactionItemRequirements.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWalletTransactions/TeachersTransactionsListViewItem.dart';
 import 'package:sintir/locale_keys.dart';
 
 const _kItemPadding = EdgeInsets.symmetric(vertical: 20);
@@ -43,21 +44,26 @@ class _TeachersTransactionsListViewState
       stream: transactionsStream,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const SliverToBoxAdapter(
-              child: Center(child: CircularProgressIndicator()));
+          return const SliverFillRemaining(
+            hasScrollBody: false,
+            child: Center(child: CircularProgressIndicator()),
+          );
         }
 
         if (snapshot.hasError) {
-          return SliverToBoxAdapter(
-              child: CustomErrorWidget(
-                  errormessage: LocaleKeys.errorOccurredMessage));
+          return SliverFillRemaining(
+            hasScrollBody: false,
+            child: CustomErrorWidget(
+                errormessage: LocaleKeys.errorOccurredMessage),
+          );
         }
 
         if (snapshot.hasData) {
           final documents = snapshot.data!.docs;
 
           if (documents.isEmpty) {
-            return SliverToBoxAdapter(
+            return SliverFillRemaining(
+              hasScrollBody: false,
               child: CustomEmptyWidget(),
             );
           }
@@ -65,9 +71,9 @@ class _TeachersTransactionsListViewState
           List<TransactionEntity> transactions = documents
               .map((doc) {
                 final data = doc.data() as Map<String, dynamic>?;
-                if (data == null) {
-                  return null;
-                }
+                //log(data.toString());
+
+                if (data == null) return null;
                 try {
                   return TransactionModel.fromJson(data).toEntity();
                 } catch (e) {
@@ -77,24 +83,28 @@ class _TeachersTransactionsListViewState
               })
               .whereType<TransactionEntity>()
               .toList();
-
           return SliverList.builder(
             itemCount: transactions.length,
             itemBuilder: (context, index) {
               return Padding(
+                key: ValueKey(transactions[index].transactionId),
                 padding: _kItemPadding,
                 child: TeachersTransactionsListViewItem(
-                  transaction: transactions[index],
-                  teacherId: widget.teacherId,
+                  transactionRequirements:
+                      TeacherWalletTransactionItemRequirements(
+                          transaction: transactions[index],
+                          teacherId: widget.teacherId),
                 ),
               );
             },
           );
         }
 
-        return SliverToBoxAdapter(
-            child: CustomErrorWidget(
-                errormessage: LocaleKeys.errorOccurredMessage));
+        return SliverFillRemaining(
+          hasScrollBody: false,
+          child:
+              CustomErrorWidget(errormessage: LocaleKeys.errorOccurredMessage),
+        );
       },
     );
   }

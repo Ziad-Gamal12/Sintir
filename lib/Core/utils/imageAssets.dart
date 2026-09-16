@@ -102,6 +102,10 @@ class Assets {
   /// assets/Icons/SVG_Icons/EgyptFlag.svg
   static const String assetsIconsSVGIconsEgyptFlag = "assets/Icons/SVG_Icons/EgyptFlag.svg";
 
+  /// Assets for assetsIconsSVGIconsEtisalatLogo
+  /// assets/Icons/SVG_Icons/EtisalatLogo.svg
+  static const String assetsIconsSVGIconsEtisalatLogo = "assets/Icons/SVG_Icons/EtisalatLogo.svg";
+
   /// Assets for assetsIconsSVGIconsExamIcon
   /// assets/Icons/SVG_Icons/ExamIcon.svg
   static const String assetsIconsSVGIconsExamIcon = "assets/Icons/SVG_Icons/ExamIcon.svg";
@@ -117,6 +121,10 @@ class Assets {
   /// Assets for assetsIconsSVGIconsGoogle
   /// assets/Icons/SVG_Icons/google.svg
   static const String assetsIconsSVGIconsGoogle = "assets/Icons/SVG_Icons/google.svg";
+
+  /// Assets for assetsIconsSVGIconsOrangeLogo
+  /// assets/Icons/SVG_Icons/OrangeLogo.svg
+  static const String assetsIconsSVGIconsOrangeLogo = "assets/Icons/SVG_Icons/OrangeLogo.svg";
 
   /// Assets for assetsIconsSVGIconsSearchIcon
   /// assets/Icons/SVG_Icons/search-icon.svg
@@ -134,6 +142,10 @@ class Assets {
   /// assets/Icons/SVG_Icons/USAFlag.svg
   static const String assetsIconsSVGIconsUSAFlag = "assets/Icons/SVG_Icons/USAFlag.svg";
 
+  /// Assets for assetsIconsSVGIconsUnknown
+  /// assets/Icons/SVG_Icons/unknown.svg
+  static const String assetsIconsSVGIconsUnknown = "assets/Icons/SVG_Icons/unknown.svg";
+
   /// Assets for assetsIconsSVGIconsUserAvatar
   /// assets/Icons/SVG_Icons/userAvatar.svg
   static const String assetsIconsSVGIconsUserAvatar = "assets/Icons/SVG_Icons/userAvatar.svg";
@@ -141,6 +153,14 @@ class Assets {
   /// Assets for assetsIconsSVGIconsVideoIcon
   /// assets/Icons/SVG_Icons/VideoIcon.svg
   static const String assetsIconsSVGIconsVideoIcon = "assets/Icons/SVG_Icons/VideoIcon.svg";
+
+  /// Assets for assetsIconsSVGIconsVodafoneLogo
+  /// assets/Icons/SVG_Icons/VodafoneLogo.svg
+  static const String assetsIconsSVGIconsVodafoneLogo = "assets/Icons/SVG_Icons/VodafoneLogo.svg";
+
+  /// Assets for assetsIconsSVGIconsWePayLogo
+  /// assets/Icons/SVG_Icons/WePayLogo.svg
+  static const String assetsIconsSVGIconsWePayLogo = "assets/Icons/SVG_Icons/WePayLogo.svg";
 
   /// Assets for assetsIconsSintiAppIcon
   /// assets/Icons/SintiAppIcon.png

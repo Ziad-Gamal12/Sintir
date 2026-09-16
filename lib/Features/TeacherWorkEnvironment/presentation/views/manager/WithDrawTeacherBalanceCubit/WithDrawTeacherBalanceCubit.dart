@@ -52,7 +52,7 @@ class WithDrawTeacherBalanceCubit extends Cubit<WithDrawTeacherBalanceState> {
     required TransactionEntity transaction,
     required String userId,
   }) async {
-    final transactionId = transaction.transactionId ?? "";
+    final transactionId = transaction.transactionId;
     if (transactionId.isEmpty) {
       return _emitFailure(
         transactionId: transactionId,

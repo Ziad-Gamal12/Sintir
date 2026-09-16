@@ -1,5 +1,5 @@
 class TransactionEntity {
-  String? transactionId;
+  String transactionId;
   final DateTime? createdAt;
   final double? amount;
   final String? currency;

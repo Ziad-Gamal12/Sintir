@@ -45,28 +45,6 @@ class TeacherWalletDetailsSection extends StatelessWidget {
         ExpandableWalletDetails(
           wallet: wallet,
         )
-        // Column(
-        //   children: [
-        //     TeacherWalletBalanceDetailsRow(
-        //       icon: FontAwesomeIcons.calendar,
-        //       title: LocaleKeys.createdDate,
-        //       value: wallet.createdAt,
-        //     ),
-        //     Divider(
-        //       color: colorScheme.onSurface.withValues(alpha: 0.05),
-        //       height: 20,
-        //     ),
-        //     TeacherWalletBalanceDetailsRow(
-        //       icon: FontAwesomeIcons.calendar,
-        //       title: LocaleKeys.updatedDate,
-        //       value: wallet.updatedAt,
-        //     ),
-        //     Divider(
-        //       color: colorScheme.onSurface.withValues(alpha: 0.05),
-        //       height: 20,
-        //     ),
-        //   ],
-        // ),
       ],
     );
   }

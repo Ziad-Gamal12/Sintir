@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sintir/Core/entities/TransactionEntity.dart';
 
 class TransactionModel {
-  final String? transactionId;
+  final String transactionId;
   final DateTime? createdAt;
   final double? amount;
   final String? currency;

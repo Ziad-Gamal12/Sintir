@@ -14,10 +14,6 @@ class TeachersTransactionsListViewHeader extends StatelessWidget {
             style: AppTextStyles(context)
                 .bold16
                 .copyWith(color: theme.textTheme.bodyMedium?.color)),
-        Text("عرض الكل",
-            style: AppTextStyles(context)
-                .semiBold12
-                .copyWith(color: theme.colorScheme.primary))
       ],
     );
   }

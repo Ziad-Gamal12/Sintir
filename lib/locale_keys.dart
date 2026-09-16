@@ -594,4 +594,18 @@ class LocaleKeys {
   static String get payoutSupportBody => 'payout_support_body'.tr();
   static String get payoutAcceptanceTitle => 'payout_acceptance_title'.tr();
   static String get payoutAcceptanceBody => 'payout_acceptance_body'.tr();
+
+  static String get withdrawalRequestTitle => 'withdrawal_request_title'.tr();
+  static String get transactionStatusCompleted =>
+      'transaction_status_completed'.tr();
+  static String get transactionStatusPending =>
+      'transaction_status_pending'.tr();
+  static String get transactionStatusRejected =>
+      'transaction_status_rejected'.tr();
+  static String get issuerOrangeCash => 'issuer_orange_cash'.tr();
+  static String get issuerVodafoneCash => 'issuer_vodafone_cash'.tr();
+  static String get issuerEtisalatCash => 'issuer_etisalat_cash'.tr();
+  static String get issuerWePay => 'issuer_we_pay'.tr();
+  static String get issuerUnknown => 'issuer_unknown'.tr();
+  static String get currencyEGP => 'currency_egp'.tr();
 }
