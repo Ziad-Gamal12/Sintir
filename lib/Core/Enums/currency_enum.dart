@@ -1,3 +1,5 @@
+import 'package:sintir/locale_keys.dart';
+
 enum Currency {
   egp,
   usd,
@@ -19,7 +21,7 @@ extension CurrencyExtension on Currency {
   String get symbol {
     switch (this) {
       case Currency.egp:
-        return 'ج.م';
+        return LocaleKeys.currencyEgpSymbol;
       case Currency.usd:
         return '\$';
       case Currency.eur:
@@ -30,11 +32,11 @@ extension CurrencyExtension on Currency {
   String get name {
     switch (this) {
       case Currency.egp:
-        return 'جنية مصري ($code)';
+        return LocaleKeys.currencyEGP;
       case Currency.usd:
-        return 'دولار أمريكي ($code)';
+        return LocaleKeys.currencyUsd;
       case Currency.eur:
-        return 'يورو ($code)';
+        return LocaleKeys.currencyEur;
     }
   }
 }

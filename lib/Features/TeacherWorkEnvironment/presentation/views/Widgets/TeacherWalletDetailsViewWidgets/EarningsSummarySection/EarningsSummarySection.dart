@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/EarningsSummarySection/EarningsSummaryCards.dart';
+import 'package:sintir/locale_keys.dart';
 
 class EarningsSummarySection extends StatelessWidget {
   const EarningsSummarySection({super.key, required this.teacherWallet});
@@ -37,12 +38,12 @@ class EarningsSummaryHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text("ملخص الأرباح",
+        Text(LocaleKeys.earningsSummaryTitle,
             style: AppTextStyles(context).bold16.copyWith(
                   color: theme.textTheme.bodyLarge?.color,
                 )),
         Text(
-          "تحديث دوري فوري",
+          LocaleKeys.earningsSummaryUpdateNote,
           style: AppTextStyles(context).regular12.copyWith(
                 color: isDarkMode ? Color(0xff8E909F) : Color(0xff64748B),
               ),

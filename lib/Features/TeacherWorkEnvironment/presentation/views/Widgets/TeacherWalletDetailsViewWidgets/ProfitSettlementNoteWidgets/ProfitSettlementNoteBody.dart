@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class ProfitSettlementNoteBody extends StatelessWidget {
   const ProfitSettlementNoteBody({
@@ -14,14 +15,13 @@ class ProfitSettlementNoteBody extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
-          "تسوية آمنة وسريعة للأرباح",
+          LocaleKeys.profitSettlementNoteTitle,
           style: AppTextStyles(context)
               .bold12
               .copyWith(color: theme.textTheme.bodyLarge?.color),
         ),
-        SizedBox(height: 2),
-        Text(
-            "تتم معالجة تحويلات السحب عبر فودافون كاش والمحافظ الإلكترونية خلال 24 ساعة دون أي رسوم إدارية إضافية.",
+        const SizedBox(height: 2),
+        Text(LocaleKeys.profitSettlementNoteDescription,
             style: AppTextStyles(context).regular12),
       ],
     );

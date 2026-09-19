@@ -6,6 +6,7 @@ import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/Auth/Data/models/UserModel.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWalletDetailsViewBodyBuilder.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TeacherWalletDetailsViewBody extends StatefulWidget {
   const TeacherWalletDetailsViewBody({
@@ -41,28 +42,28 @@ class _TeacherWalletDetailsViewBodyState
           } else if (asyncSnapshot.hasError) {
             return Center(
               child: CustomErrorWidget(
-                  errormessage: asyncSnapshot.error.toString()),
+                  errormessage: LocaleKeys.errorOccurredMessage),
             );
           }
           if (!asyncSnapshot.hasData || !asyncSnapshot.data!.exists) {
-            return const Center(
+            return Center(
               child: CustomErrorWidget(
-                  errormessage: "Wallet data not found for user"),
+                  errormessage: LocaleKeys.walletNotFoundError),
             );
           }
           final data = asyncSnapshot.data!.data();
           if (data == null) {
-            return const Center(
-              child:
-                  CustomErrorWidget(errormessage: "Wallet document is empty."),
+            return Center(
+              child: CustomErrorWidget(
+                  errormessage: LocaleKeys.walletDocumentEmptyError),
             );
           }
           UserEntity user = UserModel.fromJson(data).toEntity();
           final wallet = user.teacherExtraDataEntity?.wallet;
           if (wallet == null) {
-            return const Center(
+            return Center(
               child: CustomErrorWidget(
-                  errormessage: "Wallet data not found for user"),
+                  errormessage: LocaleKeys.walletNotFoundError),
             );
           }
           return TeacherWalletDetailsViewBodyBuilder(

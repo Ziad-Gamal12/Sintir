@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Helper/TreacherWalletTransactionItemHelper.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TeacherWalletTransactionItemRequirements {
   final TransactionEntity transaction;
@@ -22,4 +23,12 @@ class TeacherWalletTransactionItemRequirements {
       '- ${_helper.formatAmount(amount: transaction.amount)} ${_helper.getCurrencyLabel(currency: transaction.currency)}';
   String dateLabel(BuildContext context) =>
       _helper.formatDate(context, createdAt: transaction.createdAt);
+  String get transactionTypeLabel => LocaleKeys.withdrawalRequestTitle;
+  String get paymentMethodLabel =>
+      _helper.getIssuerLabel(issuer: transaction.issuer);
+  String get issuerBrandName =>
+      _helper.getIssuerBrandName(issuer: transaction.issuer);
+  String get reconciliationStatusLabel => _helper.getReconciliationStatusLabel(
+      isReconciled: transaction.isReconciled);
+  String get transactionId => transaction.transactionId;
 }

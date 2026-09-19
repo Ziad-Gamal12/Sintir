@@ -3,6 +3,7 @@ import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWallet/CustomTeacherCardHeader.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWallet/TeacherWalletAvailableBalance.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWallet/TeacherWalletWithDrawButton.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomTeacherCardItem extends StatelessWidget {
   const CustomTeacherCardItem({super.key, required this.wallet});
@@ -46,7 +47,7 @@ class CustomTeacherCardItem extends StatelessWidget {
               )
             : Center(
                 child: Text(
-                  "No Wallet Data Available",
+                  LocaleKeys.noWalletDataAvailable,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
                   ),

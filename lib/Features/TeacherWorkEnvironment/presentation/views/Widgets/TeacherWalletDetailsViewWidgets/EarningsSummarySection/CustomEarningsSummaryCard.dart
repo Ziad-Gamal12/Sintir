@@ -18,7 +18,7 @@ class CustomEarningsSummaryCard extends StatelessWidget {
     final theme = this.theme ?? Theme.of(context);
     final isDarkMode = theme.brightness == Brightness.dark;
     return AspectRatio(
-      aspectRatio: 112 / 92,
+      aspectRatio: 112 / 100,
       child: Container(
           padding: EdgeInsets.all(12),
           decoration: BoxDecoration(

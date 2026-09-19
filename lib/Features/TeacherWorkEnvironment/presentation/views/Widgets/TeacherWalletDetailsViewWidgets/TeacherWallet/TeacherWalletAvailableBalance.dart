@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/Enums/currency_enum.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TeacherWalletAvailableBalance extends StatelessWidget {
   const TeacherWalletAvailableBalance({
@@ -23,7 +24,7 @@ class TeacherWalletAvailableBalance extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "الرصيد المتاح للسحب",
+          LocaleKeys.availableBalanceLabel,
           style: AppTextStyles(context)
               .medium12
               .copyWith(color: isDark ? Color(0xffC4C5D6) : Color(0xff475569)),

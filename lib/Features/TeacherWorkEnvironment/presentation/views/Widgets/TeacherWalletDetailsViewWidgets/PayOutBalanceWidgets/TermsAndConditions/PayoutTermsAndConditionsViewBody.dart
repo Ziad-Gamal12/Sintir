@@ -30,7 +30,6 @@ class PayoutTermsAndConditionsViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Arabic Terms & Conditions text organized into clear sections
     final introTitle = LocaleKeys.payoutIntroTitle;
     final introBody = LocaleKeys.payoutIntroBody;
 

@@ -4,6 +4,7 @@ import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Core/repos/PaymobPayoutRepo/PayoutRepo.dart';
 import 'package:sintir/Core/repos/TeacherTranscationsRepo/TeacherTranscationsRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/TeacherWalletRepo.dart';
+import 'package:sintir/locale_keys.dart';
 
 part 'TransactionsState.dart';
 
@@ -56,7 +57,7 @@ class WithDrawTeacherBalanceCubit extends Cubit<WithDrawTeacherBalanceState> {
     if (transactionId.isEmpty) {
       return _emitFailure(
         transactionId: transactionId,
-        message: 'Cannot reconcile: Transaction ID is missing.',
+        message: LocaleKeys.reconcileMissingIdError,
       );
     }
 
@@ -70,7 +71,7 @@ class WithDrawTeacherBalanceCubit extends Cubit<WithDrawTeacherBalanceState> {
       (failure) {
         _emitFailure(
           transactionId: transactionId,
-          message: 'Paymob status check failed: ${failure.message}',
+          message: LocaleKeys.reconcileStatusCheckFailed(failure.message),
         );
       },
       (paymobStatusResponse) async {
@@ -92,16 +93,19 @@ class WithDrawTeacherBalanceCubit extends Cubit<WithDrawTeacherBalanceState> {
           (dbFailure) {
             _emitFailure(
               transactionId: transactionId,
-              message:
-                  'DB status update failed: ${dbFailure.message}. Paymob status: $newStatus ($statusDescription)',
+              message: LocaleKeys.reconcileDbUpdateFailed(
+                message: dbFailure.message,
+                status: newStatus,
+                description: statusDescription,
+              ),
             );
           },
           (_) async {
             if (newStatus == 'FAILED' || newStatus == 'REJECTED') {
               _emitFailure(
                 transactionId: transactionId,
-                message:
-                    'Transaction failed. Balance restored. Reason: $statusDescription',
+                message: LocaleKeys.reconcileTransactionFailedMessage(
+                    statusDescription),
               );
             } else {
               emit(ReconcileTransactionSuccess(transactionId: transactionId));

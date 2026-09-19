@@ -104,4 +104,24 @@ class TreacherWalletTransactionItemHelper {
     }
     return "";
   }
+
+  String getIssuerBrandName({required String? issuer}) {
+    final lowerIssuer = issuer?.toLowerCase();
+    if (lowerIssuer == TeacherWalletTransactionIssuer.orange.name) {
+      return 'Orange Cash';
+    } else if (lowerIssuer == TeacherWalletTransactionIssuer.vodafone.name) {
+      return 'Vodafone Cash';
+    } else if (lowerIssuer == TeacherWalletTransactionIssuer.etisalat.name) {
+      return 'Etisalat Cash';
+    } else if (lowerIssuer == TeacherWalletTransactionIssuer.we.name) {
+      return 'WE Pay';
+    }
+    return 'Unknown';
+  }
+
+  String getReconciliationStatusLabel({required bool? isReconciled}) {
+    return isReconciled == true
+        ? LocaleKeys.reconciliationStatusDone
+        : LocaleKeys.reconciliationStatusPending;
+  }
 }

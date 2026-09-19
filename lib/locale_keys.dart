@@ -594,7 +594,88 @@ class LocaleKeys {
   static String get payoutSupportBody => 'payout_support_body'.tr();
   static String get payoutAcceptanceTitle => 'payout_acceptance_title'.tr();
   static String get payoutAcceptanceBody => 'payout_acceptance_body'.tr();
+  static String get withdrawFromWalletLabel =>
+      'withdraw_from_wallet_label'.tr();
+  static String get transactionDetailsTitle => 'transaction_details_title'.tr();
+  static String get paymentMethodLabel => 'payment_method_label'.tr();
+  static String get phoneNumberLabel => 'phone_number_label'.tr();
+  static String get entityLabel => 'entity_label'.tr();
+  static String get copyTransactionIdTooltip =>
+      'copy_transaction_id_tooltip'.tr();
+  static String get transactionStatusUpdatedSuccess =>
+      'transaction_status_updated_success'.tr();
+  static String get reconcileMissingIdError =>
+      'reconcile_missing_id_error'.tr();
+  static String get walletIdLabel => 'wallet_id_label'.tr();
+  static String get walletCurrencyLabel => 'wallet_currency_label'.tr();
+  static String get walletStatusLabel => 'wallet_status_label'.tr();
+  static String get walletCreatedAtLabel => 'wallet_created_at_label'.tr();
+  static String get walletUpdatedAtLabel => 'wallet_updated_at_label'.tr();
+  static String get lastTransactionIdLabel => 'last_transaction_id_label'.tr();
+  static String get currencyUsd => 'currency_usd'.tr();
+  static String get currencyEur => 'currency_eur'.tr();
+  static String get currencyEgpSymbol => 'currency_egp_symbol'.tr();
 
+  static String reconcileStatusCheckFailed(String message) =>
+      'reconcile_status_check_failed'.tr(args: {'message': message});
+
+  static String reconcileDbUpdateFailed({
+    required String message,
+    required String status,
+    required String description,
+  }) =>
+      'reconcile_db_update_failed'.tr(args: {
+        'message': message,
+        'status': status,
+        'description': description,
+      });
+
+  static String reconcileTransactionFailedMessage(String reason) =>
+      'reconcile_transaction_failed_message'.tr(args: {'reason': reason});
+
+// Wallet body / errors
+  static String get walletNotFoundError => 'wallet_not_found_error'.tr();
+  static String get walletDocumentEmptyError =>
+      'wallet_document_empty_error'.tr();
+
+// Transactions header
+  static String get recentTransactionsTitle => 'recent_transactions_title'.tr();
+
+// Wallet card
+  static String get academicWalletTitle => 'academic_wallet_title'.tr();
+  static String get walletSubtitle => 'wallet_subtitle'.tr();
+  static String get noWalletDataAvailable => 'no_wallet_data_available'.tr();
+  static String get availableBalanceLabel => 'available_balance_label'.tr();
+
+// Profit settlement note
+  static String get profitSettlementNoteTitle =>
+      'profit_settlement_note_title'.tr();
+  static String get profitSettlementNoteDescription =>
+      'profit_settlement_note_description'.tr();
+
+// Wallet details expandable
+  static String get walletDetailsHeaderTitle =>
+      'wallet_details_header_title'.tr();
+
+// Earnings summary
+  static String get totalEarningsLabel => 'total_earnings_label'.tr();
+  static String get pendingWithdrawalLabel => 'pending_withdrawal_label'.tr();
+  static String get availableForWithdrawalLabel =>
+      'available_for_withdrawal_label'.tr();
+  static String get earningsSummaryTitle => 'earnings_summary_title'.tr();
+  static String get earningsSummaryUpdateNote =>
+      'earnings_summary_update_note'.tr();
+  static String get transactionIdCopiedTooltip =>
+      'transaction_id_copied_tooltip'.tr();
+  static String get transactionDateLabel => 'transaction_date_label'.tr();
+  static String get reconciliationStatusRowLabel =>
+      'reconciliation_status_row_label'.tr();
+  static String get reconciliationStatusDone =>
+      'reconciliation_status_done'.tr();
+  static String get reconciliationStatusPending =>
+      'reconciliation_status_pending'.tr();
+  static String get transactionIdLabel => 'transaction_id_label'.tr();
+  static String get closeButtonLabel => 'close_button_label'.tr();
   static String get withdrawalRequestTitle => 'withdrawal_request_title'.tr();
   static String get transactionStatusCompleted =>
       'transaction_status_completed'.tr();

@@ -43,7 +43,6 @@ class PayOutBalanceBodButton extends StatelessWidget {
         return;
       }
 
-      // 3. Amount Validation
       final amount = double.tryParse(amountController.text);
       if (amount == null || amount <= 0) {
         CustomSnackBar.show(
@@ -54,7 +53,6 @@ class PayOutBalanceBodButton extends StatelessWidget {
         return;
       }
 
-      // 4. Wallet Status Check
       if (walletEntity.status != BackendEndpoints.walletActive) {
         CustomSnackBar.show(
           context,
@@ -64,7 +62,6 @@ class PayOutBalanceBodButton extends StatelessWidget {
         return;
       }
 
-      // 5. Balance Check
       if (walletEntity.balance < amount) {
         CustomSnackBar.show(
           context,
@@ -74,7 +71,6 @@ class PayOutBalanceBodButton extends StatelessWidget {
         return;
       }
 
-      // 6. Issuer Validation
       if (!_validateIssuer(issuer: issuer, phone: phoneController.text)) {
         CustomSnackBar.show(
           context,
@@ -83,8 +79,6 @@ class PayOutBalanceBodButton extends StatelessWidget {
         );
         return;
       }
-
-      // Execute Payout
       context.read<PayoutCubit>().sendDisbursement(
             receiverMobile: phoneController.text,
             issuer: issuer,
@@ -94,7 +88,6 @@ class PayOutBalanceBodButton extends StatelessWidget {
 
     return Custombutton(
       text: LocaleKeys.sendMoney,
-      // Use primary theme color
       color: colorScheme.primary,
       textColor: colorScheme.onPrimary,
       onPressed: isButtonEnabled ? handleWithdrawal : () {},

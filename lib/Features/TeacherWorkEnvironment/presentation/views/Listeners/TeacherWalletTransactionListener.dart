@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/WithDrawTeacherBalanceCubit/WithDrawTeacherBalanceCubit.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TeacherWalletTransactionListener {
   final String transactionID;
@@ -21,7 +22,7 @@ class TeacherWalletTransactionListener {
         state.transactionId == transactionID) {
       CustomSnackBar.show(
         context,
-        message: 'Transaction status updated successfully',
+        message: LocaleKeys.transactionStatusUpdatedSuccess,
         type: SnackType.success,
       );
     }

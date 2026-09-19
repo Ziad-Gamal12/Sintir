@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:sintir/Core/Enums/currency_enum.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWalletStatusBadgeBody.dart';
+import 'package:sintir/locale_keys.dart';
 
 import 'wallet_detail_row.dart';
 import 'wallet_details_header.dart';
@@ -75,42 +76,32 @@ class _ExpandableWalletDetailsState extends State<ExpandableWalletDetails> {
     return Column(
       children: [
         WalletDetailRow.text(
-          label: 'رقم المحفظة',
+          label: LocaleKeys.walletIdLabel,
           value: widget.wallet.walletId.toString(),
         ),
         WalletDetailRow.text(
-          label: 'العملة',
+          label: LocaleKeys.walletCurrencyLabel,
           value: currencyFromString(widget.wallet.currency).name,
         ),
         WalletDetailRow(
-          label: 'حالة المحفظة',
+          label: LocaleKeys.walletStatusLabel,
           value: Align(
             alignment: AlignmentDirectional.centerEnd,
-            child: TeacherWalletStatusBadgeBody(
-              status: widget.wallet.status,
-            ),
+            child: TeacherWalletStatusBadgeBody(status: widget.wallet.status),
           ),
         ),
         WalletDetailRow.text(
-          label: 'تاريخ إنشاء المحفظة',
-          value: DateFormat(
-            'd MMMM y',
-            locale,
-          ).format(
-            DateTime.parse(widget.wallet.createdAt),
-          ),
+          label: LocaleKeys.walletCreatedAtLabel,
+          value: DateFormat('d MMMM y', locale)
+              .format(DateTime.parse(widget.wallet.createdAt)),
         ),
         WalletDetailRow.text(
-          label: 'آخر تحديث',
-          value: DateFormat(
-            'd MMMM yyyy، h:mm a',
-            locale,
-          ).format(
-            DateTime.parse(widget.wallet.updatedAt),
-          ),
+          label: LocaleKeys.walletUpdatedAtLabel,
+          value: DateFormat('d MMMM yyyy، h:mm a', locale)
+              .format(DateTime.parse(widget.wallet.updatedAt)),
         ),
         WalletDetailRow.text(
-          label: 'رقم آخر معاملة',
+          label: LocaleKeys.lastTransactionIdLabel,
           value: _formatTruncatedId(widget.wallet.lastTransactionId),
           showDivider: false,
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/locale_keys.dart';
 
 class WalletDetailsHeader extends StatelessWidget {
   const WalletDetailsHeader({
@@ -37,10 +38,9 @@ class WalletDetailsHeader extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'تفاصيل المحفظة',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
+                    LocaleKeys.walletDetailsHeaderTitle,
+                    style: theme.textTheme.titleMedium
+                        ?.copyWith(fontWeight: FontWeight.w700),
                   ),
                 ],
               ),

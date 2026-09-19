@@ -33,10 +33,12 @@ class InfoRow extends StatelessWidget {
                     .copyWith(color: headlineColor),
               ),
         const SizedBox(width: 8),
-        Text(
-          label,
-          style: textStyle ??
-              AppTextStyles(context).regular10.copyWith(color: textColor),
+        Expanded(
+          child: Text(
+            label,
+            style: textStyle ??
+                AppTextStyles(context).regular10.copyWith(color: textColor),
+          ),
         ),
       ],
     );

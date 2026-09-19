@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class TeachersTransactionsListViewHeader extends StatelessWidget {
   const TeachersTransactionsListViewHeader({super.key});
@@ -10,7 +11,7 @@ class TeachersTransactionsListViewHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text("آخر المعاملات",
+        Text(LocaleKeys.recentTransactionsTitle,
             style: AppTextStyles(context)
                 .bold16
                 .copyWith(color: theme.textTheme.bodyMedium?.color)),

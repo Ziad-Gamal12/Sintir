@@ -3,6 +3,7 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWallet/TeacherWalletCardIcon.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWallet/TeacherWalletDetailsViewBodyWalletCardHeader.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomTeacherCardHeader extends StatelessWidget {
   const CustomTeacherCardHeader({
@@ -26,12 +27,10 @@ class CustomTeacherCardHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(LocaleKeys.academicWalletTitle,
+                  style: AppTextStyles(context).bold16),
               Text(
-                "محفظة أكاديمية",
-                style: AppTextStyles(context).bold16,
-              ),
-              Text(
-                "سنتير باي • تسوية مباشرة",
+                LocaleKeys.walletSubtitle,
                 style: AppTextStyles(context)
                     .regular12
                     .copyWith(color: Color(0xff64748B)),
