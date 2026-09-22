@@ -118,11 +118,13 @@ class AuthRepoImpl implements AuthRepo {
 
   Future<void> storeUserLocally(Map<String, dynamic> userJson) async {
     try {
+      log(userJson.toString());
       await Hive_Services.jsonSetter(
         key: BackendEndpoints.storeUserLocaly,
         value: userJson,
       );
     } catch (e) {
+      log(e.toString());
       throw CustomException(message: LocaleKeys.errorOccurredMessage);
     }
   }
@@ -143,11 +145,12 @@ class AuthRepoImpl implements AuthRepo {
         return Left(ServerFailure(message: LocaleKeys.userNotFound));
       }
       final Map<String, dynamic> userJson = json.docData!;
-      final UserModel userEntity = UserModel.fromJson(userJson);
+      log(userJson.toString());
+      final UserModel userModel = UserModel.fromJson(userJson);
 
-      switch (userEntity.status) {
+      switch (userModel.status) {
         case BackendEndpoints.activeStatus:
-          await storeUserLocally(userEntity.toMap());
+          await storeUserLocally(userModel.toMap());
           return const Right(null);
         case BackendEndpoints.blockedStatus:
           return Left(ServerFailure(message: LocaleKeys.userBlocked));

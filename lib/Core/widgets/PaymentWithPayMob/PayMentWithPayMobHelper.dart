@@ -5,6 +5,7 @@ import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobResponse.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TransactionsStatusEnum.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PayMentWithPayMobHelper {
@@ -31,7 +32,7 @@ class PayMentWithPayMobHelper {
                   transactionId: response.paymentid,
                   method: BackendEndpoints.payMentMethod,
                   issuer: "PayMob",
-                  status: "Success");
+                  status: TransactionsStatus.success);
 
               context.read<CourseSubscribtionsCubit>().subscribeToCourse(
                     amount: response.amount,

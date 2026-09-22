@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/TransactionEntity.dart';
@@ -69,6 +71,7 @@ class _TeachersTransactionsListViewState
           List<TransactionEntity> transactions = documents
               .map((doc) {
                 final data = doc.data() as Map<String, dynamic>?;
+                log(data.toString());
                 if (data == null) return null;
                 try {
                   return TransactionModel.fromJson(data).toEntity();

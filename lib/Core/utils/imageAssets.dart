@@ -158,6 +158,10 @@ class Assets {
   /// assets/Icons/SVG_Icons/VodafoneLogo.svg
   static const String assetsIconsSVGIconsVodafoneLogo = "assets/Icons/SVG_Icons/VodafoneLogo.svg";
 
+  /// Assets for assetsIconsSVGIconsWeLogo
+  /// assets/Icons/SVG_Icons/We_logo.svg
+  static const String assetsIconsSVGIconsWeLogo = "assets/Icons/SVG_Icons/We_logo.svg";
+
   /// Assets for assetsIconsSVGIconsWePayLogo
   /// assets/Icons/SVG_Icons/WePayLogo.svg
   static const String assetsIconsSVGIconsWePayLogo = "assets/Icons/SVG_Icons/WePayLogo.svg";

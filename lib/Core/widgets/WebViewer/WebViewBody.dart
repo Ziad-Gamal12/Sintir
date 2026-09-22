@@ -7,6 +7,7 @@ import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebviewbodyPaymentSuccessWidget.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobResponse.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TransactionsStatusEnum.dart';
 import 'package:sintir/constant.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -40,7 +41,7 @@ class _WebviewbodyState extends State<Webviewbody> {
                 isReconciled: false,
                 issuer: widget.response.issuer,
                 mobileNumber: widget.response.mobileNumber,
-                status: "Success",
+                status: TransactionsStatus.other,
                 transactionId: widget.response.paymentid,
               );
               context.read<CourseSubscribtionsCubit>().subscribeToCourse(

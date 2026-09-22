@@ -14,8 +14,7 @@ class MyTransactionListViewItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    // Get the status color just for the accent line
-    final statusColor = getStatusColor(context, transactionEntity.status);
+    final statusColor = getStatusColor(context, transactionEntity.status?.name);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -37,7 +36,6 @@ class MyTransactionListViewItem extends StatelessWidget {
       child: IntrinsicHeight(
         child: Row(
           children: [
-            // --- ACCENT LINE ---
             Container(
               width: 5.0,
               decoration: BoxDecoration(
@@ -48,8 +46,6 @@ class MyTransactionListViewItem extends StatelessWidget {
                 ),
               ),
             ),
-
-            // --- CARD CONTENT (Composition) ---
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(20.0),

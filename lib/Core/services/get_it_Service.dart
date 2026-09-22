@@ -35,12 +35,12 @@ import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepoImpli.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/FireBase/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/FireBase/Firebase_FirestoreService.dart';
-import 'package:sintir/Core/services/FireBase/firebaseStorageService.dart';
 import 'package:sintir/Core/services/Paymob/PayMobService.dart';
 import 'package:sintir/Core/services/Paymob/PaymobPayoutService.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/services/SupabaseStorageServices.dart';
+import 'package:sintir/Core/services/TeacherWithdrawalService.dart';
 import 'package:sintir/Features/Auth/Data/repos/AuthRepoImpl.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 import 'package:sintir/Features/ContentCreatorProfile/data/Repos/ContentCreatorProfileRepoImpl.dart';
@@ -63,8 +63,11 @@ import 'package:sintir/Features/Support/Domain/Repos/SupportChatRepo.dart';
 import 'package:sintir/Features/Support/Domain/Repos/SupportTicketsRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/SubscribersDetailsRepoImpl.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/TeacherWalletRepoImpl.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/WithDrawalTeacherBalanceRepoImpl.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/SubscribersDetailsRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/TeacherWalletRepo.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/WithDrawalTeacherBalanceRepo.dart';
+import 'package:sintir/constant.dart';
 
 final getIt = GetIt.instance;
 
@@ -91,86 +94,96 @@ void setup_Getit() {
       () => ResetPaswordRepoImp(authService: getIt<firebaseAuthService>()));
 
   getIt.registerLazySingleton<AuthRepo>(() => AuthRepoImpl(
-        databaseservice: getIt(),
+        databaseservice: getIt<DataBaseService>(),
         authService: getIt(),
       ));
 
   getIt.registerLazySingleton<Coursesrepo>(() => CoursesrepoImpl(
-        databaseservice: getIt(),
+        databaseservice: getIt<DataBaseService>(),
         storageService: getIt(),
       ));
 
   getIt.registerLazySingleton<CourseSectionsRepo>(
-      () => CourseSectionsRepoImpl(datebaseservice: getIt()));
+      () => CourseSectionsRepoImpl(datebaseservice: getIt<DataBaseService>()));
 
-  getIt.registerLazySingleton<SectionItemsActionsRepo>(
-      () => SectionItemsActionsRepoImpli(datebaseservice: getIt()));
+  getIt.registerLazySingleton<SectionItemsActionsRepo>(() =>
+      SectionItemsActionsRepoImpli(datebaseservice: getIt<DataBaseService>()));
 
-  getIt.registerLazySingleton<VideoItemRepo>(() =>
-      VideoItemRepoImpli(storageService: getIt(), databaseservice: getIt()));
+  getIt.registerLazySingleton<VideoItemRepo>(() => VideoItemRepoImpli(
+      storageService: getIt(), databaseservice: getIt<DataBaseService>()));
 
   getIt.registerLazySingleton<FileItemRepo>(
       () => FileItemRepoImpli(storageService: getIt()));
 
-  getIt.registerLazySingleton<Testitemrepo>(() =>
-      TestItemRepoImpli(storageService: getIt(), databaseservice: getIt()));
+  getIt.registerLazySingleton<Testitemrepo>(() => TestItemRepoImpli(
+      storageService: getIt(), databaseservice: getIt<DataBaseService>()));
 
   getIt.registerLazySingleton<Assetspickerrepo>(
       () => Assetspickerrepoimpli(pickerassetsservice: getIt()));
 
-  getIt.registerLazySingleton<CourseSubscibtionsRepo>(
-      () => CourseSubscriptionsRepoImpl(databaseService: getIt()));
+  getIt.registerLazySingleton<CourseSubscibtionsRepo>(() =>
+      CourseSubscriptionsRepoImpl(databaseService: getIt<DataBaseService>()));
 
   getIt.registerLazySingleton<CourseReportsRepo>(
-      () => CourseReportsRepoimpli(databaseservice: getIt()));
+      () => CourseReportsRepoimpli(databaseservice: getIt<DataBaseService>()));
 
-  getIt.registerLazySingleton<CourseFeedBacksRepo>(
-      () => CourseFeedBacksRepoImpli(databaseservice: getIt()));
+  getIt.registerLazySingleton<CourseFeedBacksRepo>(() =>
+      CourseFeedBacksRepoImpli(databaseservice: getIt<DataBaseService>()));
 
   getIt.registerLazySingleton<CourseCouponsRepo>(
-      () => CourseCouponsRepoImp(databaseservice: getIt()));
+      () => CourseCouponsRepoImp(databaseservice: getIt<DataBaseService>()));
 
   getIt.registerLazySingleton<SearchRepo>(
-      () => SearchRepoImpl(databaseservice: getIt()));
+      () => SearchRepoImpl(databaseservice: getIt<DataBaseService>()));
 
   getIt.registerLazySingleton<TeacherWalletRepo>(() => TeacherWalletRepoImpl(
-        databaseservice: getIt(),
+        databaseservice: getIt<DataBaseService>(),
         authRepo: getIt(),
       ));
 
   getIt.registerLazySingleton<MyMistakesRepo>(
-      () => MyMistakesRepoImpl(databaseservice: getIt()));
+      () => MyMistakesRepoImpl(databaseservice: getIt<DataBaseService>()));
 
   getIt.registerLazySingleton<MyResultsRepo>(
-      () => MyResultsRepoImpl(dataBaseService: getIt()));
+      () => MyResultsRepoImpl(dataBaseService: getIt<DataBaseService>()));
 
-  getIt.registerLazySingleton<ContentCreatorProfileRepo>(
-      () => ContentCreatorProfileRepoImpl(dataBaseService: getIt()));
+  getIt.registerLazySingleton<ContentCreatorProfileRepo>(() =>
+      ContentCreatorProfileRepoImpl(dataBaseService: getIt<DataBaseService>()));
 
-  getIt.registerLazySingleton<SubscribersDetailsRepo>(
-      () => SubscribersDetailsRepoImpl(databaseservice: getIt()));
+  getIt.registerLazySingleton<SubscribersDetailsRepo>(() =>
+      SubscribersDetailsRepoImpl(databaseservice: getIt<DataBaseService>()));
 
   getIt.registerLazySingleton<FavoritesRepo>(
-      () => FavoritesRepoImpl(dataBaseService: getIt()));
+      () => FavoritesRepoImpl(dataBaseService: getIt<DataBaseService>()));
 
   getIt.registerLazySingleton<PersonalDetailsRepo>(() =>
       PersonalDetailsRepoImpl(
-          dataBaseService: getIt(),
+          dataBaseService: getIt<DataBaseService>(),
           storageService: getIt(),
           authRepo: getIt(),
           assetspickerrepo: getIt()));
 
-  getIt.registerLazySingleton<TeacherTranscationsRepo>(
-      () => TeacherTranscationsRepoImpl(dataBaseService: getIt()));
+  getIt.registerLazySingleton<TeacherTranscationsRepo>(() =>
+      TeacherTranscationsRepoImpl(dataBaseService: getIt<DataBaseService>()));
 
   getIt.registerLazySingleton<MyTransactionsRepo>(
-      () => MyTransactionsRepoImpl(dataBaseService: getIt()));
+      () => MyTransactionsRepoImpl(dataBaseService: getIt<DataBaseService>()));
 
   getIt.registerLazySingleton<SupportTicketsRepo>(
-      () => SupportTicketsRepoImpl(dataBaseService: getIt()));
+      () => SupportTicketsRepoImpl(dataBaseService: getIt<DataBaseService>()));
 
   getIt.registerLazySingleton<SupportChatRepo>(() => SupportChatRepoImpl(
       dataBaseService: getIt(),
       pickerassetsservice: getIt(),
       storageService: getIt()));
+  getIt.registerLazySingleton<TeacherWithdrawalService>(
+    () => TeacherWithdrawalService(
+      dio: getIt<Dio>(),
+      url: supaBaseUrl,
+      publishableKey: supaAnonKey,
+    ),
+  );
+  getIt.registerLazySingleton<WithDrawalTeacherBalanceRepo>(() =>
+      WithDrawalTeacherBalanceRepoImpl(
+          service: getIt<TeacherWithdrawalService>()));
 }

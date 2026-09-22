@@ -92,13 +92,12 @@ class _ExpandableWalletDetailsState extends State<ExpandableWalletDetails> {
         ),
         WalletDetailRow.text(
           label: LocaleKeys.walletCreatedAtLabel,
-          value: DateFormat('d MMMM y', locale)
-              .format(DateTime.parse(widget.wallet.createdAt)),
+          value: DateFormat('d MMMM y', locale).format(widget.wallet.createdAt),
         ),
         WalletDetailRow.text(
           label: LocaleKeys.walletUpdatedAtLabel,
           value: DateFormat('d MMMM yyyy، h:mm a', locale)
-              .format(DateTime.parse(widget.wallet.updatedAt)),
+              .format(widget.wallet.updatedAt),
         ),
         WalletDetailRow.text(
           label: LocaleKeys.lastTransactionIdLabel,

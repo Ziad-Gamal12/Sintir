@@ -3,41 +3,39 @@ import 'package:intl/intl.dart';
 import 'package:localingo/localingo.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TeacherWalletTransactionIssuer.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TransactionsStatusEnum.dart';
 import 'package:sintir/locale_keys.dart';
 
 class TreacherWalletTransactionItemHelper {
   TreacherWalletTransactionItemHelper();
 
-  Color getStatusColor({required String? status}) {
-    final lowerStatus = status?.toLowerCase();
-    if (lowerStatus == 'success' || lowerStatus == 'completed') {
+  Color getStatusColor({required TransactionsStatus? status}) {
+    if (status == TransactionsStatus.success) {
       return Colors.green.shade600;
-    } else if (lowerStatus == 'failed' || lowerStatus == 'rejected') {
+    } else if (status == TransactionsStatus.failure) {
       return Colors.red.shade600;
     }
     return Colors.orange.shade600;
   }
 
-  IconData getStatusIcon({required String? status}) {
-    final lowerStatus = status?.toLowerCase();
-    if (lowerStatus == 'success' || lowerStatus == 'completed') {
+  IconData getStatusIcon({required TransactionsStatus? status}) {
+    if (status == TransactionsStatus.success) {
       return Icons.check_circle_outline;
-    } else if (lowerStatus == 'failed' || lowerStatus == 'rejected') {
+    } else if (status == TransactionsStatus.failure) {
       return Icons.cancel_outlined;
     }
     return Icons.pending_outlined;
   }
 
-  String getStatusLabel({required String? status}) {
-    final lowerStatus = status?.toLowerCase();
-    if (lowerStatus == 'success' || lowerStatus == 'completed') {
+  String getStatusLabel({required TransactionsStatus? status}) {
+    if (status == TransactionsStatus.success) {
       return LocaleKeys.transactionStatusCompleted.tr();
-    } else if (lowerStatus == 'failed' || lowerStatus == 'rejected') {
+    } else if (status == TransactionsStatus.failure) {
       return LocaleKeys.transactionStatusRejected.tr();
-    } else if (lowerStatus == 'pending' || lowerStatus == 'processing') {
+    } else if (status == TransactionsStatus.pending) {
       return LocaleKeys.transactionStatusPending.tr();
     }
-    return status ?? '';
+    return status?.name.toUpperCase() ?? '';
   }
 
   String getIssuerSVGPath({required String? issuer}) {
@@ -48,8 +46,6 @@ class TreacherWalletTransactionItemHelper {
       return Assets.assetsIconsSVGIconsVodafoneLogo;
     } else if (lowerIssuer == TeacherWalletTransactionIssuer.etisalat.name) {
       return Assets.assetsIconsSVGIconsEtisalatLogo;
-    } else if (lowerIssuer == TeacherWalletTransactionIssuer.we.name) {
-      return Assets.assetsIconsSVGIconsWePayLogo;
     }
     return Assets.assetsIconsSVGIconsUnknown;
   }
@@ -62,8 +58,6 @@ class TreacherWalletTransactionItemHelper {
       return const Color(0xffE60000);
     } else if (lowerIssuer == TeacherWalletTransactionIssuer.etisalat.name) {
       return const Color(0xff719E19);
-    } else if (lowerIssuer == TeacherWalletTransactionIssuer.we.name) {
-      return const Color(0xff5C2D91);
     }
     return Colors.grey.shade600;
   }
@@ -76,8 +70,6 @@ class TreacherWalletTransactionItemHelper {
       return LocaleKeys.issuerVodafoneCash.tr();
     } else if (lowerIssuer == TeacherWalletTransactionIssuer.etisalat.name) {
       return LocaleKeys.issuerEtisalatCash.tr();
-    } else if (lowerIssuer == TeacherWalletTransactionIssuer.we.name) {
-      return LocaleKeys.issuerWePay.tr();
     }
     return LocaleKeys.issuerUnknown.tr();
   }
@@ -113,8 +105,6 @@ class TreacherWalletTransactionItemHelper {
       return 'Vodafone Cash';
     } else if (lowerIssuer == TeacherWalletTransactionIssuer.etisalat.name) {
       return 'Etisalat Cash';
-    } else if (lowerIssuer == TeacherWalletTransactionIssuer.we.name) {
-      return 'WE Pay';
     }
     return 'Unknown';
   }

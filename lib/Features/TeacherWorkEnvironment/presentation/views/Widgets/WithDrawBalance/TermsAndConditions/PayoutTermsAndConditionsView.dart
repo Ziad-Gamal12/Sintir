@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/PayOutBalanceWidgets/TermsAndConditions/PayoutTermsAndConditionsViewBody.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/WithDrawBalance/TermsAndConditions/PayoutTermsAndConditionsViewBody.dart';
 import 'package:sintir/locale_keys.dart';
 
 class PayoutTermsAndConditionsView extends StatelessWidget {

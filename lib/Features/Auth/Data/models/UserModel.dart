@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sintir/Core/helper/FirebaseTypesHelper.dart';
 import 'package:sintir/Features/Auth/Data/models/StudentExtraDataModel.dart';
 import 'package:sintir/Features/Auth/Data/models/TeacherExtraDataModel.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
@@ -39,24 +39,25 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      uid: json['uid'],
-      firstName: json['firstName'],
-      lastName: json['lastName'],
-      fullName: json['fullName'],
-      email: json['email'],
-      address: json['address'],
-      deviceId: json['deviceId'],
-      phoneNumber: json['phoneNumber'],
-      teacherExtraData: json['teacherExtraData'],
-      studentExtraData: json['studentExtraData'],
-      gender: json['gender'],
-      profilePicurl: json['profilePicurl'],
-      status: json['status'],
-      role: json['role'],
-      joinedDate: (json['joinedDate'] is DateTime
-          ? json['joinedDate']
-          : (json['joinedDate'] as Timestamp).toDate()),
-    );
+        uid: json['uid'],
+        firstName: json['firstName'],
+        lastName: json['lastName'],
+        fullName: json['fullName'],
+        email: json['email'],
+        address: json['address'],
+        deviceId: json['deviceId'],
+        phoneNumber: json['phoneNumber'],
+        teacherExtraData:
+            FirebaseTypesHelper.convertFirebaseTypes(json['teacherExtraData'])
+                as Map<String, dynamic>?,
+        studentExtraData:
+            FirebaseTypesHelper.convertFirebaseTypes(json['studentExtraData'])
+                as Map<String, dynamic>?,
+        gender: json['gender'],
+        profilePicurl: json['profilePicurl'],
+        status: json['status'],
+        role: json['role'],
+        joinedDate: FirebaseTypesHelper.date(json["joinedDate"]));
   }
   factory UserModel.fromEntity(UserEntity entity) {
     return UserModel(
@@ -115,7 +116,8 @@ class UserModel {
       'lastName': lastName,
       'fullName': fullName,
       'email': email,
-      'teacherExtraData': teacherExtraData,
+      'teacherExtraData':
+          FirebaseTypesHelper.convertFirebaseTypes(teacherExtraData),
       'address': address,
       'phoneNumber': phoneNumber,
       'gender': gender,
@@ -124,7 +126,8 @@ class UserModel {
       'role': role,
       'deviceId': deviceId,
       'joinedDate': joinedDate,
-      'studentExtraData': studentExtraData
+      'studentExtraData':
+          FirebaseTypesHelper.convertFirebaseTypes(studentExtraData),
     };
   }
 }

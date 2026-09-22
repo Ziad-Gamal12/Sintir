@@ -13,7 +13,7 @@ class TransactionCardHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textStyles = AppTextStyles(context);
-    final statusColor = getStatusColor(context, transactionEntity.status);
+    final statusColor = getStatusColor(context, transactionEntity.status?.name);
 
     final mainDisplayTitle = transactionEntity.issuer?.isNotEmpty == true
         ? transactionEntity.issuer!
@@ -51,7 +51,8 @@ class TransactionCardHeader extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Text(
-            transactionEntity.status ?? LocaleKeys.notAvailable,
+            transactionEntity.status?.name.toUpperCase() ??
+                LocaleKeys.notAvailable,
             style: textStyles.regular14.copyWith(
               color: statusColor,
               fontWeight: FontWeight.bold,

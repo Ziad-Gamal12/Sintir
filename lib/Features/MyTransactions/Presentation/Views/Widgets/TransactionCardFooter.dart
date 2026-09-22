@@ -16,7 +16,7 @@ class TransactionCardFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textStyles = AppTextStyles(context);
-    final statusColor = getStatusColor(context, transactionEntity.status);
+    final statusColor = getStatusColor(context, transactionEntity.status?.name);
 
     final dateString = DateFormat('MMM d, yyyy')
         .format(transactionEntity.createdAt ?? DateTime.now());
@@ -68,20 +68,18 @@ class TransactionCardFooter extends StatelessWidget {
         ),
 
         // Transaction ID (Optional)
-        if (transactionEntity.transactionId != null)
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                '${LocaleKeys.transactionId}: ${transactionEntity.transactionId!}',
-                style: textStyles.regular14.copyWith(
-                  color:
-                      theme.textTheme.bodySmall!.color!.withValues(alpha: 0.4),
-                ),
+        Padding(
+          padding: const EdgeInsets.only(top: 10.0),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              '${LocaleKeys.transactionId}: ${transactionEntity.transactionId}',
+              style: textStyles.regular14.copyWith(
+                color: theme.textTheme.bodySmall!.color!.withValues(alpha: 0.4),
               ),
             ),
           ),
+        ),
       ],
     );
   }

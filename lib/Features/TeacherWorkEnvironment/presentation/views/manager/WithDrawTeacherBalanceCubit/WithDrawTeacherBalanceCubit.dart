@@ -1,118 +1,59 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:sintir/Core/entities/TransactionEntity.dart';
-import 'package:sintir/Core/repos/PaymobPayoutRepo/PayoutRepo.dart';
-import 'package:sintir/Core/repos/TeacherTranscationsRepo/TeacherTranscationsRepo.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/TeacherWalletRepo.dart';
-import 'package:sintir/locale_keys.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TeacherWithdrawalResultEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/WithDrawalTeacherBalanceRepo.dart';
 
-part 'TransactionsState.dart';
+part 'WithDrawTeacherBalanceState.dart';
 
 class WithDrawTeacherBalanceCubit extends Cubit<WithDrawTeacherBalanceState> {
-  // Added PaymobPayoutRepo for status checking
-  WithDrawTeacherBalanceCubit({
-    required this.teacherWalletRepo,
-    required this.transcationsRepo,
-    required this.paymobPayoutRepo,
-  }) : super(UpdateTeacherWalletInitial());
+  WithDrawTeacherBalanceCubit(
+      {required WithDrawalTeacherBalanceRepo withdrawalRepo})
+      : _withdrawalRepo = withdrawalRepo,
+        super(const WithDrawBalanceInitial());
 
-  final TeacherWalletRepo teacherWalletRepo;
-  final TeacherTranscationsRepo transcationsRepo;
-  final PayoutRepo paymobPayoutRepo;
+  final WithDrawalTeacherBalanceRepo _withdrawalRepo;
 
-  Future<void> updateTeacherWalletBalance(
-      {required String teacherId, required double balance}) async {
-    emit(UpdateTeacherWalletLoading());
-    final result = await teacherWalletRepo.updateTeacherWalletBalance(
-        teacherId: teacherId, balance: balance);
-    result.fold((l) => emit(UpdateTeacherWalletFailure(errMessage: l.message)),
-        (r) => emit(UpdateTeacherWalletSuccess()));
-  }
-
-  Future<void> storeTransaction(
-      {required TransactionEntity transaction, required String userId}) async {
-    emit(StoreTransactionLoading());
-    final result = await transcationsRepo.storeTransaction(
-        transaction: transaction, userId: userId);
-    result.fold((l) => emit(StoreTransactionFailure(errMessage: l.message)),
-        (r) => emit(StoreTransactionSuccess()));
-  }
-
-  // Helper function to handle consistent error emission
-  void _emitFailure({
-    required String transactionId,
-    required String message,
-  }) {
-    emit(ReconcileTransactionFailure(
-      transactionId: transactionId,
-      errMessage: message,
-    ));
-  }
-
-  Future<void> reconcileTransactionStatus({
-    required TransactionEntity transaction,
-    required String userId,
+  Future<void> requestWithdrawal({
+    required double amount,
+    required String issuer,
+    required String mobileNumber,
+    required String idempotencyKey,
   }) async {
-    final transactionId = transaction.transactionId;
-    if (transactionId.isEmpty) {
-      return _emitFailure(
-        transactionId: transactionId,
-        message: LocaleKeys.reconcileMissingIdError,
-      );
-    }
+    if (state is WithDrawBalanceLoading) return;
 
-    emit(ReconcileTransactionLoading(transactionId: transactionId));
-
-    final statusCheckResult = await paymobPayoutRepo.getDisbursementStatus(
-      transactionId: transactionId,
+    emit(const WithDrawBalanceLoading());
+    final result = await _withdrawalRepo.requestWithdrawal(
+      amount: amount,
+      issuer: issuer,
+      mobileNumber: mobileNumber,
+      idempotencyKey: idempotencyKey,
     );
 
-    await statusCheckResult.fold(
-      (failure) {
-        _emitFailure(
-          transactionId: transactionId,
-          message: LocaleKeys.reconcileStatusCheckFailed(failure.message),
-        );
-      },
-      (paymobStatusResponse) async {
-        final newStatus =
-            (paymobStatusResponse["disbursement_status"] as String?)
-                    ?.toUpperCase() ??
-                'UNKNOWN';
-        final statusDescription =
-            (paymobStatusResponse["status_description"] as String?) ??
-                'No description provided.';
+    result.fold(
+      (failure) => emit(WithDrawBalanceFailure(errMessage: failure.message)),
+      (withdrawal) => emit(WithDrawBalanceSuccess(result: withdrawal)),
+    );
+  }
 
-        final updateStatusResult = await transcationsRepo.reconcileTransaction(
-          transaction: transaction,
-          userId: userId,
-          newStatus: newStatus,
-        );
+  Future<void> reconcileWithdrawal({required String withdrawalId}) async {
+    if (withdrawalId.trim().isEmpty) {
+      emit(const ReconcileTransactionFailure(
+        transactionId: '',
+        errMessage: 'Withdrawal ID is required.',
+      ));
+      return;
+    }
 
-        await updateStatusResult.fold(
-          (dbFailure) {
-            _emitFailure(
-              transactionId: transactionId,
-              message: LocaleKeys.reconcileDbUpdateFailed(
-                message: dbFailure.message,
-                status: newStatus,
-                description: statusDescription,
-              ),
-            );
-          },
-          (_) async {
-            if (newStatus == 'FAILED' || newStatus == 'REJECTED') {
-              _emitFailure(
-                transactionId: transactionId,
-                message: LocaleKeys.reconcileTransactionFailedMessage(
-                    statusDescription),
-              );
-            } else {
-              emit(ReconcileTransactionSuccess(transactionId: transactionId));
-            }
-          },
-        );
-      },
+    emit(ReconcileTransactionLoading(transactionId: withdrawalId));
+    final result =
+        await _withdrawalRepo.reconcileWithdrawal(withdrawalId: withdrawalId);
+
+    result.fold(
+      (failure) => emit(ReconcileTransactionFailure(
+        transactionId: withdrawalId,
+        errMessage: failure.message,
+      )),
+      (withdrawal) => emit(ReconcileTransactionSuccess(result: withdrawal)),
     );
   }
 }

@@ -1,1 +1,1 @@
-enum TeacherWalletTransactionIssuer { vodafone, etisalat, orange, we }
+enum TeacherWalletTransactionIssuer { vodafone, etisalat, orange }

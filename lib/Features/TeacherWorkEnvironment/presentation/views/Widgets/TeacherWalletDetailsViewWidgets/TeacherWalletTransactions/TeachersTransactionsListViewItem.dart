@@ -127,8 +127,6 @@ class _TeachersTransactionsListViewItemState
                                 CheckTransactionStatus(
                                     color: widget
                                         .transactionRequirements.statusColor,
-                                    teacherId: widget
-                                        .transactionRequirements.teacherId,
                                     transaction: transaction)
                               ],
                             ),

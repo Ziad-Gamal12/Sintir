@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sintir/Core/entities/TransactionEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TransactionsStatusEnum.dart';
 
 class TransactionModel {
   final String transactionId;
@@ -21,35 +22,29 @@ class TransactionModel {
       required this.issuer,
       required this.mobile,
       required this.status});
-
-  factory TransactionModel.fromJson(Map<String, dynamic> json) {
-    return TransactionModel(
-      transactionId: json['transaction_id'],
-      createdAt: (json['created_at'] as Timestamp).toDate(),
-      amount: json['amount'],
-      method: json['method'] ?? "",
-      currency: json['currency'],
-      isReconciled: json['isReconciled'],
-      issuer: json['issuer'],
-      mobile: json['mobile'],
-      status: json['status'],
-    );
-  }
-  factory TransactionModel.fromEntity(TransactionEntity entity) {
-    return TransactionModel(
-      transactionId: entity.transactionId,
-      createdAt: entity.createdAt,
-      amount: entity.amount,
-      currency: entity.currency,
-      method: entity.method,
-      isReconciled: entity.isReconciled,
-      issuer: entity.issuer,
-      mobile: entity.mobileNumber,
-      status: entity.status,
-    );
-  }
-  TransactionEntity toEntity() {
-    return TransactionEntity(
+  factory TransactionModel.fromJson(Map<String, dynamic> json) =>
+      TransactionModel(
+          transactionId: json['transaction_id'] as String? ?? '',
+          createdAt: _date(json['created_at']),
+          amount: _number(json['amount']),
+          method: json['method'] as String? ?? '',
+          currency: json['currency'] as String?,
+          isReconciled: json['isReconciled'] as bool?,
+          issuer: json['issuer'] as String?,
+          mobile: json['mobile'] as String?,
+          status: json['status'] as String?);
+  factory TransactionModel.fromEntity(TransactionEntity entity) =>
+      TransactionModel(
+          transactionId: entity.transactionId,
+          createdAt: entity.createdAt,
+          amount: entity.amount,
+          currency: entity.currency,
+          method: entity.method,
+          isReconciled: entity.isReconciled,
+          issuer: entity.issuer,
+          mobile: entity.mobileNumber,
+          status: entity.status?.name ?? TransactionsStatus.other.name);
+  TransactionEntity toEntity() => TransactionEntity(
       transactionId: transactionId,
       isReconciled: isReconciled,
       createdAt: createdAt,
@@ -58,21 +53,47 @@ class TransactionModel {
       currency: currency,
       issuer: issuer,
       mobileNumber: mobile,
-      status: status,
-    );
+      status: _status(status));
+  Map<String, dynamic> toJson() => {
+        'transaction_id': transactionId,
+        'created_at': createdAt,
+        'amount': amount,
+        'isReconciled': isReconciled,
+        'currency': currency,
+        'issuer': issuer,
+        'mobile': mobile,
+        'status': status,
+        'method': method
+      };
+  static TransactionsStatus _status(String? raw) {
+    switch (raw?.trim().toUpperCase()) {
+      case 'SUCCESS':
+      case 'SUCCESSFUL':
+      case 'COMPLETED':
+      case 'APPROVED':
+        return TransactionsStatus.success;
+      case 'FAILED':
+      case 'FAILURE':
+      case 'REJECTED':
+      case 'CANCELLED':
+        return TransactionsStatus.failure;
+      case 'RESERVED':
+      case 'PENDING':
+      case 'PROCESSING_UNKNOWN':
+      case 'IN_PROGRESS':
+        return TransactionsStatus.pending;
+      default:
+        return TransactionsStatus.other;
+    }
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'transaction_id': transactionId,
-      'created_at': createdAt,
-      'amount': amount,
-      'isReconciled': isReconciled,
-      'currency': currency,
-      'issuer': issuer,
-      'mobile': mobile,
-      'status': status,
-      'method': method
-    };
+  static DateTime? _date(dynamic value) {
+    if (value is Timestamp) return value.toDate();
+    if (value is DateTime) return value;
+    if (value is String) return DateTime.tryParse(value);
+    return null;
   }
+
+  static double? _number(dynamic value) =>
+      value is num ? value.toDouble() : null;
 }

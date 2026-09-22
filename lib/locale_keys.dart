@@ -689,4 +689,30 @@ class LocaleKeys {
   static String get issuerWePay => 'issuer_we_pay'.tr();
   static String get issuerUnknown => 'issuer_unknown'.tr();
   static String get currencyEGP => 'currency_egp'.tr();
+  static String get withdrawalAmount => 'withdrawal_amount'.tr();
+  static String get withdrawalAllBalance => 'withdrawal_all_balance'.tr();
+  static String get withdrawalMinimum => 'withdrawal_minimum'.tr();
+  static String get withdrawalValidAmount => 'withdrawal_valid_amount'.tr();
+  static String get withdrawalReceivingMethod =>
+      'withdrawal_receiving_method'.tr();
+  static String get withdrawalDirectTransfer =>
+      'withdrawal_direct_transfer'.tr();
+  static String get withdrawalInstant => 'withdrawal_instant'.tr();
+  static String get withdrawalRecipientNumber =>
+      'withdrawal_recipient_number'.tr();
+  static String get withdrawalAccountMatch => 'withdrawal_account_match'.tr();
+  static String get withdrawalSummary => 'withdrawal_summary'.tr();
+  static String get withdrawalRequested => 'withdrawal_requested'.tr();
+  static String get withdrawalFees => 'withdrawal_fees'.tr();
+  static String get withdrawalFree => 'withdrawal_free'.tr();
+  static String get withdrawalNet => 'withdrawal_net'.tr();
+  static String get withdrawalConfirm => 'withdrawal_confirm'.tr();
+  static String get withdrawalSubmitted => 'withdrawal_submitted'.tr();
+  static String get withdrawalBalanceUpdated =>
+      'withdrawal_balance_updated'.tr();
+  static String get withdrawalReadyForDeposit =>
+      'withdrawal_ready_for_deposit'.tr();
+  static String get withdrawalSecureBalance => 'withdrawal_secure_balance'.tr();
+  static String get withdrawalInvalidRecipientNumber =>
+      'withdrawal_invalid_recipient_number'.tr();
 }

@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 
+/// Firestore contract: wallet_id, teacher_id, total_earned, payout_pending,
+/// created_at, updated_at, and last_transaction_id. Dart remains camelCase.
 class TeacherWalletModel {
   final int? walletId;
   final String? teacherId;
@@ -8,10 +11,9 @@ class TeacherWalletModel {
   final double? payoutPending;
   final String? currency;
   final String? status;
-  final String? createdAt;
-  final String? updatedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
   final String? lastTransactionId;
-
   TeacherWalletModel(
       {required this.walletId,
       required this.teacherId,
@@ -23,63 +25,61 @@ class TeacherWalletModel {
       required this.createdAt,
       required this.updatedAt,
       required this.lastTransactionId});
-  factory TeacherWalletModel.fromJson(Map<String, dynamic> json) {
-    return TeacherWalletModel(
-      walletId: json['wallet_id'],
-      teacherId: json['teacher_id'],
-      balance: (json['balance'] as num).toDouble(),
-      totalEarned: (json['total_earned'] as num).toDouble(),
-      payoutPending: (json['payout_pending'] as num).toDouble(),
-      currency: json['currency'],
-      status: json['status'],
-      createdAt: json['created_at'],
-      updatedAt: json['updated_at'],
-      lastTransactionId: json['last_transaction_id'],
-    );
-  }
-  factory TeacherWalletModel.fromEntity(
-      TeacherWalletEntity teacherWalletEntity) {
-    return TeacherWalletModel(
-      walletId: teacherWalletEntity.walletId,
-      teacherId: teacherWalletEntity.teacherId,
-      balance: teacherWalletEntity.balance,
-      totalEarned: teacherWalletEntity.totalEarned,
-      payoutPending: teacherWalletEntity.payoutPending,
-      currency: teacherWalletEntity.currency,
-      status: teacherWalletEntity.status,
-      createdAt: teacherWalletEntity.createdAt,
-      updatedAt: teacherWalletEntity.updatedAt,
-      lastTransactionId: teacherWalletEntity.lastTransactionId,
-    );
-  }
-
-  TeacherWalletEntity toEntity() {
-    return TeacherWalletEntity(
+  factory TeacherWalletModel.fromJson(Map<String, dynamic> json) =>
+      TeacherWalletModel(
+          walletId: (json['wallet_id'] as num?)?.toInt(),
+          teacherId: json['teacher_id'] as String?,
+          balance: _number(json['balance']),
+          totalEarned: _number(json['total_earned']),
+          payoutPending:
+              _number(json['payout_pending'] ?? json['payoutPending']),
+          currency: json['currency'] as String?,
+          status: json['status'] as String?,
+          createdAt: _date(json['created_at']),
+          updatedAt: _date(json['updated_at'] ?? json['updatedAt']),
+          lastTransactionId: (json['last_transaction_id'] ??
+              json['lastTransactionId']) as String?);
+  factory TeacherWalletModel.fromEntity(TeacherWalletEntity wallet) =>
+      TeacherWalletModel(
+          walletId: wallet.walletId,
+          teacherId: wallet.teacherId,
+          balance: wallet.balance,
+          totalEarned: wallet.totalEarned,
+          payoutPending: wallet.payoutPending,
+          currency: wallet.currency,
+          status: wallet.status,
+          createdAt: wallet.createdAt,
+          updatedAt: wallet.updatedAt,
+          lastTransactionId: wallet.lastTransactionId);
+  TeacherWalletEntity toEntity() => TeacherWalletEntity(
       walletId: walletId ?? 0,
-      teacherId: teacherId ?? "",
-      balance: balance ?? 0.0,
-      totalEarned: totalEarned ?? 0.0,
-      payoutPending: payoutPending ?? 0.0,
-      currency: currency ?? "",
-      status: status ?? "",
-      createdAt: createdAt ?? "",
-      updatedAt: updatedAt ?? "",
-      lastTransactionId: lastTransactionId,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'wallet_id': walletId,
-      'teacher_id': teacherId,
-      'balance': balance,
-      'total_earned': totalEarned,
-      'payout_pending': payoutPending,
-      'currency': currency,
-      'status': status,
-      'created_at': createdAt,
-      'updated_at': updatedAt,
-      'last_transaction_id': lastTransactionId,
-    };
+      teacherId: teacherId ?? '',
+      balance: balance ?? 0,
+      totalEarned: totalEarned ?? 0,
+      payoutPending: payoutPending ?? 0,
+      currency: currency ?? '',
+      status: status ?? '',
+      createdAt: createdAt ?? DateTime.fromMillisecondsSinceEpoch(0),
+      updatedAt: updatedAt ?? DateTime.fromMillisecondsSinceEpoch(0),
+      lastTransactionId: lastTransactionId);
+  Map<String, dynamic> toJson() => {
+        'wallet_id': walletId,
+        'teacher_id': teacherId,
+        'balance': balance,
+        'total_earned': totalEarned,
+        'payout_pending': payoutPending,
+        'currency': currency,
+        'status': status,
+        'created_at': createdAt,
+        'updated_at': updatedAt,
+        'last_transaction_id': lastTransactionId
+      };
+  static double? _number(dynamic value) =>
+      value is num ? value.toDouble() : null;
+  static DateTime? _date(dynamic value) {
+    if (value is Timestamp) return value.toDate();
+    if (value is DateTime) return value;
+    if (value is String) return DateTime.tryParse(value);
+    return null;
   }
 }

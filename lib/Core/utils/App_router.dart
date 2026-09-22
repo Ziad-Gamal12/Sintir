@@ -63,7 +63,6 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCou
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/CourseDetailView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ExamConsequencesView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/PayOutBalance.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWalletDetailsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/VideoConsequencesView.dart';
@@ -74,7 +73,8 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/SubscriberDetailsView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/PayOutBalanceWidgets/TermsAndConditions/PayoutTermsAndConditionsView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/WithDrawBalance/TermsAndConditions/PayoutTermsAndConditionsView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/WithDrawBalanceView.dart';
 
 class App_router {
   static final GlobalKey<NavigatorState> navigatorKey =
@@ -371,14 +371,6 @@ class App_router {
         },
       ),
       GoRoute(
-        path: PayOutBalance.routeName,
-        builder: (BuildContext context, GoRouterState state) {
-          return PayOutBalance(
-            currentWallet: state.extra as TeacherWalletEntity,
-          );
-        },
-      ),
-      GoRoute(
         path: CourseTestOverViewView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return CourseTestOverViewView(
@@ -499,6 +491,14 @@ class App_router {
         builder: (BuildContext context, GoRouterState state) {
           return CreateOwnExamView(
             cubit: state.extra as GetMyMistakesCubit,
+          );
+        },
+      ),
+      GoRoute(
+        path: WithDrawBalanceView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return WithDrawBalanceView(
+            currentWallet: state.extra as TeacherWalletEntity,
           );
         },
       ),

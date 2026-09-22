@@ -6,8 +6,8 @@ class TeacherWalletEntity {
   final double payoutPending;
   final String currency;
   final String status;
-  final String createdAt;
-  final String updatedAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
   final String? lastTransactionId;
 
   TeacherWalletEntity({

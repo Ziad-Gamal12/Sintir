@@ -19,7 +19,7 @@ class TeacherWalletTransactionListener {
         type: SnackType.error,
       );
     } else if (state is ReconcileTransactionSuccess &&
-        state.transactionId == transactionID) {
+        state.result.withdrawalId == transactionID) {
       CustomSnackBar.show(
         context,
         message: LocaleKeys.transactionStatusUpdatedSuccess,

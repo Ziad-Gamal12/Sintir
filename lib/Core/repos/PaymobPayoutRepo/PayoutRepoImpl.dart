@@ -7,7 +7,6 @@ import 'package:sintir/Core/services/Paymob/PaymobPayoutService.dart';
 
 class PayoutRepoImpl implements PayoutRepo {
   final PaymobPayoutService service;
-  // State management for tokens (should ideally be persisted for long-running apps)
   String? accessToken;
   String? refreshToken;
 
