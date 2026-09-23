@@ -18,8 +18,6 @@ import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo_impl.dart';
 import 'package:sintir/Core/repos/File-Item-Repo/FileItemRepo.dart';
 import 'package:sintir/Core/repos/File-Item-Repo/FileItemRepoImpli.dart';
-import 'package:sintir/Core/repos/PaymobPayoutRepo/PayoutRepo.dart';
-import 'package:sintir/Core/repos/PaymobPayoutRepo/PayoutRepoImpl.dart';
 import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
 import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepoImp.dart';
 import 'package:sintir/Core/repos/ResetPaswordRepo/ResetPaswordRepo.dart';
@@ -36,7 +34,6 @@ import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/FireBase/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/FireBase/Firebase_FirestoreService.dart';
 import 'package:sintir/Core/services/Paymob/PayMobService.dart';
-import 'package:sintir/Core/services/Paymob/PaymobPayoutService.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/services/SupabaseStorageServices.dart';
@@ -87,8 +84,6 @@ void setup_Getit() {
 
   getIt.registerLazySingleton<PaymobRepo>(
       () => PaymobRepoImp(payMobService: PayMobService()));
-  getIt.registerLazySingleton<PayoutRepo>(
-      () => PayoutRepoImpl(service: PaymobPayoutService()));
 
   getIt.registerLazySingleton<ResetPaswordRepo>(
       () => ResetPaswordRepoImp(authService: getIt<firebaseAuthService>()));

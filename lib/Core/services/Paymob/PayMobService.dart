@@ -55,7 +55,6 @@ class PayMobService {
     }
   }
 
-  /// Step 2: Build Unified Checkout URL
   String buildCheckoutUrl({
     required String clientSecret,
   }) {
