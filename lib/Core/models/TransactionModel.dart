@@ -83,7 +83,9 @@ class TransactionModel {
       case 'IN_PROGRESS':
         return TransactionsStatus.pending;
       default:
-        return TransactionsStatus.other;
+        // Unknown provider states are non-terminal. Keep the refresh action
+        // available rather than leaving funds reserved forever in the UI.
+        return TransactionsStatus.pending;
     }
   }
 

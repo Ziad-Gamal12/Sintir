@@ -47,7 +47,12 @@ class WithDrawBalanceActionButton extends StatelessWidget {
   void _submit(BuildContext context) {
     if (!formKey.currentState!.validate()) return;
     final amount = double.tryParse(amountController.text.trim());
-    if (amount == null || amount < 100 || amount > 1000) {
+    if (amount == null ||
+        !amount.isFinite ||
+        amount < 100 ||
+        amount > 1000 ||
+        amount > walletEntity.balance ||
+        (amount * 100).roundToDouble() != amount * 100) {
       _error(context, LocaleKeys.invalidAmount);
       return;
     }

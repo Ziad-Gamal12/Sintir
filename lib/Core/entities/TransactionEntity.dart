@@ -1,7 +1,7 @@
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TransactionsStatusEnum.dart';
 
 class TransactionEntity {
-  String transactionId;
+  final String transactionId;
   final DateTime? createdAt;
   final double? amount;
   final String? currency;
@@ -28,6 +28,7 @@ class TransactionEntity {
     String? currency,
     String? issuer,
     String? mobileNumber,
+    String? method,
     bool? isReconciled,
     TransactionsStatus? status,
   }) {
@@ -36,7 +37,7 @@ class TransactionEntity {
       createdAt: createdAt ?? this.createdAt,
       amount: amount ?? this.amount,
       currency: currency ?? this.currency,
-      method: method,
+      method: method ?? this.method,
       isReconciled: isReconciled ?? this.isReconciled,
       issuer: issuer ?? this.issuer,
       mobileNumber: mobileNumber ?? this.mobileNumber,

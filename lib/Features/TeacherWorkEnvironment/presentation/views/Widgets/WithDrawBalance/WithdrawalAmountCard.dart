@@ -32,7 +32,11 @@ class _WithdrawalAmountCardState extends State<WithdrawalAmountCard> {
 
   bool get _valid {
     final amount = double.tryParse(widget.controller.text.trim());
-    return amount != null && amount >= 100 && amount <= widget.availableAmount;
+    return amount != null &&
+        amount >= 100 &&
+        amount <= 1000 &&
+        amount <= widget.availableAmount &&
+        (amount * 100).roundToDouble() == amount * 100;
   }
 
   @override

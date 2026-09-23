@@ -22,7 +22,8 @@ class TeacherWalletTransactionListener {
         state.result.withdrawalId == transactionID) {
       CustomSnackBar.show(
         context,
-        message: LocaleKeys.transactionStatusUpdatedSuccess,
+        message:
+            state.result.message ?? LocaleKeys.transactionStatusUpdatedSuccess,
         type: SnackType.success,
       );
     }

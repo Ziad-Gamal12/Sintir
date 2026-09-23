@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
@@ -27,24 +29,14 @@ class _WithDrawBalanceViewBodyState extends State<WithDrawBalanceViewBody> {
   late final TextEditingController _recipientWalletNumber;
   late WithdrawalMethodEntity _selectedMethod;
   bool isTremsAccepted = false;
-  double? amount = 0;
-  bool isLoading = false;
   @override
   void initState() {
     super.initState();
     final wallet = context.read<TeacherWalletEntity>();
-    _amountController =
-        TextEditingController(text: wallet.balance.toStringAsFixed(2));
+    _amountController = TextEditingController(
+        text: math.min(wallet.balance, 1000).toStringAsFixed(2));
     _recipientWalletNumber = TextEditingController();
     _selectedMethod = WithdrawalMethods.all.first;
-
-    WidgetsBinding.instance.addPostFrameCallback((d) {
-      _amountController.addListener(() {
-        setState(() {
-          amount = double.tryParse(_amountController.value.toString().trim());
-        });
-      });
-    });
   }
 
   @override
@@ -90,7 +82,8 @@ class _WithDrawBalanceViewBodyState extends State<WithDrawBalanceViewBody> {
                         controller: _amountController,
                         availableAmount: wallet.balance,
                         onWithdrawAll: () => setState(() => _amountController
-                            .text = wallet.balance.toStringAsFixed(2))),
+                                .text =
+                            math.min(wallet.balance, 1000).toStringAsFixed(2))),
                     const SizedBox(height: 16),
                     WithdrawalMethodsCard(
                         methods: WithdrawalMethods.all,

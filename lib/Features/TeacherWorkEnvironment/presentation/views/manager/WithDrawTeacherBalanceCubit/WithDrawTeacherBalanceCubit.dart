@@ -6,12 +6,14 @@ import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/WithDrawalTe
 part 'WithDrawTeacherBalanceState.dart';
 
 class WithDrawTeacherBalanceCubit extends Cubit<WithDrawTeacherBalanceState> {
-  WithDrawTeacherBalanceCubit(
-      {required WithDrawalTeacherBalanceRepo withdrawalRepo})
-      : _withdrawalRepo = withdrawalRepo,
+  WithDrawTeacherBalanceCubit({
+    required WithDrawalTeacherBalanceRepo withdrawalRepo,
+  })  : _withdrawalRepo = withdrawalRepo,
         super(const WithDrawBalanceInitial());
 
   final WithDrawalTeacherBalanceRepo _withdrawalRepo;
+  bool _requestInFlight = false;
+  final Set<String> _reconcilingWithdrawalIds = <String>{};
 
   Future<void> requestWithdrawal({
     required double amount,
@@ -19,41 +21,59 @@ class WithDrawTeacherBalanceCubit extends Cubit<WithDrawTeacherBalanceState> {
     required String mobileNumber,
     required String idempotencyKey,
   }) async {
-    if (state is WithDrawBalanceLoading) return;
+    if (_requestInFlight) return;
 
+    _requestInFlight = true;
     emit(const WithDrawBalanceLoading());
-    final result = await _withdrawalRepo.requestWithdrawal(
-      amount: amount,
-      issuer: issuer,
-      mobileNumber: mobileNumber,
-      idempotencyKey: idempotencyKey,
-    );
-
-    result.fold(
-      (failure) => emit(WithDrawBalanceFailure(errMessage: failure.message)),
-      (withdrawal) => emit(WithDrawBalanceSuccess(result: withdrawal)),
-    );
+    try {
+      final result = await _withdrawalRepo.requestWithdrawal(
+        amount: amount,
+        issuer: issuer,
+        mobileNumber: mobileNumber,
+        idempotencyKey: idempotencyKey,
+      );
+      result.fold(
+        (failure) => emit(WithDrawBalanceFailure(errMessage: failure.message)),
+        (withdrawal) => emit(WithDrawBalanceSuccess(result: withdrawal)),
+      );
+    } catch (_) {
+      emit(const WithDrawBalanceFailure(
+        errMessage: 'Unable to submit the withdrawal. Please try again.',
+      ));
+    } finally {
+      _requestInFlight = false;
+    }
   }
 
   Future<void> reconcileWithdrawal({required String withdrawalId}) async {
-    if (withdrawalId.trim().isEmpty) {
+    final id = withdrawalId.trim();
+    if (id.isEmpty) {
       emit(const ReconcileTransactionFailure(
         transactionId: '',
         errMessage: 'Withdrawal ID is required.',
       ));
       return;
     }
+    if (!_reconcilingWithdrawalIds.add(id)) return;
 
-    emit(ReconcileTransactionLoading(transactionId: withdrawalId));
-    final result =
-        await _withdrawalRepo.reconcileWithdrawal(withdrawalId: withdrawalId);
-
-    result.fold(
-      (failure) => emit(ReconcileTransactionFailure(
-        transactionId: withdrawalId,
-        errMessage: failure.message,
-      )),
-      (withdrawal) => emit(ReconcileTransactionSuccess(result: withdrawal)),
-    );
+    emit(ReconcileTransactionLoading(transactionId: id));
+    try {
+      final result =
+          await _withdrawalRepo.reconcileWithdrawal(withdrawalId: id);
+      result.fold(
+        (failure) => emit(ReconcileTransactionFailure(
+          transactionId: id,
+          errMessage: failure.message,
+        )),
+        (withdrawal) => emit(ReconcileTransactionSuccess(result: withdrawal)),
+      );
+    } catch (_) {
+      emit(ReconcileTransactionFailure(
+        transactionId: id,
+        errMessage: 'Unable to check this withdrawal right now.',
+      ));
+    } finally {
+      _reconcilingWithdrawalIds.remove(id);
+    }
   }
 }

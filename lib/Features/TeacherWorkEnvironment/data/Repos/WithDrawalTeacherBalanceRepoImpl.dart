@@ -41,6 +41,7 @@ class WithDrawalTeacherBalanceRepoImpl implements WithDrawalTeacherBalanceRepo {
                   ?.toString() ??
               'Withdrawal request failed.'));
     } catch (e) {
+
       return left(
           ServerFailure(message: e.toString().replaceFirst('Bad state: ', '')));
     }
