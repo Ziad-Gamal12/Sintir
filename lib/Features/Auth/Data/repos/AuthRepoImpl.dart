@@ -118,7 +118,6 @@ class AuthRepoImpl implements AuthRepo {
 
   Future<void> storeUserLocally(Map<String, dynamic> userJson) async {
     try {
-      log(userJson.toString());
       await Hive_Services.jsonSetter(
         key: BackendEndpoints.storeUserLocaly,
         value: userJson,
@@ -145,7 +144,6 @@ class AuthRepoImpl implements AuthRepo {
         return Left(ServerFailure(message: LocaleKeys.userNotFound));
       }
       final Map<String, dynamic> userJson = json.docData!;
-      log(userJson.toString());
       final UserModel userModel = UserModel.fromJson(userJson);
 
       switch (userModel.status) {

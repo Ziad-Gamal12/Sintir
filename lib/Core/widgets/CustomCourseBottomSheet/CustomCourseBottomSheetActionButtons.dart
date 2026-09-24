@@ -17,12 +17,14 @@ class CustomCourseBottomSheetActionButtons extends StatelessWidget {
     bool isSubscribed = context
         .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
         .isSubscribed;
+    final theme = Theme.of(context);
+    bool isDark = theme.brightness == Brightness.dark;
     if (isSubscribed == true) {
       return Custombutton(
           text: LocaleKeys.enterCourse,
-          color: Colors.white,
-          textColor: Colors.black,
-          side: const BorderSide(width: 1, color: Colors.black),
+          color: isDark ? Colors.grey.shade900 : Colors.grey.shade200,
+          textColor: isDark ? Colors.white : Colors.black,
+          side: BorderSide(width: 1, color: Colors.green),
           onPressed: () {
             GoRouter.of(context).push(CourseIntroductionView.routeName,
                 extra: context.read<

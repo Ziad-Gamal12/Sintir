@@ -34,7 +34,6 @@ class CustomTextField extends StatelessWidget {
     final theme = Theme.of(context);
     final isDarkMode = theme.brightness == Brightness.dark;
 
-    // Premium Border Logic: adaptive to brightness
     final Color borderColor =
         isDarkMode ? Colors.white10 : const Color(0xFFE4E6E8);
     final Color fillBg = isDarkMode

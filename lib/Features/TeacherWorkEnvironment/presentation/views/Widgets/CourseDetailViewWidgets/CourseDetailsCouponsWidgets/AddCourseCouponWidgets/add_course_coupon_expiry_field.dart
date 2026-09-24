@@ -15,13 +15,15 @@ class AddCourseCouponExpiryField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    final bool isDarkMode = theme.brightness == Brightness.dark;
     final Color defaultTextColor =
         theme.textTheme.bodyMedium!.color!.withValues(alpha: 0.7);
+
     final Color selectedTextColor = theme.textTheme.bodyLarge!.color!;
     final Color iconColor = defaultTextColor;
-    final Color fillColor = theme.brightness == Brightness.dark
-        ? theme.inputDecorationTheme.fillColor ?? Colors.grey.shade800
-        : const Color(0xffF9FAFA); // Original light mode color or theme default
+    final Color fillBg = isDarkMode
+        ? Colors.white.withValues(alpha: 0.05)
+        : const Color(0xFFF8F9FA);
 
     final Color titleColor =
         pickedDate == null ? defaultTextColor : selectedTextColor;
@@ -36,7 +38,7 @@ class AddCourseCouponExpiryField extends StatelessWidget {
         height: 56,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: fillColor,
+          color: fillBg,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: theme.dividerColor.withValues(alpha: 0.5)),
         ),

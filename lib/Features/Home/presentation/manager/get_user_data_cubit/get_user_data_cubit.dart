@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meta/meta.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/services/FireBase/FirebaseAuth_Service.dart';
+import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -12,52 +13,71 @@ class GetUserDataCubit extends Cubit<GetUserDataState> {
   GetUserDataCubit({
     required this.authRepo,
     required this.authService,
-  }) : super(GetUserDataInitial());
+    FirebaseAuth? firebaseAuth,
+    UserEntity Function()? readLocalUser,
+  })  : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
+        _readLocalUser = readLocalUser ?? getUserData,
+        super(GetUserDataInitial());
 
   final AuthRepo authRepo;
   final firebaseAuthService authService;
+  final FirebaseAuth _firebaseAuth;
+  final UserEntity Function() _readLocalUser;
+
   bool isUserDataFetched = false;
 
   Future<void> fetchUserData() async {
-    emit(GetUserDataLoading());
-
+    if (state is GetUserDataLoading) return;
+    _safeEmit(GetUserDataLoading());
     try {
-      final currentUser = FirebaseAuth.instance.currentUser;
+      final currentUser = _firebaseAuth.currentUser;
       if (currentUser == null) {
-        return emit(GetUserDataFailure(errmessage: AuthMessages.userNotFound));
+        return _safeEmit(
+            GetUserDataFailure(errmessage: AuthMessages.userNotFound));
       }
-
       final deviceId = await authRepo.getDeviceId();
       if (deviceId.isEmpty) {
-        return emit(
+        return _safeEmit(
             GetUserDataFailure(errmessage: AuthMessages.deviceNotFound));
       }
 
       final result =
           await authRepo.fetchUserAndStoreLocally(uid: currentUser.uid);
 
-      result.fold(
-        (failure) => emit(GetUserDataFailure(errmessage: failure.message)),
-        (_) async {
-          final user = getUserData();
-          if (user.deviceId != deviceId) {
-            await authService.signout();
-            return emit(
-                GetUserDataFailure(errmessage: AuthMessages.deviceMismatch));
-          }
+      final errorMessage =
+          result.fold<String?>((failure) => failure.message, (_) => null);
+      if (errorMessage != null) {
+        return _safeEmit(GetUserDataFailure(errmessage: errorMessage));
+      }
 
-          isUserDataFetched = true;
-          emit(GetUserDataSuccess());
-        },
-      );
-    } catch (e) {
-      emit(GetUserDataFailure(errmessage: LocaleKeys.dataNotFound));
+      final user = _readLocalUser();
+      if (user.deviceId != deviceId) {
+        isUserDataFetched = false;
+        try {
+          await authService.signout();
+        } catch (_) {
+          GetUserDataFailure(errmessage: AuthMessages.deviceMismatch);
+        }
+        return _safeEmit(
+            GetUserDataFailure(errmessage: AuthMessages.deviceMismatch));
+      }
+
+      isUserDataFetched = true;
+      _safeEmit(GetUserDataSuccess());
+    } catch (_) {
+      _safeEmit(GetUserDataFailure(errmessage: LocaleKeys.dataNotFound));
     }
+  }
+
+  /// The cubit may be closed while a request is in flight (e.g. signout
+  /// navigates away and disposes the screen). Emitting then throws.
+  void _safeEmit(GetUserDataState newState) {
+    if (!isClosed) emit(newState);
   }
 }
 
 class AuthMessages {
-  static String userNotFound = LocaleKeys.userNotFound;
-  static String deviceNotFound = LocaleKeys.deviceNotFound;
-  static String deviceMismatch = LocaleKeys.deviceMismatch;
+  static final String userNotFound = LocaleKeys.userNotFound;
+  static final String deviceNotFound = LocaleKeys.deviceNotFound;
+  static final String deviceMismatch = LocaleKeys.deviceMismatch;
 }

@@ -31,6 +31,7 @@ class _CourseBottomSheetCourseDetailsState
     bool isSubscribed = context
         .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
         .isSubscribed;
+    ThemeData theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -38,7 +39,8 @@ class _CourseBottomSheetCourseDetailsState
           children: [
             Expanded(
                 child: Text(course.title,
-                    style: AppTextStyles(context).semiBold20)),
+                    style: AppTextStyles(context).semiBold20.copyWith(
+                        color: theme.textTheme.headlineMedium?.color))),
             Visibility(
               visible: isSubscribed,
               child: const CourseBottomSheetCourseDetailsIsSubscribedBanner(),

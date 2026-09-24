@@ -6,10 +6,14 @@ import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/services/FireBase/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
+import 'package:sintir/Features/Favorites/presentation/views/FavoritesView.dart';
 import 'package:sintir/Features/Home/presentation/manager/cubit/bottom_nav_cubit.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_courses_cubit/get_courses_cubit.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_user_data_cubit/get_user_data_cubit.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/BottomNavBar.dart';
+import 'package:sintir/Features/Home/presentation/views/widgets/Homeview_Body.dart';
+import 'package:sintir/Features/Profile/Presentation/Views/ProfileView.dart';
+import 'package:sintir/Features/Search/Presentation/Views/SearchView.dart';
 
 class Homeview extends StatefulWidget {
   const Homeview({super.key});
@@ -20,6 +24,16 @@ class Homeview extends StatefulWidget {
 }
 
 class _HomeviewState extends State<Homeview> {
+  static final List<Widget Function()> _builders = [
+    () => const HomeViewBody(),
+    () => const SearchView(),
+    () => Favoritesview(isPopUp: false),
+    () => const ProfileView(),
+  ];
+
+  final Map<int, Widget> _cache = {};
+
+  Widget _screen(int i) => _cache.putIfAbsent(i, () => _builders[i]());
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -42,10 +56,15 @@ class _HomeviewState extends State<Homeview> {
           ),
           body: BlocBuilder<BottomNavCubit, BottomNavState>(
             builder: (context, state) {
-              return SafeArea(
-                  child: IndexedStack(
-                      index: context.read<BottomNavCubit>().currentIndex,
-                      children: context.read<BottomNavCubit>().screens));
+              final cubit = context.read<BottomNavCubit>();
+              return IndexedStack(
+                index: cubit.currentIndex,
+                children: List.generate(4, (i) {
+                  return cubit.visited.contains(i)
+                      ? _screen(i)
+                      : const SizedBox.shrink();
+                }),
+              );
             },
           ),
         );

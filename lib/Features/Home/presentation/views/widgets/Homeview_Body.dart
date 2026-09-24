@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, file_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/customRefreshWidget.dart';
-import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/ChoosingUserKindView.dart';
 import 'package:sintir/Features/Favorites/presentation/views/Manager/favourites_cubit/favourites_cubit.dart';
 import 'package:sintir/Features/Home/Extensions/HomeDataFetch.dart';
@@ -21,54 +20,55 @@ class HomeViewBody extends StatefulWidget {
   State<HomeViewBody> createState() => _HomeViewBodyState();
 }
 
-class _HomeViewBodyState extends State<HomeViewBody>
-    with AutomaticKeepAliveClientMixin {
-  UserEntity user = getUserData();
+class _HomeViewBodyState extends State<HomeViewBody> {
   @override
   void initState() {
     super.initState();
     _initFetchData();
   }
 
-  void _initFetchData() async {
+  void _initFetchData() {
     final getUserDataCubit = context.read<GetUserDataCubit>();
     if (getUserDataCubit.isUserDataFetched) return;
     getUserDataCubit.fetchUserData();
   }
 
+  Future<void> _fetchHomeData() async {
+    if (!mounted) return;
+    final coursesCubit = context.read<GetCoursesCubit>();
+    final favCubit = context.read<FavouritesCubit>();
+    final uid = getUserData().uid;
+
+    try {
+      await Future.wait([
+        coursesCubit.fetchAllHomeData(context),
+        favCubit.getFavorites(userId: uid),
+      ]);
+    } catch (e) {
+      debugPrint('Home data fetch failed: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return BlocListener<GetUserDataCubit, GetUserDataState>(
-      listener: (context, state) async {
+      listener: (context, state) {
         if (state is GetUserDataFailure) {
-          if (mounted) {
-            errordialog(context, state.errmessage, btnOkOnPress: () {
-              GoRouter.of(context)
-                  .pushReplacement(ChoosingUserKindView.routeName);
-            }).show();
-          }
+          if (!mounted) return;
+          errordialog(context, state.errmessage, btnOkOnPress: () {
+            GoRouter.of(context)
+                .pushReplacement(ChoosingUserKindView.routeName);
+          }).show();
         } else if (state is GetUserDataSuccess) {
-          final cubit = context.read<GetCoursesCubit>();
-          final favCubit = context.read<FavouritesCubit>();
-          if (mounted) {
-            await Future.wait([
-              cubit.fetchAllHomeData(context),
-              favCubit.getFavorites(userId: user.uid)
-            ]);
-          }
+          _fetchHomeData();
         }
       },
       child: Customrefreshwidget(
         onRefresh: () async {
-          final getUserDataCubit = context.read<GetUserDataCubit>();
-          getUserDataCubit.fetchUserData();
+          context.read<GetUserDataCubit>().fetchUserData();
         },
         child: HomeViewBodyBuilder(),
       ),
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

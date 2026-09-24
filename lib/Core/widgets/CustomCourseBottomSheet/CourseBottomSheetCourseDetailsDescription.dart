@@ -12,11 +12,14 @@ class CourseBottomSheetCourseDetailsDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(LocaleKeys.descriptionLabel,
-            style: AppTextStyles(context).semiBold20),
+            style: AppTextStyles(context)
+                .semiBold20
+                .copyWith(color: theme.textTheme.headlineMedium?.color)),
         const SizedBox(
           height: 12,
         ),

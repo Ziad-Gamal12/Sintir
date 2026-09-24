@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-void showCustomBottomSheet({required Widget child, required BuildContext context}) {
+void showCustomBottomSheet(
+    {required Widget child, required BuildContext context}) {
   final theme = Theme.of(context);
 
   showBottomSheet(
@@ -11,7 +12,7 @@ void showCustomBottomSheet({required Widget child, required BuildContext context
         topLeft: Radius.circular(20),
         topRight: Radius.circular(20),
       ),
-      side: BorderSide(color: theme.dividerColor.withValues(alpha: 0.5)),
+      side: BorderSide(color: theme.dividerColor.withValues(alpha: 0.2)),
     ),
     builder: (context) => child,
   );
@@ -33,7 +34,7 @@ void showCustomModalBottomSheet({
         topLeft: Radius.circular(20),
         topRight: Radius.circular(20),
       ),
-      side: BorderSide(color: theme.dividerColor),
+      side: BorderSide(color: theme.dividerColor.withValues(alpha: .2)),
     ),
     builder: (context) => child,
   );
