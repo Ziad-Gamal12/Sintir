@@ -22,7 +22,7 @@ class TeacherWalletDetailsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CustomTeacherCardItem(
+        CustomTeacherWalletCardItem(
           wallet: wallet,
         ),
         Divider(

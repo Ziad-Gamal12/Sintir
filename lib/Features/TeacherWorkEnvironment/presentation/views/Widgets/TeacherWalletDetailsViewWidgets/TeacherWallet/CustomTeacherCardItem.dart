@@ -5,8 +5,8 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWallet/TeacherWalletWithDrawButton.dart';
 import 'package:sintir/locale_keys.dart';
 
-class CustomTeacherCardItem extends StatelessWidget {
-  const CustomTeacherCardItem({super.key, required this.wallet});
+class CustomTeacherWalletCardItem extends StatelessWidget {
+  const CustomTeacherWalletCardItem({super.key, required this.wallet});
   final TeacherWalletEntity? wallet;
 
   @override

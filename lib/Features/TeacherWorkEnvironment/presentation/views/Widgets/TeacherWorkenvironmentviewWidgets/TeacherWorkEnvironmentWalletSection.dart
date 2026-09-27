@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/Auth/Data/models/UserModel.dart';
+import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWallet/CustomTeacherCardItem.dart';
 import 'package:sintir/locale_keys.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class TeacherWorkEnvironmentWalletSection extends StatefulWidget {
   const TeacherWorkEnvironmentWalletSection(
@@ -34,7 +36,11 @@ class _TeacherWorkEnvironmentWalletSectionState
         stream: walletStream,
         builder: (context, asyncSnapshot) {
           if (asyncSnapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+                child: Skeletonizer(
+                    child: CustomTeacherWalletCardItem(
+              wallet: TeacherWalletEntity.empty(),
+            )));
           } else if (asyncSnapshot.hasError) {
             return Center(
               child: CustomErrorWidget(
@@ -63,7 +69,7 @@ class _TeacherWorkEnvironmentWalletSectionState
             );
           }
 
-          return CustomTeacherCardItem(
+          return CustomTeacherWalletCardItem(
             wallet: wallet,
           );
         });

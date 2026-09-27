@@ -1,3 +1,5 @@
+import 'package:sintir/Core/utils/Backend_EndPoints.dart';
+
 class TeacherWalletEntity {
   final int walletId;
   String teacherId;
@@ -22,4 +24,16 @@ class TeacherWalletEntity {
     required this.updatedAt,
     this.lastTransactionId,
   });
+  static TeacherWalletEntity empty() {
+    return TeacherWalletEntity(
+        balance: 0,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        currency: "EGP",
+        walletId: 123456,
+        payoutPending: 0,
+        status: BackendEndpoints.walletActive,
+        teacherId: '',
+        totalEarned: 0);
+  }
 }

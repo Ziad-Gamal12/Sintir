@@ -54,18 +54,20 @@ class _HomeviewState extends State<Homeview> {
               context.read<BottomNavCubit>().changeIndex(index);
             },
           ),
-          body: BlocBuilder<BottomNavCubit, BottomNavState>(
-            builder: (context, state) {
-              final cubit = context.read<BottomNavCubit>();
-              return IndexedStack(
-                index: cubit.currentIndex,
-                children: List.generate(4, (i) {
-                  return cubit.visited.contains(i)
-                      ? _screen(i)
-                      : const SizedBox.shrink();
-                }),
-              );
-            },
+          body: SafeArea(
+            child: BlocBuilder<BottomNavCubit, BottomNavState>(
+              builder: (context, state) {
+                final cubit = context.read<BottomNavCubit>();
+                return IndexedStack(
+                  index: cubit.currentIndex,
+                  children: List.generate(4, (i) {
+                    return cubit.visited.contains(i)
+                        ? _screen(i)
+                        : const SizedBox.shrink();
+                  }),
+                );
+              },
+            ),
           ),
         );
       }),
