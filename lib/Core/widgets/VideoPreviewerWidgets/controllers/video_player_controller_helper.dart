@@ -51,7 +51,6 @@ class CustomVideoControllerBetter {
           enableSkips: true,
           enableFullscreen: true,
           enableMute: true,
-          // Theme-aware colors
           controlBarColor: theme.colorScheme.surface.withValues(alpha: 0.8),
           textColor: theme.textTheme.bodyLarge?.color ?? Colors.white,
           progressBarPlayedColor: theme.colorScheme.primary,
