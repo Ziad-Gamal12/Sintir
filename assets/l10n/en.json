@@ -615,6 +615,17 @@
   "courseNotPublishedMessage": "This course is not published yet.",
   "withdrawal_amount":"Withdrawal amount","withdrawal_all_balance":"Withdraw all balance","withdrawal_minimum":"Minimum withdrawal is EGP 100","withdrawal_valid_amount":"Valid amount","withdrawal_receiving_method":"Receiving method","withdrawal_direct_transfer":"Direct transfer","withdrawal_instant":"Instant in minutes","withdrawal_recipient_number":"Recipient e-wallet number","withdrawal_account_match":"Account name verified","withdrawal_summary":"Transaction details and fees","withdrawal_requested":"Requested amount","withdrawal_fees":"Transaction fees","withdrawal_free":"EGP 0.00 (Free)","withdrawal_net":"Net received","withdrawal_confirm":"Confirm withdrawal request","withdrawal_submitted":"Withdrawal request sent successfully",
   "withdrawal_balance_updated":"Updated now","withdrawal_ready_for_deposit":"Ready for deposit","withdrawal_secure_balance":"Secure balance",
-  "withdrawal_invalid_recipient_number":"Enter a valid 11-digit wallet number"
+  "withdrawal_invalid_recipient_number":"Enter a valid 11-digit wallet number",
+  "course_management": "Course management",
+  "course_management_count": "5 sections",
+  "course_instructor": "Course instructor",
+  "edit_course": "Edit course",
+  "archive_course": "Archive course",
+  "restore_course": "Restore course",
+  "course_state_published": "Published",
+  "course_state_pending": "Pending",
+  "course_state_archived": "Archived",
+  "archive_confirmation_title": "Change course publishing status",
+  "archive_confirmation_message": "Archiving this course will unpublish it. You can restore it later without losing its students or course content.",
+  "confirm_archive": "Confirm archive"
 }
-

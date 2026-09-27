@@ -615,6 +615,17 @@
 ,  "about_us_description": "Sintir repose sur une vision claire : offrir aux étudiants et aux enseignants une expérience d’apprentissage numérique moderne, organisée et facile à utiliser. La plateforme propose un système complet pour gérer les cours, suivre la progression, effectuer les devoirs et examens, et consulter les résultats en temps réel.\n\nSintir accompagne l’étudiant dans son parcours grâce à un contenu structuré, une interface simple, et des outils qui facilitent la compréhension et l’amélioration. Il offre également à l’enseignant un environnement puissant pour gérer ses élèves, ajouter du contenu, corriger les réponses et gérer les abonnements facilement et efficacement.\n\nNous croyons que l’éducation doit être fluide, accessible et intelligente. C’est pourquoi Sintir propose une expérience moderne alliant stabilité, rapidité et précision dans la gestion des données.\n\nSintir… là où l’éducation rencontre la qualité et la simplicité.",
   "withdrawal_amount":"Montant du retrait","withdrawal_all_balance":"Retirer tout le solde","withdrawal_minimum":"Retrait minimum : 100 EGP","withdrawal_valid_amount":"Montant valide","withdrawal_receiving_method":"Méthode de réception","withdrawal_direct_transfer":"Virement direct","withdrawal_instant":"Instantané en quelques minutes","withdrawal_recipient_number":"Numéro du portefeuille destinataire","withdrawal_account_match":"Nom du compte vérifié","withdrawal_summary":"Détails et frais","withdrawal_requested":"Montant demandé","withdrawal_fees":"Frais de transaction","withdrawal_free":"0,00 EGP (gratuit)","withdrawal_net":"Montant net reçu","withdrawal_confirm":"Confirmer la demande","withdrawal_submitted":"Demande envoyée avec succès",
   "withdrawal_balance_updated":"Mis à jour","withdrawal_ready_for_deposit":"Prêt au dépôt","withdrawal_secure_balance":"Solde sécurisé",
-  "withdrawal_invalid_recipient_number":"Saisissez un numéro de portefeuille valide à 11 chiffres"
+  "withdrawal_invalid_recipient_number":"Saisissez un numéro de portefeuille valide à 11 chiffres",
+  "course_management": "Gestion du cours",
+  "course_management_count": "5 sections",
+  "course_instructor": "Enseignant responsable",
+  "edit_course": "Modifier le cours",
+  "archive_course": "Archiver le cours",
+  "restore_course": "Restaurer le cours",
+  "course_state_published": "Publié",
+  "course_state_pending": "En attente",
+  "course_state_archived": "Archivé",
+  "archive_confirmation_title": "Modifier le statut de publication du cours",
+  "archive_confirmation_message": "L’archivage dépubliera ce cours. Vous pourrez le restaurer plus tard sans perdre ses étudiants ni son contenu.",
+  "confirm_archive": "Confirmer l’archivage"
 }
-

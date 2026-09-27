@@ -715,4 +715,18 @@ class LocaleKeys {
   static String get withdrawalSecureBalance => 'withdrawal_secure_balance'.tr();
   static String get withdrawalInvalidRecipientNumber =>
       'withdrawal_invalid_recipient_number'.tr();
+  static String get courseManagement => 'course_management'.tr();
+  static String get courseManagementCount => 'course_management_count'.tr();
+  static String get courseInstructor => 'course_instructor'.tr();
+  static String get editCourse => 'edit_course'.tr();
+  static String get archiveCourse => 'archive_course'.tr();
+  static String get restoreCourse => 'restore_course'.tr();
+  static String get courseStatePublished => 'course_state_published'.tr();
+  static String get courseStatePending => 'course_state_pending'.tr();
+  static String get courseStateArchived => 'course_state_archived'.tr();
+  static String get archiveConfirmationTitle =>
+      'archive_confirmation_title'.tr();
+  static String get archiveConfirmationMessage =>
+      'archive_confirmation_message'.tr();
+  static String get confirmArchive => 'confirm_archive'.tr();
 }
