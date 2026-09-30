@@ -64,6 +64,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/WithDrawalTeac
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/SubscribersDetailsRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/TeacherWalletRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/WithDrawalTeacherBalanceRepo.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/UseCases/UpdateCourseReportStatusUseCase.dart';
 import 'package:sintir/constant.dart';
 
 final getIt = GetIt.instance;
@@ -119,8 +120,10 @@ void setup_Getit() {
   getIt.registerLazySingleton<CourseSubscibtionsRepo>(() =>
       CourseSubscriptionsRepoImpl(databaseService: getIt<DataBaseService>()));
 
-  getIt.registerLazySingleton<CourseReportsRepo>(
-      () => CourseReportsRepoimpli(databaseservice: getIt<DataBaseService>()));
+  getIt
+      .registerLazySingleton<CourseReportsRepo>(() => CourseReportsRepoimpli());
+  getIt.registerLazySingleton<UpdateCourseReportStatusUseCase>(
+      () => UpdateCourseReportStatusUseCase(getIt<CourseReportsRepo>()));
 
   getIt.registerLazySingleton<CourseFeedBacksRepo>(() =>
       CourseFeedBacksRepoImpli(databaseservice: getIt<DataBaseService>()));

@@ -1,23 +1,13 @@
-import 'package:sintir/locale_keys.dart';
+import 'report_enums.dart';
 
-class Sendcoursereportentity {
-  final String title;
-  String? description;
+class SendCourseReportEntity {
+  final String courseId;
+  final ReportType type;
+  final String description;
 
-  Sendcoursereportentity({
-    this.description,
-    required this.title,
+  const SendCourseReportEntity({
+    required this.courseId,
+    required this.type,
+    required this.description,
   });
-  static List<Sendcoursereportentity> reportReasons = [
-    Sendcoursereportentity(title: LocaleKeys.reportInappropriate),
-    Sendcoursereportentity(title: LocaleKeys.reportWrongInfo),
-    Sendcoursereportentity(title: LocaleKeys.reportMisleading),
-    Sendcoursereportentity(title: LocaleKeys.reportTechnicalIssue),
-    Sendcoursereportentity(title: LocaleKeys.reportCopyright),
-    Sendcoursereportentity(title: LocaleKeys.reportUnfit),
-    Sendcoursereportentity(title: LocaleKeys.reportLowQuality),
-    Sendcoursereportentity(title: LocaleKeys.reportPriceIssue),
-    Sendcoursereportentity(title: LocaleKeys.reportUnprofessional),
-    Sendcoursereportentity(title: LocaleKeys.reportOther),
-  ];
 }

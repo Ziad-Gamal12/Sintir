@@ -253,6 +253,74 @@ class LocaleKeys {
   static String get reportPriceIssue => 'report_price_issue'.tr();
   static String get reportUnprofessional => 'report_unprofessional'.tr();
   static String get reportOther => 'report_other'.tr();
+  static String get reportResolved => 'report_resolved'.tr();
+  static String get reportDismissed => 'report_dismissed'.tr();
+  static String get reportOpen => 'report_open'.tr();
+  static String get reportMarkResolved => 'report_mark_resolved'.tr();
+  static String get reportDismissAction => 'report_dismiss_action'.tr();
+  static String get reportDescriptionTooShort =>
+      'report_description_too_short'.tr();
+  static String get reportDescriptionTooLong =>
+      'report_description_too_long'.tr();
+  static String get reportStudent => 'report_student'.tr();
+  static String get reportTotal => 'report_total'.tr();
+  static String get reportShowLess => 'report_show_less'.tr();
+  static String reportResolvedOnFor(String date) =>
+      'report_resolved_on'.tr(args: {'date': date});
+  static String reportDismissedOnFor(String date) =>
+      'report_dismissed_on'.tr(args: {'date': date});
+
+  static String get courseReportsTitle => 'course_reports_title'.tr();
+  static String get reportSearchHint => 'report_search_hint'.tr();
+  static String get reportFilterAll => 'report_filter_all'.tr();
+  static String get reportSummaryTotalCaption =>
+      'report_summary_total_caption'.tr();
+  static String get reportSummaryOpenCaption =>
+      'report_summary_open_caption'.tr();
+  static String get reportSummaryResolvedCaption =>
+      'report_summary_resolved_caption'.tr();
+  static String get reportSummaryDismissedCaption =>
+      'report_summary_dismissed_caption'.tr();
+  static String get reportSortNewest => 'report_sort_newest'.tr();
+  static String get reportSortOldest => 'report_sort_oldest'.tr();
+  static String get reportTypeFilterLabel => 'report_type_filter_label'.tr();
+  static String get reportShowMore => 'report_show_more'.tr();
+  static String get reportResolvedOn => 'report_resolved_on'.tr();
+  static String get reportDismissedOn => 'report_dismissed_on'.tr();
+  static String get reportDetailsTitle => 'report_details_title'.tr();
+  static String get reportFullText => 'report_full_text'.tr();
+  static String get reportSubmittedBy => 'report_submitted_by'.tr();
+  static String get reportReporterHidden => 'report_reporter_hidden'.tr();
+  static String get reportSubmittedAt => 'report_submitted_at'.tr();
+  static String get reportStatusChangeHint => 'report_status_change_hint'.tr();
+  static String get reportSelectPrompt => 'report_select_prompt'.tr();
+  static String get reportActionReopen => 'report_action_reopen'.tr();
+  static String get reportDismissConfirmTitle =>
+      'report_dismiss_confirm_title'.tr();
+  static String get reportDismissConfirmBody =>
+      'report_dismiss_confirm_body'.tr();
+  static String get reportStatusUpdated => 'report_status_updated'.tr();
+  static String get reportStatusUpdateFailed =>
+      'report_status_update_failed'.tr();
+  static String get reportClearFilters => 'report_clear_filters'.tr();
+  static String get reportNoResults => 'report_no_results'.tr();
+  static String get reportEmptyTitle => 'report_empty_title'.tr();
+  static String get reportEmptySubtitle => 'report_empty_subtitle'.tr();
+  static String get reportRetry => 'report_retry'.tr();
+  static String get reportTimeJustNow => 'report_time_just_now'.tr();
+  static String get reportTimeMinuteOne => 'report_time_minute_one'.tr();
+  static String get reportTimeMinuteTwo => 'report_time_minute_two'.tr();
+  static String get reportTimeMinuteFew => 'report_time_minute_few'.tr();
+  static String get reportTimeMinuteMany => 'report_time_minute_many'.tr();
+  static String get reportTimeHourOne => 'report_time_hour_one'.tr();
+  static String get reportTimeHourTwo => 'report_time_hour_two'.tr();
+  static String get reportTimeHourFew => 'report_time_hour_few'.tr();
+  static String get reportTimeHourMany => 'report_time_hour_many'.tr();
+  static String get reportTimeDayOne => 'report_time_day_one'.tr();
+  static String get reportTimeDayTwo => 'report_time_day_two'.tr();
+  static String get reportTimeDayFew => 'report_time_day_few'.tr();
+  static String get reportTimeDayMany => 'report_time_day_many'.tr();
+
   static String get studentsReviews => 'students_reviews'.tr();
   static String get examResults => 'exam_results'.tr();
   static String get reportPage => 'report_page'.tr();
