@@ -499,8 +499,8 @@
   "show_less": "عرض أقل",
   "course_content": "محتوى الكورس",
   "content_coming_soon": "سيتم اضافة المحتوى قريبا ⌛️",
-  "report_reasons": "أسباب الابلاغ :",
-  "report_description": "وصف الابلاغ :",
+  "report_reasons": "حدد سبب البلاغ الأساسي",
+  "report_description": "تفاصيل إضافية (مطلوب)",
   "report_sent_successfully": "تم ارسال الابلاغ بنجاح",
   "report": "ابلاغ",
   "must_subscribe_to_report": "يجب الاشتراك في الدورة لارسال الابلاغ",
@@ -690,5 +690,11 @@
   "report_time_day_few": "منذ {count} أيام",
   "report_time_day_many": "منذ {count} يوم",
   "report_total": "الإجمالي",
-  "report_show_less": "عرض أقل"
+  "report_show_less": "عرض أقل",
+  "send_course_report_title": "الإبلاغ عن الدورة",
+  "send_course_report_privacy_notice": "بلاغك سري ولن يظهر اسمك للمعلم مطلقاً",
+  "report_inappropriate_description": "ألفاظ نابية، إساءة، أو مواد مخالفة للآداب",
+  "report_wrong_info_description": "نظريات مغلوطة أو أخطاء مادية جسيمة",
+  "report_misleading_description": "المحتوى لا يطابق المسمى الدراسي المذكور",
+  "report_other_description": "انتهاك حقوق ملكية، تشويش، أو عطل تقني"
 }

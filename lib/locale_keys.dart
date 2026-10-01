@@ -244,8 +244,14 @@ class LocaleKeys {
   static String get coursesLabel => 'courses_label'.tr();
   static String get studentsLabel => 'students_label'.tr();
   static String get reportInappropriate => 'report_inappropriate'.tr();
+  static String get reportInappropriateDescription =>
+      'report_inappropriate_description'.tr();
   static String get reportWrongInfo => 'report_wrong_info'.tr();
+  static String get reportWrongInfoDescription =>
+      'report_wrong_info_description'.tr();
   static String get reportMisleading => 'report_misleading'.tr();
+  static String get reportMisleadingDescription =>
+      'report_misleading_description'.tr();
   static String get reportTechnicalIssue => 'report_technical_issue'.tr();
   static String get reportCopyright => 'report_copyright'.tr();
   static String get reportUnfit => 'report_unfit'.tr();
@@ -253,6 +259,7 @@ class LocaleKeys {
   static String get reportPriceIssue => 'report_price_issue'.tr();
   static String get reportUnprofessional => 'report_unprofessional'.tr();
   static String get reportOther => 'report_other'.tr();
+  static String get reportOtherDescription => 'report_other_description'.tr();
   static String get reportResolved => 'report_resolved'.tr();
   static String get reportDismissed => 'report_dismissed'.tr();
   static String get reportOpen => 'report_open'.tr();
@@ -422,6 +429,9 @@ class LocaleKeys {
   static String get contentComingSoon => 'content_coming_soon'.tr();
   static String get reportReasons => 'report_reasons'.tr();
   static String get reportDescription => 'report_description'.tr();
+  static String get sendCourseReportTitle => 'send_course_report_title'.tr();
+  static String get sendCourseReportPrivacyNotice =>
+      'send_course_report_privacy_notice'.tr();
   static String get reportSentSuccessfully => 'report_sent_successfully'.tr();
   static String get report => 'report'.tr();
   static String get mustSubscribeToReport => 'must_subscribe_to_report'.tr();

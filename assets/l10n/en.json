@@ -182,8 +182,8 @@
   "show_less": "Show Less",
   "course_content": "Course Content",
   "content_coming_soon": "Content will be added soon ⌛",
-  "report_reasons": "Report Reasons:",
-  "report_description": "Report Description:",
+  "report_reasons": "Select the main reason for your report",
+  "report_description": "Additional details (required)",
   "report_sent_successfully": "Report sent successfully",
   "report": "Report",
   "submit_exam": "Submit Exam",
@@ -690,5 +690,11 @@
   "report_time_day_few": "{count} days ago",
   "report_time_day_many": "{count} days ago",
   "report_total": "Total",
-  "report_show_less": "Show less"
+  "report_show_less": "Show less",
+  "send_course_report_title": "Report this course",
+  "send_course_report_privacy_notice": "Your report is confidential; your name will never be shown to the teacher",
+  "report_inappropriate_description": "Profanity, abuse, or content that violates standards",
+  "report_wrong_info_description": "False theories or serious factual errors",
+  "report_misleading_description": "The content does not match the stated course title",
+  "report_other_description": "Copyright violations, disruption, or technical issues"
 }

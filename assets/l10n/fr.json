@@ -184,8 +184,8 @@
   "show_less": "Voir moins",
   "course_content": "Contenu du cours",
   "content_coming_soon": "Le contenu sera ajouté bientôt ⌛",
-  "report_reasons": "Raisons du rapport :",
-  "report_description": "Description du rapport :",
+  "report_reasons": "Sélectionnez le motif principal du signalement",
+  "report_description": "Détails supplémentaires (obligatoire)",
   "report_sent_successfully": "Rapport envoyé avec succès",
   "report": "Rapport",
   "submit_exam": "Soumettre l'examen",
@@ -690,5 +690,11 @@
   "report_time_day_few": "Il y a {count} jours",
   "report_time_day_many": "Il y a {count} jours",
   "report_total": "Total",
-  "report_show_less": "Voir moins"
+  "report_show_less": "Voir moins",
+  "send_course_report_title": "Signaler ce cours",
+  "send_course_report_privacy_notice": "Votre signalement est confidentiel ; votre nom ne sera jamais révélé à l’enseignant",
+  "report_inappropriate_description": "Propos injurieux, abus ou contenu contraire aux règles",
+  "report_wrong_info_description": "Théories fausses ou erreurs factuelles graves",
+  "report_misleading_description": "Le contenu ne correspond pas au titre du cours indiqué",
+  "report_other_description": "Violation des droits d’auteur, perturbation ou problème technique"
 }
