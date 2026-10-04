@@ -6,13 +6,13 @@ import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
 class addingJoinedByLoadingWidget extends StatelessWidget {
-  const addingJoinedByLoadingWidget({
-    super.key,
-  });
+  const addingJoinedByLoadingWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(4),
@@ -25,24 +25,24 @@ class addingJoinedByLoadingWidget extends StatelessWidget {
         ],
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(
-            height: 40,
-            width: 40,
+            height: 24,
+            width: 24,
             child: CircularProgressIndicator(
               color: KMainColor,
+              strokeWidth: 2.5,
             ),
           ),
-          const SizedBox(
-            width: 4,
-          ),
+          const SizedBox(width: 12),
           Expanded(
             child: Text(
               LocaleKeys.loggingIn,
               style:
                   AppTextStyles(context).semiBold16.copyWith(color: KMainColor),
             ),
-          )
+          ),
         ],
       ),
     );

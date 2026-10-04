@@ -14,6 +14,7 @@ class CustomTextField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final Function(String?)? onSaved;
   final int maxLines;
+  final int? maxLength;
 
   const CustomTextField({
     super.key,
@@ -26,6 +27,7 @@ class CustomTextField extends StatelessWidget {
     required this.textInputType,
     required this.validator,
     this.onSaved,
+    this.maxLength,
     this.maxLines = 1,
   });
 
@@ -48,6 +50,7 @@ class CustomTextField extends StatelessWidget {
       obscureText: obscureText,
       validator: validator,
       maxLines: maxLines,
+      maxLength: maxLength,
       style: AppTextStyles(context).semiBold14.copyWith(
             color: theme.textTheme.bodyLarge?.color,
           ),

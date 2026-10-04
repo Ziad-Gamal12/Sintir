@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseReportsCubit/course_reports_cubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/SendCourseReportEntity.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/report_enums.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/SendReport_Widgets/CustomHeader.dart';
-import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/SendReport_Widgets/SendReportReasonsGridView.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/SendReport_Widgets/ReportReasonsAdaptiveSection.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/SendReport_Widgets/SendCourseReportHeader.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/SendReport_Widgets/SendcoursereportviewbodyActionButton.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/SendReport_Widgets/SendcoursereportviewbodyTextField.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -51,69 +53,26 @@ class _SendcoursereportviewbodyState extends State<Sendcoursereportviewbody> {
           key: _formKey,
           child: ListView(
             children: [
+              SendCourseReportHeader(),
+              const SizedBox(height: 16),
               CustomHeader(title: LocaleKeys.reportReasons),
               const SizedBox(height: 12),
-              Sendreportreasonsgridview(
-                  groupValue: _type,
-                  onChange: (value) => setState(() => _type = value)),
+              ReportReasonsAdaptiveSection(
+                  onSelected: (reportReason) =>
+                      setState(() => _type = reportReason.type)),
               const SizedBox(height: 24),
               CustomHeader(title: LocaleKeys.reportDescription),
               const SizedBox(height: 12),
-              TextFormField(
+              SendcoursereportviewbodyTextField(
                 controller: _controller,
-                minLines: 4,
-                maxLines: 6,
-                maxLength: 500,
-                textInputAction: TextInputAction.newline,
-                decoration: InputDecoration(
-                    hintText: LocaleKeys.hintWriteMessage,
-                    alignLabelWithHint: true),
-                validator: (value) {
-                  final text = value?.trim() ?? '';
-                  if (text.length < 10)
-                    return LocaleKeys.reportDescriptionTooShort;
-                  if (text.length > 500)
-                    return LocaleKeys.reportDescriptionTooLong;
-                  return null;
-                },
               ),
               const SizedBox(height: 20),
-              BlocBuilder<CourseReportsCubit, CourseReportsState>(
-                  builder: (context, state) {
-                final loading = state is CourseReportsAddReportLoading;
-                return FilledButton(
-                  onPressed: loading
-                      ? null
-                      : () {
-                          if (!widget.requirmentsEntity.isSubscribed) {
-                            CustomSnackBar.show(context,
-                                message: LocaleKeys.mustSubscribeToReport,
-                                type: SnackType.error);
-                            return;
-                          }
-                          if (_type == null ||
-                              !_formKey.currentState!.validate()) {
-                            return;
-                          }
-                          context.read<CourseReportsCubit>().addCourseReport(
-                                  reportEntity: SendCourseReportEntity(
-                                courseId: widget.requirmentsEntity.course.id,
-                                type: _type!,
-                                description: _controller.text.trim(),
-                              ));
-                        },
-                  style: FilledButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
-                      foregroundColor:
-                          Theme.of(context).colorScheme.onSecondary),
-                  child: loading
-                      ? const SizedBox(
-                          width: 22,
-                          height: 22,
-                          child: CircularProgressIndicator(strokeWidth: 2))
-                      : Text(LocaleKeys.submitReport),
-                );
-              }),
+              SendcoursereportviewbodyActionButton(
+                requirmentsEntity: widget.requirmentsEntity,
+                reportType: _type,
+                controller: _controller,
+                formKey: _formKey,
+              ),
             ],
           ),
         ),

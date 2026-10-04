@@ -35,7 +35,6 @@ class _CourseTestLayoutState extends State<CourseTestLayout> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// Question display
               TestQuestionDisplay(
                 test: widget.test,
                 currentQuestionIndex: widget.currentQuestionIndex,
@@ -53,24 +52,17 @@ class _CourseTestLayoutState extends State<CourseTestLayout> {
                   }
                 },
               ),
-
               const SizedBox(height: 24),
-
-              /// Question navigation bar
               QuestionNavigationBar(
                 currentIndex: widget.currentQuestionIndex,
                 onSelect: widget.onQuestionChanged,
               ),
-
               const Spacer(),
-
               CourseTestControlPanel(
                   stopWatchTimer: widget.stopWatchTimer, exam: widget.test),
             ],
           ),
         ),
-
-        /// Loading overlay
         const TestLoadingOverlay(),
       ],
     );

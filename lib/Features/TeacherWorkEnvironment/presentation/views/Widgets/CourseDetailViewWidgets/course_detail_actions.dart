@@ -50,7 +50,6 @@ class CourseDetailActions extends StatelessWidget {
   }
 
   void _updateCourseState(BuildContext context, String nextState) {
-    // Apply changes to the displayed course only after the repository succeeds.
     context.read<UpdateCourseCubit>().updateCourseState(
           courseEntity: _copyCourseWithState(nextState),
         );

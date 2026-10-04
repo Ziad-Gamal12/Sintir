@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/locale_keys.dart';
 
 class SendcoursereportviewbodyTextField extends StatelessWidget {
@@ -6,12 +7,13 @@ class SendcoursereportviewbodyTextField extends StatelessWidget {
       {super.key, required this.controller});
   final TextEditingController controller;
   @override
-  Widget build(BuildContext context) => TextFormField(
+  Widget build(BuildContext context) => CustomTextField(
       controller: controller,
-      minLines: 4,
       maxLines: 6,
       maxLength: 500,
-      decoration: InputDecoration(hintText: LocaleKeys.hintWriteMessage),
+      hintText: LocaleKeys.hintWriteMessage,
+      obscureText: false,
+      textInputType: TextInputType.multiline,
       validator: (value) => (value?.trim().length ?? 0) < 10
           ? LocaleKeys.reportDescriptionTooShort
           : null);
