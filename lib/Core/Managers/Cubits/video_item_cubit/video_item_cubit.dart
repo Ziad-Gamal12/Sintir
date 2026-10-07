@@ -3,7 +3,11 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
+import 'package:path/path.dart' as path;
+import 'package:sintir/Core/utils/video_file_limits.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/VideoUploadSessionEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
@@ -38,28 +42,94 @@ class VideoItemCubit extends Cubit<VideoItemState> {
     });
   }
 
-  void pickVideoFile(
+  Future<void> pickVideoFile(
       {required CourseVideoItemEntity coursevedioitementity}) async {
     final result = await assetspickerrepo.pickVideoFromGallery();
-    result.fold((failure) {
+    final file = result.fold<File?>((failure) {
       emit(PickVideoFileFailure(errMessage: failure.message));
-    }, (vedio) {
-      coursevedioitementity.file = vedio;
-      emit(PickVideoFileSuccess(file: vedio));
-    });
+      return null;
+    }, (picked) => picked);
+    if (file == null) return;
+    final extension = path.extension(file.path).toLowerCase();
+    if (extension != '.mp4' && extension != '.mov') {
+      emit(PickVideoFileFailure(
+          errMessage: LocaleKeys.videoUnsupportedFileType));
+      return;
+    }
+    final size = await file.length();
+    if (size > maxVideoSizeBytes) {
+      emit(PickVideoFileFailure(
+          errMessage:
+              LocaleKeys.videoFileTooLarge(maxVideoSizeMegabytes.toString())));
+      return;
+    }
+    coursevedioitementity.file = file;
+    emit(PickVideoFileSuccess(file: file));
   }
 
-  void uploadVideo({
-    required CourseVideoItemEntity coursevedioitementity,
-  }) async {
-    emit(UploadVideoLoading());
-    var result = await videoItemRepo.uploadVideo(
-        coursevedioitementity: coursevedioitementity);
-    result.fold((failure) {
-      emit(UploadVideoFailure(errMessage: failure.message));
-    }, (url) {
-      emit(UploadVideoSuccess(url: url));
-    });
+  Future<void> clearSelectedVideo() async {
+    await videoItemRepo.cancelVideoUpload();
+    emit(VideoFileCleared());
+  }
+
+  Future<void> uploadVideo(
+      {required CourseVideoItemEntity coursevedioitementity,
+      required String courseId,
+      required String sectionId}) async {
+    final file = coursevedioitementity.file;
+    if (file == null) return;
+    final extension = path.extension(file.path).toLowerCase();
+    if (extension != '.mp4' && extension != '.mov') {
+      emit(UploadVideoFailure(errMessage: LocaleKeys.videoUnsupportedFileType));
+      return;
+    }
+    final totalBytes = await file.length();
+    if (totalBytes > maxVideoSizeBytes) {
+      emit(UploadVideoFailure(
+          errMessage:
+              LocaleKeys.videoFileTooLarge(maxVideoSizeMegabytes.toString())));
+      return;
+    }
+    final timer = Stopwatch()..start();
+    var lastSampleAt = Duration.zero;
+    var lastSampleBytes = 0;
+    double? smoothedBytesPerSecond;
+    emit(UploadVideoLoading(progress: 0, totalBytes: totalBytes));
+    final result = await videoItemRepo.uploadVideo(
+      coursevedioitementity: coursevedioitementity,
+      courseId: courseId,
+      sectionId: sectionId,
+      onProgress: (progress, uploaded, total) {
+        final now = timer.elapsed;
+        final interval = (now - lastSampleAt).inMilliseconds / 1000;
+        final deltaBytes = uploaded - lastSampleBytes;
+        if (interval >= 0.5 && deltaBytes > 0) {
+          final sampleSpeed = deltaBytes / interval;
+          smoothedBytesPerSecond = smoothedBytesPerSecond == null
+              ? sampleSpeed
+              : smoothedBytesPerSecond! * 0.7 + sampleSpeed * 0.3;
+          lastSampleAt = now;
+          lastSampleBytes = uploaded;
+        }
+        final speed = smoothedBytesPerSecond;
+        final eta = speed != null && uploaded > 0 && uploaded < total
+            ? ((total - uploaded) / speed).ceil()
+            : null;
+        emit(UploadVideoLoading(
+            progress: progress,
+            uploadedBytes: uploaded,
+            totalBytes: total,
+            etaSeconds: eta));
+      },
+    );
+    result.fold(
+        (failure) => emit(UploadVideoFailure(errMessage: failure.message)),
+        (session) => emit(UploadVideoSuccess(session: session)));
+  }
+
+  Future<void> cancelVideoUpload() async {
+    await videoItemRepo.cancelVideoUpload();
+    emit(UploadVideoCancelled());
   }
 
   void joinToVideoItem({

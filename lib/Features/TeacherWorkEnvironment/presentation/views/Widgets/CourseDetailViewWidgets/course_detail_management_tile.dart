@@ -29,29 +29,29 @@ class CourseDetailManagementTile extends StatelessWidget {
           child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
               child: Row(children: [
-                Icon(Icons.chevron_left,
-                    color: theme.textTheme.bodySmall?.color),
+                CircleAvatar(
+                    backgroundColor:
+                        theme.colorScheme.primary.withValues(alpha: .13),
+                    foregroundColor: theme.colorScheme.primary,
+                    child: Icon(icon)),
                 const SizedBox(width: 10),
                 Expanded(
                     child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                       Text(item.title,
                           style: textStyles.semiBold16.copyWith(
                               color: theme.textTheme.titleMedium?.color)),
                       Text(item.description,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.start,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: textStyles.regular12.copyWith(
                               color: theme.textTheme.bodySmall?.color)),
                     ])),
                 const SizedBox(width: 12),
-                CircleAvatar(
-                    backgroundColor:
-                        theme.colorScheme.primary.withValues(alpha: .13),
-                    foregroundColor: theme.colorScheme.primary,
-                    child: Icon(icon)),
+                Icon(Icons.chevron_left,
+                    color: theme.textTheme.bodySmall?.color),
               ])),
         ));
   }

@@ -36,6 +36,7 @@ import 'package:sintir/Core/services/FireBase/Firebase_FirestoreService.dart';
 import 'package:sintir/Core/services/Paymob/PayMobService.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
+import 'package:sintir/Core/services/VideoUploadService.dart';
 import 'package:sintir/Core/services/SupabaseStorageServices.dart';
 import 'package:sintir/Core/services/TeacherWithdrawalService.dart';
 import 'package:sintir/Features/Auth/Data/repos/AuthRepoImpl.dart';
@@ -105,8 +106,11 @@ void setup_Getit() {
   getIt.registerLazySingleton<SectionItemsActionsRepo>(() =>
       SectionItemsActionsRepoImpli(datebaseservice: getIt<DataBaseService>()));
 
+  getIt.registerLazySingleton<VideoUploadService>(
+      () => VideoUploadService(dio: getIt<Dio>()));
   getIt.registerLazySingleton<VideoItemRepo>(() => VideoItemRepoImpli(
-      storageService: getIt(), databaseservice: getIt<DataBaseService>()));
+      videoUploadService: getIt<VideoUploadService>(),
+      databaseservice: getIt<DataBaseService>()));
 
   getIt.registerLazySingleton<FileItemRepo>(
       () => FileItemRepoImpli(storageService: getIt()));

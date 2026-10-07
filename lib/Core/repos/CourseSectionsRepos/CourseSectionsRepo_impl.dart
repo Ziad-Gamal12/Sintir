@@ -125,18 +125,21 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
       }
 
       final json = _getSectionItemData(sectionItem);
-      await datebaseservice.setData(
-        data: json,
-        requirements: getAddingSectionItemRequirments(
-          rootCollection: BackendEndpoints.coursesCollection,
-          rootDocId: courseId,
-          subCollection: BackendEndpoints.sectionsSubCollection,
-          subDocId: sectionId,
-          subCollection2: BackendEndpoints.sectionItemsSubCollection,
-          sub2DocId: (sectionItem.id) as String,
-        ),
+      final requirements = getAddingSectionItemRequirments(
+        rootCollection: BackendEndpoints.coursesCollection,
+        rootDocId: courseId,
+        subCollection: BackendEndpoints.sectionsSubCollection,
+        subDocId: sectionId,
+        subCollection2: BackendEndpoints.sectionItemsSubCollection,
+        sub2DocId: (sectionItem.id) as String,
       );
-
+      if (sectionItem is CourseVideoItemEntity &&
+          sectionItem.videoProvider == "mux") {
+        await datebaseservice.updateData(
+            data: json, requirements: requirements);
+      } else {
+        await datebaseservice.setData(data: json, requirements: requirements);
+      }
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
@@ -217,7 +220,7 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
     for (var item in listData) {
       if (item["type"] == "Test") {
         items.add(Coursetestmodel.fromJson(item).toEntity());
-      } else if (item["type"] == "Video") {
+      } else if ((item["type"] == "Video" || item["type"] == "Vedio")) {
         items.add(CourseVideoItemModel.fromJson(item).toEntity());
       } else {
         items.add(Coursefilemodel.fromJson(item).toEntity());

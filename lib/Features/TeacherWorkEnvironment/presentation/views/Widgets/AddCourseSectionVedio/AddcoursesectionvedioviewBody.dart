@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/Managers/Cubits/video_item_cubit/video_item_cubit.dart';
-import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
-import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/CustomAddCourseVideoSectionButton.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/VideoItemStateHandler.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/VideoPreviewWidget.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/VideoTitleInputField.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionViewWidgets/CourseSectionStateHandler.dart';
-import 'package:sintir/constant.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/controllers/add_video_form_controller.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/logic/leave_add_video_screen.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/logic/video_item_state_handler.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/utils/add_video_dimens.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/widgets/form/add_video_bottom_bar.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/widgets/form/add_video_form_content.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionVedio/widgets/form/add_video_leave_guard.dart';
 
 class Addcoursesectionvedioviewbody extends StatefulWidget {
   const Addcoursesectionvedioviewbody({super.key});
@@ -22,79 +22,55 @@ class Addcoursesectionvedioviewbody extends StatefulWidget {
 
 class _AddcoursesectionvedioviewbodyState
     extends State<Addcoursesectionvedioviewbody> {
-  late final CourseVideoItemEntity courseVideoItemEntity;
+  final _form = AddVideoFormController();
 
   @override
-  void initState() {
-    super.initState();
-    courseVideoItemEntity = CourseVideoItemEntity(
-      title: "",
-      vedioUrl: "",
-      durationTime: 0,
-      id: "${DateTime.now().toIso8601String()}-Video",
-    );
+  void dispose() {
+    _form.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    if (!_form.validate()) return;
+    final option = context.read<OptionNavigationRequirementsEntity>();
+    context.read<VideoItemCubit>().uploadVideo(
+          coursevedioitementity: _form.prepareForUpload(),
+          courseId: option.courseEntity.id,
+          sectionId: option.section.id,
+        );
   }
 
   @override
   Widget build(BuildContext context) {
-    final requires = context.read<OptionNavigationRequirementsEntity>();
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<VideoItemCubit, VideoItemState>(
-          listener: (context, state) =>
-              VideoItemStateHandler(context, courseVideoItemEntity)
-                  .handle(state),
-        ),
-        BlocListener<CourseSectionsCubit, CourseSectionsState>(
-          listener: (context, state) =>
-              CourseSectionStateHandler(context, requires.courseEntity)
-                  .handle(state),
-        ),
-      ],
-      child: BlocBuilder<VideoItemCubit, VideoItemState>(
-        builder: (context, state) => Stack(
-          children: [
-            _buildForm(),
-            Positioned(
-              left: 16,
-              right: 16,
-              bottom: 32,
-              child: CustomAddCourseVideoSectionButton(
-                coursevedioitementity: courseVideoItemEntity,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
+    final option = context.read<OptionNavigationRequirementsEntity>();
 
-  Widget _buildForm() {
-    return Form(
-      key: Variables.AddCourseSectionVideoItemFormKey,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: KHorizontalPadding,
-          vertical: KVerticalPadding,
-        ),
-        child: Column(
-          children: [
-            VideoTitleInputField(courseVedioItemEntity: courseVideoItemEntity),
-            const SizedBox(height: 10),
-            BlocBuilder<VideoItemCubit, VideoItemState>(
-              buildWhen: (prev, curr) =>
-                  curr is PickVideoFileFailure || curr is PickVideoFileSuccess,
-              builder: (context, state) {
-                if (courseVideoItemEntity.file != null) {
-                  return VideoPreviewWidget(
-                    videoFile: courseVideoItemEntity.file!,
-                    coursevedioitementity: courseVideoItemEntity,
-                  );
-                }
-                return const SizedBox();
-              },
+    return BlocListener<CourseSectionsCubit, CourseSectionsState>(
+      listener: (context, state) =>
+          CourseSectionStateHandler(context, option.courseEntity).handle(state),
+      child: BlocListener<VideoItemCubit, VideoItemState>(
+        listener: (context, state) =>
+            VideoItemStateHandler(context, _form).handle(state),
+        child: AddVideoLeaveGuard(
+          form: _form,
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: AddVideoDimens.maxContentWidth,
+              ),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: AddVideoFormContent(form: _form, option: option),
+                  ),
+                  AddVideoBottomBar(
+                    form: _form,
+                    onSubmit: _submit,
+                    onDiscard: () => leaveAddVideoScreen(context, _form),
+                  ),
+                ],
+              ),
             ),
-          ],
+          ),
         ),
       ),
     );

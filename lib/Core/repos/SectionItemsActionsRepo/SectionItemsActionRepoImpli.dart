@@ -44,15 +44,20 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
       } else if (sectionItem is CourseVideoItemEntity) {
         Map<String, dynamic> json =
             CourseVideoItemModel.fromEntity(sectionItem).toJson();
-        await datebaseservice.setData(
-            requirements: FireStoreRequirmentsEntity(
-                collection: BackendEndpoints.coursesCollection,
-                docId: courseId,
-                subCollection: BackendEndpoints.sectionsSubCollection,
-                subDocId: sectionId,
-                subCollection2: BackendEndpoints.sectionItemsSubCollection,
-                sub2DocId: sectionItem.id),
-            data: json);
+        final requirements = FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.coursesCollection,
+          docId: courseId,
+          subCollection: BackendEndpoints.sectionsSubCollection,
+          subDocId: sectionId,
+          subCollection2: BackendEndpoints.sectionItemsSubCollection,
+          sub2DocId: sectionItem.id,
+        );
+        if (sectionItem.videoProvider == "mux") {
+          await datebaseservice.updateData(
+              data: json, requirements: requirements);
+        } else {
+          await datebaseservice.setData(data: json, requirements: requirements);
+        }
         return right(null);
       } else if (sectionItem is CourseFileEntity) {
         Map<String, dynamic> json =
@@ -100,7 +105,7 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
       for (var item in data.listData!) {
         if (item["type"] == "Test") {
           items.add(Coursetestmodel.fromJson(item).toEntity());
-        } else if (item["type"] == "Vedio") {
+        } else if ((item["type"] == "Vedio" || item["type"] == "Video")) {
           items.add(CourseVideoItemModel.fromJson(item).toEntity());
         } else {
           items.add(Coursefilemodel.fromJson(item).toEntity());

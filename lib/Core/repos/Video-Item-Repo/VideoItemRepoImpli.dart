@@ -1,37 +1,104 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/VideoUploadSessionEntity.dart';
 import 'package:sintir/Core/entities/FetchDataResponses/GetVideoItemNotesResponseEntity.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
-import 'package:sintir/Core/services/StorageService.dart';
+import 'package:sintir/Core/services/VideoUploadService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
-import 'package:sintir/Core/utils/SupabaseBuckets.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/VideoNoteModel.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/VideoNoteEntity.dart';
 import 'package:sintir/locale_keys.dart';
 
 class VideoItemRepoImpli implements VideoItemRepo {
-  final StorageService storageService;
   final DataBaseService databaseservice;
-
+  final VideoUploadService videoUploadService;
   VideoItemRepoImpli(
-      {required this.storageService, required this.databaseservice});
-  @override
-  Future<Either<Failure, String>> uploadVideo(
-      {required CourseVideoItemEntity coursevedioitementity}) async {
-    try {
-      String url = await storageService.uploadFile(
-          file: coursevedioitementity.file!,
-          bucketname: SupabaseBuckets.Courses.name);
+      {required this.videoUploadService, required this.databaseservice});
+  VideoUploadSessionEntity? _activeSession;
+  String? _activeUploadKey;
+  CancelToken? _activeCancelToken;
+  String? _activeCourseId, _activeSectionId;
 
-      return right(url);
+  @override
+  Future<Either<Failure, VideoUploadSessionEntity>> uploadVideo(
+      {required CourseVideoItemEntity coursevedioitementity,
+      required String courseId,
+      required String sectionId,
+      void Function(double progress, int uploadedBytes, int totalBytes)?
+          onProgress}) async {
+    try {
+      final file = coursevedioitementity.file;
+      if (file == null) throw StateError('Choose a video file first.');
+      final key = '$courseId/$sectionId/${file.path}';
+      if (_activeSession == null || _activeUploadKey != key) {
+        _activeSession = await videoUploadService.createUpload(
+            courseId: courseId,
+            sectionId: sectionId,
+            title: coursevedioitementity.title,
+            description: '',
+            file: file);
+        _activeUploadKey = key;
+        _activeCourseId = courseId;
+        _activeSectionId = sectionId;
+      }
+      final token = CancelToken();
+      _activeCancelToken = token;
+      await videoUploadService.uploadFile(
+          file: file,
+          session: _activeSession!,
+          onProgress: (progress, uploaded, total) =>
+              onProgress?.call(progress, uploaded, total),
+          cancelToken: token);
+      coursevedioitementity.id = _activeSession!.videoId;
+      coursevedioitementity.videoProvider = 'mux';
+      coursevedioitementity.muxUploadId = _activeSession!.uploadId;
+      coursevedioitementity.status = 'uploading';
+      final completedSession = _activeSession!;
+      _activeSession = null;
+      _activeUploadKey = null;
+      return right(completedSession);
     } catch (e) {
+      log('Video upload failed: $e');
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
+    } finally {
+      _activeCancelToken = null;
+    }
+  }
+
+  @override
+  Future<void> cancelVideoUpload() async {
+    _activeCancelToken?.cancel('Cancelled by user.');
+    final session = _activeSession;
+    final courseId = _activeCourseId;
+    final sectionId = _activeSectionId;
+    _activeSession = null;
+    _activeUploadKey = null;
+    if (session != null && courseId != null && sectionId != null) {
+      await videoUploadService.cancel(
+          courseId: courseId, sectionId: sectionId, videoId: session.videoId);
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> getPlaybackUrl(
+      {required String courseId,
+      required String sectionId,
+      required String videoId}) async {
+    try {
+      final data = await videoUploadService.playback(
+          courseId: courseId, sectionId: sectionId, videoId: videoId);
+      return right(data['playbackUrl'] as String);
+    } catch (e) {
+      return left(ServerFailure(message: LocaleKeys.videoPlayFailed));
     }
   }
 

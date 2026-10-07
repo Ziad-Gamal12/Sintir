@@ -33,7 +33,7 @@ class CourseSectionModel {
     for (var item in items) {
       if (item["type"] == "Test") {
         courseItems.add(Coursetestmodel.fromJson(item).toEntity());
-      } else if (item["type"] == "Vedio") {
+      } else if ((item["type"] == "Vedio" || item["type"] == "Video")) {
         courseItems.add(CourseVideoItemModel.fromJson(item).toEntity());
       } else {
         courseItems.add(Coursefilemodel.fromJson(item).toEntity());

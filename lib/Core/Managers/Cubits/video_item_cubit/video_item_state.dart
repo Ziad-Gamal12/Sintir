@@ -19,17 +19,31 @@ final class PickVideoFileSuccess extends VideoItemState {
   PickVideoFileSuccess({required this.file});
 }
 
+final class VideoFileCleared extends VideoItemState {}
+
 final class PickVideoFileFailure extends VideoItemState {
   final String errMessage;
   PickVideoFileFailure({required this.errMessage});
 }
 
-final class UploadVideoLoading extends VideoItemState {}
+final class UploadVideoLoading extends VideoItemState {
+  final double progress;
+  final int uploadedBytes;
+  final int totalBytes;
+  final int? etaSeconds;
+  UploadVideoLoading(
+      {this.progress = 0,
+      this.uploadedBytes = 0,
+      this.totalBytes = 0,
+      this.etaSeconds});
+}
 
 final class UploadVideoSuccess extends VideoItemState {
-  final String url;
-  UploadVideoSuccess({required this.url});
+  final VideoUploadSessionEntity session;
+  UploadVideoSuccess({required this.session});
 }
+
+final class UploadVideoCancelled extends VideoItemState {}
 
 final class UploadVideoFailure extends VideoItemState {
   final String errMessage;

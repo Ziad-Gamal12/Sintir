@@ -16,8 +16,6 @@ class TeacherWalletDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SensitivePageWrapper(
-      inactivityTimeout: const Duration(minutes: 5),
-      requireBiometricOnResume: true,
       child: BlocProvider(
         create: (context) => WithDrawTeacherBalanceCubit(
             withdrawalRepo: getIt<WithDrawalTeacherBalanceRepo>()),

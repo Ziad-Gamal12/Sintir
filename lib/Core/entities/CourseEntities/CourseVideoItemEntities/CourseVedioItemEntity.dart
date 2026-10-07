@@ -13,6 +13,8 @@ class CourseVideoItemEntity {
   String id;
   File? file;
   String? type;
+  String? videoProvider, muxUploadId, muxAssetId, muxPlaybackId, status;
+  List<String> availableQualities;
   String preffixImage = Assets.assetsIconsSVGIconsVideoIcon;
   void ontap(
       {required BuildContext context,
@@ -22,11 +24,18 @@ class CourseVideoItemEntity {
         .push(Displaycoursevedioveiw.routeName, extra: requires);
   }
 
-  CourseVideoItemEntity(
-      {required this.title,
-      required this.vedioUrl,
-      required this.id,
-      required this.durationTime,
-      this.file,
-      this.type = "Video"});
+  CourseVideoItemEntity({
+    required this.title,
+    required this.vedioUrl,
+    required this.id,
+    required this.durationTime,
+    this.file,
+    this.type = "Video",
+    this.videoProvider,
+    this.muxUploadId,
+    this.muxAssetId,
+    this.muxPlaybackId,
+    this.status,
+    this.availableQualities = const [],
+  });
 }

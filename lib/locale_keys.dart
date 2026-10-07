@@ -807,4 +807,48 @@ class LocaleKeys {
   static String get archiveConfirmationMessage =>
       'archive_confirmation_message'.tr();
   static String get confirmArchive => 'confirm_archive'.tr();
+  static String get videoPickerTitle => 'video_picker_title'.tr();
+  static String videoConstraints(String size) =>
+      'video_constraints_label'.tr(args: {'size': '\u2068$size\u2069'});
+  static String videoFileTooLarge(String size) =>
+      'video_file_too_large'.tr(args: {'size': '\u2068$size\u2069'});
+  static String get videoUnsupportedFileType =>
+      'video_file_type_unsupported'.tr();
+  static String get videoPickerSubtitle => 'video_picker_subtitle'.tr();
+  static String get browseVideoFiles => 'browse_video_files'.tr();
+  static String get videoReadyToUpload => 'video_ready_to_upload'.tr();
+  static String get changeVideo => 'change_video'.tr();
+  static String get removeSelectedVideo => 'remove_selected_video'.tr();
+  static String get videoUploadProgress => 'video_upload_progress'.tr();
+  static String get videoUploadingTitle => 'video_uploading_title'.tr();
+  static String videoUploadBytes(String uploaded, String size) =>
+      'video_upload_bytes'.tr(args: {'uploaded': uploaded, 'size': size});
+  static String videoEta(int seconds) =>
+      'video_eta'.tr(args: {'seconds': '$seconds'});
+  static String get calculatingEta => 'calculating_eta'.tr();
+  static String get cancelUpload => 'cancel_upload'.tr();
+  static String get videoTitleLabel => 'video_title_label'.tr();
+  static String get videoTitleHint => 'video_title_hint'.tr();
+  static String get videoTitleHelper => 'video_title_helper'.tr();
+  static String get videoTitleRequired => 'video_title_required'.tr();
+  static String get allowVideoComments => 'allow_video_comments'.tr();
+  static String get allowVideoCommentsDescription =>
+      'allow_video_comments_description'.tr();
+  static String get videoStandardsTitle => 'video_standards_title'.tr();
+  static String get videoStandardsBody => 'video_standards_body'.tr();
+  static String get uploadAndSaveVideo => 'upload_and_save_video'.tr();
+  static String uploadingVideoButton(int percent) =>
+      'uploading_video_button'.tr(args: {'percent': '$percent'});
+  static String get savingVideo => 'saving_video'.tr();
+  static String get retryUpload => 'retry_upload'.tr();
+  static String get discardVideoTitle => 'discard_video_title'.tr();
+  static String get discardVideoMessage => 'discard_video_message'.tr();
+  static String get discardChanges => 'discard_changes'.tr();
+  static String get discardAndGoBack => 'discard_and_go_back'.tr();
+  static String get megabyteUnit => 'megabyte_unit'.tr();
+  static String get videoFileLabel => 'video_file_label'.tr();
+  static String videoMetadata(String resolution, String duration) =>
+      'video_metadata'
+          .tr(args: {'resolution': resolution, 'duration': duration});
+  static String get videoPreview => 'video_preview'.tr();
 }

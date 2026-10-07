@@ -5,6 +5,8 @@ import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/Cour
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVideoviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepo.dart';
+import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/VideoPreviewerWidgets/CustomDisplayingVedioWidget.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/JoinedByEntity.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/DisplayCourseVedioView_Widgets/CustomSendNoteText.dart';
@@ -24,29 +26,48 @@ class DisplaycoursevedioveiwBody extends StatefulWidget {
 
 class _DisplaycoursevedioveiwBodyState
     extends State<DisplaycoursevedioveiwBody> {
+  String? _playbackUrl;
+  bool _playbackLoading = false;
+
   @override
   void initState() {
-    if (mounted) {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final requirement =
+          context.read<CourseVideoViewNavigationsRequirmentsEntity>();
+      final video = requirement.video;
+      if (video.videoProvider == "mux" && video.status == "ready") {
+        _loadMuxPlayback(requirement);
+      }
       context.read<VideoItemCubit>().joinToVideoItem(
-            courseId: context
-                .read<CourseVideoViewNavigationsRequirmentsEntity>()
-                .courseEntity
-                .id,
-            sectionId: context
-                .read<CourseVideoViewNavigationsRequirmentsEntity>()
-                .sectionId,
-            sectionItemId: context
-                .read<CourseVideoViewNavigationsRequirmentsEntity>()
-                .video
-                .id,
+            courseId: requirement.courseEntity.id,
+            sectionId: requirement.sectionId,
+            sectionItemId: video.id,
             joinedByEntity: JoinedByEntity(
                 uid: getUserData().uid,
                 name: getUserData().fullName,
                 imageUrl: getUserData().profilePicurl,
                 joinedDate: DateTime.now()),
           );
-    }
-    super.initState();
+    });
+  }
+
+  Future<void> _loadMuxPlayback(
+      CourseVideoViewNavigationsRequirmentsEntity requirement) async {
+    setState(() => _playbackLoading = true);
+    final result = await getIt<VideoItemRepo>().getPlaybackUrl(
+      courseId: requirement.courseEntity.id,
+      sectionId: requirement.sectionId,
+      videoId: requirement.video.id,
+    );
+    if (!mounted) return;
+    result.fold(
+        (_) => setState(() => _playbackLoading = false),
+        (url) => setState(() {
+              _playbackUrl = url;
+              _playbackLoading = false;
+            }));
   }
 
   @override
@@ -83,9 +104,21 @@ class _DisplaycoursevedioveiwBodyState
                           const SizedBox(
                             height: 10,
                           ),
-                          PremiumVideoPlayer(
-                            videoUrl: vedio.vedioUrl,
-                          ),
+                          if (vedio.videoProvider == "mux")
+                            if (vedio.status != "ready")
+                              Text(vedio.status == "failed"
+                                  ? LocaleKeys.videoPlayFailed
+                                  : "Video is processing")
+                            else if (_playbackLoading)
+                              const CircularProgressIndicator()
+                            else if (_playbackUrl != null)
+                              PremiumVideoPlayer(
+                                videoUrl: _playbackUrl,
+                              )
+                            else
+                              Text(LocaleKeys.videoPlayFailed)
+                          else
+                            PremiumVideoPlayer(videoUrl: vedio.vedioUrl),
                           const SizedBox(
                             height: 32,
                           ),
