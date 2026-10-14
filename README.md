@@ -1,69 +1,241 @@
-<div align="center"><img src="assets/Icons/SVG_Icons/AppLogo.svg" alt="Sintir Admin Panel Logo" width="96" />Sintir Admin PanelA responsive Flutter Web back-office platform for managing users, courses, support operations, payouts, and real-time analytics across the Sintir educational ecosystem.Live Demo · Companion Mobile App Repo</div>📖 OverviewSintir Admin Panel (sintir_dashboard) is the administrative control center for the Sintir digital learning platform. Built with Flutter Web, it empowers operations teams, course managers, and support staff to oversee platform activity from a single responsive interface:Executive Analytics & KPIs: Monitor platform revenue, user demographics, enrollment trends, and course performance through interactive charts (fl_chart).Granular Role-Based Access Control (RBAC): Enforce database-driven permissions across 5 distinct operational roles (Admin, CoursesManager, UsersManager, Support, and Viewer) with active-status verification.Course & Instructor Governance: Review, filter, publish, edit, or remove courses, inspect section content, moderate student reports, and audit course transactions.User & Wallet Operations: Search and filter users with server-side pagination, inspect individual wallets and transaction histories, and manage account statuses.Real-Time Support Desk: Triage support tickets, track resolution analytics, and communicate directly with students and teachers in a dedicated support chat interface.Serverless Media & Payout Backend: Houses the Supabase Edge Functions powering Mux direct video uploads/signed playback tokens and Paymob instructor withdrawals.📸 ScreenshotsLight ModeDark Mode<img src="docs/screenshots/dashboard-light.png" alt="Dashboard Light Mode" width="420" /><img src="docs/screenshots/dashboard-dark.png" alt="Dashboard Dark Mode" width="420" /><img src="docs/screenshots/users-light.png" alt="Users Management Light Mode" width="420" /><img src="docs/screenshots/users-dark.png" alt="Users Management Dark Mode" width="420" /><img src="docs/screenshots/course-details-light.png" alt="Course Details Light Mode" width="420" /><img src="docs/screenshots/support-dark.png" alt="Support Chat Dark Mode" width="420" />✨ Features by ModuleModuleKey CapabilitiesAuthentication (Auth)Email/password sign-in, staff registration, password reset via Firebase Auth, and session-aware route redirection.Analytics Overview (Dashboard)Responsive KPI summary cards, revenue trajectories, gender distribution breakdowns, and course analytics charts.Courses Management (CoursesManagment)Searchable, filterable, responsive course directory with status badges and quick moderation actions.Course Deep-Dive (CourseDetails)Full inspection of course sections, lecture items, student reports, reviews/feedback, subscribers, coupons, and financial transactions.Creator Profile (ContentCreatorProfile)Instructor profile overview, teaching portfolio, and associated course metrics.Users Management (UsersManagement)Paginated Firestore directory (10 records per page, ordered by joinedDate) with multi-criteria filtering by role, account status, and gender.User Profile & Wallet (UserDetails)Detailed user inspection, profile editing, role/status updates, activity logs, wallet balance monitoring, and transaction history.Support Center (Support)Ticket queue management, ticket volume analytics, status updates, and real-time support chat messaging.Serverless Pipeline (supabase/functions)Deno/TypeScript Edge Functions orchestrating Mux video uploads, webhook verification, signed playback tokens, and Paymob teacher payouts.🔐 Role-Based Access Control (RBAC) & RoutingUser roles and account statuses are stored in the Firestore Users collection and evaluated locally via lib/Core/Permissions/Permissions Mapping.dart. Every permission check requires the user's account status to be Active.Role MatrixRoleGranted PermissionsAdminFull superuser access across all modules and actions (bypasses individual permission checks).CoursesManagerviewCourses, publishCourse, editCourse, deleteCourseUsersManagerviewUsers, editUser, deleteUserSupportviewTickets, replyTickets, changeTicketStatus, banUserViewer (Default fallback)viewUsers, viewTickets, viewCourses, viewAnalyticsComplete Declared Permission Set (15 granular flags):
-viewUsers, createUser, editUser, deleteUser, banUser, viewCourses, createCourse, editCourse, deleteCourse, publishCourse, viewTickets, replyTickets, changeTicketStatus, viewAnalytics, exportData.Declarative Routing (GoRouter)Configured in lib/Core/Utils/App_router.dart, the router enforces active session checks before rendering protected views, while individual feature views enforce module-level permissions (rendering AccessDeniedWidget or hiding restricted actions):Route PathScreenAccess & State Handling/SplashViewPublic entry; routes based on cached session state/SignInViewSignInViewPublic; redirects authenticated active sessions to /dashboard/signUpViewSignUpViewPublic staff/user registration/teacherResetPasswordViewCustomResetPasswordViewPublic password recovery flow/dashboardResponsiveDashboardViewRequires active authenticated session (UID + Active status)/courses-managmentResponsiveCoursesManagmentViewSession guard + UI-level Permission.viewCourses check/responsive_course_details_viewResponsiveCourseDeatilsViewSession guard; receives course object via state.extra/ContentCreatorProfileContentCreatorProfileSession guard; receives creator entity via state.extra/ResponsiveUsersManagementViewResponsiveUsersManagementViewSession guard + UI-level Permission.viewUsers check/responsive-user-detailsResponsiveUserDetailsViewSession guard; receives target UID via state.extra/ResponsiveTicketsManagementViewResponsiveTicketsManagementViewSession guard + UI-level Permission.viewTickets check/SupportChatViewResponsiveSupportChatViewSession guard; receives ticket entity via state.extra/unauthorizedUnauthorizedViewDisplayed when session or access requirements fail🛠 Tech StackLayerPackages & ToolsFramework & SDKFlutter (Web, Windows, macOS, Android, iOS), Dart ^3.10.4State Managementflutter_bloc ^9.1.1, bloc ^9.1.0, hydrated_bloc ^11.0.0, provider ^6.1.5+1Dependency Injectionget_it ^9.2.0Routinggo_router ^17.0.1Backend & Cloudfirebase_core ^4.3.0, firebase_auth ^6.1.3, cloud_firestore ^6.1.1, firebase_storage ^13.0.5, supabase_flutter ^2.12.0Networkingdio ^5.9.0Data Visualization & Tablesfl_chart ^1.1.1, data_table_2 ^3.0.0UI, Icons & Animationsflutter_animate ^4.5.2, skeletonizer ^2.1.2, loading_animation_widget ^1.3.0, cached_network_image ^3.4.1, lucide_icons_flutter ^3.1.15, font_awesome_flutter ^11.0.0, svg_flutter ^0.0.1Security & Local Storageflutter_secure_storage ^11.0.0, hive_flutter ^1.1.0, secure_content ^2.0.0, device_info_plus ^13.2.0Localizationflutter_localizations, intl (Arabic & English ARB files)Functional & Utilitiesdartz ^0.10.1, equatable, uuid, image_picker ^1.2.1, path_provider ^2.1.5🏗 ArchitectureThe project follows a feature-first MVVM / Clean Architecture pattern powered by BLoC/Cubit and Repository abstractions. Shared services and repositories are registered in lib/Core/Services/get_it_Service.dart after main.dart initializes Firebase, Supabase, Hive, and HydratedBloc storage.flowchart LR
-    V[Responsive View / Widgets] --> C[Feature Cubit]
-    C --> R[Repository Abstraction]
-    R --> RI[Repository Implementation]
-    RI --> S[Shared Service<br/>DataBaseService / Dio]
-    S --> F[(Cloud Firestore &<br/>Firebase Auth)]
-    S --> SB[(Supabase<br/>Edge Functions)]
-Example Workflow: Paginated Users ManagementPermission Check: UsersManagementViewBody reads the locally cached user profile and verifies Permission.viewUsers.DI & State Provision: If authorized, it provides UsersManagementCubit injected with getIt<UsersRepo>().Query Execution: The Cubit invokes UsersRepo.getUsers() with the active search query, role/status/gender filters, and pagination cursor.Firestore Mapping: UsersRepoImpl constructs a query on the Users collection (ordered by joinedDate, page size 10) and calls DataBaseService.getData() (FirebaseFirestoreservice), mapping documents into UserEntity objects.Folder Structurelib/
+<div align="center">
+
+<img src="assets/Icons/SintiAppIcon.png" alt="Sintir Logo" width="96" />
+
+# Sintir — Digital Learning Platform
+
+**A 59-screen multilingual Flutter application connecting instructors and students with course management, chunked video streaming, timed assessments, mistake analytics, and integrated Paymob payments.**
+
+![Flutter](https://img.shields.io/badge/Flutter-Cross--Platform-02569B?logo=flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-3.5%2B-0175C2?logo=dart&logoColor=white)
+![State Management](https://img.shields.io/badge/State-BLoC%20%2F%20Cubit-4169E2)
+![Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture-2E7D32)
+![Firebase](https://img.shields.io/badge/Firebase-Auth%20%7C%20Firestore-FFCA28?logo=firebase&logoColor=black)
+![Supabase](https://img.shields.io/badge/Supabase-Storage%20%7C%20Edge%20Functions-3ECF8E?logo=supabase&logoColor=white)
+![Payments](https://img.shields.io/badge/Payments-Paymob-00A8E8)
+
+[**Companion Admin Panel Repo**](https://github.com/Ziad-Gamal12/Sintir_DashBoard) · [**Live Admin Dashboard**](https://sintir-2f0be.web.app/) · [**Latest Releases**](https://github.com/Ziad-Gamal12/Sintir/releases)
+
+</div>
+
+## 📖 Overview
+
+**Sintir** is a full-featured digital education platform built with Flutter for students and instructors. It streamlines the entire learning lifecycle—from discovering courses and processing payments to streaming protected video lectures, taking timed exams, practicing past mistakes, and managing instructor payouts.
+
+- **59 Screens Across Dual Role Workflows:** Covers 52 declarative `GoRouter` routes plus interactive modal sheets and sub-views tailored for both **Students** and **Teachers**.
+- **Multilingual & Adaptive Design:** Ships with full **Arabic (RTL), English, and French** localization alongside persistent **Light and Dark** themes.
+- **Production Back-Office Ecosystem:** Operates alongside the [**Sintir Admin Panel**](https://github.com/Ziad-Gamal12/Sintir_DashBoard) ([Live Demo](https://sintir-2f0be.web.app/)), which provides role-based back-office governance over courses, users, support tickets, and platform analytics.
+
+## 📱 Screenshots
+
+| Select Sign-In Role | Sign In as Student | Student Home Feed |
+| :---: | :---: | :---: |
+| <img src="Screenshots/Screenshot_2025-12-11-18-44-04-34_f9966819976412588049618dad4b8aef.jpg" alt="Select Role" width="220" /> | <img src="Screenshots/Screenshot_2025-12-11-18-44-15-75_f9966819976412588049618dad4b8aef.jpg" alt="Sign In as Student" width="220" /> | <img src="Screenshots/Screenshot_2025-12-11-18-18-03-39_f9966819976412588049618dad4b8aef.jpg" alt="Home Page" width="220" /> |
+
+| Course & Teacher Search | Instructor Wallet | Course Coupons |
+| :---: | :---: | :---: |
+| <img src="Screenshots/Screenshot_2025-12-11-18-18-30-44_f9966819976412588049618dad4b8aef.jpg" alt="Search Page" width="220" /> | <img src="Screenshots/Screenshot_2025-12-11-18-19-03-65_f9966819976412588049618dad4b8aef.jpg" alt="Wallet Page" width="220" /> | <img src="Screenshots/Screenshot_2025-12-11-18-25-46-73_f9966819976412588049618dad4b8aef.jpg" alt="Coupons" width="220" /> |
+
+| Create Course | Build Exam | Active Timed Exam |
+| :---: | :---: | :---: |
+| <img src="Screenshots/Screenshot_2025-12-11-18-21-53-34_f9966819976412588049618dad4b8aef.jpg" alt="Add Course" width="220" /> | <img src="Screenshots/Screenshot_2025-12-11-18-22-38-28_f9966819976412588049618dad4b8aef.jpg" alt="Add Exam" width="220" /> | <img src="Screenshots/Screenshot_2025-12-11-18-40-44-30_f9966819976412588049618dad4b8aef.jpg" alt="Taking Exam" width="220" /> |
+
+| Pre-Exam Instructions | Post-Exam Analytics & Results |
+| :---: | :---: |
+| <img src="Screenshots/Screenshot_2025-12-11-18-40-39-97_f9966819976412588049618dad4b8aef.jpg" alt="Before Joining Exam" width="220" /> | <img src="Screenshots/Screenshot_2025-12-11-18-25-29-19_f9966819976412588049618dad4b8aef.jpg" alt="Result After Exam" width="220" /> |
+
+## ✨ Key Features
+
+### 🎓 For Students
+- **Curated Discovery & Search:** Browse popular, newest, and interest-matched courses on the home feed, or search courses and instructors with filters for price, education level, and subscription status.
+- **Course Enrollment & Paymob Checkout:** Preview course syllabi, apply discount coupons, and complete purchases via **Paymob Unified Checkout** (supporting online cards, mobile wallets, kiosk, and cash collection).
+- **Interactive Learning Player:** Stream protected course videos using token-authenticated playback, add timestamped video notes, and read attached PDF study materials (`pdfx`) inside the app.
+- **Timed Assessments & Attempt Tracking:** Take countdown-timed exams (`stop_watch_timer`) with question navigation, attempt limits, and automated grading.
+- **Mistake Bank & Custom Practice Exams:** Review historical exam results and incorrect answers with highlighted solutions, and generate custom practice exams directly from saved mistakes.
+- **Feedback, Reporting & Support:** Rate courses, submit content reports, track payment history, and chat with support agents via real-time support tickets.
+
+### 👨‍🏫 For Teachers
+- **Course & Curriculum Builder:** Create courses with metadata (subject, education level, language, pricing) and organize content into structured sections containing video lectures, downloadable files, and exams.
+- **Resumable Chunked Video Uploads:** Upload large lecture videos using byte-range chunking with automatic retry, pause/resume, and cancellation orchestrated via Supabase Edge Functions.
+- **Multi-Step Exam Authoring:** Build rich assessments with image attachments, multiple-choice options, custom durations, and maximum attempt rules.
+- **Engagement & Performance Analytics:** Track per-video attendance, inspect student video notes, and analyze exam completion rates and score distributions (`fl_chart`).
+- **Coupon & Subscriber Management:** Generate promotional course coupons, inspect enrolled students, and review or resolve student content reports.
+- **Instructor Wallet & Withdrawals:** Monitor wallet balances, total earnings, and transaction logs, and submit payout requests processed through **Paymob** via the `teacher-withdrawal` Edge Function.
+
+## 🛡️ Engineering Highlights & Security
+
+- **Device-Bound Authentication:** Prevents unauthorized account sharing by pairing user sessions with hardware identifiers (`unique_device_identifier`) verified through `GetUserDataCubit` against Firestore user records.
+- **Anti-Capture Content Protection:** Protects proprietary educational videos and exams using `PrivacyWrapper` and `SensitivePageWrapper` (`secure_content`) to restrict unauthorized screenshots and screen recording.
+- **Encrypted Local Storage:** Secures sensitive local cache using `hive_flutter` encrypted with keys stored in `flutter_secure_storage`, paired with `hydrated_bloc` for seamless state restoration.
+- **Serverless Media & Payout Pipeline:** Keeps third-party API secrets off the client by routing video upload session creation, signed playback token generation, and teacher payouts through authenticated **Supabase Edge Functions** verified with Firebase ID tokens.
+
+## 🛠 Tech Stack
+
+| Category | Packages & Technologies |
+| :--- | :--- |
+| **Framework & Language** | Flutter (Android, iOS, Web, Desktop scaffolding), Dart `^3.5.0` |
+| **State Management** | `flutter_bloc`, `bloc`, `hydrated_bloc`, `bloc_concurrency`, `provider` |
+| **Dependency Injection** | `get_it` |
+| **Navigation & Routing** | `go_router` (52 declarative routes with typed `state.extra` payloads) |
+| **Backend & Serverless** | Firebase Auth, Cloud Firestore, Supabase Storage, Supabase Edge Functions |
+| **Payments & Payouts** | Paymob Unified Checkout (`PayMobService` via `dio` + WebView), `teacher-withdrawal` Edge Function |
+| **Networking** | `dio`, `http` |
+| **Media & Documents** | `better_player_plus`, `video_player`, `pdfx`, `webview_flutter`, `image_picker`, `file_selector` |
+| **UI, Charts & Animations** | `fl_chart`, `percent_indicator`, `flutter_animate`, `lottie`, `skeletonizer`, `awesome_dialog`, `cached_network_image` |
+| **Security & Auth Providers** | `google_sign_in`, `flutter_facebook_auth`, `flutter_secure_storage`, `secure_content`, `unique_device_identifier`, `crypto` |
+| **Local Persistence** | `hive_flutter` (encrypted), `shared_preferences`, `path_provider` |
+| **Localization** | `flutter_localizations`, `intl`, `localingo` (Arabic, English, French) |
+| **Functional & Utilities** | `dartz`, `meta`, `uuid`, `stop_watch_timer`, `restart_app` |
+| **Testing & Linting** | `flutter_test`, `test_api`, `flutter_lints` |
+
+## 🏗 Architecture
+
+Sintir is structured around **Clean Architecture** principles with a **feature-first** modular organization. Features encapsulate their own **Presentation** (Views, Widgets, Cubits), **Domain** (Entities, Repository Interfaces), and **Data** (Models, Repository Implementations) layers, while cross-cutting repositories and service abstractions live in `lib/Core/`.
+
+~~~mermaid
+flowchart LR
+    UI[Presentation Layer<br/>Views & Widgets] --> Cubit[State Management<br/>BLoC / Cubit]
+    Cubit --> Repo[Domain / Core<br/>Repository Interface]
+    Repo --> RepoImpl[Data Layer<br/>Repository Implementation]
+    RepoImpl --> DB[Shared Services<br/>Firestore / Storage / Paymob]
+    DB --> FB[(Firebase<br/>Auth & Firestore)]
+    DB --> SB[(Supabase<br/>Storage & Edge Functions)]
+~~~
+
+### Example Data Flow: Course Video Playback & Upload
+1. **View:** `DisplayCourseVedioVeiw` dispatches playback or upload actions to `VideoItemCubit`.
+2. **Cubit:** `VideoItemCubit` coordinates state transitions and invokes `VideoItemRepo`.
+3. **Repository:** `VideoItemRepoImpli` queries item metadata via `FirebaseFirestoreservice` and delegates media operations to `VideoUploadService`.
+4. **Service & Edge Functions:** `VideoUploadService` attaches the user's Firebase ID token, calls Supabase Edge Functions (`create-video-upload`, `resume-video-upload`, or `get-video-playback-token`), and handles byte-range chunk uploads with automatic retries.
+
+### Folder Structure
+
+~~~text
+lib/
 ├── Core/
-│   ├── Entities/          # Shared domain entities
-│   ├── Errors/            # Custom Failure classes and error handlers
-│   ├── Helper/            # Responsive layout helpers and UI utilities
-│   ├── Managers/          # App-wide Cubits (e.g., ThemeCubit)
-│   ├── Models/            # Shared data models
-│   ├── Permissions/       # RBAC roles and permission mapping logic
-│   ├── Services/          # Firebase, Supabase, Dio, and GetIt registration
-│   ├── Themes/            # Light and Dark theme configurations (app_theme.dart)
-│   ├── Utils/             # GoRouter configuration (App_router.dart) and constants
+│   ├── Entities/          # Shared domain entities across features
+│   ├── Errors/            # Failure classes and exception mapping
+│   ├── Helper/            # UI helpers, dialogs, and formatters
+│   ├── Managers/          # Shared Cubits (video item, theme, locale, user data)
+│   ├── Models/            # Shared data models and serialization
+│   ├── Themes/            # Light and Dark ThemeData definitions
 │   ├── repos/             # Shared repository contracts and implementations
-│   └── widgets/           # Reusable dashboard tables, cards, and access-denied views
+│   ├── services/          # Firebase, Supabase, Paymob, VideoUpload, and GetIt setup
+│   ├── utils/             # GoRouter (App_router.dart), Backend_EndPoints, AppTextStyles
+│   └── widgets/           # Reusable UI components and Paymob WebView checkout
 ├── Features/
 │   ├── Auth/
+│   ├── ChoosingUserKind/
 │   ├── ContentCreatorProfile/
-│   ├── CourseDetails/
-│   ├── CoursesManagment/
-│   ├── Dashboard/
+│   ├── CourseManagementAndInteractionFeature/
+│   ├── Favorites/
+│   ├── Home/
+│   ├── MyCourses/
+│   ├── MyMistakes/
+│   ├── MyResults/
+│   ├── MyTransactions/
+│   ├── Profile/
+│   ├── Search/
 │   ├── Splash/
+│   ├── StudentOnboarding/
+│   ├── Subscribtion/
 │   ├── Support/
-│   ├── UserDetails/
-│   └── UsersManagement/
-├── generated/             # Auto-generated localization classes
-├── l10n/                  # intl_ar.arb and intl_en.arb translation sources
-├── constant.dart          # Brand colors, version, and public Supabase config
-├── firebase_options.dart  # Platform-specific Firebase configuration
-└── main.dart              # Application bootstrap
-supabase/
-└── functions/             # Serverless Edge Functions (Mux video & Paymob payouts)
-☁️ Backend & Serverless InfrastructureCloud Firestore SchemaTop-Level Collections: Users, Teachers, Students, Transactions, Courses, Tickets, MuxVideoIndex, MuxWebhookEventsNested Collections: Sections, Items, Reports, Feedbacks, Coupons, Subscribers, JoinedBy, Results, MyResults, MyMistakes, Favorites, VideoNotes, and MessagesSupabase Edge Functions (supabase/functions)Edge FunctionPurposecreate-video-uploadVerifies teacher identity, creates a Mux direct-upload session, and records video metadata in Firestoreresume-video-uploadChecks whether an interrupted Mux upload session remains resumablecancel-video-uploadCancels a pending upload or Mux asset and updates the corresponding Firestore recordget-video-playback-tokenValidates course access and issues a signed JWT playback token for Mux video streamingmux-webhookVerifies Mux webhook signatures and updates Firestore video processing states in real timeteacher-withdrawalReserves and executes instructor wallet payouts via Paymob with reconciliation supportsintir-analyticsAggregates platform analytics queried by the dashboard via DioFor detailed documentation on the video streaming and webhook architecture, see MUX_VIDEO.md.🎨 Theming & LocalizationTypography: Uses the Cairo typeface (Regular, Medium, SemiBold, Bold) for crisp Arabic and English legibility.Brand Palette: Primary Royal Blue (#4169E2) and Secondary Vibrant Orange (#FF8C1A), with custom Light and Dark surface tokens defined in lib/Core/Themes/app_theme.dart.Persistent Theme State: ThemeCubit defaults to Dark Mode and persists user preference across browser sessions using HydratedBloc.Bilingual Support: Includes Arabic (lib/l10n/intl_ar.arb) and English (lib/l10n/intl_en.arb) localization files with generated delegates under lib/generated/.🚀 Getting StartedPrerequisitesFlutter SDK with Dart ^3.10.4A Firebase project (Authentication, Cloud Firestore, Storage, Hosting)A Supabase project + Supabase CLI (for Edge Functions)Firebase CLI or Vercel CLI (for web deployment)1. Clone & Run Locallygit clone https://github.com/Ziad-Gamal12/Sintir_DashBoard.git
-cd Sintir_DashBoard
-flutter pub get
-flutter run -d chrome
-2. Configure Client & Serverless EnvironmentFirebase: Generate lib/firebase_options.dart for your Firebase project using flutterfire configure.Supabase Client: Set supaBaseUrl and supaAnonKey in lib/constant.dart.Edge Function Secrets: Copy supabase/functions/.env.example to supabase/functions/.env and populate the required server-side credentials:FB_PROJECT_ID
-FB_CLIENT_EMAIL
-FB_PRIVATE_KEY
-PAYMOB_PAYOUT_CLIENT_ID
-PAYMOB_PAYOUT_CLIENT_SECRET
-PAYMOB_PAYOUT_USERNAME
-PAYMOB_PAYOUT_PASSWORD
-PAYMOB_WEBHOOK_HMAC_SECRET
-MUX_TOKEN_ID
-MUX_TOKEN_SECRET
-MUX_WEBHOOK_SECRET
-MUX_SIGNING_KEY_ID
-MUX_SIGNING_KEY_PRIVATE_BASE64
-Security Note: Never commit supabase/functions/.env or private keys to Git. Only the public supaAnonKey belongs in the Flutter client.Serve or Deploy Edge Functions:# Serve locally
-supabase functions serve --env-file supabase/functions/.env
+│   ├── TeaacherOnBoarding/
+│   └── TeacherWorkEnvironment/
+├── generated/             # Generated localization delegates
+├── l10n/                  # Localization ARB resources
+├── constant.dart          # App-wide constants and public config keys
+├── firebase_options.dart  # Platform-specific Firebase initialization options
+├── locale_keys.dart       # Localization key definitions
+└── main.dart              # App entry point, storage encryption, and DI bootstrap
+~~~
 
-# Deploy to Supabase
-supabase functions deploy <function-name> --no-verify-jwt
-3. Build & Deploy Web Dashboard# Build production web bundle
-flutter build web
+## ☁️ Backend & Cloud Services
 
-# Option A: Deploy to Firebase Hosting (SPA rewrite configured in firebase.json)
-firebase deploy --only hosting
+### Cloud Firestore Collections
+- **Top-Level Collections:** `Users`, `Students`, `Teachers`, `Courses`, `Transactions`, `Tickets`
+- **User & Teacher Subcollections:** Enrolled courses, `Favorites`, `MyResults`, `MyMistakes`, and `Transactions`
+- **Course Subcollections:** `Sections` → `Items` (`Results`, `JoinedBy`, `VideoNotes`), `Subscribers`, `Reports`, `Feedbacks`, and `Coupons`
+- **Support Subcollections:** `Tickets/{ticketId}/Messages`
 
-# Option B: Deploy to Vercel (SPA rewrite configured in vercel.json)
-vercel --prod
-👤 AuthorZiad Gamal — Flutter DeveloperLinkedIn: linkedin.com/in/ziad-gamal-54b052375GitHub: @Ziad-Gamal12Email: ziadgamal.work@gmail.com
+### Supabase Storage & Edge Functions
+- **Storage Buckets:** `Courses`, `Users`, `DefaultBucket`, `Support` (used for course thumbnails, PDFs, profile avatars, and support attachments)
+- **Edge Functions:**
+  | Edge Function | Responsibility |
+  | :--- | :--- |
+  | `create-video-upload` | Validates teacher authorization and initializes a chunked video upload session |
+  | `resume-video-upload` | Checks upload status and resumes interrupted byte-range transfers |
+  | `cancel-video-upload` | Cancels an active upload session and cleans up pending video records |
+  | `get-video-playback-token` | Verifies student enrollment and issues a signed video playback token |
+  | `teacher-withdrawal` | Processes instructor wallet payout requests through Paymob |
+
+## 🎨 Localization & Theming
+
+- **Supported Languages:** Arabic (`ar` — default startup locale with RTL layout), English (`en`), and French (`fr`), managed by `LocaleCubit`.
+- **Adaptive Theming:** Full Light and Dark mode palettes defined in `lib/Core/Themes/app_theme.dart` and persisted across app launches via `ThemeCubit` and `HydratedBloc`.
+- **Typography:** Uses **Cairo** and **Poppins** font families (`Regular`, `Medium`, `SemiBold`, `Bold`) paired with a centralized `AppTextStyles` scale.
+
+## 🚀 Getting Started
+
+### Prerequisites
+- [Flutter SDK](https://docs.flutter.dev/get-started/install) with Dart `^3.5.0`
+- Configured **Firebase** project (Authentication & Cloud Firestore)
+- Configured **Supabase** project (Storage & Edge Functions)
+- **Paymob** merchant account (for course checkout and wallet integrations)
+
+### Installation & Setup
+
+1. **Clone the repository**
+   ~~~bash
+   git clone https://github.com/Ziad-Gamal12/Sintir.git
+   cd Sintir
+   ~~~
+
+2. **Install dependencies**
+   ~~~bash
+   flutter pub get
+   ~~~
+
+3. **Configure Firebase**
+   - Generate your `lib/firebase_options.dart` via the FlutterFire CLI (`flutterfire configure`) or place your platform files in:
+     - Android: `android/app/google-services.json`
+     - iOS: `ios/Runner/GoogleService-Info.plist`
+
+4. **Configure Environment & Service Keys**
+   - Provide your Supabase and Paymob configuration values in `.env` / `lib/constant.dart`:
+     ~~~text
+     supaBaseUrl
+     supaAnonKey
+     PayMobTestPublicKey
+     PayMobSecretKey
+     PaymobWalletsIntegrationID
+     PaymobOnlineCardIntegrationID
+     PaymobAcceptKioskIntegrationID
+     PaymobCashCollectionIntegrationID
+     ~~~
+   > **Security Note:** Never commit production secret keys to version control. Keep `.env` excluded via `.gitignore`.
+
+5. **Run the application**
+   ~~~bash
+   flutter run
+   ~~~
+
+### Build & Test Commands
+
+~~~bash
+# Run unit tests (course actions, report helpers, video models, withdrawal logic)
+flutter test
+
+# Build release artifacts
+flutter build apk
+flutter build appbundle
+flutter build ios
+~~~
+
+## 👤 Author
+
+**Ziad Gamal** — Flutter Developer
+
+- **LinkedIn:** [linkedin.com/in/ziad-gamal-54b052375](https://www.linkedin.com/in/ziad-gamal-54b052375/)
+- **GitHub:** [@Ziad-Gamal12](https://github.com/Ziad-Gamal12)
+- **Email:** [ziadgamal.work@gmail.com](mailto:ziadgamal.work@gmail.com)
