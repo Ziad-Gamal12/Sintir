@@ -1,6 +1,6 @@
 class StudentExtraDataEntity {
   String educationLevel;
-  String birthDate;
+  DateTime? birthDate;
 
   StudentExtraDataEntity(
       {required this.educationLevel, required this.birthDate});

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:sintir/Core/Enums/CourseCouponEnum.dart';
 import 'package:sintir/Core/Managers/Cubits/course_coupons_cubit/course_coupons_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/repos/CourseCouponsRepo/CourseCouponsRepo.dart';
@@ -22,7 +23,7 @@ class _AddCourseCouponViewState extends State<AddCourseCouponView> {
       code: "",
       discountPercentage: 0,
       expiryDate: DateTime.now(),
-      isActive: true,
+      status: CourseCouponStatus.active,
       usageLimit: 0,
       usedCount: 0);
 

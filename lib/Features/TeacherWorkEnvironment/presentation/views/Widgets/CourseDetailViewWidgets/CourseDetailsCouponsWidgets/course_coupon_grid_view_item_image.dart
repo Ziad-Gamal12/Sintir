@@ -6,7 +6,6 @@ class CourseCouponGridViewItemImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // You might want to consider adding a theme-based color filter or adjust the image source
     final ThemeData theme = Theme.of(context);
     final Color? colorFilter = theme.brightness == Brightness.dark
         ? theme.colorScheme.onSurface
@@ -15,6 +14,8 @@ class CourseCouponGridViewItemImage extends StatelessWidget {
     return Image.asset(
       Assets.assetsIconsCoupon,
       fit: BoxFit.cover,
+      height: 18,
+      width: 18,
       color: colorFilter,
     );
   }

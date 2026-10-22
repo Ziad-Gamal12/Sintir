@@ -3,16 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/course_coupons_cubit/course_coupons_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
-import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseCouponsGridView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseCouponsListViewLoading.dart';
-import 'package:sintir/constant.dart';
-import 'package:sintir/locale_keys.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Helper/CourseDetailsCouponsViewHelper.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseDetailsCouponsViewContent.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/CouponItemActionsCubit/coupon_item_actions_cubit.dart';
 
 class CourseDetailsCouponsViewBody extends StatefulWidget {
-  const CourseDetailsCouponsViewBody({super.key, required this.courseId});
+  const CourseDetailsCouponsViewBody({
+    super.key,
+    required this.courseId,
+  });
+
   final String courseId;
+
   @override
   State<CourseDetailsCouponsViewBody> createState() =>
       _CourseDetailsCouponsViewBodyState();
@@ -20,90 +22,156 @@ class CourseDetailsCouponsViewBody extends StatefulWidget {
 
 class _CourseDetailsCouponsViewBodyState
     extends State<CourseDetailsCouponsViewBody> {
-  List<CourseCouponEntity> coupons = [];
-  bool hasMore = false;
-  late ScrollController scrollController;
+  final ScrollController _scrollController = ScrollController();
+
+  List<CourseCouponEntity> _coupons = [];
+  bool _hasMore = false;
 
   @override
   void initState() {
     super.initState();
-    scrollController = ScrollController();
+
+    _scrollController.addListener(_onScroll);
+    _fetchCoupons();
+  }
+
+  void _fetchCoupons() {
+    context.read<CourseCouponsCubit>().getCourseCoupons(
+          courseID: widget.courseId,
+          isPaginate: false,
+        );
+  }
+
+  void _onScroll() {
+    _requestNextPageIfNeeded();
+  }
+
+  void _requestNextPageIfNeeded({
+    bool allowWithoutScroll = false,
+  }) {
     final cubit = context.read<CourseCouponsCubit>();
+    final hasClients = _scrollController.hasClients;
 
-    cubit.getCourseCoupons(courseID: widget.courseId, isPaginate: false);
+    final double? extentAfter =
+        hasClients ? _scrollController.position.extentAfter : null;
 
-    scrollController.addListener(() {
-      if (_shouldFetchMoreReports(cubit)) {
-        cubit.getCourseCoupons(courseID: widget.courseId, isPaginate: true);
-      }
+    final shouldFetch = CourseDetailsCouponsViewHelper.shouldRequestNextPage(
+      hasMore: _hasMore,
+      isLoading: cubit.state is GetCourseCouponsLoading,
+      hasScrollClients: hasClients,
+      extentAfter: extentAfter,
+      allowWithoutScroll: allowWithoutScroll,
+    );
+
+    if (!shouldFetch) return;
+
+    cubit.getCourseCoupons(
+      courseID: widget.courseId,
+      isPaginate: true,
+    );
+  }
+
+  void _schedulePaginationCheck() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+
+      _requestNextPageIfNeeded(
+        allowWithoutScroll: _coupons.isEmpty,
+      );
     });
   }
 
-  bool _shouldFetchMoreReports(CourseCouponsCubit cubit) {
-    return scrollController.position.pixels >=
-            scrollController.position.maxScrollExtent - 200 &&
-        hasMore &&
-        cubit.state is! GetCourseCouponsLoading;
+  void _handleCouponsState(
+    BuildContext context,
+    CourseCouponsState state,
+  ) {
+    if (state is GetCourseCouponsSuccess) {
+      final response = state.response;
+
+      final updatedCoupons = response.isPaginate
+          ? CourseDetailsCouponsViewHelper.mergeUniqueCoupons(
+              existing: _coupons,
+              incoming: response.coupons,
+            )
+          : List<CourseCouponEntity>.of(response.coupons);
+
+      setState(() {
+        _coupons = updatedCoupons;
+        _hasMore = response.hasMore;
+      });
+
+      _schedulePaginationCheck();
+      return;
+    }
+    if (state is GetCourseCouponsFailure && _coupons.isNotEmpty) {
+      CustomSnackBar.show(
+        context,
+        message: state.errmessage,
+        type: SnackType.error,
+      );
+    }
+  }
+
+  void _handleCouponActionState(
+    BuildContext context,
+    CouponItemActionsState state,
+  ) {
+    if (state is DeleteCourseCouponSuccess) {
+      final updatedCoupons = CourseDetailsCouponsViewHelper.removeCouponByCode(
+        coupons: _coupons,
+        code: state.couponId,
+      );
+
+      if (updatedCoupons.length == _coupons.length) return;
+
+      setState(() {
+        _coupons = updatedCoupons;
+      });
+
+      _schedulePaginationCheck();
+      return;
+    }
+
+    if (state is DeleteCourseCouponFailure) {
+      CustomSnackBar.show(
+        context,
+        message: state.errmessage,
+        type: SnackType.error,
+      );
+    }
   }
 
   @override
   void dispose() {
-    scrollController.dispose();
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CourseCouponsCubit, CourseCouponsState>(
-      listener: (context, state) {
-        if (state is GetCourseCouponsSuccess) {
-          if (state.response.isPaginate) {
-            setState(() {
-              coupons.addAll(state.response.coupons);
-            });
-          } else {
-            setState(() {
-              coupons = state.response.coupons;
-            });
-          }
-          hasMore = state.response.hasMore;
-        } else if (state is DeleteCourseCouponSuccess) {
-          coupons.removeWhere((element) => element.code == state.couponId);
-          CustomSnackBar.show(
-            context,
-            message: LocaleKeys.operationSuccessful,
-            type: SnackType.success,
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<CourseCouponsCubit, CourseCouponsState>(
+          listener: _handleCouponsState,
+        ),
+        BlocListener<CouponItemActionsCubit, CouponItemActionsState>(
+          listener: _handleCouponActionState,
+        ),
+      ],
+      child: BlocBuilder<CourseCouponsCubit, CourseCouponsState>(
+        builder: (context, state) {
+          return CourseDetailsCouponsViewContent(
+            courseId: widget.courseId,
+            coupons: _coupons,
+            hasMore: _hasMore,
+            scrollController: _scrollController,
+            state: state,
           );
-          setState(() {});
-        } else if (state is DeleteCourseCouponFailure) {
-          CustomSnackBar.show(
-            context,
-            message: state.errmessage,
-            type: SnackType.error,
-          );
-        }
-      },
-      builder: (context, state) {
-        if (state is GetCourseCouponsFailure) {
-          return Center(
-            child: CustomErrorWidget(errormessage: state.errmessage),
-          );
-        } else if (state is GetCourseCouponsLoading && coupons.isEmpty) {
-          return const CourseCouponsGridViewLoading();
-        } else if (coupons.isNotEmpty) {
-          return CourseCouponsGridView(
-              courseId: widget.courseId,
-              scrollController: scrollController,
-              coupons: coupons);
-        } else if (state is! GetCourseCouponsLoading) {
-          return CustomEmptyWidget();
-        } else {
-          return const Center(
-              child: CircularProgressIndicator(
-            color: KMainColor,
-          ));
-        }
-      },
+        },
+      ),
     );
   }
 }

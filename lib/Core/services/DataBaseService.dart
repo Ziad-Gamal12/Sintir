@@ -2,7 +2,10 @@
 
 import 'package:sintir/Core/entities/FireStoreEntities/FireStorePaginateResponse.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
-
+typedef DocumentTransactionAction<T> = T Function(
+  Map<String, dynamic>? currentData,
+  void Function(Map<String, dynamic> fields) update,
+);
 abstract class DataBaseService {
   Future<void> setData({
     required Map<String, dynamic> data,
@@ -35,4 +38,8 @@ abstract class DataBaseService {
     required FireStoreRequirmentsEntity requirements,
     Map<String, dynamic>? query,
   });
+  Future<T> runDocumentTransaction<T>({
+  required FireStoreRequirmentsEntity requirements,
+  required DocumentTransactionAction<T> action,
+});
 }

@@ -1,91 +1,94 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sintir/Core/Managers/Cubits/course_coupons_cubit/course_coupons_cubit.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/DiscountBadge.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/PriceCard.dart';
 import 'package:sintir/locale_keys.dart';
 
 class PremiumSubscriptionPriceSection extends StatelessWidget {
   final int originalPrice;
+  final CourseCouponEntity? coupon;
+  final double payableAmount;
 
   const PremiumSubscriptionPriceSection({
     super.key,
     required this.originalPrice,
+    required this.coupon,
+    required this.payableAmount,
   });
+
+  String _formatPrice(double amount) {
+    final formatted = amount.toStringAsFixed(2);
+    return formatted.replaceFirst(
+      RegExp(r'\.?0+$'),
+      '',
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CourseCouponsCubit, CourseCouponsState>(
-      buildWhen: (previous, current) {
-        if (current is IsCouponExistSuccess ||
-            current is IsCouponExistFailure ||
-            current is IsCouponExistLoading) {
-          return true;
-        } else {
-          return false;
-        }
-      },
-      builder: (context, state) {
-        final bool hasDiscount = state is IsCouponExistSuccess &&
-            state.coupon.isActive &&
-            !state.coupon.isExpired;
+    final bool hasDiscount = coupon != null;
 
-        final double discountPercent =
-            hasDiscount ? state.coupon.discountPercentage : 0;
+    final double discountPercent = hasDiscount ? coupon!.discountPercentage : 0;
 
-        final int discountedPrice = hasDiscount
-            ? state.coupon.applyDiscount(originalPrice).toInt()
-            : originalPrice;
+    final String formattedPayableAmount = _formatPrice(payableAmount);
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // ORIGINAL PRICE
-            PriceCard(
-              icon: FontAwesomeIcons.tag,
-              label: LocaleKeys.originalPrice,
-              value: "$originalPrice ${LocaleKeys.priceEgp}",
-              isOriginal: true,
-              showStrike: hasDiscount,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // ORIGINAL PRICE
+        PriceCard(
+          icon: FontAwesomeIcons.tag,
+          label: LocaleKeys.originalPrice,
+          value: '$originalPrice ${LocaleKeys.priceEgp}',
+          isOriginal: true,
+          showStrike: hasDiscount,
+        ),
 
-            const SizedBox(height: 14),
+        const SizedBox(height: 14),
 
-            // DISCOUNT BADGE
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 500),
-              child: hasDiscount
-                  ? DiscountBadge(percent: discountPercent)
-                  : const SizedBox.shrink(),
-            ),
-
-            const SizedBox(height: 14),
-
-            // DISCOUNTED PRICE
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 600),
-              transitionBuilder: (child, anim) => FadeTransition(
-                opacity: anim,
-                child: ScaleTransition(
-                  scale: CurvedAnimation(
-                    parent: anim,
-                    curve: Curves.easeOutBack,
+        // DISCOUNT BADGE
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 500),
+          child: hasDiscount
+              ? DiscountBadge(
+                  key: ValueKey(
+                    'discount-$discountPercent',
                   ),
-                  child: child,
+                  percent: discountPercent,
+                )
+              : const SizedBox.shrink(
+                  key: ValueKey('no-discount'),
                 ),
+        ),
+
+        const SizedBox(height: 14),
+
+        AnimatedSwitcher(
+          duration: const Duration(milliseconds: 600),
+          transitionBuilder: (child, animation) {
+            return FadeTransition(
+              opacity: animation,
+              child: ScaleTransition(
+                scale: CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.easeOutBack,
+                ),
+                child: child,
               ),
-              child: PriceCard(
-                key: ValueKey(discountedPrice),
-                icon: FontAwesomeIcons.moneyBillWave,
-                label: LocaleKeys.discountedPrice,
-                value: "$discountedPrice ${LocaleKeys.priceEgp}",
-                highlight: hasDiscount,
-              ),
+            );
+          },
+          child: PriceCard(
+            key: ValueKey(
+              'price-$hasDiscount-$formattedPayableAmount',
             ),
-          ],
-        );
-      },
+            icon: FontAwesomeIcons.moneyBillWave,
+            label: LocaleKeys.discountedPrice,
+            value: '$formattedPayableAmount ${LocaleKeys.priceEgp}',
+            highlight: hasDiscount,
+          ),
+        ),
+      ],
     );
   }
 }

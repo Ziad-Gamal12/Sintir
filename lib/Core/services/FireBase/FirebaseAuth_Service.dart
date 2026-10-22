@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:crypto/crypto.dart';
@@ -53,6 +54,8 @@ class firebaseAuthService {
       );
       return credential.user!;
     } on FirebaseAuthException catch (e) {
+      log(e.code);
+      log(e.message.toString());
       switch (e.code) {
         case 'user-not-found':
           throw CustomException(message: LocaleKeys.dataNotFound);

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:sintir/Core/Enums/CourseCouponEnum.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/entities/FetchDataResponses/GetCourseCouponsResponseEntity.dart';
 import 'package:sintir/Core/repos/CourseCouponsRepo/CourseCouponsRepo.dart';
@@ -13,7 +14,7 @@ class CourseCouponsCubit extends Cubit<CourseCouponsState> {
 
   Future<void> getCourseCoupons(
       {required String courseID, required bool isPaginate}) async {
-    emit(GetCourseCouponsLoading());
+    emit(GetCourseCouponsLoading(isPaginate: isPaginate));
     final result = await courseCouponsRepo.getCourseCoupons(
         courseID: courseID, isPaginate: isPaginate);
     result.fold(
@@ -29,30 +30,6 @@ class CourseCouponsCubit extends Cubit<CourseCouponsState> {
     result.fold(
         (failure) => emit(AddCourseCouponFailure(errmessage: failure.message)),
         (success) => emit(AddCourseCouponSuccess()));
-  }
-
-  Future<void> deleteCourseCoupon(
-      {required String courseID, required String couponID}) async {
-    emit(DeleteCourseCouponLoading());
-    final result = await courseCouponsRepo.deleteCourseCoupon(
-        courseID: courseID, couponID: couponID);
-    result.fold(
-        (failure) =>
-            emit(DeleteCourseCouponFailure(errmessage: failure.message)),
-        (success) => emit(DeleteCourseCouponSuccess(
-              couponId: couponID,
-            )));
-  }
-
-  Future<void> updateCourseCoupon(
-      {required String courseID, required CourseCouponEntity coupon}) async {
-    emit(UpdateCourseCouponLoading());
-    final result = await courseCouponsRepo.updateCourseCoupon(
-        courseID: courseID, coupon: coupon);
-    result.fold(
-        (failure) =>
-            emit(UpdateCourseCouponFailure(errmessage: failure.message)),
-        (success) => emit(UpdateCourseCouponSuccess()));
   }
 
   Future<void> useCoupon(
@@ -73,5 +50,14 @@ class CourseCouponsCubit extends Cubit<CourseCouponsState> {
     result.fold(
         (failure) => emit(IsCouponExistFailure(errmessage: failure.message)),
         (success) => emit(IsCouponExistSuccess(coupon: success)));
+  }
+
+  bool isCouponUsable(CourseCouponEntity coupon) {
+    final hasReachedLimit =
+        coupon.usageLimit > 0 && coupon.usedCount >= coupon.usageLimit;
+
+    return coupon.status == CourseCouponStatus.active &&
+        !coupon.isExpired &&
+        !hasReachedLimit;
   }
 }

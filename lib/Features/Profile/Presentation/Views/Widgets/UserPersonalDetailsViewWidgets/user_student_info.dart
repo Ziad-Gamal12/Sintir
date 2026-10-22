@@ -52,7 +52,9 @@ class UserStudentInfo extends StatelessWidget {
               icon: FontAwesomeIcons.cakeCandles,
               iconColor: iconColor, // Pass theme color for consistency
               title: LocaleKeys.studentBirthDate,
-              value: student.birthDate,
+              value: student.birthDate != null
+                  ? "${student.birthDate!.day}/${student.birthDate!.month}/${student.birthDate!.year}"
+                  : LocaleKeys.notAvailable,
             ),
           ],
         ),

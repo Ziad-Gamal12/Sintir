@@ -1,52 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseCouponGridViewItemIsExpired.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseCouponGridViewItemIsInActive.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseCouponGridViewItemIsUsed.dart';
 import 'package:sintir/locale_keys.dart';
 
 class CourseCouponGridViewItemCode extends StatelessWidget {
-  const CourseCouponGridViewItemCode({super.key, required this.couponEntity});
-  final CourseCouponEntity couponEntity;
+  const CourseCouponGridViewItemCode({super.key, required this.couponCode});
+  final String couponCode;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
-          onTap: () {
-            Clipboard.setData(ClipboardData(text: couponEntity.code));
-            CustomSnackBar.show(
-              context,
-              message: LocaleKeys.operationSuccessful,
-              type: SnackType.success,
-            );
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Icon(Icons.copy, color: Colors.grey, size: 20),
-              const SizedBox(width: 10),
-              Text(
-                couponEntity.code,
-                style: AppTextStyles(context)
-                    .regular21
-                    .copyWith(color: Colors.red),
-              ),
-            ],
-          ),
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    return InkWell(
+      onTap: () {
+        Clipboard.setData(ClipboardData(text: couponCode));
+        CustomSnackBar.show(
+          context,
+          message: LocaleKeys.operationSuccessful,
+          type: SnackType.success,
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        decoration: BoxDecoration(
+            color: isDark ? Color(0xff353534) : Colors.grey.shade300,
+            borderRadius: BorderRadius.circular(8)),
+        child: Text(
+          couponCode,
+          style: AppTextStyles(context)
+              .bold16
+              .copyWith(color: isDark == false ? Colors.black : Colors.white),
         ),
-        if (couponEntity.isExpired)
-          const CourseCouponGridViewItemIsExpired()
-        else if (couponEntity.usageLimit == 0)
-          const CourseCouponGridViewItemIsUsed()
-        else if (couponEntity.isActive == false)
-          const CourseCouponGridViewItemIsInActive(),
-      ],
+      ),
     );
   }
 }

@@ -62,8 +62,7 @@ class _StudentsignupBirthdayfieldState
       },
     ).then((value) {
       if (!mounted) return;
-      context.read<UserEntity>().studentExtraDataEntity?.birthDate =
-          value.toString();
+      context.read<UserEntity>().studentExtraDataEntity?.birthDate = value;
       setState(() {
         pickedDate = value;
       });

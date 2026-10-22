@@ -22,7 +22,10 @@ import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
 class SubscribtionViewBody extends StatefulWidget {
-  const SubscribtionViewBody({super.key, required this.requirmentsEntity});
+  const SubscribtionViewBody({
+    super.key,
+    required this.requirmentsEntity,
+  });
 
   final DisplayCourseBottomsheetNavigationRequirmentsEntity requirmentsEntity;
 
@@ -33,18 +36,42 @@ class SubscribtionViewBody extends StatefulWidget {
 class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
   CourseCouponEntity? coupon;
 
+  /// Returns the selected coupon only while it is usable.
+  ///
+  /// The same result is passed to the price section and action button,
+  /// preventing them from displaying different coupon selections.
+  CourseCouponEntity? _getUsableCoupon() {
+    final selectedCoupon = coupon;
+
+    if (selectedCoupon == null) {
+      return null;
+    }
+
+    final couponCubit = context.read<CourseCouponsCubit>();
+
+    return couponCubit.isCouponUsable(selectedCoupon) ? selectedCoupon : null;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final course = widget.requirmentsEntity.course;
+
+    final selectedCoupon = _getUsableCoupon();
+
+    final double payableAmount = selectedCoupon != null
+        ? selectedCoupon.applyDiscount(course.price)
+        : course.price.toDouble();
+
     return MultiBlocListener(
       listeners: [
         BlocListener<CourseSubscribtionsCubit, CourseSubscribtionsState>(
           listener: (context, state) {
             switch (state) {
               case PayWithWalletSuccess(:final response):
-                GoRouter.of(context).push(
+                context.push(
                   Webviewer.routeName,
                   extra: PayMobWebViewRequirmentsEntity(
-                    course: widget.requirmentsEntity.course,
+                    course: course,
                     payMobResponse: response,
                   ),
                 );
@@ -63,24 +90,44 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
             }
           },
         ),
-
-        /// Listen for coupon-related states
         BlocListener<CourseCouponsCubit, CourseCouponsState>(
           listener: (context, state) {
             switch (state) {
+              case IsCouponExistLoading():
+                // Do not keep applying the previous coupon
+                // while another coupon code is being validated.
+                setState(() {
+                  coupon = null;
+                });
+                break;
+
               case IsCouponExistSuccess(:final coupon):
-                if (!coupon.isActive || coupon.isExpired) {
+                final couponCubit = context.read<CourseCouponsCubit>();
+
+                if (!couponCubit.isCouponUsable(coupon)) {
+                  setState(() {
+                    this.coupon = null;
+                  });
+
                   CustomSnackBar.show(
                     context,
                     message: LocaleKeys.invalidCoupon,
                     type: SnackType.error,
                   );
+
                   return;
                 }
-                setState(() => this.coupon = coupon);
+
+                setState(() {
+                  this.coupon = coupon;
+                });
                 break;
 
               case IsCouponExistFailure(:final errmessage):
+                setState(() {
+                  coupon = null;
+                });
+
                 CustomSnackBar.show(
                   context,
                   message: errmessage,
@@ -89,10 +136,22 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
                 break;
 
               case UseCouponSuccess():
+                final selectedCoupon = _getUsableCoupon();
+
+                if (selectedCoupon == null) {
+                  CustomSnackBar.show(
+                    context,
+                    message: LocaleKeys.invalidCoupon,
+                    type: SnackType.error,
+                  );
+                  return;
+                }
+
+                // Continue with the existing payment workflow.
                 context.read<CourseSubscribtionsCubit>().payWithWallet(
                       userEntity: getUserData(),
-                      amount: coupon!.applyDiscount(
-                        widget.requirmentsEntity.course.price,
+                      amount: selectedCoupon.applyDiscount(
+                        course.price,
                       ),
                     );
                 break;
@@ -121,11 +180,12 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
           children: [
             const SubscribtionViewBodyCourseDetailsTitle(),
             const SizedBox(height: 20),
-
             AspectRatio(
-                aspectRatio: 16 / 10,
-                child: CustomCourseHorizontalItem(
-                    course: widget.requirmentsEntity.course)),
+              aspectRatio: 16 / 10,
+              child: CustomCourseHorizontalItem(
+                course: course,
+              ),
+            ),
             Divider(
               color: Colors.grey.shade200,
               thickness: 2,
@@ -136,28 +196,20 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
               style: AppTextStyles(context).semiBold20,
             ),
             const SizedBox(height: 20),
-
-            /// Coupon Text Field
             SubscribtionViewBodyCouponTextFieldSection(
-              courseID: widget.requirmentsEntity.course.id,
+              courseID: course.id,
             ),
             const SizedBox(height: 20),
-
-            /// Course Price Details
             PremiumSubscriptionPriceSection(
-              originalPrice: widget.requirmentsEntity.course.price,
+              originalPrice: course.price,
+              coupon: selectedCoupon,
+              payableAmount: payableAmount,
             ),
-
             const Spacer(),
-
-            /// Action Button
             SubscribtionViewBodyActionButton(
-              courseID: widget.requirmentsEntity.course.id,
-              coupon: coupon,
-              amount: coupon?.applyDiscount(
-                    widget.requirmentsEntity.course.price,
-                  ) ??
-                  widget.requirmentsEntity.course.price.toDouble(),
+              courseID: course.id,
+              coupon: selectedCoupon,
+              amount: payableAmount,
             ),
           ],
         ),

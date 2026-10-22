@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseCouponGridViewItemHeader.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/course_coupon_grid_view_item_info.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CouponCardFooter.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CouponCardHeader.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CouponCodeContainer.dart';
 
 class CourseCouponGridViewItem extends StatelessWidget {
   const CourseCouponGridViewItem(
@@ -13,48 +14,30 @@ class CourseCouponGridViewItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final Color cardColor = theme.cardColor;
-    final Color borderColor = theme.dividerColor;
     final bool isDarkMode = theme.brightness == Brightness.dark;
-
-    // Adjusted shadow for theme compatibility
-    final List<BoxShadow> boxShadows = isDarkMode
-        ? [
-            BoxShadow(
-              color: Colors.grey.withValues(alpha: 0.4),
-              blurRadius: 10,
-              spreadRadius: 1,
-              offset: const Offset(0, 3),
-            ),
-          ]
-        : [
-            BoxShadow(
-              color: Colors.grey.shade100,
-              blurRadius: 10,
-              spreadRadius: 1,
-              offset: const Offset(0, 3),
-            ),
-          ];
+    final Color cardColor = isDarkMode ? Color(0xff1C1B1B) : Color(0xffF9F9F9);
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: cardColor,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: boxShadows,
-        border:
-            Border.all(color: borderColor.withValues(alpha: 0.5), width: .5),
+        borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
         children: [
-          CourseCouponGridViewItemHeader(
-              courseID: courseId, couponEntity: couponEntity),
-          Expanded(
-              flex: 4,
-              child: CourseCouponGridViewItemInfo(
-                couponEntity: couponEntity,
-                courseId: courseId,
-              )),
+          CouponCardHeader(courseID: courseId, couponEntity: couponEntity),
+          SizedBox(
+            height: 12,
+          ),
+          CouponCodeContainer(
+            couponCode: couponEntity.code,
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          CouponCardFooter(
+            coupon: couponEntity,
+          )
         ],
       ),
     );

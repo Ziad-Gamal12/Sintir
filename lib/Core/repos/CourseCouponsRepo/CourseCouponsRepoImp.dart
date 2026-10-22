@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
+import 'package:sintir/Core/Enums/CourseCouponEnum.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/entities/FetchDataResponses/GetCourseCouponsResponseEntity.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
@@ -175,12 +176,77 @@ class CourseCouponsRepoImp implements CourseCouponsRepo {
   }
 
   @override
-  Future<Either<Failure, void>> useCoupon(
-      {required CourseCouponEntity coupon, required String courseID}) async {
+  Future<Either<Failure, void>> useCoupon({
+    required CourseCouponEntity coupon,
+    required String courseID,
+  }) async {
     try {
-      coupon.usageLimit -= 1;
-      coupon.usedCount += 1;
-      return updateCourseCoupon(courseID: courseID, coupon: coupon);
+      await databaseservice.runDocumentTransaction<void>(
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.coursesCollection,
+          docId: courseID,
+          subCollection: BackendEndpoints.couponsSubCollection,
+          subDocId: coupon.code,
+        ),
+        action: (rawData, update) {
+          if (rawData == null) {
+            throw CustomException(
+              message: LocaleKeys.couponNotFound,
+            );
+          }
+
+          final currentCoupon = CourseCouponModel.fromJson(rawData).toEntity();
+
+          if (currentCoupon.status != CourseCouponStatus.active) {
+            throw CustomException(
+              message: LocaleKeys.errorOccurredMessage,
+            );
+          }
+
+          if (currentCoupon.isExpired) {
+            throw CustomException(
+              message: LocaleKeys.errorOccurredMessage,
+            );
+          }
+
+          if (currentCoupon.usageLimit > 0 &&
+              currentCoupon.usedCount >= currentCoupon.usageLimit) {
+            throw CustomException(
+              message: LocaleKeys.errorOccurredMessage,
+            );
+          }
+          update({
+            'usedCount': currentCoupon.usedCount + 1,
+          });
+        },
+      );
+
+      return right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (e) {
+      return left(
+        ServerFailure(message: LocaleKeys.errorOccurredMessage),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> changeCouponStatus(
+      {required String courseID,
+      required String couponID,
+      required CourseCouponStatus status}) async {
+    try {
+      await databaseservice.updateData(
+          requirements: FireStoreRequirmentsEntity(
+            collection: BackendEndpoints.coursesCollection,
+            docId: courseID,
+            subCollection: BackendEndpoints.couponsSubCollection,
+            subDocId: couponID,
+          ),
+          field: "status",
+          data: status.name);
+      return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {

@@ -10,10 +10,11 @@ class CoursefedbackslistviewItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: theme.cardColor,
+        color: isDark ? Color(0xFF2C2C2C) : Color(0xFFF5F5F5),
         borderRadius: BorderRadius.circular(10),
       ),
       child: ListTile(

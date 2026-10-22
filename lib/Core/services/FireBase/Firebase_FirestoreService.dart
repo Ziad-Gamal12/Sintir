@@ -434,4 +434,43 @@ class FirebaseFirestoreservice implements DataBaseService {
       throw CustomException(message: LocaleKeys.errorOccurredMessage);
     }
   }
+  @override
+Future<T> runDocumentTransaction<T>({
+  required FireStoreRequirmentsEntity requirements,
+  required DocumentTransactionAction<T> action,
+}) async {
+  try {
+    final ref = _resolveUpdateTarget(requirements);
+
+    return await firestore.runTransaction<T>((transaction) async {
+      final snapshot = await transaction.get(ref);
+
+      Map<String, dynamic>? pendingUpdate;
+
+      final result = action(
+        snapshot.data(),
+        (fields) {
+          pendingUpdate = {
+            ...?pendingUpdate,
+            ...fields,
+          };
+        },
+      );
+
+      if (pendingUpdate != null) {
+        if (!snapshot.exists) {
+          throw StateError(
+            'Cannot update a document that does not exist.',
+          );
+        }
+
+        transaction.update(ref, pendingUpdate!);
+      }
+
+      return result;
+    });
+  } on FirebaseException catch (e) {
+    throw _getFireStoreCustomException(e: e);
+  }
+}
 }

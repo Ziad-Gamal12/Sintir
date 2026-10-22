@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:dartz/dartz.dart';
+import 'package:sintir/Core/Enums/CourseCouponEnum.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/entities/FetchDataResponses/GetCourseCouponsResponseEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
@@ -29,5 +30,10 @@ abstract class CourseCouponsRepo {
   Future<Either<Failure, void>> useCoupon({
     required CourseCouponEntity coupon,
     required String courseID,
+  });
+  Future<Either<Failure, void>> changeCouponStatus({
+    required String courseID,
+    required String couponID,
+    required CourseCouponStatus status,
   });
 }

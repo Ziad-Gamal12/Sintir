@@ -28,8 +28,8 @@ class _AddCourseCouponViewBodyState extends State<AddCourseCouponViewBody> {
   Future<void> showDatePickerDialog() async {
     final value = await showDatePicker(
       context: context,
-      firstDate: DateTime(1990),
-      lastDate: DateTime(2100),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(Duration(days: 365)),
     );
     if (value != null) {
       setState(() => pickedDate = value);
