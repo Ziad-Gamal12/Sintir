@@ -5,7 +5,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Helper/CourseDetailsCouponsViewHelper.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseDetailsCouponsViewContent.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/CouponItemActionsCubit/coupon_item_actions_cubit.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/cubit/coupon_item_actions_cubit.dart';
 
 class CourseDetailsCouponsViewBody extends StatefulWidget {
   const CourseDetailsCouponsViewBody({

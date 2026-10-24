@@ -82,6 +82,10 @@ class Assets {
   /// assets/Icons/SVG_Icons/BottomNavBarSearchInActiveIcon.svg
   static const String assetsIconsSVGIconsBottomNavBarSearchInActiveIcon = "assets/Icons/SVG_Icons/BottomNavBarSearchInActiveIcon.svg";
 
+  /// Assets for assetsIconsSVGIconsCalenderDate
+  /// assets/Icons/SVG_Icons/calenderDate.svg
+  static const String assetsIconsSVGIconsCalenderDate = "assets/Icons/SVG_Icons/calenderDate.svg";
+
   /// Assets for assetsIconsSVGIconsCheckedIcon
   /// assets/Icons/SVG_Icons/Checked_icon.svg
   static const String assetsIconsSVGIconsCheckedIcon = "assets/Icons/SVG_Icons/Checked_icon.svg";

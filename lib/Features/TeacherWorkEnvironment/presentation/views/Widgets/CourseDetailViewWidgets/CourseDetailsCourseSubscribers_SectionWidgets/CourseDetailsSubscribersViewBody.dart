@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, file_names
+// ignore_for_file: file_names
 
 import 'dart:async';
 
@@ -8,11 +8,11 @@ import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubsc
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
+import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomSearchTextField.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersGridView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersLoadingGridView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseStudentsCount.dart';
-import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
 class CourseDetailsSubscribersViewBody extends StatefulWidget {
@@ -25,23 +25,24 @@ class CourseDetailsSubscribersViewBody extends StatefulWidget {
 }
 
 class _CourseDetailsSubscribersViewBodyState
-    extends State<CourseDetailsSubscribersViewBody>
-    with AutomaticKeepAliveClientMixin {
+    extends State<CourseDetailsSubscribersViewBody> {
   final TextEditingController controller = TextEditingController();
+  final ScrollController scrollController = ScrollController();
   final List<SubscriberEntity> _subscribers = [];
   final List<SubscriberEntity> _searchSubscribers = [];
-
-  late ScrollController scrollController;
   Timer? _debounce;
-
-  bool hasMore = true;
   bool isSearching = false;
+  bool _normalHasMore = true;
+  bool _searchHasMore = true;
+  bool _normalPageLoading = false;
+  bool _searchPageLoading = false;
+  bool _searchReady = false;
+  bool _normalInitialLoading = true;
+  bool _searchInitialLoading = false;
 
   @override
   void initState() {
     super.initState();
-    scrollController = ScrollController();
-
     final cubit = context.read<CourseSubscribtionsCubit>();
 
     cubit.getCoursSubscribers(isPaginate: false);
@@ -50,45 +51,56 @@ class _CourseDetailsSubscribersViewBodyState
 
     scrollController.addListener(() {
       if (!mounted) return;
-
-      if (_shouldPaginate(cubit)) {
-        if (isSearching) {
-          cubit.searchSubscribers(
-            keyword: controller.text.trim(),
-            isPaginate: true,
-          );
-        } else {
-          cubit.getCoursSubscribers(isPaginate: true);
-        }
+      if (!scrollController.hasClients ||
+          scrollController.position.extentAfter > 300) {
+        return;
+      }
+      if (isSearching &&
+          _searchReady &&
+          _searchHasMore &&
+          !_searchPageLoading) {
+        _searchPageLoading = true;
+        cubit.searchSubscribers(
+          keyword: controller.text.trim(),
+          isPaginate: true,
+        );
+      } else if (!isSearching && _normalHasMore && !_normalPageLoading) {
+        _normalPageLoading = true;
+        cubit.getCoursSubscribers(isPaginate: true);
       }
     });
-  }
-
-  bool _shouldPaginate(CourseSubscribtionsCubit cubit) {
-    return scrollController.position.pixels >=
-            scrollController.position.maxScrollExtent - 200 &&
-        hasMore &&
-        cubit.state is! GetCourseSubscribersLoading &&
-        cubit.state is! SearchSubscribersLoading;
   }
 
   void _onSearchChanged() {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
 
-    _debounce = Timer(const Duration(milliseconds: 500), () {
-      final keyword = controller.text.trim();
-      final cubit = context.read<CourseSubscribtionsCubit>();
-
-      final searching = keyword.isNotEmpty;
-      if (searching != isSearching) {
-        setState(() {
-          isSearching = searching;
-        });
-      }
-
-      if (searching) {
-        cubit.searchSubscribers(keyword: keyword, isPaginate: false);
-      }
+    final keyword = controller.text.trim();
+    final cubit = context.read<CourseSubscribtionsCubit>();
+    cubit.invalidateSubscriberSearch();
+    if (keyword.isEmpty) {
+      _debounce?.cancel();
+      setState(() {
+        isSearching = false;
+        _searchReady = false;
+        _searchInitialLoading = false;
+        _searchSubscribers.clear();
+      });
+      _searchHasMore = true;
+      if (scrollController.hasClients) scrollController.jumpTo(0);
+      return;
+    }
+    setState(() {
+      isSearching = true;
+      _searchReady = false;
+      _searchInitialLoading = true;
+      _searchSubscribers.clear();
+      _searchHasMore = true;
+      _searchPageLoading = false;
+    });
+    _debounce = Timer(const Duration(milliseconds: 400), () {
+      if (scrollController.hasClients) scrollController.jumpTo(0);
+      _searchReady = true;
+      cubit.searchSubscribers(keyword: keyword, isPaginate: false);
     });
   }
 
@@ -103,80 +115,151 @@ class _CourseDetailsSubscribersViewBodyState
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-
     return BlocConsumer<CourseSubscribtionsCubit, CourseSubscribtionsState>(
       listener: (context, state) {
         if (state is GetCourseSubscribersSuccess) {
+          _normalInitialLoading = false;
+          _normalPageLoading = false;
           if (state.response.isPaginate) {
-            _subscribers.addAll(state.response.subscribers);
+            _merge(_subscribers, state.response.subscribers);
           } else {
             _subscribers
               ..clear()
               ..addAll(state.response.subscribers);
           }
-          hasMore = state.response.hasMore;
+          _normalHasMore =
+              state.response.hasMore && state.response.subscribers.isNotEmpty;
           setState(() {});
         }
 
+        if (state is GetCourseSubscribersFailure) {
+          _normalInitialLoading = false;
+          _normalPageLoading = false;
+          if (_subscribers.isNotEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.errMessage)),
+            );
+          }
+        }
+
         if (state is SearchSubscribersSuccess) {
+          _searchInitialLoading = false;
+          _searchPageLoading = false;
           if (state.response.isPaginate) {
-            _searchSubscribers.addAll(state.response.subscribers);
+            _merge(_searchSubscribers, state.response.subscribers);
           } else {
             _searchSubscribers
               ..clear()
               ..addAll(state.response.subscribers);
           }
-          hasMore = state.response.hasMore;
+          _searchHasMore =
+              state.response.hasMore && state.response.subscribers.isNotEmpty;
           setState(() {});
+        }
+        if (state is SearchSubscribersFailure) {
+          _searchInitialLoading = false;
+          _searchPageLoading = false;
+          if (_searchSubscribers.isNotEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.errMessage)),
+            );
+          }
         }
       },
       builder: (context, state) {
         final list = isSearching ? _searchSubscribers : _subscribers;
-
-        return ListView(
+        final initialLoading = isSearching
+            ? _searchInitialLoading
+            : _normalInitialLoading && _subscribers.isEmpty;
+        final failure = isSearching
+            ? state is SearchSubscribersFailure
+            : state is GetCourseSubscribersFailure;
+        return CustomScrollView(
           controller: scrollController,
-          padding: const EdgeInsets.symmetric(
-            horizontal: KHorizontalPadding,
-            vertical: KVerticalPadding,
-          ),
-          children: [
-            CustomSearchTextField(controller: controller),
-            const SizedBox(height: 20),
-            CourseStudentsCount(count: widget.courseEntity.studentsCount),
-            const SizedBox(height: 20),
-            if (state is GetCourseSubscribersLoading && _subscribers.isEmpty)
-              const CourseDetailsSubscribersLoadingGridView()
-            else if (list.isNotEmpty)
-              CourseDetailsSubscribersGridView(
-                subscribers: list,
-                courseEntity: widget.courseEntity,
+          slivers: [
+            SliverPadding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+                sliver: SliverToBoxAdapter(
+                    child: CustomSearchTextField(controller: controller))),
+            SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                sliver: SliverToBoxAdapter(
+                    child: CourseStudentsCount(
+                        count: widget.courseEntity.studentsCount))),
+            const SliverToBoxAdapter(child: SizedBox(height: 16)),
+            if (initialLoading)
+              const SliverPadding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  sliver: CourseDetailsSubscribersLoadingGridView())
+            else if (failure && list.isEmpty)
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CustomErrorWidget(
+                        errormessage: state is GetCourseSubscribersFailure
+                            ? state.errMessage
+                            : (state as SearchSubscribersFailure).errMessage,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          if (isSearching) {
+                            setState(() => _searchInitialLoading = true);
+                            context
+                                .read<CourseSubscribtionsCubit>()
+                                .searchSubscribers(
+                                    keyword: controller.text.trim(),
+                                    isPaginate: false);
+                          } else {
+                            setState(() => _normalInitialLoading = true);
+                            context
+                                .read<CourseSubscribtionsCubit>()
+                                .getCoursSubscribers(isPaginate: false);
+                          }
+                        },
+                        child: Text(LocaleKeys.reportRetry),
+                      ),
+                    ],
+                  ),
+                ),
               )
+            else if (list.isNotEmpty)
+              SliverPadding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  sliver: CourseDetailsSubscribersGridView(
+                    subscribers: list,
+                    courseEntity: widget.courseEntity,
+                  ))
             else if (state is! GetCourseSubscribersLoading &&
                 state is! SearchSubscribersLoading)
-              CustomEmptyWidget(
-                text: LocaleKeys.noSubscribersInCourse,
-              )
-            else if (state is SearchSubscribersLoading &&
-                isSearching &&
-                _searchSubscribers.isEmpty)
-              const CourseDetailsSubscribersLoadingGridView(),
-            Visibility(
-                visible: (state is SearchSubscribersLoading &&
-                        state.isPaginate) ||
-                    (state is GetCourseSubscribersLoading && state.isPaginate),
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: CircularProgressIndicator(
-                    color: KMainColor,
-                  ),
-                ))
+              SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Center(
+                      child: CustomEmptyWidget(
+                          text: LocaleKeys.noSubscribersInCourse))),
+            if (list.isNotEmpty &&
+                (isSearching ? _searchPageLoading : _normalPageLoading))
+              const SliverToBoxAdapter(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Center(
+                          child: SizedBox(
+                              width: 24,
+                              height: 24,
+                              child:
+                                  CircularProgressIndicator(strokeWidth: 2)))))
           ],
         );
       },
     );
   }
 
-  @override
-  bool get wantKeepAlive => true;
+  void _merge(List<SubscriberEntity> target, List<SubscriberEntity> incoming) {
+    final ids = target.map((item) => item.id).toSet();
+    for (final subscriber in incoming) {
+      if (ids.add(subscriber.id)) target.add(subscriber);
+    }
+  }
 }

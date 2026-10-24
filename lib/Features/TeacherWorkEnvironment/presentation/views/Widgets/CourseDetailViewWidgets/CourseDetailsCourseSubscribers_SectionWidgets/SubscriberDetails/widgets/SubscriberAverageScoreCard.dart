@@ -24,24 +24,16 @@ class _SubscriberAverageScoreCardState
 
     return BlocBuilder<SubscriberDetailsCubit, SubscriberDetailsState>(
       buildWhen: (previous, current) {
-        // Only rebuild when the state is a successful calculation or if you need to show a loading/error state.
-        // Based on the original logic, we only check for success.
         return current is SubscriberAvrageCalculationSuccess;
       },
       builder: (context, state) {
-        // Default to 0 if calculation hasn't run or failed (though failure is not explicitly handled in original logic)
         double average =
             state is SubscriberAvrageCalculationSuccess ? state.avrage : 0;
-
-        // Handle loading or initial states (where average is likely 0) by optionally showing a shimmer/skeleton or just 0
-        // Since the original code doesn't explicitly check for loading, we proceed with the average value.
-
         return Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: cardColor, // Use theme card color
-            border: Border.all(
-                color: borderColor), // Use theme divider color for border
+            color: cardColor,
+            border: Border.all(color: borderColor),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Column(

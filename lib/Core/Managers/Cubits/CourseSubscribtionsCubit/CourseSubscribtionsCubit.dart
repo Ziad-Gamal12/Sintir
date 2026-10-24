@@ -21,6 +21,18 @@ class CourseSubscribtionsCubit extends Cubit<CourseSubscribtionsState> {
   final CourseSubscibtionsRepo subscribtionRepo;
   final PaymobRepo paymobRepo;
   final CourseEntity course;
+  int _searchRequestId = 0;
+  String _activeSearchKeyword = '';
+  bool _normalPageLoading = false;
+  bool _searchPageLoading = false;
+  bool _normalHasMore = true;
+  bool _searchHasMore = true;
+
+  void invalidateSubscriberSearch() {
+    _searchRequestId++;
+    _searchPageLoading = false;
+    _activeSearchKeyword = '';
+  }
 
   void subscribeToCourse(
       {required UserEntity userEntity,
@@ -29,7 +41,7 @@ class CourseSubscribtionsCubit extends Cubit<CourseSubscribtionsState> {
     emit(SubscibeingToCourseLoading());
     var result = await subscribtionRepo.subscribeToCourse(
         amount: amount,
-        transactionId: transactionEntity.transactionId ?? "",
+        transactionId: transactionEntity.transactionId,
         transactionEntity: transactionEntity,
         course: course,
         userEntity: userEntity);
@@ -66,29 +78,64 @@ class CourseSubscribtionsCubit extends Cubit<CourseSubscribtionsState> {
   }
 
   Future<void> getCoursSubscribers({required bool isPaginate}) async {
+    if (isPaginate && (_normalPageLoading || !_normalHasMore)) return;
+    _normalPageLoading = true;
     emit(GetCourseSubscribersLoading(
       isPaginate: isPaginate,
     ));
-    var result = await subscribtionRepo.getSubscribers(
-        courseID: course.id, isPaginate: isPaginate);
-    result.fold((failure) {
-      emit(GetCourseSubscribersFailure(errMessage: failure.message));
-    }, (response) {
-      emit(GetCourseSubscribersSuccess(response: response));
-    });
+    try {
+      final result = await subscribtionRepo.getSubscribers(
+          courseID: course.id, isPaginate: isPaginate);
+      result.fold((failure) {
+        emit(GetCourseSubscribersFailure(errMessage: failure.message));
+      }, (response) {
+        _normalHasMore = response.hasMore && response.subscribers.isNotEmpty;
+        emit(GetCourseSubscribersSuccess(response: response));
+      });
+    } finally {
+      _normalPageLoading = false;
+    }
   }
 
   Future<void> searchSubscribers(
       {required String keyword, required bool isPaginate}) async {
+    final normalizedKeyword = keyword.trim();
+    if (normalizedKeyword.isEmpty) return;
+    if (!isPaginate) {
+      if (normalizedKeyword == _activeSearchKeyword) return;
+      _activeSearchKeyword = normalizedKeyword;
+      _searchRequestId++;
+      _searchHasMore = true;
+      _searchPageLoading = false;
+    } else if (_searchPageLoading ||
+        !_searchHasMore ||
+        normalizedKeyword != _activeSearchKeyword) {
+      return;
+    }
+    final requestId = _searchRequestId;
+    _searchPageLoading = true;
     emit(SearchSubscribersLoading(
       isPaginate: isPaginate,
     ));
-    var result = await subscribtionRepo.searchSubscribers(
-        searchKey: keyword, isPaginate: isPaginate, courseID: course.id);
-    result.fold((failure) {
-      emit(SearchSubscribersFailure(errMessage: failure.message));
-    }, (response) {
-      emit(SearchSubscribersSuccess(response: response));
-    });
+    try {
+      final result = await subscribtionRepo.searchSubscribers(
+          searchKey: normalizedKeyword,
+          isPaginate: isPaginate,
+          courseID: course.id);
+      if (requestId != _searchRequestId ||
+          normalizedKeyword != _activeSearchKeyword) {
+        return;
+      }
+      result.fold((failure) {
+        emit(SearchSubscribersFailure(errMessage: failure.message));
+      }, (response) {
+        _searchHasMore = response.hasMore && response.subscribers.isNotEmpty;
+        emit(SearchSubscribersSuccess(response: response));
+      });
+    } finally {
+      if (requestId == _searchRequestId) {
+        _searchPageLoading = false;
+      }
+    }
   }
 }

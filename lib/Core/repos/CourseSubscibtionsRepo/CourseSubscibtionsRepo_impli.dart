@@ -205,6 +205,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
   }
 
   DocumentSnapshot? _lastSubscribersDoc;
+  final Map<String, DocumentSnapshot?> _lastSearchSubscribersDocs = {};
   final Map<String, dynamic> _baseQuery = {"startAfter": null, "limit": 10};
 
   @override
@@ -280,7 +281,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       required bool isPaginate}) async {
     try {
       Map<String, dynamic> query = {
-        "startAfter": isPaginate ? _lastSubscribersDoc : null,
+        "startAfter": isPaginate ? _lastSearchSubscribersDocs[searchKey] : null,
         "limit": 10,
         "searchField": "name",
         "searchValue": searchKey,
@@ -307,7 +308,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
         ));
       }
 
-      _lastSubscribersDoc = response.lastDocumentSnapshot;
+      _lastSearchSubscribersDocs[searchKey] = response.lastDocumentSnapshot;
 
       final subscribers = await compute(_parseSubscribers, response.listData!);
       final hasMore = response.hasMore ?? false;

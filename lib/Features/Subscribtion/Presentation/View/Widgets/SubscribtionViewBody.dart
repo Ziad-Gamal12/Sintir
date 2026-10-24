@@ -147,7 +147,6 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
                   return;
                 }
 
-                // Continue with the existing payment workflow.
                 context.read<CourseSubscribtionsCubit>().payWithWallet(
                       userEntity: getUserData(),
                       amount: selectedCoupon.applyDiscount(

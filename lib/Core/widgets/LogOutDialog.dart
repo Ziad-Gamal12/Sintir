@@ -15,14 +15,12 @@ class LogoutDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    final bool isDark = theme.brightness == Brightness.dark;
 
-    // Theme-aware colors
     final Color dialogBackgroundColor =
         theme.dialogTheme.backgroundColor ?? theme.cardColor;
     final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
     const Color confirmButtonColor = Colors.red;
-    final Color confirmTextColor = theme.colorScheme.onError;
+    final Color confirmTextColor = Colors.white;
     final Color cancelButtonColor = theme.scaffoldBackgroundColor;
     final Color cancelTextColor = primaryTextColor;
     final BorderSide cancelButtonBorder = BorderSide(color: theme.dividerColor);

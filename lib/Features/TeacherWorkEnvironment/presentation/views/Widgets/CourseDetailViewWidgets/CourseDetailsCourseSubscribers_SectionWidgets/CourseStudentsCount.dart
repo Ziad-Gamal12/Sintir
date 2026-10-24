@@ -12,28 +12,35 @@ class CourseStudentsCount extends StatelessWidget {
     final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
     final Color accentColor = theme.colorScheme.primary;
 
-    return RichText(
-      text: TextSpan(
-        style: AppTextStyles(context).regular16,
-        children: [
-          TextSpan(
-              text: LocaleKeys.subscribersCount,
-              style: AppTextStyles(context)
-                  .regular16
-                  .copyWith(color: primaryTextColor)),
-          TextSpan(
-            text: " $count ",
-            style: AppTextStyles(context).semiBold16.copyWith(
-                  color: accentColor,
-                ),
+    return Row(
+      children: [
+        Container(
+          width: 8,
+          height: 8,
+          decoration: BoxDecoration(shape: BoxShape.circle, color: accentColor),
+        ),
+        SizedBox(
+          width: 6,
+        ),
+        RichText(
+          text: TextSpan(
+            style: AppTextStyles(context).regular16,
+            children: [
+              TextSpan(
+                  text: LocaleKeys.subscribersCount,
+                  style: AppTextStyles(context)
+                      .regular16
+                      .copyWith(color: primaryTextColor)),
+              TextSpan(
+                text: " $count ",
+                style: AppTextStyles(context).semiBold16.copyWith(
+                      color: primaryTextColor,
+                    ),
+              ),
+            ],
           ),
-          TextSpan(
-              text: LocaleKeys.person,
-              style: AppTextStyles(context)
-                  .regular16
-                  .copyWith(color: primaryTextColor)),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

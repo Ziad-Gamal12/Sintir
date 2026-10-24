@@ -5,7 +5,6 @@ import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/SubscriberEnrolledCoursesListViewLoading.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/SubscriberEnrolledDisplayedCoursesListView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/subuscriber_details_cubit/subuscriber_details_cubit.dart';
-import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
 class SubscriberEnrolledCoursesListView extends StatefulWidget {
@@ -42,9 +41,7 @@ class _SubscriberEnrolledCoursesListViewState
         return SubscriberEnrolledDisplayedCoursesListView(
             courses: state.courses);
       } else {
-        return const CircularProgressIndicator(
-          color: KMainColor,
-        );
+        return const SubscriberEnrolledCoursesListViewLoading();
       }
     });
   }
