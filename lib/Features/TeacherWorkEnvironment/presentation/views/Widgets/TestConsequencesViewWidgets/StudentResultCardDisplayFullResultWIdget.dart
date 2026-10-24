@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/ReviewTestResultView.dart';
-import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
 class StudentResultCardAction extends StatelessWidget {
@@ -13,6 +12,7 @@ class StudentResultCardAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = AppTextStyles(context);
+    final theme = Theme.of(context);
 
     return InkWell(
       borderRadius: BorderRadius.circular(12),
@@ -21,20 +21,23 @@ class StudentResultCardAction extends StatelessWidget {
             .push(Reviewtestresultview.routeName, extra: testResultEntity);
       },
       child: Container(
+        constraints: const BoxConstraints(minHeight: 48),
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: KMainColor.withValues(alpha: 0.1),
+          color: theme.colorScheme.primary.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.visibility_rounded, color: KMainColor, size: 22),
+            Icon(Icons.visibility_rounded,
+                color: theme.colorScheme.primary, size: 22),
             const SizedBox(width: 6),
             Text(
               LocaleKeys.viewResult,
-              style: style.regular14.copyWith(color: KMainColor),
+              style:
+                  style.semiBold14.copyWith(color: theme.colorScheme.primary),
             ),
           ],
         ),

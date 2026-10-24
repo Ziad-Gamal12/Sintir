@@ -8,6 +8,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/SubscriberEnrolledCoursesHeader.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/SubscriberEnrolledCoursesListView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/SubscriberResultsSliverListView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/SubscriberPerformanceSummary.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/subuscriber_details_cubit/subuscriber_details_cubit.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
@@ -23,54 +24,35 @@ class SubscriberDetailsViewBody extends StatefulWidget {
 
 class _SubscriberDetailsViewBodyState extends State<SubscriberDetailsViewBody> {
   List<TestResultEntity> results = [];
+  SubscriberPerformanceSummary _summary =
+      SubscriberPerformanceSummary.fromResults(const []);
   @override
   void initState() {
     super.initState();
     final cubit = context.read<SubscriberDetailsCubit>();
-    // Call services with a small delay to prevent multiple state emissions clashing
-    // or to ensure the context is fully available, although `addPostFrameCallback`
-    // already helps with the latter. We maintain the original structure for logic.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      cubit.getSubscibersEnrolledCoursesForTeacher(
-        subscriberId: widget.requirements.subscriber.id,
-        contentCreatorId: widget.requirements.contentCreatorId,
-      );
-      Future.delayed(const Duration(milliseconds: 500), () {
-        cubit.getSubscriberResults(
-          subscriberId: widget.requirements.subscriber.id,
-          courseId: widget.requirements.courseId,
-        );
-      });
-
-      Future.delayed(const Duration(milliseconds: 1000), () {
-        cubit.getSubscriberHighestScore(
-          subscriberId: widget.requirements.subscriber.id,
-          courseId: widget.requirements.courseId,
-        );
-      });
-      Future.delayed(const Duration(milliseconds: 1500), () {
-        cubit.getSubscriberLowestScore(
-          subscriberId: widget.requirements.subscriber.id,
-          courseId: widget.requirements.courseId,
-        );
-      });
-    });
+    cubit.getSubscibersEnrolledCoursesForTeacher(
+      subscriberId: widget.requirements.subscriber.id,
+      contentCreatorId: widget.requirements.contentCreatorId,
+    );
+    cubit.getSubscriberResults(
+      subscriberId: widget.requirements.subscriber.id,
+      courseId: widget.requirements.courseId,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     final ThemeData theme = Theme.of(context);
-    final Color dividerColor = theme.dividerColor;
     final Color headerTextColor = theme.textTheme.bodyLarge!.color!;
 
     return BlocConsumer<SubscriberDetailsCubit, SubscriberDetailsState>(
+      buildWhen: (previous, current) =>
+          current is GetSubscriberResultsSuccess ||
+          current is GetSubscriberResultsFailure,
       listener: (context, state) {
         if (state is GetSubscriberResultsSuccess) {
-          // Update results list when results are successfully fetched
           results = state.results;
-          // Calculate average score after getting all results
-          context.read<SubscriberDetailsCubit>().getSubscriberAverageScore();
+          _summary = SubscriberPerformanceSummary.fromResults(state.results);
         }
       },
       builder: (context, state) => Padding(
@@ -80,51 +62,51 @@ class _SubscriberDetailsViewBodyState extends State<SubscriberDetailsViewBody> {
         ),
         child: CustomScrollView(
           slivers: [
-            // Subscriber Details Card
             SliverToBoxAdapter(
               child: CustomSubscriberDetailsCard(
                 subscriberentity: widget.requirements.subscriber,
               ),
             ),
-
-            // Enrolled Courses Header
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 24,
+              ),
+            ),
             const SliverToBoxAdapter(
               child: SubscriberEnrolledCoursesHeader(),
             ),
 
-            // Enrolled Courses List
             SliverToBoxAdapter(
-              child: SizedBox(
-                  height: height * .28,
-                  child: const SubscriberEnrolledCoursesListView()),
+              child: const SizedBox(
+                height: 220,
+                child: SubscriberEnrolledCoursesListView(),
+              ),
             ),
 
             // Divider 1
             SliverToBoxAdapter(
-              child: Divider(
-                height: 40,
-                color: dividerColor,
+              child: SizedBox(
+                height: 24,
               ),
             ),
 
-            // Analysis Section (Highest, Lowest, Average Scores)
             SliverToBoxAdapter(
               child: SubscriberAnalysisSection(
                 results: results,
+                summary: _summary,
               ),
             ),
 
             // Divider 2
             SliverToBoxAdapter(
-              child: Divider(
-                height: 40,
-                color: dividerColor,
+              child: SizedBox(
+                height: 24,
               ),
             ),
 
             // Test Results Header
             SliverToBoxAdapter(
-                child: Text(LocaleKeys.results,
+                child: Text(LocaleKeys.examResultsHistory,
                     style: AppTextStyles(context)
                         .semiBold20
                         .copyWith(color: headerTextColor))),

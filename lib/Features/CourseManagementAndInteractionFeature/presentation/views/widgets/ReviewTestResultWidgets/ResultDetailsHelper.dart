@@ -11,10 +11,11 @@ class ResultDetailsHelper {
   }
 
   static double getResultPercent(TestResultEntity testresulteEntity) {
-    return ((getSuccessQuestions(testresulteEntity).length /
-                testresulteEntity.totalQuestions) *
-            100)
-        .toDouble();
+    if (testresulteEntity.totalQuestions <= 0) return 0;
+    final percent = getSuccessQuestions(testresulteEntity).length /
+        testresulteEntity.totalQuestions *
+        100;
+    return percent.isFinite ? percent : 0;
   }
 
   static Color getProgressColor(TestResultEntity testresulteEntity) {

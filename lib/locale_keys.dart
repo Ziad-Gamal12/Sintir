@@ -6,6 +6,24 @@ import 'package:localingo/localingo.dart';
 /// Type-safe translation keys
 /// Usage: Text(LocaleKeys.appName)
 class LocaleKeys {
+  static String get subscriberDetailsTitle => 'subscriber_details_title'.tr();
+  static String get subscriberEducationFallback =>
+      'subscriber_education_fallback'.tr();
+  static String get subscriberAddressFallback =>
+      'subscriber_address_fallback'.tr();
+  static String get subscriberPhoneFallback => 'subscriber_phone_fallback'.tr();
+  static String get subscriberJoinedDate => 'subscriber_joined_date'.tr();
+  static String get studentCode => 'student_code'.tr();
+  static String get subscriberIdCopied => 'subscriber_id_copied'.tr();
+  static String get copy => 'copy'.tr();
+  static String get copyFailed => 'copy_failed'.tr();
+  static String get subscribedCourses => 'subscribed_courses'.tr();
+  static String coursesCount(int count) =>
+      'courses_count'.tr(args: {'count': '$count'});
+  static String get performanceTrend => 'performance_trend'.tr();
+  static String get examScoreProgression => 'exam_score_progression'.tr();
+  static String get examResultsHistory => 'exam_results_history'.tr();
+  static String get educationLevel => 'education_level'.tr();
   static String get welcomeTo => 'welcome_to'.tr();
   static String get description1 => 'description_1'.tr();
   static String get learnEasySafe => 'learn_easy_safe'.tr();

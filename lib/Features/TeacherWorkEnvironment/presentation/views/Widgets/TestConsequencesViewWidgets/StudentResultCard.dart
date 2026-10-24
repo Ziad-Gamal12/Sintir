@@ -14,52 +14,49 @@ class StudentResultCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      padding: const EdgeInsets.all(18),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: theme.cardColor,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
             color: theme.brightness == Brightness.light
-                ? Colors.grey.shade100
-                : Colors.black26,
-            blurRadius: 20,
-            offset: const Offset(0, 8),
+                ? theme.shadowColor.withValues(alpha: .06)
+                : theme.shadowColor.withValues(alpha: .16),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
           ),
         ],
         border: Border.all(
           color: theme.brightness == Brightness.light
-              ? Colors.grey.shade50
-              : Colors.white10,
+              ? theme.dividerColor.withValues(alpha: .45)
+              : theme.dividerColor.withValues(alpha: .6),
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           StudentResultCardAction(testResultEntity: testResultEntity),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
 
           /// Top Row — Avatar + Info + Button
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               StudentAvatar(url: testResultEntity.joinedbyentity.imageUrl),
-              const SizedBox(width: 16),
+              const SizedBox(width: 12),
               Expanded(child: StudentInfoTexts(testResult: testResultEntity)),
               const SizedBox(width: 8),
             ],
           ),
 
-          const SizedBox(height: 18),
+          const SizedBox(height: 12),
           Divider(
-            thickness: 0.6,
-            color: theme.dividerColor,
-          ),
-
-          /// Stats
-          const Spacer(),
+              height: 1,
+              thickness: 1,
+              color: theme.dividerColor.withValues(alpha: .5)),
+          const SizedBox(height: 12),
           StudentResultStatsRow(testResultEntity: testResultEntity),
-          const Spacer(),
         ],
       ),
     )

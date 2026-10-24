@@ -21,31 +21,13 @@ class StudentStatItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = AppTextStyles(context);
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        gradient: LinearGradient(
-          colors: [
-            backgroundColor.withValues(alpha: 0.85),
-            isDark ? Colors.white10 : Colors.white.withValues(alpha: 0.4),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: backgroundColor.withValues(alpha: isDark ? 0.2 : 0.35),
-            blurRadius: 25,
-            offset: const Offset(0, 12),
-          ),
-        ],
-        border: Border.all(
-          color: isDark ? Colors.white10 : Colors.white.withValues(alpha: 0.3),
-          width: 0.8,
-        ),
+        color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: .55),
+        border: Border.all(color: theme.dividerColor.withValues(alpha: .45)),
       ),
       child: Row(
         children: [
@@ -63,15 +45,18 @@ class StudentStatItem extends StatelessWidget {
                 Text(
                   title,
                   style: style.regular11.copyWith(
-                    color: isDark ? Colors.white70 : Colors.grey.shade600,
+                    color: theme.colorScheme.onSurfaceVariant,
                     letterSpacing: 0.3,
                   ),
                 ),
                 const SizedBox(height: 6),
-                Text(
-                  value,
-                  style: style.semiBold16.copyWith(
-                    color: isDark ? Colors.white : Colors.black87,
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Text(
+                    value,
+                    style: style.semiBold16.copyWith(
+                      color: theme.colorScheme.onSurface,
+                    ),
                   ),
                 ),
               ],

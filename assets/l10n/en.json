@@ -731,5 +731,22 @@
   "megabyte_unit": "MB",
   "video_file_label": "Video content file (Video)",
   "video_metadata": "{resolution} • {duration}",
-  "video_preview": "Preview video"
+  "video_preview": "Preview video",
+  "subscriber_details_title": "Subscriber Details",
+  "subscriber_education_fallback": "Education level not specified",
+  "subscriber_address_fallback": "Address not specified",
+  "subscriber_phone_fallback": "Phone number not available",
+  "subscriber_joined_date": "Joined",
+  "student_code": "Student ID:",
+  "subscriber_id_copied": "Student ID copied",
+  "copy": "Copy",
+  "copy_failed": "Could not copy the student ID",
+  "subscribed_courses": "Subscribed courses",
+  "courses_count": "{count} courses",
+  "performance_trend": "Average score",
+  "exam_score_progression": "Exam score progression",
+  "highest_score": "Highest score",
+  "lowest_score": "Lowest score",
+  "exam_results_history": "Exam results history",
+  "education_level": "Education level"
 }

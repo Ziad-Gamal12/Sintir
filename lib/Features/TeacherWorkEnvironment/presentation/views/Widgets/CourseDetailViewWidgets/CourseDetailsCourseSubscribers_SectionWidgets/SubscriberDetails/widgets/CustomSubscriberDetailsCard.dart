@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/CustomSubscriberDetailsCardAvatar.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/CustomSubscriberDetailsCardInformation.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/SubscriberContactChipsRow.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/SubscriberIdCopyContainer.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/SubscriberJoinedDateRow.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/SubscriberProfileHeader.dart';
 
 class CustomSubscriberDetailsCard extends StatelessWidget {
   const CustomSubscriberDetailsCard(
@@ -9,28 +11,43 @@ class CustomSubscriberDetailsCard extends StatelessWidget {
   final SubscriberEntity subscriberentity;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Card(
-      elevation: 2,
-      color: Theme.of(context).cardColor,
+      elevation: theme.brightness == Brightness.light ? 1 : 0,
+      color: theme.cardColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: theme.dividerColor.withValues(alpha: .45)),
+      ),
       child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Row(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                flex: 1,
-                child: CustomSubscriberDetailsCardAvatar(
-                    imageUrl: subscriberentity.imageUrl),
+              SubscriberProfileHeader(
+                subscriberEntity: subscriberentity,
               ),
-              const SizedBox(
-                width: 10,
+              Divider(
+                  height: 20,
+                  thickness: 1,
+                  color: theme.dividerColor.withValues(alpha: .55)),
+              SubscriberContactChipsRow(
+                  phoneNum: subscriberentity.phone,
+                  address: subscriberentity.address),
+              SizedBox(
+                height: 10,
               ),
-              Expanded(
-                flex: 3,
-                child: CustomSubscriberDetailsCardInformation(
-                    subscriberentity: subscriberentity),
+              if (subscriberentity.joinedDate != null)
+                SubscriberJoinedDateRow(
+                  joinedDate: subscriberentity.joinedDate!,
+                ),
+              SizedBox(
+                height: 10,
               ),
+              SubscriberIdCopyContainer(
+                subscriberID: subscriberentity.id,
+              )
             ],
           )),
     );

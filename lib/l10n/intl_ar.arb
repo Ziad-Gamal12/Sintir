@@ -1,0 +1,20 @@
+{
+  "subscriber_details_title": "تفاصيل المشترك",
+  "subscriber_education_fallback": "المستوى الدراسي غير محدد",
+  "subscriber_address_fallback": "العنوان غير محدد",
+  "subscriber_phone_fallback": "رقم الهاتف غير متاح",
+  "subscriber_joined_date": "تاريخ الانضمام",
+  "student_code": "كود الطالب:",
+  "subscriber_id_copied": "تم نسخ كود الطالب",
+  "copy": "نسخ",
+  "copy_failed": "تعذر نسخ كود الطالب",
+  "subscribed_courses": "اشتراكات الطالب",
+  "courses_count": "{count} كورس",
+  "@courses_count": { "placeholders": { "count": { "type": "int" } } },
+  "performance_trend": "متوسط النتائج",
+  "exam_score_progression": "تطور درجات الاختبارات",
+  "highest_score": "أعلى الدرجات",
+  "lowest_score": "أدنى نتيجة",
+  "exam_results_history": "سجل نتائج الاختبارات",
+  "education_level": "المستوى الدراسي"
+}

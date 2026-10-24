@@ -11,22 +11,15 @@ class SubscriberResultsSliverListView extends StatelessWidget {
   Widget build(BuildContext context) {
     if (testResults.isEmpty) {
       return SliverToBoxAdapter(
-        child: CustomEmptyWidget(
-          text: LocaleKeys.noResults,
-        ),
+        child: CustomEmptyWidget(text: LocaleKeys.noResults),
       );
     }
     return SliverList.builder(
       itemCount: testResults.length,
       itemBuilder: (context, index) {
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          child: AspectRatio(
-            aspectRatio: 2 / 1.75,
-            child: StudentResultCard(
-              testResultEntity: testResults[index],
-            ),
-          ),
+          padding: const EdgeInsets.only(bottom: 12),
+          child: StudentResultCard(testResultEntity: testResults[index]),
         );
       },
     );

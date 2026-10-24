@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/widgets/CustomCachedNetworkImage.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CustomSubscriberDetailsCardAvatar extends StatelessWidget {
   const CustomSubscriberDetailsCardAvatar({
@@ -11,12 +11,25 @@ class CustomSubscriberDetailsCardAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: ClipRRect(
-          borderRadius: BorderRadius.circular(50),
-          child:
-              CustomCachedNetworkImage(imageUrl: imageUrl, fit: BoxFit.cover)),
+    final theme = Theme.of(context);
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: CachedNetworkImage(
+        imageUrl: imageUrl.trim(),
+        fit: BoxFit.cover,
+        placeholder: (context, url) => ColoredBox(
+          color: theme.colorScheme.surfaceContainerHighest,
+          child: Icon(Icons.person_rounded,
+              color: theme.colorScheme.onSurfaceVariant),
+        ),
+        errorWidget: (context, url, error) => ColoredBox(
+          color: theme.colorScheme.surfaceContainerHighest,
+          child: Icon(Icons.person_rounded,
+              color: theme.colorScheme.onSurfaceVariant),
+        ),
+        imageBuilder: (context, provider) =>
+            Image(image: provider, fit: BoxFit.cover),
+      ),
     );
   }
 }
