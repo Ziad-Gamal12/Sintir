@@ -5,6 +5,9 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 class DisplayCourseBottomsheetNavigationRequirmentsEntity {
   final CourseEntity course;
   bool isSubscribed;
+  bool hasSubscriptionCheckResult;
   DisplayCourseBottomsheetNavigationRequirmentsEntity(
-      {required this.course, required this.isSubscribed});
+      {required this.course,
+      required this.isSubscribed,
+      this.hasSubscriptionCheckResult = true});
 }

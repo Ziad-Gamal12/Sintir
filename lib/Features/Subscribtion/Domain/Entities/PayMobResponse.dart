@@ -1,12 +1,7 @@
 class PayMobResponse {
-  String url, paymentid;
-  double amount;
-  String issuer, mobileNumber, currency;
-  PayMobResponse(
-      {required this.url,
-      required this.paymentid,
-      required this.currency,
-      required this.amount,
-      required this.issuer,
-      required this.mobileNumber});
+  const PayMobResponse({required this.url, required this.paymentAttemptId, this.status = 'pending'});
+
+  final String url;
+  final String paymentAttemptId;
+  final String status;
 }

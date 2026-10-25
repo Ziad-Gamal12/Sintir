@@ -1,38 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
-import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/TransactionEntity.dart';
-import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
-import 'package:sintir/Core/models/TransactionModel.dart';
 import 'package:sintir/Core/repos/TeacherTranscationsRepo/TeacherTranscationsRepo.dart';
-import 'package:sintir/Core/services/DataBaseService.dart';
-import 'package:sintir/Core/utils/Backend_EndPoints.dart';
-import 'package:sintir/locale_keys.dart';
 
 class TeacherTranscationsRepoImpl implements TeacherTranscationsRepo {
-  final DataBaseService dataBaseService;
-  TeacherTranscationsRepoImpl({required this.dataBaseService});
+  TeacherTranscationsRepoImpl();
 
   @override
   Future<Either<Failure, void>> storeTransaction(
       {required TransactionEntity transaction, required String userId}) async {
-    try {
-      Map<String, dynamic> transactionJson =
-          TransactionModel.fromEntity(transaction).toJson();
-      await dataBaseService.setData(
-          data: transactionJson,
-          requirements: FireStoreRequirmentsEntity(
-              collection: BackendEndpoints.usersCollectionName,
-              docId: userId,
-              subCollection: BackendEndpoints.transactionsSubCollection,
-              subDocId: transaction.transactionId));
-      return right(null);
-    } on CustomException catch (e) {
-      return left(ServerFailure(message: e.message));
-    } catch (e) {
-      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
-    }
+    return left(ServerFailure(
+      message: 'Financial transactions can only be created by the server.',
+    ));
   }
 
   @override
@@ -40,69 +19,24 @@ class TeacherTranscationsRepoImpl implements TeacherTranscationsRepo {
       {required TransactionEntity transaction,
       required String userId,
       required String newStatus}) async {
-    try {
-      await updateTransactionStatus(
-          userId: userId,
-          status: newStatus,
-          transactionId: transaction.transactionId);
-      if (newStatus.toUpperCase() == "REJECTED" ||
-          newStatus.toUpperCase() == "CANCELLED" ||
-          newStatus.toUpperCase() == "FAILED") {
-        if (transaction.isReconciled == false) {
-          await reStoreTransactionAfterFailure(
-              amount: transaction.amount ?? 0, userId: userId);
-          await updateTransactionIsReconciled(
-              userId: userId,
-              value: true,
-              transactionId: transaction.transactionId);
-        }
-        return right(null);
-      } else if (newStatus.toUpperCase() == "COMPLETED" ||
-          newStatus.toUpperCase() == "APPROVED" ||
-          newStatus.toUpperCase() == "SUCCESS") {
-        if (transaction.isReconciled == true) {
-          await updateTransactionIsReconciled(
-              userId: userId,
-              value: false,
-              transactionId: transaction.transactionId);
-          await deducteFromTeacherWallet(
-            amount: transaction.amount ?? 0,
-            userId: userId,
-          );
-        }
-        return right(null);
-      } else {
-        return right(null);
-      }
-    } on CustomException catch (e) {
-      return left(ServerFailure(message: e.message));
-    } catch (e) {
-      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
-    }
+    return left(ServerFailure(
+      message:
+          'Transaction reconciliation can only be performed by the server.',
+    ));
   }
 
   @override
   Future<void> reStoreTransactionAfterFailure(
       {required double amount, required String userId}) async {
-    await dataBaseService.updateData(
-        requirements: FireStoreRequirmentsEntity(
-          collection: BackendEndpoints.usersCollectionName,
-          docId: userId,
-        ),
-        field: "teacherExtraData.wallet.balance",
-        data: FieldValue.increment(amount));
+    throw UnsupportedError(
+        'Wallet changes can only be performed by the server.');
   }
 
   @override
   Future<void> deducteFromTeacherWallet(
       {required double amount, required String userId}) async {
-    await dataBaseService.updateData(
-        requirements: FireStoreRequirmentsEntity(
-          collection: BackendEndpoints.usersCollectionName,
-          docId: userId,
-        ),
-        field: "teacherExtraData.wallet.balance",
-        data: FieldValue.increment(-amount));
+    throw UnsupportedError(
+        'Wallet changes can only be performed by the server.');
   }
 
   @override
@@ -110,16 +44,8 @@ class TeacherTranscationsRepoImpl implements TeacherTranscationsRepo {
       {required String userId,
       required bool value,
       required String transactionId}) async {
-    await dataBaseService.updateData(
-      requirements: FireStoreRequirmentsEntity(
-        collection: BackendEndpoints.usersCollectionName,
-        docId: userId,
-        subCollection: BackendEndpoints.transactionsSubCollection,
-        subDocId: transactionId,
-      ),
-      field: "isReconciled",
-      data: value,
-    );
+    throw UnsupportedError(
+        'Transaction reconciliation can only be performed by the server.');
   }
 
   @override
@@ -127,15 +53,7 @@ class TeacherTranscationsRepoImpl implements TeacherTranscationsRepo {
       {required String userId,
       required String status,
       required String transactionId}) async {
-    await dataBaseService.updateData(
-      requirements: FireStoreRequirmentsEntity(
-        collection: BackendEndpoints.usersCollectionName,
-        docId: userId,
-        subCollection: BackendEndpoints.transactionsSubCollection,
-        subDocId: transactionId,
-      ),
-      field: "status",
-      data: status,
-    );
+    throw UnsupportedError(
+        'Transaction statuses can only be changed by the server.');
   }
 }

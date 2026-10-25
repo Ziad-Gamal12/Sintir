@@ -1,4 +1,11 @@
 {
+  "payment_verifying": "Payment is being verified. You can safely leave this page and check again later.",
+  "payment_not_completed": "Payment was not completed.",
+  "checkout_expired": "This checkout has expired.",
+  "payment_status_unavailable": "Payment status could not be retrieved. Try again.",
+  "payment_requires_review": "Paymob confirmed a payment, but we could not finalize enrollment automatically. Contact support before paying again.",
+  "check_payment_status": "Check payment status",
+  "leave_checkout": "Leave checkout",
   "subscriber_details_title": "Subscriber Details",
   "subscriber_education_fallback": "Education level not specified",
   "subscriber_address_fallback": "Address not specified",

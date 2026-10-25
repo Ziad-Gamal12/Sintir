@@ -6,6 +6,13 @@ import 'package:localingo/localingo.dart';
 /// Type-safe translation keys
 /// Usage: Text(LocaleKeys.appName)
 class LocaleKeys {
+  static String get paymentVerifying => 'payment_verifying'.tr();
+  static String get paymentNotCompleted => 'payment_not_completed'.tr();
+  static String get checkoutExpired => 'checkout_expired'.tr();
+  static String get paymentStatusUnavailable => 'payment_status_unavailable'.tr();
+  static String get paymentRequiresReview => 'payment_requires_review'.tr();
+  static String get checkPaymentStatus => 'check_payment_status'.tr();
+  static String get leaveCheckout => 'leave_checkout'.tr();
   static String get subscriberDetailsTitle => 'subscriber_details_title'.tr();
   static String get subscriberEducationFallback =>
       'subscriber_education_fallback'.tr();

@@ -1,14 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
-import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
 class PayMobService {
   final Dio dio;
 
   /// Unified Checkout base URL
-  static const String _baseUrl = "https://accept.paymob.com/v1/";
-
   PayMobService({Dio? dio})
       : dio = dio ??
             Dio(
@@ -21,7 +18,8 @@ class PayMobService {
               ),
             );
 
-  /// Step 1: Create Payment Intention
+  /// Intention creation is server-side. This client service remains only to
+  /// fail closed for legacy callers while existing installations migrate.
   Future<Map<String, dynamic>> createPaymentIntention({
     required int amountCents,
     required String currency,
@@ -29,35 +27,12 @@ class PayMobService {
     required Map<String, dynamic> billingData,
     required List<Map<String, dynamic>> items,
   }) async {
-    try {
-      final response = await dio.post(
-        "${_baseUrl}intention/",
-        data: {
-          "amount": amountCents,
-          "currency": currency,
-          "items": items,
-          "payment_methods": integrationIds,
-          "billing_data": billingData,
-        },
-        options: Options(
-          headers: {
-            "Authorization": "Token $PayMobSecretKey",
-          },
-        ),
-      );
-
-      return response.data;
-    } on DioException catch (e) {
-      throw CustomException(
-          message: e.response?.data?["message"] ?? "Payment intention error");
-    } catch (e) {
-      throw CustomException(message: LocaleKeys.errorOccurredMessage);
-    }
+    throw CustomException(message: LocaleKeys.unexpectedError);
   }
 
   String buildCheckoutUrl({
     required String clientSecret,
   }) {
-    return "https://accept.paymob.com/unifiedcheckout/?publicKey=$PayMobTestPublicKey&clientSecret=$clientSecret";
+    throw CustomException(message: LocaleKeys.unexpectedError);
   }
 }

@@ -14,6 +14,8 @@ import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo_impl.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo_impli.dart';
+import 'package:sintir/Core/repos/CourseCheckoutRepo.dart';
+import 'package:sintir/Core/repos/CourseCheckoutRepoImpl.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo_impl.dart';
 import 'package:sintir/Core/repos/File-Item-Repo/FileItemRepo.dart';
@@ -24,8 +26,6 @@ import 'package:sintir/Core/repos/ResetPaswordRepo/ResetPaswordRepo.dart';
 import 'package:sintir/Core/repos/ResetPaswordRepo/ResetPaswordRepoImp.dart';
 import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
 import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepoImpli.dart';
-import 'package:sintir/Core/repos/TeacherTranscationsRepo/TeacherTranscationsRepo.dart';
-import 'package:sintir/Core/repos/TeacherTranscationsRepo/TeacherTranscationsRepoImpl.dart';
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo-Impli.dart';
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepo.dart';
@@ -60,10 +60,8 @@ import 'package:sintir/Features/Support/Data/Repos/SupportTicketsRepoImpl.dart';
 import 'package:sintir/Features/Support/Domain/Repos/SupportChatRepo.dart';
 import 'package:sintir/Features/Support/Domain/Repos/SupportTicketsRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/SubscribersDetailsRepoImpl.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/TeacherWalletRepoImpl.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/WithDrawalTeacherBalanceRepoImpl.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/SubscribersDetailsRepo.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/TeacherWalletRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/WithDrawalTeacherBalanceRepo.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/UseCases/UpdateCourseReportStatusUseCase.dart';
 import 'package:sintir/constant.dart';
@@ -121,8 +119,13 @@ void setup_Getit() {
   getIt.registerLazySingleton<Assetspickerrepo>(
       () => Assetspickerrepoimpli(pickerassetsservice: getIt()));
 
+  getIt.registerLazySingleton<CourseCheckoutGateway>(
+      () => CourseCheckoutRepoImpl());
   getIt.registerLazySingleton<CourseSubscibtionsRepo>(() =>
-      CourseSubscriptionsRepoImpl(databaseService: getIt<DataBaseService>()));
+      CourseSubscriptionsRepoImpl(
+        databaseService: getIt<DataBaseService>(),
+        checkoutGateway: getIt<CourseCheckoutGateway>(),
+      ));
 
   getIt
       .registerLazySingleton<CourseReportsRepo>(() => CourseReportsRepoimpli());
@@ -137,11 +140,6 @@ void setup_Getit() {
 
   getIt.registerLazySingleton<SearchRepo>(
       () => SearchRepoImpl(databaseservice: getIt<DataBaseService>()));
-
-  getIt.registerLazySingleton<TeacherWalletRepo>(() => TeacherWalletRepoImpl(
-        databaseservice: getIt<DataBaseService>(),
-        authRepo: getIt(),
-      ));
 
   getIt.registerLazySingleton<MyMistakesRepo>(
       () => MyMistakesRepoImpl(databaseservice: getIt<DataBaseService>()));
@@ -164,9 +162,6 @@ void setup_Getit() {
           storageService: getIt(),
           authRepo: getIt(),
           assetspickerrepo: getIt()));
-
-  getIt.registerLazySingleton<TeacherTranscationsRepo>(() =>
-      TeacherTranscationsRepoImpl(dataBaseService: getIt<DataBaseService>()));
 
   getIt.registerLazySingleton<MyTransactionsRepo>(
       () => MyTransactionsRepoImpl(dataBaseService: getIt<DataBaseService>()));

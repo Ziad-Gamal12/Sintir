@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
-import 'package:sintir/Core/entities/TransactionEntity.dart';
-import 'package:sintir/Core/helper/GetUserData.dart';
-import 'package:sintir/Core/utils/Backend_EndPoints.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Core/Managers/Cubits/course_checkout_cubit/course_checkout_cubit.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebviewbodyPaymentSuccessWidget.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobResponse.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TransactionsStatusEnum.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Webviewbody extends StatefulWidget {
@@ -20,10 +17,16 @@ class Webviewbody extends StatefulWidget {
 
 class _WebviewbodyState extends State<Webviewbody> {
   late WebViewController controller;
-  bool handledSuccess = false;
+  Timer? _pollTimer;
+  String _status = 'pending';
+  bool _checking = false;
+  bool _returnedFromCheckout = false;
+  int _checks = 0;
 
   @override
   void initState() {
+    super.initState();
+    _status = widget.response.status.toLowerCase();
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
@@ -31,33 +34,10 @@ class _WebviewbodyState extends State<Webviewbody> {
           onNavigationRequest: (NavigationRequest request) {
             final url = request.url;
 
-            if (url.contains("success=true") && !handledSuccess) {
-              handledSuccess = true;
-              TransactionEntity transaction = TransactionEntity(
-                amount: widget.response.amount,
-                method: BackendEndpoints.payMentMethod,
-                createdAt: DateTime.now(),
-                currency: widget.response.currency,
-                isReconciled: false,
-                issuer: widget.response.issuer,
-                mobileNumber: widget.response.mobileNumber,
-                status: TransactionsStatus.other,
-                transactionId: widget.response.paymentid,
-              );
-              context.read<CourseSubscribtionsCubit>().subscribeToCourse(
-                    amount: widget.response.amount,
-                    userEntity: getUserData(),
-                    transactionEntity: transaction,
-                  );
-              return NavigationDecision.prevent;
-            }
-
-            if (url.contains("success=true") && handledSuccess) {
-              return NavigationDecision.prevent;
-            }
-
-            if (url.contains("success=false")) {
-              return NavigationDecision.prevent;
+            final uri = Uri.tryParse(url);
+            if (uri != null && (uri.queryParameters.containsKey('success') || uri.path.contains('payment-status'))) {
+              _returnedFromCheckout = true;
+              _startPolling();
             }
 
             return NavigationDecision.navigate;
@@ -66,29 +46,62 @@ class _WebviewbodyState extends State<Webviewbody> {
       )
       ..loadRequest(Uri.parse(widget.response.url));
 
-    super.initState();
+  }
+
+  void _startPolling() {
+    if (_pollTimer != null) return;
+    _pollTimer = Timer.periodic(const Duration(seconds: 4), (_) => _checkStatus());
+    _checkStatus();
+  }
+
+  Future<void> _checkStatus() async {
+    if (_checking || !mounted || _checks >= 30 || ['succeeded', 'failed', 'expired', 'paid_requires_review'].contains(_status)) return;
+    _checking = true;
+    _checks++;
+    try {
+      final result = await context.read<CourseCheckoutCubit>().refreshStatus(widget.response.paymentAttemptId);
+      if (!mounted) return;
+      setState(() => _status = result.toLowerCase());
+      if (['succeeded', 'failed', 'expired', 'paid_requires_review'].contains(_status)) _pollTimer?.cancel();
+    } finally {
+      _checking = false;
+    }
+  }
+
+  Future<void> _manualRefresh() async {
+    _checks = 0;
+    _pollTimer?.cancel();
+    _pollTimer = null;
+    await _checkStatus();
+    if (mounted && !['succeeded', 'failed', 'expired', 'paid_requires_review'].contains(_status)) {
+      _pollTimer = Timer.periodic(const Duration(seconds: 4), (_) => _checkStatus());
+    }
+  }
+
+  @override
+  void dispose() {
+    _pollTimer?.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CourseSubscribtionsCubit, CourseSubscribtionsState>(
-      builder: (context, state) {
-        if (state is SubscibeingToCourseLoading) {
-          return const Center(
-              child: CircularProgressIndicator(
-            color: KMainColor,
-          ));
-        } else if (state is SubscibeingToCourseFailure) {
-          return Center(
-              child: Text(
-            state.errMessge,
-            style: AppTextStyles(context).bold24.copyWith(color: Colors.red),
-          ));
-        } else if (state is SubscibeingToCourseSuccess) {
-          return const WebviewbodyPaymentSuccessWidget();
-        }
-        return WebViewWidget(controller: controller);
-      },
-    );
+    if (_status == 'succeeded') return const WebviewbodyPaymentSuccessWidget();
+    if (_returnedFromCheckout) {
+      final message = switch (_status) {
+        'failed' => LocaleKeys.paymentNotCompleted,
+        'expired' => LocaleKeys.checkoutExpired,
+        'unavailable' => LocaleKeys.paymentStatusUnavailable,
+        'paid_requires_review' => LocaleKeys.paymentRequiresReview,
+        _ => LocaleKeys.paymentVerifying,
+      };
+      return Center(child: Padding(padding: const EdgeInsets.all(24), child: Column(mainAxisSize: MainAxisSize.min, children: [
+        if (!['failed', 'expired', 'paid_requires_review'].contains(_status)) const CircularProgressIndicator(color: KMainColor),
+        const SizedBox(height: 16), Text(message, textAlign: TextAlign.center),
+        TextButton(onPressed: _manualRefresh, child: Text(LocaleKeys.checkPaymentStatus)),
+        TextButton(onPressed: () => Navigator.of(context).maybePop(), child: Text(LocaleKeys.leaveCheckout)),
+      ])));
+    }
+    return WebViewWidget(controller: controller);
   }
 }

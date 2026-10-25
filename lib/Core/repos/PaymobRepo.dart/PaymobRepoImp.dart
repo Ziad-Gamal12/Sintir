@@ -4,11 +4,7 @@ import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
 import 'package:sintir/Core/services/Paymob/PayMobService.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
-import 'package:sintir/Features/Subscribtion/Data/Models/PaymentModels/BillingDataModel.dart';
-import 'package:sintir/Features/Subscribtion/Data/Models/PaymentModels/OrderItemModel.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobResponse.dart';
-import 'package:sintir/Features/Subscribtion/Domain/Entities/PaymentEntities/BillingDataEntity.dart';
-import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
 class PaymobRepoImp implements PaymobRepo {
@@ -21,58 +17,6 @@ class PaymobRepoImp implements PaymobRepo {
     required CourseEntity course,
     required double amount,
   }) async {
-    try {
-      final billingData =
-          Billingdatamodel.fromEntity(entity: getBillingEntity(user: user))
-              .toJson();
-      final items =
-          Orderitemmodel.fromCourseEntity(course, amount.toInt()).toJson();
-
-      final response = await payMobService.createPaymentIntention(
-        amountCents: (amount.toInt() * 100).toInt(),
-        currency: "EGP",
-        items: [items],
-        integrationIds: [
-          PaymobWalletsIntegrationID,
-          PaymobOnlineCardIntegrationID,
-          PaymobAcceptKioskIntegrationID,
-          PaymobCashCollectionIntegrationID
-        ],
-        billingData: billingData,
-      );
-
-      final clientSecret = response["client_secret"];
-      if (clientSecret == null) {
-        return left(ServerFailure(message: LocaleKeys.unexpectedError));
-      }
-
-      final checkoutUrl =
-          payMobService.buildCheckoutUrl(clientSecret: clientSecret);
-      return right(PayMobResponse(
-        url: checkoutUrl,
-        paymentid: clientSecret,
-        currency: "EGP",
-        issuer: "Paymob",
-        mobileNumber: user.phoneNumber,
-        amount: amount,
-      ));
-    } catch (e) {
-      return left(ServerFailure(message: LocaleKeys.unexpectedError));
-    }
-  }
-
-  Billingdataentity getBillingEntity({required UserEntity user}) {
-    return Billingdataentity(
-      apartment: "NA",
-      building: "NA",
-      city: user.address.isEmpty ? "NA" : user.address,
-      country: "EG",
-      email: user.email,
-      floor: "NA",
-      firstName: user.firstName.isEmpty ? "NA" : user.firstName,
-      lastName: user.lastName.isEmpty ? user.firstName : user.lastName,
-      phoneNumber: user.phoneNumber.isEmpty ? "NA" : user.phoneNumber,
-      street: "NA",
-    );
+    return left(ServerFailure(message: LocaleKeys.unexpectedError));
   }
 }

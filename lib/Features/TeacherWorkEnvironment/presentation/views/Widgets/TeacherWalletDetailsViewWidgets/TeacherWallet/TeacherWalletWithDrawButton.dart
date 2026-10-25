@@ -28,29 +28,6 @@ class TeacherWalletWithDrawButton extends StatelessWidget {
             onPressed: () {
               GoRouter.of(context)
                   .push(WithDrawBalanceView.routeName, extra: wallet);
-              // showCustomBottomSheet(
-              //     child: IntrinsicHeight(
-              //       child: MultiBlocProvider(
-              //         providers: [
-              //           BlocProvider(
-              //             create: (context) => PayoutCubit(
-              //               payoutRepo: getIt<PayoutRepo>(),
-              //             ),
-              //           ),
-              //           BlocProvider(
-              //             create: (context) => WithDrawTeacherBalanceCubit(
-              //               transcationsRepo: getIt<TeacherTranscationsRepo>(),
-              //               teacherWalletRepo: getIt<TeacherWalletRepo>(),
-              //               paymobPayoutRepo: getIt<PayoutRepo>(),
-              //             ),
-              //           ),
-              //         ],
-              //         child: PayOutBalanceBody(
-              //           currentWallet: wallet,
-              //         ),
-              //       ),
-              //     ),
-              //     context: context);
             }));
   }
 }

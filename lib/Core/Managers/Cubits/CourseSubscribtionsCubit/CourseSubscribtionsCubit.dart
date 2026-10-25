@@ -9,6 +9,7 @@ import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.
 import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobResponse.dart';
+import 'package:sintir/locale_keys.dart';
 
 part 'CourseSubscribtionsState.dart';
 
@@ -66,15 +67,20 @@ class CourseSubscribtionsCubit extends Cubit<CourseSubscribtionsState> {
     });
   }
 
-  void checkIfSubscribed({required String uid}) async {
+  Future<void> checkIfSubscribed() async {
     emit(CheckIfSubscribedLoading());
-    var result = await subscribtionRepo.checkIfSubscribed(
-        userID: uid, courseID: course.id);
-    result.fold((failure) {
-      emit(CheckIfSubscribedFailure(errMessage: failure.message));
-    }, (isSubscribed) {
-      emit(CheckIfSubscribedSuccess(isSubscribed: isSubscribed));
-    });
+    try {
+      final result = await subscribtionRepo.checkIfSubscribed(
+          courseID: course.id);
+      result.fold((failure) {
+        emit(CheckIfSubscribedFailure(errMessage: failure.message));
+      }, (isSubscribed) {
+        emit(CheckIfSubscribedSuccess(isSubscribed: isSubscribed));
+      });
+    } catch (_) {
+      emit(CheckIfSubscribedFailure(
+          errMessage: LocaleKeys.errorOccurredMessage));
+    }
   }
 
   Future<void> getCoursSubscribers({required bool isPaginate}) async {

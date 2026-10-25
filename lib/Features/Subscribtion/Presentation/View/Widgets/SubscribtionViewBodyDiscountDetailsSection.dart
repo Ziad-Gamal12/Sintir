@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/DiscountBadge.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/PriceCard.dart';
 import 'package:sintir/locale_keys.dart';
 
 class PremiumSubscriptionPriceSection extends StatelessWidget {
   final int originalPrice;
-  final CourseCouponEntity? coupon;
+  final double discountPercent;
   final double payableAmount;
 
   const PremiumSubscriptionPriceSection({
     super.key,
     required this.originalPrice,
-    required this.coupon,
+    required this.discountPercent,
     required this.payableAmount,
   });
 
@@ -27,9 +26,7 @@ class PremiumSubscriptionPriceSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool hasDiscount = coupon != null;
-
-    final double discountPercent = hasDiscount ? coupon!.discountPercentage : 0;
+    final bool hasDiscount = discountPercent > 0;
 
     final String formattedPayableAmount = _formatPrice(payableAmount);
 

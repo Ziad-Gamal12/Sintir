@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
-import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
-import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
+import 'package:sintir/Core/Managers/Cubits/course_checkout_cubit/course_checkout_cubit.dart';
+import 'package:sintir/Core/repos/CourseCheckoutRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebViewBody.dart';
@@ -15,11 +14,7 @@ class Webviewer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CourseSubscribtionsCubit(
-        paymobRepo: getIt<PaymobRepo>(),
-        subscribtionRepo: getIt<CourseSubscibtionsRepo>(),
-        course: requirmentsEntity.course,
-      ),
+      create: (context) => CourseCheckoutCubit(getIt<CourseCheckoutGateway>()),
       child: Scaffold(
         appBar: CustomAppBar(appBartitle: "Web View"),
         body: Webviewbody(response: requirmentsEntity.payMobResponse),

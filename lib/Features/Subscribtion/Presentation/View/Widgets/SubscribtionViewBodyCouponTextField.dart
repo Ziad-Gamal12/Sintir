@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/Managers/Cubits/course_coupons_cubit/course_coupons_cubit.dart';
+import 'package:sintir/Core/Managers/Cubits/course_checkout_cubit/course_checkout_cubit.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -38,8 +38,8 @@ class _SubscribtionViewBodyCouponTextFieldState
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<CourseCouponsCubit, CourseCouponsState, bool>(
-      selector: (state) => state is IsCouponExistLoading,
+    return BlocSelector<CourseCheckoutCubit, CourseCheckoutState, bool>(
+      selector: (state) => state is CourseCheckoutLoading,
       builder: (context, isLoading) {
         return Form(
           key: formKey,
@@ -70,9 +70,9 @@ class _SubscribtionViewBodyCouponTextFieldState
                     onPressed: () {
                       if (formKey.currentState?.validate() ?? false) {
                         formKey.currentState!.save();
-                        context.read<CourseCouponsCubit>().isCouponExists(
+                        context.read<CourseCheckoutCubit>().quote(
+                              widget.courseID,
                               couponCode: couponCode,
-                              courseID: widget.courseID,
                             );
                       }
                     },

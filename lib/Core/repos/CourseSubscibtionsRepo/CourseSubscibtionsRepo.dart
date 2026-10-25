@@ -14,8 +14,7 @@ abstract class CourseSubscibtionsRepo {
       required TransactionEntity transactionEntity,
       required UserEntity userEntity,
       required String transactionId});
-  Future<Either<Failure, bool>> checkIfSubscribed(
-      {required String userID, required String courseID});
+  Future<Either<Failure, bool>> checkIfSubscribed({required String courseID});
   Future<Either<Failure, GetCourseSubscribersEntity>> getSubscribers(
       {required String courseID, required bool isPaginate});
   Future<Either<Failure, GetCourseSubscribersEntity>> searchSubscribers(

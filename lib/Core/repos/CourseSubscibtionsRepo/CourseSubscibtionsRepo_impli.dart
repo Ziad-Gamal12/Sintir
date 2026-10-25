@@ -12,9 +12,9 @@ import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntit
 import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
-import 'package:sintir/Core/models/CourseModel.dart';
 import 'package:sintir/Core/models/SubscriberModel.dart';
-import 'package:sintir/Core/models/TransactionModel.dart';
+import 'package:sintir/Core/repos/CourseCheckoutRepo.dart';
+import 'package:sintir/Core/repos/CourseCheckoutRequestException.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
@@ -23,8 +23,12 @@ import 'package:sintir/locale_keys.dart';
 
 class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
   final DataBaseService databaseService;
+  final CourseCheckoutGateway checkoutGateway;
 
-  CourseSubscriptionsRepoImpl({required this.databaseService});
+  CourseSubscriptionsRepoImpl({
+    required this.databaseService,
+    required this.checkoutGateway,
+  });
 
   @override
   Future<Either<Failure, void>> subscribeToCourse(
@@ -33,173 +37,24 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       required String transactionId,
       required TransactionEntity transactionEntity,
       required double amount}) async {
-    try {
-      if (course.contentcreaterentity?.id == userEntity.uid) {
-        return left(
-            ServerFailure(message: LocaleKeys.cannotSubscribeOwnCourseMessage));
-      }
-      if (course.state != BackendEndpoints.coursePublishedState) {
-        return left(
-            ServerFailure(message: LocaleKeys.courseNotPublishedMessage));
-      }
-      final subscriber = _buildSubscriberEntity(userEntity);
-
-      await Future.wait([
-        _addCourseToUserList(course, userEntity),
-        _addSubscriber(
-            subscriber, _buildSubscriberReq(course.id, userEntity.uid)),
-        _updateCourseSubscriberCount(courseId: course.id),
-        _updateTeacherWalletBatch(
-          teacherId: course.contentcreaterentity?.id ?? "",
-          amount: amount,
-          transactionId: transactionId,
-        ),
-        storeSubscribtionTransaction(
-            courseID: course.id,
-            userID: userEntity.uid,
-            transaction: transactionEntity)
-      ]);
-
-      return right(null);
-    } on CustomException catch (e, s) {
-      log(e.toString(), stackTrace: s);
-      await _rollbackUserCourse(course, userEntity);
-      return left(ServerFailure(message: e.message));
-    } catch (e) {
-      log(e.toString());
-      await _rollbackUserCourse(course, userEntity);
-      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
-    }
-  }
-
-  Future<void> _updateCourseSubscriberCount({
-    required String courseId,
-    int delta = 1,
-  }) async {
-    await databaseService.updateData(
-      requirements: FireStoreRequirmentsEntity(
-        collection: BackendEndpoints.coursesCollection,
-        docId: courseId,
-      ),
-      field: "studentsCount",
-      data: FieldValue.increment(delta),
-    );
-  }
-
-  Future<void> _addSubscriber(
-    SubscriberEntity subscriber,
-    FireStoreRequirmentsEntity requirements,
-  ) async {
-    final data =
-        SubscriberModel.fromEntit(subscriberentity: subscriber).toJson();
-    await databaseService.setData(data: data, requirements: requirements);
-  }
-
-  SubscriberEntity _buildSubscriberEntity(UserEntity user) {
-    return SubscriberEntity(
-      id: user.uid,
-      name: user.firstName,
-      joinedDate: DateTime.now(),
-      gender: user.gender.isEmpty ? "" : user.gender,
-      phone: user.phoneNumber,
-      educationLevel: user.studentExtraDataEntity?.educationLevel ?? "",
-      imageUrl: user.profilePicurl,
-      address: user.address,
-    );
-  }
-
-  Future<void> _updateTeacherWalletBatch({
-    required String teacherId,
-    required double amount,
-    required String transactionId,
-  }) async {
-    try {
-      if (teacherId.isEmpty) return;
-
-      final double netAmount = amount - (amount * 0.05);
-      final updates = {
-        "teacherExtraData.wallet.balance": FieldValue.increment(netAmount),
-        "teacherExtraData.wallet.last_transaction_id": transactionId,
-        "teacherExtraData.wallet.updated_at": DateTime.now().toIso8601String(),
-        "teacherExtraData.wallet.total_earned": FieldValue.increment(netAmount),
-      };
-
-      for (final entry in updates.entries) {
-        await databaseService.updateData(
-          requirements: FireStoreRequirmentsEntity(
-            collection: BackendEndpoints.usersCollectionName,
-            docId: teacherId,
-          ),
-          field: entry.key,
-          data: entry.value,
-        );
-      }
-    } on CustomException {
-      return;
-    }
-    return;
-  }
-
-  FireStoreRequirmentsEntity _buildSubscriberReq(
-      String courseId, String userId) {
-    return FireStoreRequirmentsEntity(
-      collection: BackendEndpoints.coursesCollection,
-      docId: courseId,
-      subDocId: userId,
-      subCollection: BackendEndpoints.subscribersSubCollection,
-    );
-  }
-
-  Future<void> _addCourseToUserList(
-    CourseEntity course,
-    UserEntity user,
-  ) async {
-    final data = Coursemodel.fromEntity(courseEntity: course).toJson();
-    await databaseService.setData(
-      requirements: FireStoreRequirmentsEntity(
-        collection: BackendEndpoints.usersCollectionName,
-        docId: user.uid,
-        subDocId: course.id,
-        subCollection: BackendEndpoints.subscribetoCourseCollection,
-      ),
-      data: data,
-    );
-  }
-
-  Future<bool> _isCourseInUserList(CourseEntity course, UserEntity user) async {
-    return await databaseService.isDataExists(
-      key: BackendEndpoints.usersCollectionName,
-      docId: user.uid,
-      subDocId: course.id,
-      subCollectionKey: BackendEndpoints.subscribetoCourseCollection,
-    );
-  }
-
-  Future<void> _rollbackUserCourse(CourseEntity course, UserEntity user) async {
-    if (await _isCourseInUserList(course, user)) {
-      await databaseService.deleteDoc(
-        collectionKey: BackendEndpoints.usersCollectionName,
-        docId: user.uid,
-        subDocId: course.id,
-        subCollectionKey: BackendEndpoints.subscribetoCourseCollection,
-      );
-    }
+    return left(ServerFailure(
+      message: 'Enrollment is finalized only by the verified payment callback.',
+    ));
   }
 
   @override
   Future<Either<Failure, bool>> checkIfSubscribed({
-    required String userID,
     required String courseID,
   }) async {
     try {
-      final isSubscribed = await databaseService.isDataExists(
-        key: BackendEndpoints.usersCollectionName,
-        subCollectionKey: BackendEndpoints.checkifSubscribedSubCollection,
-        docId: userID,
-        subDocId: courseID,
-      );
+      final isSubscribed = await checkoutGateway.isSubscribed(courseID);
       return right(isSubscribed);
+    } on CourseCheckoutRequestException catch (e) {
+      log(e.toString());
+
+      return left(ServerFailure(message: e.message));
     } catch (e) {
+      log(e.toString());
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
@@ -330,39 +185,10 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       {required String courseID,
       required String userID,
       required TransactionEntity transaction}) async {
-    try {
-      Map<String, dynamic> json =
-          TransactionModel.fromEntity(transaction).toJson();
-      await Future.wait([
-        databaseService.setData(
-          data: json,
-          requirements: FireStoreRequirmentsEntity(
-              collection: BackendEndpoints.coursesCollection,
-              docId: courseID,
-              subCollection: BackendEndpoints.transactionsSubCollection,
-              subDocId: transaction.transactionId),
-        ),
-        databaseService.setData(
-            data: json,
-            requirements: FireStoreRequirmentsEntity(
-                collection: BackendEndpoints.usersCollectionName,
-                docId: userID,
-                subCollection: BackendEndpoints.transactionsSubCollection,
-                subDocId: transaction.transactionId)),
-        databaseService.setData(
-            data: json,
-            requirements: FireStoreRequirmentsEntity(
-              collection: BackendEndpoints.transactionsCollection,
-              docId: transaction.transactionId,
-            )),
-      ]);
-
-      return right(null);
-    } on CustomException catch (e) {
-      return left(ServerFailure(message: e.message));
-    } catch (e) {
-      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
-    }
+    return left(ServerFailure(
+      message:
+          'Payment transactions are written by the verified payment callback.',
+    ));
   }
 }
 

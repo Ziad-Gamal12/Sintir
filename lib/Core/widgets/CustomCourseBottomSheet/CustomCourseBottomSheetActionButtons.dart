@@ -17,6 +17,10 @@ class CustomCourseBottomSheetActionButtons extends StatelessWidget {
     bool isSubscribed = context
         .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
         .isSubscribed;
+    final hasSubscriptionCheckResult = context
+        .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
+        .hasSubscriptionCheckResult;
+    if (!hasSubscriptionCheckResult) return const SizedBox.shrink();
     final theme = Theme.of(context);
     bool isDark = theme.brightness == Brightness.dark;
     if (isSubscribed == true) {

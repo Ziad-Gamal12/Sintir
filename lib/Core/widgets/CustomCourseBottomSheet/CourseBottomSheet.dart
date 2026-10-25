@@ -31,7 +31,9 @@ class _CourseBottomSheetState extends State<CourseBottomSheet> {
     DisplayCourseBottomsheetNavigationRequirmentsEntity
         bottomsheetnavigationrequirmentsentity =
         DisplayCourseBottomsheetNavigationRequirmentsEntity(
-            course: widget.courseEntity, isSubscribed: false);
+            course: widget.courseEntity,
+            isSubscribed: false,
+            hasSubscriptionCheckResult: false);
 
     return BlocProvider(
       create: (context) => CourseSubscribtionsCubit(

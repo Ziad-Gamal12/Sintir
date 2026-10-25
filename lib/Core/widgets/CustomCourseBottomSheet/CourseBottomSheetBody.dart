@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
-import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomContentCreator.dart';
@@ -27,11 +26,7 @@ class CourseBottomSheetBody extends StatefulWidget {
 class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
   @override
   void initState() {
-    if (mounted) {
-      context
-          .read<CourseSubscribtionsCubit>()
-          .checkIfSubscribed(uid: getUserData().uid);
-    }
+    if (mounted) context.read<CourseSubscribtionsCubit>().checkIfSubscribed();
     super.initState();
   }
 
@@ -44,7 +39,7 @@ class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
       builder: (context, state) {
         return Skeletonizer(
           enabled: state is CheckIfSubscribedLoading,
-          child: const Padding(
+          child: Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: KHorizontalPadding, vertical: KVerticalPadding),
             child: SingleChildScrollView(
@@ -79,7 +74,8 @@ class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
     } else if (state is CheckIfSubscribedSuccess) {
       context
           .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
-          .isSubscribed = state.isSubscribed;
+          ..isSubscribed = state.isSubscribed
+          ..hasSubscriptionCheckResult = true;
     } else if (state is CheckIfSubscribedFailure) {
       CustomSnackBar.show(
         context,

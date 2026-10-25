@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
-import 'package:sintir/Core/Managers/Cubits/course_coupons_cubit/course_coupons_cubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
-import 'package:sintir/Core/repos/CourseCouponsRepo/CourseCouponsRepo.dart';
-import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
-import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
+import 'package:sintir/Core/Managers/Cubits/course_checkout_cubit/course_checkout_cubit.dart';
+import 'package:sintir/Core/repos/CourseCheckoutRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/SubscribtionViewBody.dart';
@@ -17,20 +14,8 @@ class SubscribtionView extends StatelessWidget {
   final DisplayCourseBottomsheetNavigationRequirmentsEntity requirmentsEntity;
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => CourseSubscribtionsCubit(
-            course: requirmentsEntity.course,
-            paymobRepo: getIt<PaymobRepo>(),
-            subscribtionRepo: getIt<CourseSubscibtionsRepo>(),
-          ),
-        ),
-        BlocProvider(
-          create: (context) =>
-              CourseCouponsCubit(courseCouponsRepo: getIt<CourseCouponsRepo>()),
-        )
-      ],
+    return BlocProvider(
+      create: (_) => CourseCheckoutCubit(getIt<CourseCheckoutGateway>()),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: CustomAppBar(appBartitle: LocaleKeys.subscription),

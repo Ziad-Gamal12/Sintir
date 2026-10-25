@@ -1,4 +1,11 @@
 {
+  "payment_verifying": "جارٍ التحقق من الدفع. يمكنك مغادرة هذه الصفحة والعودة للتحقق لاحقًا.",
+  "payment_not_completed": "لم تكتمل عملية الدفع.",
+  "checkout_expired": "انتهت صلاحية عملية الدفع.",
+  "payment_status_unavailable": "تعذر استرجاع حالة الدفع. حاول مرة أخرى.",
+  "payment_requires_review": "أكدت Paymob الدفع، لكن تعذر إتمام التسجيل تلقائيًا. تواصل مع الدعم قبل الدفع مرة أخرى.",
+  "check_payment_status": "تحقق من حالة الدفع",
+  "leave_checkout": "مغادرة الدفع",
   "subscriber_details_title": "تفاصيل المشترك",
   "subscriber_education_fallback": "المستوى الدراسي غير محدد",
   "subscriber_address_fallback": "العنوان غير محدد",
