@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "check_later": MessageLookupByLibrary.simpleMessage("التحقق لاحقًا"),
     "check_payment_status": MessageLookupByLibrary.simpleMessage(
       "تحقق من حالة الدفع",
     ),
@@ -34,6 +35,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "copy_failed": MessageLookupByLibrary.simpleMessage("تعذر نسخ كود الطالب"),
     "courses_count": m0,
     "education_level": MessageLookupByLibrary.simpleMessage("المستوى الدراسي"),
+    "existing_checkout_coupon_mismatch": MessageLookupByLibrary.simpleMessage(
+      "كوبون هذه العملية يختلف عن الكوبون المحدد الآن. أكمِل هذه العملية أو تحقق منها قبل بدء دفع آخر.",
+    ),
+    "existing_checkout_message": MessageLookupByLibrary.simpleMessage(
+      "توجد عملية دفع سابقة ما زالت نشطة. راجع تفاصيل الدفع الأصلية قبل المتابعة.",
+    ),
+    "existing_checkout_title": MessageLookupByLibrary.simpleMessage("عملية دفع سابقة"),
     "exam_results_history": MessageLookupByLibrary.simpleMessage(
       "سجل نتائج الاختبارات",
     ),
@@ -43,6 +51,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "highest_score": MessageLookupByLibrary.simpleMessage("أعلى الدرجات"),
     "leave_checkout": MessageLookupByLibrary.simpleMessage("مغادرة الدفع"),
     "lowest_score": MessageLookupByLibrary.simpleMessage("أدنى نتيجة"),
+    "no_coupon_applied": MessageLookupByLibrary.simpleMessage("لا يوجد"),
+    "original_checkout_amount": MessageLookupByLibrary.simpleMessage("المبلغ الأصلي"),
+    "original_checkout_coupon": MessageLookupByLibrary.simpleMessage("كوبون الخصم الأصلي"),
     "payment_not_completed": MessageLookupByLibrary.simpleMessage(
       "لم تكتمل عملية الدفع.",
     ),
@@ -55,6 +66,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "payment_verifying": MessageLookupByLibrary.simpleMessage(
       "جارٍ التحقق من الدفع. يمكنك مغادرة هذه الصفحة والعودة للتحقق لاحقًا.",
     ),
+    "resume_checkout": MessageLookupByLibrary.simpleMessage("متابعة الدفع السابق"),
     "performance_trend": MessageLookupByLibrary.simpleMessage("متوسط النتائج"),
     "student_code": MessageLookupByLibrary.simpleMessage("كود الطالب:"),
     "subscribed_courses": MessageLookupByLibrary.simpleMessage(

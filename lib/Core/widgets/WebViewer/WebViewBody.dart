@@ -27,6 +27,7 @@ class _WebviewbodyState extends State<Webviewbody> {
   void initState() {
     super.initState();
     _status = widget.response.status.toLowerCase();
+    _returnedFromCheckout = widget.response.url.isEmpty;
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
@@ -35,7 +36,9 @@ class _WebviewbodyState extends State<Webviewbody> {
             final url = request.url;
 
             final uri = Uri.tryParse(url);
-            if (uri != null && (uri.queryParameters.containsKey('success') || uri.path.contains('payment-status'))) {
+            if (uri != null &&
+                (uri.queryParameters.containsKey('success') ||
+                    uri.path.contains('payment-status'))) {
               _returnedFromCheckout = true;
               _startPolling();
             }
@@ -43,26 +46,42 @@ class _WebviewbodyState extends State<Webviewbody> {
             return NavigationDecision.navigate;
           },
         ),
-      )
-      ..loadRequest(Uri.parse(widget.response.url));
-
+      );
+    if (widget.response.url.isNotEmpty) {
+      controller.loadRequest(Uri.parse(widget.response.url));
+    } else if (!['succeeded', 'failed', 'expired', 'paid_requires_review']
+        .contains(_status)) {
+      _startPolling();
+    }
   }
 
   void _startPolling() {
     if (_pollTimer != null) return;
-    _pollTimer = Timer.periodic(const Duration(seconds: 4), (_) => _checkStatus());
+    _pollTimer =
+        Timer.periodic(const Duration(seconds: 4), (_) => _checkStatus());
     _checkStatus();
   }
 
   Future<void> _checkStatus() async {
-    if (_checking || !mounted || _checks >= 30 || ['succeeded', 'failed', 'expired', 'paid_requires_review'].contains(_status)) return;
+    if (_checking ||
+        !mounted ||
+        _checks >= 30 ||
+        ['succeeded', 'failed', 'expired', 'paid_requires_review']
+            .contains(_status)) {
+      return;
+    }
     _checking = true;
     _checks++;
     try {
-      final result = await context.read<CourseCheckoutCubit>().refreshStatus(widget.response.paymentAttemptId);
+      final result = await context
+          .read<CourseCheckoutCubit>()
+          .refreshStatus(widget.response.paymentAttemptId);
       if (!mounted) return;
       setState(() => _status = result.toLowerCase());
-      if (['succeeded', 'failed', 'expired', 'paid_requires_review'].contains(_status)) _pollTimer?.cancel();
+      if (['succeeded', 'failed', 'expired', 'paid_requires_review']
+          .contains(_status)) {
+        _pollTimer?.cancel();
+      }
     } finally {
       _checking = false;
     }
@@ -73,8 +92,11 @@ class _WebviewbodyState extends State<Webviewbody> {
     _pollTimer?.cancel();
     _pollTimer = null;
     await _checkStatus();
-    if (mounted && !['succeeded', 'failed', 'expired', 'paid_requires_review'].contains(_status)) {
-      _pollTimer = Timer.periodic(const Duration(seconds: 4), (_) => _checkStatus());
+    if (mounted &&
+        !['succeeded', 'failed', 'expired', 'paid_requires_review']
+            .contains(_status)) {
+      _pollTimer =
+          Timer.periodic(const Duration(seconds: 4), (_) => _checkStatus());
     }
   }
 
@@ -93,14 +115,25 @@ class _WebviewbodyState extends State<Webviewbody> {
         'expired' => LocaleKeys.checkoutExpired,
         'unavailable' => LocaleKeys.paymentStatusUnavailable,
         'paid_requires_review' => LocaleKeys.paymentRequiresReview,
+        'verification_required' => LocaleKeys.paymentVerifying,
         _ => LocaleKeys.paymentVerifying,
       };
-      return Center(child: Padding(padding: const EdgeInsets.all(24), child: Column(mainAxisSize: MainAxisSize.min, children: [
-        if (!['failed', 'expired', 'paid_requires_review'].contains(_status)) const CircularProgressIndicator(color: KMainColor),
-        const SizedBox(height: 16), Text(message, textAlign: TextAlign.center),
-        TextButton(onPressed: _manualRefresh, child: Text(LocaleKeys.checkPaymentStatus)),
-        TextButton(onPressed: () => Navigator.of(context).maybePop(), child: Text(LocaleKeys.leaveCheckout)),
-      ])));
+      return Center(
+          child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                if (!['failed', 'expired', 'paid_requires_review']
+                    .contains(_status))
+                  const CircularProgressIndicator(color: KMainColor),
+                const SizedBox(height: 16),
+                Text(message, textAlign: TextAlign.center),
+                TextButton(
+                    onPressed: _manualRefresh,
+                    child: Text(LocaleKeys.checkPaymentStatus)),
+                TextButton(
+                    onPressed: () => Navigator.of(context).maybePop(),
+                    child: Text(LocaleKeys.leaveCheckout)),
+              ])));
     }
     return WebViewWidget(controller: controller);
   }

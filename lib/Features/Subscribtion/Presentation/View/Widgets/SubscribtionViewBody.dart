@@ -4,12 +4,14 @@ import 'package:go_router/go_router.dart';
 // Core
 import 'package:sintir/Core/Managers/Cubits/course_checkout_cubit/course_checkout_cubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomCourseHorizontalItem/CustomCourseHorizintalItem.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebView.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobWebViewRequirmentsEntity.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobResponse.dart';
+import 'package:sintir/Features/Subscribtion/Domain/Entities/CourseCheckoutEntity.dart';
 // Features
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/SubscribtionViewBodyActionButton.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/SubscribtionViewBodyCouponTextField.dart';
@@ -47,14 +49,7 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
         BlocListener<CourseCheckoutCubit, CourseCheckoutState>(
           listener: (context, state) {
             if (state is CourseCheckoutCreated) {
-              context.push(Webviewer.routeName, extra: PayMobWebViewRequirmentsEntity(
-                course: course,
-                payMobResponse: PayMobResponse(
-                  url: state.attempt.checkoutUrl,
-                  paymentAttemptId: state.attempt.id,
-                  status: state.attempt.status,
-                ),
-              ));
+              _openAttempt(context, course, state.attempt);
             } else if (state is CourseCheckoutQuoteReady) {
               setState(() {
                 quoteAmountCents = state.quote.amountCents;
@@ -67,7 +62,8 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
                 discountPercent = 0;
                 couponCode = null;
               });
-              CustomSnackBar.show(context, message: state.message, type: SnackType.error);
+              CustomSnackBar.show(context,
+                  message: state.message, type: SnackType.error);
             }
           },
         ),
@@ -116,5 +112,60 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
         ),
       ),
     );
+  }
+
+  Future<void> _openAttempt(
+    BuildContext context,
+    CourseEntity course,
+    CoursePaymentAttempt attempt,
+  ) async {
+    if (attempt.requiresConfirmation) {
+      final amount = (attempt.quote.amountCents / 100).toStringAsFixed(2);
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (dialogContext) => AlertDialog(
+          title: Text(LocaleKeys.existingCheckoutTitle),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(attempt.requestDiffers
+                  ? LocaleKeys.existingCheckoutCouponMismatch
+                  : attempt.checkoutUrl.isEmpty
+                      ? LocaleKeys.paymentVerifying
+                      : LocaleKeys.existingCheckoutMessage),
+              const SizedBox(height: 12),
+              Text('${LocaleKeys.originalCheckoutAmount}: $amount EGP'),
+              if (attempt.requestDiffers || attempt.quote.couponCode != null)
+                Text(
+                    '${LocaleKeys.originalCheckoutCoupon}: ${attempt.quote.couponCode ?? LocaleKeys.noCouponApplied}'),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: Text(LocaleKeys.checkLater),
+            ),
+            FilledButton(
+              onPressed: () => Navigator.pop(dialogContext, true),
+              child: Text(attempt.checkoutUrl.isEmpty
+                  ? LocaleKeys.checkPaymentStatus
+                  : LocaleKeys.resumeCheckout),
+            ),
+          ],
+        ),
+      );
+      if (confirmed != true || !context.mounted) return;
+    }
+    if (!context.mounted) return;
+    context.push(Webviewer.routeName,
+        extra: PayMobWebViewRequirmentsEntity(
+          course: course,
+          payMobResponse: PayMobResponse(
+            url: attempt.checkoutUrl,
+            paymentAttemptId: attempt.id,
+            status: attempt.status,
+          ),
+        ));
   }
 }

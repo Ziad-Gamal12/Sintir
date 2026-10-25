@@ -101,8 +101,7 @@ void main() {
       throwsA(isA<CourseCheckoutRequestException>()
           .having((error) => error.statusCode, 'status', 400)
           .having((error) => error.code, 'code', 'invalid_course_id')
-          .having(
-              (error) => error.message, 'message', 'Course ID is invalid.')
+          .having((error) => error.message, 'message', 'Course ID is invalid.')
           .having((error) => error.requestId, 'request ID',
               'a0d17c03-13d0-4d60-9882-b7998c21d2e4')),
     );
@@ -178,6 +177,9 @@ void main() {
             'checkoutUrl': 'https://checkout.example',
             'status': 'pending',
             'quote': _quote,
+            'resumedExisting': true,
+            'requiresConfirmation': true,
+            'requestDiffers': true,
           });
         case 'get-course-payment-status':
           return const CourseCheckoutFunctionResponse(
@@ -197,6 +199,9 @@ void main() {
     expect(quote.amountCents, 9000);
     expect(attempt.id, 'attempt-1');
     expect(attempt.checkoutUrl, 'https://checkout.example');
+    expect(attempt.resumedExisting, isTrue);
+    expect(attempt.requiresConfirmation, isTrue);
+    expect(attempt.requestDiffers, isTrue);
     expect(status, 'succeeded');
   });
 

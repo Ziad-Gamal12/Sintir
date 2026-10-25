@@ -47,23 +47,35 @@ class CoursePaymentAttempt {
     required this.checkoutUrl,
     required this.status,
     required this.quote,
+    this.resumedExisting = false,
+    this.requiresConfirmation = false,
+    this.requestDiffers = false,
   });
 
   final String id;
   final String checkoutUrl;
   final String status;
   final CourseCheckoutQuote quote;
+  final bool resumedExisting;
+  final bool requiresConfirmation;
+  final bool requestDiffers;
 
   factory CoursePaymentAttempt.fromJson(Map<String, dynamic> json) {
     final id = json['paymentAttemptId'];
     final checkoutUrl = json['checkoutUrl'];
     final status = json['status'];
     final quote = json['quote'];
+    final resumedExisting = json['resumedExisting'];
+    final requiresConfirmation = json['requiresConfirmation'];
+    final requestDiffers = json['requestDiffers'];
     if (id is! String ||
         id.isEmpty ||
         checkoutUrl is! String ||
         status is! String ||
         status.isEmpty ||
+        (resumedExisting != null && resumedExisting is! bool) ||
+        (requiresConfirmation != null && requiresConfirmation is! bool) ||
+        (requestDiffers != null && requestDiffers is! bool) ||
         quote is! Map) {
       throw const FormatException('Invalid course payment response.');
     }
@@ -72,6 +84,9 @@ class CoursePaymentAttempt {
       checkoutUrl: checkoutUrl,
       status: status,
       quote: CourseCheckoutQuote.fromJson(Map<String, dynamic>.from(quote)),
+      resumedExisting: resumedExisting == true,
+      requiresConfirmation: requiresConfirmation == true,
+      requestDiffers: requestDiffers == true,
     );
   }
 }

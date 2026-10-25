@@ -115,6 +115,62 @@ class S {
     );
   }
 
+  String get existing_checkout_title => Intl.message(
+        'Existing checkout',
+        name: 'existing_checkout_title',
+        desc: '',
+        args: [],
+      );
+
+  String get existing_checkout_message => Intl.message(
+        'A previous checkout is still active. Confirm these original payment details before continuing.',
+        name: 'existing_checkout_message',
+        desc: '',
+        args: [],
+      );
+
+  String get existing_checkout_coupon_mismatch => Intl.message(
+        'The coupon on this checkout differs from the one selected now. Resolve this checkout before starting another payment.',
+        name: 'existing_checkout_coupon_mismatch',
+        desc: '',
+        args: [],
+      );
+
+  String get original_checkout_amount => Intl.message(
+        'Original amount',
+        name: 'original_checkout_amount',
+        desc: '',
+        args: [],
+      );
+
+  String get original_checkout_coupon => Intl.message(
+        'Original coupon',
+        name: 'original_checkout_coupon',
+        desc: '',
+        args: [],
+      );
+
+  String get no_coupon_applied => Intl.message(
+        'None',
+        name: 'no_coupon_applied',
+        desc: '',
+        args: [],
+      );
+
+  String get resume_checkout => Intl.message(
+        'Resume checkout',
+        name: 'resume_checkout',
+        desc: '',
+        args: [],
+      );
+
+  String get check_later => Intl.message(
+        'Check later',
+        name: 'check_later',
+        desc: '',
+        args: [],
+      );
+
   /// `Leave checkout`
   String get leave_checkout {
     return Intl.message(
