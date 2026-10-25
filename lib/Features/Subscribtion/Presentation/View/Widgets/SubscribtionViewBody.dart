@@ -64,6 +64,12 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
               });
               CustomSnackBar.show(context,
                   message: state.message, type: SnackType.error);
+            } else if (state is CourseCheckoutRecoveryRequired) {
+              CustomSnackBar.show(context,
+                  message: state.message, type: SnackType.info);
+            } else if (state is CourseCheckoutReviewRequired) {
+              CustomSnackBar.show(context,
+                  message: state.message, type: SnackType.warning);
             }
           },
         ),

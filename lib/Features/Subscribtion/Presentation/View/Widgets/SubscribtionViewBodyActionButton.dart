@@ -44,6 +44,20 @@ class SubscribtionViewBodyActionButton extends StatelessWidget {
                     .regular16
                     .copyWith(color: Colors.red),
               );
+            } else if (state is CourseCheckoutRecoveryRequired) {
+              return Text(
+                state.message,
+                style: AppTextStyles(context)
+                    .regular16
+                    .copyWith(color: Colors.orange.shade800),
+              );
+            } else if (state is CourseCheckoutReviewRequired) {
+              return Text(
+                state.message,
+                style: AppTextStyles(context)
+                    .regular16
+                    .copyWith(color: Colors.orange.shade800),
+              );
             } else {
               return Container();
             }
@@ -58,7 +72,16 @@ class SubscribtionViewBodyActionButton extends StatelessWidget {
             return Custom_Loading_Widget(
               isLoading: state,
               child: Custombutton(
-                text: LocaleKeys.subscribeNow,
+                text: context.select<CourseCheckoutCubit, String>((cubit) {
+                  final current = cubit.state;
+                  if (current is CourseCheckoutRecoveryRequired) {
+                    return LocaleKeys.retryCheckout;
+                  }
+                  if (current is CourseCheckoutReviewRequired) {
+                    return LocaleKeys.checkPaymentStatus;
+                  }
+                  return LocaleKeys.subscribeNow;
+                }),
                 color: KSecondaryColor,
                 textColor: Colors.white,
                 onPressed: () => _handleSubscription(context),

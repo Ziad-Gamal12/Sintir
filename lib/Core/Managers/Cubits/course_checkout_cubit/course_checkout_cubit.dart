@@ -31,6 +31,16 @@ class CourseCheckoutFailure extends CourseCheckoutState {
   final String message;
 }
 
+class CourseCheckoutRecoveryRequired extends CourseCheckoutState {
+  CourseCheckoutRecoveryRequired(this.message);
+  final String message;
+}
+
+class CourseCheckoutReviewRequired extends CourseCheckoutState {
+  CourseCheckoutReviewRequired(this.message);
+  final String message;
+}
+
 class CourseCheckoutCubit extends Cubit<CourseCheckoutState> {
   CourseCheckoutCubit(this._repo) : super(CourseCheckoutInitial());
   final CourseCheckoutGateway _repo;
@@ -75,7 +85,7 @@ class CourseCheckoutCubit extends Cubit<CourseCheckoutState> {
         // resolved this idempotency key. Network/ambiguous outcomes keep it.
         _idempotencyKey = null;
       }
-      emit(CourseCheckoutFailure(_safeMessage(e)));
+      _emitCheckoutError(e);
     } finally {
       _creating = false;
     }
@@ -87,7 +97,7 @@ class CourseCheckoutCubit extends Cubit<CourseCheckoutState> {
       emit(CourseCheckoutStatus(status));
       return status;
     } catch (e) {
-      emit(CourseCheckoutFailure(_safeMessage(e)));
+      _emitCheckoutError(e);
       return 'unavailable';
     }
   }
@@ -101,6 +111,7 @@ class CourseCheckoutCubit extends Cubit<CourseCheckoutState> {
         case 'checkout_processing':
         case 'paymob_intention_unknown':
         case 'checkout_in_progress':
+        case 'checkout_retry_required':
           return LocaleKeys.paymentVerifying;
         case 'paid_requires_review':
         case 'stale_checkout_lock':
@@ -109,5 +120,24 @@ class CourseCheckoutCubit extends Cubit<CourseCheckoutState> {
     }
     final text = error.toString().replaceFirst('Exception: ', '');
     return text.length > 180 ? 'Checkout could not be completed.' : text;
+  }
+
+  void _emitCheckoutError(Object error) {
+    final code = error is CourseCheckoutRequestException ? error.code : '';
+    final message = _safeMessage(error);
+    if (const {
+      'checkout_status_unknown',
+      'checkout_processing',
+      'paymob_intention_unknown',
+      'checkout_in_progress',
+      'checkout_retry_required',
+    }.contains(code)) {
+      emit(CourseCheckoutRecoveryRequired(message));
+    } else if (const {'paid_requires_review', 'stale_checkout_lock'}
+        .contains(code)) {
+      emit(CourseCheckoutReviewRequired(message));
+    } else {
+      emit(CourseCheckoutFailure(message));
+    }
   }
 }

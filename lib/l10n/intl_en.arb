@@ -4,6 +4,7 @@
   "checkout_expired": "This checkout has expired.",
   "payment_status_unavailable": "Payment status could not be retrieved. Try again.",
   "payment_requires_review": "Paymob confirmed a payment, but we could not finalize enrollment automatically. Contact support before paying again.",
+  "retry_checkout": "Check payment status",
   "check_payment_status": "Check payment status",
   "leave_checkout": "Leave checkout",
   "existing_checkout_title": "Existing checkout",

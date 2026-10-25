@@ -12,6 +12,7 @@ class LocaleKeys {
   static String get paymentStatusUnavailable =>
       'payment_status_unavailable'.tr();
   static String get paymentRequiresReview => 'payment_requires_review'.tr();
+  static String get retryCheckout => 'retry_checkout'.tr();
   static String get checkPaymentStatus => 'check_payment_status'.tr();
   static String get leaveCheckout => 'leave_checkout'.tr();
   static String get existingCheckoutTitle => 'existing_checkout_title'.tr();

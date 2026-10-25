@@ -9,6 +9,7 @@ import 'package:sintir/locale_keys.dart';
 
 class _FakeCheckoutGateway implements CourseCheckoutGateway {
   int createCalls = 0;
+  final List<String> idempotencyKeys = [];
   Completer<CoursePaymentAttempt>? createCompleter;
   Object? createError;
   Object? quoteError;
@@ -34,6 +35,7 @@ class _FakeCheckoutGateway implements CourseCheckoutGateway {
       required String idempotencyKey,
       String? couponCode}) {
     createCalls++;
+    idempotencyKeys.add(idempotencyKey);
     if (createError != null) {
       return Future<CoursePaymentAttempt>.error(createError!);
     }
@@ -151,8 +153,27 @@ void main() {
       );
     final cubit = CourseCheckoutCubit(gateway);
     await cubit.createPayment('course');
-    expect((cubit.state as CourseCheckoutFailure).message,
+    expect(cubit.state, isA<CourseCheckoutRecoveryRequired>());
+    expect((cubit.state as CourseCheckoutRecoveryRequired).message,
         LocaleKeys.paymentVerifying);
+    final originalKey = gateway.idempotencyKeys.last;
+    gateway.createError = null;
+    gateway.createCompleter = Completer<CoursePaymentAttempt>();
+    final retry = cubit.createPayment('course');
+    gateway.createCompleter!.complete(const CoursePaymentAttempt(
+      id: 'attempt',
+      checkoutUrl: '',
+      status: 'verification_required',
+      quote: CourseCheckoutQuote(
+        originalAmountCents: 10000,
+        discountAmountCents: 0,
+        amountCents: 10000,
+        currency: 'EGP',
+      ),
+    ));
+    await retry;
+    expect(gateway.idempotencyKeys.last, originalKey,
+        reason: 'Ambiguous recovery must reuse the same idempotency key.');
 
     gateway.createError = const CourseCheckoutRequestException(
       'paid_requires_review',
@@ -160,7 +181,7 @@ void main() {
       409,
     );
     await cubit.createPayment('course');
-    expect((cubit.state as CourseCheckoutFailure).message,
+    expect((cubit.state as CourseCheckoutReviewRequired).message,
         LocaleKeys.paymentRequiresReview);
     await cubit.close();
   });
