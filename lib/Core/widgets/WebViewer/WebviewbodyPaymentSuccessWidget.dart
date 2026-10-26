@@ -7,7 +7,10 @@ import 'package:sintir/locale_keys.dart';
 class WebviewbodyPaymentSuccessWidget extends StatelessWidget {
   const WebviewbodyPaymentSuccessWidget({
     super.key,
+    required this.onContinue,
   });
+
+  final VoidCallback onContinue;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +35,11 @@ class WebviewbodyPaymentSuccessWidget extends StatelessWidget {
             style: AppTextStyles(context)
                 .bold24
                 .copyWith(color: const Color(0xff009ef2)),
+          ),
+          const SizedBox(height: 20),
+          FilledButton(
+            onPressed: onContinue,
+            child: Text(LocaleKeys.enterCourse),
           ),
         ],
       ),

@@ -22,8 +22,9 @@ class CourseCheckoutCreated extends CourseCheckoutState {
 }
 
 class CourseCheckoutStatus extends CourseCheckoutState {
-  CourseCheckoutStatus(this.status);
-  final String status;
+  CourseCheckoutStatus(this.result);
+  final CoursePaymentStatusResult result;
+  String get status => result.status;
 }
 
 class CourseCheckoutFailure extends CourseCheckoutState {
@@ -91,14 +92,17 @@ class CourseCheckoutCubit extends Cubit<CourseCheckoutState> {
     }
   }
 
-  Future<String> refreshStatus(String attemptId) async {
+  Future<CoursePaymentStatusResult> refreshStatus(String attemptId) async {
     try {
-      final status = await _repo.paymentStatus(attemptId);
-      emit(CourseCheckoutStatus(status));
-      return status;
+      final result = await _repo.paymentStatus(attemptId);
+      emit(CourseCheckoutStatus(result));
+      return result;
     } catch (e) {
       _emitCheckoutError(e);
-      return 'unavailable';
+      return const CoursePaymentStatusResult(
+        status: 'unavailable',
+        verificationState: 'request_failed',
+      );
     }
   }
 

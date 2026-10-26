@@ -183,7 +183,14 @@ void main() {
           });
         case 'get-course-payment-status':
           return const CourseCheckoutFunctionResponse(
-              status: 200, data: {'ok': true, 'status': 'succeeded'});
+              status: 200,
+              data: {
+                'ok': true,
+                'status': 'verification_required',
+                'verificationState': 'cooldown',
+                'retryAfterSeconds': 19,
+                'canRetry': true,
+              });
         default:
           throw StateError('Unexpected Edge Function: $name');
       }
@@ -202,7 +209,26 @@ void main() {
     expect(attempt.resumedExisting, isTrue);
     expect(attempt.requiresConfirmation, isTrue);
     expect(attempt.requestDiffers, isTrue);
-    expect(status, 'succeeded');
+    expect(status.status, 'verification_required');
+    expect(status.verificationState, 'cooldown');
+    expect(status.retryAfterSeconds, 19);
+    expect(status.canRetry, isTrue);
+  });
+
+  test('status response with no cooldown metadata remains backward compatible',
+      () async {
+    final repo = _repository(
+      invoker: (_, __, ___) async => const CourseCheckoutFunctionResponse(
+        status: 200,
+        data: {'ok': true, 'status': 'succeeded'},
+      ),
+    );
+
+    final status = await repo.paymentStatus('attempt-1');
+    expect(status.status, 'succeeded');
+    expect(status.verificationState, 'unknown');
+    expect(status.retryAfterSeconds, 0);
+    expect(status.canRetry, isTrue);
   });
 
   test(

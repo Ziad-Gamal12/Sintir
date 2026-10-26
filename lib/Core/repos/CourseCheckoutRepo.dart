@@ -7,6 +7,6 @@ abstract interface class CourseCheckoutGateway {
       {required String courseId,
       required String idempotencyKey,
       String? couponCode});
-  Future<String> paymentStatus(String paymentAttemptId);
+  Future<CoursePaymentStatusResult> paymentStatus(String paymentAttemptId);
   Future<bool> isSubscribed(String courseId);
 }

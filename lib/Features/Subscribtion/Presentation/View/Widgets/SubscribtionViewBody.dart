@@ -164,7 +164,7 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
       if (confirmed != true || !context.mounted) return;
     }
     if (!context.mounted) return;
-    context.push(Webviewer.routeName,
+    final completed = await context.push<bool>(Webviewer.routeName,
         extra: PayMobWebViewRequirmentsEntity(
           course: course,
           payMobResponse: PayMobResponse(
@@ -173,5 +173,11 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
             status: attempt.status,
           ),
         ));
+    if (completed == true && context.mounted) {
+      widget.requirmentsEntity
+        ..isSubscribed = true
+        ..hasSubscriptionCheckResult = true;
+      context.pop(true);
+    }
   }
 }

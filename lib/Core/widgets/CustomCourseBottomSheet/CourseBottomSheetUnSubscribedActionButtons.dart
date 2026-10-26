@@ -27,12 +27,17 @@ class CourseBottomSheetUnSubscribedActionButtons extends StatelessWidget {
                 text: LocaleKeys.subscribeNow,
                 color: KSecondaryColor,
                 textColor: Colors.white,
-                onPressed: () {
-                  GoRouter.of(context).push(
+                onPressed: () async {
+                  final completed = await GoRouter.of(context).push<bool>(
                     SubscribtionView.routeName,
                     extra: context.read<
                         DisplayCourseBottomsheetNavigationRequirmentsEntity>(),
                   );
+                  if (completed == true && context.mounted) {
+                    await context
+                        .read<CourseSubscribtionsCubit>()
+                        .checkIfSubscribed();
+                  }
                 },
               ),
             ),

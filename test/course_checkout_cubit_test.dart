@@ -13,7 +13,11 @@ class _FakeCheckoutGateway implements CourseCheckoutGateway {
   Completer<CoursePaymentAttempt>? createCompleter;
   Object? createError;
   Object? quoteError;
-  String nextStatus = 'pending';
+  CoursePaymentStatusResult nextStatus = const CoursePaymentStatusResult(
+    status: 'pending',
+    verificationState: 'cooldown',
+    retryAfterSeconds: 24,
+  );
 
   @override
   Future<CourseCheckoutQuote> quote(
@@ -43,7 +47,8 @@ class _FakeCheckoutGateway implements CourseCheckoutGateway {
   }
 
   @override
-  Future<String> paymentStatus(String paymentAttemptId) async => nextStatus;
+  Future<CoursePaymentStatusResult> paymentStatus(String paymentAttemptId) async =>
+      nextStatus;
 
   @override
   Future<bool> isSubscribed(String courseId) async => false;
@@ -90,10 +95,17 @@ void main() {
   test('payment status is only represented by the backend response', () async {
     final gateway = _FakeCheckoutGateway();
     final cubit = CourseCheckoutCubit(gateway);
-    expect(await cubit.refreshStatus('attempt'), 'pending');
+    final pending = await cubit.refreshStatus('attempt');
+    expect(pending.status, 'pending');
+    expect(pending.verificationState, 'cooldown');
+    expect(pending.retryAfterSeconds, 24);
     expect((cubit.state as CourseCheckoutStatus).status, 'pending');
-    gateway.nextStatus = 'succeeded';
-    expect(await cubit.refreshStatus('attempt'), 'succeeded');
+    gateway.nextStatus = const CoursePaymentStatusResult(
+      status: 'succeeded',
+      verificationState: 'terminal',
+      canRetry: false,
+    );
+    expect((await cubit.refreshStatus('attempt')).status, 'succeeded');
     expect((cubit.state as CourseCheckoutStatus).status, 'succeeded');
     await cubit.close();
   });
@@ -135,11 +147,19 @@ void main() {
 
   test('an unresolved payment status stays recoverable, not failed', () async {
     final gateway = _FakeCheckoutGateway()
-      ..nextStatus = 'verification_required';
+      ..nextStatus = const CoursePaymentStatusResult(
+        status: 'verification_required',
+        verificationState: 'provider_unavailable',
+        retryAfterSeconds: 30,
+      );
     final cubit = CourseCheckoutCubit(gateway);
-    expect(await cubit.refreshStatus('attempt'), 'verification_required');
+    expect((await cubit.refreshStatus('attempt')).status,
+        'verification_required');
     expect(
         (cubit.state as CourseCheckoutStatus).status, 'verification_required');
+    expect((cubit.state as CourseCheckoutStatus).result.verificationState,
+        'provider_unavailable');
+    expect((cubit.state as CourseCheckoutStatus).result.retryAfterSeconds, 30);
     await cubit.close();
   });
 

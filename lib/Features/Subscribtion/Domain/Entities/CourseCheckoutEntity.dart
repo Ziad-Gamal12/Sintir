@@ -90,3 +90,37 @@ class CoursePaymentAttempt {
     );
   }
 }
+
+class CoursePaymentStatusResult {
+  const CoursePaymentStatusResult({
+    required this.status,
+    this.verificationState = 'unknown',
+    this.retryAfterSeconds = 0,
+    this.canRetry = true,
+  });
+
+  final String status;
+  final String verificationState;
+  final int retryAfterSeconds;
+  final bool canRetry;
+
+  factory CoursePaymentStatusResult.fromJson(Map<String, dynamic> json) {
+    final status = json['status'];
+    final verificationState = json['verificationState'];
+    final retryAfterSeconds = json['retryAfterSeconds'];
+    final canRetry = json['canRetry'];
+    if (status is! String ||
+        status.isEmpty ||
+        (verificationState != null && verificationState is! String) ||
+        (retryAfterSeconds != null && retryAfterSeconds is! num) ||
+        (canRetry != null && canRetry is! bool)) {
+      throw const FormatException('Invalid payment status response.');
+    }
+    return CoursePaymentStatusResult(
+      status: status,
+      verificationState: verificationState as String? ?? 'unknown',
+      retryAfterSeconds: (retryAfterSeconds as num?)?.toInt() ?? 0,
+      canRetry: canRetry as bool? ?? true,
+    );
+  }
+}
