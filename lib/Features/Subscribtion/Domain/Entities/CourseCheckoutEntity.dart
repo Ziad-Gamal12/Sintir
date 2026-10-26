@@ -113,6 +113,10 @@ class CoursePaymentStatusResult {
         status.isEmpty ||
         (verificationState != null && verificationState is! String) ||
         (retryAfterSeconds != null && retryAfterSeconds is! num) ||
+        (retryAfterSeconds is num &&
+            (!retryAfterSeconds.isFinite ||
+                retryAfterSeconds < 0 ||
+                retryAfterSeconds % 1 != 0)) ||
         (canRetry != null && canRetry is! bool)) {
       throw const FormatException('Invalid payment status response.');
     }

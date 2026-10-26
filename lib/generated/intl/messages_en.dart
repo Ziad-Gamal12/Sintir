@@ -37,25 +37,41 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "courses_count": m0,
     "education_level": MessageLookupByLibrary.simpleMessage("Education level"),
-    "existing_checkout_coupon_mismatch": MessageLookupByLibrary.simpleMessage(
-      "The coupon on this checkout differs from the one selected now. Resolve this checkout before starting another payment.",
-    ),
-    "existing_checkout_message": MessageLookupByLibrary.simpleMessage(
-      "A previous checkout is still active. Confirm these original payment details before continuing.",
-    ),
-    "existing_checkout_title": MessageLookupByLibrary.simpleMessage("Existing checkout"),
+    "enter_course": MessageLookupByLibrary.simpleMessage("Enter course"),
     "exam_results_history": MessageLookupByLibrary.simpleMessage(
       "Exam results history",
     ),
     "exam_score_progression": MessageLookupByLibrary.simpleMessage(
       "Exam score progression",
     ),
+    "existing_checkout_coupon_mismatch": MessageLookupByLibrary.simpleMessage(
+      "The coupon on this checkout differs from the one selected now. Resolve this checkout before starting another payment.",
+    ),
+    "existing_checkout_message": MessageLookupByLibrary.simpleMessage(
+      "A previous checkout is still active. Confirm these original payment details before continuing.",
+    ),
+    "existing_checkout_title": MessageLookupByLibrary.simpleMessage(
+      "Existing checkout",
+    ),
     "highest_score": MessageLookupByLibrary.simpleMessage("Highest score"),
     "leave_checkout": MessageLookupByLibrary.simpleMessage("Leave checkout"),
     "lowest_score": MessageLookupByLibrary.simpleMessage("Lowest score"),
     "no_coupon_applied": MessageLookupByLibrary.simpleMessage("None"),
-    "original_checkout_amount": MessageLookupByLibrary.simpleMessage("Original amount"),
-    "original_checkout_coupon": MessageLookupByLibrary.simpleMessage("Original coupon"),
+    "original_checkout_amount": MessageLookupByLibrary.simpleMessage(
+      "Original amount",
+    ),
+    "original_checkout_coupon": MessageLookupByLibrary.simpleMessage(
+      "Original coupon",
+    ),
+    "payment_check_cooldown_prefix": MessageLookupByLibrary.simpleMessage(
+      "You can check payment status again in",
+    ),
+    "payment_check_cooldown_suffix": MessageLookupByLibrary.simpleMessage(
+      "seconds.",
+    ),
+    "payment_finalizing_enrollment": MessageLookupByLibrary.simpleMessage(
+      "Payment is confirmed. Course access is still being finalized. Check again shortly.",
+    ),
     "payment_not_completed": MessageLookupByLibrary.simpleMessage(
       "Payment was not completed.",
     ),
@@ -68,8 +84,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "payment_verifying": MessageLookupByLibrary.simpleMessage(
       "Payment is being verified. You can safely leave this page and check again later.",
     ),
-    "resume_checkout": MessageLookupByLibrary.simpleMessage("Resume checkout"),
     "performance_trend": MessageLookupByLibrary.simpleMessage("Average score"),
+    "resume_checkout": MessageLookupByLibrary.simpleMessage("Resume checkout"),
+    "retry_checkout": MessageLookupByLibrary.simpleMessage(
+      "Check payment status",
+    ),
     "student_code": MessageLookupByLibrary.simpleMessage("Student ID:"),
     "subscribed_courses": MessageLookupByLibrary.simpleMessage(
       "Subscribed courses",

@@ -95,11 +95,61 @@ class S {
     );
   }
 
+  /// `You can check payment status again in`
+  String get payment_check_cooldown_prefix {
+    return Intl.message(
+      'You can check payment status again in',
+      name: 'payment_check_cooldown_prefix',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `seconds.`
+  String get payment_check_cooldown_suffix {
+    return Intl.message(
+      'seconds.',
+      name: 'payment_check_cooldown_suffix',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment is confirmed. Course access is still being finalized. Check again shortly.`
+  String get payment_finalizing_enrollment {
+    return Intl.message(
+      'Payment is confirmed. Course access is still being finalized. Check again shortly.',
+      name: 'payment_finalizing_enrollment',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Paymob confirmed a payment, but we could not finalize enrollment automatically. Contact support before paying again.`
   String get payment_requires_review {
     return Intl.message(
       'Paymob confirmed a payment, but we could not finalize enrollment automatically. Contact support before paying again.',
       name: 'payment_requires_review',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter course`
+  String get enter_course {
+    return Intl.message(
+      'Enter course',
+      name: 'enter_course',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check payment status`
+  String get retry_checkout {
+    return Intl.message(
+      'Check payment status',
+      name: 'retry_checkout',
       desc: '',
       args: [],
     );
@@ -115,62 +165,6 @@ class S {
     );
   }
 
-  String get existing_checkout_title => Intl.message(
-        'Existing checkout',
-        name: 'existing_checkout_title',
-        desc: '',
-        args: [],
-      );
-
-  String get existing_checkout_message => Intl.message(
-        'A previous checkout is still active. Confirm these original payment details before continuing.',
-        name: 'existing_checkout_message',
-        desc: '',
-        args: [],
-      );
-
-  String get existing_checkout_coupon_mismatch => Intl.message(
-        'The coupon on this checkout differs from the one selected now. Resolve this checkout before starting another payment.',
-        name: 'existing_checkout_coupon_mismatch',
-        desc: '',
-        args: [],
-      );
-
-  String get original_checkout_amount => Intl.message(
-        'Original amount',
-        name: 'original_checkout_amount',
-        desc: '',
-        args: [],
-      );
-
-  String get original_checkout_coupon => Intl.message(
-        'Original coupon',
-        name: 'original_checkout_coupon',
-        desc: '',
-        args: [],
-      );
-
-  String get no_coupon_applied => Intl.message(
-        'None',
-        name: 'no_coupon_applied',
-        desc: '',
-        args: [],
-      );
-
-  String get resume_checkout => Intl.message(
-        'Resume checkout',
-        name: 'resume_checkout',
-        desc: '',
-        args: [],
-      );
-
-  String get check_later => Intl.message(
-        'Check later',
-        name: 'check_later',
-        desc: '',
-        args: [],
-      );
-
   /// `Leave checkout`
   String get leave_checkout {
     return Intl.message(
@@ -179,6 +173,76 @@ class S {
       desc: '',
       args: [],
     );
+  }
+
+  /// `Existing checkout`
+  String get existing_checkout_title {
+    return Intl.message(
+      'Existing checkout',
+      name: 'existing_checkout_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A previous checkout is still active. Confirm these original payment details before continuing.`
+  String get existing_checkout_message {
+    return Intl.message(
+      'A previous checkout is still active. Confirm these original payment details before continuing.',
+      name: 'existing_checkout_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The coupon on this checkout differs from the one selected now. Resolve this checkout before starting another payment.`
+  String get existing_checkout_coupon_mismatch {
+    return Intl.message(
+      'The coupon on this checkout differs from the one selected now. Resolve this checkout before starting another payment.',
+      name: 'existing_checkout_coupon_mismatch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Original amount`
+  String get original_checkout_amount {
+    return Intl.message(
+      'Original amount',
+      name: 'original_checkout_amount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Original coupon`
+  String get original_checkout_coupon {
+    return Intl.message(
+      'Original coupon',
+      name: 'original_checkout_coupon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `None`
+  String get no_coupon_applied {
+    return Intl.message('None', name: 'no_coupon_applied', desc: '', args: []);
+  }
+
+  /// `Resume checkout`
+  String get resume_checkout {
+    return Intl.message(
+      'Resume checkout',
+      name: 'resume_checkout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check later`
+  String get check_later {
+    return Intl.message('Check later', name: 'check_later', desc: '', args: []);
   }
 
   /// `Subscriber Details`

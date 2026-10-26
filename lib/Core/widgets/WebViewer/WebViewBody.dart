@@ -22,6 +22,7 @@ class _WebviewbodyState extends State<Webviewbody> {
   String _status = 'pending';
   String _verificationState = 'unknown';
   bool _checking = false;
+  bool _canRetry = true;
   bool _returnedFromCheckout = false;
   int _checks = 0;
   int _retryAfterSeconds = 0;
@@ -66,9 +67,12 @@ class _WebviewbodyState extends State<Webviewbody> {
     _scheduleCheck(Duration.zero);
   }
 
-  bool get _isTerminal =>
-      ['succeeded', 'failed', 'expired', 'paid_requires_review']
-          .contains(_status);
+  bool get _isTerminal => [
+        'succeeded',
+        'failed',
+        'expired',
+        'paid_requires_review'
+      ].contains(_status);
 
   void _scheduleCheck(Duration delay) {
     _pollTimer?.cancel();
@@ -104,6 +108,7 @@ class _WebviewbodyState extends State<Webviewbody> {
       setState(() {
         _status = result.status.toLowerCase();
         _verificationState = result.verificationState;
+        _canRetry = result.canRetry;
         _retryAfterSeconds = result.retryAfterSeconds;
         _nextCheckAt = result.retryAfterSeconds > 0
             ? DateTime.now().add(Duration(seconds: result.retryAfterSeconds))
@@ -159,7 +164,6 @@ class _WebviewbodyState extends State<Webviewbody> {
 
   @override
   Widget build(BuildContext context) {
-    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
     if (_status == 'succeeded') {
       return WebviewbodyPaymentSuccessWidget(
         onContinue: () => Navigator.of(context).pop(true),
@@ -171,20 +175,17 @@ class _WebviewbodyState extends State<Webviewbody> {
         'expired' => LocaleKeys.checkoutExpired,
         'unavailable' => LocaleKeys.paymentStatusUnavailable,
         'paid_requires_review' => LocaleKeys.paymentRequiresReview,
-        _ when _verificationState == 'provider_unavailable' ||
-            _verificationState == 'request_failed' =>
+        _
+            when _verificationState == 'provider_unavailable' ||
+                _verificationState == 'request_failed' =>
           LocaleKeys.paymentStatusUnavailable,
         _ when _verificationState == 'fulfillment_retry_required' =>
-          isArabic
-              ? 'تم تأكيد الدفع. جارٍ إتمام إتاحة الدورة. تحقق مرة أخرى بعد قليل.'
-              : 'Payment is confirmed. Course access is still being finalized. Check again shortly.',
+          LocaleKeys.paymentFinalizingEnrollment,
         'verification_required' => LocaleKeys.paymentVerifying,
         _ => LocaleKeys.paymentVerifying,
       };
       final checkLabel = _retryAfterSeconds > 0
-          ? (isArabic
-                  ? 'يمكنك التحقق من حالة الدفع مرة أخرى بعد $_retryAfterSeconds ثانية.'
-                  : 'You can check payment status again in $_retryAfterSeconds seconds.')
+          ? LocaleKeys.paymentCheckCooldown(_retryAfterSeconds)
           : LocaleKeys.checkPaymentStatus;
       return Center(
           child: Padding(
@@ -195,11 +196,10 @@ class _WebviewbodyState extends State<Webviewbody> {
                 const SizedBox(height: 16),
                 Text(message, textAlign: TextAlign.center),
                 TextButton(
-                    onPressed: _checking ||
-                            _retryAfterSeconds > 0 ||
-                            !_canRefresh
-                        ? null
-                        : _manualRefresh,
+                    onPressed:
+                        _checking || _retryAfterSeconds > 0 || !_canRefresh
+                            ? null
+                            : _manualRefresh,
                     child: _checking
                         ? const SizedBox(
                             width: 18,
@@ -216,5 +216,7 @@ class _WebviewbodyState extends State<Webviewbody> {
   }
 
   bool get _canRefresh =>
-      !_isTerminal && _verificationState != 'fulfillment_inconsistent';
+      _canRetry &&
+      !_isTerminal &&
+      _verificationState != 'fulfillment_inconsistent';
 }

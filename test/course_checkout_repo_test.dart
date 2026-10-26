@@ -9,6 +9,7 @@ import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo_impli.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
+import 'package:sintir/Features/Subscribtion/Domain/Entities/CourseCheckoutEntity.dart';
 
 class _UnusedDatabaseService implements DataBaseService {
   @override
@@ -182,15 +183,13 @@ void main() {
             'requestDiffers': true,
           });
         case 'get-course-payment-status':
-          return const CourseCheckoutFunctionResponse(
-              status: 200,
-              data: {
-                'ok': true,
-                'status': 'verification_required',
-                'verificationState': 'cooldown',
-                'retryAfterSeconds': 19,
-                'canRetry': true,
-              });
+          return const CourseCheckoutFunctionResponse(status: 200, data: {
+            'ok': true,
+            'status': 'verification_required',
+            'verificationState': 'cooldown',
+            'retryAfterSeconds': 19,
+            'canRetry': true,
+          });
         default:
           throw StateError('Unexpected Edge Function: $name');
       }
@@ -229,6 +228,23 @@ void main() {
     expect(status.verificationState, 'unknown');
     expect(status.retryAfterSeconds, 0);
     expect(status.canRetry, isTrue);
+  });
+
+  test('status parser rejects invalid retry timing', () {
+    expect(
+      () => CoursePaymentStatusResult.fromJson({
+        'status': 'pending',
+        'retryAfterSeconds': -1,
+      }),
+      throwsFormatException,
+    );
+    expect(
+      () => CoursePaymentStatusResult.fromJson({
+        'status': 'pending',
+        'retryAfterSeconds': 0.5,
+      }),
+      throwsFormatException,
+    );
   });
 
   test(

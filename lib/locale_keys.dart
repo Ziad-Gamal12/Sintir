@@ -11,6 +11,14 @@ class LocaleKeys {
   static String get checkoutExpired => 'checkout_expired'.tr();
   static String get paymentStatusUnavailable =>
       'payment_status_unavailable'.tr();
+  static String paymentCheckCooldown(int seconds) {
+    final prefix = 'payment_check_cooldown_prefix'.tr();
+    final suffix = 'payment_check_cooldown_suffix'.tr();
+    return '$prefix $seconds $suffix';
+  }
+
+  static String get paymentFinalizingEnrollment =>
+      'payment_finalizing_enrollment'.tr();
   static String get paymentRequiresReview => 'payment_requires_review'.tr();
   static String get retryCheckout => 'retry_checkout'.tr();
   static String get checkPaymentStatus => 'check_payment_status'.tr();
