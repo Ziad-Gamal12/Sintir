@@ -97,4 +97,63 @@ void main() {
             'Disposed verification screens must not issue delayed requests.');
     await cubit.close();
   });
+
+  testWidgets(
+      'pending non-resumable response is actionable and respects cooldown',
+      (tester) async {
+    final gateway = _StatusOnlyGateway()
+      ..statusCompleter = Completer<CoursePaymentStatusResult>();
+    final cubit = CourseCheckoutCubit(gateway);
+    var currentTime = DateTime(2026, 10, 27);
+
+    await tester.pumpWidget(
+      BlocProvider.value(
+        value: cubit,
+        child: MaterialApp(
+          home: Scaffold(
+            body: Webviewbody(
+              now: () => currentTime,
+              response: PayMobResponse(
+                url: '',
+                paymentAttemptId: 'original-attempt',
+                status: 'verification_required',
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+    gateway.statusCompleter!.complete(const CoursePaymentStatusResult(
+      status: 'pending',
+      verificationState: 'inquiry_complete',
+      retryAfterSeconds: 29,
+      canRetry: true,
+      checkoutUrl: 'https://checkout.example/original?clientSecret=redacted',
+      canResume: false,
+    ));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 50));
+
+    expect(gateway.statusCalls, 1);
+    expect(find.byType(CircularProgressIndicator), findsNothing);
+    expect(find.byType(FilledButton), findsNothing,
+        reason: 'The backend explicitly denied resumption for this response.');
+    final buttons = tester.widgetList<TextButton>(find.byType(TextButton));
+    expect(buttons.first.onPressed, isNull,
+        reason: 'A positive retry delay disables status inquiries.');
+    expect(buttons.last.onPressed, isNotNull,
+        reason: 'The user can leave and recover this same attempt later.');
+
+    currentTime = currentTime.add(const Duration(seconds: 29));
+    await tester.pump(const Duration(seconds: 29));
+    final refreshedButtons =
+        tester.widgetList<TextButton>(find.byType(TextButton));
+    expect(refreshedButtons.first.onPressed, isNotNull);
+    expect(gateway.statusCalls, 1,
+        reason: 'Cooldown expiry enables manual retry without auto-polling.');
+
+    await tester.pumpWidget(const SizedBox.shrink());
+    await cubit.close();
+  });
 }

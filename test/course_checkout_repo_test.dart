@@ -236,6 +236,44 @@ void main() {
     expect(status.canResume, isFalse);
   });
 
+  test('parses the reported pending no-resume response and honors its cooldown',
+      () async {
+    final repo = _repository(
+      invoker: (_, __, ___) async => const CourseCheckoutFunctionResponse(
+        status: 200,
+        data: {
+          'ok': true,
+          'paymentAttemptId': 'attempt-1',
+          'status': 'pending',
+          'verificationState': 'inquiry_complete',
+          'retryAfterSeconds': 29,
+          'canRetry': true,
+          'canResume': false,
+          'amountCents': 17000,
+          'currency': 'EGP',
+          'checkoutUrl':
+              'https://checkout.example/original?clientSecret=redacted',
+          'quote': {
+            'couponCode': null,
+            'currency': 'EGP',
+            'discountAmountCents': 0,
+            'amountCents': 17000,
+            'originalAmountCents': 17000,
+            'discountPercentage': 0,
+          },
+        },
+      ),
+    );
+
+    final status = await repo.paymentStatus('attempt-1');
+    expect(status.status, 'pending');
+    expect(status.verificationState, 'inquiry_complete');
+    expect(status.retryAfterSeconds, 29);
+    expect(status.canRetry, isTrue);
+    expect(status.canResume, isFalse);
+    expect(status.checkoutUrl, contains('clientSecret=redacted'));
+  });
+
   test('status parser rejects invalid retry timing', () {
     expect(
       () => CoursePaymentStatusResult.fromJson({

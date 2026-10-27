@@ -226,11 +226,21 @@ class CourseCheckoutRepoImpl implements CourseCheckoutGateway {
   }
 
   @override
-  Future<CoursePaymentStatusResult> paymentStatus(String paymentAttemptId) async {
+  Future<CoursePaymentStatusResult> paymentStatus(
+      String paymentAttemptId) async {
     final data = await _invoke('get-course-payment-status', {
       'paymentAttemptId': paymentAttemptId,
     });
-    return _parse(() => CoursePaymentStatusResult.fromJson(data));
+    final status = _parse(() => CoursePaymentStatusResult.fromJson(data));
+    developer.log(
+      'payment status received: attempt=$paymentAttemptId '
+      'status=${status.status} verificationState=${status.verificationState} '
+      'checkoutUrlPresent=${status.checkoutUrl.isNotEmpty} '
+      'canResume=${status.canResume} canRetry=${status.canRetry} '
+      'retryAfterSeconds=${status.retryAfterSeconds}',
+      name: 'course_checkout',
+    );
+    return status;
   }
 
   @override
