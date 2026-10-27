@@ -8,12 +8,16 @@ import 'package:sintir/Features/MyCourses/Presentation/Views/Widgets/MyCoursesVi
 import 'package:sintir/locale_keys.dart';
 
 class MyCoursesView extends StatelessWidget {
-  const MyCoursesView({super.key});
+  MyCoursesView({super.key, this.isPopUp = true});
   static String routeName = "/MyCoursesView";
+  bool isPopUp;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(appBartitle: LocaleKeys.myCourses),
+      appBar: CustomAppBar(
+        appBartitle: LocaleKeys.myCourses,
+        isPopUp: isPopUp,
+      ),
       body: BlocProvider(
           create: (context) => MyCoursesCubit(
                 coursesrepo: getIt<Coursesrepo>(),

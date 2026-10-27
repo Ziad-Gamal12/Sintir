@@ -25,10 +25,10 @@ class BottomNavBarEntity {
         inactiveIcon: Assets.assetsIconsSVGIconsBottomNavBarSearchInActiveIcon,
       ),
       BottomNavBarEntity(
-        title: LocaleKeys.favorites,
-        activeIcon: Assets.assetsIconsSVGIconsBottomNavBarFavouriteActiveIcon,
+        title: LocaleKeys.myCourses,
+        activeIcon: Assets.assetsIconsSVGIconsBottomNavBarMyCoursesActiveIcon,
         inactiveIcon:
-            Assets.assetsIconsSVGIconsBottomNavBarFavouriteInActiveIcon,
+            Assets.assetsIconsSVGIconsBottomNavBarMyCoursesInActiveIcon,
       ),
       BottomNavBarEntity(
         title: LocaleKeys.profile,

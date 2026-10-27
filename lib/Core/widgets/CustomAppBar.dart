@@ -14,11 +14,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   AppBar build(BuildContext context) {
     Locale locale = Localizations.localeOf(context);
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final theme = Theme.of(context);
+    bool isDarkMode = theme.brightness == Brightness.dark;
     return AppBar(
       leadingWidth: 50,
       elevation: 0,
       scrolledUnderElevation: 0,
+      backgroundColor: theme.scaffoldBackgroundColor,
       leading: isPopUp == true
           ? Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),

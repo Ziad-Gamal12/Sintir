@@ -388,7 +388,9 @@ class App_router {
       GoRoute(
         path: MyCoursesView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return const MyCoursesView();
+          return MyCoursesView(
+            isPopUp: true,
+          );
         },
       ),
       GoRoute(

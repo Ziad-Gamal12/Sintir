@@ -12,9 +12,7 @@ class BottomNavBarActiveItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final color = theme.brightness == Brightness.light
-        ? const Color.fromARGB(255, 0, 48, 190)
-        : Colors.lightBlueAccent;
+    final color = const Color.fromARGB(255, 0, 48, 190);
 
     return Container(
       padding: const EdgeInsets.all(12),
@@ -26,6 +24,7 @@ class BottomNavBarActiveItem extends StatelessWidget {
         children: [
           SvgPicture.asset(
             bottomNavBarEntity.activeIcon,
+            height: 30,
             color: color,
           ),
           const SizedBox(width: 10),

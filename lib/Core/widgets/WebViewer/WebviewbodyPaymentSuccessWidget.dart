@@ -39,7 +39,12 @@ class WebviewbodyPaymentSuccessWidget extends StatelessWidget {
           const SizedBox(height: 20),
           FilledButton(
             onPressed: onContinue,
-            child: Text(LocaleKeys.enterCourse),
+            child: Text(
+              LocaleKeys.enterCourse,
+              style: AppTextStyles(context)
+                  .regular12
+                  .copyWith(color: Colors.white),
+            ),
           ),
         ],
       ),

@@ -35,7 +35,7 @@ class ProfileActionsEntity {
     ),
     ProfileActionsEntity(
       title: LocaleKeys.profileMyCourses,
-      icon: FontAwesomeIcons.graduationCap,
+      icon: FontAwesomeIcons.bookOpen,
       routeName: MyCoursesView.routeName,
       color: KSecondaryColor,
     ),

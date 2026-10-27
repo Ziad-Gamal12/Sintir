@@ -19,6 +19,8 @@ class BottomNavCubit extends Cubit<BottomNavState> {
   void navigateToProfile() {
     if (currentIndex == 3) return;
     currentIndex = 3;
+    visited.add(3);
+
     emit(BottomNavChanged());
   }
 }

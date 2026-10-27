@@ -66,6 +66,14 @@ class Assets {
   /// assets/Icons/SVG_Icons/BottomNavBarHomeInActiveIcon.svg
   static const String assetsIconsSVGIconsBottomNavBarHomeInActiveIcon = "assets/Icons/SVG_Icons/BottomNavBarHomeInActiveIcon.svg";
 
+  /// Assets for assetsIconsSVGIconsBottomNavBarMyCoursesActiveIcon
+  /// assets/Icons/SVG_Icons/BottomNavBarMyCoursesActiveIcon.svg
+  static const String assetsIconsSVGIconsBottomNavBarMyCoursesActiveIcon = "assets/Icons/SVG_Icons/BottomNavBarMyCoursesActiveIcon.svg";
+
+  /// Assets for assetsIconsSVGIconsBottomNavBarMyCoursesInActiveIcon
+  /// assets/Icons/SVG_Icons/BottomNavBarMyCoursesInActiveIcon.svg
+  static const String assetsIconsSVGIconsBottomNavBarMyCoursesInActiveIcon = "assets/Icons/SVG_Icons/BottomNavBarMyCoursesInActiveIcon.svg";
+
   /// Assets for assetsIconsSVGIconsBottomNavBarProfileActiveIcon
   /// assets/Icons/SVG_Icons/BottomNavBarProfileActiveIcon.svg
   static const String assetsIconsSVGIconsBottomNavBarProfileActiveIcon = "assets/Icons/SVG_Icons/BottomNavBarProfileActiveIcon.svg";
