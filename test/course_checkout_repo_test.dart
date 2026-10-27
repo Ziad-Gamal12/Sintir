@@ -189,6 +189,8 @@ void main() {
             'verificationState': 'cooldown',
             'retryAfterSeconds': 19,
             'canRetry': true,
+            'checkoutUrl': 'https://checkout.example/original',
+            'canResume': true,
           });
         default:
           throw StateError('Unexpected Edge Function: $name');
@@ -212,6 +214,8 @@ void main() {
     expect(status.verificationState, 'cooldown');
     expect(status.retryAfterSeconds, 19);
     expect(status.canRetry, isTrue);
+    expect(status.checkoutUrl, 'https://checkout.example/original');
+    expect(status.canResume, isTrue);
   });
 
   test('status response with no cooldown metadata remains backward compatible',
@@ -228,6 +232,8 @@ void main() {
     expect(status.verificationState, 'unknown');
     expect(status.retryAfterSeconds, 0);
     expect(status.canRetry, isTrue);
+    expect(status.checkoutUrl, isEmpty);
+    expect(status.canResume, isFalse);
   });
 
   test('status parser rejects invalid retry timing', () {

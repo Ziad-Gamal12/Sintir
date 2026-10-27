@@ -21,6 +21,8 @@ import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/Subscribt
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
+enum _ExistingCheckoutAction { checkLater, checkStatus, resumePayment }
+
 class SubscribtionViewBody extends StatefulWidget {
   const SubscribtionViewBody({
     super.key,
@@ -127,7 +129,7 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
   ) async {
     if (attempt.requiresConfirmation) {
       final amount = (attempt.quote.amountCents / 100).toStringAsFixed(2);
-      final confirmed = await showDialog<bool>(
+      final action = await showDialog<_ExistingCheckoutAction>(
         context: context,
         builder: (dialogContext) => AlertDialog(
           title: Text(LocaleKeys.existingCheckoutTitle),
@@ -149,30 +151,56 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(dialogContext, false),
+              onPressed: () => Navigator.pop(
+                  dialogContext, _ExistingCheckoutAction.checkLater),
               child: Text(LocaleKeys.checkLater),
             ),
-            FilledButton(
-              onPressed: () => Navigator.pop(dialogContext, true),
-              child: Text(attempt.checkoutUrl.isEmpty
-                  ? LocaleKeys.checkPaymentStatus
-                  : LocaleKeys.resumeCheckout),
+            TextButton(
+              onPressed: () => Navigator.pop(
+                  dialogContext, _ExistingCheckoutAction.checkStatus),
+              child: Text(LocaleKeys.checkPaymentStatus),
             ),
+            if (attempt.checkoutUrl.isNotEmpty)
+              FilledButton(
+                onPressed: () => Navigator.pop(
+                    dialogContext, _ExistingCheckoutAction.resumePayment),
+                child: Text(LocaleKeys.resumeCheckout),
+              ),
           ],
         ),
       );
-      if (confirmed != true || !context.mounted) return;
+      if (action == null ||
+          action == _ExistingCheckoutAction.checkLater ||
+          !context.mounted) {
+        return;
+      }
+      final checkoutUrl = action == _ExistingCheckoutAction.resumePayment
+          ? attempt.checkoutUrl
+          : '';
+      await _openVerification(context, course, attempt, checkoutUrl);
+      return;
     }
     if (!context.mounted) return;
-    final completed = await context.push<bool>(Webviewer.routeName,
-        extra: PayMobWebViewRequirmentsEntity(
-          course: course,
-          payMobResponse: PayMobResponse(
-            url: attempt.checkoutUrl,
-            paymentAttemptId: attempt.id,
-            status: attempt.status,
-          ),
-        ));
+    await _openVerification(context, course, attempt, attempt.checkoutUrl);
+  }
+
+  Future<void> _openVerification(
+    BuildContext context,
+    CourseEntity course,
+    CoursePaymentAttempt attempt,
+    String checkoutUrl,
+  ) async {
+    final completed = await context.push<bool>(
+      Webviewer.routeName,
+      extra: PayMobWebViewRequirmentsEntity(
+        course: course,
+        payMobResponse: PayMobResponse(
+          url: checkoutUrl,
+          paymentAttemptId: attempt.id,
+          status: attempt.status,
+        ),
+      ),
+    );
     if (completed == true && context.mounted) {
       widget.requirmentsEntity
         ..isSubscribed = true

@@ -9,7 +9,9 @@ import 'package:sintir/locale_keys.dart';
 
 class _FakeCheckoutGateway implements CourseCheckoutGateway {
   int createCalls = 0;
+  int statusCalls = 0;
   final List<String> idempotencyKeys = [];
+  final List<String> statusAttemptIds = [];
   Completer<CoursePaymentAttempt>? createCompleter;
   Object? createError;
   Object? quoteError;
@@ -47,8 +49,12 @@ class _FakeCheckoutGateway implements CourseCheckoutGateway {
   }
 
   @override
-  Future<CoursePaymentStatusResult> paymentStatus(String paymentAttemptId) async =>
-      nextStatus;
+  Future<CoursePaymentStatusResult> paymentStatus(
+      String paymentAttemptId) async {
+    statusCalls++;
+    statusAttemptIds.add(paymentAttemptId);
+    return nextStatus;
+  }
 
   @override
   Future<bool> isSubscribed(String courseId) async => false;
@@ -107,6 +113,9 @@ void main() {
     );
     expect((await cubit.refreshStatus('attempt')).status, 'succeeded');
     expect((cubit.state as CourseCheckoutStatus).status, 'succeeded');
+    expect(gateway.statusAttemptIds, ['attempt', 'attempt']);
+    expect(gateway.createCalls, 0,
+        reason: 'Checking status must never create another payment attempt.');
     await cubit.close();
   });
 
@@ -153,8 +162,8 @@ void main() {
         retryAfterSeconds: 30,
       );
     final cubit = CourseCheckoutCubit(gateway);
-    expect((await cubit.refreshStatus('attempt')).status,
-        'verification_required');
+    expect(
+        (await cubit.refreshStatus('attempt')).status, 'verification_required');
     expect(
         (cubit.state as CourseCheckoutStatus).status, 'verification_required');
     expect((cubit.state as CourseCheckoutStatus).result.verificationState,

@@ -97,18 +97,24 @@ class CoursePaymentStatusResult {
     this.verificationState = 'unknown',
     this.retryAfterSeconds = 0,
     this.canRetry = true,
+    this.checkoutUrl = '',
+    this.canResume = false,
   });
 
   final String status;
   final String verificationState;
   final int retryAfterSeconds;
   final bool canRetry;
+  final String checkoutUrl;
+  final bool canResume;
 
   factory CoursePaymentStatusResult.fromJson(Map<String, dynamic> json) {
     final status = json['status'];
     final verificationState = json['verificationState'];
     final retryAfterSeconds = json['retryAfterSeconds'];
     final canRetry = json['canRetry'];
+    final checkoutUrl = json['checkoutUrl'];
+    final canResume = json['canResume'];
     if (status is! String ||
         status.isEmpty ||
         (verificationState != null && verificationState is! String) ||
@@ -117,7 +123,9 @@ class CoursePaymentStatusResult {
             (!retryAfterSeconds.isFinite ||
                 retryAfterSeconds < 0 ||
                 retryAfterSeconds % 1 != 0)) ||
-        (canRetry != null && canRetry is! bool)) {
+        (canRetry != null && canRetry is! bool) ||
+        (checkoutUrl != null && checkoutUrl is! String) ||
+        (canResume != null && canResume is! bool)) {
       throw const FormatException('Invalid payment status response.');
     }
     return CoursePaymentStatusResult(
@@ -125,6 +133,8 @@ class CoursePaymentStatusResult {
       verificationState: verificationState as String? ?? 'unknown',
       retryAfterSeconds: (retryAfterSeconds as num?)?.toInt() ?? 0,
       canRetry: canRetry as bool? ?? true,
+      checkoutUrl: checkoutUrl as String? ?? '',
+      canResume: canResume as bool? ?? false,
     );
   }
 }

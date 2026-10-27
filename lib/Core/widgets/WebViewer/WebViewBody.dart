@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/course_checkout_cubit/course_checkout_cubit.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebviewbodyPaymentSuccessWidget.dart';
@@ -9,63 +10,73 @@ import 'package:sintir/locale_keys.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Webviewbody extends StatefulWidget {
-  const Webviewbody({super.key, required this.response});
+  const Webviewbody({super.key, required this.response, this.now});
   final PayMobResponse response;
+  final DateTime Function()? now;
   @override
   State<Webviewbody> createState() => _WebviewbodyState();
 }
 
 class _WebviewbodyState extends State<Webviewbody> {
-  late WebViewController controller;
-  Timer? _pollTimer;
+  WebViewController? _controller;
   Timer? _countdownTimer;
   String _status = 'pending';
   String _verificationState = 'unknown';
   bool _checking = false;
   bool _canRetry = true;
+  bool _canResume = false;
   bool _returnedFromCheckout = false;
-  int _checks = 0;
   int _retryAfterSeconds = 0;
   DateTime? _nextCheckAt;
+  String _checkoutUrl = '';
 
   @override
   void initState() {
     super.initState();
     _status = widget.response.status.toLowerCase();
-    _returnedFromCheckout = widget.response.url.isEmpty;
-    controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onNavigationRequest: (NavigationRequest request) {
-            final url = request.url;
-
-            final uri = Uri.tryParse(url);
-            if (uri != null &&
-                (uri.queryParameters.containsKey('success') ||
-                    uri.path.contains('payment-status'))) {
-              if (mounted && !_returnedFromCheckout) {
-                setState(() => _returnedFromCheckout = true);
-              }
-              _startPolling();
-            }
-
-            return NavigationDecision.navigate;
-          },
-        ),
-      );
-    if (widget.response.url.isNotEmpty) {
-      controller.loadRequest(Uri.parse(widget.response.url));
+    _checkoutUrl = widget.response.url;
+    _returnedFromCheckout = _checkoutUrl.isEmpty;
+    if (_checkoutUrl.isNotEmpty) {
+      _loadCheckoutUrl();
     } else if (!['succeeded', 'failed', 'expired', 'paid_requires_review']
         .contains(_status)) {
-      _startPolling();
+      _startStatusCheck();
     }
   }
 
-  void _startPolling() {
-    if (_checking || _pollTimer != null || _isTerminal) return;
-    _scheduleCheck(Duration.zero);
+  WebViewController _createController() => WebViewController()
+    ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    ..setNavigationDelegate(NavigationDelegate(
+      onNavigationRequest: (NavigationRequest request) {
+        final url = request.url;
+
+        final uri = Uri.tryParse(url);
+        if (uri != null &&
+            (uri.queryParameters.containsKey('success') ||
+                uri.path.contains('payment-status'))) {
+          if (mounted) {
+            setState(() => _returnedFromCheckout = true);
+          }
+          _startStatusCheck();
+        }
+
+        return NavigationDecision.navigate;
+      },
+    ));
+
+  WebViewController _getController() => _controller ??= _createController();
+
+  void _loadCheckoutUrl() {
+    _getController().loadRequest(Uri.parse(_checkoutUrl));
   }
+
+  void _startStatusCheck() {
+    if (_checking || _isTerminal || _autoCheckStarted) return;
+    _autoCheckStarted = true;
+    _checkStatus();
+  }
+
+  bool _autoCheckStarted = false;
 
   bool get _isTerminal => [
         'succeeded',
@@ -74,31 +85,17 @@ class _WebviewbodyState extends State<Webviewbody> {
         'paid_requires_review'
       ].contains(_status);
 
-  void _scheduleCheck(Duration delay) {
-    _pollTimer?.cancel();
-    if (delay == Duration.zero) {
-      _pollTimer = null;
-      _checkStatus();
-    } else {
-      _pollTimer = Timer(delay, () {
-        _pollTimer = null;
-        _checkStatus();
-      });
-    }
-  }
+  DateTime _currentTime() => widget.now?.call() ?? DateTime.now();
 
   Future<void> _checkStatus() async {
     if (_checking || !mounted || _isTerminal) {
       return;
     }
-    if (_checks >= 30) return;
     final nextCheckAt = _nextCheckAt;
-    if (nextCheckAt != null && DateTime.now().isBefore(nextCheckAt)) {
-      _scheduleCheck(nextCheckAt.difference(DateTime.now()));
+    if (nextCheckAt != null && _currentTime().isBefore(nextCheckAt)) {
       return;
     }
     _checking = true;
-    _checks++;
     if (mounted) setState(() {});
     try {
       final result = await context
@@ -109,18 +106,20 @@ class _WebviewbodyState extends State<Webviewbody> {
         _status = result.status.toLowerCase();
         _verificationState = result.verificationState;
         _canRetry = result.canRetry;
+        _canResume = result.canResume && result.checkoutUrl.isNotEmpty;
+        if (_canResume) _checkoutUrl = result.checkoutUrl;
         _retryAfterSeconds = result.retryAfterSeconds;
         _nextCheckAt = result.retryAfterSeconds > 0
-            ? DateTime.now().add(Duration(seconds: result.retryAfterSeconds))
+            ? _currentTime().add(Duration(seconds: result.retryAfterSeconds))
             : null;
       });
       if (_isTerminal) {
         _cancelChecks();
       } else if (_retryAfterSeconds > 0) {
         _startCountdown();
-        _scheduleCheck(Duration(seconds: _retryAfterSeconds));
       } else {
-        _scheduleCheck(const Duration(seconds: 4));
+        _countdownTimer?.cancel();
+        _countdownTimer = null;
       }
     } finally {
       _checking = false;
@@ -129,11 +128,23 @@ class _WebviewbodyState extends State<Webviewbody> {
   }
 
   Future<void> _manualRefresh() async {
-    if (_checking || _isTerminal || _retryAfterSeconds > 0) return;
-    _checks = 0;
-    _pollTimer?.cancel();
-    _pollTimer = null;
+    if (_checking || _isTerminal || _retryAfterSeconds > 0 || !_canRefresh) {
+      return;
+    }
     await _checkStatus();
+  }
+
+  void _resumePayment() {
+    if (!_canResume || _checkoutUrl.isEmpty || _checking || !mounted) return;
+    final controller = _getController();
+    _cancelChecks();
+    setState(() {
+      _returnedFromCheckout = false;
+      _retryAfterSeconds = 0;
+      _nextCheckAt = null;
+      _autoCheckStarted = false;
+    });
+    controller.loadRequest(Uri.parse(_checkoutUrl));
   }
 
   void _startCountdown() {
@@ -143,16 +154,16 @@ class _WebviewbodyState extends State<Webviewbody> {
         timer.cancel();
         return;
       }
-      final remaining = _nextCheckAt!.difference(DateTime.now()).inSeconds;
-      setState(() => _retryAfterSeconds = remaining < 0 ? 0 : remaining);
+      final remainingMs =
+          _nextCheckAt!.difference(_currentTime()).inMilliseconds;
+      final remaining = remainingMs <= 0 ? 0 : (remainingMs + 999) ~/ 1000;
+      setState(() => _retryAfterSeconds = remaining);
       if (_retryAfterSeconds == 0) timer.cancel();
     });
   }
 
   void _cancelChecks() {
-    _pollTimer?.cancel();
     _countdownTimer?.cancel();
-    _pollTimer = null;
     _countdownTimer = null;
   }
 
@@ -207,12 +218,17 @@ class _WebviewbodyState extends State<Webviewbody> {
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
                         : Text(checkLabel)),
+                if (_canResume)
+                  FilledButton(
+                    onPressed: _checking ? null : _resumePayment,
+                    child: Text(LocaleKeys.resumeCheckout),
+                  ),
                 TextButton(
                     onPressed: () => Navigator.of(context).pop(false),
                     child: Text(LocaleKeys.leaveCheckout)),
               ])));
     }
-    return WebViewWidget(controller: controller);
+    return WebViewWidget(controller: _controller!);
   }
 
   bool get _canRefresh =>
