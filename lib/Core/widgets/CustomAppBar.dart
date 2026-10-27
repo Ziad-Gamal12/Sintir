@@ -7,9 +7,15 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  CustomAppBar({super.key, required this.appBartitle, this.isPopUp = true});
+  const CustomAppBar({
+    super.key,
+    required this.appBartitle,
+    this.isPopUp = true,
+    this.onBackPressed,
+  });
   final String appBartitle;
-  bool? isPopUp;
+  final VoidCallback? onBackPressed;
+  final bool? isPopUp;
 
   @override
   AppBar build(BuildContext context) {
@@ -25,16 +31,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: InkWell(
-                onTap: () {
-                  GoRouter.of(context).pop();
-                },
+                onTap: onBackPressed ?? () => GoRouter.of(context).pop(),
                 child: Transform.rotate(
                   angle: locale.languageCode == 'ar' ? 0 : 3.14,
                   child: SvgPicture.asset(
                     Assets.assetsIconsSVGIconsArrowLeftBack,
                     height: 20,
                     width: 20,
-                    color: isDarkMode == true ? Colors.white : null,
+                    colorFilter: isDarkMode == true
+                        ? const ColorFilter.mode(Colors.white, BlendMode.srcIn)
+                        : null,
                   ),
                 ),
               ),

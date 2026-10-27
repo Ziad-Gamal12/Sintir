@@ -17,11 +17,10 @@ import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/Subscribt
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/SubscribtionViewBodyCouponTextField.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/SubscribtionViewBodyCourseDetailsTitle.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/SubscribtionViewBodyDiscountDetailsSection.dart';
+import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/ExistingCheckoutDialog.dart';
 // Constants
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
-
-enum _ExistingCheckoutAction { checkLater, checkStatus, resumePayment }
 
 class SubscribtionViewBody extends StatefulWidget {
   const SubscribtionViewBody({
@@ -128,53 +127,20 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
     CoursePaymentAttempt attempt,
   ) async {
     if (attempt.requiresConfirmation) {
-      final amount = (attempt.quote.amountCents / 100).toStringAsFixed(2);
-      final action = await showDialog<_ExistingCheckoutAction>(
+      final action = await showDialog<ExistingCheckoutAction>(
         context: context,
-        builder: (dialogContext) => AlertDialog(
-          title: Text(LocaleKeys.existingCheckoutTitle),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(attempt.requestDiffers
-                  ? LocaleKeys.existingCheckoutCouponMismatch
-                  : attempt.checkoutUrl.isEmpty
-                      ? LocaleKeys.paymentVerifying
-                      : LocaleKeys.existingCheckoutMessage),
-              const SizedBox(height: 12),
-              Text('${LocaleKeys.originalCheckoutAmount}: $amount EGP'),
-              if (attempt.requestDiffers || attempt.quote.couponCode != null)
-                Text(
-                    '${LocaleKeys.originalCheckoutCoupon}: ${attempt.quote.couponCode ?? LocaleKeys.noCouponApplied}'),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(
-                  dialogContext, _ExistingCheckoutAction.checkLater),
-              child: Text(LocaleKeys.checkLater),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(
-                  dialogContext, _ExistingCheckoutAction.checkStatus),
-              child: Text(LocaleKeys.checkPaymentStatus),
-            ),
-            if (attempt.checkoutUrl.isNotEmpty)
-              FilledButton(
-                onPressed: () => Navigator.pop(
-                    dialogContext, _ExistingCheckoutAction.resumePayment),
-                child: Text(LocaleKeys.resumeCheckout),
-              ),
-          ],
+        builder: (_) => ExistingCheckoutDialog(
+          courseTitle: course.title,
+          attempt: attempt,
+          requestDiffers: attempt.requestDiffers,
         ),
       );
       if (action == null ||
-          action == _ExistingCheckoutAction.checkLater ||
+          action == ExistingCheckoutAction.checkLater ||
           !context.mounted) {
         return;
       }
-      final checkoutUrl = action == _ExistingCheckoutAction.resumePayment
+      final checkoutUrl = action == ExistingCheckoutAction.resumePayment
           ? attempt.checkoutUrl
           : '';
       await _openVerification(context, course, attempt, checkoutUrl);
@@ -199,6 +165,7 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
           paymentAttemptId: attempt.id,
           status: attempt.status,
         ),
+        quote: attempt.quote,
       ),
     );
     if (completed == true && context.mounted) {

@@ -4,15 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/course_checkout_cubit/course_checkout_cubit.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebviewbodyPaymentSuccessWidget.dart';
+import 'package:sintir/Features/Subscribtion/Domain/Entities/CourseCheckoutEntity.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobResponse.dart';
-import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Webviewbody extends StatefulWidget {
-  const Webviewbody({super.key, required this.response, this.now});
+  const Webviewbody({
+    super.key,
+    required this.response,
+    this.courseTitle,
+    this.quote,
+    this.now,
+  });
+
   final PayMobResponse response;
+  final String? courseTitle;
+  final CourseCheckoutQuote? quote;
   final DateTime Function()? now;
+
   @override
   State<Webviewbody> createState() => _WebviewbodyState();
 }
@@ -29,6 +39,8 @@ class _WebviewbodyState extends State<Webviewbody> {
   int _retryAfterSeconds = 0;
   DateTime? _nextCheckAt;
   String _checkoutUrl = '';
+  bool _allowSuccessPop = false;
+  bool _successPopQueued = false;
 
   @override
   void initState() {
@@ -167,6 +179,15 @@ class _WebviewbodyState extends State<Webviewbody> {
     _countdownTimer = null;
   }
 
+  void _returnFromSuccess() {
+    if (!mounted || !_isSuccess || _successPopQueued) return;
+    _successPopQueued = true;
+    setState(() => _allowSuccessPop = true);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) Navigator.of(context).pop(true);
+    });
+  }
+
   @override
   void dispose() {
     _cancelChecks();
@@ -175,9 +196,23 @@ class _WebviewbodyState extends State<Webviewbody> {
 
   @override
   Widget build(BuildContext context) {
-    if (_status == 'succeeded') {
+    return PopScope<Object?>(
+      canPop: !_isSuccess || _allowSuccessPop,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop && _isSuccess) _returnFromSuccess();
+      },
+      child: _buildContent(context),
+    );
+  }
+
+  bool get _isSuccess => _status == 'succeeded';
+
+  Widget _buildContent(BuildContext context) {
+    if (_isSuccess) {
       return WebviewbodyPaymentSuccessWidget(
-        onContinue: () => Navigator.of(context).pop(true),
+        courseTitle: widget.courseTitle,
+        quote: widget.quote,
+        onContinue: _returnFromSuccess,
       );
     }
     if (_returnedFromCheckout) {
@@ -203,21 +238,41 @@ class _WebviewbodyState extends State<Webviewbody> {
               padding: const EdgeInsets.all(24),
               child: Column(mainAxisSize: MainAxisSize.min, children: [
                 if (_checking)
-                  const CircularProgressIndicator(color: KMainColor),
+                  Semantics(
+                    liveRegion: true,
+                    label: LocaleKeys.paymentCheckingStatus,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox.square(
+                            dimension: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Flexible(
+                            child: Text(LocaleKeys.paymentCheckingStatus),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 const SizedBox(height: 16),
-                Text(message, textAlign: TextAlign.center),
+                Semantics(
+                  liveRegion: !_checking,
+                  child: Text(message, textAlign: TextAlign.center),
+                ),
                 TextButton(
+                    key: const Key('verification_check_status'),
                     onPressed:
                         _checking || _retryAfterSeconds > 0 || !_canRefresh
                             ? null
                             : _manualRefresh,
-                    child: _checking
-                        ? const SizedBox(
-                            width: 18,
-                            height: 18,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          )
-                        : Text(checkLabel)),
+                    child: Text(checkLabel)),
                 if (_canResume)
                   FilledButton(
                     onPressed: _checking ? null : _resumePayment,

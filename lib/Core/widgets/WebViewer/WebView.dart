@@ -6,6 +6,7 @@ import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebViewBody.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobWebViewRequirmentsEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 class Webviewer extends StatelessWidget {
   const Webviewer({super.key, required this.requirmentsEntity});
@@ -16,8 +17,15 @@ class Webviewer extends StatelessWidget {
     return BlocProvider(
       create: (context) => CourseCheckoutCubit(getIt<CourseCheckoutGateway>()),
       child: Scaffold(
-        appBar: CustomAppBar(appBartitle: "Web View"),
-        body: Webviewbody(response: requirmentsEntity.payMobResponse),
+        appBar: CustomAppBar(
+          appBartitle: LocaleKeys.paymentStatusTitle,
+          onBackPressed: () => Navigator.of(context).maybePop(),
+        ),
+        body: Webviewbody(
+          response: requirmentsEntity.payMobResponse,
+          courseTitle: requirmentsEntity.course.title,
+          quote: requirmentsEntity.quote,
+        ),
       ),
     );
   }

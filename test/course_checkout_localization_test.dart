@@ -19,6 +19,7 @@ void main() {
     'leave_checkout',
     'existing_checkout_title',
     'existing_checkout_message',
+    'existing_checkout_later_message',
     'existing_checkout_coupon_mismatch',
     'original_checkout_amount',
     'original_checkout_coupon',
@@ -26,6 +27,15 @@ void main() {
     'resume_checkout',
     'check_later',
     'enter_course',
+    'payment_pending',
+    'payment_verification_in_progress',
+    'payment_checking_status',
+    'payment_confirmed_heading',
+    'payment_confirmed_message',
+    'payment_confirmed_amount',
+    'payment_discount',
+    'return_to_course',
+    'payment_status_title',
   ];
 
   for (final languageCode in ['en', 'ar', 'fr']) {

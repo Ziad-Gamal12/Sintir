@@ -25,6 +25,18 @@ class LocaleKeys {
   static String get leaveCheckout => 'leave_checkout'.tr();
   static String get existingCheckoutTitle => 'existing_checkout_title'.tr();
   static String get existingCheckoutMessage => 'existing_checkout_message'.tr();
+  static String get existingCheckoutLaterMessage =>
+      'existing_checkout_later_message'.tr();
+  static String get paymentPending => 'payment_pending'.tr();
+  static String get paymentVerificationInProgress =>
+      'payment_verification_in_progress'.tr();
+  static String get paymentCheckingStatus => 'payment_checking_status'.tr();
+  static String get paymentConfirmedHeading => 'payment_confirmed_heading'.tr();
+  static String get paymentConfirmedMessage => 'payment_confirmed_message'.tr();
+  static String get paymentConfirmedAmount => 'payment_confirmed_amount'.tr();
+  static String get paymentDiscount => 'payment_discount'.tr();
+  static String get returnToCourse => 'return_to_course'.tr();
+  static String get paymentStatusTitle => 'payment_status_title'.tr();
   static String get existingCheckoutCouponMismatch =>
       'existing_checkout_coupon_mismatch'.tr();
   static String get originalCheckoutAmount => 'original_checkout_amount'.tr();
