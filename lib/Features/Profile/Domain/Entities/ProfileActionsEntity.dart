@@ -9,7 +9,6 @@ import 'package:sintir/Features/Profile/Presentation/Views/AboutUsView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/SettingsView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/UserPersonalDetailsView.dart';
 import 'package:sintir/Features/Support/Presentation/Views/MySupportTicketsView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -63,17 +62,6 @@ class ProfileActionsEntity {
       routeName: MyTransactionsView.routeName,
       color: Colors.orange,
     ),
-  ];
-
-  static List<ProfileActionsEntity> studentActions = [...userCoreActions];
-  static List<ProfileActionsEntity> teacherActions = [
-    ProfileActionsEntity(
-      routeName: TeacherWorkenvironmentview.routeName,
-      title: LocaleKeys.workEnvironment,
-      icon: FontAwesomeIcons.briefcase,
-      color: Colors.green,
-    ),
-    ...userCoreActions
   ];
 
   static List<ProfileActionsEntity> appCoreActions = [

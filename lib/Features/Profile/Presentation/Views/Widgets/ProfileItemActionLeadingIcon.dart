@@ -6,7 +6,7 @@ class ProfileItemActionLeadingIcon extends StatelessWidget {
   const ProfileItemActionLeadingIcon({
     super.key,
     required this.profileActionsEntity,
-    this.size = 22.0,
+    this.size = 18.0,
   });
 
   final ProfileActionsEntity profileActionsEntity;
@@ -17,11 +17,11 @@ class ProfileItemActionLeadingIcon extends StatelessWidget {
     final color = profileActionsEntity.getColor(context);
 
     return Container(
-      width: 44,
-      height: 44,
+      width: 42,
+      height: 42,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: color.withValues(alpha: 0.1),
+        color: color.withValues(alpha: 0.14),
       ),
       child: Center(
         child: FaIcon(

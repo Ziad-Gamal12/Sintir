@@ -15,15 +15,34 @@ class UserAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserPersonalDetailsCubit, UserPersonalDetailsState>(
-      builder: (context, state) => Skeletonizer(
-          enabled: state is UpdatedUserProfilePicLoading,
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: CustomCachedNetworkImage(
-                    imageUrl: profilePicurl, fit: BoxFit.cover)),
-          )),
+      builder: (context, state) => ClipOval(
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Skeletonizer(
+              enabled: state is UpdatedUserProfilePicLoading,
+              child: CustomCachedNetworkImage(
+                imageUrl: profilePicurl,
+                fit: BoxFit.cover,
+              ),
+            ),
+            if (state is UpdatedUserProfilePicLoading)
+              ColoredBox(
+                color: Colors.black.withValues(alpha: 0.28),
+                child: const Center(
+                  child: SizedBox(
+                    width: 22,
+                    height: 22,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
     );
   }
 }

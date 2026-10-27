@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/widgets/CustomButton.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/LogOutDialog.dart';
 import 'package:sintir/Features/Profile/Presentation/Manager/user_personal_details_cubit/user_personal_details_cubit.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/ProfileItemActionsButtons.dart';
@@ -14,8 +14,6 @@ class ProfileViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return BlocListener<UserPersonalDetailsCubit, UserPersonalDetailsState>(
       listener: _handleStateChanges,
       child: CustomScrollView(
@@ -26,26 +24,16 @@ class ProfileViewBody extends StatelessWidget {
               KHorizontalPadding,
               KVerticalPadding,
               KHorizontalPadding,
-              KVerticalPadding + 20,
+              KVerticalPadding + 80,
             ),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-                // 1. User Info Section
                 const ProfileViewBodyUserInfo(),
-
-                const SizedBox(height: 24),
-
-                // 2. Subtle Divider
-                Divider(
-                  color: theme.dividerColor.withValues(alpha: 0.1),
-                  thickness: 1,
-                ),
-
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
 
                 const ProfileItemActionsButtons(),
 
-                const SizedBox(height: 48),
+                const SizedBox(height: 28),
 
                 // 4. Logout Action
                 _buildLogoutButton(context),
@@ -72,16 +60,40 @@ class ProfileViewBody extends StatelessWidget {
   Widget _buildLogoutButton(BuildContext context) {
     return Column(
       children: [
-        Custombutton(
-          text: LocaleKeys.logout,
-          color: Colors.red,
-          textColor: Colors.white,
-          onPressed: () {
-            showDialog<void>(
-              context: context,
-              builder: (BuildContext context) => const LogoutDialog(),
-            );
-          },
+        SizedBox(
+          height: 54,
+          width: double.infinity,
+          child: Material(
+            color: Colors.red.withValues(alpha: 0.08),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+              side: BorderSide(color: Colors.red.withValues(alpha: 0.25)),
+            ),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(16),
+              onTap: () {
+                showDialog<void>(
+                  context: context,
+                  builder: (BuildContext context) => const LogoutDialog(),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.logout_rounded,
+                    color: Colors.redAccent,
+                    size: 20,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(LocaleKeys.logout,
+                      style: AppTextStyles(context)
+                          .semiBold16
+                          .copyWith(color: Colors.redAccent)),
+                ],
+              ),
+            ),
+          ),
         ),
         const SizedBox(height: 12),
         Text(

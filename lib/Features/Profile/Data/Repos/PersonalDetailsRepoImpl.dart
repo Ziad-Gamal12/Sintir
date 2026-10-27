@@ -40,7 +40,7 @@ class PersonalDetailsRepoImpl implements PersonalDetailsRepo {
       }
 
       final file = result.getOrElse(() => File(""));
-      if (file == File("") || file.path.isEmpty) {
+      if (file.path.isEmpty) {
         return Left(ServerFailure(message: LocaleKeys.noImageFound));
       }
 

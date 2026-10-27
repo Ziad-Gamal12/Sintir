@@ -416,6 +416,9 @@ class LocaleKeys {
   static String get highestToLowest => 'highest_to_lowest'.tr();
   static String get addCoursesToFavorites => 'add_courses_to_favorites'.tr();
   static String get workEnvironment => 'work_environment'.tr();
+  static String get accountAndActivity => 'account_and_activity'.tr();
+  static String get settingsAndSupport => 'settings_and_support'.tr();
+  static String get workEnvironmentSubtitle => 'work_environment_subtitle'.tr();
   static String get profileSupport => 'profile_support'.tr();
   static String get profileEmail => 'profile_email'.tr();
   static String get profileGender => 'profile_gender'.tr();

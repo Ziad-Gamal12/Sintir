@@ -5,23 +5,26 @@ import 'package:sintir/Features/Profile/Domain/Entities/ProfileActionsEntity.dar
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/ProfileItemActionLeadingIcon.dart';
 
 class ProfileItemAction extends StatelessWidget {
-  const ProfileItemAction({super.key, required this.profileActionsEntity});
+  const ProfileItemAction({
+    super.key,
+    required this.profileActionsEntity,
+    this.showDivider = true,
+  });
   final ProfileActionsEntity profileActionsEntity;
+  final bool showDivider;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(vertical: 2),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
             onTap: () => context.push(profileActionsEntity.routeName),
-            visualDensity: VisualDensity.compact,
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
             leading: ProfileItemActionLeadingIcon(
               profileActionsEntity: profileActionsEntity,
             ),
@@ -34,19 +37,17 @@ class ProfileItemAction extends StatelessWidget {
             trailing: Icon(
               Icons.chevron_right_rounded,
               color: theme.colorScheme.outline,
-              size: 24,
+              size: 22,
             ),
           ),
-          const SizedBox(
-            height: 6,
-          ),
-          Divider(
-            height: 2,
-            thickness: 0.5,
-            color: theme.dividerColor.withValues(alpha: 0.1),
-            indent: 56,
-            endIndent: 16,
-          ),
+          if (showDivider)
+            Divider(
+              height: 1,
+              thickness: 0.6,
+              color: theme.dividerColor.withValues(alpha: 0.08),
+              indent: 16,
+              endIndent: 16,
+            ),
         ],
       ),
     );

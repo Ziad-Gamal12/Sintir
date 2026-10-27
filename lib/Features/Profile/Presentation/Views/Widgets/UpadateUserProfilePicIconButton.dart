@@ -15,20 +15,43 @@ class UpadateUserProfilePicIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return InkWell(
-      onTap: () {
-        context
-            .read<UserPersonalDetailsCubit>()
-            .updatedUserProfilePic(uid: user.uid);
+    return BlocBuilder<UserPersonalDetailsCubit, UserPersonalDetailsState>(
+      builder: (context, state) {
+        final isLoading = state is UpdatedUserProfilePicLoading;
+        return Material(
+          color: theme.colorScheme.surface,
+          shape: CircleBorder(
+            side: BorderSide(
+              color: theme.colorScheme.outline.withValues(alpha: 0.35),
+            ),
+          ),
+          child: InkWell(
+            customBorder: const CircleBorder(),
+            onTap: isLoading
+                ? null
+                : () => context
+                    .read<UserPersonalDetailsCubit>()
+                    .updatedUserProfilePic(uid: user.uid),
+            child: SizedBox(
+              width: 28,
+              height: 28,
+              child: Center(
+                child: isLoading
+                    ? const SizedBox(
+                        width: 14,
+                        height: 14,
+                        child: CircularProgressIndicator(strokeWidth: 1.8),
+                      )
+                    : Icon(
+                        Icons.camera_alt_rounded,
+                        color: theme.iconTheme.color,
+                        size: 15,
+                      ),
+              ),
+            ),
+          ),
+        );
       },
-      child: CircleAvatar(
-        backgroundColor: theme.cardColor,
-        child: Icon(
-          Icons.add_a_photo,
-          color: theme.iconTheme.color,
-          size: 20,
-        ),
-      ),
     );
   }
 }

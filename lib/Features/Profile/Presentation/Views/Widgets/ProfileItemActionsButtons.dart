@@ -2,36 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Profile/Domain/Entities/ProfileActionsEntity.dart';
-import 'package:sintir/Features/Profile/Presentation/Views/Widgets/ProfileItemAction.dart';
+import 'package:sintir/Features/Profile/Presentation/Views/Widgets/ProfileActionsGroupCard.dart';
+import 'package:sintir/Features/Profile/Presentation/Views/Widgets/TeacherWorkEnvironmentCard.dart';
+import 'package:sintir/locale_keys.dart';
 
-class ProfileItemActionsButtons extends StatefulWidget {
+class ProfileItemActionsButtons extends StatelessWidget {
   const ProfileItemActionsButtons({super.key});
 
   @override
-  State<ProfileItemActionsButtons> createState() =>
-      _ProfileItemActionsButtonsState();
-}
-
-class _ProfileItemActionsButtonsState extends State<ProfileItemActionsButtons> {
-  String role = getUserData().role;
-  List<ProfileActionsEntity> actions() {
-    if (role == BackendEndpoints.teacherRole) {
-      return ProfileActionsEntity.teacherActions;
-    } else {
-      return ProfileActionsEntity.studentActions;
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final isTeacher = getUserData().role == BackendEndpoints.teacherRole;
+
     return Column(
       children: [
-        ...actions().map((e) => ProfileItemAction(profileActionsEntity: e)),
-        const SizedBox(
-          height: 32,
+        if (isTeacher) ...[
+          const TeacherWorkEnvironmentCard(),
+          const SizedBox(height: 20),
+        ],
+        ProfileActionsGroupCard(
+          sectionTitle: LocaleKeys.accountAndActivity,
+          items: ProfileActionsEntity.userCoreActions,
         ),
-        ...ProfileActionsEntity.appCoreActions
-            .map((e) => ProfileItemAction(profileActionsEntity: e)),
+        ProfileActionsGroupCard(
+          sectionTitle: LocaleKeys.settingsAndSupport,
+          items: ProfileActionsEntity.appCoreActions,
+          topSpacing: 24,
+        ),
       ],
     );
   }
