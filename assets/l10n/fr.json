@@ -23,7 +23,7 @@
   "return_to_course": "Retour au cours",
   "payment_status_title": "Paiement du cours",
   "existing_checkout_coupon_mismatch": "Le coupon de ce paiement diffère de celui sélectionné. Résolvez ce paiement avant d'en commencer un autre.",
-  "original_checkout_amount": "Montant d'origine",
+  "original_checkout_amount": "Montant dû pour le paiement enregistré",
   "original_checkout_coupon": "Coupon d'origine",
   "no_coupon_applied": "Aucun",
   "resume_checkout": "Reprendre le paiement",

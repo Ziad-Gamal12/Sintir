@@ -23,7 +23,7 @@
   "return_to_course": "Return to course",
   "payment_status_title": "Course payment",
   "existing_checkout_coupon_mismatch": "The coupon on this checkout differs from the one selected now. Resolve this checkout before starting another payment.",
-  "original_checkout_amount": "Original amount",
+  "original_checkout_amount": "Amount due on saved checkout",
   "original_checkout_coupon": "Original coupon",
   "no_coupon_applied": "None",
   "resume_checkout": "Resume checkout",

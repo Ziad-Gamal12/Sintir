@@ -10,6 +10,7 @@ import 'package:sintir/Core/widgets/WebViewer/WebviewbodyPaymentSuccessWidget.da
 import 'package:sintir/Features/Subscribtion/Domain/Entities/CourseCheckoutEntity.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobResponse.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/ExistingCheckoutDialog.dart';
+import 'package:sintir/locale_keys.dart';
 
 const _quote = CourseCheckoutQuote(
   originalAmountCents: 20000,
@@ -21,13 +22,17 @@ const _quote = CourseCheckoutQuote(
 );
 
 CoursePaymentAttempt _attempt(
-        {String checkoutUrl = 'https://checkout.example'}) =>
+        {String checkoutUrl = 'https://checkout.example',
+        bool canResume = true,
+        String? status}) =>
     CoursePaymentAttempt(
       id: 'attempt-1',
       checkoutUrl: checkoutUrl,
-      status: checkoutUrl.isEmpty ? 'verification_required' : 'pending',
+      status:
+          status ?? (checkoutUrl.isEmpty ? 'verification_required' : 'pending'),
       quote: _quote,
       requiresConfirmation: true,
+      canResume: canResume,
     );
 
 Future<Future<ExistingCheckoutAction?>?> _showExistingCheckoutDialog(
@@ -138,6 +143,42 @@ void main() {
     expect(await result, ExistingCheckoutAction.checkStatus);
   });
 
+  testWidgets('checkout URL alone does not authorize resume', (tester) async {
+    await _showExistingCheckoutDialog(
+      tester,
+      attempt: _attempt(canResume: false),
+      courseTitle: 'Physics',
+    );
+
+    expect(find.byKey(const Key('checkout_resume_payment')), findsNothing);
+    expect(find.byKey(const Key('checkout_check_status')), findsOneWidget);
+  });
+
+  testWidgets('verification status is presented as verification, not pending',
+      (tester) async {
+    await _showExistingCheckoutDialog(
+      tester,
+      attempt: _attempt(status: 'verification_required', canResume: false),
+      courseTitle: 'Physics',
+    );
+
+    expect(find.text(LocaleKeys.paymentVerificationInProgress), findsOneWidget);
+    expect(find.text(LocaleKeys.paymentPending), findsNothing);
+    expect(find.text(LocaleKeys.paymentVerifying), findsOneWidget);
+  });
+
+  testWidgets('dialog shows a terminal failure only for failed server status',
+      (tester) async {
+    await _showExistingCheckoutDialog(
+      tester,
+      attempt: _attempt(status: 'failed', canResume: false),
+      courseTitle: 'Physics',
+    );
+
+    expect(find.text(LocaleKeys.paymentNotCompleted), findsNWidgets(2));
+    expect(find.byKey(const Key('checkout_resume_payment')), findsNothing);
+  });
+
   testWidgets('dialog scrolls with long Arabic content and enlarged text',
       (tester) async {
     tester.view.physicalSize = const Size(320, 640);
@@ -224,7 +265,7 @@ void main() {
     expect(gateway.statusCalls, 2);
     expect(find.byType(WebviewbodyPaymentSuccessWidget), findsOneWidget);
     expect(find.text('Algebra and Problem Solving'), findsOneWidget);
-    expect(find.textContaining('EGP'), findsNWidgets(2));
+    expect(find.textContaining('EGP'), findsNWidgets(3));
 
     await tester.pump(const Duration(seconds: 10));
     expect(gateway.statusCalls, 2,
@@ -274,6 +315,29 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('success_return_to_course')));
     expect(continued, isTrue);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('success screen keeps quote details when course title is absent',
+      (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: MediaQuery(
+          data: const MediaQueryData(disableAnimations: true),
+          child: Scaffold(
+            body: WebviewbodyPaymentSuccessWidget(
+              quote: _quote,
+              onContinue: () {},
+            ),
+          ),
+        ),
+      ),
+    );
+
+    expect(find.text(LocaleKeys.paymentConfirmedAmount), findsOneWidget);
+    expect(find.text('SAVE'), findsOneWidget);
+    expect(find.textContaining('EGP'), findsNWidgets(3));
+    expect(find.byIcon(Icons.check_circle_rounded), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

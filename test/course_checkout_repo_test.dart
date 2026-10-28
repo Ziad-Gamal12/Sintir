@@ -181,6 +181,7 @@ void main() {
             'resumedExisting': true,
             'requiresConfirmation': true,
             'requestDiffers': true,
+            'canResume': true,
           });
         case 'get-course-payment-status':
           return const CourseCheckoutFunctionResponse(status: 200, data: {
@@ -210,6 +211,7 @@ void main() {
     expect(attempt.resumedExisting, isTrue);
     expect(attempt.requiresConfirmation, isTrue);
     expect(attempt.requestDiffers, isTrue);
+    expect(attempt.canResume, isTrue);
     expect(status.status, 'verification_required');
     expect(status.verificationState, 'cooldown');
     expect(status.retryAfterSeconds, 19);

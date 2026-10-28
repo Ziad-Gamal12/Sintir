@@ -23,7 +23,7 @@
   "return_to_course": "العودة إلى الدورة",
   "payment_status_title": "الدفع للدورة",
   "existing_checkout_coupon_mismatch": "كوبون هذه العملية يختلف عن الكوبون المحدد الآن. أكمِل هذه العملية أو تحقق منها قبل بدء دفع آخر.",
-  "original_checkout_amount": "المبلغ الأصلي",
+  "original_checkout_amount": "المبلغ المستحق لعملية الدفع المحفوظة",
   "original_checkout_coupon": "كوبون الخصم الأصلي",
   "no_coupon_applied": "لا يوجد",
   "resume_checkout": "متابعة الدفع السابق",
