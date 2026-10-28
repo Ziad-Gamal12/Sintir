@@ -237,6 +237,7 @@ class CourseCheckoutRepoImpl implements CourseCheckoutGateway {
       'status=${status.status} verificationState=${status.verificationState} '
       'checkoutUrlPresent=${status.checkoutUrl.isNotEmpty} '
       'canResume=${status.canResume} canRetry=${status.canRetry} '
+      'paymentConfirmed=${status.paymentConfirmed} '
       'retryAfterSeconds=${status.retryAfterSeconds}',
       name: 'course_checkout',
     );

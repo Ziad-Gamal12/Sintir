@@ -85,11 +85,13 @@ class _StatusGateway implements CourseCheckoutGateway {
   _StatusGateway(this.results);
 
   final List<CoursePaymentStatusResult> results;
+  final List<String> paymentAttemptIds = [];
   int statusCalls = 0;
 
   @override
   Future<CoursePaymentStatusResult> paymentStatus(
       String paymentAttemptId) async {
+    paymentAttemptIds.add(paymentAttemptId);
     final index = statusCalls++;
     return results[index.clamp(0, results.length - 1).toInt()];
   }
@@ -210,6 +212,61 @@ void main() {
     expect(find.text(longTitle), findsOneWidget);
     await tester.ensureVisible(find.byKey(const Key('checkout_check_later')));
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('confirmed payment retries fulfillment without reopening Paymob',
+      (tester) async {
+    final gateway = _StatusGateway([
+      const CoursePaymentStatusResult(
+        status: 'verification_required',
+        verificationState: 'fulfillment_retry_required',
+        retryAfterSeconds: 0,
+        canRetry: true,
+        checkoutUrl: 'https://checkout.example/original',
+        canResume: true,
+        paymentConfirmed: true,
+      ),
+      const CoursePaymentStatusResult(
+        status: 'succeeded',
+        canRetry: false,
+        paymentConfirmed: true,
+      ),
+    ]);
+    final cubit = CourseCheckoutCubit(gateway);
+
+    await tester.pumpWidget(
+      BlocProvider.value(
+        value: cubit,
+        child: MaterialApp(
+          home: Scaffold(
+            body: Webviewbody(
+              response: PayMobResponse(
+                url: '',
+                paymentAttemptId: 'attempt-1',
+                status: 'verification_required',
+              ),
+              courseTitle: 'Algebra and Problem Solving',
+              quote: _quote,
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(gateway.statusCalls, 1);
+    expect(find.text(LocaleKeys.paymentFinalizingEnrollment), findsOneWidget);
+    expect(find.byKey(const Key('verification_check_status')), findsOneWidget);
+    expect(find.text(LocaleKeys.resumeCheckout), findsNothing);
+
+    await tester.tap(find.byKey(const Key('verification_check_status')));
+    await tester.pumpAndSettle();
+
+    expect(gateway.statusCalls, 2);
+    expect(gateway.paymentAttemptIds, ['attempt-1', 'attempt-1']);
+    expect(find.byType(WebviewbodyPaymentSuccessWidget), findsOneWidget);
+    expect(find.text(LocaleKeys.resumeCheckout), findsNothing);
+    await cubit.close();
   });
 
   testWidgets(

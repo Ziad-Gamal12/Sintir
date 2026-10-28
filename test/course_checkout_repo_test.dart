@@ -236,6 +236,23 @@ void main() {
     expect(status.canRetry, isTrue);
     expect(status.checkoutUrl, isEmpty);
     expect(status.canResume, isFalse);
+    expect(status.paymentConfirmed, isFalse);
+  });
+
+  test('payment status preserves confirmed-payment fulfillment semantics', () {
+    final status = CoursePaymentStatusResult.fromJson({
+      'status': 'verification_required',
+      'verificationState': 'fulfillment_retry_required',
+      'paymentConfirmed': true,
+      'canRetry': true,
+      'canResume': false,
+      'retryAfterSeconds': 0,
+    });
+
+    expect(status.paymentConfirmed, isTrue);
+    expect(status.canRetry, isTrue);
+    expect(status.canResume, isFalse);
+    expect(status.verificationState, 'fulfillment_retry_required');
   });
 
   test('parses the reported pending no-resume response and honors its cooldown',

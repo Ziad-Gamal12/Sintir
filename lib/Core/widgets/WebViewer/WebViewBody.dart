@@ -118,7 +118,16 @@ class _WebviewbodyState extends State<Webviewbody> {
         _status = result.status.toLowerCase();
         _verificationState = result.verificationState;
         _canRetry = result.canRetry;
-        _canResume = result.canResume && result.checkoutUrl.isNotEmpty;
+        final paymentNeedsFulfillment = result.paymentConfirmed ||
+            const {
+              'fulfillment_retry_required',
+              'fulfillment_records_missing',
+              'fulfillment_inconsistent',
+            }.contains(result.verificationState);
+        _canResume = result.canResume &&
+            result.checkoutUrl.isNotEmpty &&
+            !paymentNeedsFulfillment &&
+            result.status != 'paid_requires_review';
         if (_canResume) _checkoutUrl = result.checkoutUrl;
         _retryAfterSeconds = result.retryAfterSeconds;
         _nextCheckAt = result.retryAfterSeconds > 0
@@ -227,6 +236,8 @@ class _WebviewbodyState extends State<Webviewbody> {
           LocaleKeys.paymentStatusUnavailable,
         _ when _verificationState == 'fulfillment_retry_required' =>
           LocaleKeys.paymentFinalizingEnrollment,
+        _ when _verificationState == 'fulfillment_records_missing' =>
+          LocaleKeys.paymentRequiresReview,
         'verification_required' => LocaleKeys.paymentVerifying,
         _ => LocaleKeys.paymentVerifying,
       };
