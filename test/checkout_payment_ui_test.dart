@@ -115,6 +115,16 @@ void main() {
     expect(find.textContaining('170'), findsOneWidget);
     expect(find.byKey(const Key('checkout_resume_payment')), findsOneWidget);
     expect(find.byKey(const Key('checkout_check_status')), findsOneWidget);
+    final checkStatusButton = find.byKey(const Key('checkout_check_status'));
+    final checkStatusLabel = find.descendant(
+      of: checkStatusButton,
+      matching: find.text(LocaleKeys.checkPaymentStatus),
+    );
+    expect(
+      tester.widget<Text>(checkStatusLabel).style?.color,
+      Theme.of(tester.element(checkStatusButton)).colorScheme.primary,
+      reason: 'Outlined status action must remain readable in the light theme.',
+    );
 
     await tester
         .ensureVisible(find.byKey(const Key('checkout_resume_payment')));

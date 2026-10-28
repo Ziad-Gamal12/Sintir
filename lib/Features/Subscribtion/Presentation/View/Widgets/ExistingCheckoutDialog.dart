@@ -194,7 +194,12 @@ class ExistingCheckoutDialog extends StatelessWidget {
                       onPressed: () => Navigator.of(context)
                           .pop(ExistingCheckoutAction.resumePayment),
                       icon: const Icon(Icons.open_in_new_rounded),
-                      label: Text(LocaleKeys.resumeCheckout),
+                      label: Text(
+                        LocaleKeys.resumeCheckout,
+                        style: AppTextStyles(context)
+                            .semiBold14
+                            .copyWith(color: Colors.white),
+                      ),
                     ),
                     const SizedBox(height: 8),
                     OutlinedButton.icon(
@@ -207,7 +212,12 @@ class ExistingCheckoutDialog extends StatelessWidget {
                       onPressed: () => Navigator.of(context)
                           .pop(ExistingCheckoutAction.checkStatus),
                       icon: const Icon(Icons.fact_check_outlined),
-                      label: Text(LocaleKeys.checkPaymentStatus),
+                      label: Text(
+                        LocaleKeys.checkPaymentStatus,
+                        style: AppTextStyles(context)
+                            .semiBold14
+                            .copyWith(color: colors.primary),
+                      ),
                     ),
                   ] else
                     FilledButton.icon(
@@ -219,8 +229,16 @@ class ExistingCheckoutDialog extends StatelessWidget {
                       ),
                       onPressed: () => Navigator.of(context)
                           .pop(ExistingCheckoutAction.checkStatus),
-                      icon: const Icon(Icons.fact_check_outlined),
-                      label: Text(LocaleKeys.checkPaymentStatus),
+                      icon: const Icon(
+                        Icons.fact_check_outlined,
+                        color: Colors.white,
+                      ),
+                      label: Text(
+                        LocaleKeys.checkPaymentStatus,
+                        style: AppTextStyles(context)
+                            .semiBold14
+                            .copyWith(color: Colors.white),
+                      ),
                     ),
                   const SizedBox(height: 4),
                   TextButton(

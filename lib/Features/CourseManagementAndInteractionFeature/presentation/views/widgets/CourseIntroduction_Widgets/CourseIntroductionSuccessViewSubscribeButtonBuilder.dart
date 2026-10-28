@@ -31,7 +31,11 @@ class _CourseIntroductionSuccessViewSubscribeButtonBuilderState
         .course;
     return BlocConsumer<CourseSubscribtionsCubit, CourseSubscribtionsState>(
       listener: (context, state) {
-        if (state is SubscibeingToCourseSuccess) {
+        if (state is CheckIfSubscribedSuccess) {
+          context
+              .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
+              .isSubscribed = state.isSubscribed;
+        } else if (state is SubscibeingToCourseSuccess) {
           setState(() {
             context
                 .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
@@ -59,8 +63,13 @@ class _CourseIntroductionSuccessViewSubscribeButtonBuilderState
                 AppTextStyles(context).regular14.copyWith(color: Colors.green),
           ));
         }
+        final isSubscribed = state is CheckIfSubscribedSuccess
+            ? state.isSubscribed
+            : widget.isSubscribed;
         return CourseIntroductionSuccessViewSubscribeButton(
-            widget: widget, course: course);
+          isSubscribed: isSubscribed,
+          course: course,
+        );
       },
     );
   }

@@ -1,5 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
@@ -8,7 +11,12 @@ import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo_
 import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/CourseIntroduction_Widgets/CourseIntroductionSuccessViewSubscribeButtonBuilder.dart';
+import 'package:sintir/Features/Subscribtion/Presentation/View/SubscribtionView.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobResponse.dart';
+import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
+import 'package:sintir/locale_keys.dart';
+import 'package:provider/provider.dart';
 
 class _UnusedDatabaseService implements DataBaseService {
   @override
@@ -16,9 +24,9 @@ class _UnusedDatabaseService implements DataBaseService {
 }
 
 class _FakeCheckoutGateway implements CourseCheckoutGateway {
-  _FakeCheckoutGateway({this.result = false, this.error});
+  _FakeCheckoutGateway();
 
-  bool result;
+  bool result = false;
   Object? error;
   String? requestedCourseId;
 
@@ -44,6 +52,8 @@ class _UnusedPaymobRepo implements PaymobRepo {
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   late _FakeCheckoutGateway gateway;
   late CourseSubscriptionsRepoImpl repo;
 
@@ -106,5 +116,90 @@ void main() {
 
     expect(cubit.state, isA<CheckIfSubscribedFailure>());
     await cubit.close();
+  });
+
+  testWidgets(
+      'course introduction refreshes enrollment after checkout returns success',
+      (tester) async {
+    gateway.result = false;
+    final course = CourseEntity(
+      id: 'course-id',
+      state: 'Published',
+      studentsCount: 0,
+      subject: '',
+      level: '',
+      title: 'Physics',
+      description: '',
+      price: 100,
+      language: '',
+      postedDate: DateTime.utc(2026),
+    );
+    final requirements = DisplayCourseBottomsheetNavigationRequirmentsEntity(
+      course: course,
+      isSubscribed: false,
+    );
+    final cubit = CourseSubscribtionsCubit(
+      subscribtionRepo: repo,
+      course: course,
+      paymobRepo: _UnusedPaymobRepo(),
+    );
+    final router = GoRouter(
+      initialLocation: '/',
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (_, __) => const Scaffold(
+            body: CourseIntroductionSuccessViewSubscribeButtonBuilder(
+              isSubscribed: false,
+            ),
+          ),
+        ),
+        GoRoute(
+          path: SubscribtionView.routeName,
+          builder: (context, _) => Scaffold(
+            body: TextButton(
+              key: const Key('complete_checkout_for_test'),
+              onPressed: () {
+                gateway.result = true;
+                context.pop(true);
+              },
+              child: const Text('Complete checkout'),
+            ),
+          ),
+        ),
+      ],
+    );
+    addTearDown(router.dispose);
+    addTearDown(cubit.close);
+
+    await tester.pumpWidget(
+      Provider.value(
+        value: requirements,
+        child: BlocProvider.value(
+          value: cubit,
+          child: MaterialApp.router(routerConfig: router),
+        ),
+      ),
+    );
+    expect(
+        tester
+            .widget<Visibility>(
+                find.byKey(const Key('course_subscription_action')))
+            .visible,
+        isTrue);
+
+    await tester.tap(find.text(LocaleKeys.subscribeNow));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('complete_checkout_for_test')));
+    await tester.pumpAndSettle();
+
+    expect(gateway.requestedCourseId, course.id);
+    expect(requirements.isSubscribed, isTrue);
+    expect(
+        tester
+            .widget<Visibility>(
+                find.byKey(const Key('course_subscription_action')))
+            .visible,
+        isFalse);
   });
 }

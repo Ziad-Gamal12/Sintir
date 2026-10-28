@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
-import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/CourseIntroduction_Widgets/CourseIntroductionSuccessViewSubscribeButtonBuilder.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/SubscribtionView.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
@@ -13,11 +13,11 @@ import 'package:sintir/locale_keys.dart';
 class CourseIntroductionSuccessViewSubscribeButton extends StatelessWidget {
   const CourseIntroductionSuccessViewSubscribeButton({
     super.key,
-    required this.widget,
+    required this.isSubscribed,
     required this.course,
   });
 
-  final CourseIntroductionSuccessViewSubscribeButtonBuilder widget;
+  final bool isSubscribed;
   final CourseEntity course;
 
   @override
@@ -28,7 +28,8 @@ class CourseIntroductionSuccessViewSubscribeButton extends StatelessWidget {
     const shadowColor = Colors.black12;
 
     return Visibility(
-      visible: !widget.isSubscribed,
+      key: const Key('course_subscription_action'),
+      visible: !isSubscribed,
       child: Container(
         padding: const EdgeInsets.symmetric(
             horizontal: KHorizontalPadding, vertical: 16),
@@ -50,10 +51,17 @@ class CourseIntroductionSuccessViewSubscribeButton extends StatelessWidget {
                   text: LocaleKeys.subscribeNow,
                   color: KSecondaryColor,
                   textColor: Colors.white,
-                  onPressed: () {
-                    GoRouter.of(context).push(SubscribtionView.routeName,
-                        extra: context.read<
-                            DisplayCourseBottomsheetNavigationRequirmentsEntity>());
+                  onPressed: () async {
+                    final completed = await GoRouter.of(context).push<bool>(
+                      SubscribtionView.routeName,
+                      extra: context.read<
+                          DisplayCourseBottomsheetNavigationRequirmentsEntity>(),
+                    );
+                    if (completed == true && context.mounted) {
+                      await context
+                          .read<CourseSubscribtionsCubit>()
+                          .checkIfSubscribed();
+                    }
                   }),
             ),
             const SizedBox(width: 20),
