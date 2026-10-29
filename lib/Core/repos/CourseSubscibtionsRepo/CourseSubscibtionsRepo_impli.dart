@@ -59,9 +59,12 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
     }
   }
 
-  DocumentSnapshot? _lastSubscribersDoc;
+  final Map<String, DocumentSnapshot?> _lastSubscribersDocs = {};
   final Map<String, DocumentSnapshot?> _lastSearchSubscribersDocs = {};
   final Map<String, dynamic> _baseQuery = {"startAfter": null, "limit": 10};
+
+  String _searchCursorKey(String courseId, String searchKey) =>
+      '$courseId\u0000$searchKey';
 
   @override
   Future<Either<Failure, GetCourseSubscribersEntity>> getSubscribers({
@@ -69,8 +72,9 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
     required bool isPaginate,
   }) async {
     try {
+      if (!isPaginate) _lastSubscribersDocs.remove(courseID);
       final query = Map<String, dynamic>.from(_baseQuery)
-        ..["startAfter"] = isPaginate ? _lastSubscribersDoc : null;
+        ..["startAfter"] = isPaginate ? _lastSubscribersDocs[courseID] : null;
 
       final response = await databaseService.getData(
         requirements: FireStoreRequirmentsEntity(
@@ -93,7 +97,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
         ));
       }
 
-      _lastSubscribersDoc = response.lastDocumentSnapshot;
+      _lastSubscribersDocs[courseID] = response.lastDocumentSnapshot;
 
       final subscribers = await compute(_parseSubscribers, response.listData!);
       final hasMore = response.hasMore ?? false;
@@ -135,8 +139,15 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       required String searchKey,
       required bool isPaginate}) async {
     try {
+      final cursorKey = _searchCursorKey(courseID, searchKey);
+      if (!isPaginate) {
+        final coursePrefix = '$courseID\u0000';
+        _lastSearchSubscribersDocs.removeWhere(
+          (key, _) => key.startsWith(coursePrefix),
+        );
+      }
       Map<String, dynamic> query = {
-        "startAfter": isPaginate ? _lastSearchSubscribersDocs[searchKey] : null,
+        "startAfter": isPaginate ? _lastSearchSubscribersDocs[cursorKey] : null,
         "limit": 10,
         "searchField": "name",
         "searchValue": searchKey,
@@ -163,7 +174,7 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
         ));
       }
 
-      _lastSearchSubscribersDocs[searchKey] = response.lastDocumentSnapshot;
+      _lastSearchSubscribersDocs[cursorKey] = response.lastDocumentSnapshot;
 
       final subscribers = await compute(_parseSubscribers, response.listData!);
       final hasMore = response.hasMore ?? false;

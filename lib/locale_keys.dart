@@ -171,6 +171,13 @@ class LocaleKeys {
   static String get snackError => 'snack_error'.tr();
   static String get snackWarning => 'snack_warning'.tr();
   static String get aboutUsDescription => 'about_us_description'.tr();
+  static String get aboutUsHighlightCourses =>
+      'about_us_highlight_courses'.tr();
+  static String get aboutUsHighlightExams => 'about_us_highlight_exams'.tr();
+  static String get aboutUsHighlightProgress =>
+      'about_us_highlight_progress'.tr();
+  static String get aboutUsHighlightTeachers =>
+      'about_us_highlight_teachers'.tr();
 
   static String get snackInfo => 'snack_info'.tr();
   static String get teacherSubjectTitle => 'teacher_subject_title'.tr();

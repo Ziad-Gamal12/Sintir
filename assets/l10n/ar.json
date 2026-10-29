@@ -780,5 +780,9 @@
   "highest_score": "أعلى الدرجات",
   "lowest_score": "أدنى نتيجة",
   "exam_results_history": "سجل نتائج الاختبارات",
-  "education_level": "المستوى الدراسي"
+  "education_level": "المستوى الدراسي",
+  "about_us_highlight_courses": "كورسات متكاملة",
+  "about_us_highlight_exams": "اختبارات بوقت محدد",
+  "about_us_highlight_progress": "متابعة التقدم",
+  "about_us_highlight_teachers": "معلمون متميزون"
 }

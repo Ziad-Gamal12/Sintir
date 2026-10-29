@@ -763,5 +763,9 @@
   "megabyte_unit": "Mo",
   "video_file_label": "Fichier vidéo (Video)",
   "video_metadata": "{resolution} • {duration}",
-  "video_preview": "Aperçu de la vidéo"
+  "video_preview": "Aperçu de la vidéo",
+  "about_us_highlight_courses": "Cours complets",
+  "about_us_highlight_exams": "Examens chronométrés",
+  "about_us_highlight_progress": "Suivi des progrès",
+  "about_us_highlight_teachers": "Enseignants experts"
 }

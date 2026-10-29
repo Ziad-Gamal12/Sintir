@@ -780,5 +780,9 @@
   "highest_score": "Highest score",
   "lowest_score": "Lowest score",
   "exam_results_history": "Exam results history",
-  "education_level": "Education level"
+  "education_level": "Education level",
+  "about_us_highlight_courses": "Rich Courses",
+  "about_us_highlight_exams": "Timed Exams",
+  "about_us_highlight_progress": "Progress Tracking",
+  "about_us_highlight_teachers": "Expert Teachers"
 }

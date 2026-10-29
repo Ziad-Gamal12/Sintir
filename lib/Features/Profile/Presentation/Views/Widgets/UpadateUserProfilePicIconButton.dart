@@ -22,7 +22,7 @@ class UpadateUserProfilePicIconButton extends StatelessWidget {
           color: theme.colorScheme.surface,
           shape: CircleBorder(
             side: BorderSide(
-              color: theme.colorScheme.outline.withValues(alpha: 0.35),
+              color: const Color(0xff3FC4FF),
             ),
           ),
           child: InkWell(

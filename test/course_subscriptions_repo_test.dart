@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,6 +11,8 @@ import 'package:sintir/Core/repos/CourseCheckoutRepo.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo_impli.dart';
 import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
+import 'package:sintir/Core/entities/FireStoreEntities/FireStorePaginateResponse.dart';
+import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/CourseIntroduction_Widgets/CourseIntroductionSuccessViewSubscribeButtonBuilder.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/SubscribtionView.dart';
@@ -22,6 +25,40 @@ class _UnusedDatabaseService implements DataBaseService {
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
+
+class _RecordingDatabaseService implements DataBaseService {
+  final cursor = _FakeDocumentSnapshot();
+  final List<Map<String, dynamic>?> queries = [];
+
+  @override
+  Future<FireStoreResponse> getData({
+    required FireStoreRequirmentsEntity requirements,
+    Map<String, dynamic>? query,
+  }) async {
+    queries.add(query);
+    return FireStoreResponse(
+      listData: [
+        {
+          'id': 'student-id',
+          'name': 'Student',
+          'gender': '',
+          'joinedDate': null,
+          'phone': '',
+          'educationLevel': '',
+          'imageUrl': '',
+          'address': '',
+        }
+      ],
+      lastDocumentSnapshot: cursor,
+      hasMore: true,
+    );
+  }
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+class _FakeDocumentSnapshot extends Fake implements DocumentSnapshot<Object?> {}
 
 class _FakeCheckoutGateway implements CourseCheckoutGateway {
   _FakeCheckoutGateway();
@@ -91,6 +128,50 @@ void main() {
     final result = await repo.checkIfSubscribed(courseID: 'course-id');
 
     expect(result.isLeft(), isTrue);
+  });
+
+  test('subscriber pagination cursors stay scoped to their course', () async {
+    final database = _RecordingDatabaseService();
+    final scopedRepo = CourseSubscriptionsRepoImpl(
+      databaseService: database,
+      checkoutGateway: gateway,
+    );
+
+    await scopedRepo.getSubscribers(courseID: 'course-a', isPaginate: false);
+    await scopedRepo.getSubscribers(courseID: 'course-b', isPaginate: true);
+    await scopedRepo.getSubscribers(courseID: 'course-a', isPaginate: true);
+
+    expect(database.queries[0]?['startAfter'], isNull);
+    expect(database.queries[1]?['startAfter'], isNull);
+    expect(database.queries[2]?['startAfter'], same(database.cursor));
+  });
+
+  test('subscriber search cursors stay scoped to course and keyword', () async {
+    final database = _RecordingDatabaseService();
+    final scopedRepo = CourseSubscriptionsRepoImpl(
+      databaseService: database,
+      checkoutGateway: gateway,
+    );
+
+    await scopedRepo.searchSubscribers(
+      courseID: 'course-a',
+      searchKey: 'Ali',
+      isPaginate: false,
+    );
+    await scopedRepo.searchSubscribers(
+      courseID: 'course-b',
+      searchKey: 'Ali',
+      isPaginate: true,
+    );
+    await scopedRepo.searchSubscribers(
+      courseID: 'course-a',
+      searchKey: 'Ali',
+      isPaginate: true,
+    );
+
+    expect(database.queries[0]?['startAfter'], isNull);
+    expect(database.queries[1]?['startAfter'], isNull);
+    expect(database.queries[2]?['startAfter'], same(database.cursor));
   });
 
   test('Cubit emits failure after subscription check error', () async {

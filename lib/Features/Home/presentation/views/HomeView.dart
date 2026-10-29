@@ -55,12 +55,13 @@ class _HomeviewState extends State<Homeview> {
             },
           ),
           body: SafeArea(
+            bottom: false,
             child: BlocBuilder<BottomNavCubit, BottomNavState>(
               builder: (context, state) {
                 final cubit = context.read<BottomNavCubit>();
                 return IndexedStack(
                   index: cubit.currentIndex,
-                  children: List.generate(4, (i) {
+                  children: List.generate(_builders.length, (i) {
                     return cubit.visited.contains(i)
                         ? _screen(i)
                         : const SizedBox.shrink();

@@ -1,81 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/AboutUsViewWidgets/AboutUSDescription.dart';
-import 'package:sintir/Features/Profile/Presentation/Views/Widgets/AboutUsViewWidgets/AboutUsIcon.dart';
-import 'package:sintir/Features/Profile/Presentation/Views/Widgets/AboutUsViewWidgets/AboutUsTitle.dart';
+import 'package:sintir/Features/Profile/Presentation/Views/Widgets/AboutUsViewWidgets/AboutUsFadeSlide.dart';
+import 'package:sintir/Features/Profile/Presentation/Views/Widgets/AboutUsViewWidgets/AboutUsHeader.dart';
+import 'package:sintir/Features/Profile/Presentation/Views/Widgets/AboutUsViewWidgets/AboutUsHighlights.dart';
 
 class AboutUsViewBody extends StatelessWidget {
   const AboutUsViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final bool isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-        child: TweenAnimationBuilder<double>(
-          duration: const Duration(milliseconds: 650),
-          tween: Tween(begin: 0.92, end: 1),
-          curve: Curves.easeOutCubic,
-          builder: (context, scale, _) => Transform.scale(
-            scale: scale,
-            child: _buildPremiumCard(context, isDark),
+    return SafeArea(
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 640),
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AboutUsFadeSlide(child: AboutUsHeader()),
+                SizedBox(height: 20),
+                AboutUsFadeSlide(
+                  delay: Duration(milliseconds: 120),
+                  child: AboutUSDescription(),
+                ),
+                SizedBox(height: 16),
+                AboutUsFadeSlide(
+                  delay: Duration(milliseconds: 240),
+                  child: AboutUsHighlights(),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildPremiumCard(BuildContext context, bool isDark) {
-    return Container(
-      padding: const EdgeInsets.all(32),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-
-        border: Border.all(
-          width: 1.4,
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.08)
-              : Colors.black.withValues(alpha: 0.05),
-        ),
-
-        gradient: LinearGradient(
-          colors: isDark
-              ? [
-                  const Color(0xff1A1A1A),
-                  const Color(0xff0f0f0f),
-                ]
-              : [
-                  Colors.white.withValues(alpha: 0.95),
-                  Colors.grey.shade100,
-                ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-
-        // ----------- SOFT SHADOW -----------
-        boxShadow: [
-          BoxShadow(
-            color: isDark
-                ? Colors.black.withValues(alpha: 0.45)
-                : Colors.grey.withValues(alpha: 0.25),
-            offset: const Offset(0, 28),
-            blurRadius: 40,
-            spreadRadius: -4,
-          ),
-        ],
-      ),
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AboutUsIcon(),
-          SizedBox(height: 24),
-          AboutUsTitle(),
-          SizedBox(height: 28),
-          Expanded(
-            child: AboutUSDescription(),
-          ),
-        ],
       ),
     );
   }
