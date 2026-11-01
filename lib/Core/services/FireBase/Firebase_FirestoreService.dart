@@ -399,11 +399,11 @@ class FirebaseFirestoreservice implements DataBaseService {
       if (requirements.docId == null && query != null) {
         Query<Map<String, dynamic>> queryResult =
             _applyQueryOptions(currentCollection, query);
-        final querySnapshot = await queryResult.get();
-        return querySnapshot.docs.length;
+        final aggregate = await queryResult.count().get();
+        return aggregate.count ?? 0;
       } else if (requirements.docId == null && query == null) {
-        final querySnapshot = await currentCollection.get();
-        return querySnapshot.docs.length;
+        final aggregate = await currentCollection.count().get();
+        return aggregate.count ?? 0;
       }
       DocumentReference<Map<String, dynamic>> currentDoc =
           currentCollection.doc(requirements.docId!);
@@ -422,11 +422,11 @@ class FirebaseFirestoreservice implements DataBaseService {
       if (query != null) {
         Query<Map<String, dynamic>> queryResult =
             _applyQueryOptions(currentCollection, query);
-        final querySnapshot = await queryResult.get();
-        return querySnapshot.docs.length;
+        final aggregate = await queryResult.count().get();
+        return aggregate.count ?? 0;
       } else {
-        final querySnapshot = await currentCollection.get();
-        return querySnapshot.docs.length;
+        final aggregate = await currentCollection.count().get();
+        return aggregate.count ?? 0;
       }
     } on FirebaseException catch (e) {
       throw _getFireStoreCustomException(e: e);
@@ -434,43 +434,44 @@ class FirebaseFirestoreservice implements DataBaseService {
       throw CustomException(message: LocaleKeys.errorOccurredMessage);
     }
   }
+
   @override
-Future<T> runDocumentTransaction<T>({
-  required FireStoreRequirmentsEntity requirements,
-  required DocumentTransactionAction<T> action,
-}) async {
-  try {
-    final ref = _resolveUpdateTarget(requirements);
+  Future<T> runDocumentTransaction<T>({
+    required FireStoreRequirmentsEntity requirements,
+    required DocumentTransactionAction<T> action,
+  }) async {
+    try {
+      final ref = _resolveUpdateTarget(requirements);
 
-    return await firestore.runTransaction<T>((transaction) async {
-      final snapshot = await transaction.get(ref);
+      return await firestore.runTransaction<T>((transaction) async {
+        final snapshot = await transaction.get(ref);
 
-      Map<String, dynamic>? pendingUpdate;
+        Map<String, dynamic>? pendingUpdate;
 
-      final result = action(
-        snapshot.data(),
-        (fields) {
-          pendingUpdate = {
-            ...?pendingUpdate,
-            ...fields,
-          };
-        },
-      );
+        final result = action(
+          snapshot.data(),
+          (fields) {
+            pendingUpdate = {
+              ...?pendingUpdate,
+              ...fields,
+            };
+          },
+        );
 
-      if (pendingUpdate != null) {
-        if (!snapshot.exists) {
-          throw StateError(
-            'Cannot update a document that does not exist.',
-          );
+        if (pendingUpdate != null) {
+          if (!snapshot.exists) {
+            throw StateError(
+              'Cannot update a document that does not exist.',
+            );
+          }
+
+          transaction.update(ref, pendingUpdate!);
         }
 
-        transaction.update(ref, pendingUpdate!);
-      }
-
-      return result;
-    });
-  } on FirebaseException catch (e) {
-    throw _getFireStoreCustomException(e: e);
+        return result;
+      });
+    } on FirebaseException catch (e) {
+      throw _getFireStoreCustomException(e: e);
+    }
   }
-}
 }

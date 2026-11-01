@@ -17,6 +17,7 @@ import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/utils/SupabaseBuckets.dart';
+import 'package:sintir/Features/MyResults/Domain/Repo/my_results_repo.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/CourseTestModel.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/TestResulteModel.dart';
 import 'package:sintir/locale_keys.dart';
@@ -24,12 +25,14 @@ import 'package:sintir/locale_keys.dart';
 class TestItemRepoImpli implements Testitemrepo {
   final StorageService storageService;
   final DataBaseService databaseservice;
+  final MyResultsRepo myResultsRepo;
 
   DocumentSnapshot? lastTestResultDoc;
 
   TestItemRepoImpli({
     required this.storageService,
     required this.databaseservice,
+    required this.myResultsRepo,
   });
 
   @override
@@ -100,9 +103,9 @@ class TestItemRepoImpli implements Testitemrepo {
     }
   }
 
-  Future<void> addTestResultToUsersResults(
-      String userUID, TestResultEntity testResult, Map<String, dynamic> json) {
-    return databaseservice.setData(
+  Future<void> addTestResultToUsersResults(String userUID,
+      TestResultEntity testResult, Map<String, dynamic> json) async {
+    await databaseservice.setData(
       requirements: FireStoreRequirmentsEntity(
         collection: BackendEndpoints.usersCollectionName,
         docId: userUID,
@@ -111,6 +114,7 @@ class TestItemRepoImpli implements Testitemrepo {
       ),
       data: json,
     );
+    myResultsRepo.invalidateOverviewCache(userId: userUID);
   }
 
   Future<void> addTestResultToExamResultsCollection(

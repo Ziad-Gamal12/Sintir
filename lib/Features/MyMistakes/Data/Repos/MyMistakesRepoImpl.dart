@@ -14,11 +14,15 @@ import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/TestResulteModel.dart';
 import 'package:sintir/Features/MyMistakes/Domain/Entities/GetMyMistakesResponseEntity.dart';
 import 'package:sintir/Features/MyMistakes/Domain/Repo/MyMistakesRepo.dart';
+import 'package:sintir/Features/MyResults/Domain/Repo/my_results_repo.dart';
 import 'package:sintir/locale_keys.dart';
 
 class MyMistakesRepoImpl implements MyMistakesRepo {
   final DataBaseService databaseservice;
-  MyMistakesRepoImpl({required this.databaseservice});
+  final MyResultsRepo myResultsRepo;
+
+  MyMistakesRepoImpl(
+      {required this.databaseservice, required this.myResultsRepo});
 
   // Track pagination state locally but keep query config inside the method
   DocumentSnapshot? _lastDoc;
@@ -141,8 +145,8 @@ class MyMistakesRepoImpl implements MyMistakesRepo {
     String userUID,
     TestResultEntity testResult,
     Map<String, dynamic> json,
-  ) {
-    return databaseservice.setData(
+  ) async {
+    await databaseservice.setData(
       requirements: FireStoreRequirmentsEntity(
         collection: BackendEndpoints.usersCollectionName,
         docId: userUID,
@@ -151,6 +155,7 @@ class MyMistakesRepoImpl implements MyMistakesRepo {
       ),
       data: json,
     );
+    myResultsRepo.invalidateOverviewCache(userId: userUID);
   }
 
   @override

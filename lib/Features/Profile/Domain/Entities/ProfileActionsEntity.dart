@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Features/Favorites/presentation/views/FavoritesView.dart';
 import 'package:sintir/Features/MyCourses/Presentation/Views/MyCoursesView.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Views/MyMistakesView.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/MyResultsView.dart';
+import 'package:sintir/Features/MyResults/Presentation/Views/my_results_view.dart';
 import 'package:sintir/Features/MyTransactions/Presentation/Views/MyTransactionsView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/AboutUsView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/SettingsView.dart';

@@ -2,10 +2,80 @@
 // Auto-generated file. Do not edit manually.
 
 import 'package:localingo/localingo.dart';
+import 'package:intl/intl.dart';
+import 'package:sintir/Core/utils/locale_formatter.dart';
 
 /// Type-safe translation keys
 /// Usage: Text(LocaleKeys.appName)
 class LocaleKeys {
+  static String resultsJoined(String date) =>
+      'results_joined'.tr(args: {'date': date});
+  static String resultsStudentName(String name) =>
+      'results_student_name'.tr(args: {'name': name});
+  static String resultsCode(String code) =>
+      'results_code'.tr(args: {'code': code});
+  static String resultsAssessmentFallback(String code) =>
+      'results_assessment_fallback'.tr(args: {'code': code});
+  static String get resultsGeneralAverage => 'results_general_average'.tr();
+  static String get resultsAverageSubtitle => 'results_average_subtitle'.tr();
+  static String get resultsAverage => 'results_average'.tr();
+  static String resultsRecordedCountValue(int count, String locale) =>
+      Intl.plural(
+        count,
+        locale: locale,
+        zero: 'results_count_zero'.tr(),
+        one: 'results_count_one'
+            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
+        two: 'results_count_two'
+            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
+        few: 'results_count_few'
+            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
+        many: 'results_count_many'
+            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
+        other: 'results_count_other'
+            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
+      );
+  static String get resultsExcellent => 'results_excellent'.tr();
+  static String get resultsGood => 'results_good'.tr();
+  static String get resultsSteady => 'results_steady'.tr();
+  static String get resultsFollowUp => 'results_follow_up'.tr();
+  static String get resultsTimelineTitle => 'results_timeline_title'.tr();
+  static String get resultsAcademicTerm => 'results_academic_term'.tr();
+  static String get resultsFullyComplete => 'results_fully_complete'.tr();
+  static String get resultsPartiallyComplete =>
+      'results_partially_complete'.tr();
+  static String get resultsRecorded => 'results_recorded'.tr();
+  static String get resultsEarnedScore => 'results_earned_score'.tr();
+  static String resultsQuestionValue(int earned, int total, String locale) {
+    final args = {
+      'earned': LocaleFormatter.number(earned, locale),
+      'total': LocaleFormatter.number(total, locale),
+    };
+    return Intl.plural(total,
+        locale: locale,
+        one: 'results_question_one'.tr(args: args),
+        two: 'results_question_two'.tr(args: args),
+        few: 'results_question_few'.tr(args: args),
+        many: 'results_question_many'.tr(args: args),
+        other: 'results_question_other'.tr(args: args));
+  }
+
+  static String get resultsAttemptDate => 'results_attempt_date'.tr();
+  static String get resultsFooterNote => 'results_footer_note'.tr();
+  static String get resultsPassed => 'results_passed'.tr();
+  static String get resultsNotPassed => 'results_not_passed'.tr();
+  static String get resultsAllLoaded => 'results_all_loaded'.tr();
+  static String get resultsBack => 'results_back'.tr();
+
+  static String get resultsBrandLine => 'results_brand_line'.tr();
+  static String get resultsEmptyTitle => 'results_empty_title'.tr();
+  static String get resultsEmptyHint => 'results_empty_hint'.tr();
+  static String get resultsRetry => 'results_retry'.tr();
+  static String get resultsErrorTitle => 'results_error_title'.tr();
+  static String resultsGaugeSemantics(String value) =>
+      'results_gauge_semantics'.tr(args: {'value': value});
+  static String resultsAssessmentSemantics(String value) =>
+      'results_assessment_semantics'.tr(args: {'value': value});
   static String get paymentVerifying => 'payment_verifying'.tr();
   static String get paymentNotCompleted => 'payment_not_completed'.tr();
   static String get checkoutExpired => 'checkout_expired'.tr();

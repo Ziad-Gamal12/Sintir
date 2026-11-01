@@ -47,8 +47,8 @@ import 'package:sintir/Features/Favorites/Data/Repos/FavoritesRepoImpl.dart';
 import 'package:sintir/Features/Favorites/Domain/Repos/FavoritesRepo.dart';
 import 'package:sintir/Features/MyMistakes/Data/Repos/MyMistakesRepoImpl.dart';
 import 'package:sintir/Features/MyMistakes/Domain/Repo/MyMistakesRepo.dart';
-import 'package:sintir/Features/MyResults/Data/Repo/MyResultsRepoImpl.dart';
-import 'package:sintir/Features/MyResults/Domain/Repo/MyResultsRepo.dart';
+import 'package:sintir/Features/MyResults/Data/Repo/my_results_repo_impl.dart';
+import 'package:sintir/Features/MyResults/Domain/Repo/my_results_repo.dart';
 import 'package:sintir/Features/MyTransactions/Data/Repos/MyTransactionsRepImpl.dart';
 import 'package:sintir/Features/MyTransactions/Domain/Repos/MyTransactionsRep.dart';
 import 'package:sintir/Features/Profile/Data/Repos/PersonalDetailsRepoImpl.dart';
@@ -114,18 +114,20 @@ void setup_Getit() {
       () => FileItemRepoImpli(storageService: getIt()));
 
   getIt.registerLazySingleton<Testitemrepo>(() => TestItemRepoImpli(
-      storageService: getIt(), databaseservice: getIt<DataBaseService>()));
+      storageService: getIt(),
+      databaseservice: getIt<DataBaseService>(),
+      myResultsRepo: getIt<MyResultsRepo>()));
 
   getIt.registerLazySingleton<Assetspickerrepo>(
       () => Assetspickerrepoimpli(pickerassetsservice: getIt()));
 
   getIt.registerLazySingleton<CourseCheckoutGateway>(
       () => CourseCheckoutRepoImpl());
-  getIt.registerLazySingleton<CourseSubscibtionsRepo>(() =>
-      CourseSubscriptionsRepoImpl(
-        databaseService: getIt<DataBaseService>(),
-        checkoutGateway: getIt<CourseCheckoutGateway>(),
-      ));
+  getIt.registerLazySingleton<CourseSubscibtionsRepo>(
+      () => CourseSubscriptionsRepoImpl(
+            databaseService: getIt<DataBaseService>(),
+            checkoutGateway: getIt<CourseCheckoutGateway>(),
+          ));
 
   getIt
       .registerLazySingleton<CourseReportsRepo>(() => CourseReportsRepoimpli());
@@ -141,8 +143,9 @@ void setup_Getit() {
   getIt.registerLazySingleton<SearchRepo>(
       () => SearchRepoImpl(databaseservice: getIt<DataBaseService>()));
 
-  getIt.registerLazySingleton<MyMistakesRepo>(
-      () => MyMistakesRepoImpl(databaseservice: getIt<DataBaseService>()));
+  getIt.registerLazySingleton<MyMistakesRepo>(() => MyMistakesRepoImpl(
+      databaseservice: getIt<DataBaseService>(),
+      myResultsRepo: getIt<MyResultsRepo>()));
 
   getIt.registerLazySingleton<MyResultsRepo>(
       () => MyResultsRepoImpl(dataBaseService: getIt<DataBaseService>()));
