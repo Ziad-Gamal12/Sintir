@@ -57,12 +57,12 @@ class TransactionsReconciliationSummary extends StatelessWidget {
           );
           if (constraints.maxWidth < 360) {
             return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(children: [text, const SizedBox(width: 12), icon]),
+                Row(children: [icon, const SizedBox(width: 12), text]),
                 const SizedBox(height: 8),
                 Align(
-                  alignment: AlignmentDirectional.centerStart,
+                  alignment: AlignmentDirectional.centerEnd,
                   child: connected,
                 ),
               ],

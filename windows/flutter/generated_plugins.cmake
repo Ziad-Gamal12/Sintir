@@ -13,6 +13,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   pdfx
   restart_app
   rive_native
+  share_plus
   unique_device_identifier
   url_launcher_windows
 )

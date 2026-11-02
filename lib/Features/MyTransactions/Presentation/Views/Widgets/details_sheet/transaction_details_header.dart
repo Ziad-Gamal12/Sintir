@@ -41,26 +41,35 @@ class TransactionDetailsHeader extends StatelessWidget {
                   LocaleKeys.transactionsDetails,
                   style: AppTextStyles(context).semiBold20,
                 ),
-                Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: Text(
-                    '${LocaleKeys.transactionsSystemReference}: ${TransactionDisplayFormatters.fullId(transaction.transactionId)}',
-                    style: AppTextStyles(context).regular11.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                      fontFeatures: const [FontFeature.tabularFigures()],
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                Text(
+                  '${LocaleKeys.transactionsSystemReference}: ${TransactionDisplayFormatters.fullId(transaction.transactionId)}',
+                  style: AppTextStyles(context).regular11.copyWith(
+                    color: theme.colorScheme.onSurfaceVariant,
+                    fontFeatures: const [FontFeature.tabularFigures()],
                   ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
           ),
           const SizedBox(width: 8),
-          IconButton.filledTonal(
+          IconButton(
             tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
             onPressed: onClose,
-            icon: const Icon(Icons.close_rounded),
+            constraints: const BoxConstraints.tightFor(width: 36, height: 36),
+            padding: EdgeInsets.zero,
+            style: IconButton.styleFrom(
+              backgroundColor: theme.brightness == Brightness.dark
+                  ? const Color(0xFF262626)
+                  : const Color(0xFFF1F5F9),
+              foregroundColor: theme.brightness == Brightness.dark
+                  ? const Color(0xFF94A3B8)
+                  : const Color(0xFF64748B),
+              shape: const CircleBorder(),
+              elevation: 0,
+            ),
+            icon: const Icon(Icons.close_rounded, size: 18),
           ),
         ],
       ),

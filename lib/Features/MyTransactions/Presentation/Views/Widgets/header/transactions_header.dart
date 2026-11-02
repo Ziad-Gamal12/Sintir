@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/summary/transaction_share_summary.dart';
 import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/styles/transactions_style_mapper.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/summary/transaction_share_summary.dart';
 import 'package:sintir/locale_keys.dart';
-import 'package:share_plus/share_plus.dart';
 
 class TransactionsHeader extends StatelessWidget {
   const TransactionsHeader({super.key, required this.transactions});
@@ -17,27 +17,22 @@ class TransactionsHeader extends StatelessWidget {
     final styles = AppTextStyles(context);
     return Row(
       children: [
-        IconButton.filledTonal(
-          style: IconButton.styleFrom(
-            foregroundColor: TransactionsStyleMapper.primary(theme),
-            backgroundColor: TransactionsStyleMapper.primary(
-              theme,
-            ).withValues(alpha: .1),
-            shape: const CircleBorder(),
-            side: BorderSide(color: TransactionsStyleMapper.cardBorder(theme)),
-          ),
-          tooltip: LocaleKeys.transactionsShare,
-          onPressed: transactions.isEmpty ? null : () => _share(context),
-          icon: const Icon(Icons.ios_share_outlined),
-        ),
-        const SizedBox(width: 10),
         Expanded(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  Flexible(
+                    child: Text(
+                      LocaleKeys.transactionsTitle,
+                      style: styles.semiBold20,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 8,
@@ -56,29 +51,34 @@ class TransactionsHeader extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Flexible(
-                    child: Text(
-                      LocaleKeys.transactionsTitle,
-                      style: styles.semiBold20,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
                 ],
               ),
               Align(
-                alignment: AlignmentDirectional.centerEnd,
+                alignment: AlignmentDirectional.centerStart,
                 child: Text(
                   LocaleKeys.transactionsSubtitle,
                   style: styles.regular12.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
-                  textAlign: TextAlign.end,
+                  textAlign: TextAlign.start,
                 ),
               ),
             ],
           ),
+        ),
+        const SizedBox(width: 10),
+        IconButton.filledTonal(
+          style: IconButton.styleFrom(
+            foregroundColor: TransactionsStyleMapper.primary(theme),
+            backgroundColor: TransactionsStyleMapper.primary(
+              theme,
+            ).withValues(alpha: .1),
+            shape: const CircleBorder(),
+            side: BorderSide(color: TransactionsStyleMapper.cardBorder(theme)),
+          ),
+          tooltip: LocaleKeys.transactionsShare,
+          onPressed: transactions.isEmpty ? null : () => _share(context),
+          icon: const Icon(Icons.ios_share_outlined),
         ),
       ],
     );

@@ -17,6 +17,7 @@ import package_info_plus
 import pdfx
 import restart_app
 import rive_native
+import share_plus
 import shared_preferences_foundation
 import sqflite_darwin
 import unique_device_identifier
@@ -38,6 +39,7 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   PdfxPlugin.register(with: registry.registrar(forPlugin: "PdfxPlugin"))
   RestartAppPlugin.register(with: registry.registrar(forPlugin: "RestartAppPlugin"))
   RiveNativePlugin.register(with: registry.registrar(forPlugin: "RiveNativePlugin"))
+  SharePlusMacosPlugin.register(with: registry.registrar(forPlugin: "SharePlusMacosPlugin"))
   SharedPreferencesPlugin.register(with: registry.registrar(forPlugin: "SharedPreferencesPlugin"))
   SqflitePlugin.register(with: registry.registrar(forPlugin: "SqflitePlugin"))
   UniqueDeviceIdentifierPlugin.register(with: registry.registrar(forPlugin: "UniqueDeviceIdentifierPlugin"))

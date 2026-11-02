@@ -19,24 +19,20 @@ class TransactionsReconciliationRate extends StatelessWidget {
       TransactionsStatus.success,
     );
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           LocaleKeys.transactionsReconciliationRate,
           style: AppTextStyles(
             context,
           ).regular12.copyWith(color: theme.colorScheme.onSurfaceVariant),
-          textAlign: TextAlign.end,
         ),
         const SizedBox(height: 3),
-        Directionality(
-          textDirection: TextDirection.ltr,
-          child: Text(
-            '$value%',
-            style: AppTextStyles(
-              context,
-            ).bold20.copyWith(color: theme.colorScheme.onSurface),
-          ),
+        Text(
+          '$value%',
+          style: AppTextStyles(
+            context,
+          ).bold20.copyWith(color: theme.colorScheme.onSurface),
         ),
         Text(
           LocaleKeys.transactionsThisWeek,
