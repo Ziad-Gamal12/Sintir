@@ -19,6 +19,7 @@ class MyTransactionsRepoImpl implements MyTransactionsRepo {
   Future<Either<Failure, GetMyTransactionsResponseEntity>> getMyTransactions(
       {required String userId, required bool isPaginate}) async {
     try {
+      if (!isPaginate) getMyTransactionsLastDoc = null;
       Map<String, dynamic> query = {
         "limit": 10,
         "orderBy": "created_at",

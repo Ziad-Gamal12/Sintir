@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_tokens.dart';
+import 'package:sintir/Core/widgets/results/results_tokens.dart';
 
 class AssessmentProgressBar extends StatelessWidget {
   const AssessmentProgressBar(

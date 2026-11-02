@@ -128,6 +128,53 @@ class LocaleKeys {
   static String get subscribedCourses => 'subscribed_courses'.tr();
   static String coursesCount(int count) =>
       'courses_count'.tr(args: {'count': '$count'});
+  static String get subscriberSubscriptionsTitle =>
+      'subscriber_subscriptions_title'.tr();
+  static String subscriberTrendImprovingFor(int percent, String locale) =>
+      'subscriber_trend_improving'.tr(args: {
+        'percent': LocaleFormatter.number(percent, locale),
+      });
+  static String subscriberTrendDecliningFor(int percent, String locale) =>
+      'subscriber_trend_declining'.tr(args: {
+        'percent': LocaleFormatter.number(percent, locale),
+      });
+  static String get subscriberTrendStable => 'subscriber_trend_stable'.tr();
+  static String subscriberTrendSemantics(String trend) =>
+      'subscriber_trend_semantics'.tr(args: {'trend': trend});
+  static String get subscriberChartNeedsTwo =>
+      'subscriber_chart_needs_two'.tr();
+  static String subscriberChartTooltip(int attempt, int score, String locale) =>
+      'subscriber_chart_tooltip'.tr(args: {
+        'attempt': LocaleFormatter.number(attempt, locale),
+        'score': LocaleFormatter.number(score, locale),
+      });
+  static String subscriberChartSemantics(
+          int count, int first, int latest, String trend, String locale) =>
+      'subscriber_chart_semantics'.tr(args: {
+        'count': LocaleFormatter.number(count, locale),
+        'first': LocaleFormatter.number(first, locale),
+        'latest': LocaleFormatter.number(latest, locale),
+        'trend': trend,
+      });
+  static String get subscriberAttempt => 'subscriber_attempt'.tr();
+  static String get subscriberHighestResult => 'subscriber_highest_result'.tr();
+  static String get subscriberAverage => 'subscriber_average'.tr();
+  static String get subscriberLowestResult => 'subscriber_lowest_result'.tr();
+  static String subscriberCourseCount(int count, String locale) => Intl.plural(
+        count,
+        locale: locale,
+        zero: 'subscriber_courses_zero'.tr(),
+        one: 'subscriber_courses_one'
+            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
+        two: 'subscriber_courses_two'
+            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
+        few: 'subscriber_courses_few'
+            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
+        many: 'subscriber_courses_many'
+            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
+        other: 'subscriber_courses_other'
+            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
+      );
   static String get performanceTrend => 'performance_trend'.tr();
   static String get examScoreProgression => 'exam_score_progression'.tr();
   static String get examResultsHistory => 'exam_results_history'.tr();
@@ -987,4 +1034,93 @@ class LocaleKeys {
       'video_metadata'
           .tr(args: {'resolution': resolution, 'duration': duration});
   static String get videoPreview => 'video_preview'.tr();
+  static String get transactionsTitle => 'transactions_title'.tr();
+  static String get transactionsSubtitle => 'transactions_subtitle'.tr();
+  static String get transactionsSearchHint => 'transactions_search_hint'.tr();
+  static String get transactionsAll => 'transactions_all'.tr();
+  static String get transactionsSuccess => 'transactions_success'.tr();
+  static String get transactionsPending => 'transactions_pending'.tr();
+  static String get transactionsFailed => 'transactions_failed'.tr();
+  static String get transactionsOther => 'transactions_other'.tr();
+  static String get transactionsToday => 'transactions_today'.tr();
+  static String get transactionsYesterday => 'transactions_yesterday'.tr();
+  static String get transactionsOlder => 'transactions_older'.tr();
+  static String get transactionsCountZero => 'transactions_count_zero'.tr();
+  static String get transactionsCountOne => 'transactions_count_one'.tr();
+  static String transactionsCountValue(int count, String locale) => Intl.plural(
+        count,
+        locale: locale,
+        zero: 'transactions_count_zero'.tr(),
+        one: 'transactions_count_one'.tr(),
+        two: 'transactions_count_two'.tr(args: {'count': '$count'}),
+        few: 'transactions_count_few'.tr(args: {'count': '$count'}),
+        many: 'transactions_count_many'.tr(args: {'count': '$count'}),
+        other: 'transactions_count_other'.tr(args: {'count': '$count'}),
+      );
+  static String get transactionsFilter => 'transactions_filter'.tr();
+  static String get transactionsMatched => 'transactions_matched'.tr();
+  static String get transactionsUnmatched => 'transactions_unmatched'.tr();
+  static String get transactionsPhoneUnavailable =>
+      'transactions_phone_unavailable'.tr();
+  static String get transactionsCopy => 'transactions_copy'.tr();
+  static String get transactionsCopied => 'transactions_copied'.tr();
+  static String get transactionsDetails => 'transactions_details'.tr();
+  static String get transactionsSystemReference =>
+      'transactions_system_reference'.tr();
+  static String get transactionsTotalCollected =>
+      'transactions_total_collected'.tr();
+  static String get transactionsAmount => 'transactions_amount'.tr();
+  static String get transactionsFullNumber => 'transactions_full_number'.tr();
+  static String get transactionsCreatedAt => 'transactions_created_at'.tr();
+  static String get transactionsPaymentMethod =>
+      'transactions_payment_method'.tr();
+  static String get transactionsIssuer => 'transactions_issuer'.tr();
+  static String get transactionsPhone => 'transactions_phone'.tr();
+  static String get transactionsReconciliation =>
+      'transactions_reconciliation'.tr();
+  static String get transactionsCurrency => 'transactions_currency'.tr();
+  static String get transactionsNoData => 'transactions_no_data'.tr();
+  static String get transactionsNoMatches => 'transactions_no_matches'.tr();
+  static String get transactionsClearFilters =>
+      'transactions_clear_filters'.tr();
+  static String get transactionsReset => 'transactions_reset'.tr();
+  static String get transactionsStatus => 'transactions_status'.tr();
+  static String get transactionsSingleChoice =>
+      'transactions_single_choice'.tr();
+  static String get transactionsPaymentMethods =>
+      'transactions_payment_methods'.tr();
+  static String get transactionsMultipleChoice =>
+      'transactions_multiple_choice'.tr();
+  static String get transactionsDateRange => 'transactions_date_range'.tr();
+  static String get transactionsLast7Days => 'transactions_last_7_days'.tr();
+  static String get transactionsLast30Days => 'transactions_last_30_days'.tr();
+  static String get transactionsCustomRange => 'transactions_custom_range'.tr();
+  static String get transactionsSort => 'transactions_sort'.tr();
+  static String get transactionsNewest => 'transactions_newest'.tr();
+  static String get transactionsOldest => 'transactions_oldest'.tr();
+  static String transactionsApplyFilters(int count) =>
+      'transactions_apply_filters'.tr(args: {'count': '$count'});
+  static String get transactionsShare => 'transactions_share'.tr();
+  static String get transactionsDownloadReceipt =>
+      'transactions_download_receipt'.tr();
+  static String get transactionsRefresh => 'transactions_refresh'.tr();
+  static String get transactionsMatchedSuccess =>
+      'transactions_matched_success'.tr();
+  static String get transactionsMatchedPending =>
+      'transactions_matched_pending'.tr();
+  static String get transactionsMatchedFailed =>
+      'transactions_matched_failed'.tr();
+  static String get transactionsCash => 'transactions_cash'.tr();
+  static String get transactionsWallet => 'transactions_wallet'.tr();
+  static String get transactionsBankCard => 'transactions_bank_card'.tr();
+  static String get transactionsFawry => 'transactions_fawry'.tr();
+  static String get transactionsDirectTransfer =>
+      'transactions_direct_transfer'.tr();
+  static String get transactionsCurrencyEgp => 'transactions_currency_egp'.tr();
+  static String get transactionsCurrencySar => 'transactions_currency_sar'.tr();
+  static String get transactionsUpdated => 'transactions_updated'.tr();
+  static String get transactionsExportCopied =>
+      'transactions_export_copied'.tr();
+  static String get transactionsBankCardDetail =>
+      'transactions_bank_card_detail'.tr();
 }

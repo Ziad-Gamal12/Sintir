@@ -1,4 +1,6 @@
+// SubscriberContactChipsRow.dart
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/widgets/results/results_tokens.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/CustomSubscriberMetaInfoCard.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -6,32 +8,45 @@ class SubscriberContactChipsRow extends StatelessWidget {
   const SubscriberContactChipsRow(
       {super.key, required this.phoneNum, required this.address});
   final String phoneNum, address;
+
+  static const double _stackBelowWidth = 290;
+
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: CustomSubscriberMetaInfoCard(
-            text: phoneNum.trim().isEmpty
-                ? LocaleKeys.subscriberPhoneFallback
-                : phoneNum.trim(),
-            icon: Icons.phone,
-            textDirection: phoneNum.trim().isEmpty ? null : TextDirection.ltr,
-          ),
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Expanded(
-          child: CustomSubscriberMetaInfoCard(
-            text: address.trim().isEmpty
-                ? LocaleKeys.subscriberAddressFallback
-                : address.trim(),
-            icon: Icons.location_on_outlined,
-            iconColor: const Color(0xFFFF8C1A),
-          ),
-        ),
-      ],
-    );
+    final phone = phoneNum.trim();
+    final location = address.trim();
+    final warning = ResultsTokens.of(Theme.of(context)).warning;
+
+    return LayoutBuilder(builder: (context, box) {
+      final stacked = box.maxWidth < _stackBelowWidth ||
+          MediaQuery.textScalerOf(context).scale(1) > 1.3;
+
+      final phoneTile = CustomSubscriberMetaInfoCard(
+        text: phone.isEmpty ? LocaleKeys.subscriberPhoneFallback : phone,
+        icon: Icons.phone_rounded,
+        textDirection: phone.isEmpty ? null : TextDirection.ltr,
+        isPlaceholder: phone.isEmpty,
+      );
+      final addressTile = CustomSubscriberMetaInfoCard(
+        text:
+            location.isEmpty ? LocaleKeys.subscriberAddressFallback : location,
+        icon: Icons.location_on_rounded,
+        accent: warning,
+        isPlaceholder: location.isEmpty,
+        maxLines: stacked ? 2 : 1,
+      );
+
+      if (stacked) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [phoneTile, const SizedBox(height: 8), addressTile],
+        );
+      }
+      return Row(children: [
+        Expanded(child: phoneTile),
+        const SizedBox(width: 10),
+        Expanded(child: addressTile),
+      ]);
+    });
   }
 }

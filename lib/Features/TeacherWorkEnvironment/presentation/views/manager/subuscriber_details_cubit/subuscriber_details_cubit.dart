@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
+import 'package:sintir/Core/widgets/results/results_status_mapper.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/SubscribersDetailsRepo.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/SubscriberPerformanceSummary.dart';
 
 part 'subuscriber_details_state.dart';
 
@@ -10,7 +12,7 @@ class SubscriberDetailsCubit extends Cubit<SubscriberDetailsState> {
   SubscriberDetailsCubit({required this.subscribersDetailsRepo})
       : super(SubuscriberDetailsInitial());
   final SubscribersDetailsRepo subscribersDetailsRepo;
-  List<TestResultEntity> subscriberResults = [];
+  List<TestResultEntity> subscriberResults = const [];
 
   Future<void> getSubscibersEnrolledCoursesForTeacher({
     required String contentCreatorId,
@@ -21,10 +23,11 @@ class SubscriberDetailsCubit extends Cubit<SubscriberDetailsState> {
         await subscribersDetailsRepo.getSubscibersEnrolledCoursesForTeacher(
             contentCreatorId: contentCreatorId, subscriberId: subscriberId);
     result.fold(
-        (l) => emit(GetSubscibersEnrolledCoursesForTeacherFailure(
-            errmessage: l.message)),
-        (courses) => emit(
-            GetSubscibersEnrolledCoursesForTeacherSuccess(courses: courses)));
+      (failure) => emit(GetSubscibersEnrolledCoursesForTeacherFailure(
+          errmessage: failure.message)),
+      (courses) =>
+          emit(GetSubscibersEnrolledCoursesForTeacherSuccess(courses: courses)),
+    );
   }
 
   Future<void> getSubscriberResults({
@@ -34,11 +37,21 @@ class SubscriberDetailsCubit extends Cubit<SubscriberDetailsState> {
     emit(GetSubscriberResultsLoading());
     final result = await subscribersDetailsRepo.getSubscriberResults(
         subscriberId: subscriberId, courseId: courseId);
-    result.fold((l) => emit(GetSubscriberResultsFailure(errmessage: l.message)),
-        (results) {
-      subscriberResults = results;
-      emit(GetSubscriberResultsSuccess(results: results));
-    });
+    result.fold(
+      (failure) =>
+          emit(GetSubscriberResultsFailure(errmessage: failure.message)),
+      (results) {
+        subscriberResults = List.unmodifiable(results);
+        final summary =
+            SubscriberPerformanceSummary.fromResults(subscriberResults);
+        if (summary.resultDiscrepancyCount > 0) {
+          debugPrint(
+              'Subscriber results include ${summary.resultDiscrepancyCount} result/count discrepancies; using question correctness counts.');
+        }
+        emit(GetSubscriberResultsSuccess(
+            results: subscriberResults, summary: summary));
+      },
+    );
   }
 
   Future<void> getSubscriberHighestScore({
@@ -49,8 +62,10 @@ class SubscriberDetailsCubit extends Cubit<SubscriberDetailsState> {
     final result = await subscribersDetailsRepo.getSubscriberHighestScore(
         subscriberId: subscriberId, courseId: courseId);
     result.fold(
-        (l) => emit(GetSubscriberHighestScoreFailure(errmessage: l.message)),
-        (results) => emit(GetSubscriberHighestScoreSuccess(result: results)));
+      (failure) =>
+          emit(GetSubscriberHighestScoreFailure(errmessage: failure.message)),
+      (value) => emit(GetSubscriberHighestScoreSuccess(result: value)),
+    );
   }
 
   Future<void> getSubscriberLowestScore({
@@ -61,19 +76,18 @@ class SubscriberDetailsCubit extends Cubit<SubscriberDetailsState> {
     final result = await subscribersDetailsRepo.getSubscriberLowestScore(
         subscriberId: subscriberId, courseId: courseId);
     result.fold(
-        (l) => emit(GetSubscriberLowestScoreFailure(errmessage: l.message)),
-        (results) => emit(GetSubscriberLowestScoreSuccess(result: results)));
+      (failure) =>
+          emit(GetSubscriberLowestScoreFailure(errmessage: failure.message)),
+      (value) => emit(GetSubscriberLowestScoreSuccess(result: value)),
+    );
   }
 
   void getSubscriberAverageScore() {
-    double totalScore = 0;
-    if (subscriberResults.isNotEmpty) {
-      for (TestResultEntity result in subscriberResults) {
-        totalScore += result.result;
-      }
-      emit(SubscriberAvrageCalculationSuccess(
-        avrage: totalScore / subscriberResults.length,
-      ));
-    }
+    if (subscriberResults.isEmpty) return;
+    final mean = subscriberResults
+            .map(ResultsStatusMapper.percentage)
+            .reduce((left, right) => left + right) /
+        subscriberResults.length;
+    emit(SubscriberAvrageCalculationSuccess(avrage: mean));
   }
 }

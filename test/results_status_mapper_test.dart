@@ -3,7 +3,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/ExamResultSolvedQuestionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/JoinedByEntity.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_status_mapper.dart';
+import 'package:sintir/Core/widgets/results/results_status_mapper.dart';
 
 void main() {
   group('ResultsStatusMapper', () {

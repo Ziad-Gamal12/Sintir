@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_tokens.dart';
+import 'package:sintir/Core/widgets/results/results_tokens.dart';
 
 class ResultsLoading extends StatelessWidget {
   const ResultsLoading({super.key});

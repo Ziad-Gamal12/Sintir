@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/assessment_stats_row.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/assessment_pass_indicator.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/assessment_progress_bar.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_date_formatter.dart';
+import 'package:sintir/Core/widgets/results/assessment_stats_row.dart';
+import 'package:sintir/Core/widgets/results/assessment_pass_indicator.dart';
+import 'package:sintir/Core/widgets/results/assessment_progress_bar.dart';
+import 'package:sintir/Core/widgets/results/results_date_formatter.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/ReviewTestResultView.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_status_mapper.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_tokens.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/tonal_view_result_button.dart';
+import 'package:sintir/Core/widgets/results/results_status_mapper.dart';
+import 'package:sintir/Core/widgets/results/results_tokens.dart';
+import 'package:sintir/Core/widgets/results/tonal_view_result_button.dart';
 import 'package:sintir/locale_keys.dart';
 
 class AssessmentResultCard extends StatelessWidget {
-  const AssessmentResultCard({super.key, required this.result});
+  const AssessmentResultCard({super.key, required this.result, this.onViewResult});
   final TestResultEntity result;
+  final VoidCallback? onViewResult;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -28,8 +29,14 @@ class AssessmentResultCard extends StatelessWidget {
         ? LocaleKeys.resultsAssessmentFallback(result.testId)
         : result.courseSubject;
     final captionConsistent = result.isPassed == (percent >= 50);
-    void openReview() => GoRouter.of(context)
-        .push(Reviewtestresultview.routeName, extra: result);
+    void openReview() {
+      if (onViewResult != null) {
+        onViewResult!.call();
+      } else {
+        GoRouter.of(context)
+            .push(Reviewtestresultview.routeName, extra: result);
+      }
+    }
     return Material(
       color: tokens.card,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

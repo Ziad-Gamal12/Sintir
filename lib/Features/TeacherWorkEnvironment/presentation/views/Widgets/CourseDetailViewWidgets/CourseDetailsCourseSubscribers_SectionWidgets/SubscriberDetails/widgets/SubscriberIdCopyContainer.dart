@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Core/widgets/CustomCopyToClipboard.dart';
+import 'package:sintir/Core/widgets/results/results_tokens.dart';
 import 'package:sintir/locale_keys.dart';
 
 class SubscriberIdCopyContainer extends StatelessWidget {
   const SubscriberIdCopyContainer({super.key, required this.subscriberID});
-
   final String subscriberID;
 
   String _displayId(String id) => id.length <= 20
@@ -30,37 +31,36 @@ class SubscriberIdCopyContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final styles = AppTextStyles(context);
-    return Container(
-      padding: const EdgeInsetsDirectional.fromSTEB(12, 4, 4, 4),
-      decoration: BoxDecoration(
-        color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: .55),
-        border: Border.all(color: theme.dividerColor.withValues(alpha: .5)),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          Text('${LocaleKeys.studentCode} ', style: styles.medium12),
-          Expanded(
-            child: Directionality(
+    final tokens = ResultsTokens.of(theme);
+    return Material(
+      color: tokens.inner,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+          side: BorderSide(color: tokens.border, width: 1)),
+      child: InkWell(
+        onTap: subscriberID.isEmpty ? null : () => _copy(context),
+        borderRadius: BorderRadius.circular(14),
+        child: Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(12, 4, 4, 4),
+          child: Row(children: [
+            Text(LocaleKeys.studentCode,
+                style: AppTextStyles(context)
+                    .medium12
+                    .copyWith(color: theme.colorScheme.onSurface)),
+            const SizedBox(width: 6),
+            Expanded(
+                child: Directionality(
               textDirection: TextDirection.ltr,
-              child: Text(
-                _displayId(subscriberID),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: styles.regular12.copyWith(
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
-              ),
-            ),
-          ),
-          IconButton(
-            tooltip: LocaleKeys.copy,
-            onPressed: subscriberID.isEmpty ? null : () => _copy(context),
-            icon: const Icon(Icons.copy_rounded, size: 17),
-            constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
-          ),
-        ],
+              child: Text(_displayId(subscriberID),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles(context).regular12.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                      fontFeatures: const [FontFeature.tabularFigures()])),
+            )),
+            CustomCopyToClipboard(value: subscriberID)
+          ]),
+        ),
       ),
     );
   }

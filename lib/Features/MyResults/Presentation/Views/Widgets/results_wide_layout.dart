@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_footer_note.dart';
 import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_profile_summary.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_timeline.dart';
+import 'package:sintir/Core/widgets/results/results_timeline.dart';
 import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_timeline_header.dart';
 import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_end_of_list.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/assessment_stat_item.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_date_formatter.dart';
+import 'package:sintir/Core/widgets/results/assessment_stat_item.dart';
+import 'package:sintir/Core/widgets/results/results_date_formatter.dart';
 import 'package:sintir/locale_keys.dart';
 
 class AssessmentStatsRow extends StatelessWidget {

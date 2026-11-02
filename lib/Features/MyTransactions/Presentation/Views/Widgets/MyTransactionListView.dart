@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/TransactionEntity.dart';
-import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/MyTransactionListViewItem.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/transaction_card.dart';
 
 class MyTransactionSliverListView extends StatelessWidget {
   const MyTransactionSliverListView({super.key, required this.transactions});
@@ -11,15 +11,12 @@ class MyTransactionSliverListView extends StatelessWidget {
         itemCount: transactions.length,
         itemBuilder: (context, index) {
           return Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 12,
-              ),
-              child: AspectRatio(
-                aspectRatio: 2 / 1.1,
-                child: MyTransactionListViewItem(
-                    transactionEntity: transactions[index]),
-              ));
+            padding: const EdgeInsetsDirectional.fromSTEB(16, 6, 16, 6),
+            child: TransactionCard(
+              key: ValueKey(transactions[index].transactionId),
+              transaction: transactions[index],
+            ),
+          );
         });
   }
 }

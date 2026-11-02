@@ -1,66 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/CustomSubscriberResultsGraph.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/SubscriberResultsAnalysisCard.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/SubscriberPerformanceSummary.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/subscriber_section_header.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/widgets/subscriber_trend_pill.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/subuscriber_details_cubit/subuscriber_details_cubit.dart';
 import 'package:sintir/locale_keys.dart';
 
 class SubscriberAnalysisSection extends StatelessWidget {
-  const SubscriberAnalysisSection({
-    super.key,
-    required this.results,
-    required this.summary,
-  });
-  final List<TestResultEntity> results;
-  final SubscriberPerformanceSummary summary;
+  const SubscriberAnalysisSection({super.key, this.onRetry});
+  final VoidCallback? onRetry;
+
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                LocaleKeys.performanceAnalysis,
-                style: AppTextStyles(context).semiBold20.copyWith(
-                      color: theme.colorScheme.onSurface,
-                    ),
-              ),
-            ),
-            DecoratedBox(
-              decoration: BoxDecoration(
-                color: theme.colorScheme.primary.withValues(alpha: .1),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.trending_up_rounded,
-                        size: 15, color: theme.colorScheme.primary),
-                    const SizedBox(width: 4),
-                    Text(
-                      LocaleKeys.performanceTrend,
-                      style: AppTextStyles(context).regular11.copyWith(
-                            color: theme.colorScheme.primary,
-                          ),
-                    ),
-                  ],
+  Widget build(BuildContext context) =>
+      BlocBuilder<SubscriberDetailsCubit, SubscriberDetailsState>(
+        buildWhen: (_, state) =>
+            state is GetSubscriberResultsLoading ||
+            state is GetSubscriberResultsFailure ||
+            state is GetSubscriberResultsSuccess,
+        builder: (context, state) {
+          final summary = state is GetSubscriberResultsSuccess
+              ? state.summary
+              : SubscriberPerformanceSummary.fromResults(const []);
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SubscriberSectionHeader(
+                  title: LocaleKeys.performanceAnalysis,
+                  trailing: state is GetSubscriberResultsSuccess
+                      ? SubscriberTrendPill(summary: state.summary)
+                      : null,
                 ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        SubscriberResultsChart(results: results, summary: summary),
-        const SizedBox(height: 12),
-        SubscriberResultsAnalysisCard(summary: summary),
-      ],
-    );
-  }
+                const SizedBox(height: 12),
+                if (state is GetSubscriberResultsFailure)
+                  Column(children: [
+                    CustomErrorWidget(errormessage: state.errmessage),
+                    if (onRetry != null)
+                      TextButton(
+                          onPressed: onRetry,
+                          child: Text(LocaleKeys.resultsRetry)),
+                  ])
+                else if (state is GetSubscriberResultsLoading ||
+                    state is SubuscriberDetailsInitial)
+                  Skeletonizer(
+                      enabled: true,
+                      child: Column(children: [
+                        SubscriberResultsChart(summary: summary),
+                        const SizedBox(height: 12),
+                        const SubscriberResultsAnalysisCard(summary: null),
+                      ]))
+                else ...[
+                  SubscriberResultsChart(summary: summary),
+                  const SizedBox(height: 12),
+                  SubscriberResultsAnalysisCard(summary: summary),
+                ],
+              ]);
+        },
+      );
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/locale_keys.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_tokens.dart';
+import 'package:sintir/Core/widgets/results/results_tokens.dart';
 
 class ResultsStatus {
   const ResultsStatus(this.label, this.color, this.icon);

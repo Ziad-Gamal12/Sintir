@@ -7,6 +7,9 @@ class LocaleFormatter {
   static String date(DateTime value, String locale) =>
       _latinize(DateFormat('dd/MM/yyyy', locale).format(value));
 
+  static String longDate(DateTime value, String locale) =>
+      _latinize(DateFormat('d MMMM yyyy', locale).format(value));
+
   static String number(num value, String locale) =>
       _latinize(NumberFormat.decimalPattern(locale).format(value));
 

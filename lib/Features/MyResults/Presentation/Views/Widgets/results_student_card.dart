@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_active_badge.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_date_formatter.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_tokens.dart';
+import 'package:sintir/Core/widgets/results/results_date_formatter.dart';
+import 'package:sintir/Core/widgets/results/results_tokens.dart';
 import 'package:sintir/locale_keys.dart';
 
 class ResultsStudentCard extends StatelessWidget {

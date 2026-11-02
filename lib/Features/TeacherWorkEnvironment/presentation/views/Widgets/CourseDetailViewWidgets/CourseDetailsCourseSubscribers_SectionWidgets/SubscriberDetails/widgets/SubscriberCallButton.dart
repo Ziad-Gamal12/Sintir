@@ -42,7 +42,7 @@ class SubscriberCallButton extends StatelessWidget {
         disabledForegroundColor: theme.colorScheme.onSurfaceVariant,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
-      icon: const Icon(Icons.phone_rounded, size: 20),
+      icon: const Icon(Icons.phone_rounded, size: 20, color: Colors.white),
     );
   }
 }

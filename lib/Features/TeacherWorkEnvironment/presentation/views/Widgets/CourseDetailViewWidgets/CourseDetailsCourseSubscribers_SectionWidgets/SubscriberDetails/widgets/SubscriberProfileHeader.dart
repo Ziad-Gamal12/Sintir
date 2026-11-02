@@ -8,57 +8,42 @@ import 'package:sintir/locale_keys.dart';
 class SubscriberProfileHeader extends StatelessWidget {
   const SubscriberProfileHeader({super.key, required this.subscriberEntity});
   final SubscriberEntity subscriberEntity;
+
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
-    final Color secondaryTextColor = theme.textTheme.bodyMedium!.color!;
-    final textStyles = AppTextStyles(context);
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(
+    final theme = Theme.of(context);
+    final styles = AppTextStyles(context);
+    return Row(children: [
+      SizedBox(
           width: 64,
           height: 64,
           child: CustomSubscriberDetailsCardAvatar(
             imageUrl: subscriberEntity.imageUrl,
-          ),
-        ),
-        SizedBox(
-          width: 12,
-        ),
-        Expanded(
+            name: subscriberEntity.name,
+          )),
+      const SizedBox(width: 12),
+      Expanded(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                subscriberEntity.name,
-                overflow: TextOverflow.ellipsis,
-                style: textStyles.semiBold20.copyWith(color: primaryTextColor),
-              ),
-              SizedBox(
-                height: 2,
-              ),
-              Text(
-                subscriberEntity.educationLevel.trim().isEmpty
-                    ? LocaleKeys.subscriberEducationFallback
-                    : subscriberEntity.educationLevel.trim(),
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles(context)
-                    .regular16
-                    .copyWith(color: secondaryTextColor),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          width: 12,
-        ),
-        SubscriberCallButton(phoneNumber: subscriberEntity.phone)
-      ],
-    );
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(subscriberEntity.name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: styles.semiBold20
+                  .copyWith(color: theme.colorScheme.onSurface)),
+          const SizedBox(height: 2),
+          Text(
+              subscriberEntity.educationLevel.trim().isEmpty
+                  ? LocaleKeys.subscriberEducationFallback
+                  : subscriberEntity.educationLevel.trim(),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: styles.regular14
+                  .copyWith(color: theme.colorScheme.onSurfaceVariant)),
+        ],
+      )),
+      const SizedBox(width: 12),
+      SubscriberCallButton(phoneNumber: subscriberEntity.phone),
+    ]);
   }
 }

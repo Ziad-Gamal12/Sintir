@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_average_gauge.dart';
 import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_count_tile.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_status_mapper.dart';
+import 'package:sintir/Core/widgets/results/results_status_mapper.dart';
 import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_summary_text.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_tokens.dart';
+import 'package:sintir/Core/widgets/results/results_tokens.dart';
 
 class ResultsSummaryCard extends StatelessWidget {
   const ResultsSummaryCard(

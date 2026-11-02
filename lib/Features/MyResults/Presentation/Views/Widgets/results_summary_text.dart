@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_status_mapper.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_tokens.dart';
+import 'package:sintir/Core/widgets/results/results_status_mapper.dart';
+import 'package:sintir/Core/widgets/results/results_tokens.dart';
 import 'package:sintir/locale_keys.dart';
 
 class ResultsSummaryText extends StatelessWidget {

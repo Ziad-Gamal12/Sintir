@@ -1,32 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:sintir/Core/utils/locale_formatter.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/locale_keys.dart';
 
 class SubscriberJoinedDateRow extends StatelessWidget {
   const SubscriberJoinedDateRow({super.key, required this.joinedDate});
   final DateTime joinedDate;
+
   @override
   Widget build(BuildContext context) {
-    final locale = Localizations.localeOf(context).languageCode;
     final theme = Theme.of(context);
-    return Row(
-      children: [
-        Icon(
-          Icons.calendar_today_rounded,
-          size: 15,
-          color: theme.colorScheme.onSurfaceVariant,
-        ),
-        SizedBox(
-          width: 4,
-        ),
-        Text(
-          '${LocaleKeys.subscriberJoinedDate}: ${DateFormat.yMMMMd(locale).format(joinedDate)}',
-          style: AppTextStyles(context).regular12.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-        ),
-      ],
-    );
+    final locale = Localizations.localeOf(context).toString();
+    return Row(children: [
+      Icon(Icons.calendar_month,
+          size: 16, color: theme.colorScheme.onSurfaceVariant),
+      const SizedBox(width: 6),
+      Expanded(
+          child: Text(
+        '${LocaleKeys.subscriberJoinedDate}: ${LocaleFormatter.longDate(joinedDate, locale)}',
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: AppTextStyles(context)
+            .regular12
+            .copyWith(color: theme.colorScheme.onSurfaceVariant),
+      )),
+    ]);
   }
 }

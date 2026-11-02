@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/assessment_result_card.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_timeline_entry.dart';
-import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results_tokens.dart';
+import 'package:sintir/Core/widgets/results/assessment_result_card.dart';
+import 'package:sintir/Core/widgets/results/results_timeline_entry.dart';
+import 'package:sintir/Core/widgets/results/results_tokens.dart';
 
 class ResultsTimeline extends StatelessWidget {
   const ResultsTimeline(
-      {super.key, required this.results, required this.horizontalPadding});
+      {super.key, required this.results, required this.horizontalPadding,
+      this.onViewResult});
   final List<TestResultEntity> results;
   final double horizontalPadding;
+  final ValueChanged<TestResultEntity>? onViewResult;
 
   @override
   Widget build(BuildContext context) => SliverPadding(
@@ -39,7 +41,10 @@ class ResultsTimeline extends StatelessWidget {
                       Expanded(
                           child: AssessmentResultCard(
                               key: ValueKey('result-${item.serialNumber}'),
-                              result: item)),
+                              result: item,
+                              onViewResult: onViewResult == null
+                                  ? null
+                                  : () => onViewResult!(item))),
                     ]),
                   )),
             );
