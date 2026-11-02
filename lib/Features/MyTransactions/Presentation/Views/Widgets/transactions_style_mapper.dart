@@ -32,8 +32,12 @@ class TransactionsStyleMapper {
         _ => Icons.info_outline_rounded,
       };
 
-  static IconData methodIcon(String method) {
+  static IconData methodIcon(String method, {TransactionsStatus? status}) {
     final value = method.toLowerCase();
+    if ((value.contains('card') || value.contains('بطاقة')) &&
+        status == TransactionsStatus.failure) {
+      return Icons.credit_card_off;
+    }
     if (value.contains('card') || value.contains('بطاقة')) {
       return Icons.credit_card_rounded;
     }
@@ -56,6 +60,37 @@ class TransactionsStyleMapper {
       return Icons.swap_horiz_rounded;
     }
     return Icons.receipt_long_outlined;
+  }
+
+  static Color methodColor(
+      ThemeData theme, String method, TransactionsStatus? status) {
+    final colors = PaymentStatusPalette.forTheme(theme);
+    final value = method.toLowerCase();
+    if (status == TransactionsStatus.failure &&
+        (value.contains('card') || value.contains('بطاقة'))) {
+      return colors.failure;
+    }
+    if (value.contains('wallet') ||
+        value.contains('mobile') ||
+        value.contains('محفظ')) {
+      return colors.pending;
+    }
+    if (value.contains('fawry') ||
+        value.contains('outlet') ||
+        value.contains('فوري')) {
+      return colors.success;
+    }
+    if (value.contains('cash') || value.contains('نقد')) {
+      return theme.brightness == Brightness.dark
+          ? const Color(0xFF8DD9CF)
+          : const Color(0xFF087F73);
+    }
+    if (value.contains('transfer') ||
+        value.contains('instapay') ||
+        value.contains('تحويل')) {
+      return colors.information;
+    }
+    return theme.colorScheme.primary;
   }
 
   static String maskPhone(String value) {

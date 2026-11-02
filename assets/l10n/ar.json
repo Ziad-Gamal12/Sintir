@@ -894,8 +894,6 @@
   "transactions_newest": "الأحدث أولا",
   "transactions_oldest": "الأقدم أولا",
   "transactions_apply_filters": "تطبيق التصفية ({count} معاملة)",
-  "transactions_share": "مشاركة البيانات",
-  "transactions_download_receipt": "تحميل الإيصال",
   "transactions_refresh": "إعادة المحاولة",
   "transactions_matched_success": "تمت المطابقة بنجاح",
   "transactions_matched_pending": "بانتظار المطابقة",
@@ -908,6 +906,5 @@
   "transactions_currency_egp": "جنيه مصري (EGP)",
   "transactions_currency_sar": "ريال سعودي (SAR)",
   "transactions_updated": "محدّث",
-  "transactions_export_copied": "تم نسخ ملخص المعاملات",
   "transactions_bank_card_detail": "بطاقة بنكية (Credit/Debit)"
 }

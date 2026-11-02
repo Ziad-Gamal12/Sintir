@@ -892,8 +892,6 @@
   "transactions_newest": "Plus récentes d'abord",
   "transactions_oldest": "Plus anciennes d'abord",
   "transactions_apply_filters": "Appliquer ({count} transactions)",
-  "transactions_share": "Partager les données",
-  "transactions_download_receipt": "Télécharger le reçu",
   "transactions_refresh": "Réessayer",
   "transactions_matched_success": "Rapprochement réussi",
   "transactions_matched_pending": "Rapprochement en attente",
@@ -906,6 +904,5 @@
   "transactions_currency_egp": "Livre égyptienne (EGP)",
   "transactions_currency_sar": "Riyal saoudien (SAR)",
   "transactions_updated": "À jour",
-  "transactions_export_copied": "Résumé des transactions copié",
   "transactions_bank_card_detail": "Carte bancaire (crédit/débit)"
 }

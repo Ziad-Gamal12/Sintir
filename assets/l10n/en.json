@@ -894,8 +894,6 @@
   "transactions_newest": "Newest first",
   "transactions_oldest": "Oldest first",
   "transactions_apply_filters": "Apply filters ({count} transactions)",
-  "transactions_share": "Share details",
-  "transactions_download_receipt": "Download receipt",
   "transactions_refresh": "Retry",
   "transactions_matched_success": "Successfully matched",
   "transactions_matched_pending": "Awaiting match",
@@ -908,6 +906,5 @@
   "transactions_currency_egp": "Egyptian pound (EGP)",
   "transactions_currency_sar": "Saudi riyal (SAR)",
   "transactions_updated": "Updated",
-  "transactions_export_copied": "Transaction summary copied",
   "transactions_bank_card_detail": "Bank card (Credit/Debit)"
 }

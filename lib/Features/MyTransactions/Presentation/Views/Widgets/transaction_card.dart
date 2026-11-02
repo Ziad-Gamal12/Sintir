@@ -20,6 +20,8 @@ class TransactionCard extends StatelessWidget {
     final styles = AppTextStyles(context);
     final status =
         TransactionsStyleMapper.statusColor(theme, transaction.status);
+    final methodColor = TransactionsStyleMapper.methodColor(
+        theme, transaction.method, transaction.status);
     final locale = Localizations.localeOf(context).languageCode;
     final amount = transaction.amount == null
         ? '—'
@@ -73,11 +75,14 @@ class TransactionCard extends StatelessWidget {
                     width: 44,
                     height: 44,
                     decoration: BoxDecoration(
-                        color: theme.colorScheme.primary.withValues(alpha: .1),
+                        color: methodColor.withValues(
+                            alpha:
+                                theme.brightness == Brightness.dark ? .18 : .1),
                         borderRadius: BorderRadius.circular(13)),
                     child: Icon(
-                        TransactionsStyleMapper.methodIcon(transaction.method),
-                        color: theme.colorScheme.primary)),
+                        TransactionsStyleMapper.methodIcon(transaction.method,
+                            status: transaction.status),
+                        color: methodColor)),
                 const SizedBox(width: 12),
                 Expanded(
                     child: Column(

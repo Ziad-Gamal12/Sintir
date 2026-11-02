@@ -309,7 +309,15 @@ class _DetailRow extends StatelessWidget {
             IconButton(
                 tooltip: LocaleKeys.transactionsCopy,
                 visualDensity: VisualDensity.compact,
-                onPressed: () => Clipboard.setData(ClipboardData(text: value)),
+                onPressed: () async {
+                  await Clipboard.setData(ClipboardData(text: value));
+                  await HapticFeedback.selectionClick();
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(LocaleKeys.transactionsCopied),
+                        duration: const Duration(seconds: 2)));
+                  }
+                },
                 icon: const Icon(Icons.copy_outlined, size: 16)),
         ]));
   }

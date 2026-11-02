@@ -1100,9 +1100,6 @@ class LocaleKeys {
   static String get transactionsOldest => 'transactions_oldest'.tr();
   static String transactionsApplyFilters(int count) =>
       'transactions_apply_filters'.tr(args: {'count': '$count'});
-  static String get transactionsShare => 'transactions_share'.tr();
-  static String get transactionsDownloadReceipt =>
-      'transactions_download_receipt'.tr();
   static String get transactionsRefresh => 'transactions_refresh'.tr();
   static String get transactionsMatchedSuccess =>
       'transactions_matched_success'.tr();
@@ -1119,8 +1116,6 @@ class LocaleKeys {
   static String get transactionsCurrencyEgp => 'transactions_currency_egp'.tr();
   static String get transactionsCurrencySar => 'transactions_currency_sar'.tr();
   static String get transactionsUpdated => 'transactions_updated'.tr();
-  static String get transactionsExportCopied =>
-      'transactions_export_copied'.tr();
   static String get transactionsBankCardDetail =>
       'transactions_bank_card_detail'.tr();
 }

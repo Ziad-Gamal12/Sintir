@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:sintir/Core/helper/GetUserData.dart';
@@ -79,34 +78,6 @@ class _MyTransactionsViewBodyState extends State<MyTransactionsViewBody> {
                                           CrossAxisAlignment.stretch,
                                       children: [
                                         Row(children: [
-                                          Semantics(
-                                              label:
-                                                  LocaleKeys.transactionsShare,
-                                              button: true,
-                                              child: IconButton.filledTonal(
-                                                  tooltip: LocaleKeys
-                                                      .transactionsShare,
-                                                  onPressed: () async {
-                                                    final text = state
-                                                        .transactions
-                                                        .map((item) =>
-                                                            item.transactionId)
-                                                        .join('\n');
-                                                    await Clipboard.setData(
-                                                        ClipboardData(
-                                                            text: text));
-                                                    if (context.mounted) {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(SnackBar(
-                                                              content: Text(
-                                                                  LocaleKeys
-                                                                      .transactionsExportCopied)));
-                                                    }
-                                                  },
-                                                  icon: const Icon(Icons
-                                                      .ios_share_outlined))),
-                                          const SizedBox(width: 10),
                                           Expanded(
                                               child: Column(
                                                   crossAxisAlignment:
