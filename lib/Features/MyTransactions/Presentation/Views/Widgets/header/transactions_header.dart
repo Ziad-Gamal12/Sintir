@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/summary/transaction_share_summary.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/styles/transactions_style_mapper.dart';
 import 'package:sintir/locale_keys.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -17,6 +18,14 @@ class TransactionsHeader extends StatelessWidget {
     return Row(
       children: [
         IconButton.filledTonal(
+          style: IconButton.styleFrom(
+            foregroundColor: TransactionsStyleMapper.primary(theme),
+            backgroundColor: TransactionsStyleMapper.primary(
+              theme,
+            ).withValues(alpha: .1),
+            shape: const CircleBorder(),
+            side: BorderSide(color: TransactionsStyleMapper.cardBorder(theme)),
+          ),
           tooltip: LocaleKeys.transactionsShare,
           onPressed: transactions.isEmpty ? null : () => _share(context),
           icon: const Icon(Icons.ios_share_outlined),
@@ -35,13 +44,15 @@ class TransactionsHeader extends StatelessWidget {
                       vertical: 3,
                     ),
                     decoration: BoxDecoration(
-                      color: theme.colorScheme.primary.withValues(alpha: .1),
+                      color: TransactionsStyleMapper.primary(
+                        theme,
+                      ).withValues(alpha: .1),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
                       LocaleKeys.transactionsUpdated,
                       style: styles.regular10.copyWith(
-                        color: theme.colorScheme.primary,
+                        color: TransactionsStyleMapper.primary(theme),
                       ),
                     ),
                   ),

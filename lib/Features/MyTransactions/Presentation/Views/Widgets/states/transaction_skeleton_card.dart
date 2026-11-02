@@ -26,39 +26,65 @@ class TransactionSkeletonCard extends StatelessWidget {
                     size: 44,
                     borderRadius: BorderRadius.all(Radius.circular(13)),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 10),
                   const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Bone.text(words: 2),
                         SizedBox(height: 6),
-                        Bone.text(words: 3),
+                        Bone.text(words: 2),
                       ],
                     ),
                   ),
-                  const SizedBox(width: 20),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Bone.text(words: 2),
-                      SizedBox(height: 6),
-                      Bone(
-                        width: 58,
-                        height: 18,
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
-                      ),
-                    ],
+                  const SizedBox(width: 8),
+                  const SizedBox(
+                    width: 92,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Bone.text(words: 2),
+                        SizedBox(height: 6),
+                        Bone(
+                          width: 58,
+                          height: 18,
+                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Divider(height: 1),
+              ),
+              const Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                spacing: 8,
+                runSpacing: 8,
                 children: [
-                  Bone.text(words: 2),
-                  Bone.text(words: 3),
-                  Bone(width: 60, height: 18),
+                  SizedBox(
+                    width: 76,
+                    child: Bone(
+                      height: 16,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 92,
+                    child: Bone(
+                      height: 16,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 58,
+                    child: Bone(
+                      height: 16,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                  ),
                 ],
               ),
             ],

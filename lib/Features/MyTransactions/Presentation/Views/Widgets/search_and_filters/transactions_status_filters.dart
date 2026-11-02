@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Features/MyTransactions/Presentation/Manager/my_transactions_cubit/my_transactions_cubit.dart';
-import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/card/transactions_style_mapper.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/styles/transactions_style_mapper.dart';
 import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/search_and_filters/transaction_status_chip.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TransactionsStatusEnum.dart';
 import 'package:sintir/locale_keys.dart';

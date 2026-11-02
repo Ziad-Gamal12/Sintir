@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/locale_keys.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/details_sheet/transaction_detail_copy_button.dart';
 
 class TransactionDetailRow extends StatelessWidget {
   const TransactionDetailRow({
@@ -12,6 +11,7 @@ class TransactionDetailRow extends StatelessWidget {
     this.copy = false,
     this.ltr = false,
     this.valueColor,
+    this.grouped = false,
   });
 
   final IconData icon;
@@ -20,70 +20,85 @@ class TransactionDetailRow extends StatelessWidget {
   final bool copy;
   final bool ltr;
   final Color? valueColor;
+  final bool grouped;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 3),
-      padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 8, 10),
-      decoration: BoxDecoration(
-        color: theme.cardColor,
-        borderRadius: BorderRadius.circular(10),
+      margin: grouped
+          ? EdgeInsets.zero
+          : const EdgeInsets.symmetric(vertical: 3),
+      padding: EdgeInsetsDirectional.fromSTEB(
+        10,
+        grouped ? 9 : 10,
+        8,
+        grouped ? 9 : 10,
       ),
-      child: Row(
-        children: [
-          Icon(icon, size: 18, color: theme.colorScheme.onSurfaceVariant),
-          const SizedBox(width: 8),
-          Expanded(
-            flex: 4,
+      decoration: BoxDecoration(
+        color: grouped ? Colors.transparent : theme.cardColor,
+        borderRadius: BorderRadius.circular(grouped ? 0 : 10),
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final labelText = Text(
+            label,
+            style: AppTextStyles(
+              context,
+            ).regular11.copyWith(color: theme.colorScheme.onSurfaceVariant),
+          );
+          final valueText = Directionality(
+            textDirection: ltr ? TextDirection.ltr : Directionality.of(context),
             child: Text(
-              label,
-              style: AppTextStyles(
-                context,
-              ).regular11.copyWith(color: theme.colorScheme.onSurfaceVariant),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            flex: 6,
-            child: Directionality(
-              textDirection: ltr
-                  ? TextDirection.ltr
-                  : Directionality.of(context),
-              child: Text(
-                value,
-                textAlign: TextAlign.end,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles(context).regular12.copyWith(
-                  color: valueColor ?? theme.colorScheme.onSurface,
-                ),
+              value,
+              textAlign: TextAlign.end,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles(context).regular12.copyWith(
+                color: valueColor ?? theme.colorScheme.onSurface,
+                fontFeatures: ltr ? const [FontFeature.tabularFigures()] : null,
               ),
             ),
-          ),
-          if (copy)
-            IconButton(
-              tooltip: LocaleKeys.transactionsCopy,
-              visualDensity: VisualDensity.compact,
-              onPressed: () => _copy(context),
-              icon: const Icon(Icons.copy_outlined, size: 16),
-            ),
-        ],
+          );
+          final copyButton = copy
+              ? TransactionDetailCopyButton(value: value)
+              : null;
+          if (constraints.maxWidth < 360) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      icon,
+                      size: 18,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(child: labelText),
+                    ?copyButton,
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 26),
+                  child: valueText,
+                ),
+              ],
+            );
+          }
+          return Row(
+            children: [
+              Icon(icon, size: 18, color: theme.colorScheme.onSurfaceVariant),
+              const SizedBox(width: 8),
+              Expanded(flex: 4, child: labelText),
+              const SizedBox(width: 8),
+              Expanded(flex: 6, child: valueText),
+              ?copyButton,
+            ],
+          );
+        },
       ),
     );
-  }
-
-  Future<void> _copy(BuildContext context) async {
-    await Clipboard.setData(ClipboardData(text: value));
-    await HapticFeedback.selectionClick();
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(LocaleKeys.transactionsCopied),
-          duration: const Duration(seconds: 2),
-        ),
-      );
-    }
   }
 }

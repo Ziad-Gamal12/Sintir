@@ -6,6 +6,7 @@ import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/filter
 import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/filter_sheet/filter_methods_section.dart';
 import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/filter_sheet/filter_sort_section.dart';
 import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/filter_sheet/filter_status_section.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/styles/transactions_style_mapper.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TransactionsStatusEnum.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -47,7 +48,7 @@ class TransactionsFilterContent extends StatelessWidget {
             children: [
               Icon(
                 Icons.filter_list_rounded,
-                color: Theme.of(context).colorScheme.primary,
+                color: TransactionsStyleMapper.primary(Theme.of(context)),
               ),
               const SizedBox(width: 8),
               Expanded(

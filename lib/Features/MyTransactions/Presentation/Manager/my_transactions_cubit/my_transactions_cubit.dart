@@ -6,6 +6,7 @@ import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Features/MyTransactions/Domain/Entities/GetMyTransactionsResponseEntity.dart';
 import 'package:sintir/Features/MyTransactions/Domain/Repos/MyTransactionsRep.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TransactionsStatusEnum.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/styles/transaction_method_mapper.dart';
 
 part 'my_transactions_state.dart';
 
@@ -51,6 +52,7 @@ class MyTransactionsCubit extends Cubit<MyTransactionsState> {
             hasMore: response.hasMore,
             isLoading: false,
             isPaginating: false,
+            isSystemConnected: true,
           ),
         );
       },

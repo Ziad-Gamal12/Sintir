@@ -6,12 +6,12 @@ import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/filter
 Future<void> showTransactionsFilter(BuildContext context) async {
   final cubit = context.read<MyTransactionsCubit>();
   final filter = TransactionsFilterSheet(cubit: cubit);
-  if (MediaQuery.sizeOf(context).width >= 900) {
+  if (MediaQuery.sizeOf(context).width > 600) {
     await showDialog<void>(
       context: context,
       builder: (context) => Dialog(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 560, maxHeight: 720),
+          constraints: const BoxConstraints(maxWidth: 540, maxHeight: 720),
           child: filter,
         ),
       ),

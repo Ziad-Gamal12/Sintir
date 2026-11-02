@@ -1140,4 +1140,15 @@ class LocaleKeys {
   static String get transactionsSelectTransaction =>
       'transactions_select_transaction'.tr();
   static String get transactionsShareFailed => 'transactions_share_failed'.tr();
+  static String get transactionsReconciliationRate =>
+      'transactions_reconciliation_rate'.tr();
+  static String get transactionsThisWeek => 'transactions_this_week'.tr();
+  static String get transactionsSystemConnected =>
+      'transactions_system_connected'.tr();
+  static String get transactionsFinancialLedger =>
+      'transactions_financial_ledger'.tr();
+  static String get transactionsIssuerPaymob =>
+      'transactions_issuer_paymob'.tr();
+  static String get transactionsSystemConnecting =>
+      'transactions_system_connecting'.tr();
 }

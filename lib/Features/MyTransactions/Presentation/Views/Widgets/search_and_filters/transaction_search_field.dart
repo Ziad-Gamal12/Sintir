@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/styles/transactions_style_mapper.dart';
 import 'package:sintir/locale_keys.dart';
 
 class TransactionSearchField extends StatelessWidget {
@@ -15,6 +16,7 @@ class TransactionSearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final primary = TransactionsStyleMapper.primary(theme);
     final border = OutlineInputBorder(
       borderRadius: BorderRadius.circular(14),
       borderSide: BorderSide(color: theme.dividerColor.withValues(alpha: .25)),
@@ -26,11 +28,14 @@ class TransactionSearchField extends StatelessWidget {
       style: AppTextStyles(context).regular14,
       decoration: InputDecoration(
         hintText: LocaleKeys.transactionsSearchHint,
-        prefixIcon: const Icon(Icons.search),
+        prefixIcon: Icon(Icons.search, color: primary),
         isDense: true,
         filled: true,
         border: border,
         enabledBorder: border,
+        focusedBorder: border.copyWith(
+          borderSide: BorderSide(color: primary, width: 1.5),
+        ),
       ),
     );
   }

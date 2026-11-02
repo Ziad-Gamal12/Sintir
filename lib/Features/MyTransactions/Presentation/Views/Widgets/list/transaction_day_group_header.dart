@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:sintir/Core/utils/locale_formatter.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/card/transaction_display_formatters.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/MyTransactions/Presentation/Manager/my_transactions_cubit/my_transactions_cubit.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/styles/transactions_style_mapper.dart';
 import 'package:sintir/locale_keys.dart';
 
 class TransactionDayGroupHeader extends StatelessWidget {
@@ -37,10 +38,10 @@ class TransactionDayGroupHeader extends StatelessWidget {
             Directionality(
               textDirection: TextDirection.ltr,
               child: Text(
-                '${LocaleFormatter.number(group.total!, locale)} ${group.currency}',
-                style: AppTextStyles(
-                  context,
-                ).regular11.copyWith(color: theme.colorScheme.primary),
+                '${TransactionDisplayFormatters.fixedAmount(group.total!, locale)} ${group.currency}',
+                style: AppTextStyles(context).regular11.copyWith(
+                  color: TransactionsStyleMapper.primary(theme),
+                ),
               ),
             ),
           ],

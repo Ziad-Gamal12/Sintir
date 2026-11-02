@@ -16,7 +16,12 @@ class MyTransactionsView extends StatelessWidget {
       create: (context) =>
           MyTransactionsCubit(myTransactionsRep: getIt<MyTransactionsRepo>()),
       child: Scaffold(
-        appBar: CustomAppBar(appBartitle: LocaleKeys.myPayments),
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? const Color(0xFF121212)
+            : const Color(0xFFF8FAFC),
+        appBar: CustomAppBar(
+          appBartitle: LocaleKeys.transactionsFinancialLedger,
+        ),
         body: const MyTransactionsViewBody(),
       ),
     );

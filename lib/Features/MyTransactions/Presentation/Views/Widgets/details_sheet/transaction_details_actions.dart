@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/summary/transaction_share_summary.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/styles/transactions_style_mapper.dart';
 import 'package:sintir/locale_keys.dart';
 
 class TransactionDetailsActions extends StatelessWidget {
@@ -12,6 +13,10 @@ class TransactionDetailsActions extends StatelessWidget {
   Widget build(BuildContext context) => SizedBox(
     width: double.infinity,
     child: FilledButton.icon(
+      style: FilledButton.styleFrom(
+        backgroundColor: TransactionsStyleMapper.primary(Theme.of(context)),
+        foregroundColor: Colors.white,
+      ),
       onPressed: () => _share(context),
       icon: const Icon(Icons.share_outlined),
       label: Text(LocaleKeys.transactionsShare),

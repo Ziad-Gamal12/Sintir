@@ -27,9 +27,14 @@ class TransactionDetailPill extends StatelessWidget {
       children: [
         Icon(icon, size: 15, color: color),
         const SizedBox(width: 5),
-        Text(
-          label,
-          style: AppTextStyles(context).regular11.copyWith(color: color),
+        Flexible(
+          child: Text(
+            label,
+            style: AppTextStyles(context).regular11.copyWith(color: color),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+          ),
         ),
       ],
     ),

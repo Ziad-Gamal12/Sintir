@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/card/transaction_card_metadata.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/card/transaction_display_formatters.dart';
 import 'package:sintir/locale_keys.dart';
 
 class TransactionCardFooter extends StatelessWidget {
@@ -23,9 +24,10 @@ class TransactionCardFooter extends StatelessWidget {
             Directionality(
               textDirection: TextDirection.ltr,
               child: Text(
-                _shortId(transaction.transactionId),
+                TransactionDisplayFormatters.shortId(transaction.transactionId),
                 style: AppTextStyles(context).regular11.copyWith(
                   letterSpacing: .35,
+                  fontFeatures: const [FontFeature.tabularFigures()],
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
                 maxLines: 1,
@@ -44,14 +46,6 @@ class TransactionCardFooter extends StatelessWidget {
         TransactionCardMetadata(transaction: transaction),
       ],
     );
-  }
-
-  String _shortId(String id) {
-    final parts = id.split('-');
-    if (parts.length > 2 && parts.first.toUpperCase() == 'TXN') {
-      return parts.take(2).join('-');
-    }
-    return id.length > 12 ? id.substring(0, 12) : id;
   }
 
   Future<void> _copy(BuildContext context) async {

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/TransactionEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/card/transactions_style_mapper.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TransactionsStatusEnum.dart';
-import 'package:sintir/locale_keys.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/card/transaction_display_formatters.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/styles/transaction_method_mapper.dart';
 
 class TransactionCardHeader extends StatelessWidget {
   const TransactionCardHeader({super.key, required this.transaction});
@@ -12,7 +11,7 @@ class TransactionCardHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final color = TransactionsStyleMapper.methodColor(
+    final color = TransactionMethodMapper.color(
       theme,
       transaction.method,
       transaction.status,
@@ -29,7 +28,7 @@ class TransactionCardHeader extends StatelessWidget {
             borderRadius: BorderRadius.circular(13),
           ),
           child: Icon(
-            TransactionsStyleMapper.methodIcon(
+            TransactionMethodMapper.icon(
               transaction.method,
               status: transaction.status,
             ),
@@ -42,14 +41,14 @@ class TransactionCardHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                _methodLabel(transaction.method),
+                TransactionMethodMapper.label(transaction.method),
                 style: AppTextStyles(context).semiBold14,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               if (transaction.issuer?.isNotEmpty == true)
                 Text(
-                  transaction.issuer!,
+                  TransactionDisplayFormatters.issuerLabel(transaction.issuer!),
                   style: AppTextStyles(context).regular12.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
                   ),
@@ -61,33 +60,5 @@ class TransactionCardHeader extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  String _methodLabel(String value) {
-    final method = value.toLowerCase();
-    if (method.contains('card') || method.contains('بطاقة')) {
-      return LocaleKeys.transactionsBankCard;
-    }
-    if (method.contains('wallet') ||
-        method.contains('mobile') ||
-        method.contains('محفظ')) {
-      return LocaleKeys.transactionsWallet;
-    }
-    if (method.contains('fawry') ||
-        method.contains('outlet') ||
-        method.contains('فوري')) {
-      return LocaleKeys.transactionsFawry;
-    }
-    if (method.contains('cash') || method.contains('نقد')) {
-      return LocaleKeys.transactionsCash;
-    }
-    if (method.contains('transfer') ||
-        method.contains('instapay') ||
-        method.contains('تحويل')) {
-      return LocaleKeys.transactionsDirectTransfer;
-    }
-    return transaction.status == TransactionsStatus.other
-        ? LocaleKeys.transactionsOther
-        : value;
   }
 }

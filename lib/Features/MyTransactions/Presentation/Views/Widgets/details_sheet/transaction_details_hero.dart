@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/TransactionEntity.dart';
-import 'package:sintir/Core/utils/locale_formatter.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/card/transaction_display_formatters.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/details_sheet/transaction_details_status_pills.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/styles/transactions_style_mapper.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TransactionsStatusEnum.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -16,7 +17,7 @@ class TransactionDetailsHero extends StatelessWidget {
     final locale = Localizations.localeOf(context).languageCode;
     final amount = transaction.amount == null
         ? '—'
-        : LocaleFormatter.number(transaction.amount!, locale);
+        : TransactionDisplayFormatters.fixedAmount(transaction.amount!, locale);
     final currency = transaction.currency == 'EGP'
         ? (locale == 'ar' ? 'ج.م' : 'EGP')
         : transaction.currency == 'SAR'
@@ -27,8 +28,8 @@ class TransactionDetailsHero extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            theme.colorScheme.primary.withValues(alpha: .13),
-            theme.colorScheme.primary.withValues(alpha: .04),
+            TransactionsStyleMapper.primary(theme).withValues(alpha: .13),
+            TransactionsStyleMapper.primary(theme).withValues(alpha: .04),
           ],
         ),
         borderRadius: BorderRadius.circular(16),
@@ -48,9 +49,11 @@ class TransactionDetailsHero extends StatelessWidget {
             textDirection: TextDirection.ltr,
             child: Text(
               '$amount $currency'.trim(),
-              style: AppTextStyles(
-                context,
-              ).bold30.copyWith(color: theme.colorScheme.onSurface),
+              style: AppTextStyles(context).bold30.copyWith(
+                color: theme.brightness == Brightness.dark
+                    ? const Color(0xFF3B82F6)
+                    : TransactionsStyleMapper.brand,
+              ),
             ),
           ),
           const SizedBox(height: 12),

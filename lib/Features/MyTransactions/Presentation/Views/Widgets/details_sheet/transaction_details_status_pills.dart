@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/utils/PaymentStatusPalette.dart';
-import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/card/transactions_style_mapper.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/styles/transactions_style_mapper.dart';
 import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/details_sheet/transaction_detail_pill.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TransactionsStatusEnum.dart';
 import 'package:sintir/locale_keys.dart';
@@ -17,7 +16,6 @@ class TransactionDetailsStatusPills extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final palette = PaymentStatusPalette.forTheme(theme);
     final statusColor = TransactionsStyleMapper.statusColor(theme, status);
     return Wrap(
       alignment: WrapAlignment.center,
@@ -40,10 +38,18 @@ class TransactionDetailsStatusPills extends StatelessWidget {
             label: reconciled!
                 ? LocaleKeys.transactionsMatchedSuccess
                 : LocaleKeys.transactionsMatchedFailed,
-            color: reconciled! ? palette.success : palette.information,
-            surface: reconciled!
-                ? palette.successSurface
-                : palette.informationSurface,
+            color: TransactionsStyleMapper.statusColor(
+              theme,
+              reconciled!
+                  ? TransactionsStatus.success
+                  : TransactionsStatus.other,
+            ),
+            surface: TransactionsStyleMapper.statusSurface(
+              theme,
+              reconciled!
+                  ? TransactionsStatus.success
+                  : TransactionsStatus.other,
+            ),
             icon: reconciled! ? Icons.verified_outlined : Icons.sync,
           ),
       ],

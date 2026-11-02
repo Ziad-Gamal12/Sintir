@@ -4,6 +4,7 @@ import 'package:sintir/Features/MyTransactions/Presentation/Manager/my_transacti
 import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/header/transactions_header.dart';
 import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/list/transactions_results_sliver.dart';
 import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/search_and_filters/transactions_search_and_filters.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/summary/transactions_reconciliation_summary.dart';
 
 class TransactionsScrollableList extends StatelessWidget {
   const TransactionsScrollableList({
@@ -39,6 +40,8 @@ class TransactionsScrollableList extends StatelessWidget {
               children: [
                 TransactionsHeader(transactions: state.filteredTransactions),
                 const SizedBox(height: 18),
+                TransactionsReconciliationSummary(state: state),
+                const SizedBox(height: 16),
                 TransactionsSearchAndFilters(
                   state: state,
                   searchController: searchController,

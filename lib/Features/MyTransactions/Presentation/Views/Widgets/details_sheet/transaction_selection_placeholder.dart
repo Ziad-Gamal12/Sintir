@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/styles/transactions_style_mapper.dart';
 import 'package:sintir/locale_keys.dart';
 
 class TransactionSelectionPlaceholder extends StatelessWidget {
@@ -12,7 +13,7 @@ class TransactionSelectionPlaceholder extends StatelessWidget {
         Icon(
           Icons.receipt_long_outlined,
           size: 42,
-          color: Theme.of(context).colorScheme.primary,
+          color: TransactionsStyleMapper.primary(Theme.of(context)),
         ),
         const SizedBox(height: 12),
         Text(LocaleKeys.transactionsSelectTransaction),

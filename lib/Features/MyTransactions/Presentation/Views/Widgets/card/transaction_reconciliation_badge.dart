@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/utils/PaymentStatusPalette.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/styles/transactions_style_mapper.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TransactionsStatusEnum.dart';
 import 'package:sintir/locale_keys.dart';
 
 class TransactionReconciliationBadge extends StatelessWidget {
@@ -9,13 +10,18 @@ class TransactionReconciliationBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = PaymentStatusPalette.forTheme(Theme.of(context));
     final matched = isMatched == true;
-    final color = matched ? colors.success : colors.information;
+    final status = matched
+        ? TransactionsStatus.success
+        : TransactionsStatus.other;
+    final color = TransactionsStyleMapper.statusColor(
+      Theme.of(context),
+      status,
+    );
     return Container(
       padding: const EdgeInsetsDirectional.fromSTEB(8, 3, 8, 3),
       decoration: BoxDecoration(
-        color: matched ? colors.successSurface : colors.informationSurface,
+        color: TransactionsStyleMapper.statusSurface(Theme.of(context), status),
         borderRadius: BorderRadius.circular(7),
       ),
       child: Row(

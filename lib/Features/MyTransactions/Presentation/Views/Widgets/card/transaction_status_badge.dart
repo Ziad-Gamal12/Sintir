@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/card/transactions_style_mapper.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/styles/transactions_style_mapper.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TransactionsStatusEnum.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -27,9 +27,14 @@ class TransactionStatusBadge extends StatelessWidget {
             color: color,
           ),
           const SizedBox(width: 4),
-          Text(
-            _statusLabel(status),
-            style: AppTextStyles(context).regular11.copyWith(color: color),
+          Flexible(
+            child: Text(
+              _statusLabel(status),
+              style: AppTextStyles(context).regular11.copyWith(color: color),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
+            ),
           ),
         ],
       ),

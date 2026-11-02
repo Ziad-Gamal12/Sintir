@@ -7,6 +7,7 @@ class MyTransactionsState {
     this.isLoading = false,
     this.isPaginating = false,
     this.hasMore = true,
+    this.isSystemConnected = false,
     this.error,
     this.searchQuery = '',
     this.statusFilter,
@@ -17,7 +18,7 @@ class MyTransactionsState {
     this.newestFirst = true,
   });
   final List<TransactionEntity> transactions;
-  final bool isLoading, isPaginating, hasMore, newestFirst;
+  final bool isLoading, isPaginating, hasMore, newestFirst, isSystemConnected;
   final String? error;
   final String searchQuery;
   final TransactionsStatus? statusFilter;
@@ -73,6 +74,18 @@ class MyTransactionsState {
   int count(TransactionsStatus? status) => status == null
       ? transactions.length
       : transactions.where((item) => item.status == status).length;
+  double get autoReconciliationRate {
+    final now = DateTime.now();
+    final cutoff = now.subtract(const Duration(days: 7));
+    final recent = transactions.where((item) {
+      final date = item.createdAt;
+      return date != null && !date.isBefore(cutoff) && !date.isAfter(now);
+    }).toList();
+    if (recent.isEmpty) return 100.0;
+    final reconciled = recent.where((item) => item.isReconciled == true).length;
+    return reconciled / recent.length * 100;
+  }
+
   bool get hasActiveFilters =>
       statusFilter != null ||
       paymentMethods.isNotEmpty ||
@@ -124,6 +137,7 @@ class MyTransactionsState {
     bool? isLoading,
     bool? isPaginating,
     bool? hasMore,
+    bool? isSystemConnected,
     String? error,
     bool clearError = false,
     String? searchQuery,
@@ -140,6 +154,7 @@ class MyTransactionsState {
     isLoading: isLoading ?? this.isLoading,
     isPaginating: isPaginating ?? this.isPaginating,
     hasMore: hasMore ?? this.hasMore,
+    isSystemConnected: isSystemConnected ?? this.isSystemConnected,
     error: clearError ? null : error ?? this.error,
     searchQuery: searchQuery ?? this.searchQuery,
     statusFilter: clearStatusFilter ? null : statusFilter ?? this.statusFilter,
@@ -173,28 +188,5 @@ typedef TransactionListItem = ({
 enum TransactionsDateRange { all, today, last7Days, last30Days, custom }
 
 String transactionMethodKey(String method) {
-  final value = method.toLowerCase();
-  if (value.contains('card') || value.contains('بطاقة')) {
-    return 'card';
-  }
-  if (value.contains('wallet') ||
-      value.contains('mobile') ||
-      value.contains('محفظ')) {
-    return 'wallet';
-  }
-  if (value.contains('fawry') ||
-      value.contains('outlet') ||
-      value.contains('فوري')) {
-    return 'fawry';
-  }
-  if (value.contains('cash') || value.contains('نقد')) {
-    return 'cash';
-  }
-  if (value.contains('transfer') ||
-      value.contains('instapay') ||
-      value.contains('bank') ||
-      value.contains('تحويل')) {
-    return 'transfer';
-  }
-  return 'other';
+  return TransactionMethodMapper.key(method);
 }

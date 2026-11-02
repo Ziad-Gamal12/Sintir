@@ -1,43 +1,48 @@
+import 'package:intl/intl.dart' as intl;
 import 'package:sintir/locale_keys.dart';
 
 class TransactionDisplayFormatters {
   const TransactionDisplayFormatters._();
 
   static String maskPhone(String value) {
-    if (value.contains('*')) return value;
-    final digits = value.replaceAll(RegExp(r'\D'), '');
-    if (digits.length <= 4) return value;
-    final prefixLength = digits.length > 10 ? digits.length - 10 + 4 : 4;
-    final prefix = digits.substring(
-      0,
-      prefixLength.clamp(1, digits.length - 4),
-    );
-    return '+$prefix *** ${digits.substring(digits.length - 4)}';
+    var digits = value.replaceAll(RegExp(r'\D'), '');
+    if (digits.startsWith('20')) digits = digits.substring(2);
+    if (digits.startsWith('0')) digits = digits.substring(1);
+    if (digits.length < 6) return value;
+    return '+20 ${digits.substring(0, 2)} *** ${digits.substring(digits.length - 4)}';
   }
 
-  static String methodLabel(String value) {
-    final lower = value.toLowerCase();
-    if (lower.contains('card') || lower.contains('بطاقة')) {
-      return LocaleKeys.transactionsBankCardDetail;
-    }
-    if (lower.contains('wallet') ||
-        lower.contains('mobile') ||
-        lower.contains('محفظ')) {
-      return LocaleKeys.transactionsWallet;
-    }
-    if (lower.contains('fawry') ||
-        lower.contains('outlet') ||
-        lower.contains('فوري')) {
-      return LocaleKeys.transactionsFawry;
-    }
-    if (lower.contains('cash') || lower.contains('نقد')) {
-      return LocaleKeys.transactionsCash;
-    }
-    if (lower.contains('transfer') ||
-        lower.contains('bank') ||
-        lower.contains('تحويل')) {
-      return LocaleKeys.transactionsDirectTransfer;
-    }
-    return value;
+  static String shortId(String id) {
+    final canonical = _canonicalId(id);
+    final token = canonical.split('-').first;
+    return 'TXN-${token.substring(0, token.length.clamp(0, 6))}';
   }
+
+  static String fullId(String id) => 'TXN-${_canonicalId(id)}-SNT';
+
+  static String fixedAmount(num amount, String locale) =>
+      _latinize(intl.NumberFormat('0.00', locale).format(amount));
+
+  static String _canonicalId(String id) => id
+      .trim()
+      .replaceFirst(RegExp(r'^TXN-', caseSensitive: false), '')
+      .replaceFirst(RegExp(r'-SNT$', caseSensitive: false), '');
+
+  static String _latinize(String value) =>
+      value.replaceAllMapped(RegExp('[٠-٩۰-۹]'), (match) {
+        final code = match.group(0)!.runes.single;
+        final start = code >= 0x06F0 ? 0x06F0 : 0x0660;
+        return String.fromCharCode(0x30 + code - start);
+      });
+
+  static String issuerLabel(String value) =>
+      value.trim().toLowerCase() == 'paymob'
+      ? LocaleKeys.transactionsIssuerPaymob
+      : value.trim();
+
+  static String currencyLabel(String value) => switch (value) {
+    'EGP' => LocaleKeys.transactionsCurrencyEgp,
+    'SAR' => LocaleKeys.transactionsCurrencySar,
+    _ => value,
+  };
 }

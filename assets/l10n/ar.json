@@ -909,5 +909,11 @@
   "transactions_bank_card_detail": "بطاقة بنكية (Credit/Debit)",
   "transactions_share": "مشاركة البيانات",
   "transactions_select_transaction": "اختر معاملة لعرض تفاصيلها",
-  "transactions_share_failed": "تعذر فتح قائمة المشاركة"
+  "transactions_share_failed": "تعذر فتح قائمة المشاركة",
+  "transactions_reconciliation_rate": "نسبة المطابقة التلقائية",
+  "transactions_this_week": "هذا الأسبوع",
+  "transactions_system_connected": "النظام متصل",
+  "transactions_financial_ledger": "دفتر المعاملات المالية",
+  "transactions_issuer_paymob": "بوابة Paymob",
+  "transactions_system_connecting": "جارٍ الاتصال بالنظام"
 }

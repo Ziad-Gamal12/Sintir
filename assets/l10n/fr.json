@@ -907,5 +907,11 @@
   "transactions_bank_card_detail": "Carte bancaire (crédit/débit)",
   "transactions_share": "Partager les données",
   "transactions_select_transaction": "Sélectionnez une transaction pour afficher ses détails",
-  "transactions_share_failed": "Impossible d'ouvrir le menu de partage"
+  "transactions_share_failed": "Impossible d'ouvrir le menu de partage",
+  "transactions_reconciliation_rate": "Taux de rapprochement automatique",
+  "transactions_this_week": "Cette semaine",
+  "transactions_system_connected": "Système connecté",
+  "transactions_financial_ledger": "Grand livre financier",
+  "transactions_issuer_paymob": "Passerelle Paymob",
+  "transactions_system_connecting": "Connexion au système"
 }

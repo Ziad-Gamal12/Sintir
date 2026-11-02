@@ -30,7 +30,7 @@ class TransactionDetailsPanel extends StatelessWidget {
             decoration: BoxDecoration(
               color: Theme.of(
                 context,
-              ).colorScheme.primary.withValues(alpha: .2),
+              ).colorScheme.onSurface.withValues(alpha: .2),
               borderRadius: BorderRadius.circular(8),
             ),
           ),

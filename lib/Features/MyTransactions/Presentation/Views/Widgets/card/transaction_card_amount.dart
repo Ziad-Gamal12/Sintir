@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/TransactionEntity.dart';
-import 'package:sintir/Core/utils/locale_formatter.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/card/transaction_display_formatters.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/card/transaction_status_badge.dart';
-import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/card/transactions_style_mapper.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/styles/transactions_style_mapper.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TransactionsStatusEnum.dart';
 
 class TransactionCardAmount extends StatelessWidget {
@@ -16,7 +16,7 @@ class TransactionCardAmount extends StatelessWidget {
     final locale = Localizations.localeOf(context).languageCode;
     final amount = transaction.amount == null
         ? '—'
-        : LocaleFormatter.number(transaction.amount!, locale);
+        : TransactionDisplayFormatters.fixedAmount(transaction.amount!, locale);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [

@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:sintir/Core/entities/TransactionEntity.dart';
-import 'package:sintir/Core/utils/locale_formatter.dart';
 import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/card/transaction_display_formatters.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TransactionsStatusEnum.dart';
 import 'package:sintir/locale_keys.dart';
@@ -25,7 +24,7 @@ class TransactionShareSummary {
     final locale = Localizations.localeOf(context).languageCode;
     final amount = transaction.amount == null
         ? '—'
-        : LocaleFormatter.number(transaction.amount!, locale);
+        : TransactionDisplayFormatters.fixedAmount(transaction.amount!, locale);
     final createdAt = transaction.createdAt == null
         ? null
         : intl.DateFormat.yMMMMEEEEd(
@@ -35,7 +34,7 @@ class TransactionShareSummary {
         ? null
         : TransactionDisplayFormatters.maskPhone(transaction.mobileNumber!);
     return <String>[
-      '${LocaleKeys.transactionsFullNumber}: ${transaction.transactionId}',
+      '${LocaleKeys.transactionsFullNumber}: ${TransactionDisplayFormatters.fullId(transaction.transactionId)}',
       '${LocaleKeys.transactionsAmount}: $amount',
       if (transaction.currency != null)
         '${LocaleKeys.transactionsCurrency}: ${transaction.currency}',

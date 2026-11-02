@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/filter_sheet/transactions_filter_launcher.dart';
+import 'package:sintir/Features/MyTransactions/Presentation/Views/Widgets/styles/transactions_style_mapper.dart';
 import 'package:sintir/locale_keys.dart';
 
 class TransactionsFilterButton extends StatelessWidget {
@@ -13,6 +14,13 @@ class TransactionsFilterButton extends StatelessWidget {
       clipBehavior: Clip.none,
       children: [
         IconButton.filledTonal(
+          style: IconButton.styleFrom(
+            foregroundColor: TransactionsStyleMapper.primary(theme),
+            backgroundColor: TransactionsStyleMapper.primary(
+              theme,
+            ).withValues(alpha: .1),
+            side: BorderSide(color: TransactionsStyleMapper.cardBorder(theme)),
+          ),
           tooltip: LocaleKeys.transactionsFilter,
           onPressed: () => showTransactionsFilter(context),
           icon: const Icon(Icons.tune_rounded),
@@ -25,7 +33,7 @@ class TransactionsFilterButton extends StatelessWidget {
               width: 8,
               height: 8,
               decoration: BoxDecoration(
-                color: theme.colorScheme.primary,
+                color: TransactionsStyleMapper.primary(theme),
                 shape: BoxShape.circle,
               ),
             ),

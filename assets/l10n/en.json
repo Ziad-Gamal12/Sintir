@@ -909,5 +909,11 @@
   "transactions_bank_card_detail": "Bank card (Credit/Debit)",
   "transactions_share": "Share details",
   "transactions_select_transaction": "Select a transaction to view its details",
-  "transactions_share_failed": "Could not open the share sheet"
+  "transactions_share_failed": "Could not open the share sheet",
+  "transactions_reconciliation_rate": "Automatic reconciliation rate",
+  "transactions_this_week": "This week",
+  "transactions_system_connected": "System connected",
+  "transactions_financial_ledger": "Financial Ledger",
+  "transactions_issuer_paymob": "Paymob gateway",
+  "transactions_system_connecting": "Connecting to system"
 }
