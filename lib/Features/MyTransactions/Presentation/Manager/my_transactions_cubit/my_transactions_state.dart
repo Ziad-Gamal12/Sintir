@@ -2,19 +2,20 @@ part of 'my_transactions_cubit.dart';
 
 @immutable
 class MyTransactionsState {
-  const MyTransactionsState(
-      {this.transactions = const [],
-      this.isLoading = false,
-      this.isPaginating = false,
-      this.hasMore = true,
-      this.error,
-      this.searchQuery = '',
-      this.statusFilter,
-      this.paymentMethods = const {},
-      this.dateRange = TransactionsDateRange.all,
-      this.customStart,
-      this.customEnd,
-      this.newestFirst = true});
+  const MyTransactionsState({
+    this.transactions = const [],
+    this.isLoading = false,
+    this.isPaginating = false,
+    this.hasMore = true,
+    this.error,
+    this.searchQuery = '',
+    this.statusFilter,
+    this.paymentMethods = const {},
+    this.dateRange = TransactionsDateRange.all,
+    this.customStart,
+    this.customEnd,
+    this.newestFirst = true,
+  });
   final List<TransactionEntity> transactions;
   final bool isLoading, isPaginating, hasMore, newestFirst;
   final String? error;
@@ -30,8 +31,9 @@ class MyTransactionsState {
     final start = switch (dateRange) {
       TransactionsDateRange.today => DateTime(now.year, now.month, now.day),
       TransactionsDateRange.last7Days => now.subtract(const Duration(days: 7)),
-      TransactionsDateRange.last30Days =>
-        now.subtract(const Duration(days: 30)),
+      TransactionsDateRange.last30Days => now.subtract(
+        const Duration(days: 30),
+      ),
       TransactionsDateRange.custom => customStart,
       TransactionsDateRange.all => null,
     };
@@ -88,66 +90,85 @@ class MyTransactionsState {
     }
     return groups.entries.map((entry) {
       final currencies = entry.value.map((e) => e.currency).toSet();
-      final total = currencies.length == 1 &&
+      final total =
+          currencies.length == 1 &&
               currencies.first != null &&
               entry.value.every((e) => e.amount != null)
           ? entry.value.fold<double>(0, (sum, item) => sum + item.amount!)
           : null;
       return TransactionDayGroup(
-          date: entry.key,
-          transactions: List.unmodifiable(entry.value),
-          total: total,
-          currency: currencies.length == 1 ? currencies.first : null);
-    }).toList()
-      ..sort((a, b) =>
-          newestFirst ? b.date.compareTo(a.date) : a.date.compareTo(b.date));
+        date: entry.key,
+        transactions: List.unmodifiable(entry.value),
+        total: total,
+        currency: currencies.length == 1 ? currencies.first : null,
+      );
+    }).toList()..sort(
+      (a, b) =>
+          newestFirst ? b.date.compareTo(a.date) : a.date.compareTo(b.date),
+    );
   }
 
-  MyTransactionsState copyWith(
-          {List<TransactionEntity>? transactions,
-          bool? isLoading,
-          bool? isPaginating,
-          bool? hasMore,
-          String? error,
-          bool clearError = false,
-          String? searchQuery,
-          TransactionsStatus? statusFilter,
-          bool clearStatusFilter = false,
-          Set<String>? paymentMethods,
-          TransactionsDateRange? dateRange,
-          DateTime? customStart,
-          DateTime? customEnd,
-          bool clearCustomRange = false,
-          bool? newestFirst}) =>
-      MyTransactionsState(
-          transactions: transactions ?? this.transactions,
-          isLoading: isLoading ?? this.isLoading,
-          isPaginating: isPaginating ?? this.isPaginating,
-          hasMore: hasMore ?? this.hasMore,
-          error: clearError ? null : error ?? this.error,
-          searchQuery: searchQuery ?? this.searchQuery,
-          statusFilter:
-              clearStatusFilter ? null : statusFilter ?? this.statusFilter,
-          paymentMethods: paymentMethods ?? this.paymentMethods,
-          dateRange: dateRange ?? this.dateRange,
-          customStart:
-              clearCustomRange ? null : customStart ?? this.customStart,
-          customEnd: clearCustomRange ? null : customEnd ?? this.customEnd,
-          newestFirst: newestFirst ?? this.newestFirst);
+  List<TransactionListItem> get displayItems {
+    final items = <TransactionListItem>[];
+    for (final group in dayGroups) {
+      items.add((group: group, transaction: null));
+      for (final transaction in group.transactions) {
+        items.add((group: null, transaction: transaction));
+      }
+    }
+    return List.unmodifiable(items);
+  }
+
+  MyTransactionsState copyWith({
+    List<TransactionEntity>? transactions,
+    bool? isLoading,
+    bool? isPaginating,
+    bool? hasMore,
+    String? error,
+    bool clearError = false,
+    String? searchQuery,
+    TransactionsStatus? statusFilter,
+    bool clearStatusFilter = false,
+    Set<String>? paymentMethods,
+    TransactionsDateRange? dateRange,
+    DateTime? customStart,
+    DateTime? customEnd,
+    bool clearCustomRange = false,
+    bool? newestFirst,
+  }) => MyTransactionsState(
+    transactions: transactions ?? this.transactions,
+    isLoading: isLoading ?? this.isLoading,
+    isPaginating: isPaginating ?? this.isPaginating,
+    hasMore: hasMore ?? this.hasMore,
+    error: clearError ? null : error ?? this.error,
+    searchQuery: searchQuery ?? this.searchQuery,
+    statusFilter: clearStatusFilter ? null : statusFilter ?? this.statusFilter,
+    paymentMethods: paymentMethods ?? this.paymentMethods,
+    dateRange: dateRange ?? this.dateRange,
+    customStart: clearCustomRange ? null : customStart ?? this.customStart,
+    customEnd: clearCustomRange ? null : customEnd ?? this.customEnd,
+    newestFirst: newestFirst ?? this.newestFirst,
+  );
 }
 
 @immutable
 class TransactionDayGroup {
-  const TransactionDayGroup(
-      {required this.date,
-      required this.transactions,
-      required this.total,
-      required this.currency});
+  const TransactionDayGroup({
+    required this.date,
+    required this.transactions,
+    required this.total,
+    required this.currency,
+  });
   final DateTime date;
   final List<TransactionEntity> transactions;
   final double? total;
   final String? currency;
 }
+
+typedef TransactionListItem = ({
+  TransactionDayGroup? group,
+  TransactionEntity? transaction,
+});
 
 enum TransactionsDateRange { all, today, last7Days, last30Days, custom }
 

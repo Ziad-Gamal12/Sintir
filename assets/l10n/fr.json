@@ -904,5 +904,8 @@
   "transactions_currency_egp": "Livre égyptienne (EGP)",
   "transactions_currency_sar": "Riyal saoudien (SAR)",
   "transactions_updated": "À jour",
-  "transactions_bank_card_detail": "Carte bancaire (crédit/débit)"
+  "transactions_bank_card_detail": "Carte bancaire (crédit/débit)",
+  "transactions_share": "Partager les données",
+  "transactions_select_transaction": "Sélectionnez une transaction pour afficher ses détails",
+  "transactions_share_failed": "Impossible d'ouvrir le menu de partage"
 }

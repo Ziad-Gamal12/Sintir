@@ -24,16 +24,21 @@ class LocaleKeys {
         count,
         locale: locale,
         zero: 'results_count_zero'.tr(),
-        one: 'results_count_one'
-            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
-        two: 'results_count_two'
-            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
-        few: 'results_count_few'
-            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
-        many: 'results_count_many'
-            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
-        other: 'results_count_other'
-            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
+        one: 'results_count_one'.tr(
+          args: {'count': LocaleFormatter.number(count, locale)},
+        ),
+        two: 'results_count_two'.tr(
+          args: {'count': LocaleFormatter.number(count, locale)},
+        ),
+        few: 'results_count_few'.tr(
+          args: {'count': LocaleFormatter.number(count, locale)},
+        ),
+        many: 'results_count_many'.tr(
+          args: {'count': LocaleFormatter.number(count, locale)},
+        ),
+        other: 'results_count_other'.tr(
+          args: {'count': LocaleFormatter.number(count, locale)},
+        ),
       );
   static String get resultsExcellent => 'results_excellent'.tr();
   static String get resultsGood => 'results_good'.tr();
@@ -51,13 +56,15 @@ class LocaleKeys {
       'earned': LocaleFormatter.number(earned, locale),
       'total': LocaleFormatter.number(total, locale),
     };
-    return Intl.plural(total,
-        locale: locale,
-        one: 'results_question_one'.tr(args: args),
-        two: 'results_question_two'.tr(args: args),
-        few: 'results_question_few'.tr(args: args),
-        many: 'results_question_many'.tr(args: args),
-        other: 'results_question_other'.tr(args: args));
+    return Intl.plural(
+      total,
+      locale: locale,
+      one: 'results_question_one'.tr(args: args),
+      two: 'results_question_two'.tr(args: args),
+      few: 'results_question_few'.tr(args: args),
+      many: 'results_question_many'.tr(args: args),
+      other: 'results_question_other'.tr(args: args),
+    );
   }
 
   static String get resultsAttemptDate => 'results_attempt_date'.tr();
@@ -131,50 +138,63 @@ class LocaleKeys {
   static String get subscriberSubscriptionsTitle =>
       'subscriber_subscriptions_title'.tr();
   static String subscriberTrendImprovingFor(int percent, String locale) =>
-      'subscriber_trend_improving'.tr(args: {
-        'percent': LocaleFormatter.number(percent, locale),
-      });
+      'subscriber_trend_improving'.tr(
+        args: {'percent': LocaleFormatter.number(percent, locale)},
+      );
   static String subscriberTrendDecliningFor(int percent, String locale) =>
-      'subscriber_trend_declining'.tr(args: {
-        'percent': LocaleFormatter.number(percent, locale),
-      });
+      'subscriber_trend_declining'.tr(
+        args: {'percent': LocaleFormatter.number(percent, locale)},
+      );
   static String get subscriberTrendStable => 'subscriber_trend_stable'.tr();
   static String subscriberTrendSemantics(String trend) =>
       'subscriber_trend_semantics'.tr(args: {'trend': trend});
   static String get subscriberChartNeedsTwo =>
       'subscriber_chart_needs_two'.tr();
   static String subscriberChartTooltip(int attempt, int score, String locale) =>
-      'subscriber_chart_tooltip'.tr(args: {
-        'attempt': LocaleFormatter.number(attempt, locale),
-        'score': LocaleFormatter.number(score, locale),
-      });
+      'subscriber_chart_tooltip'.tr(
+        args: {
+          'attempt': LocaleFormatter.number(attempt, locale),
+          'score': LocaleFormatter.number(score, locale),
+        },
+      );
   static String subscriberChartSemantics(
-          int count, int first, int latest, String trend, String locale) =>
-      'subscriber_chart_semantics'.tr(args: {
-        'count': LocaleFormatter.number(count, locale),
-        'first': LocaleFormatter.number(first, locale),
-        'latest': LocaleFormatter.number(latest, locale),
-        'trend': trend,
-      });
+    int count,
+    int first,
+    int latest,
+    String trend,
+    String locale,
+  ) => 'subscriber_chart_semantics'.tr(
+    args: {
+      'count': LocaleFormatter.number(count, locale),
+      'first': LocaleFormatter.number(first, locale),
+      'latest': LocaleFormatter.number(latest, locale),
+      'trend': trend,
+    },
+  );
   static String get subscriberAttempt => 'subscriber_attempt'.tr();
   static String get subscriberHighestResult => 'subscriber_highest_result'.tr();
   static String get subscriberAverage => 'subscriber_average'.tr();
   static String get subscriberLowestResult => 'subscriber_lowest_result'.tr();
   static String subscriberCourseCount(int count, String locale) => Intl.plural(
-        count,
-        locale: locale,
-        zero: 'subscriber_courses_zero'.tr(),
-        one: 'subscriber_courses_one'
-            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
-        two: 'subscriber_courses_two'
-            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
-        few: 'subscriber_courses_few'
-            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
-        many: 'subscriber_courses_many'
-            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
-        other: 'subscriber_courses_other'
-            .tr(args: {'count': LocaleFormatter.number(count, locale)}),
-      );
+    count,
+    locale: locale,
+    zero: 'subscriber_courses_zero'.tr(),
+    one: 'subscriber_courses_one'.tr(
+      args: {'count': LocaleFormatter.number(count, locale)},
+    ),
+    two: 'subscriber_courses_two'.tr(
+      args: {'count': LocaleFormatter.number(count, locale)},
+    ),
+    few: 'subscriber_courses_few'.tr(
+      args: {'count': LocaleFormatter.number(count, locale)},
+    ),
+    many: 'subscriber_courses_many'.tr(
+      args: {'count': LocaleFormatter.number(count, locale)},
+    ),
+    other: 'subscriber_courses_other'.tr(
+      args: {'count': LocaleFormatter.number(count, locale)},
+    ),
+  );
   static String get performanceTrend => 'performance_trend'.tr();
   static String get examScoreProgression => 'exam_score_progression'.tr();
   static String get examResultsHistory => 'exam_results_history'.tr();
@@ -884,41 +904,38 @@ class LocaleKeys {
     required String message,
     required String status,
     required String description,
-  }) =>
-      'reconcile_db_update_failed'.tr(args: {
-        'message': message,
-        'status': status,
-        'description': description,
-      });
+  }) => 'reconcile_db_update_failed'.tr(
+    args: {'message': message, 'status': status, 'description': description},
+  );
 
   static String reconcileTransactionFailedMessage(String reason) =>
       'reconcile_transaction_failed_message'.tr(args: {'reason': reason});
 
-// Wallet body / errors
+  // Wallet body / errors
   static String get walletNotFoundError => 'wallet_not_found_error'.tr();
   static String get walletDocumentEmptyError =>
       'wallet_document_empty_error'.tr();
 
-// Transactions header
+  // Transactions header
   static String get recentTransactionsTitle => 'recent_transactions_title'.tr();
 
-// Wallet card
+  // Wallet card
   static String get academicWalletTitle => 'academic_wallet_title'.tr();
   static String get walletSubtitle => 'wallet_subtitle'.tr();
   static String get noWalletDataAvailable => 'no_wallet_data_available'.tr();
   static String get availableBalanceLabel => 'available_balance_label'.tr();
 
-// Profit settlement note
+  // Profit settlement note
   static String get profitSettlementNoteTitle =>
       'profit_settlement_note_title'.tr();
   static String get profitSettlementNoteDescription =>
       'profit_settlement_note_description'.tr();
 
-// Wallet details expandable
+  // Wallet details expandable
   static String get walletDetailsHeaderTitle =>
       'wallet_details_header_title'.tr();
 
-// Earnings summary
+  // Earnings summary
   static String get totalEarningsLabel => 'total_earnings_label'.tr();
   static String get pendingWithdrawalLabel => 'pending_withdrawal_label'.tr();
   static String get availableForWithdrawalLabel =>
@@ -1031,8 +1048,9 @@ class LocaleKeys {
   static String get megabyteUnit => 'megabyte_unit'.tr();
   static String get videoFileLabel => 'video_file_label'.tr();
   static String videoMetadata(String resolution, String duration) =>
-      'video_metadata'
-          .tr(args: {'resolution': resolution, 'duration': duration});
+      'video_metadata'.tr(
+        args: {'resolution': resolution, 'duration': duration},
+      );
   static String get videoPreview => 'video_preview'.tr();
   static String get transactionsTitle => 'transactions_title'.tr();
   static String get transactionsSubtitle => 'transactions_subtitle'.tr();
@@ -1048,15 +1066,15 @@ class LocaleKeys {
   static String get transactionsCountZero => 'transactions_count_zero'.tr();
   static String get transactionsCountOne => 'transactions_count_one'.tr();
   static String transactionsCountValue(int count, String locale) => Intl.plural(
-        count,
-        locale: locale,
-        zero: 'transactions_count_zero'.tr(),
-        one: 'transactions_count_one'.tr(),
-        two: 'transactions_count_two'.tr(args: {'count': '$count'}),
-        few: 'transactions_count_few'.tr(args: {'count': '$count'}),
-        many: 'transactions_count_many'.tr(args: {'count': '$count'}),
-        other: 'transactions_count_other'.tr(args: {'count': '$count'}),
-      );
+    count,
+    locale: locale,
+    zero: 'transactions_count_zero'.tr(),
+    one: 'transactions_count_one'.tr(),
+    two: 'transactions_count_two'.tr(args: {'count': '$count'}),
+    few: 'transactions_count_few'.tr(args: {'count': '$count'}),
+    many: 'transactions_count_many'.tr(args: {'count': '$count'}),
+    other: 'transactions_count_other'.tr(args: {'count': '$count'}),
+  );
   static String get transactionsFilter => 'transactions_filter'.tr();
   static String get transactionsMatched => 'transactions_matched'.tr();
   static String get transactionsUnmatched => 'transactions_unmatched'.tr();
@@ -1118,4 +1136,8 @@ class LocaleKeys {
   static String get transactionsUpdated => 'transactions_updated'.tr();
   static String get transactionsBankCardDetail =>
       'transactions_bank_card_detail'.tr();
+  static String get transactionsShare => 'transactions_share'.tr();
+  static String get transactionsSelectTransaction =>
+      'transactions_select_transaction'.tr();
+  static String get transactionsShareFailed => 'transactions_share_failed'.tr();
 }

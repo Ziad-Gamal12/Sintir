@@ -13,9 +13,8 @@ class MyTransactionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => MyTransactionsCubit(
-        myTransactionsRep: getIt<MyTransactionsRepo>(),
-      ),
+      create: (context) =>
+          MyTransactionsCubit(myTransactionsRep: getIt<MyTransactionsRepo>()),
       child: Scaffold(
         appBar: CustomAppBar(appBartitle: LocaleKeys.myPayments),
         body: const MyTransactionsViewBody(),

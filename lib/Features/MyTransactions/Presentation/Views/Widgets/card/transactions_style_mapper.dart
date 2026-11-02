@@ -26,11 +26,11 @@ class TransactionsStyleMapper {
   }
 
   static IconData statusIcon(TransactionsStatus? status) => switch (status) {
-        TransactionsStatus.success => Icons.check_circle_outline,
-        TransactionsStatus.pending => Icons.schedule_rounded,
-        TransactionsStatus.failure => Icons.cancel_outlined,
-        _ => Icons.info_outline_rounded,
-      };
+    TransactionsStatus.success => Icons.check_circle_outline,
+    TransactionsStatus.pending => Icons.schedule_rounded,
+    TransactionsStatus.failure => Icons.cancel_outlined,
+    _ => Icons.info_outline_rounded,
+  };
 
   static IconData methodIcon(String method, {TransactionsStatus? status}) {
     final value = method.toLowerCase();
@@ -63,7 +63,10 @@ class TransactionsStyleMapper {
   }
 
   static Color methodColor(
-      ThemeData theme, String method, TransactionsStatus? status) {
+    ThemeData theme,
+    String method,
+    TransactionsStatus? status,
+  ) {
     final colors = PaymentStatusPalette.forTheme(theme);
     final value = method.toLowerCase();
     if (status == TransactionsStatus.failure &&
@@ -91,19 +94,5 @@ class TransactionsStyleMapper {
       return colors.information;
     }
     return theme.colorScheme.primary;
-  }
-
-  static String maskPhone(String value) {
-    if (value.contains('*')) {
-      return value;
-    }
-    final digits = value.replaceAll(RegExp(r'\D'), '');
-    if (digits.length <= 4) {
-      return value;
-    }
-    final prefixLength = digits.length > 10 ? digits.length - 10 + 4 : 4;
-    final prefix =
-        digits.substring(0, prefixLength.clamp(1, digits.length - 4));
-    return '+$prefix *** ${digits.substring(digits.length - 4)}';
   }
 }

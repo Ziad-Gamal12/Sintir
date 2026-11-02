@@ -8,6 +8,7 @@ import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/MyTransactions/Domain/Entities/GetMyTransactionsResponseEntity.dart';
 import 'package:sintir/Features/MyTransactions/Domain/Repos/MyTransactionsRep.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Enums/TransactionsStatusEnum.dart';
 import 'package:sintir/locale_keys.dart';
 
 class MyTransactionsRepoImpl implements MyTransactionsRepo {
@@ -16,8 +17,10 @@ class MyTransactionsRepoImpl implements MyTransactionsRepo {
   DocumentSnapshot? getMyTransactionsLastDoc;
 
   @override
-  Future<Either<Failure, GetMyTransactionsResponseEntity>> getMyTransactions(
-      {required String userId, required bool isPaginate}) async {
+  Future<Either<Failure, GetMyTransactionsResponseEntity>> getMyTransactions({
+    required String userId,
+    required bool isPaginate,
+  }) async {
     try {
       if (!isPaginate) getMyTransactionsLastDoc = null;
       Map<String, dynamic> query = {
@@ -45,27 +48,56 @@ class MyTransactionsRepoImpl implements MyTransactionsRepo {
         return left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
       if (response.listData!.isEmpty) {
-        return right(GetMyTransactionsResponseEntity(
-          transactions: [],
-          hasMore: false,
-          isPaginate: isPaginate,
-        ));
+        return right(
+          GetMyTransactionsResponseEntity(
+            transactions: [],
+            hasMore: false,
+            isPaginate: isPaginate,
+          ),
+        );
       }
       if (response.lastDocumentSnapshot != null) {
         getMyTransactionsLastDoc = response.lastDocumentSnapshot;
       }
 
-      return right(GetMyTransactionsResponseEntity(
-        transactions: response.listData!
-            .map((e) => TransactionModel.fromJson(e).toEntity())
-            .toList(),
-        hasMore: response.hasMore ?? false,
-        isPaginate: isPaginate,
-      ));
+      return right(
+        GetMyTransactionsResponseEntity(
+          transactions: response.listData!.map((e) {
+            final model = TransactionModel.fromJson(e);
+            return model.toEntity().copyWith(
+              status: _myTransactionsStatus(model.status),
+            );
+          }).toList(),
+          hasMore: response.hasMore ?? false,
+          isPaginate: isPaginate,
+        ),
+      );
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
+    }
+  }
+
+  TransactionsStatus _myTransactionsStatus(String? raw) {
+    switch (raw?.trim().toUpperCase()) {
+      case 'SUCCESS':
+      case 'SUCCESSFUL':
+      case 'COMPLETED':
+      case 'APPROVED':
+        return TransactionsStatus.success;
+      case 'FAILED':
+      case 'FAILURE':
+      case 'REJECTED':
+      case 'CANCELLED':
+        return TransactionsStatus.failure;
+      case 'RESERVED':
+      case 'PENDING':
+      case 'PROCESSING_UNKNOWN':
+      case 'IN_PROGRESS':
+        return TransactionsStatus.pending;
+      default:
+        return TransactionsStatus.other;
     }
   }
 }

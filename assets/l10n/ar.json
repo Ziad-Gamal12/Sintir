@@ -906,5 +906,8 @@
   "transactions_currency_egp": "جنيه مصري (EGP)",
   "transactions_currency_sar": "ريال سعودي (SAR)",
   "transactions_updated": "محدّث",
-  "transactions_bank_card_detail": "بطاقة بنكية (Credit/Debit)"
+  "transactions_bank_card_detail": "بطاقة بنكية (Credit/Debit)",
+  "transactions_share": "مشاركة البيانات",
+  "transactions_select_transaction": "اختر معاملة لعرض تفاصيلها",
+  "transactions_share_failed": "تعذر فتح قائمة المشاركة"
 }

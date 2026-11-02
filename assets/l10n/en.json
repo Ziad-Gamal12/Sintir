@@ -906,5 +906,8 @@
   "transactions_currency_egp": "Egyptian pound (EGP)",
   "transactions_currency_sar": "Saudi riyal (SAR)",
   "transactions_updated": "Updated",
-  "transactions_bank_card_detail": "Bank card (Credit/Debit)"
+  "transactions_bank_card_detail": "Bank card (Credit/Debit)",
+  "transactions_share": "Share details",
+  "transactions_select_transaction": "Select a transaction to view its details",
+  "transactions_share_failed": "Could not open the share sheet"
 }
