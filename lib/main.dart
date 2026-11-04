@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_portal/flutter_portal.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:localingo/localingo.dart';
 import 'package:path_provider/path_provider.dart';
@@ -33,21 +34,17 @@ void main() async {
   Bloc.observer = Bloc_Observer();
   HydratedBloc.storage = storage;
   await Future.wait([
-    Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    ),
+    Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
     SupabaseStorageServices.initSupabase(),
     shared_preferences_Services.init(),
     Hive_Services.init(),
   ]);
-  setup_Getit();
-  runApp(
-    const Portal(
-      child: PrivacyWrapper(
-        child: Sintir(),
-      ),
-    ),
+  await GoogleSignIn.instance.initialize(
+    serverClientId:
+        '769176418060-smo79qpqjcab1k21is8sod904kpai4f8.apps.googleusercontent.com',
   );
+  setup_Getit();
+  runApp(const Portal(child: PrivacyWrapper(child: Sintir())));
 }
 
 class Sintir extends StatelessWidget {
@@ -60,16 +57,10 @@ class Sintir extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => FavouritesCubit(
-            favoritesRepo: getIt<FavoritesRepo>(),
-          ),
+          create: (_) => FavouritesCubit(favoritesRepo: getIt<FavoritesRepo>()),
         ),
-        BlocProvider(
-          create: (_) => ThemeCubit(),
-        ),
-        BlocProvider(
-          create: (_) => LocaleCubit(),
-        ),
+        BlocProvider(create: (_) => ThemeCubit()),
+        BlocProvider(create: (_) => LocaleCubit()),
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {

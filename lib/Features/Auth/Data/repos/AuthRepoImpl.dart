@@ -4,7 +4,6 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sintir/Core/entities/FireStoreEntities/FireStorePaginateResponse.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
@@ -18,15 +17,133 @@ import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
 import 'package:sintir/locale_keys.dart';
 import 'package:unique_device_identifier/unique_device_identifier.dart';
 
+typedef DeviceIdReader = Future<String?> Function();
+typedef LocalUserWriter = Future<void> Function(Map<String, dynamic> userJson);
+
 class AuthRepoImpl implements AuthRepo {
   final firebaseAuthService authService;
   final DataBaseService databaseservice;
 
-  AuthRepoImpl({required this.authService, required this.databaseservice});
+  final FirebaseAuth? _firebaseAuthOverride;
+  final DeviceIdReader _deviceIdReader;
+  final LocalUserWriter _localUserWriter;
 
-  Failure _toFailure(Object e, [StackTrace? s]) {
-    if (e is CustomException) return ServerFailure(message: e.message);
+  FirebaseAuth get _firebaseAuth =>
+      _firebaseAuthOverride ?? FirebaseAuth.instance;
+
+  AuthRepoImpl({
+    required this.authService,
+    required this.databaseservice,
+    FirebaseAuth? firebaseAuth,
+    DeviceIdReader? deviceIdReader,
+    LocalUserWriter? localUserWriter,
+  }) : _firebaseAuthOverride = firebaseAuth,
+       _deviceIdReader = deviceIdReader ?? _readPlatformDeviceId,
+       _localUserWriter = localUserWriter ?? _writeUserToHive;
+
+  static Future<String?> _readPlatformDeviceId() async {
+    return UniqueDeviceIdentifier.getUniqueIdentifier();
+  }
+
+  static Future<void> _writeUserToHive(Map<String, dynamic> userJson) async {
+    await Hive_Services.jsonSetter(
+      key: BackendEndpoints.storeUserLocaly,
+      value: userJson,
+    );
+  }
+
+  Failure _toFailure(Object error, [StackTrace? stackTrace]) {
+    if (error is CustomException) {
+      return ServerFailure(message: error.message);
+    }
+
+    if (error is FirebaseAuthException) {
+      if (error.code == 'too-many-requests') {
+        return ServerFailure(message: LocaleKeys.tooManyRequests);
+      }
+
+      final message = error.message;
+      if (message != null && message.trim().isNotEmpty) {
+        return ServerFailure(message: message);
+      }
+    }
+
     return ServerFailure(message: LocaleKeys.generalError);
+  }
+
+  Future<void> _safeSignOut() async {
+    try {
+      await authService.signout();
+    } catch (error, stackTrace) {
+      log('AuthRepoImpl: sign-out failed: $error', stackTrace: stackTrace);
+    }
+  }
+
+  Future<void> _tryDeleteUser(User? user) async {
+    if (user == null) return;
+
+    try {
+      await user.delete();
+    } catch (error, stackTrace) {
+      log(
+        'AuthRepoImpl: rollback could not delete the newly-created user: $error',
+        stackTrace: stackTrace,
+      );
+    }
+  }
+
+  @override
+  Future<String> getDeviceId() async {
+    try {
+      return (await _deviceIdReader())?.trim() ?? '';
+    } catch (error, stackTrace) {
+      log(
+        'AuthRepoImpl: could not read device ID: $error',
+        stackTrace: stackTrace,
+      );
+      return '';
+    }
+  }
+
+  Future<String> _requireDeviceId() async {
+    final deviceId = await getDeviceId();
+    if (deviceId.isEmpty) {
+      throw CustomException(message: LocaleKeys.generalError);
+    }
+    return deviceId;
+  }
+
+  Future<void> _persistDeviceId({
+    required String uid,
+    required String deviceId,
+  }) async {
+    await databaseservice.updateData(
+      requirements: FireStoreRequirmentsEntity(
+        collection: BackendEndpoints.usersCollectionName,
+        docId: uid,
+      ),
+      data: deviceId,
+      field: 'deviceId',
+    );
+  }
+
+  @override
+  Future<Either<Failure, void>> updateDeviceId({required String uid}) async {
+    try {
+      if (uid.trim().isEmpty) {
+        return Left(ServerFailure(message: LocaleKeys.userNotFound));
+      }
+
+      final deviceId = await _requireDeviceId();
+      await _persistDeviceId(uid: uid, deviceId: deviceId);
+      return const Right(null);
+    } catch (error, stackTrace) {
+      log(
+        'AuthRepoImpl: updateDeviceId failed: $error',
+        stackTrace: stackTrace,
+      );
+      return Left(_toFailure(error, stackTrace));
+    }
   }
 
   @override
@@ -35,42 +152,38 @@ class AuthRepoImpl implements AuthRepo {
     required String password,
   }) async {
     try {
-      User user = await authService.signInWithEmailAndPassword(email, password);
-      await user.reload();
-      User? fresh = FirebaseAuth.instance.currentUser ?? user;
-      if (fresh.emailVerified == false) {
-        await fresh.sendEmailVerification();
-        await authService.signout();
-        return Left(ServerFailure(message: LocaleKeys.verificationSent));
-      } else {
-        final updateDeviceIdResult = await updateDeviceId(uid: fresh.uid);
-        if (updateDeviceIdResult.isLeft()) {
-          await authService.signout();
-          return updateDeviceIdResult;
-        }
-        final result = await fetchUserAndStoreLocally(uid: fresh.uid);
-        if (result.isLeft()) {
-          await authService.signout();
-          return result;
-        }
-        return const Right(null);
-      }
-    } on FirebaseAuthException catch (e) {
-      await authService.signout();
-      if (e.code == 'too-many-requests') {
-        return Left(ServerFailure(message: LocaleKeys.tooManyRequests));
-      }
-      return Left(
-        ServerFailure(message: e.message ?? LocaleKeys.errorOccurredMessage),
+      final signedInUser = await authService.signInWithEmailAndPassword(
+        email,
+        password,
       );
-    } on CustomException catch (e) {
-      log(e.message);
-      await authService.signout();
-      return Left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      log(e.toString(), stackTrace: s);
-      await authService.signout();
-      return Left(_toFailure(e, s));
+
+      await signedInUser.reload();
+      final freshUser = _firebaseAuth.currentUser ?? signedInUser;
+
+      if (freshUser.emailVerified == false) {
+        try {
+          await freshUser.sendEmailVerification();
+        } catch (error, stackTrace) {
+          log(
+            'AuthRepoImpl: verification email could not be sent: $error',
+            stackTrace: stackTrace,
+          );
+          await _safeSignOut();
+          return Left(ServerFailure(message: LocaleKeys.verificationNotSent));
+        }
+
+        await _safeSignOut();
+        return Left(ServerFailure(message: LocaleKeys.verificationSent));
+      }
+
+      return _completeExistingUserSignIn(uid: freshUser.uid);
+    } on FirebaseAuthException catch (error, stackTrace) {
+      await _safeSignOut();
+      return Left(_toFailure(error, stackTrace));
+    } catch (error, stackTrace) {
+      log('AuthRepoImpl: email sign-in failed: $error', stackTrace: stackTrace);
+      await _safeSignOut();
+      return Left(_toFailure(error, stackTrace));
     }
   }
 
@@ -79,52 +192,63 @@ class AuthRepoImpl implements AuthRepo {
     required UserEntity userEntity,
     required String password,
   }) async {
-    User? user;
+    User? createdUser;
+    var firestoreWriteCompleted = false;
+
     try {
-      user = await authService.createUserWithEmailAndPassword(
+      final deviceId = await _requireDeviceId();
+
+      createdUser = await authService.createUserWithEmailAndPassword(
         userEntity.email,
         password,
-        '${userEntity.firstName} ${userEntity.lastName}',
+        '${userEntity.firstName} ${userEntity.lastName}'.trim(),
       );
 
-      userEntity.uid = user.uid;
-      userEntity.deviceId = await getDeviceId();
+      userEntity.uid = createdUser.uid;
+      userEntity.deviceId = deviceId;
       if (userEntity.teacherExtraDataEntity != null) {
-        userEntity.teacherExtraDataEntity!.wallet.teacherId = user.uid;
+        userEntity.teacherExtraDataEntity!.wallet.teacherId = createdUser.uid;
       }
 
-      final userModel = UserModel.fromEntity(userEntity);
+      final userJson = UserModel.fromEntity(userEntity).toMap();
+      userJson['uid'] = createdUser.uid;
+      userJson['deviceId'] = deviceId;
 
-      return await storeUserDataInFireStore(
-        user: user,
-        userjson: userModel.toMap(),
-        uid: user.uid,
+      await databaseservice.setData(
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.usersCollectionName,
+          docId: createdUser.uid,
+        ),
+        data: userJson,
       );
-    } on CustomException catch (e) {
-      await _tryDeleteUser(user);
-      return Left(ServerFailure(message: e.message));
-    } catch (e, s) {
-      await _tryDeleteUser(user);
-      return Left(_toFailure(e, s));
-    }
-  }
+      firestoreWriteCompleted = true;
+      try {
+        await createdUser.sendEmailVerification();
+      } catch (error, stackTrace) {
+        log(
+          'AuthRepoImpl: sign-up verification email failed: $error',
+          stackTrace: stackTrace,
+        );
+        await _safeSignOut();
+        return Left(ServerFailure(message: LocaleKeys.verificationNotSent));
+      }
 
-  Future<void> _tryDeleteUser(User? user) async {
-    if (user == null) return;
-    try {
-      await user.delete();
-    } catch (e) {}
-  }
-
-  Future<void> storeUserLocally(Map<String, dynamic> userJson) async {
-    try {
-      await Hive_Services.jsonSetter(
-        key: BackendEndpoints.storeUserLocaly,
-        value: userJson,
-      );
-    } catch (e) {
-      log(e.toString());
-      throw CustomException(message: LocaleKeys.errorOccurredMessage);
+      await _safeSignOut();
+      return const Right(null);
+    } on FirebaseAuthException catch (error, stackTrace) {
+      log('AuthRepoImpl: sign-up failed: $error', stackTrace: stackTrace);
+      if (createdUser != null && !firestoreWriteCompleted) {
+        await _tryDeleteUser(createdUser);
+      }
+      await _safeSignOut();
+      return Left(_toFailure(error, stackTrace));
+    } catch (error, stackTrace) {
+      log('AuthRepoImpl: sign-up failed: $error', stackTrace: stackTrace);
+      if (createdUser != null && !firestoreWriteCompleted) {
+        await _tryDeleteUser(createdUser);
+      }
+      await _safeSignOut();
+      return Left(_toFailure(error, stackTrace));
     }
   }
 
@@ -133,108 +257,123 @@ class AuthRepoImpl implements AuthRepo {
     required String uid,
   }) async {
     try {
-      FireStoreResponse json = await databaseservice.getData(
+      final userJson = await _fetchActiveUserJson(uid: uid);
+      await storeUserLocally(userJson);
+      return const Right(null);
+    } catch (error, stackTrace) {
+      log(
+        'AuthRepoImpl: fetchUserAndStoreLocally failed: $error',
+        stackTrace: stackTrace,
+      );
+      await _safeSignOut();
+      return Left(_toFailure(error, stackTrace));
+    }
+  }
+
+  Future<Map<String, dynamic>> _fetchActiveUserJson({
+    required String uid,
+  }) async {
+    if (uid.trim().isEmpty) {
+      throw CustomException(message: LocaleKeys.userNotFound);
+    }
+
+    final response = await databaseservice.getData(
+      requirements: FireStoreRequirmentsEntity(
+        collection: BackendEndpoints.usersCollectionName,
+        docId: uid,
+      ),
+    );
+
+    final documentData = response.docData;
+    if (documentData == null) {
+      throw CustomException(message: LocaleKeys.userNotFound);
+    }
+
+    final userModel = UserModel.fromJson(
+      Map<String, dynamic>.from(documentData),
+    );
+
+    switch (userModel.status) {
+      case BackendEndpoints.activeStatus:
+        return userModel.toMap();
+      case BackendEndpoints.blockedStatus:
+        throw CustomException(message: LocaleKeys.userBlocked);
+      case BackendEndpoints.pendingStatus:
+        throw CustomException(message: LocaleKeys.userPending);
+      case BackendEndpoints.rejectedStatus:
+        throw CustomException(message: LocaleKeys.userRejected);
+      case BackendEndpoints.inActiveStatus:
+        throw CustomException(message: LocaleKeys.userInactive);
+      default:
+        throw CustomException(message: LocaleKeys.generalError);
+    }
+  }
+
+  Future<Either<Failure, void>> _completeExistingUserSignIn({
+    required String uid,
+  }) async {
+    try {
+      final userJson = await _fetchActiveUserJson(uid: uid);
+      final deviceId = await _requireDeviceId();
+      final storedDeviceId = userJson['deviceId']?.toString().trim() ?? '';
+
+      if (storedDeviceId != deviceId) {
+        await _persistDeviceId(uid: uid, deviceId: deviceId);
+      }
+
+      userJson['deviceId'] = deviceId;
+      await storeUserLocally(userJson);
+      return const Right(null);
+    } catch (error, stackTrace) {
+      log(
+        'AuthRepoImpl: completing sign-in failed: $error',
+        stackTrace: stackTrace,
+      );
+      await _safeSignOut();
+      return Left(_toFailure(error, stackTrace));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> signInWithFacebook() {
+    return _signInWithSocialProvider(signIn: authService.signinWithFacebook);
+  }
+
+  @override
+  Future<Either<Failure, void>> signInWithGoogle() {
+    return _signInWithSocialProvider(signIn: authService.signinWithGoogle);
+  }
+
+  Future<Either<Failure, void>> _signInWithSocialProvider({
+    required Future<User> Function() signIn,
+  }) async {
+    try {
+      final user = await signIn();
+      final exists = await databaseservice.isDataExists(
+        key: BackendEndpoints.usersCollectionName,
+        docId: user.uid,
+      );
+
+      if (exists) {
+        return _completeExistingUserSignIn(uid: user.uid);
+      }
+      final userJson = await _userJson(user: user);
+      await databaseservice.setData(
         requirements: FireStoreRequirmentsEntity(
           collection: BackendEndpoints.usersCollectionName,
-          docId: uid,
+          docId: user.uid,
         ),
+        data: userJson,
       );
-
-      if (json.docData == null) {
-        return Left(ServerFailure(message: LocaleKeys.userNotFound));
-      }
-      final Map<String, dynamic> userJson = json.docData!;
-      final UserModel userModel = UserModel.fromJson(userJson);
-
-      switch (userModel.status) {
-        case BackendEndpoints.activeStatus:
-          await storeUserLocally(userModel.toMap());
-          return const Right(null);
-        case BackendEndpoints.blockedStatus:
-          return Left(ServerFailure(message: LocaleKeys.userBlocked));
-
-        case BackendEndpoints.pendingStatus:
-          return Left(ServerFailure(message: LocaleKeys.userPending));
-
-        case BackendEndpoints.rejectedStatus:
-          return Left(ServerFailure(message: LocaleKeys.userRejected));
-
-        case BackendEndpoints.inActiveStatus:
-          return Left(ServerFailure(message: LocaleKeys.userInactive));
-
-        default:
-          return Left(ServerFailure(message: LocaleKeys.generalError));
-      }
-    } on CustomException catch (e) {
-      await authService.signout();
-      log(e.message);
-      return Left(ServerFailure(message: e.message));
-    } catch (e) {
-      log(e.toString());
-      await authService.signout();
-      return Left(_toFailure(e));
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> signInWithFacebook() async {
-    bool isExists = false;
-    User? user;
-    try {
-      user = await authService.signinWithFacebook();
-      isExists = await databaseservice.isDataExists(
-        key: BackendEndpoints.usersCollectionName,
-        docId: user.uid,
+      await storeUserLocally(userJson);
+      return const Right(null);
+    } catch (error, stackTrace) {
+      log(
+        'AuthRepoImpl: social sign-in failed: $error',
+        stackTrace: stackTrace,
       );
-
-      if (isExists) {
-        return await fetchUserAndStoreLocally(uid: user.uid);
-      }
-
-      final userJson = await _userJson(user: user);
-      return await storeUserDataInFireStore(
-        signOut: false,
-        user: user,
-        userjson: userJson,
-        uid: user.uid,
-      );
-    } catch (e, s) {
-      if (isExists == false) {
-        await _tryDeleteUser(user);
-      } else {
-        await authService.signout();
-      }
-      return Left(_toFailure(e, s));
-    }
-  }
-
-  @override
-  Future<Either<Failure, void>> signInWithGoogle() async {
-    bool isExists = false;
-    User? user;
-    try {
-      user = await authService.signinWithGoogle();
-      isExists = await databaseservice.isDataExists(
-        key: BackendEndpoints.usersCollectionName,
-        docId: user.uid,
-      );
-
-      if (isExists) return await fetchUserAndStoreLocally(uid: user.uid);
-
-      final userJson = await _userJson(user: user);
-      return await storeUserDataInFireStore(
-        signOut: false,
-        user: user,
-        userjson: userJson,
-        uid: user.uid,
-      );
-    } catch (e, s) {
-      if (isExists == false) {
-        await _tryDeleteUser(user);
-      } else {
-        await authService.signout();
-      }
-      return Left(_toFailure(e, s));
+      await _safeSignOut();
+      return Left(_toFailure(error, stackTrace));
     }
   }
 
@@ -257,16 +396,25 @@ class AuthRepoImpl implements AuthRepo {
       if (checkVerified) {
         try {
           await user.sendEmailVerification();
-        } catch (e) {
+        } catch (error, stackTrace) {
+          log(
+            'AuthRepoImpl: verification email failed after profile write: $error',
+            stackTrace: stackTrace,
+          );
+          if (signOut) await _safeSignOut();
           return Left(ServerFailure(message: LocaleKeys.verificationNotSent));
         }
       }
 
-      if (signOut) await authService.signout();
-
+      if (signOut) await _safeSignOut();
       return const Right(null);
-    } catch (e, s) {
-      return Left(_toFailure(e, s));
+    } catch (error, stackTrace) {
+      log(
+        'AuthRepoImpl: storeUserDataInFireStore failed: $error',
+        stackTrace: stackTrace,
+      );
+      if (signOut) await _safeSignOut();
+      return Left(_toFailure(error, stackTrace));
     }
   }
 
@@ -277,30 +425,32 @@ class AuthRepoImpl implements AuthRepo {
     required String currentPassword,
   }) async {
     try {
-      User? user = FirebaseAuth.instance.currentUser;
-
+      final user = _firebaseAuth.currentUser;
       if (user == null) {
         return Left(ServerFailure(message: LocaleKeys.userNotFound));
       }
 
-      Map<String, dynamic> userJson = UserModel.fromEntity(userEntity).toMap();
-
-      bool isValid = await authService.checkAccountPassword(
+      final isValid = await authService.checkAccountPassword(
         password: currentPassword,
       );
       if (!isValid) {
         return Left(ServerFailure(message: LocaleKeys.wrongPassword));
       }
 
+      final userJson = UserModel.fromEntity(userEntity).toMap();
+      userJson['uid'] = user.uid;
+
       if (newPassword != null && newPassword.isNotEmpty) {
         await authService.changePassword(password: newPassword);
       }
 
-      if (userEntity.email != user.email) {
-        await authService.changeEmail(email: userEntity.email);
+      final newEmail = userEntity.email.trim();
+      final currentEmail = (user.email ?? '').trim();
+      if (newEmail.toLowerCase() != currentEmail.toLowerCase()) {
+        await authService.changeEmail(email: newEmail);
       }
 
-      final result = await storeUserDataInFireStore(
+      final saveResult = await storeUserDataInFireStore(
         user: user,
         userjson: userJson,
         uid: user.uid,
@@ -308,12 +458,16 @@ class AuthRepoImpl implements AuthRepo {
         checkVerified: false,
       );
 
-      if (result.isLeft()) return result;
+      if (saveResult.isLeft()) return saveResult;
 
       await storeUserLocally(userJson);
       return const Right(null);
-    } catch (e) {
-      return Left(ServerFailure(message: LocaleKeys.generalError));
+    } on FirebaseAuthException catch (error, stackTrace) {
+      log('AuthRepoImpl: updateUser failed: $error', stackTrace: stackTrace);
+      return Left(_toFailure(error, stackTrace));
+    } catch (error, stackTrace) {
+      log('AuthRepoImpl: updateUser failed: $error', stackTrace: stackTrace);
+      return Left(_toFailure(error, stackTrace));
     }
   }
 
@@ -322,57 +476,47 @@ class AuthRepoImpl implements AuthRepo {
     try {
       await authService.resetPassword(email: email);
       return const Right(null);
-    } catch (e, s) {
-      return Left(_toFailure(e, s));
+    } on FirebaseAuthException catch (error, stackTrace) {
+      return Left(_toFailure(error, stackTrace));
+    } catch (error, stackTrace) {
+      log('AuthRepoImpl: resetPassword failed: $error', stackTrace: stackTrace);
+      return Left(_toFailure(error, stackTrace));
     }
   }
 
   Future<Map<String, dynamic>> _userJson({required User user}) async {
+    final deviceId = await _requireDeviceId();
+
     return UserModel.fromEntity(
       UserEntity(
         uid: user.uid,
         phoneNumber: user.phoneNumber ?? '',
         firstName: user.displayName ?? '',
         fullName: user.displayName ?? '',
-        deviceId: await getDeviceId(),
+        deviceId: deviceId,
         joinedDate: DateTime.now(),
-        profilePicurl: 'https://cdn-icons-png.flaticon.com/128/149/149071.png',
+        profilePicurl:
+            'https://lsblauupczaxktmrpsmv.supabase.co/storage/v1/object/public/Users/149071.png',
         role: BackendEndpoints.studentRole,
         lastName: '',
         email: user.email ?? '',
         status: BackendEndpoints.activeStatus,
         address: '',
-        gender: "",
+        gender: '',
         teacherExtraDataEntity: null,
       ),
     ).toMap();
   }
 
-  @override
-  Future<String> getDeviceId() async {
+  Future<void> storeUserLocally(Map<String, dynamic> userJson) async {
     try {
-      return await UniqueDeviceIdentifier.getUniqueIdentifier() ?? '';
-    } catch (e) {
-      return '';
-    }
-  }
-
-  Future<Either<Failure, void>> updateDeviceId({required String uid}) async {
-    try {
-      final deviceId = await getDeviceId();
-
-      await databaseservice.updateData(
-        requirements: FireStoreRequirmentsEntity(
-          collection: BackendEndpoints.usersCollectionName,
-          docId: uid,
-        ),
-        data: deviceId,
-        field: 'deviceId',
+      await _localUserWriter(userJson);
+    } catch (error, stackTrace) {
+      log(
+        'AuthRepoImpl: local user storage failed: $error',
+        stackTrace: stackTrace,
       );
-
-      return const Right(null);
-    } catch (e, s) {
-      return Left(_toFailure(e, s));
+      throw CustomException(message: LocaleKeys.errorOccurredMessage);
     }
   }
 }

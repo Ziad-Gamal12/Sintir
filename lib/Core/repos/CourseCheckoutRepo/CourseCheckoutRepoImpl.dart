@@ -6,8 +6,8 @@ import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sintir/Core/repos/CourseCheckoutRepo.dart';
-import 'package:sintir/Core/repos/CourseCheckoutRequestException.dart';
+import 'package:sintir/Core/repos/CourseCheckoutRepo/CourseCheckoutRepo.dart';
+import 'package:sintir/Core/repos/CourseCheckoutRepo/CourseCheckoutRequestException.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/CourseCheckoutEntity.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

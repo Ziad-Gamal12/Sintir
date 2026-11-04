@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/course_checkout_cubit/course_checkout_cubit.dart';
-import 'package:sintir/Core/repos/CourseCheckoutRepo.dart';
+import 'package:sintir/Core/repos/CourseCheckoutRepo/CourseCheckoutRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebViewBody.dart';

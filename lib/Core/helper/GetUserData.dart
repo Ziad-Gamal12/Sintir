@@ -5,14 +5,11 @@ import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Auth/Data/models/UserModel.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 
-UserEntity getUserData() {
-  Map<String, dynamic> userJson = Hive_Services.jsonGetter(
-    key: BackendEndpoints.storeUserLocaly,
-  );
-  if (userJson == {}) {
-    return UserEntity.empty();
-  } else {
-    UserEntity userEntity = UserModel.fromJson(userJson).toEntity();
-    return userEntity;
-  }
+UserEntity userEntityFromLocalJson(Map<String, dynamic> userJson) {
+  if (userJson.isEmpty) return UserEntity.empty();
+  return UserModel.fromJson(userJson).toEntity();
 }
+
+UserEntity getUserData() => userEntityFromLocalJson(
+  Hive_Services.jsonGetter(key: BackendEndpoints.storeUserLocaly),
+);

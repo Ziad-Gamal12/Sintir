@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sintir/Core/Managers/Cubits/course_checkout_cubit/course_checkout_cubit.dart';
-import 'package:sintir/Core/repos/CourseCheckoutRepo.dart';
+import 'package:sintir/Core/repos/CourseCheckoutRepo/CourseCheckoutRepo.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebViewBody.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/CourseCheckoutEntity.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobResponse.dart';

@@ -7,6 +7,7 @@ import 'dart:math' as math;
 
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
@@ -16,7 +17,10 @@ class firebaseAuthService {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   Future<User> createUserWithEmailAndPassword(
-      String email, String password, String name) async {
+    String email,
+    String password,
+    String name,
+  ) async {
     try {
       final credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -84,61 +88,54 @@ class firebaseAuthService {
 
   Future<User> signinWithGoogle() async {
     try {
-      final GoogleSignIn signIn = GoogleSignIn.instance;
-      await signIn.initialize();
-      if (!signIn.supportsAuthenticate()) {
-        throw CustomException(message: LocaleKeys.errorOccurredMessage);
-      }
+      final GoogleSignInAccount account = await GoogleSignIn.instance
+          .authenticate();
 
-      final GoogleSignInAccount user = await signIn.authenticate();
-      final GoogleSignInClientAuthorization? auth =
-          await user.authorizationClient.authorizationForScopes([
-        'email',
-        'openid',
-        'https://www.googleapis.com/auth/userinfo.email',
-      ]);
-
-      if (auth == null) {
-        throw CustomException(message: LocaleKeys.errorOccurredMessage);
-      }
-
-      final String? idToken = user.authentication.idToken;
+      final String? idToken = account.authentication.idToken;
       if (idToken == null) {
         throw CustomException(message: LocaleKeys.errorOccurredMessage);
       }
 
-      final String accessToken = auth.accessToken;
-
       final OAuthCredential credential = GoogleAuthProvider.credential(
         idToken: idToken,
-        accessToken: accessToken,
       );
 
-      final UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
+      final UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithCredential(credential);
 
-      return userCredential.user!;
+      final User? user = userCredential.user;
+      if (user == null) {
+        throw CustomException(message: LocaleKeys.errorOccurredMessage);
+      }
+      return user;
+    } on CustomException {
+      rethrow;
+    } on GoogleSignInException catch (e) {
+      debugPrint('Google error: ${e.code} - ${e.description}');
+      throw CustomException(message: LocaleKeys.errorOccurredMessage);
     } on FirebaseAuthException catch (e) {
+      debugPrint('Firebase error: ${e.code} - ${e.message}');
       switch (e.code) {
-        case "network-request-failed":
+        case 'network-request-failed':
           throw CustomException(message: LocaleKeys.noInternet);
-        case "operation-not-allowed":
+        case 'operation-not-allowed':
           throw CustomException(message: LocaleKeys.operationNotAllowed);
-        case "too-many-requests":
+        case 'too-many-requests':
           throw CustomException(message: LocaleKeys.tooManyRequests);
-        case "internal-error":
+        case 'internal-error':
           throw CustomException(message: LocaleKeys.internalError);
-        case "popup-blocked":
-        case "popup-closed-by-user":
+        case 'popup-blocked':
+        case 'popup-closed-by-user':
           throw CustomException(message: LocaleKeys.popupBlocked);
-        case "account-exists-with-different-credential":
+        case 'account-exists-with-different-credential':
           throw CustomException(message: LocaleKeys.differentCredential);
-        case "user-disabled":
+        case 'user-disabled':
           throw CustomException(message: LocaleKeys.userDisabled);
         default:
           throw CustomException(message: LocaleKeys.errorOccurredMessage);
       }
     } catch (e) {
+      debugPrint('Unknown error: $e');
       throw CustomException(message: LocaleKeys.errorOccurredMessage);
     }
   }
@@ -242,8 +239,10 @@ class firebaseAuthService {
       final user = auth.currentUser;
       if (user == null) return false;
 
-      AuthCredential credential =
-          EmailAuthProvider.credential(email: user.email!, password: password);
+      AuthCredential credential = EmailAuthProvider.credential(
+        email: user.email!,
+        password: password,
+      );
 
       await user.reauthenticateWithCredential(credential);
       return true;
