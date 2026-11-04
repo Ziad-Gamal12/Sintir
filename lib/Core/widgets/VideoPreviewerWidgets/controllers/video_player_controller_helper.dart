@@ -1,90 +1,101 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:better_player_plus/better_player_plus.dart';
 import 'package:flutter/material.dart';
 
-enum PremiumVideoPlayerStatus {
-  idle,
-  initializing,
-  ready,
-  failed,
-}
+enum PremiumVideoPlayerStatus { idle, initializing, ready, failed }
+
+typedef PlayerControlsBuilder = Widget Function(BetterPlayerController player);
 
 class CustomVideoControllerBetter extends ChangeNotifier {
   BetterPlayerController? betterPlayerController;
 
   PremiumVideoPlayerStatus status = PremiumVideoPlayerStatus.idle;
-
   String? errorMessage;
   Duration? duration;
+
+  /// null = Auto
+  int? selectedHeight;
+  double speed = 1.0;
 
   double _aspectRatio = 16 / 9;
 
   String? _videoUrl;
   File? _file;
+  String? _posterUrl;
   bool _autoPlay = false;
+  PlayerControlsBuilder? _controlsBuilder;
 
-  bool get isInitialized =>
-      betterPlayerController?.isVideoInitialized() ?? false;
-
-  bool get isBuffering =>
-      betterPlayerController?.isBuffering() ?? false;
-
-  bool get isPlaying =>
-      betterPlayerController?.isPlaying() ?? false;
-
-  bool get hasError => status == PremiumVideoPlayerStatus.failed;
+  bool _disposed = false;
+  int _session = 0;
 
   double get aspectRatio => _aspectRatio;
+  bool get hasError => status == PremiumVideoPlayerStatus.failed;
 
-  List<BetterPlayerAsmsTrack> get availableTracks {
-    return betterPlayerController?.betterPlayerAsmsTracks ?? [];
+  List<BetterPlayerAsmsTrack> get availableTracks =>
+      betterPlayerController?.betterPlayerAsmsTracks ?? [];
+
+  /// Clean quality list (720, 540, 480, 360) from the real HLS tracks.
+  List<int> get qualityHeights {
+    final heights = <int>{
+      for (final t in availableTracks)
+        if ((t.height ?? 0) > 0) t.height!,
+    };
+    return heights.toList()..sort((a, b) => b.compareTo(a));
   }
+
+  @override
+  void notifyListeners() {
+    if (!_disposed) super.notifyListeners();
+  }
+
+  bool _isStale(int session) => _disposed || session != _session;
 
   Future<void> initializeVideo({
     required String? videoUrl,
     required File? file,
+    required PlayerControlsBuilder controlsBuilder,
+    String? posterUrl,
     ValueChanged<Duration>? onDurationChanged,
     double? aspectRatio,
     bool autoPlay = false,
   }) async {
+    final session = ++_session;
+
     _videoUrl = videoUrl;
     _file = file;
+    _posterUrl = posterUrl;
     _autoPlay = autoPlay;
+    _controlsBuilder = controlsBuilder;
 
-    if (aspectRatio != null && aspectRatio > 0) {
-      _aspectRatio = aspectRatio;
-    }
+    if (aspectRatio != null && aspectRatio > 0) _aspectRatio = aspectRatio;
 
-    await _disposeCurrentPlayer();
+    _disposeCurrentPlayer();
 
     status = PremiumVideoPlayerStatus.initializing;
     errorMessage = null;
     duration = null;
+    selectedHeight = null;
+    speed = 1.0;
     notifyListeners();
 
     try {
-      final dataSource = _buildDataSource();
-
-      final configuration = _buildConfiguration(
-        autoPlay: autoPlay,
-      );
-
-      final controller = BetterPlayerController(configuration);
-
+      final controller = BetterPlayerController(_buildConfiguration());
       controller.addEventsListener(_handlePlayerEvent);
-
       betterPlayerController = controller;
 
-      await controller.setupDataSource(dataSource);
+      await controller
+          .setupDataSource(_buildDataSource())
+          .timeout(const Duration(seconds: 25));
 
-      if (controller.isVideoInitialized()!=null && controller.isVideoInitialized()!) {
-        _handleInitialized();
-      }
+      if (_isStale(session)) return;
+
+      if (controller.isVideoInitialized() == true) _handleInitialized();
     } catch (e, stackTrace) {
+      if (_isStale(session)) return;
       debugPrint('Video initialization failed: $e');
       debugPrintStack(stackTrace: stackTrace);
-
       _setFailure();
     }
   }
@@ -107,50 +118,43 @@ class CustomVideoControllerBetter extends ChangeNotifier {
     return BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
       url,
-      videoFormat:
-          isHls ? BetterPlayerVideoFormat.hls : null,
+      videoFormat: isHls ? BetterPlayerVideoFormat.hls : null,
       useAsmsTracks: isHls,
-      useAsmsAudioTracks: isHls,
-      useAsmsSubtitles: isHls,
+      useAsmsAudioTracks: false,
+      useAsmsSubtitles: false,
       liveStream: false,
     );
   }
 
-  BetterPlayerConfiguration _buildConfiguration({
-    required bool autoPlay,
-  }) {
+  BetterPlayerConfiguration _buildConfiguration() {
+    final poster = _posterUrl;
+    final builder = _controlsBuilder;
+
     return BetterPlayerConfiguration(
-      autoPlay: autoPlay,
+      autoPlay: _autoPlay,
       looping: false,
       allowedScreenSleep: false,
       fit: BoxFit.contain,
       aspectRatio: _aspectRatio,
-
-      showPlaceholderUntilPlay: true,
-
-      controlsConfiguration: const BetterPlayerControlsConfiguration(
-        showControls: true,
-        showControlsOnInitialize: true,
-
-        enablePlayPause: true,
-        enableFullscreen: true,
-        enableMute: true,
-        enableSkips: true,
-        enablePlaybackSpeed: true,
-        enableQualities: true,
-        enableRetry: true,
-
-        enableProgressBar: true,
-        enableProgressBarDrag: true,
-        enableProgressText: true,
-        enableOverflowMenu: true,
-
-        controlsHideTime: Duration(seconds: 4),
-
-        forwardSkipTimeInMilliseconds: 10000,
-        backwardSkipTimeInMilliseconds: 10000,
-
-        controlBarHeight: 46,
+      autoDispose: false,
+      handleLifecycle: true,
+      autoDetectFullscreenDeviceOrientation: true,
+      autoDetectFullscreenAspectRatio: true,
+      placeholder: poster == null
+          ? null
+          : Image.network(
+              poster,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+              errorBuilder: (_, _, _) => const SizedBox.shrink(),
+            ),
+      showPlaceholderUntilPlay: poster != null,
+      controlsConfiguration: BetterPlayerControlsConfiguration(
+        playerTheme: BetterPlayerTheme.custom,
+        customControlsBuilder: builder == null
+            ? null
+            : (player, onVisibilityChanged, config) => builder(player),
       ),
     );
   }
@@ -160,100 +164,85 @@ class CustomVideoControllerBetter extends ChangeNotifier {
       case BetterPlayerEventType.initialized:
         _handleInitialized();
         break;
-
       case BetterPlayerEventType.exception:
         _setFailure();
         break;
-
-      case BetterPlayerEventType.changedResolution:
-        notifyListeners();
-        break;
-
-      case BetterPlayerEventType.bufferingStart:
-      case BetterPlayerEventType.bufferingEnd:
-        notifyListeners();
-        break;
-
       default:
         break;
     }
   }
 
   void _handleInitialized() {
-    final playerController = betterPlayerController;
-
-    if (playerController == null) {
+    final player = betterPlayerController;
+    if (player == null) {
       _setFailure();
       return;
     }
 
-    final videoValue =
-        playerController.videoPlayerController?.value;
+    final value = player.videoPlayerController?.value;
 
-    final videoDuration = videoValue?.duration;
+    final d = value?.duration;
+    if (d != null && d != Duration.zero) duration = d;
 
-    if (videoDuration != null &&
-        videoDuration != Duration.zero) {
-      duration = videoDuration;
-    }
-
-    final videoSize = videoValue?.size;
-
-    if (videoSize != null &&
-        videoSize.width > 0 &&
-        videoSize.height > 0) {
-      _aspectRatio = videoSize.width / videoSize.height;
+    final size = value?.size;
+    if (size != null && size.width > 0 && size.height > 0) {
+      _aspectRatio = size.width / size.height;
     }
 
     status = PremiumVideoPlayerStatus.ready;
     errorMessage = null;
-
     notifyListeners();
   }
 
   Future<void> retry() async {
-    if (_videoUrl == null && _file == null) {
-      return;
-    }
+    if (_videoUrl == null && _file == null) return;
+    final builder = _controlsBuilder;
+    if (builder == null) return;
 
     await initializeVideo(
       videoUrl: _videoUrl,
       file: _file,
+      posterUrl: _posterUrl,
       autoPlay: _autoPlay,
       aspectRatio: _aspectRatio,
+      controlsBuilder: builder,
     );
   }
 
-  Future<void> play() async {
-    await betterPlayerController?.play();
+  Future<void> play() async => betterPlayerController?.play();
+  Future<void> pause() async => betterPlayerController?.pause();
+  Future<void> seekTo(Duration p) async => betterPlayerController?.seekTo(p);
+
+  Future<void> setSpeed(double value) async {
+    await betterPlayerController?.setSpeed(value);
+    speed = value;
+    notifyListeners();
   }
 
-  Future<void> pause() async {
-    await betterPlayerController?.pause();
-  }
+  /// [height] null = Auto (adaptive).
+  void setQuality(int? height) {
+    final player = betterPlayerController;
+    if (player == null) return;
 
-  Future<void> seekTo(Duration position) async {
-    await betterPlayerController?.seekTo(position);
-  }
-
-  Future<void> setSpeed(double speed) async {
-    await betterPlayerController?.setSpeed(speed);
-  }
-
-  Future<void> changeResolution(String url) async {
-    await betterPlayerController?.setResolution(url);
-  }
-
-  Future<void> _disposeCurrentPlayer() async {
-    final controller = betterPlayerController;
-
-    if (controller == null) {
-      return;
+    if (height == null) {
+      player.setTrack(BetterPlayerAsmsTrack.defaultTrack());
+    } else {
+      final matches = availableTracks.where((t) => t.height == height).toList()
+        ..sort((a, b) => (a.bitrate ?? 0).compareTo(b.bitrate ?? 0));
+      if (matches.isEmpty) return;
+      player.setTrack(matches.last);
     }
+
+    selectedHeight = height;
+    notifyListeners();
+  }
+
+  void _disposeCurrentPlayer() {
+    final controller = betterPlayerController;
+    if (controller == null) return;
 
     controller.removeEventsListener(_handlePlayerEvent);
     controller.dispose(forceDispose: true);
-
     betterPlayerController = null;
   }
 
@@ -265,25 +254,14 @@ class CustomVideoControllerBetter extends ChangeNotifier {
 
   bool _isHlsUrl(String url) {
     final uri = Uri.tryParse(url);
-
-    if (uri == null) {
-      return false;
-    }
-
-    return uri.path.toLowerCase().endsWith('.m3u8');
+    return uri != null && uri.path.toLowerCase().endsWith('.m3u8');
   }
 
   @override
   void dispose() {
-    final controller = betterPlayerController;
-
-    if (controller != null) {
-      controller.removeEventsListener(_handlePlayerEvent);
-      controller.dispose(forceDispose: true);
-    }
-
-    betterPlayerController = null;
-
+    _disposed = true;
+    _session++;
+    _disposeCurrentPlayer();
     super.dispose();
   }
 }

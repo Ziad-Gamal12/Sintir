@@ -162,7 +162,7 @@ packages:
     source: hosted
     version: "0.0.5"
   cli_util:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: cli_util
       sha256: ff6785f7e9e3c38ac98b2fb035701789de90154024a75b6cb926445e83197d1c
@@ -321,14 +321,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.1"
-  expansion_widget:
-    dependency: "direct main"
-    description:
-      name: expansion_widget
-      sha256: "9204670970a1c2a836526f4c9bd38f0ae43468e28bca940f1de1432a4feaff6d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.0"
   extension:
     dependency: transitive
     description:
@@ -612,7 +604,7 @@ packages:
     source: hosted
     version: "10.3.4"
   flutter_secure_storage_darwin:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_secure_storage_darwin
       sha256: "82329fa5cdf343773b1b6897dea959105a29f092454259edff92f9f6637e8149"
@@ -1046,7 +1038,7 @@ packages:
     source: hosted
     version: "0.12.20"
   material_color_utilities:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: material_color_utilities
       sha256: "9c337007e82b1889149c82ed242ed1cb24a66044e30979c44912381e9be4c48b"
@@ -1579,7 +1571,7 @@ packages:
     source: hosted
     version: "1.2.2"
   test_api:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: test_api
       sha256: "2a122cbe059f8b610d3a5415f42e255b6c17b1f21eee1d960f31080237fb4f11"
