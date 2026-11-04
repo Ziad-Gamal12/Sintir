@@ -5,10 +5,32 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+val releaseStoreFilePath = providers.environmentVariable("SINTIR_RELEASE_STORE_FILE").orNull
+val releaseStorePasswordValue = providers.environmentVariable("SINTIR_RELEASE_STORE_PASSWORD").orNull
+val releaseKeyAliasValue = providers.environmentVariable("SINTIR_RELEASE_KEY_ALIAS").orNull
+val releaseKeyPasswordValue = providers.environmentVariable("SINTIR_RELEASE_KEY_PASSWORD").orNull
+val releaseSigningReady = listOf(
+    releaseStoreFilePath,
+    releaseStorePasswordValue,
+    releaseKeyAliasValue,
+    releaseKeyPasswordValue,
+).all { !it.isNullOrBlank() }
+
 android {
     namespace = "com.example.sintir"
     compileSdk = 37
     ndkVersion = "28.2.13676358"
+
+    if (releaseSigningReady) {
+        signingConfigs {
+            create("release") {
+                storeFile = file(requireNotNull(releaseStoreFilePath))
+                storePassword = requireNotNull(releaseStorePasswordValue)
+                keyAlias = requireNotNull(releaseKeyAliasValue)
+                keyPassword = requireNotNull(releaseKeyPasswordValue)
+            }
+        }
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -33,7 +55,13 @@ android {
                 "proguard-rules.pro"
             )
 
-            signingConfig = signingConfigs.getByName("debug")
+            // An unset release key produces an unsigned artifact; never fall
+            // back to the debug identity for a release build.
+            signingConfig = if (releaseSigningReady) {
+                signingConfigs.getByName("release")
+            } else {
+                null
+            }
         }
 
         getByName("debug") {

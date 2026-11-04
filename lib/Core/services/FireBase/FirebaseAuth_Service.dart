@@ -11,6 +11,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
+import 'package:sintir/Core/services/HiveService.dart';
+import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/locale_keys.dart';
 
 class firebaseAuthService {
@@ -204,7 +206,11 @@ class firebaseAuthService {
   }
 
   Future<void> signout() async {
-    await auth.signOut();
+    try {
+      await auth.signOut();
+    } finally {
+      await Hive_Services.delete(key: BackendEndpoints.storeUserLocaly);
+    }
   }
 
   Future<bool> isLoggedIn() async {

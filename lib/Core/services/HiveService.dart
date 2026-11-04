@@ -64,6 +64,10 @@ abstract class Hive_Services {
     await _box.put(key, value);
   }
 
+  static Future<void> delete({required String key}) async {
+    await _box.delete(key);
+  }
+
   static Map<String, dynamic> jsonGetter({required String key}) {
     final data = _box.get(key);
     if (data == null) return {};
