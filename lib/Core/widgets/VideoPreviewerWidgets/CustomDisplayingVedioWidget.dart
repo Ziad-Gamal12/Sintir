@@ -4,6 +4,7 @@ import 'package:better_player_plus/better_player_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Core/widgets/VideoPreviewerWidgets/controllers/PremiumVideoStrings.dart';
+import 'package:sintir/Core/widgets/VideoPreviewerWidgets/controllers/premium_video_controls.dart';
 import 'package:sintir/Core/widgets/VideoPreviewerWidgets/controllers/video_player_controller_helper.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -12,10 +13,15 @@ class PremiumVideoPlayer extends StatefulWidget {
   final File? file;
   final String? posterUrl;
   final String? title;
+
+  /// From Firestore `availableQualities`, e.g. ["360p", "480p", "540p", "720p"].
+  final List<String> availableQualities;
+
   final int? sourceWidth;
   final int? sourceHeight;
   final bool autoPlay;
   final ValueChanged<Duration>? onDurationChanged;
+  final Future<String> Function(int? height)? resolveUrl;
 
   const PremiumVideoPlayer({
     super.key,
@@ -23,6 +29,8 @@ class PremiumVideoPlayer extends StatefulWidget {
     this.file,
     this.posterUrl,
     this.title,
+    this.resolveUrl,
+    this.availableQualities = const [],
     this.sourceWidth,
     this.sourceHeight,
     this.autoPlay = false,
@@ -59,12 +67,23 @@ class _PremiumVideoPlayerState extends State<PremiumVideoPlayer> {
     }
   }
 
+  List<int> _parseQualities() {
+    return widget.availableQualities
+        .map((q) => int.tryParse(q.replaceAll('p', '')))
+        .whereType<int>()
+        .toSet()
+        .toList()
+      ..sort((a, b) => b.compareTo(a));
+  }
+
   Future<void> _initializeVideo() async {
     await _controller.initializeVideo(
       videoUrl: widget.videoUrl,
       file: widget.file,
       posterUrl: widget.posterUrl,
       autoPlay: widget.autoPlay,
+      qualities: _parseQualities(),
+      urlResolver: widget.resolveUrl,
       aspectRatio: _calculateAspectRatio(),
       onDurationChanged: widget.onDurationChanged,
       controlsBuilder: (player) => PremiumVideoControls(

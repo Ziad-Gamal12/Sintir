@@ -27,23 +27,18 @@ class CustomVideoControllerBetter extends ChangeNotifier {
   bool _autoPlay = false;
   PlayerControlsBuilder? _controlsBuilder;
 
+  /// Quality options (e.g. 720, 540, 480, 360), highest first.
+  List<int> _qualities = const [];
+
+  /// Position to resume from after a quality switch.
+  Duration? _resumeAt;
+
   bool _disposed = false;
   int _session = 0;
-
+  Future<String> Function(int? height)? _urlResolver;
   double get aspectRatio => _aspectRatio;
   bool get hasError => status == PremiumVideoPlayerStatus.failed;
-
-  List<BetterPlayerAsmsTrack> get availableTracks =>
-      betterPlayerController?.betterPlayerAsmsTracks ?? [];
-
-  /// Clean quality list (720, 540, 480, 360) from the real HLS tracks.
-  List<int> get qualityHeights {
-    final heights = <int>{
-      for (final t in availableTracks)
-        if ((t.height ?? 0) > 0) t.height!,
-    };
-    return heights.toList()..sort((a, b) => b.compareTo(a));
-  }
+  List<int> get qualityHeights => _qualities;
 
   @override
   void notifyListeners() {
@@ -52,36 +47,52 @@ class CustomVideoControllerBetter extends ChangeNotifier {
 
   bool _isStale(int session) => _disposed || session != _session;
 
+  // ───────── initialization ─────────
+
+  /// Starts a new video. Resets quality and speed.
   Future<void> initializeVideo({
     required String? videoUrl,
     required File? file,
     required PlayerControlsBuilder controlsBuilder,
+    List<int> qualities = const [],
+    Future<String> Function(int? height)? urlResolver,
     String? posterUrl,
     ValueChanged<Duration>? onDurationChanged,
     double? aspectRatio,
     bool autoPlay = false,
   }) async {
-    final session = ++_session;
-
+    _urlResolver = urlResolver;
     _videoUrl = videoUrl;
     _file = file;
     _posterUrl = posterUrl;
     _autoPlay = autoPlay;
     _controlsBuilder = controlsBuilder;
+    _qualities = qualities;
 
     if (aspectRatio != null && aspectRatio > 0) _aspectRatio = aspectRatio;
+
+    selectedHeight = null;
+    speed = 1.0;
+    _resumeAt = null;
+
+    await _start(play: autoPlay);
+  }
+
+  /// Creates a fresh player. Used for the first load, retry and quality
+  /// switches. A new player means a new texture, so the frame size is
+  /// always correct (no green bars).
+  Future<void> _start({required bool play}) async {
+    final session = ++_session;
 
     _disposeCurrentPlayer();
 
     status = PremiumVideoPlayerStatus.initializing;
     errorMessage = null;
     duration = null;
-    selectedHeight = null;
-    speed = 1.0;
     notifyListeners();
 
     try {
-      final controller = BetterPlayerController(_buildConfiguration());
+      final controller = BetterPlayerController(_buildConfiguration(play));
       controller.addEventsListener(_handlePlayerEvent);
       betterPlayerController = controller;
 
@@ -112,26 +123,47 @@ class CustomVideoControllerBetter extends ChangeNotifier {
       );
     }
 
-    final url = _videoUrl!.trim();
+    final url = _withQuality(_videoUrl!.trim());
     final isHls = _isHlsUrl(url);
 
     return BetterPlayerDataSource(
       BetterPlayerDataSourceType.network,
       url,
       videoFormat: isHls ? BetterPlayerVideoFormat.hls : null,
-      useAsmsTracks: isHls,
+      useAsmsTracks: false, // we no longer switch tracks inside the player
       useAsmsAudioTracks: false,
       useAsmsSubtitles: false,
       liveStream: false,
     );
   }
 
-  BetterPlayerConfiguration _buildConfiguration() {
+  /// Mux playback modifiers: min = max = the chosen height leaves only
+  /// that rendition in the manifest.
+  /// NOTE: with signed playback IDs these must be inside the JWT claims.
+  String _withQuality(String url) {
+    if (_urlResolver != null) return url;
+
+    final h = selectedHeight;
+    if (h == null) return url;
+
+    final uri = Uri.parse(url);
+    return uri
+        .replace(
+          queryParameters: {
+            ...uri.queryParameters,
+            'min_resolution': '${h}p',
+            'max_resolution': '${h}p',
+          },
+        )
+        .toString();
+  }
+
+  BetterPlayerConfiguration _buildConfiguration(bool play) {
     final poster = _posterUrl;
     final builder = _controlsBuilder;
 
     return BetterPlayerConfiguration(
-      autoPlay: _autoPlay,
+      autoPlay: play,
       looping: false,
       allowedScreenSleep: false,
       fit: BoxFit.contain,
@@ -149,7 +181,8 @@ class CustomVideoControllerBetter extends ChangeNotifier {
               height: double.infinity,
               errorBuilder: (_, _, _) => const SizedBox.shrink(),
             ),
-      showPlaceholderUntilPlay: poster != null,
+      // After a quality switch, show the video frame, not the poster.
+      showPlaceholderUntilPlay: poster != null && _resumeAt == null,
       controlsConfiguration: BetterPlayerControlsConfiguration(
         playerTheme: BetterPlayerTheme.custom,
         customControlsBuilder: builder == null
@@ -158,6 +191,8 @@ class CustomVideoControllerBetter extends ChangeNotifier {
       ),
     );
   }
+
+  // ───────── events ─────────
 
   void _handlePlayerEvent(BetterPlayerEvent event) {
     switch (event.betterPlayerEventType) {
@@ -189,24 +224,23 @@ class CustomVideoControllerBetter extends ChangeNotifier {
       _aspectRatio = size.width / size.height;
     }
 
+    // Restore state after a quality switch / retry.
+    if (speed != 1.0) player.setSpeed(speed);
+
+    final resume = _resumeAt;
+    _resumeAt = null;
+    if (resume != null && resume > Duration.zero) player.seekTo(resume);
+
     status = PremiumVideoPlayerStatus.ready;
     errorMessage = null;
     notifyListeners();
   }
 
+  // ───────── actions ─────────
+
   Future<void> retry() async {
     if (_videoUrl == null && _file == null) return;
-    final builder = _controlsBuilder;
-    if (builder == null) return;
-
-    await initializeVideo(
-      videoUrl: _videoUrl,
-      file: _file,
-      posterUrl: _posterUrl,
-      autoPlay: _autoPlay,
-      aspectRatio: _aspectRatio,
-      controlsBuilder: builder,
-    );
+    await _start(play: _autoPlay);
   }
 
   Future<void> play() async => betterPlayerController?.play();
@@ -219,23 +253,41 @@ class CustomVideoControllerBetter extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// [height] null = Auto (adaptive).
-  void setQuality(int? height) {
+  /// [height] null = Auto. Rebuilds the player at the same position.
+  Future<void> setQuality(int? height) async {
     final player = betterPlayerController;
-    if (player == null) return;
+    if (player == null || height == selectedHeight) return;
 
-    if (height == null) {
-      player.setTrack(BetterPlayerAsmsTrack.defaultTrack());
-    } else {
-      final matches = availableTracks.where((t) => t.height == height).toList()
-        ..sort((a, b) => (a.bitrate ?? 0).compareTo(b.bitrate ?? 0));
-      if (matches.isEmpty) return;
-      player.setTrack(matches.last);
+    // Fresh URL first (a signed token may have expired).
+    String? freshUrl;
+    final resolver = _urlResolver;
+    if (resolver != null) {
+      try {
+        freshUrl = await resolver(height);
+      } catch (e) {
+        debugPrint('Quality URL resolve failed: $e');
+        return;
+      }
+      if (_disposed || betterPlayerController != player) return;
     }
 
+    final wasPlaying = player.isPlaying() ?? false;
+    final position = await player.videoPlayerController?.position;
+    if (_disposed || betterPlayerController != player) return;
+
+    if (player.isFullScreen) {
+      player.exitFullScreen();
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+      if (_disposed || betterPlayerController != player) return;
+    }
+
+    if (freshUrl != null) _videoUrl = freshUrl;
     selectedHeight = height;
-    notifyListeners();
+    _resumeAt = position;
+    await _start(play: wasPlaying);
   }
+
+  // ───────── cleanup ─────────
 
   void _disposeCurrentPlayer() {
     final controller = betterPlayerController;

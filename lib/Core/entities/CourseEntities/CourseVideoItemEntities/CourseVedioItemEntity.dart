@@ -8,20 +8,36 @@ import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/displayCourseVedioVeiw.dart';
 
 class CourseVideoItemEntity {
-  String title, vedioUrl;
+  String title;
+  String vedioUrl;
   int durationTime;
   String id;
+
   File? file;
   String? type;
-  String? videoProvider, muxUploadId, muxAssetId, muxPlaybackId, status;
+  String? videoProvider;
+  String? muxUploadId;
+  String? muxAssetId;
+  String? muxPlaybackId;
+  String? status;
+
+  /// Source dimensions returned by Mux/your processing pipeline.
+  /// These are optional because older Firestore records may not contain them.
+  int? sourceWidth;
+  int? sourceHeight;
+
   List<String> availableQualities;
   String preffixImage = Assets.assetsIconsSVGIconsVideoIcon;
-  void ontap(
-      {required BuildContext context,
-      required CourseVideoViewNavigationsRequirmentsEntity requires,
-      required CourseEntity course}) {
-    GoRouter.of(context)
-        .push(Displaycoursevedioveiw.routeName, extra: requires);
+
+  void ontap({
+    required BuildContext context,
+    required CourseVideoViewNavigationsRequirmentsEntity requires,
+    required CourseEntity course,
+  }) {
+    GoRouter.of(context).push(
+      Displaycoursevedioveiw.routeName,
+      extra: requires,
+    );
   }
 
   CourseVideoItemEntity({
@@ -30,12 +46,14 @@ class CourseVideoItemEntity {
     required this.id,
     required this.durationTime,
     this.file,
-    this.type = "Video",
+    this.type = 'Video',
     this.videoProvider,
     this.muxUploadId,
     this.muxAssetId,
     this.muxPlaybackId,
     this.status,
-    this.availableQualities = const [],
+    this.sourceWidth,
+    this.sourceHeight,
+    this.availableQualities = const <String>[],
   });
 }

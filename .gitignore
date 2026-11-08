@@ -58,3 +58,6 @@ lib/constant.dart
 .env
 # Widget Preview related
 .widget_preview/
+/android/key.properties
+*.jks
+*.keystore

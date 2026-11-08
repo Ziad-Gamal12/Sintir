@@ -15,9 +15,7 @@ import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
 class DisplaycoursevedioveiwBody extends StatefulWidget {
-  const DisplaycoursevedioveiwBody({
-    super.key,
-  });
+  const DisplaycoursevedioveiwBody({super.key});
 
   @override
   State<DisplaycoursevedioveiwBody> createState() =>
@@ -34,46 +32,77 @@ class _DisplaycoursevedioveiwBodyState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
-      final requirement =
-          context.read<CourseVideoViewNavigationsRequirmentsEntity>();
+      final requirement = context
+          .read<CourseVideoViewNavigationsRequirmentsEntity>();
       final video = requirement.video;
       if (video.videoProvider == "mux" && video.status == "ready") {
         _loadMuxPlayback(requirement);
       }
       context.read<VideoItemCubit>().joinToVideoItem(
-            courseId: requirement.courseEntity.id,
-            sectionId: requirement.sectionId,
-            sectionItemId: video.id,
-            joinedByEntity: JoinedByEntity(
-                uid: getUserData().uid,
-                name: getUserData().fullName,
-                imageUrl: getUserData().profilePicurl,
-                joinedDate: DateTime.now()),
-          );
+        courseId: requirement.courseEntity.id,
+        sectionId: requirement.sectionId,
+        sectionItemId: video.id,
+        joinedByEntity: JoinedByEntity(
+          uid: getUserData().uid,
+          name: getUserData().fullName,
+          imageUrl: getUserData().profilePicurl,
+          joinedDate: DateTime.now(),
+        ),
+      );
     });
   }
 
-  Future<void> _loadMuxPlayback(
-      CourseVideoViewNavigationsRequirmentsEntity requirement) async {
-    setState(() => _playbackLoading = true);
+  /// [height] null = Auto.
+  Future<String?> _fetchPlaybackUrl(
+    CourseVideoViewNavigationsRequirmentsEntity requirement, {
+    int? height,
+  }) async {
     final result = await getIt<VideoItemRepo>().getPlaybackUrl(
       courseId: requirement.courseEntity.id,
       sectionId: requirement.sectionId,
       videoId: requirement.video.id,
+      // TODO: if the URL is signed (contains token=), add a `height`
+      // param here and put min_resolution / max_resolution in the JWT claims.
     );
+    return result.fold<String?>((_) => null, (url) => url);
+  }
+
+  Future<void> _loadMuxPlayback(
+    CourseVideoViewNavigationsRequirmentsEntity requirement,
+  ) async {
+    setState(() => _playbackLoading = true);
+    final url = await _fetchPlaybackUrl(requirement);
     if (!mounted) return;
-    result.fold(
-        (_) => setState(() => _playbackLoading = false),
-        (url) => setState(() {
-              _playbackUrl = url;
-              _playbackLoading = false;
-            }));
+    setState(() {
+      _playbackUrl = url;
+      _playbackLoading = false;
+    });
+  }
+
+  Widget _buildMuxPlayer(
+    CourseVideoViewNavigationsRequirmentsEntity requirement,
+    CourseVideoItemEntity video,
+  ) {
+    return PremiumVideoPlayer(
+      videoUrl: _playbackUrl,
+      title: video.title,
+      availableQualities: video.availableQualities,
+      sourceWidth: (video.sourceWidth as num?)?.toInt(),
+      sourceHeight: (video.sourceHeight as num?)?.toInt(),
+      resolveUrl: (height) async {
+        final url = await _fetchPlaybackUrl(requirement, height: height);
+        if (url == null) throw Exception('Playback URL unavailable');
+        return url;
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final CourseVideoItemEntity vedio =
-        context.read<CourseVideoViewNavigationsRequirmentsEntity>().video;
+    final requirement = context
+        .read<CourseVideoViewNavigationsRequirmentsEntity>();
+    final CourseVideoItemEntity vedio = requirement.video;
+
     return BlocConsumer<VideoItemCubit, VideoItemState>(
       listener: (context, state) {
         if (state is JoinToVideoItemSuccess) {
@@ -94,47 +123,48 @@ class _DisplaycoursevedioveiwBodyState
         return Stack(
           children: [
             Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: KHorizontalPadding, vertical: KVerticalPadding),
-                child: CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          if (vedio.videoProvider == "mux")
-                            if (vedio.status != "ready")
-                              Text(vedio.status == "failed"
+              padding: const EdgeInsets.symmetric(
+                horizontal: KHorizontalPadding,
+                vertical: KVerticalPadding,
+              ),
+              child: CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        if (vedio.videoProvider == "mux")
+                          if (vedio.status != "ready")
+                            Text(
+                              vedio.status == "failed"
                                   ? LocaleKeys.videoPlayFailed
-                                  : "Video is processing")
-                            else if (_playbackLoading)
-                              const CircularProgressIndicator()
-                            else if (_playbackUrl != null)
-                              PremiumVideoPlayer(
-                                videoUrl: _playbackUrl,
-                              )
-                            else
-                              Text(LocaleKeys.videoPlayFailed)
+                                  : "Video is processing",
+                            )
+                          else if (_playbackLoading)
+                            const CircularProgressIndicator()
+                          else if (_playbackUrl != null)
+                            _buildMuxPlayer(requirement, vedio)
                           else
-                            PremiumVideoPlayer(videoUrl: vedio.vedioUrl),
-                          const SizedBox(
-                            height: 32,
-                          ),
-                          const CustomSendNoteText(),
-                        ],
-                      ),
+                            Text(LocaleKeys.videoPlayFailed)
+                        else
+                          PremiumVideoPlayer(videoUrl: vedio.vedioUrl),
+                        const SizedBox(height: 32),
+                        const CustomSendNoteText(),
+                      ],
                     ),
-                  ],
-                )),
+                  ),
+                ],
+              ),
+            ),
             Visibility(
-                visible: state is JoinToVideoItemLoading ? true : false,
-                child: const Positioned(
-                    bottom: 16,
-                    left: 16,
-                    right: 16,
-                    child: addingJoinedByLoadingWidget()))
+              visible: state is JoinToVideoItemLoading,
+              child: const Positioned(
+                bottom: 16,
+                left: 16,
+                right: 16,
+                child: addingJoinedByLoadingWidget(),
+              ),
+            ),
           ],
         );
       },
