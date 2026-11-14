@@ -9,16 +9,17 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manage
 import 'package:sintir/locale_keys.dart';
 
 class TeacherWalletDetailsView extends StatelessWidget {
-  const TeacherWalletDetailsView({
-    super.key,
-  });
+  const TeacherWalletDetailsView({super.key});
   static const routeName = '/TeacherWalletDetailsView';
   @override
   Widget build(BuildContext context) {
     return SensitivePageWrapper(
+      requireBiometric: true,
+      inactivityTimeout: const Duration(minutes: 5),
       child: BlocProvider(
         create: (context) => WithDrawTeacherBalanceCubit(
-            withdrawalRepo: getIt<WithDrawalTeacherBalanceRepo>()),
+          withdrawalRepo: getIt<WithDrawalTeacherBalanceRepo>(),
+        ),
         child: Scaffold(
           appBar: CustomAppBar(appBartitle: LocaleKeys.walletDetailsTitle),
           body: const TeacherWalletDetailsViewBody(),

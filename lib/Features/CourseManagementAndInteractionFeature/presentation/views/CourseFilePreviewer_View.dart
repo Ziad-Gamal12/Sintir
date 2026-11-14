@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/Managers/Cubits/file_item_cubit/file_item_cubit.dart';
+import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/File-Item-Repo/FileItemRepo.dart';
 import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
@@ -28,6 +29,7 @@ class CoursefilepreviewerView extends StatelessWidget {
       child: Provider.value(
         value: coursefileviewnavigationsrequirmentsentity,
         child: SensitivePageWrapper(
+           watermarkText: getUserData().uid,
           child: Scaffold(
             appBar: CustomAppBar(
                 appBartitle:

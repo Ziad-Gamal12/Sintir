@@ -11,6 +11,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sintir/Core/Managers/Cubits/LocalizationCubit/LocaleCubit.dart';
 import 'package:sintir/Core/Themes/app_theme.dart';
 import 'package:sintir/Core/Themes/theme_cubit.dart';
+import 'package:sintir/Core/helper/BiometricAvailability.dart';
 import 'package:sintir/Core/services/BlocObserver.dart';
 import 'package:sintir/Core/services/HiveService.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
@@ -31,8 +32,8 @@ void main() async {
             (await getApplicationDocumentsDirectory()).path,
           ),
   );
-  Bloc.observer = Bloc_Observer();
   HydratedBloc.storage = storage;
+  await BiometricAvailability.init();
   await Future.wait([
     Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
     SupabaseStorageServices.initSupabase(),

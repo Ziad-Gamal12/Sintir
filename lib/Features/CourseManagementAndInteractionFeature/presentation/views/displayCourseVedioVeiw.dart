@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/Managers/Cubits/video_item_cubit/video_item_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVideoviewnavigationsrequirmentsentity.dart';
+import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/repos/AssetsPickerRepo/AssetsPickerRepo.dart';
 import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
 import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
-import 'package:sintir/Core/widgets/SensitivePageWrapper.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/DisplayCourseVedioView_Widgets/DisplaycoursevedioveiwBody.dart';
 
 class Displaycoursevedioveiw extends StatelessWidget {
@@ -19,7 +19,7 @@ class Displaycoursevedioveiw extends StatelessWidget {
   });
   static const routeName = '/Displaycoursevedioveiw';
   final CourseVideoViewNavigationsRequirmentsEntity
-      coursevideoviewnavigationsrequirmentsentity;
+  coursevideoviewnavigationsrequirmentsentity;
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +29,14 @@ class Displaycoursevedioveiw extends StatelessWidget {
         assetspickerrepo: getIt<Assetspickerrepo>(),
         sectionItemsActionsRepo: getIt<SectionItemsActionsRepo>(),
       ),
-      child: SensitivePageWrapper(
-        child: Scaffold(
-          key: Variables.DisplaycoursevedioveiwScaffoldKey,
-          appBar: CustomAppBar(
-              appBartitle:
-                  coursevideoviewnavigationsrequirmentsentity.video.title),
-          body: Provider.value(
-            value: coursevideoviewnavigationsrequirmentsentity,
-            child: const DisplaycoursevedioveiwBody(),
-          ),
+      child: Scaffold(
+        key: Variables.DisplaycoursevedioveiwScaffoldKey,
+        appBar: CustomAppBar(
+          appBartitle: coursevideoviewnavigationsrequirmentsentity.video.title,
+        ),
+        body: Provider.value(
+          value: coursevideoviewnavigationsrequirmentsentity,
+          child: const DisplaycoursevedioveiwBody(),
         ),
       ),
     );

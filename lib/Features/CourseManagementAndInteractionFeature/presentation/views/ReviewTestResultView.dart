@@ -5,6 +5,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestR
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
+import 'package:sintir/Core/widgets/SensitivePageWrapper.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/manager/CheckIfResultHidden/check_if_result_hidden_cubit.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/ReviewTestResultWidgets/ReviewtestresultviewBody.dart';
 import 'package:sintir/locale_keys.dart';
@@ -16,13 +17,14 @@ class Reviewtestresultview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CheckIfResultHiddenCubit(
-        testitemrepo: getIt<Testitemrepo>(),
-      ),
+      create: (context) =>
+          CheckIfResultHiddenCubit(testitemrepo: getIt<Testitemrepo>()),
       child: Scaffold(
         appBar: CustomAppBar(appBartitle: LocaleKeys.myResultsAppbar),
         body: Provider.value(
-            value: resultEntity, child: const Reviewtestresultviewbody()),
+          value: resultEntity,
+          child: SensitivePageWrapper(child: const Reviewtestresultviewbody()),
+        ),
       ),
     );
   }
