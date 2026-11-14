@@ -23,7 +23,6 @@ class LogoutDialog extends StatelessWidget {
     final Color confirmTextColor = Colors.white;
     final Color cancelButtonColor = theme.scaffoldBackgroundColor;
     final Color cancelTextColor = primaryTextColor;
-    final BorderSide cancelButtonBorder = BorderSide(color: theme.dividerColor);
 
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -32,9 +31,10 @@ class LogoutDialog extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 60),
         child: Text(
           LocaleKeys.logout,
-          style: AppTextStyles(context)
-              .semiBold14
-              .copyWith(color: primaryTextColor, fontWeight: FontWeight.w600),
+          style: AppTextStyles(context).semiBold14.copyWith(
+            color: primaryTextColor,
+            fontWeight: FontWeight.w600,
+          ),
           textAlign: TextAlign.center,
         ),
       ),
@@ -63,7 +63,6 @@ class LogoutDialog extends StatelessWidget {
                 text: LocaleKeys.cancel,
                 color: cancelButtonColor,
                 textColor: cancelTextColor,
-                side: cancelButtonBorder,
               ),
             ),
           ],

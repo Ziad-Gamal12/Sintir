@@ -97,10 +97,6 @@ class AuthRepoImpl implements AuthRepo {
     try {
       return (await _deviceIdReader())?.trim() ?? '';
     } catch (error, stackTrace) {
-      log(
-        'AuthRepoImpl: could not read device ID: $error',
-        stackTrace: stackTrace,
-      );
       return '';
     }
   }
@@ -127,7 +123,6 @@ class AuthRepoImpl implements AuthRepo {
     );
   }
 
-  @override
   Future<Either<Failure, void>> updateDeviceId({required String uid}) async {
     try {
       if (uid.trim().isEmpty) {
@@ -138,10 +133,6 @@ class AuthRepoImpl implements AuthRepo {
       await _persistDeviceId(uid: uid, deviceId: deviceId);
       return const Right(null);
     } catch (error, stackTrace) {
-      log(
-        'AuthRepoImpl: updateDeviceId failed: $error',
-        stackTrace: stackTrace,
-      );
       return Left(_toFailure(error, stackTrace));
     }
   }
@@ -163,11 +154,7 @@ class AuthRepoImpl implements AuthRepo {
       if (freshUser.emailVerified == false) {
         try {
           await freshUser.sendEmailVerification();
-        } catch (error, stackTrace) {
-          log(
-            'AuthRepoImpl: verification email could not be sent: $error',
-            stackTrace: stackTrace,
-          );
+        } catch (error) {
           await _safeSignOut();
           return Left(ServerFailure(message: LocaleKeys.verificationNotSent));
         }
@@ -176,14 +163,13 @@ class AuthRepoImpl implements AuthRepo {
         return Left(ServerFailure(message: LocaleKeys.verificationSent));
       }
 
-      return _completeExistingUserSignIn(uid: freshUser.uid);
+      return await _completeExistingUserSignIn(uid: freshUser.uid);
     } on FirebaseAuthException catch (error, stackTrace) {
       await _safeSignOut();
       return Left(_toFailure(error, stackTrace));
-    } catch (error, stackTrace) {
-      log('AuthRepoImpl: email sign-in failed: $error', stackTrace: stackTrace);
+    } catch (error) {
       await _safeSignOut();
-      return Left(_toFailure(error, stackTrace));
+      return Left(_toFailure(error));
     }
   }
 
@@ -224,31 +210,25 @@ class AuthRepoImpl implements AuthRepo {
       firestoreWriteCompleted = true;
       try {
         await createdUser.sendEmailVerification();
-      } catch (error, stackTrace) {
-        log(
-          'AuthRepoImpl: sign-up verification email failed: $error',
-          stackTrace: stackTrace,
-        );
+      } catch (error) {
         await _safeSignOut();
         return Left(ServerFailure(message: LocaleKeys.verificationNotSent));
       }
 
       await _safeSignOut();
       return const Right(null);
-    } on FirebaseAuthException catch (error, stackTrace) {
-      log('AuthRepoImpl: sign-up failed: $error', stackTrace: stackTrace);
+    } on FirebaseAuthException catch (error) {
       if (createdUser != null && !firestoreWriteCompleted) {
         await _tryDeleteUser(createdUser);
       }
       await _safeSignOut();
-      return Left(_toFailure(error, stackTrace));
-    } catch (error, stackTrace) {
-      log('AuthRepoImpl: sign-up failed: $error', stackTrace: stackTrace);
+      return Left(_toFailure(error));
+    } catch (error) {
       if (createdUser != null && !firestoreWriteCompleted) {
         await _tryDeleteUser(createdUser);
       }
       await _safeSignOut();
-      return Left(_toFailure(error, stackTrace));
+      return Left(_toFailure(error));
     }
   }
 
@@ -260,13 +240,9 @@ class AuthRepoImpl implements AuthRepo {
       final userJson = await _fetchActiveUserJson(uid: uid);
       await storeUserLocally(userJson);
       return const Right(null);
-    } catch (error, stackTrace) {
-      log(
-        'AuthRepoImpl: fetchUserAndStoreLocally failed: $error',
-        stackTrace: stackTrace,
-      );
+    } catch (error) {
       await _safeSignOut();
-      return Left(_toFailure(error, stackTrace));
+      return Left(_toFailure(error));
     }
   }
 
@@ -324,13 +300,9 @@ class AuthRepoImpl implements AuthRepo {
       userJson['deviceId'] = deviceId;
       await storeUserLocally(userJson);
       return const Right(null);
-    } catch (error, stackTrace) {
-      log(
-        'AuthRepoImpl: completing sign-in failed: $error',
-        stackTrace: stackTrace,
-      );
+    } catch (error) {
       await _safeSignOut();
-      return Left(_toFailure(error, stackTrace));
+      return Left(_toFailure(error));
     }
   }
 
@@ -367,13 +339,9 @@ class AuthRepoImpl implements AuthRepo {
       );
       await storeUserLocally(userJson);
       return const Right(null);
-    } catch (error, stackTrace) {
-      log(
-        'AuthRepoImpl: social sign-in failed: $error',
-        stackTrace: stackTrace,
-      );
+    } catch (error) {
       await _safeSignOut();
-      return Left(_toFailure(error, stackTrace));
+      return Left(_toFailure(error));
     }
   }
 
@@ -396,11 +364,7 @@ class AuthRepoImpl implements AuthRepo {
       if (checkVerified) {
         try {
           await user.sendEmailVerification();
-        } catch (error, stackTrace) {
-          log(
-            'AuthRepoImpl: verification email failed after profile write: $error',
-            stackTrace: stackTrace,
-          );
+        } catch (error) {
           if (signOut) await _safeSignOut();
           return Left(ServerFailure(message: LocaleKeys.verificationNotSent));
         }
@@ -408,13 +372,9 @@ class AuthRepoImpl implements AuthRepo {
 
       if (signOut) await _safeSignOut();
       return const Right(null);
-    } catch (error, stackTrace) {
-      log(
-        'AuthRepoImpl: storeUserDataInFireStore failed: $error',
-        stackTrace: stackTrace,
-      );
+    } catch (error) {
       if (signOut) await _safeSignOut();
-      return Left(_toFailure(error, stackTrace));
+      return Left(_toFailure(error));
     }
   }
 
@@ -463,11 +423,9 @@ class AuthRepoImpl implements AuthRepo {
       await storeUserLocally(userJson);
       return const Right(null);
     } on FirebaseAuthException catch (error, stackTrace) {
-      log('AuthRepoImpl: updateUser failed: $error', stackTrace: stackTrace);
       return Left(_toFailure(error, stackTrace));
-    } catch (error, stackTrace) {
-      log('AuthRepoImpl: updateUser failed: $error', stackTrace: stackTrace);
-      return Left(_toFailure(error, stackTrace));
+    } catch (error) {
+      return Left(_toFailure(error));
     }
   }
 
@@ -478,9 +436,8 @@ class AuthRepoImpl implements AuthRepo {
       return const Right(null);
     } on FirebaseAuthException catch (error, stackTrace) {
       return Left(_toFailure(error, stackTrace));
-    } catch (error, stackTrace) {
-      log('AuthRepoImpl: resetPassword failed: $error', stackTrace: stackTrace);
-      return Left(_toFailure(error, stackTrace));
+    } catch (error) {
+      return Left(_toFailure(error));
     }
   }
 
@@ -511,11 +468,7 @@ class AuthRepoImpl implements AuthRepo {
   Future<void> storeUserLocally(Map<String, dynamic> userJson) async {
     try {
       await _localUserWriter(userJson);
-    } catch (error, stackTrace) {
-      log(
-        'AuthRepoImpl: local user storage failed: $error',
-        stackTrace: stackTrace,
-      );
+    } catch (error) {
       throw CustomException(message: LocaleKeys.errorOccurredMessage);
     }
   }

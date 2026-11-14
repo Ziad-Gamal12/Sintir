@@ -13,10 +13,7 @@ class SupabaseStorageServices implements StorageService {
   static SupabaseClient get _client => Supabase.instance.client;
 
   static Future<void> initSupabase() async {
-    await Supabase.initialize(
-      url: supaBaseUrl,
-      anonKey: supaAnonKey,
-    );
+    await Supabase.initialize(url: supaBaseUrl, anonKey: supaAnonKey);
   }
 
   @override
@@ -30,11 +27,9 @@ class SupabaseStorageServices implements StorageService {
       await _client.storage.from(bucket).upload(fileName, file);
 
       return getFileUrl(bucketname: bucket, filepath: fileName);
-    } on StorageException catch (e) {
-      log("Supabase Storage Error: ${e.message}");
+    } on StorageException {
       rethrow;
     } catch (e) {
-      log("Unexpected Error: $e");
       rethrow;
     }
   }
@@ -54,8 +49,6 @@ class SupabaseStorageServices implements StorageService {
       final filePath = segments.sublist(bucketIndex + 1).join('/');
 
       await _client.storage.from(bucketName).remove([filePath]);
-    } catch (e) {
-      log("Delete Error: $e");
-    }
+    } catch (e) {}
   }
 }

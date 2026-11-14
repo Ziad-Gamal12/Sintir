@@ -24,8 +24,12 @@ class CourseCheckoutFunctionResponse {
 }
 
 typedef CourseCheckoutTokenProvider = Future<String?> Function();
-typedef CourseCheckoutFunctionInvoker = Future<CourseCheckoutFunctionResponse>
-    Function(String name, Map<String, dynamic> body, String token);
+typedef CourseCheckoutFunctionInvoker =
+    Future<CourseCheckoutFunctionResponse> Function(
+      String name,
+      Map<String, dynamic> body,
+      String token,
+    );
 
 class CourseCheckoutRepoImpl implements CourseCheckoutGateway {
   CourseCheckoutRepoImpl({
@@ -33,10 +37,10 @@ class CourseCheckoutRepoImpl implements CourseCheckoutGateway {
     FirebaseAuth? auth,
     CourseCheckoutTokenProvider? tokenProvider,
     CourseCheckoutFunctionInvoker? functionInvoker,
-  })  : _client = client,
-        _auth = auth,
-        _tokenProvider = tokenProvider,
-        _functionInvoker = functionInvoker;
+  }) : _client = client,
+       _auth = auth,
+       _tokenProvider = tokenProvider,
+       _functionInvoker = functionInvoker;
 
   final SupabaseClient? _client;
   final FirebaseAuth? _auth;
@@ -59,12 +63,16 @@ class CourseCheckoutRepoImpl implements CourseCheckoutGateway {
     if (injectedInvoker != null) return injectedInvoker(name, body, token);
 
     try {
-      final response = await (_client ?? Supabase.instance.client)
-          .functions
-          .invoke(name,
-              headers: {'Authorization': 'Bearer $token'}, body: body);
+      final response = await (_client ?? Supabase.instance.client).functions
+          .invoke(
+            name,
+            headers: {'Authorization': 'Bearer $token'},
+            body: body,
+          );
       return CourseCheckoutFunctionResponse(
-          status: response.status, data: response.data);
+        status: response.status,
+        data: response.data,
+      );
     } on FunctionException catch (exception) {
       return CourseCheckoutFunctionResponse(
         status: exception.status,
@@ -83,14 +91,23 @@ class CourseCheckoutRepoImpl implements CourseCheckoutGateway {
       token = await _getToken();
     } on FirebaseAuthException {
       throw const CourseCheckoutRequestException(
-          'authentication_failed', 'Please sign in to continue.', 401);
+        'authentication_failed',
+        'Please sign in to continue.',
+        401,
+      );
     } on Object {
       throw const CourseCheckoutRequestException(
-          'authentication_failed', 'Please sign in to continue.', 401);
+        'authentication_failed',
+        'Please sign in to continue.',
+        401,
+      );
     }
     if (token == null || token.isEmpty) {
       throw const CourseCheckoutRequestException(
-          'authentication_required', 'Please sign in to continue.', 401);
+        'authentication_required',
+        'Please sign in to continue.',
+        401,
+      );
     }
 
     final CourseCheckoutFunctionResponse response;
@@ -99,25 +116,40 @@ class CourseCheckoutRepoImpl implements CourseCheckoutGateway {
     } on FunctionException catch (exception) {
       throw _functionException(exception);
     } on SocketException {
-      throw const CourseCheckoutRequestException('network_error',
-          'Network error. Check your connection and retry.', 503);
+      throw const CourseCheckoutRequestException(
+        'network_error',
+        'Network error. Check your connection and retry.',
+        503,
+      );
     } on TimeoutException {
       throw const CourseCheckoutRequestException(
-          'network_timeout', 'The request timed out. Please retry.', 503);
+        'network_timeout',
+        'The request timed out. Please retry.',
+        503,
+      );
     } on CourseCheckoutRequestException {
       rethrow;
     } on Object {
-      throw const CourseCheckoutRequestException('request_failed',
-          'Checkout could not be completed. Please retry.', 502);
+      throw const CourseCheckoutRequestException(
+        'request_failed',
+        'Checkout could not be completed. Please retry.',
+        502,
+      );
     }
 
     if (response.status < 200 || response.status >= 300) {
       throw _responseException(
-          response.data, response.status, response.reasonPhrase);
+        response.data,
+        response.status,
+        response.reasonPhrase,
+      );
     }
     if (response.data is! Map) {
       throw const CourseCheckoutRequestException(
-          'invalid_response', 'The server returned an invalid response.', 502);
+        'invalid_response',
+        'The server returned an invalid response.',
+        502,
+      );
     }
     final data = Map<String, dynamic>.from(response.data as Map);
     if (data['ok'] != true) {
@@ -127,12 +159,18 @@ class CourseCheckoutRepoImpl implements CourseCheckoutGateway {
   }
 
   CourseCheckoutRequestException _functionException(
-          FunctionException exception) =>
-      _responseException(
-          exception.details, exception.status, exception.reasonPhrase);
+    FunctionException exception,
+  ) => _responseException(
+    exception.details,
+    exception.status,
+    exception.reasonPhrase,
+  );
 
   CourseCheckoutRequestException _responseException(
-      Object? payload, int status, String? reasonPhrase) {
+    Object? payload,
+    int status,
+    String? reasonPhrase,
+  ) {
     Object? decoded = payload;
     if (decoded is String) {
       try {
@@ -145,15 +183,16 @@ class CourseCheckoutRepoImpl implements CourseCheckoutGateway {
     final code = error is Map ? error['code'] : null;
     final message = error is Map ? error['message'] : null;
     final rawRequestId = error is Map ? error['requestId'] : null;
-    final requestId = rawRequestId is String &&
+    final requestId =
+        rawRequestId is String &&
             RegExp(r'^[A-Za-z0-9_-]{8,100}$').hasMatch(rawRequestId)
         ? rawRequestId
         : null;
     final safeStatus = status == 0
         ? 0
         : status >= 100 && status <= 599
-            ? status
-            : 502;
+        ? status
+        : 502;
     final safeCode = code is String
         ? code
         : (safeStatus == 0 ? 'network_error' : 'checkout_request_failed');
@@ -163,20 +202,16 @@ class CourseCheckoutRepoImpl implements CourseCheckoutGateway {
         'status=$safeStatus',
         if (requestId != null) 'requestId=$requestId',
       ].join(' ');
-      developer.log(
-        'Checkout function failure: $diagnostic',
-        name: 'course_checkout',
-      );
     }
     return CourseCheckoutRequestException(
       safeCode,
       message is String && message.isNotEmpty
           ? message
           : safeStatus == 401
-              ? 'Please sign in to continue.'
-              : safeStatus == 0 || safeStatus >= 500
-                  ? 'The service is temporarily unavailable. Please retry.'
-                  : reasonPhrase ?? 'Checkout request failed.',
+          ? 'Please sign in to continue.'
+          : safeStatus == 0 || safeStatus >= 500
+          ? 'The service is temporarily unavailable. Please retry.'
+          : reasonPhrase ?? 'Checkout request failed.',
       safeStatus,
       requestId: requestId,
     );
@@ -189,7 +224,10 @@ class CourseCheckoutRepoImpl implements CourseCheckoutGateway {
       rethrow;
     } on Object {
       throw const CourseCheckoutRequestException(
-          'invalid_response', 'The server returned an invalid response.', 502);
+        'invalid_response',
+        'The server returned an invalid response.',
+        502,
+      );
     }
   }
 
@@ -201,8 +239,10 @@ class CourseCheckoutRepoImpl implements CourseCheckoutGateway {
       });
 
   @override
-  Future<CourseCheckoutQuote> quote(
-      {required String courseId, String? couponCode}) async {
+  Future<CourseCheckoutQuote> quote({
+    required String courseId,
+    String? couponCode,
+  }) async {
     final data = await _invoke('course-checkout-quote', {
       'courseId': courseId,
       if (couponCode != null && couponCode.trim().isNotEmpty)
@@ -212,10 +252,11 @@ class CourseCheckoutRepoImpl implements CourseCheckoutGateway {
   }
 
   @override
-  Future<CoursePaymentAttempt> createPayment(
-      {required String courseId,
-      required String idempotencyKey,
-      String? couponCode}) async {
+  Future<CoursePaymentAttempt> createPayment({
+    required String courseId,
+    required String idempotencyKey,
+    String? couponCode,
+  }) async {
     final data = await _invoke('create-course-payment', {
       'courseId': courseId,
       'idempotencyKey': idempotencyKey,
@@ -227,27 +268,21 @@ class CourseCheckoutRepoImpl implements CourseCheckoutGateway {
 
   @override
   Future<CoursePaymentStatusResult> paymentStatus(
-      String paymentAttemptId) async {
+    String paymentAttemptId,
+  ) async {
     final data = await _invoke('get-course-payment-status', {
       'paymentAttemptId': paymentAttemptId,
     });
     final status = _parse(() => CoursePaymentStatusResult.fromJson(data));
-    developer.log(
-      'payment status received: attempt=$paymentAttemptId '
-      'status=${status.status} verificationState=${status.verificationState} '
-      'checkoutUrlPresent=${status.checkoutUrl.isNotEmpty} '
-      'canResume=${status.canResume} canRetry=${status.canRetry} '
-      'paymentConfirmed=${status.paymentConfirmed} '
-      'retryAfterSeconds=${status.retryAfterSeconds}',
-      name: 'course_checkout',
-    );
+
     return status;
   }
 
   @override
   Future<bool> isSubscribed(String courseId) async {
-    final data =
-        await _invoke('check-course-subscription', {'courseId': courseId});
+    final data = await _invoke('check-course-subscription', {
+      'courseId': courseId,
+    });
     return _parse(() {
       final isSubscribed = data['isSubscribed'];
       if (isSubscribed is! bool) {

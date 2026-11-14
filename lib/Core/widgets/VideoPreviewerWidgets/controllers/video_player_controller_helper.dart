@@ -103,10 +103,8 @@ class CustomVideoControllerBetter extends ChangeNotifier {
       if (_isStale(session)) return;
 
       if (controller.isVideoInitialized() == true) _handleInitialized();
-    } catch (e, stackTrace) {
+    } catch (e) {
       if (_isStale(session)) return;
-      debugPrint('Video initialization failed: $e');
-      debugPrintStack(stackTrace: stackTrace);
       _setFailure();
     }
   }
@@ -258,14 +256,12 @@ class CustomVideoControllerBetter extends ChangeNotifier {
     final player = betterPlayerController;
     if (player == null || height == selectedHeight) return;
 
-    // Fresh URL first (a signed token may have expired).
     String? freshUrl;
     final resolver = _urlResolver;
     if (resolver != null) {
       try {
         freshUrl = await resolver(height);
       } catch (e) {
-        debugPrint('Quality URL resolve failed: $e');
         return;
       }
       if (_disposed || betterPlayerController != player) return;

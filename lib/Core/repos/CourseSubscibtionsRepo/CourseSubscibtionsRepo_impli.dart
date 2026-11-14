@@ -31,15 +31,19 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
   });
 
   @override
-  Future<Either<Failure, void>> subscribeToCourse(
-      {required CourseEntity course,
-      required UserEntity userEntity,
-      required String transactionId,
-      required TransactionEntity transactionEntity,
-      required double amount}) async {
-    return left(ServerFailure(
-      message: 'Enrollment is finalized only by the verified payment callback.',
-    ));
+  Future<Either<Failure, void>> subscribeToCourse({
+    required CourseEntity course,
+    required UserEntity userEntity,
+    required String transactionId,
+    required TransactionEntity transactionEntity,
+    required double amount,
+  }) async {
+    return left(
+      ServerFailure(
+        message:
+            'Enrollment is finalized only by the verified payment callback.',
+      ),
+    );
   }
 
   @override
@@ -50,11 +54,8 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       final isSubscribed = await checkoutGateway.isSubscribed(courseID);
       return right(isSubscribed);
     } on CourseCheckoutRequestException catch (e) {
-      log(e.toString());
-
       return left(ServerFailure(message: e.message));
     } catch (e) {
-      log(e.toString());
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
@@ -90,11 +91,13 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       }
 
       if (response.listData!.isEmpty) {
-        return right(GetCourseSubscribersEntity(
-          subscribers: [],
-          hasMore: false,
-          isPaginate: isPaginate,
-        ));
+        return right(
+          GetCourseSubscribersEntity(
+            subscribers: [],
+            hasMore: false,
+            isPaginate: isPaginate,
+          ),
+        );
       }
 
       _lastSubscribersDocs[courseID] = response.lastDocumentSnapshot;
@@ -102,11 +105,13 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       final subscribers = await compute(_parseSubscribers, response.listData!);
       final hasMore = response.hasMore ?? false;
 
-      return right(GetCourseSubscribersEntity(
-        subscribers: subscribers,
-        hasMore: hasMore,
-        isPaginate: isPaginate,
-      ));
+      return right(
+        GetCourseSubscribersEntity(
+          subscribers: subscribers,
+          hasMore: hasMore,
+          isPaginate: isPaginate,
+        ),
+      );
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
@@ -115,8 +120,9 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
   }
 
   @override
-  Future<Either<Failure, int>> getSubscribersCount(
-      {required String courseID}) async {
+  Future<Either<Failure, int>> getSubscribersCount({
+    required String courseID,
+  }) async {
     try {
       final response = await databaseService.getCollectionItemsCount(
         requirements: FireStoreRequirmentsEntity(
@@ -134,10 +140,11 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
   }
 
   @override
-  Future<Either<Failure, GetCourseSubscribersEntity>> searchSubscribers(
-      {required String courseID,
-      required String searchKey,
-      required bool isPaginate}) async {
+  Future<Either<Failure, GetCourseSubscribersEntity>> searchSubscribers({
+    required String courseID,
+    required String searchKey,
+    required bool isPaginate,
+  }) async {
     try {
       final cursorKey = _searchCursorKey(courseID, searchKey);
       if (!isPaginate) {
@@ -167,11 +174,13 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       }
 
       if (response.listData!.isEmpty) {
-        return right(GetCourseSubscribersEntity(
-          subscribers: [],
-          hasMore: false,
-          isPaginate: isPaginate,
-        ));
+        return right(
+          GetCourseSubscribersEntity(
+            subscribers: [],
+            hasMore: false,
+            isPaginate: isPaginate,
+          ),
+        );
       }
 
       _lastSearchSubscribersDocs[cursorKey] = response.lastDocumentSnapshot;
@@ -179,11 +188,13 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
       final subscribers = await compute(_parseSubscribers, response.listData!);
       final hasMore = response.hasMore ?? false;
 
-      return right(GetCourseSubscribersEntity(
-        subscribers: subscribers,
-        hasMore: hasMore,
-        isPaginate: isPaginate,
-      ));
+      return right(
+        GetCourseSubscribersEntity(
+          subscribers: subscribers,
+          hasMore: hasMore,
+          isPaginate: isPaginate,
+        ),
+      );
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
@@ -192,14 +203,17 @@ class CourseSubscriptionsRepoImpl implements CourseSubscibtionsRepo {
   }
 
   @override
-  Future<Either<Failure, void>> storeSubscribtionTransaction(
-      {required String courseID,
-      required String userID,
-      required TransactionEntity transaction}) async {
-    return left(ServerFailure(
-      message:
-          'Payment transactions are written by the verified payment callback.',
-    ));
+  Future<Either<Failure, void>> storeSubscribtionTransaction({
+    required String courseID,
+    required String userID,
+    required TransactionEntity transaction,
+  }) async {
+    return left(
+      ServerFailure(
+        message:
+            'Payment transactions are written by the verified payment callback.',
+      ),
+    );
   }
 }
 

@@ -65,24 +65,24 @@ class _CoursefilepreviewerviewbodyState
     loadPdf();
     if (mounted) {
       context.read<FileItemCubit>().joinToFileItem(
-            courseId: context
-                .read<Coursefileviewnavigationsrequirmentsentity>()
-                .course
-                .id,
-            sectionId: context
-                .read<Coursefileviewnavigationsrequirmentsentity>()
-                .sectionId,
-            sectionItemId: context
-                .read<Coursefileviewnavigationsrequirmentsentity>()
-                .file
-                .id,
-            joinedByEntity: JoinedByEntity(
-              name: getUserData().fullName,
-              uid: getUserData().uid,
-              joinedDate: DateTime.now(),
-              imageUrl: getUserData().profilePicurl,
-            ),
-          );
+        courseId: context
+            .read<Coursefileviewnavigationsrequirmentsentity>()
+            .course
+            .id,
+        sectionId: context
+            .read<Coursefileviewnavigationsrequirmentsentity>()
+            .sectionId,
+        sectionItemId: context
+            .read<Coursefileviewnavigationsrequirmentsentity>()
+            .file
+            .id,
+        joinedByEntity: JoinedByEntity(
+          name: getUserData().fullName,
+          uid: getUserData().uid,
+          joinedDate: DateTime.now(),
+          imageUrl: getUserData().profilePicurl,
+        ),
+      );
     }
     super.initState();
   }
@@ -122,35 +122,37 @@ class _CoursefilepreviewerviewbodyState
                 child: Column(
                   children: [
                     CourseFileOverView(
-                        totalPages: totalPages,
-                        pdfControllerPinch: pdfControllerPinch!,
-                        currentPage: currentPage),
-                    const SizedBox(
-                      height: 20,
+                      totalPages: totalPages,
+                      pdfControllerPinch: pdfControllerPinch!,
+                      currentPage: currentPage,
                     ),
+                    const SizedBox(height: 20),
                     Expanded(
-                        child: PdfViewPinch(
-                            controller: pdfControllerPinch!,
-                            onDocumentLoaded: (doc) {
-                              totalPages = doc.pagesCount;
-                              setState(() {});
-                            },
-                            onPageChanged: (page) {
-                              setState(() {
-                                currentPage = page;
-                              });
-                            }))
+                      child: PdfViewPinch(
+                        controller: pdfControllerPinch!,
+                        onDocumentLoaded: (doc) {
+                          totalPages = doc.pagesCount;
+                          setState(() {});
+                        },
+                        onPageChanged: (page) {
+                          setState(() {
+                            currentPage = page;
+                          });
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
               Visibility(
                 visible: state is JoinToFileITemLoading ? true : false,
                 child: const Positioned(
-                    bottom: 16,
-                    left: 16,
-                    right: 16,
-                    child: addingJoinedByLoadingWidget()),
-              )
+                  bottom: 16,
+                  left: 16,
+                  right: 16,
+                  child: LoadingMessageCard(),
+                ),
+              ),
             ],
           );
         },

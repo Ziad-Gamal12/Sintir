@@ -21,8 +21,10 @@ class MyMistakesRepoImpl implements MyMistakesRepo {
   final DataBaseService databaseservice;
   final MyResultsRepo myResultsRepo;
 
-  MyMistakesRepoImpl(
-      {required this.databaseservice, required this.myResultsRepo});
+  MyMistakesRepoImpl({
+    required this.databaseservice,
+    required this.myResultsRepo,
+  });
 
   // Track pagination state locally but keep query config inside the method
   DocumentSnapshot? _lastDoc;
@@ -33,10 +35,7 @@ class MyMistakesRepoImpl implements MyMistakesRepo {
     required bool isPaginate,
   }) async {
     try {
-      final query = {
-        "limit": 10,
-        "startAfter": isPaginate ? _lastDoc : null,
-      };
+      final query = {"limit": 10, "startAfter": isPaginate ? _lastDoc : null};
       final result = await databaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
           collection: BackendEndpoints.usersCollectionName,
@@ -49,11 +48,13 @@ class MyMistakesRepoImpl implements MyMistakesRepo {
       final listData = result.listData as List<Map<String, dynamic>>? ?? [];
 
       if (listData.isEmpty) {
-        return Right(GetMyMistakesResponseEntity(
-          hasMore: false,
-          myMistakesList: [],
-          isPaginate: isPaginate,
-        ));
+        return Right(
+          GetMyMistakesResponseEntity(
+            hasMore: false,
+            myMistakesList: [],
+            isPaginate: isPaginate,
+          ),
+        );
       }
 
       _lastDoc = result.lastDocumentSnapshot;
@@ -62,16 +63,16 @@ class MyMistakesRepoImpl implements MyMistakesRepo {
           .map((e) => QuestionMistakeModel.fromJson(e).toEntity())
           .toList();
 
-      return Right(GetMyMistakesResponseEntity(
-        hasMore: result.hasMore ?? false,
-        myMistakesList: mistakes,
-        isPaginate: isPaginate,
-      ));
+      return Right(
+        GetMyMistakesResponseEntity(
+          hasMore: result.hasMore ?? false,
+          myMistakesList: mistakes,
+          isPaginate: isPaginate,
+        ),
+      );
     } on CustomException catch (e) {
-      log(e.message);
       return Left(ServerFailure(message: e.message));
     } catch (e) {
-      log(e.toString());
       return Left(ServerFailure(message: LocaleKeys.generalError));
     }
   }
@@ -80,46 +81,51 @@ class MyMistakesRepoImpl implements MyMistakesRepo {
     required TestResultEntity testResult,
     required String userUID,
   }) async {
-    await Future.wait(testResult.questionsSolvedListEntity.map((solved) async {
-      final requirements = FireStoreRequirmentsEntity(
-        collection: BackendEndpoints.usersCollectionName,
-        docId: userUID,
-        subCollection: BackendEndpoints.myMistakesSubCollection,
-        subDocId: solved.question.questionId,
-      );
+    await Future.wait(
+      testResult.questionsSolvedListEntity.map((solved) async {
+        final requirements = FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.usersCollectionName,
+          docId: userUID,
+          subCollection: BackendEndpoints.myMistakesSubCollection,
+          subDocId: solved.question.questionId,
+        );
 
-      final response =
-          await databaseservice.getData(requirements: requirements);
-      if (response.docData == null) return;
+        final response = await databaseservice.getData(
+          requirements: requirements,
+        );
+        if (response.docData == null) return;
 
-      final existing =
-          QuestionMistakeModel.fromJson(response.docData!).toEntity();
-      int newStreak =
-          solved.isCorrect ? (existing.progress.correctStreak + 1) : 0;
-      int newWrongCount = solved.isCorrect
-          ? existing.progress.wrongCount
-          : (existing.progress.wrongCount + 1);
-      MistakeStatus newStatus = MistakeStatus.active;
-      if (newStreak >= 3) {
-        newStatus = MistakeStatus.mastered;
-      } else if (newStreak >= 2) {
-        newStatus = MistakeStatus.improving;
-      }
+        final existing = QuestionMistakeModel.fromJson(
+          response.docData!,
+        ).toEntity();
+        int newStreak = solved.isCorrect
+            ? (existing.progress.correctStreak + 1)
+            : 0;
+        int newWrongCount = solved.isCorrect
+            ? existing.progress.wrongCount
+            : (existing.progress.wrongCount + 1);
+        MistakeStatus newStatus = MistakeStatus.active;
+        if (newStreak >= 3) {
+          newStatus = MistakeStatus.mastered;
+        } else if (newStreak >= 2) {
+          newStatus = MistakeStatus.improving;
+        }
 
-      final updated = existing.copyWith(
-        progress: existing.progress.copyWith(
-          correctStreak: newStreak,
-          wrongCount: newWrongCount,
-          lastAnsweredAt: DateTime.now(),
-          status: newStatus,
-        ),
-      );
+        final updated = existing.copyWith(
+          progress: existing.progress.copyWith(
+            correctStreak: newStreak,
+            wrongCount: newWrongCount,
+            lastAnsweredAt: DateTime.now(),
+            status: newStatus,
+          ),
+        );
 
-      await databaseservice.setData(
-        requirements: requirements,
-        data: QuestionMistakeModel.fromEntity(updated).toJson(),
-      );
-    }));
+        await databaseservice.setData(
+          requirements: requirements,
+          data: QuestionMistakeModel.fromEntity(updated).toJson(),
+        );
+      }),
+    );
   }
 
   @override
@@ -159,8 +165,9 @@ class MyMistakesRepoImpl implements MyMistakesRepo {
   }
 
   @override
-  Future<Either<Failure, List<QuestionMistakeEntity>>> getAllActiveMistakes(
-      {required String userUID}) async {
+  Future<Either<Failure, List<QuestionMistakeEntity>>> getAllActiveMistakes({
+    required String userUID,
+  }) async {
     try {
       final result = await databaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
@@ -188,24 +195,23 @@ class MyMistakesRepoImpl implements MyMistakesRepo {
   }
 
   @override
-  Future<Either<Failure, int>> getSubjectTotalMistakes(
-      {required String userUID, required String subjectId}) async {
+  Future<Either<Failure, int>> getSubjectTotalMistakes({
+    required String userUID,
+    required String subjectId,
+  }) async {
     try {
       final response = await databaseservice.getCollectionItemsCount(
-          requirements: FireStoreRequirmentsEntity(
-            collection: BackendEndpoints.usersCollectionName,
-            docId: userUID,
-            subCollection: BackendEndpoints.myMistakesSubCollection,
-          ),
-          query: {
-            "filters": [
-              {
-                "field": "courseSubject",
-                "operator": "==",
-                "value": subjectId,
-              }
-            ]
-          });
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.usersCollectionName,
+          docId: userUID,
+          subCollection: BackendEndpoints.myMistakesSubCollection,
+        ),
+        query: {
+          "filters": [
+            {"field": "courseSubject", "operator": "==", "value": subjectId},
+          ],
+        },
+      );
       return Right(response);
     } on CustomException catch (e) {
       return Left(ServerFailure(message: e.message));

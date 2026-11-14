@@ -60,8 +60,6 @@ class firebaseAuthService {
       );
       return credential.user!;
     } on FirebaseAuthException catch (e) {
-      log(e.code);
-      log(e.message.toString());
       switch (e.code) {
         case 'user-not-found':
           throw CustomException(message: LocaleKeys.dataNotFound);
@@ -113,10 +111,8 @@ class firebaseAuthService {
     } on CustomException {
       rethrow;
     } on GoogleSignInException catch (e) {
-      debugPrint('Google error: ${e.code} - ${e.description}');
       throw CustomException(message: LocaleKeys.errorOccurredMessage);
     } on FirebaseAuthException catch (e) {
-      debugPrint('Firebase error: ${e.code} - ${e.message}');
       switch (e.code) {
         case 'network-request-failed':
           throw CustomException(message: LocaleKeys.noInternet);
@@ -137,7 +133,6 @@ class firebaseAuthService {
           throw CustomException(message: LocaleKeys.errorOccurredMessage);
       }
     } catch (e) {
-      debugPrint('Unknown error: $e');
       throw CustomException(message: LocaleKeys.errorOccurredMessage);
     }
   }

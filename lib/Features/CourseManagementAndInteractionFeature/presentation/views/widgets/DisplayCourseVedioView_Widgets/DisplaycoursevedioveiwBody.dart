@@ -5,6 +5,8 @@ import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/Cour
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVideoviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Core/widgets/SensitivePageWrapper.dart';
+
 import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/VideoPreviewerWidgets/CustomDisplayingVedioWidget.dart';
@@ -52,7 +54,6 @@ class _DisplaycoursevedioveiwBodyState
     });
   }
 
-  /// [height] null = Auto.
   Future<String?> _fetchPlaybackUrl(
     CourseVideoViewNavigationsRequirmentsEntity requirement, {
     int? height,
@@ -61,8 +62,6 @@ class _DisplaycoursevedioveiwBodyState
       courseId: requirement.courseEntity.id,
       sectionId: requirement.sectionId,
       videoId: requirement.video.id,
-      // TODO: if the URL is signed (contains token=), add a `height`
-      // param here and put min_resolution / max_resolution in the JWT claims.
     );
     return result.fold<String?>((_) => null, (url) => url);
   }
@@ -83,17 +82,28 @@ class _DisplaycoursevedioveiwBodyState
     CourseVideoViewNavigationsRequirmentsEntity requirement,
     CourseVideoItemEntity video,
   ) {
-    return PremiumVideoPlayer(
-      videoUrl: _playbackUrl,
-      title: video.title,
-      availableQualities: video.availableQualities,
-      sourceWidth: (video.sourceWidth as num?)?.toInt(),
-      sourceHeight: (video.sourceHeight as num?)?.toInt(),
-      resolveUrl: (height) async {
-        final url = await _fetchPlaybackUrl(requirement, height: height);
-        if (url == null) throw Exception('Playback URL unavailable');
-        return url;
+    return SensitivePageWrapper(
+      watermarkText: getUserData().uid,
+      requireBiometric: false,
+      onSecurityEvent: (eventName) {
+        CustomSnackBar.show(
+          context,
+          message: 'Security event detected: $eventName',
+          type: SnackType.warning,
+        );
       },
+      child: PremiumVideoPlayer(
+        videoUrl: _playbackUrl,
+        title: video.title,
+        availableQualities: video.availableQualities,
+        sourceWidth: (video.sourceWidth as num?)?.toInt(),
+        sourceHeight: (video.sourceHeight as num?)?.toInt(),
+        resolveUrl: (height) async {
+          final url = await _fetchPlaybackUrl(requirement, height: height);
+          if (url == null) throw Exception('Playback URL unavailable');
+          return url;
+        },
+      ),
     );
   }
 
@@ -162,7 +172,7 @@ class _DisplaycoursevedioveiwBodyState
                 bottom: 16,
                 left: 16,
                 right: 16,
-                child: addingJoinedByLoadingWidget(),
+                child: LoadingMessageCard(),
               ),
             ),
           ],
