@@ -1,49 +1,54 @@
-// ignore_for_file: camel_case_types, file_names
-
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
-class addingJoinedByLoadingWidget extends StatelessWidget {
-  const addingJoinedByLoadingWidget({super.key});
+class LoadingMessageCard extends StatelessWidget {
+  const LoadingMessageCard({super.key, this.message});
+
+  final String? message;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(4),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 4,
-            offset: Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(
-            height: 24,
-            width: 24,
-            child: CircularProgressIndicator(
-              color: KMainColor,
-              strokeWidth: 2.5,
+    final colors = Theme.of(context).colorScheme;
+
+    return Semantics(
+      liveRegion: true,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 320),
+        child: Material(
+          color: colors.surface,
+          elevation: 6,
+          shadowColor: Colors.black45,
+          borderRadius: BorderRadius.circular(16),
+          clipBehavior: Clip.antiAlias,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox.square(
+                  dimension: 22,
+                  child: CircularProgressIndicator(
+                    color: KMainColor,
+                    strokeWidth: 2.5,
+                  ),
+                ),
+                const SizedBox(width: 14),
+                Flexible(
+                  child: Text(
+                    message ?? LocaleKeys.loggingIn,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles(
+                      context,
+                    ).semiBold16.copyWith(color: colors.onSurface),
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              LocaleKeys.loggingIn,
-              style:
-                  AppTextStyles(context).semiBold16.copyWith(color: KMainColor),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

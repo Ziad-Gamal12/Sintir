@@ -22,22 +22,24 @@ class ProfileItemAction extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ListTile(
-            onTap: () => context.push(profileActionsEntity.routeName),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-            leading: ProfileItemActionLeadingIcon(
-              profileActionsEntity: profileActionsEntity,
-            ),
-            title: Text(
-              profileActionsEntity.title,
-              style: AppTextStyles(context).semiBold16.copyWith(
-                    color: theme.colorScheme.onSurface,
-                  ),
-            ),
-            trailing: Icon(
-              Icons.chevron_right_rounded,
-              color: theme.colorScheme.outline,
-              size: 22,
+          Material(
+            child: ListTile(
+              onTap: () => context.push(profileActionsEntity.routeName),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+              leading: ProfileItemActionLeadingIcon(
+                profileActionsEntity: profileActionsEntity,
+              ),
+              title: Text(
+                profileActionsEntity.title,
+                style: AppTextStyles(
+                  context,
+                ).semiBold16.copyWith(color: theme.colorScheme.onSurface),
+              ),
+              trailing: Icon(
+                Icons.chevron_right_rounded,
+                color: theme.colorScheme.outline,
+                size: 22,
+              ),
             ),
           ),
           if (showDivider)

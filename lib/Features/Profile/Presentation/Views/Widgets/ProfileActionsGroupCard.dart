@@ -29,25 +29,25 @@ class ProfileActionsGroupCard extends StatelessWidget {
             child: Text(
               sectionTitle,
               textAlign: TextAlign.start,
-              style: AppTextStyles(context)
-                  .semiBold14
-                  .copyWith(color: theme.colorScheme.onSurfaceVariant),
+              style: AppTextStyles(
+                context,
+              ).semiBold14.copyWith(color: theme.colorScheme.onSurfaceVariant),
             ),
           ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: ColoredBox(
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
               color: theme.cardColor,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  for (var index = 0; index < items.length; index++)
-                    ProfileItemAction(
-                      profileActionsEntity: items[index],
-                      showDivider: index < items.length - 1,
-                    ),
-                ],
-              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                for (var index = 0; index < items.length; index++)
+                  ProfileItemAction(
+                    profileActionsEntity: items[index],
+                    showDivider: index < items.length - 1,
+                  ),
+              ],
             ),
           ),
         ],

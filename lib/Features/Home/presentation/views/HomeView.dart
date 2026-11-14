@@ -39,39 +39,49 @@ class _HomeviewState extends State<Homeview> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) =>
-                GetCoursesCubit(coursesrepo: getIt<Coursesrepo>())),
+          create: (context) =>
+              GetCoursesCubit(coursesrepo: getIt<Coursesrepo>()),
+        ),
         BlocProvider(
-            create: (context) => GetUserDataCubit(
-                authService: getIt<firebaseAuthService>(),
-                authRepo: getIt<AuthRepo>())),
+          create: (context) => GetUserDataCubit(
+            authService: getIt<firebaseAuthService>(),
+            authRepo: getIt<AuthRepo>(),
+          ),
+        ),
         BlocProvider(create: (context) => BottomNavCubit()),
       ],
-      child: Builder(builder: (context) {
-        return Scaffold(
-          bottomNavigationBar: BottomNavBar(
-            onPageChanged: (index) {
-              context.read<BottomNavCubit>().changeIndex(index);
-            },
-          ),
-          body: SafeArea(
-            bottom: false,
-            child: BlocBuilder<BottomNavCubit, BottomNavState>(
-              builder: (context, state) {
-                final cubit = context.read<BottomNavCubit>();
-                return IndexedStack(
-                  index: cubit.currentIndex,
-                  children: List.generate(_builders.length, (i) {
-                    return cubit.visited.contains(i)
-                        ? _screen(i)
-                        : const SizedBox.shrink();
-                  }),
-                );
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            extendBody: true,
+            bottomNavigationBar: BottomNavBar(
+              onPageChanged: (index) {
+                context.read<BottomNavCubit>().changeIndex(index);
               },
             ),
-          ),
-        );
-      }),
+            body: MediaQuery.removePadding(
+              context: context,
+              removeBottom: true,
+              child: SafeArea(
+                bottom: false,
+                child: BlocBuilder<BottomNavCubit, BottomNavState>(
+                  builder: (context, state) {
+                    final cubit = context.read<BottomNavCubit>();
+                    return IndexedStack(
+                      index: cubit.currentIndex,
+                      children: List.generate(_builders.length, (i) {
+                        return cubit.visited.contains(i)
+                            ? _screen(i)
+                            : const SizedBox.shrink();
+                      }),
+                    );
+                  },
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

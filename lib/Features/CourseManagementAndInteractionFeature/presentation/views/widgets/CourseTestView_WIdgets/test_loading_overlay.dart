@@ -8,8 +8,9 @@ class TestLoadingOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = context
-        .select((TestItemCubit cubit) => cubit.state is JoinToTestItemLoading);
+    final isLoading = context.select(
+      (TestItemCubit cubit) => cubit.state is JoinToTestItemLoading,
+    );
 
     return Visibility(
       visible: isLoading,
@@ -17,7 +18,7 @@ class TestLoadingOverlay extends StatelessWidget {
         bottom: 16,
         left: 16,
         right: 16,
-        child: addingJoinedByLoadingWidget(),
+        child: LoadingMessageCard(),
       ),
     );
   }

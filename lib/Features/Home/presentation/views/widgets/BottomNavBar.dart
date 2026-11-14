@@ -9,18 +9,8 @@ import 'package:sintir/Features/Home/Domain/Entities/BottomNavBarEntity.dart';
 import 'package:sintir/Features/Home/presentation/manager/cubit/bottom_nav_cubit.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/BottomNavBarItem.dart';
 
-/// Floating, capsule-shaped bottom navigation bar.
-///
-/// - Single source of truth: the selected tab is read from [BottomNavCubit]
-///   (no duplicated local state).
-/// - Safe-area aware (gesture bar / home indicator / landscape notch).
-/// - Capped width so it stays a tidy dock on tablets & foldables.
-/// - Text scaling is clamped so large accessibility fonts can't break it.
 class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({
-    super.key,
-    required this.onPageChanged,
-  });
+  const BottomNavBar({super.key, required this.onPageChanged});
 
   final ValueChanged<int> onPageChanged;
 
@@ -52,7 +42,7 @@ class BottomNavBar extends StatelessWidget {
         16 + viewPadding.left,
         0,
         16 + viewPadding.right,
-        math.max(12.0, viewPadding.bottom - 6),
+        math.max(4.0, viewPadding.bottom - 12),
       ),
       child: Align(
         heightFactor: 1,
@@ -65,23 +55,10 @@ class BottomNavBar extends StatelessWidget {
                 color: surface,
                 borderRadius: BorderRadius.circular(_radius),
                 border: Border.all(
-                  color: theme.colorScheme.onSurface
-                      .withValues(alpha: isDark ? 0.08 : 0.05),
+                  color: theme.colorScheme.onSurface.withValues(
+                    alpha: isDark ? 0.08 : 0.05,
+                  ),
                 ),
-                boxShadow: [
-                  // Soft ambient shadow
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: isDark ? 0.45 : 0.10),
-                    blurRadius: 32,
-                    offset: const Offset(0, 12),
-                  ),
-                  // Tight contact shadow
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: isDark ? 0.30 : 0.06),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
               ),
               child: Padding(
                 padding: const EdgeInsets.all(_barPadding),

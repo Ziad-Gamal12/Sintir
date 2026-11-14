@@ -27,31 +27,36 @@ class CouponCardHeader extends StatelessWidget {
       listener: (context, state) {
         if (state is UpdateCouponItemStatusSuccess &&
             state.couponID == couponEntity.code) {
-          log("${state.couponID} ${couponEntity.code}");
           couponEntity.status = state.newStatus;
         } else if (state is UpdateCouponItemStatusFailure) {
-          CustomSnackBar.show(context,
-              message: state.errMessage, type: SnackType.error);
+          CustomSnackBar.show(
+            context,
+            message: state.errMessage,
+            type: SnackType.error,
+          );
         }
       },
       builder: (context, state) {
         return Row(
           children: [
             Expanded(
-                child: Wrap(
-              children: [
-                CourseCouponGridViewItemDiscount(
+              child: Wrap(
+                children: [
+                  CourseCouponGridViewItemDiscount(
                     pecentage: couponEntity.discountPercentage,
-                    discountColor: couponEntity.availability ==
+                    discountColor:
+                        couponEntity.availability ==
                             CourseCouponAvailability.active
                         ? Colors.amber.shade600
-                        : Colors.grey),
-                SizedBox(width: 8),
-                CouponItemStatusBadge(
-                  availability: couponEntity.availability,
-                )
-              ],
-            )),
+                        : Colors.grey,
+                  ),
+                  SizedBox(width: 8),
+                  CouponItemStatusBadge(
+                    availability: couponEntity.availability,
+                  ),
+                ],
+              ),
+            ),
             const SizedBox(width: 8),
             CourseCouponGridViewItemHeaderSwitcher(
               courseID: courseID,
@@ -61,7 +66,7 @@ class CouponCardHeader extends StatelessWidget {
             CouponPopupMenuButton(
               couponID: couponEntity.code,
               courseID: courseID,
-            )
+            ),
           ],
         );
       },
