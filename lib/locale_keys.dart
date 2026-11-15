@@ -41,6 +41,9 @@ class LocaleKeys {
         ),
       );
   static String get resultsExcellent => 'results_excellent'.tr();
+  static String get passed => 'passed'.tr();
+  static String get failed => 'failed'.tr();
+  static String get correctAnswers => 'correct_answers'.tr();
   static String get resultsGood => 'results_good'.tr();
   static String get resultsSteady => 'results_steady'.tr();
   static String get resultsFollowUp => 'results_follow_up'.tr();

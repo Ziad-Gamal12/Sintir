@@ -1,46 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/ReviewTestResultView.dart';
 import 'package:sintir/locale_keys.dart';
 
+/// Tonal "View result" button (same look as the original design, but placed
+/// last in the card). Presentational only: navigation is handled by the
+/// card's InkWell in StudentResultCard.
 class StudentResultCardAction extends StatelessWidget {
-  const StudentResultCardAction({super.key, required this.testResultEntity});
-  final TestResultEntity testResultEntity;
+  const StudentResultCardAction({super.key});
 
   @override
   Widget build(BuildContext context) {
     final style = AppTextStyles(context);
     final theme = Theme.of(context);
+    final primary = theme.colorScheme.primary;
 
-    return InkWell(
-      borderRadius: BorderRadius.circular(12),
-      onTap: () {
-        GoRouter.of(context)
-            .push(Reviewtestresultview.routeName, extra: testResultEntity);
-      },
-      child: Container(
-        constraints: const BoxConstraints(minHeight: 48),
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        decoration: BoxDecoration(
-          color: theme.colorScheme.primary.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.visibility_rounded,
-                color: theme.colorScheme.primary, size: 22),
-            const SizedBox(width: 6),
-            Text(
+    // Raw brand blue on the dark card is ~3.4:1; use a lighter tint of the
+    // same hue for text/icon in dark mode.
+    final contentColor = theme.brightness == Brightness.dark
+        ? Color.lerp(primary, Colors.white, .3)!
+        : primary;
+
+    return Container(
+      constraints: const BoxConstraints(minHeight: 44),
+      alignment: Alignment.center,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: primary.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.visibility_rounded, color: contentColor, size: 20),
+          const SizedBox(width: 6),
+          Flexible(
+            child: Text(
               LocaleKeys.viewResult,
-              style:
-                  style.semiBold14.copyWith(color: theme.colorScheme.primary),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: style.semiBold14.copyWith(color: contentColor),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

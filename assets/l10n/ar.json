@@ -42,7 +42,11 @@
   "reset_password": "إعادة تعيين كلمة المرور",
   "description_label": "وصف",
   "shared": "مشترك",
+  "passed": "ناجح",
+  "failed": "راسب",
+  "correct_answers": "الإجابات الصحيحة",
   "login": "تسجيل الدخول",
+  
   "withdrawal_request_title": "طلب سحب رصيد",
   "transaction_status_completed": "مكتملة",
   "transaction_status_pending": "قيد المعالجة",

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/StudentStatItemIcon.dart';
 
@@ -31,29 +30,28 @@ class StudentStatItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          StudentStatItemIcon(
-            icon: icon,
-            backgroundColor: backgroundColor,
-          ),
+          StudentStatItemIcon(icon: icon, backgroundColor: backgroundColor),
           const SizedBox(width: 10),
-
-          // Text details
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: style.regular11.copyWith(
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  // letterSpacing removed: it breaks Arabic letter joining.
+                  style: style.regular12.copyWith(
                     color: theme.colorScheme.onSurfaceVariant,
-                    letterSpacing: 0.3,
                   ),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: 4),
                 Directionality(
                   textDirection: TextDirection.ltr,
                   child: Text(
                     value,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: style.semiBold16.copyWith(
                       color: theme.colorScheme.onSurface,
                     ),
@@ -64,9 +62,6 @@ class StudentStatItem extends StatelessWidget {
           ),
         ],
       ),
-    )
-        .animate()
-        .fadeIn(duration: 350.ms)
-        .moveY(begin: 10, curve: Curves.easeOut);
+    );
   }
 }

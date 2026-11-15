@@ -1,88 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/ResultsAverageHero.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/test_consequences_cubit/test_consequences_cubit.dart';
 import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class AverageScoreCard extends StatefulWidget {
-  const AverageScoreCard({super.key});
+class AverageScoreCard extends StatelessWidget {
+  const AverageScoreCard({super.key, this.average});
 
-  @override
-  State<AverageScoreCard> createState() => _AverageScoreCardState();
-}
-
-class _AverageScoreCardState extends State<AverageScoreCard> {
-  int highestScore = 0;
-  int lowestScore = 0;
+  /// The REAL mean of all student results (null → not available yet).
+  final double? average;
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final Color cardColor = theme.cardColor;
-    final Color borderColor = theme.dividerColor;
-    final Color primaryColor = theme.colorScheme.primary;
-    final Color errorColor = theme.colorScheme.error;
-    final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
-
-    return BlocConsumer<TestConsequencesCubit, TestConsequencesState>(
-      listener: (context, state) {
-        if (state is TestConsequencesGetHighestScorSuccess) {
-          highestScore = state.testResultEntity.result;
-        } else if (state is TestConsequencesGetLowestScorSuccess) {
-          lowestScore = state.testResultEntity.result;
-        }
-      },
+    // The cubit is used only to read the test's total questions
+    // (every TestResultEntity carries it) and the loading state.
+    return BlocBuilder<TestConsequencesCubit, TestConsequencesState>(
+      buildWhen: (previous, current) =>
+          current is TestConsequencesGetHighestScorLoading ||
+          current is TestConsequencesGetHighestScorSuccess ||
+          current is TestConsequencesGetHighestScorFailure,
       builder: (context, state) {
-        if (state is TestConsequencesGetLowestScorFailure) {
-          return Expanded(
-            child: Text(
-              state.errMessage,
-              overflow: TextOverflow.ellipsis,
-              style:
-                  AppTextStyles(context).regular14.copyWith(color: errorColor),
-            ),
-          );
-        } else if (state is TestConsequencesGetHighestScorFailure) {
-          return Expanded(
-            child: Text(
-              state.errMessage,
-              overflow: TextOverflow.ellipsis,
-              style:
-                  AppTextStyles(context).regular14.copyWith(color: errorColor),
-            ),
-          );
-        }
+        final isLoading = state is TestConsequencesGetHighestScorLoading;
+        final int? total = state is TestConsequencesGetHighestScorSuccess
+            ? state.testResultEntity.totalQuestions
+            : null;
+
         return Skeletonizer(
-          enabled: state is TestConsequencesGetHighestScorLoading ||
-              state is TestConsequencesGetLowestScorLoading,
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: cardColor,
-              border: Border.all(color: borderColor),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  "${(highestScore + lowestScore) / 2}",
-                  style: AppTextStyles(context)
-                      .bold24
-                      .copyWith(color: primaryColor),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  LocaleKeys.averageResults,
-                  style: AppTextStyles(context)
-                      .bold16
-                      .copyWith(color: primaryTextColor),
-                ),
-              ],
-            ),
+          enabled: isLoading,
+          child: ResultsAverageHero(
+            label: LocaleKeys.averageResults,
+            // Placeholders only so the skeleton draws the full layout.
+            average: isLoading ? 1.5 : average,
+            totalQuestions: isLoading ? 3 : total,
           ),
         );
       },
     );
+  }
+}
+
+/// Mean of all `result` values, or null when there are no results.
+extension TestResultsStats on Iterable<TestResultEntity> {
+  double? get averageScore {
+    if (isEmpty) return null;
+    return fold<int>(0, (sum, r) => sum + r.result) / length;
   }
 }

@@ -18,6 +18,10 @@ class TestResultsSliverListView extends StatefulWidget {
 }
 
 class _TestResultsSliverListViewState extends State<TestResultsSliverListView> {
+  late final List<TestResultEntity> _fakeResults = List.generate(
+    6,
+    (_) => TestResultEntity.empty(),
+  );
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GetExamResultsCubit, GetExamResultsState>(
@@ -33,48 +37,41 @@ class _TestResultsSliverListViewState extends State<TestResultsSliverListView> {
             widget.testResults.isEmpty) {
           return SliverToBoxAdapter(
             child: ListView.builder(
-                itemCount: getFakeTestResults().length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: AspectRatio(
-                        aspectRatio: 2 / 1.75,
-                        child: Skeletonizer(
-                            enabled: true,
-                            child: StudentResultCard(
-                              testResultEntity: getFakeTestResults()[index],
-                            ))),
-                  );
-                }),
+              itemCount: _fakeResults.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Skeletonizer(
+                    enabled: true,
+                    child: StudentResultCard(
+                      testResultEntity: _fakeResults[index],
+                    ),
+                  ),
+                );
+              },
+            ),
           );
         } else if (state is GetExamResultsSuccess &&
             widget.testResults.isEmpty) {
           return SliverToBoxAdapter(
-            child: CustomEmptyWidget(
-              text: LocaleKeys.noResults,
-            ),
+            child: CustomEmptyWidget(text: LocaleKeys.noResults),
           );
         } else {
           return SliverList.builder(
-              itemCount: widget.testResults.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: AspectRatio(
-                      aspectRatio: 2 / 1.75,
-                      child: StudentResultCard(
-                        testResultEntity: widget.testResults[index],
-                      )),
-                );
-              });
+            itemCount: widget.testResults.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: StudentResultCard(
+                  testResultEntity: widget.testResults[index],
+                ),
+              );
+            },
+          );
         }
       },
     );
-  }
-
-  List<TestResultEntity> getFakeTestResults() {
-    return List.generate(6, (index) => TestResultEntity.empty());
   }
 }
