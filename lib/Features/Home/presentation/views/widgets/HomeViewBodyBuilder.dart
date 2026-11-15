@@ -7,9 +7,7 @@ import 'package:sintir/Features/Home/presentation/views/widgets/UserInterestedCo
 import 'package:sintir/constant.dart';
 
 class HomeViewBodyBuilder extends StatelessWidget {
-  const HomeViewBodyBuilder({
-    super.key,
-  });
+  const HomeViewBodyBuilder({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +19,12 @@ class HomeViewBodyBuilder extends StatelessWidget {
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(child: HomeViewBodyAppBar()),
-          SliverToBoxAdapter(child: SizedBox(height: 24)),
+          SliverToBoxAdapter(child: SizedBox(height: 16)),
           UserInterestedCoursesSection(),
-          SliverToBoxAdapter(child: SizedBox(height: 24)),
+          SliverToBoxAdapter(child: SizedBox(height: 16)),
           PopularCoursesSection(),
-          SliverToBoxAdapter(child: SizedBox(height: 24)),
-          SliverToBoxAdapter(
-            child: NewestCoursesHeader(),
-          ),
+          SliverToBoxAdapter(child: SizedBox(height: 16)),
+          SliverToBoxAdapter(child: NewestCoursesHeader()),
           SliverToBoxAdapter(child: SizedBox(height: 12)),
           RecentCoursesSection(),
         ],

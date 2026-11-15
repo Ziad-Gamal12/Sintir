@@ -10,9 +10,7 @@ import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
 class HomeViewBodyAppBar extends StatelessWidget {
-  const HomeViewBodyAppBar({
-    super.key,
-  });
+  const HomeViewBodyAppBar({super.key});
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -34,18 +32,22 @@ class HomeViewBodyAppBar extends StatelessWidget {
           ),
         ),
       ),
-      title: Text.rich(TextSpan(children: [
+      title: Text.rich(
         TextSpan(
-          text: LocaleKeys.welcomeBackHome,
-          style: AppTextStyles(context).semiBold20,
+          children: [
+            TextSpan(
+              text: LocaleKeys.welcomeBackHome,
+              style: AppTextStyles(context).semiBold20,
+            ),
+            TextSpan(
+              text: getUserData().firstName,
+              style: AppTextStyles(
+                context,
+              ).semiBold20.copyWith(color: KSecondaryColor),
+            ),
+          ],
         ),
-        TextSpan(
-          text: getUserData().firstName,
-          style: AppTextStyles(context)
-              .semiBold20
-              .copyWith(color: KSecondaryColor),
-        ),
-      ])),
+      ),
     );
   }
 }

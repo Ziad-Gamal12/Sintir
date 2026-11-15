@@ -1,63 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseCardMetrics.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseItemDetailsContentCreatorCard.dart';
+import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseItemPrice.dart';
+import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseItemStudentsCount.dart';
+import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseItemTitleBlock.dart';
 import 'package:sintir/Features/ContentCreatorProfile/Presentation/Views/ContentCreatorProfile.dart';
 
 class CourseItemDetails extends StatelessWidget {
-  const CourseItemDetails({
-    super.key,
-    required this.courseItem,
-  });
+  const CourseItemDetails({super.key, required this.courseItem});
 
   final CourseEntity courseItem;
 
   @override
   Widget build(BuildContext context) {
-    final styles = AppTextStyles(context);
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
+    final creator = courseItem.contentcreaterentity;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Text(
-          courseItem.title,
-          maxLines: 1,
-          textAlign: TextAlign.right,
-          overflow: TextOverflow.ellipsis,
-          style: styles.semiBold12.copyWith(
-            color: isDark ? Colors.white : Colors.black,
-          ),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          courseItem.description,
-          maxLines: 2,
-          textAlign: TextAlign.right,
-          overflow: TextOverflow.ellipsis,
-          style: styles.regular10.copyWith(
-            color: isDark ? Colors.white70 : Colors.grey,
-          ),
-        ),
-        const Spacer(),
-        if (courseItem.contentcreaterentity != null)
-          InkWell(
-            onTap: () {
-              GoRouter.of(context).push(
-                ContentCreatorProfile.routeName,
-                extra: courseItem.contentcreaterentity,
-              );
-            },
-            child: CourseItemDetailsContentCreatorCard(
-              contentcreaterentity: courseItem.contentcreaterentity!,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final titleBlockHeight = CourseCardMetrics.titleBlockHeight(context);
+        final metaHeight = CourseCardMetrics.metaHeight(context);
+        final showCreator =
+            creator != null &&
+            constraints.maxHeight >=
+                titleBlockHeight +
+                    CourseCardMetrics.titleToMetaGap +
+                    metaHeight +
+                    4 +
+                    CourseCardMetrics.creatorHeight -
+                    1;
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: titleBlockHeight,
+              width: double.infinity,
+              child: CourseItemTitleBlock(
+                title: courseItem.title,
+                description: courseItem.description,
+              ),
             ),
-          )
-        else
-          const SizedBox(),
-      ],
+            const SizedBox(height: CourseCardMetrics.titleToMetaGap),
+            Row(
+              children: [
+                Flexible(child: CourseItemPrice(price: courseItem.price)),
+                const Spacer(),
+                if (courseItem.studentsCount > 0)
+                  CourseItemStudentsCount(count: courseItem.studentsCount),
+              ],
+            ),
+            const Spacer(),
+            if (showCreator)
+              CourseItemDetailsContentCreatorCard(
+                contentcreaterentity: creator,
+                onTap: () => GoRouter.of(
+                  context,
+                ).push(ContentCreatorProfile.routeName, extra: creator),
+              ),
+          ],
+        );
+      },
     );
   }
 }

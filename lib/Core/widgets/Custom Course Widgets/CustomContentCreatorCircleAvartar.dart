@@ -7,19 +7,20 @@ class CustomContentCreatorCircleAvartar extends StatelessWidget {
   const CustomContentCreatorCircleAvartar({
     super.key,
     required this.imagepath,
+    this.radius = 15,
   });
   final String imagepath;
+  final double radius;
+
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: 15,
+      radius: radius,
       child: AspectRatio(
         aspectRatio: 1,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(45),
-          child: CustomCachedNetworkImage(
-            imageUrl: imagepath,
-          ),
+          borderRadius: BorderRadius.circular(radius * 3),
+          child: CustomCachedNetworkImage(imageUrl: imagepath),
         ),
       ),
     );

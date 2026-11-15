@@ -7,23 +7,21 @@ import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
 class NewestCoursesHeader extends StatelessWidget {
-  const NewestCoursesHeader({
-    super.key,
-  });
+  const NewestCoursesHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
     return CustomListORGridTextHeader(
-        text: LocaleKeys.latestCourses,
-        trailing: InkWell(
-          child: Text(
-            LocaleKeys.seeMore,
-            style:
-                AppTextStyles(context).semiBold14.copyWith(color: KMainColor),
-          ),
-          onTap: () {
-            GoRouter.of(context).push(MoreNewestCoursesView.routeName);
-          },
-        ));
+      text: LocaleKeys.latestCourses,
+      trailing: InkWell(
+        child: Text(
+          LocaleKeys.seeMore,
+          style: AppTextStyles(context).semiBold14.copyWith(color: KMainColor),
+        ),
+        onTap: () {
+          GoRouter.of(context).push(MoreNewestCoursesView.routeName);
+        },
+      ),
+    );
   }
 }
