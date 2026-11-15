@@ -5,13 +5,10 @@ import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Helper/CourseDetailsCouponsViewHelper.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseDetailsCouponsViewContent.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/cubit/coupon_item_actions_cubit.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/coupon_item_actions_cubit/coupon_item_actions_cubit.dart';
 
 class CourseDetailsCouponsViewBody extends StatefulWidget {
-  const CourseDetailsCouponsViewBody({
-    super.key,
-    required this.courseId,
-  });
+  const CourseDetailsCouponsViewBody({super.key, required this.courseId});
 
   final String courseId;
 
@@ -37,23 +34,22 @@ class _CourseDetailsCouponsViewBodyState
 
   void _fetchCoupons() {
     context.read<CourseCouponsCubit>().getCourseCoupons(
-          courseID: widget.courseId,
-          isPaginate: false,
-        );
+      courseID: widget.courseId,
+      isPaginate: false,
+    );
   }
 
   void _onScroll() {
     _requestNextPageIfNeeded();
   }
 
-  void _requestNextPageIfNeeded({
-    bool allowWithoutScroll = false,
-  }) {
+  void _requestNextPageIfNeeded({bool allowWithoutScroll = false}) {
     final cubit = context.read<CourseCouponsCubit>();
     final hasClients = _scrollController.hasClients;
 
-    final double? extentAfter =
-        hasClients ? _scrollController.position.extentAfter : null;
+    final double? extentAfter = hasClients
+        ? _scrollController.position.extentAfter
+        : null;
 
     final shouldFetch = CourseDetailsCouponsViewHelper.shouldRequestNextPage(
       hasMore: _hasMore,
@@ -65,26 +61,18 @@ class _CourseDetailsCouponsViewBodyState
 
     if (!shouldFetch) return;
 
-    cubit.getCourseCoupons(
-      courseID: widget.courseId,
-      isPaginate: true,
-    );
+    cubit.getCourseCoupons(courseID: widget.courseId, isPaginate: true);
   }
 
   void _schedulePaginationCheck() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
 
-      _requestNextPageIfNeeded(
-        allowWithoutScroll: _coupons.isEmpty,
-      );
+      _requestNextPageIfNeeded(allowWithoutScroll: _coupons.isEmpty);
     });
   }
 
-  void _handleCouponsState(
-    BuildContext context,
-    CourseCouponsState state,
-  ) {
+  void _handleCouponsState(BuildContext context, CourseCouponsState state) {
     if (state is GetCourseCouponsSuccess) {
       final response = state.response;
 

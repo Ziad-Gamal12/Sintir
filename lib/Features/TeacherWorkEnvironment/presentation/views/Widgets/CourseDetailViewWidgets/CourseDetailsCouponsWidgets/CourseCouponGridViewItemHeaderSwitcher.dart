@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Enums/CourseCouponEnum.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/cubit/coupon_item_actions_cubit.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/coupon_item_actions_cubit/coupon_item_actions_cubit.dart';
 
 class CourseCouponGridViewItemHeaderSwitcher extends StatefulWidget {
   const CourseCouponGridViewItemHeaderSwitcher({
@@ -35,12 +35,12 @@ class _CourseCouponGridViewItemHeaderSwitcherState
     });
     try {
       await context.read<CouponItemActionsCubit>().changeCouponStatus(
-            couponID: widget.couponEntity.code,
-            courseID: widget.courseID,
-            status: enabled
-                ? CourseCouponStatus.active
-                : CourseCouponStatus.inactive,
-          );
+        couponID: widget.couponEntity.code,
+        courseID: widget.courseID,
+        status: enabled
+            ? CourseCouponStatus.active
+            : CourseCouponStatus.inactive,
+      );
     } catch (error) {
       if (mounted) {
         CustomSnackBar.show(
@@ -72,9 +72,7 @@ class _CourseCouponGridViewItemHeaderSwitcherState
             ? const SizedBox(
                 width: 22,
                 height: 22,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                ),
+                child: CircularProgressIndicator(strokeWidth: 2),
               )
             : Switch.adaptive(
                 value: coupon.canBeUsed,

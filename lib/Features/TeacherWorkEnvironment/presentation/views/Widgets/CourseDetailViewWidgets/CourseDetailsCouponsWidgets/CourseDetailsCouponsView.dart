@@ -6,7 +6,7 @@ import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseDetailsCouponsViewBody.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseDetailsCouponsViewFloatingButton.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/cubit/coupon_item_actions_cubit.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/coupon_item_actions_cubit/coupon_item_actions_cubit.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -21,28 +21,25 @@ class CourseDetailsCouponsView extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<CourseCouponsCubit>(
-          create: (_) => CourseCouponsCubit(
-            courseCouponsRepo: couponsRepo,
-          ),
+          create: (_) => CourseCouponsCubit(courseCouponsRepo: couponsRepo),
         ),
         BlocProvider<CouponItemActionsCubit>(
-          create: (_) => CouponItemActionsCubit(
-            couponsRepo: couponsRepo,
-          ),
+          create: (_) => CouponItemActionsCubit(couponsRepo: couponsRepo),
         ),
       ],
       child: Scaffold(
         appBar: CustomAppBar(appBartitle: LocaleKeys.coupons),
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton:
-            CourseDetailsCouponsViewFloatingButton(courseId: courseId),
+        floatingActionButton: CourseDetailsCouponsViewFloatingButton(
+          courseId: courseId,
+        ),
         body: Padding(
           padding: const EdgeInsets.symmetric(
-              horizontal: KHorizontalPadding, vertical: KVerticalPadding),
-          child: CourseDetailsCouponsViewBody(
-            courseId: courseId,
+            horizontal: KHorizontalPadding,
+            vertical: KVerticalPadding,
           ),
+          child: CourseDetailsCouponsViewBody(courseId: courseId),
         ),
       ),
     );
