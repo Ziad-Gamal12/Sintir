@@ -15,7 +15,7 @@ class CouponCodeContainer extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isDarkMode ? Color(0xff201F1F) : Colors.grey[100],
+        color: isDarkMode ? Colors.grey[900] : Colors.grey[100],
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
@@ -31,21 +31,18 @@ class CouponCodeContainer extends StatelessWidget {
                 Text(
                   'الكود:',
                   style: appTextStyles.medium12.copyWith(
-                      color: isDarkMode ? Colors.white : Colors.black),
+                    color: isDarkMode ? Colors.white : Colors.black,
+                  ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
-                    child:
-                        CourseCouponGridViewItemCode(couponCode: couponCode)),
+                  child: CourseCouponGridViewItemCode(couponCode: couponCode),
+                ),
               ],
             ),
           ),
-          SizedBox(
-            width: 8,
-          ),
-          CustomCopyToClipboard(
-            value: couponCode,
-          )
+          SizedBox(width: 8),
+          CustomCopyToClipboard(value: couponCode),
         ],
       ),
     );

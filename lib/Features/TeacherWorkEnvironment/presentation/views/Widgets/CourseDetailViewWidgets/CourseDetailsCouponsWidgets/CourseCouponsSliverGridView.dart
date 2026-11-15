@@ -16,11 +16,11 @@ class CourseCouponsSliverGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverGrid.builder(
       itemCount: coupons.length,
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 340.0,
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 480.0,
         crossAxisSpacing: 16,
         mainAxisSpacing: 16,
-        childAspectRatio: 1.52,
+        mainAxisExtent: 240.0,
       ),
       itemBuilder: (context, index) {
         return CourseCouponGridViewItem(

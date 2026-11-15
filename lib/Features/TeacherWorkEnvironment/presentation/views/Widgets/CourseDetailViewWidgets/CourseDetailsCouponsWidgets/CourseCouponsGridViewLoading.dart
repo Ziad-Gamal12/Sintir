@@ -11,20 +11,22 @@ class CourseCouponsGridViewLoading extends StatelessWidget {
     return Skeletonizer(
       enabled: true,
       child: GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: CourseCouponEntity.loadingItems().length,
-          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 340,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            childAspectRatio: 1.52,
-          ),
-          itemBuilder: (context, index) {
-            return CourseCouponGridViewItem(
-                courseId: "",
-                couponEntity: CourseCouponEntity.loadingItems()[index]);
-          }),
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: CourseCouponEntity.loadingItems().length,
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 480.0,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+          mainAxisExtent: 240.0,
+        ),
+        itemBuilder: (context, index) {
+          return CourseCouponGridViewItem(
+            courseId: "",
+            couponEntity: CourseCouponEntity.loadingItems()[index],
+          );
+        },
+      ),
     );
   }
 }
