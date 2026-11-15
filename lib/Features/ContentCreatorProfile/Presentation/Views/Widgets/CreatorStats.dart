@@ -15,22 +15,34 @@ class CreatorStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        _buildStatItem(
-          context: context,
-          icon: LucideIcons.bookOpen,
-          label: LocaleKeys.coursesLabel,
-          value: coursesCount.toString(),
-        ),
-        _buildStatItem(
-          context: context,
-          icon: LucideIcons.users,
-          label: LocaleKeys.studentsLabel,
-          value: subscribersCount.toString(),
-        ),
-      ],
+    final ThemeData theme = Theme.of(context);
+
+    return IntrinsicHeight(
+      child: Row(
+        children: [
+          Expanded(
+            child: _buildStatItem(
+              context: context,
+              icon: LucideIcons.bookOpen,
+              label: LocaleKeys.coursesLabel,
+              value: coursesCount.toString(),
+            ),
+          ),
+          VerticalDivider(
+            color: theme.dividerColor.withValues(alpha: 0.08),
+            thickness: 1,
+            width: 24,
+          ),
+          Expanded(
+            child: _buildStatItem(
+              context: context,
+              icon: LucideIcons.users,
+              label: LocaleKeys.studentsLabel,
+              value: subscribersCount.toString(),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -42,28 +54,43 @@ class CreatorStats extends StatelessWidget {
   }) {
     final ThemeData theme = Theme.of(context);
     final Color primaryColor = theme.colorScheme.primary;
+    final Color primaryTextColor = theme.textTheme.titleLarge!.color!;
     final Color secondaryTextColor = theme.textTheme.bodyMedium!.color!;
 
-    return Column(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(icon, size: 22, color: primaryColor),
-        const SizedBox(height: 4),
-        AnimatedSwitcher(
-            duration: const Duration(milliseconds: 500),
-            switchInCurve: Curves.easeOutBack,
-            switchOutCurve: Curves.easeIn,
-            key: ValueKey(value),
-            child: Text(
-              value,
-              style: AppTextStyles(context).semiBold16.copyWith(
-                    color: primaryColor,
-                  ),
-            )),
-        Text(
-          label,
-          style: AppTextStyles(context)
-              .regular14
-              .copyWith(color: secondaryTextColor),
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: primaryColor.withValues(alpha: 0.08),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(icon, size: 20, color: primaryColor),
+        ),
+        const SizedBox(width: 12),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 400),
+              child: Text(
+                value,
+                key: ValueKey<String>(value),
+                style: AppTextStyles(
+                  context,
+                ).semiBold16.copyWith(color: primaryTextColor, height: 1.1),
+              ),
+            ),
+            const SizedBox(height: 2),
+            Text(
+              label,
+              style: AppTextStyles(
+                context,
+              ).regular13.copyWith(color: secondaryTextColor),
+            ),
+          ],
         ),
       ],
     );

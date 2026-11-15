@@ -24,7 +24,7 @@ class _ContentCreatorDetailsState extends State<ContentCreatorDetails>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 600),
+      duration: const Duration(milliseconds: 500),
     )..forward();
   }
 
@@ -38,11 +38,6 @@ class _ContentCreatorDetailsState extends State<ContentCreatorDetails>
   Widget build(BuildContext context) {
     final creator = widget.contentcreaterentity;
     final ThemeData theme = Theme.of(context);
-    final Color cardBackgroundColor = theme.cardColor;
-    final Color shadowColor = theme.shadowColor;
-
-    const Color gradientStartColor = Color(0xff7F5AFF);
-    const Color gradientEndColor = Color(0xff5F9BFF);
 
     final subscribersCount = context
         .watch<ContentCreatorCoursesCubit>()
@@ -52,52 +47,25 @@ class _ContentCreatorDetailsState extends State<ContentCreatorDetails>
         .watch<ContentCreatorCoursesCubit>()
         .getContentCreatorCoursesCount();
 
-    return ScaleTransition(
-      scale: CurvedAnimation(parent: _controller, curve: Curves.easeOutBack),
-      child: Container(
-        padding: const EdgeInsets.all(24),
-        decoration: BoxDecoration(
-          color: cardBackgroundColor,
-          borderRadius: BorderRadius.circular(26),
-          boxShadow: [
-            BoxShadow(
-              color: shadowColor.withValues(alpha: 0.1),
-              blurRadius: 20,
-              spreadRadius: 2,
-              offset: const Offset(0, 8),
-            ),
-          ],
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CreatorAvatar(imageUrl: creator.profileImageUrl),
+        const SizedBox(height: 14),
+        CreatorNameTitle(name: creator.name, title: creator.title),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Divider(
+            height: 1,
+            thickness: 1,
+            color: theme.dividerColor.withValues(alpha: 0.08),
+          ),
         ),
-        child: Column(
-          children: [
-            CreatorAvatar(imageUrl: creator.profileImageUrl),
-            const SizedBox(height: 16),
-            CreatorNameTitle(
-              name: creator.name,
-              title: creator.title,
-            ),
-            const SizedBox(height: 20),
-            CreatorStats(
-              coursesCount: coursesCount,
-              subscribersCount: subscribersCount,
-            ),
-            const SizedBox(height: 20),
-            Container(
-              height: 4,
-              width: 120,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40),
-                gradient: const LinearGradient(
-                  colors: [
-                    gradientStartColor,
-                    gradientEndColor,
-                  ],
-                ),
-              ),
-            ),
-          ],
+        CreatorStats(
+          coursesCount: coursesCount,
+          subscribersCount: subscribersCount,
         ),
-      ),
+      ],
     );
   }
 }

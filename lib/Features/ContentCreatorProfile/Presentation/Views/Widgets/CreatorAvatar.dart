@@ -8,27 +8,28 @@ class CreatorAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final Color primaryColor = theme.colorScheme.primary;
+
     return Container(
-      padding: const EdgeInsets.all(4),
-      decoration: const BoxDecoration(
+      padding: const EdgeInsets.all(3),
+      decoration: BoxDecoration(
         shape: BoxShape.circle,
-        gradient: LinearGradient(
-          colors: [
-            Color(0xff7F5AFF),
-            Color(0xff5F9BFF),
-          ],
+        border: Border.all(
+          color: primaryColor.withValues(alpha: 0.5),
+          width: 2,
         ),
       ),
-      child: CircleAvatar(
-          radius: 52,
-          backgroundColor: Colors.white,
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: CustomCachedNetworkImage(
-                    imageUrl: imageUrl, fit: BoxFit.cover)),
-          )),
+      child: SizedBox(
+        width: 92,
+        height: 92,
+        child: ClipOval(
+          child: CustomCachedNetworkImage(
+            imageUrl: imageUrl,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
     );
   }
 }
