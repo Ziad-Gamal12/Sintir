@@ -66,7 +66,8 @@ class _WebviewbodyPaymentSuccessWidgetState
                                 : Lottie.asset(
                                     Assets.assetsLottieFilesSuccessanimation,
                                     key: const ValueKey(
-                                        'payment_success_lottie'),
+                                      'payment_success_lottie',
+                                    ),
                                     repeat: false,
                                     fit: BoxFit.contain,
                                     errorBuilder: (_, __, ___) =>
@@ -82,18 +83,18 @@ class _WebviewbodyPaymentSuccessWidgetState
                       child: Text(
                         LocaleKeys.paymentConfirmedHeading,
                         textAlign: TextAlign.center,
-                        style: AppTextStyles(context).bold24.copyWith(
-                              color: colors.onSurface,
-                            ),
+                        style: AppTextStyles(
+                          context,
+                        ).bold24.copyWith(color: colors.onSurface),
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       LocaleKeys.paymentConfirmedMessage,
                       textAlign: TextAlign.center,
-                      style: AppTextStyles(context)
-                          .regular14
-                          .copyWith(color: colors.onSurfaceVariant),
+                      style: AppTextStyles(
+                        context,
+                      ).regular14.copyWith(color: colors.onSurfaceVariant),
                     ),
                     if (hasPaymentDetails) ...[
                       const SizedBox(height: 24),
@@ -109,9 +110,9 @@ class _WebviewbodyPaymentSuccessWidgetState
                             if (hasCourseTitle)
                               Text(
                                 normalizedCourseTitle!,
-                                style: AppTextStyles(context)
-                                    .semiBold16
-                                    .copyWith(color: colors.onSurface),
+                                style: AppTextStyles(
+                                  context,
+                                ).semiBold16.copyWith(color: colors.onSurface),
                               ),
                             if (quote != null) ...[
                               if (hasCourseTitle) const SizedBox(height: 14),
@@ -125,13 +126,17 @@ class _WebviewbodyPaymentSuccessWidgetState
                                 _PaymentDetailRow(
                                   label: LocaleKeys.originalPrice,
                                   value: _formatMoney(
-                                      context, quote.originalAmountCents),
+                                    context,
+                                    quote.originalAmountCents,
+                                  ),
                                 ),
                                 const SizedBox(height: 8),
                                 _PaymentDetailRow(
                                   label: LocaleKeys.paymentDiscount,
                                   value: _formatMoney(
-                                      context, quote.discountAmountCents),
+                                    context,
+                                    quote.discountAmountCents,
+                                  ),
                                 ),
                               ],
                               if (quote.couponCode != null) ...[
@@ -153,10 +158,19 @@ class _WebviewbodyPaymentSuccessWidgetState
                       style: FilledButton.styleFrom(
                         minimumSize: const Size.fromHeight(52),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14)),
+                          borderRadius: BorderRadius.circular(14),
+                        ),
                       ),
-                      icon: const Icon(Icons.school_outlined),
-                      label: Text(LocaleKeys.returnToCourse),
+                      icon: const Icon(
+                        Icons.school_outlined,
+                        color: Colors.white,
+                      ),
+                      label: Text(
+                        LocaleKeys.returnToCourse,
+                        style: AppTextStyles(
+                          context,
+                        ).semiBold16.copyWith(color: Colors.white),
+                      ),
                     ),
                   ],
                 ),
@@ -168,10 +182,8 @@ class _WebviewbodyPaymentSuccessWidgetState
     );
   }
 
-  String _formatMoney(BuildContext context, int amountCents) => '${NumberFormat(
-        '#,##0.00',
-        Localizations.localeOf(context).toString(),
-      ).format(amountCents / 100)}\u00a0${widget.quote!.currency}';
+  String _formatMoney(BuildContext context, int amountCents) =>
+      '${NumberFormat('#,##0.00', Localizations.localeOf(context).toString()).format(amountCents / 100)}\u00a0${widget.quote!.currency}';
 }
 
 class _SuccessMark extends StatelessWidget {
@@ -180,11 +192,8 @@ class _SuccessMark extends StatelessWidget {
   final Color color;
 
   @override
-  Widget build(BuildContext context) => Icon(
-        Icons.check_circle_rounded,
-        size: 88,
-        color: color,
-      );
+  Widget build(BuildContext context) =>
+      Icon(Icons.check_circle_rounded, size: 88, color: color);
 }
 
 class _PaymentDetailRow extends StatelessWidget {
@@ -207,9 +216,9 @@ class _PaymentDetailRow extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: AppTextStyles(context)
-                .regular13
-                .copyWith(color: colors.onSurfaceVariant),
+            style: AppTextStyles(
+              context,
+            ).regular13.copyWith(color: colors.onSurfaceVariant),
           ),
         ),
         const SizedBox(width: 12),
@@ -217,12 +226,11 @@ class _PaymentDetailRow extends StatelessWidget {
           child: Text(
             value,
             textAlign: TextAlign.end,
-            style: (emphasis
-                    ? AppTextStyles(context).semiBold20
-                    : AppTextStyles(context).semiBold14)
-                .copyWith(
-              color: colors.onSurface,
-            ),
+            style:
+                (emphasis
+                        ? AppTextStyles(context).semiBold20
+                        : AppTextStyles(context).semiBold14)
+                    .copyWith(color: colors.onSurface),
           ),
         ),
       ],

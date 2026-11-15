@@ -10,20 +10,19 @@ class CustomVideoNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomCard(
-        child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        ListTile(
-            leading: ClipRRect(
-              borderRadius: BorderRadiusGeometry.circular(40),
-              child: CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: CustomCachedNetworkImage(
-                        imageUrl: note.user.profilePicurl),
-                  )),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          ListTile(
+            leading: AspectRatio(
+              aspectRatio: 1,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: CustomCachedNetworkImage(
+                  imageUrl: note.user.profilePicurl,
+                ),
+              ),
             ),
             title: Text(
               "${note.user.firstName} ${note.user.lastName}",
@@ -32,15 +31,12 @@ class CustomVideoNote extends StatelessWidget {
             subtitle: Text(
               "${note.dateTime.day}/${note.dateTime.month}/${note.dateTime.year}",
               style: AppTextStyles(context).regular13,
-            )),
-        const SizedBox(
-          height: 5,
-        ),
-        Text(
-          note.note,
-          style: AppTextStyles(context).regular14,
-        )
-      ],
-    ));
+            ),
+          ),
+          const SizedBox(height: 5),
+          Text(note.note, style: AppTextStyles(context).regular14),
+        ],
+      ),
+    );
   }
 }

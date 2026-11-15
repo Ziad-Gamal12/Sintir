@@ -10,7 +10,6 @@ void showCustomBottomSheet({
     context: context,
     isScrollControlled: true,
     useRootNavigator: true,
-
     isDismissible: true,
     backgroundColor: theme.cardColor,
     shape: RoundedRectangleBorder(

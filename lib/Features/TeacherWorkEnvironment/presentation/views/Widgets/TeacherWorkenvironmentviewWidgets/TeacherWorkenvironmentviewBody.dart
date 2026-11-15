@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/content_creator_courses_cubit/content_creator_courses_cubit.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
-import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomMyCoursesGridHeader.dart';
+import 'package:sintir/Core/widgets/CustomMyCoursesGridHeader.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomSearchTextField.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/TeacherEnvironmentCoursesGrid.dart';
@@ -13,9 +13,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/constant.dart';
 
 class TeacherWorkenvironmentviewBody extends StatefulWidget {
-  const TeacherWorkenvironmentviewBody({
-    super.key,
-  });
+  const TeacherWorkenvironmentviewBody({super.key});
 
   @override
   State<TeacherWorkenvironmentviewBody> createState() =>
@@ -34,8 +32,8 @@ class _TeacherWorkenvironmentviewBodyState
     searchController = TextEditingController();
 
     context.read<ContentCreatorCoursesCubit>().getContentCreatorCourses(
-          userId: user.uid,
-        );
+      userId: user.uid,
+    );
 
     searchController.addListener(_onSearchChanged);
   }
@@ -49,9 +47,9 @@ class _TeacherWorkenvironmentviewBodyState
       if (keyword.isNotEmpty) {
         if (!isSearching) setState(() => isSearching = true);
         context.read<ContentCreatorCoursesCubit>().searchContentCreatorCourses(
-              userId: user.uid,
-              keyword: keyword,
-            );
+          userId: user.uid,
+          keyword: keyword,
+        );
       } else {
         if (isSearching) setState(() => isSearching = false);
       }
@@ -71,51 +69,24 @@ class _TeacherWorkenvironmentviewBodyState
       padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
       child: CustomScrollView(
         slivers: [
-          const SliverToBoxAdapter(
-            child: SizedBox(
-              height: 20,
-            ),
-          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 20)),
           SliverToBoxAdapter(
             child: TeacherWorkenvironmentviewBodyWalletSectionHeader(),
           ),
-          const SliverToBoxAdapter(
-            child: SizedBox(
-              height: 12,
-            ),
-          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 12)),
           SliverToBoxAdapter(
-            child: TeacherWorkEnvironmentWalletSection(
-              teacherId: user.uid,
-            ),
+            child: TeacherWorkEnvironmentWalletSection(teacherId: user.uid),
           ),
           const SliverToBoxAdapter(
-            child: Divider(
-              height: 40,
-              color: Color(0xffE5E5EA),
-            ),
+            child: Divider(height: 40, color: Color(0xffE5E5EA)),
           ),
-          const SliverToBoxAdapter(
-            child: CustomMyCoursesGridHeader(),
-          ),
-          const SliverToBoxAdapter(
-            child: SizedBox(
-              height: 12,
-            ),
-          ),
+          const SliverToBoxAdapter(child: CustomMyCoursesGridHeader()),
+          const SliverToBoxAdapter(child: SizedBox(height: 12)),
           SliverToBoxAdapter(
-            child: CustomSearchTextField(
-              controller: searchController,
-            ),
+            child: CustomSearchTextField(controller: searchController),
           ),
-          const SliverToBoxAdapter(
-            child: SizedBox(
-              height: 12,
-            ),
-          ),
-          TeacherEnvironmentCoursesGrid(
-            isSearch: isSearching,
-          )
+          const SliverToBoxAdapter(child: SizedBox(height: 12)),
+          TeacherEnvironmentCoursesGrid(isSearch: isSearching),
         ],
       ),
     );
