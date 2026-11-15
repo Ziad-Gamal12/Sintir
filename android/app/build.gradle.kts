@@ -67,19 +67,12 @@ if (releaseTaskRequested && !releaseSigningReady) {
     )
 }
 
-// --------------------------------------------------
-// Android Configuration
-// --------------------------------------------------
-
 android {
     namespace = "com.example.sintir"
 
     compileSdk = 37
     ndkVersion = "28.2.13676358"
 
-    // --------------------------------------------------
-    // Signing Configurations
-    // --------------------------------------------------
 
     signingConfigs {
         if (releaseSigningReady) {
@@ -92,18 +85,12 @@ android {
         }
     }
 
-    // --------------------------------------------------
-    // Compile Options
-    // --------------------------------------------------
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    // --------------------------------------------------
-    // Default Configuration
-    // --------------------------------------------------
 
     defaultConfig {
         applicationId = "com.example.sintir"
@@ -115,13 +102,9 @@ android {
         versionName = flutter.versionName
     }
 
-    // --------------------------------------------------
-    // Build Types
-    // --------------------------------------------------
 
     buildTypes {
 
-        // Release Configuration
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = false
@@ -131,7 +114,6 @@ android {
                 "proguard-rules.pro"
             )
 
-            // Never use the Debug signing identity for Release.
             signingConfig = if (releaseSigningReady) {
                 signingConfigs.getByName("release")
             } else {
@@ -139,7 +121,6 @@ android {
             }
         }
 
-        // Debug Configuration
         getByName("debug") {
             isMinifyEnabled = false
             isShrinkResources = false
@@ -150,9 +131,6 @@ android {
     }
 }
 
-// --------------------------------------------------
-// Kotlin Configuration
-// --------------------------------------------------
 
 kotlin {
     compilerOptions {
@@ -160,20 +138,19 @@ kotlin {
     }
 }
 
-// --------------------------------------------------
-// Flutter Configuration
-// --------------------------------------------------
 
 flutter {
     source = "../.."
 }
 
-// --------------------------------------------------
-// Dependencies
-// --------------------------------------------------
-
 dependencies {
     implementation("androidx.media3:media3-exoplayer:1.5.1")
 
     implementation("com.facebook.android:facebook-login:latest.release")
+}
+configurations.all {
+    resolutionStrategy {
+        force("androidx.core:core:1.17.0")
+        force("androidx.core:core-ktx:1.17.0")
+    }
 }

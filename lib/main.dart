@@ -12,7 +12,6 @@ import 'package:sintir/Core/Managers/Cubits/LocalizationCubit/LocaleCubit.dart';
 import 'package:sintir/Core/Themes/app_theme.dart';
 import 'package:sintir/Core/Themes/theme_cubit.dart';
 import 'package:sintir/Core/helper/BiometricAvailability.dart';
-import 'package:sintir/Core/services/BlocObserver.dart';
 import 'package:sintir/Core/services/HiveService.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/services/SupabaseStorageServices.dart';

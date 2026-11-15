@@ -9,6 +9,8 @@ import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseCubit/add_course_cubit.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
+import 'package:uuid/uuid.dart';
+import 'package:uuid/v4.dart';
 
 class CustomAddCourseActionButton extends StatelessWidget {
   const CustomAddCourseActionButton({
@@ -17,14 +19,12 @@ class CustomAddCourseActionButton extends StatelessWidget {
     required this.selectedLevel,
     required this.selectedSubject,
     required this.titleController,
-    required this.codeController,
     required this.descriptionController,
     required this.priceController,
     required this.selectedLanguage,
   });
   final GlobalKey<FormState> formKey;
   final TextEditingController titleController;
-  final TextEditingController codeController;
   final TextEditingController descriptionController;
   final TextEditingController priceController;
 
@@ -64,7 +64,7 @@ class CustomAddCourseActionButton extends StatelessWidget {
 
   void _submitCourse(BuildContext context) {
     FocusScope.of(context).unfocus();
-
+    Uuid uuid = const Uuid();
     final cubit = context.read<AddCourseCubitCubit>();
 
     if (!formKey.currentState!.validate()) return;
@@ -91,7 +91,7 @@ class CustomAddCourseActionButton extends StatelessWidget {
     final course = CourseEntity(
       studentsCount: 0,
       subject: selectedSubject!,
-      id: codeController.text.trim(),
+      id: uuid.v4(),
       level: selectedLevel!,
       state: BackendEndpoints.coursePendingState,
       title: titleController.text.trim(),
@@ -101,12 +101,8 @@ class CustomAddCourseActionButton extends StatelessWidget {
       postedDate: DateTime.now(),
     );
 
-    warningdialog(
-      context,
-      LocaleKeys.priceWarning,
-      () {
-        cubit.addCourse(courseEntity: course, userEntity: getUserData());
-      },
-    ).show();
+    warningdialog(context, LocaleKeys.priceWarning, () {
+      cubit.addCourse(courseEntity: course, userEntity: getUserData());
+    }).show();
   }
 }

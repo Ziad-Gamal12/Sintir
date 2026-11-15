@@ -17,7 +17,6 @@ class AddCourseViewBody extends StatefulWidget {
 class _AddCourseViewBodyState extends State<AddCourseViewBody> {
   final formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
-  final codeController = TextEditingController();
   final descriptionController = TextEditingController();
   final priceController = TextEditingController();
 
@@ -28,7 +27,6 @@ class _AddCourseViewBodyState extends State<AddCourseViewBody> {
   @override
   void dispose() {
     titleController.dispose();
-    codeController.dispose();
     descriptionController.dispose();
     priceController.dispose();
     super.dispose();
@@ -58,7 +56,6 @@ class _AddCourseViewBodyState extends State<AddCourseViewBody> {
               children: [
                 CourseInputsCard(
                   titleController: titleController,
-                  codeController: codeController,
                   descriptionController: descriptionController,
                   priceController: priceController,
                   onLevelChange: (v) => setState(() => selectedLevel = v),
@@ -69,7 +66,6 @@ class _AddCourseViewBodyState extends State<AddCourseViewBody> {
                 CustomAddCourseActionButton(
                   formKey: formKey,
                   titleController: titleController,
-                  codeController: codeController,
                   descriptionController: descriptionController,
                   priceController: priceController,
                   selectedLanguage: selectedLanguage,

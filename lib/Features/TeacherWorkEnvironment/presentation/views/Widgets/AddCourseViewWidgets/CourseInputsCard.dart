@@ -13,7 +13,6 @@ import 'course_title_input.dart';
 
 class CourseInputsCard extends StatelessWidget {
   final TextEditingController titleController;
-  final TextEditingController codeController;
   final TextEditingController descriptionController;
   final TextEditingController priceController;
 
@@ -24,7 +23,6 @@ class CourseInputsCard extends StatelessWidget {
   const CourseInputsCard({
     super.key,
     required this.titleController,
-    required this.codeController,
     required this.descriptionController,
     required this.priceController,
     required this.onLevelChange,
@@ -35,18 +33,15 @@ class CourseInputsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: 14,
       children: [
         CourseTitleInput(controller: titleController),
-        const SizedBox(height: 14),
-        CourseCodeInput(controller: codeController),
-        const SizedBox(height: 14),
         CourseDescriptionInput(controller: descriptionController),
-        const SizedBox(height: 14),
         CoursePriceInput(controller: priceController),
-        const SizedBox(height: 14),
         CourseLevelSelector(onChanged: onLevelChange),
-        const SizedBox(height: 14),
         Row(
+          spacing: 14,
+
           children: [
             Expanded(
               child: Column(
@@ -57,11 +52,11 @@ class CourseInputsCard extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 14),
             Expanded(
               child: Addcourseposter(
-                coursePosterImage:
-                    context.watch<AddCourseCubitCubit>().coursePosterImage,
+                coursePosterImage: context
+                    .watch<AddCourseCubitCubit>()
+                    .coursePosterImage,
                 onTap: () {
                   context.read<AddCourseCubitCubit>().pickCoursePosterImage();
                 },

@@ -10,9 +10,7 @@ import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetCou
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetCourseDetailsPrice.dart';
 
 class CourseBottomSheetCourseDetails extends StatefulWidget {
-  const CourseBottomSheetCourseDetails({
-    super.key,
-  });
+  const CourseBottomSheetCourseDetails({super.key});
 
   @override
   State<CourseBottomSheetCourseDetails> createState() =>
@@ -38,25 +36,29 @@ class _CourseBottomSheetCourseDetailsState
         Row(
           children: [
             Expanded(
-                child: Text(course.title,
-                    style: AppTextStyles(context).semiBold20.copyWith(
-                        color: theme.textTheme.headlineMedium?.color))),
+              child: Text(
+                course.title,
+                style: AppTextStyles(context).semiBold20.copyWith(
+                  color: theme.textTheme.headlineMedium?.color,
+                ),
+              ),
+            ),
+            SizedBox(width: 8),
             Visibility(
               visible: isSubscribed,
               child: const CourseBottomSheetCourseDetailsIsSubscribedBanner(),
-            )
+            ),
           ],
         ),
-        const SizedBox(
-          height: 20,
-        ),
+        const SizedBox(height: 20),
         CourseBottomSheetCourseDetailsDescription(
-            description: course.description),
-        const SizedBox(
-          height: 20,
+          description: course.description,
         ),
+        const SizedBox(height: 20),
         CourseBottomSheetCourseDetailsPrice(
-            price: course.price, isSubscribed: isSubscribed),
+          price: course.price,
+          isSubscribed: isSubscribed,
+        ),
       ],
     );
   }

@@ -36,8 +36,9 @@ class _ResultsAnalysisCardHighestScoreCardState
             child: Text(
               state.errMessage,
               overflow: TextOverflow.ellipsis,
-              style:
-                  AppTextStyles(context).regular14.copyWith(color: Colors.red),
+              style: AppTextStyles(
+                context,
+              ).regular14.copyWith(color: Colors.red),
             ),
           );
         }
@@ -46,12 +47,14 @@ class _ResultsAnalysisCardHighestScoreCardState
           child: InkWell(
             onTap: () {
               if (state is TestConsequencesGetHighestScorSuccess) {
-                showCustomModalBottomSheet(
-                    child: IntrinsicHeight(
-                      child: StudentResultCard(
-                          testResultEntity: state.testResultEntity),
+                showCustomBottomSheet(
+                  child: IntrinsicHeight(
+                    child: StudentResultCard(
+                      testResultEntity: state.testResultEntity,
                     ),
-                    context: context);
+                  ),
+                  context: context,
+                );
               }
             },
             child: ScoreStatCard(

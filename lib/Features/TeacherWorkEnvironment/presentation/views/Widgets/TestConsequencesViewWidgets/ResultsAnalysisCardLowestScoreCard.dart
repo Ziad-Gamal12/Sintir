@@ -36,8 +36,9 @@ class _ResultsAnalysisCardLowestScoreCardState
             child: Text(
               state.errMessage,
               overflow: TextOverflow.ellipsis,
-              style:
-                  AppTextStyles(context).regular14.copyWith(color: Colors.red),
+              style: AppTextStyles(
+                context,
+              ).regular14.copyWith(color: Colors.red),
             ),
           );
         }
@@ -46,12 +47,14 @@ class _ResultsAnalysisCardLowestScoreCardState
           child: InkWell(
             onTap: () {
               if (state is TestConsequencesGetLowestScorSuccess) {
-                showCustomModalBottomSheet(
-                    child: IntrinsicHeight(
-                      child: StudentResultCard(
-                          testResultEntity: state.testResultEntity),
+                showCustomBottomSheet(
+                  child: IntrinsicHeight(
+                    child: StudentResultCard(
+                      testResultEntity: state.testResultEntity,
                     ),
-                    context: context);
+                  ),
+                  context: context,
+                );
               }
             },
             child: ScoreStatCard(
