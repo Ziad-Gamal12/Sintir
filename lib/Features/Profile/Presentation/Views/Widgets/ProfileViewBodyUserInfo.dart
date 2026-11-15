@@ -18,46 +18,46 @@ class ProfileViewBodyUserInfo extends StatelessWidget {
         final theme = Theme.of(context);
         final user = getUserData();
         final isDark = theme.brightness == Brightness.dark;
+        final Color primaryColor = theme.colorScheme.primary;
+
         final role = user.role == BackendEndpoints.teacherRole
             ? LocaleKeys.teacherRole
             : LocaleKeys.studentRole;
 
         return Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
           decoration: BoxDecoration(
+            color: theme.cardColor,
             borderRadius: BorderRadius.circular(20),
-            gradient: isDark
-                ? const LinearGradient(
-                    begin: AlignmentDirectional.topStart,
-                    end: AlignmentDirectional.bottomEnd,
-                    colors: [Color(0xff181C24), Color(0xff1E2430)],
-                  )
-                : null,
-            color: isDark ? null : theme.cardColor,
             border: Border.all(
-              color: theme.colorScheme.outline.withValues(alpha: 0.12),
+              color: theme.dividerColor.withValues(alpha: 0.08),
+              width: 1,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: isDark ? 0.18 : 0.06),
-                blurRadius: 18,
-                offset: const Offset(0, 8),
+                color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.05),
+                blurRadius: 16,
+                offset: const Offset(0, 6),
               ),
             ],
           ),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              // 1. صورة المستخدم مع زر التحديث
               Stack(
                 clipBehavior: Clip.none,
                 children: [
                   Container(
                     width: 72,
                     height: 72,
-                    padding: const EdgeInsets.all(2),
+                    padding: const EdgeInsets.all(2.5),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                          color: const Color(0xff3FC4FF), width: 1.5),
+                        color: primaryColor.withValues(alpha: 0.45),
+                        width: 1.5,
+                      ),
                     ),
                     child: UserAvatar(profilePicurl: user.profilePicurl),
                   ),
@@ -68,45 +68,46 @@ class ProfileViewBodyUserInfo extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(width: 14),
+              const SizedBox(width: 16),
+
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 4,
-                      crossAxisAlignment: WrapCrossAlignment.center,
+                    Row(
                       children: [
-                        ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 180),
+                        Flexible(
                           child: Text(
                             '${user.firstName} ${user.lastName}'.trim(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyles(context).bold16.copyWith(
-                                  color: theme.colorScheme.onSurface,
-                                ),
+                              color: theme.colorScheme.onSurface,
+                              height: 1.2,
+                            ),
                           ),
                         ),
+                        const SizedBox(width: 8),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 4),
+                            horizontal: 10,
+                            vertical: 3,
+                          ),
                           decoration: BoxDecoration(
-                            color:
-                                const Color(0xff3FC4FF).withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(20),
+                            color: primaryColor.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                              color: const Color(0xff3FC4FF)
-                                  .withValues(alpha: 0.35),
+                              color: primaryColor.withValues(alpha: 0.2),
+                              width: 1,
                             ),
                           ),
                           child: Text(
                             role,
                             style: AppTextStyles(context).semiBold12.copyWith(
-                                  color: const Color(0xff3FC4FF),
-                                ),
+                              color: primaryColor,
+                              height: 1.2,
+                            ),
                           ),
                         ),
                       ],
@@ -116,9 +117,12 @@ class ProfileViewBodyUserInfo extends StatelessWidget {
                       user.email,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
+                      textDirection: TextDirection.ltr,
                       style: AppTextStyles(context).regular13.copyWith(
-                            color: theme.colorScheme.onSurfaceVariant,
-                          ),
+                        color: theme.colorScheme.onSurfaceVariant.withValues(
+                          alpha: 0.75,
+                        ),
+                      ),
                     ),
                   ],
                 ),

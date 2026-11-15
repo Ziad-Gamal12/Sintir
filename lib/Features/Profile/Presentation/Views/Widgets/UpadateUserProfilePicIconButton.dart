@@ -4,10 +4,7 @@ import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Profile/Presentation/Manager/user_personal_details_cubit/user_personal_details_cubit.dart';
 
 class UpadateUserProfilePicIconButton extends StatelessWidget {
-  const UpadateUserProfilePicIconButton({
-    super.key,
-    required this.user,
-  });
+  const UpadateUserProfilePicIconButton({super.key, required this.user});
 
   final UserEntity user;
 
@@ -21,17 +18,15 @@ class UpadateUserProfilePicIconButton extends StatelessWidget {
         return Material(
           color: theme.colorScheme.surface,
           shape: CircleBorder(
-            side: BorderSide(
-              color: const Color(0xff3FC4FF),
-            ),
+            side: BorderSide(color: theme.cardColor, width: 2),
           ),
           child: InkWell(
             customBorder: const CircleBorder(),
             onTap: isLoading
                 ? null
                 : () => context
-                    .read<UserPersonalDetailsCubit>()
-                    .updatedUserProfilePic(uid: user.uid),
+                      .read<UserPersonalDetailsCubit>()
+                      .updatedUserProfilePic(uid: user.uid),
             child: SizedBox(
               width: 28,
               height: 28,
