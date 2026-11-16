@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Features/Home/presentation/manager/cubit/bottom_nav_cubit.dart';
+import 'package:sintir/Features/Home/presentation/manager/bottom_nav_cubit/bottom_nav_cubit.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 

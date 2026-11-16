@@ -6,9 +6,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manage
 import 'package:skeletonizer/skeletonizer.dart';
 
 class TestAttendancePresentage extends StatefulWidget {
-  const TestAttendancePresentage({
-    super.key,
-  });
+  const TestAttendancePresentage({super.key});
 
   @override
   State<TestAttendancePresentage> createState() =>
@@ -22,8 +20,9 @@ class _TestAttendancePresentageState extends State<TestAttendancePresentage> {
   Widget build(BuildContext context) {
     final Color primaryColor = Theme.of(context).colorScheme.primary;
     final Color textColor = Theme.of(context).textTheme.bodyLarge!.color!;
-    final Color backgroundColor =
-        Theme.of(context).dividerColor.withValues(alpha: 0.5);
+    final Color backgroundColor = Theme.of(
+      context,
+    ).dividerColor.withValues(alpha: 0.5);
 
     return BlocConsumer<TestConsequencesCubit, TestConsequencesState>(
       listenWhen: (previous, current) {
@@ -59,7 +58,8 @@ class _TestAttendancePresentageState extends State<TestAttendancePresentage> {
       },
       builder: (context, state) {
         return Skeletonizer(
-          enabled: state is TestConsequencesGetAttendedCountLoading ||
+          enabled:
+              state is TestConsequencesGetAttendedCountLoading ||
               state is TestConsequencesGetTotalStudentsCountLoading,
           child: CircularPercentIndicator(
             radius: 40,
@@ -70,8 +70,9 @@ class _TestAttendancePresentageState extends State<TestAttendancePresentage> {
               totalStudents == 0
                   ? "0%"
                   : " ${(attendedCount / totalStudents * 100).toInt()}%",
-              style:
-                  AppTextStyles(context).semiBold16.copyWith(color: textColor),
+              style: AppTextStyles(
+                context,
+              ).semiBold16.copyWith(color: textColor),
             ),
             progressColor: primaryColor,
             backgroundColor: backgroundColor,

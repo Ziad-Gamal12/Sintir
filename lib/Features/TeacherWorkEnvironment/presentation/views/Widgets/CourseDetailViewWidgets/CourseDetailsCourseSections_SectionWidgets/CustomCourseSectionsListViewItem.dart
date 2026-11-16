@@ -7,6 +7,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/section_expanded_content.dart.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/section_header_tile.dartd.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CustomCourseDetailsSectionsListViewItem extends StatefulWidget {
   const CustomCourseDetailsSectionsListViewItem({
@@ -43,9 +44,9 @@ class _CustomCourseDetailsSectionsListViewItemState
   void _fetchSectionItems(BuildContext context) {
     if (sectionLessons.isEmpty) {
       context.read<CourseSectionsCubit>().getSectionItems(
-            sectionId: widget.sectionItem.id,
-            courseId: widget.course.id,
-          );
+        sectionId: widget.sectionItem.id,
+        courseId: widget.course.id,
+      );
     }
     _controller.toggle();
   }
@@ -91,10 +92,27 @@ class _CustomCourseDetailsSectionsListViewItemState
     );
   }
 
-  void customCourseDetailsSectionsListViewItemListener(context, state) {
+  void customCourseDetailsSectionsListViewItemListener(
+    BuildContext context,
+    CourseSectionsState state,
+  ) {
     if (state is GetSectionItemsSuccess &&
         state.sectionId == widget.sectionItem.id) {
       setState(() => sectionLessons = state.items);
+    } else if (state is DeleteSectionItemSuccess) {
+      final id = state.deletedItemId;
+      if (sectionLessons.any((item) => item.id == id)) {
+        setState(() {
+          sectionLessons = sectionLessons
+              .where((item) => item.id != id)
+              .toList();
+        });
+        CustomSnackBar.show(
+          context,
+          message: LocaleKeys.operationSuccessful,
+          type: SnackType.success,
+        );
+      }
     } else if (state is GetSectionItemsFailure) {
       CustomSnackBar.show(
         context,

@@ -110,7 +110,7 @@ class firebaseAuthService {
       return user;
     } on CustomException {
       rethrow;
-    } on GoogleSignInException catch (e) {
+    } on GoogleSignInException {
       throw CustomException(message: LocaleKeys.errorOccurredMessage);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {

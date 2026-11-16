@@ -23,8 +23,8 @@ class CustomSubscriberDetailsCardAvatar extends StatelessWidget {
               imageUrl: url,
               memCacheWidth: 192,
               fit: BoxFit.cover,
-              placeholder: (_, __) => fallback,
-              errorWidget: (_, __, ___) => fallback,
+              placeholder: (_, _) => fallback,
+              errorWidget: (_, _, _) => fallback,
               imageBuilder: (_, provider) =>
                   Image(image: provider, fit: BoxFit.cover),
             ),
@@ -50,12 +50,16 @@ class _Fallback extends StatelessWidget {
       color: theme.colorScheme.surfaceContainerHighest,
       child: Center(
         child: initials.isEmpty
-            ? Icon(Icons.person_rounded,
-                color: theme.colorScheme.onSurfaceVariant)
-            : Text(initials.toUpperCase(),
-                style: AppTextStyles(context)
-                    .semiBold16
-                    .copyWith(color: theme.colorScheme.onSurfaceVariant)),
+            ? Icon(
+                Icons.person_rounded,
+                color: theme.colorScheme.onSurfaceVariant,
+              )
+            : Text(
+                initials.toUpperCase(),
+                style: AppTextStyles(context).semiBold16.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
       ),
     );
   }

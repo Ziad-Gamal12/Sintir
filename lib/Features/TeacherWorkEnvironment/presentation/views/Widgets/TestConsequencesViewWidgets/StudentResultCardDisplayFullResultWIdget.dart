@@ -1,12 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/ReviewTestResultView.dart';
 import 'package:sintir/locale_keys.dart';
 
-/// Tonal "View result" button (same look as the original design, but placed
-/// last in the card). Presentational only: navigation is handled by the
-/// card's InkWell in StudentResultCard.
-class StudentResultCardAction extends StatelessWidget {
-  const StudentResultCardAction({super.key});
+/// Restored public widget for displaying the tonal "View result" button.
+/// Maintains full backward compatibility with both original constructor signatures
+/// (accepting [testResultEntity]) and optional [onTap] callbacks.
+class StudentResultCardDisplayFullResultWidget extends StatelessWidget {
+  const StudentResultCardDisplayFullResultWidget({
+    super.key,
+    this.testResultEntity,
+    this.onTap,
+  });
+
+  final TestResultEntity? testResultEntity;
+  final VoidCallback? onTap;
+
+  void _handleTap(BuildContext context) {
+    if (onTap != null) {
+      onTap!();
+    } else if (testResultEntity != null) {
+      GoRouter.of(
+        context,
+      ).push(Reviewtestresultview.routeName, extra: testResultEntity);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +34,11 @@ class StudentResultCardAction extends StatelessWidget {
     final theme = Theme.of(context);
     final primary = theme.colorScheme.primary;
 
-    // Raw brand blue on the dark card is ~3.4:1; use a lighter tint of the
-    // same hue for text/icon in dark mode.
     final contentColor = theme.brightness == Brightness.dark
         ? Color.lerp(primary, Colors.white, .3)!
         : primary;
 
-    return Container(
+    final child = Container(
       constraints: const BoxConstraints(minHeight: 44),
       alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -44,5 +62,22 @@ class StudentResultCardAction extends StatelessWidget {
         ],
       ),
     );
+
+    if (onTap != null || testResultEntity != null) {
+      return InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () => _handleTap(context),
+        child: child,
+      );
+    }
+
+    return child;
   }
 }
+
+/// Backward compatibility alias for the original PascalCase/Capital-I file & class name
+typedef StudentResultCardDisplayFullResultWIdget =
+    StudentResultCardDisplayFullResultWidget;
+
+/// Backward compatibility alias for the temporary refactored class name
+typedef StudentResultCardAction = StudentResultCardDisplayFullResultWidget;

@@ -34,19 +34,20 @@ class UpdateTestInfoBottomSheetActionButton extends StatelessWidget {
           child: Custom_Loading_Widget(
             isLoading: isLoading,
             child: Custombutton(
-                text: LocaleKeys.save,
-                color: KMainColor,
-                textColor: Colors.white,
-                onPressed: () {
-                  if (examDetailsFormKey.currentState!.validate()) {
-                    examDetailsFormKey.currentState!.save();
-                    BlocProvider.of<UpdateTestCubit>(context).updateTestItem(
-                      test: courseTestEntity,
-                      courseId: courseId,
-                      sectionId: sectionId,
-                    );
-                  }
-                }),
+              text: LocaleKeys.save,
+              color: KMainColor,
+              textColor: Colors.white,
+              onPressed: () {
+                if (examDetailsFormKey.currentState!.validate()) {
+                  examDetailsFormKey.currentState!.save();
+                  BlocProvider.of<UpdateTestCubit>(context).updateTestItem(
+                    test: courseTestEntity,
+                    courseId: courseId,
+                    sectionId: sectionId,
+                  );
+                }
+              },
+            ),
           ),
         );
       },

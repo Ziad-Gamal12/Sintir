@@ -22,12 +22,12 @@ import 'package:sintir/Features/MyMistakes/Domain/Repo/MyMistakesRepo.dart';
 part 'test_item_state.dart';
 
 class TestItemCubit extends Cubit<TestItemState> {
-  TestItemCubit(
-      {required this.testitemrepo,
-      required this.sectionItemsActionsRepo,
-      required this.myMistakesRepo,
-      required this.assetspickerrepo})
-      : super(TestItemInitial());
+  TestItemCubit({
+    required this.testitemrepo,
+    required this.sectionItemsActionsRepo,
+    required this.myMistakesRepo,
+    required this.assetspickerrepo,
+  }) : super(TestItemInitial());
   final Testitemrepo testitemrepo;
   final MyMistakesRepo myMistakesRepo;
   final SectionItemsActionsRepo sectionItemsActionsRepo;
@@ -38,17 +38,19 @@ class TestItemCubit extends Cubit<TestItemState> {
     emit(AddCourseSectionTestQuestionAdded());
   }
 
-  void removeQuestion(
-      {required CourseTestEntity coursetestentity,
-      required CourseTestQuestionEntity question}) {
+  void removeQuestion({
+    required CourseTestEntity coursetestentity,
+    required CourseTestQuestionEntity question,
+  }) {
     coursetestentity.questions.remove(question);
     emit(AddCourseSectionTestQuestionRemoved());
   }
 
-  void removeSolutin(
-      {required CourseTestQuestionSolutionEntity solution,
-      required CourseTestEntity coursetestentity,
-      required CourseTestQuestionEntity question}) {
+  void removeSolutin({
+    required CourseTestQuestionSolutionEntity solution,
+    required CourseTestEntity coursetestentity,
+    required CourseTestQuestionEntity question,
+  }) {
     if (question.solutions.length > 1) {
       question.removeSolution(solution);
     } else {
@@ -62,8 +64,10 @@ class TestItemCubit extends Cubit<TestItemState> {
     emit(AddCourseSectionTestSolutionAdded());
   }
 
-  void changeSelectedSolution(
-      {required CourseTestQuestionEntity question, required int index}) {
+  void changeSelectedSolution({
+    required CourseTestQuestionEntity question,
+    required int index,
+  }) {
     for (var solution in question.solutions) {
       solution.isCorrect = false;
     }
@@ -76,13 +80,17 @@ class TestItemCubit extends Cubit<TestItemState> {
     required CourseTestEntity test,
   }) async {
     emit(QuestionsImagesUploadedingLoading());
-    var resulte =
-        await testitemrepo.uploadTestQuestionsImages(questions: test.questions);
-    resulte.fold((failure) {
-      emit(QuestionsImagesUploadedingFailure(errMessage: failure.message));
-    }, (success) {
-      emit(QuestionsImagesUploadedingSuccuss());
-    });
+    var resulte = await testitemrepo.uploadTestQuestionsImages(
+      questions: test.questions,
+    );
+    resulte.fold(
+      (failure) {
+        emit(QuestionsImagesUploadedingFailure(errMessage: failure.message));
+      },
+      (success) {
+        emit(QuestionsImagesUploadedingSuccuss());
+      },
+    );
   }
 
   Future<void> uploadTestQuestionsSolutionsImages({
@@ -90,13 +98,20 @@ class TestItemCubit extends Cubit<TestItemState> {
   }) async {
     emit(QuestionsSolutionsImagesUploadedingLoading());
     var resulte = await testitemrepo.uploadTestQuestionsSolutionsImages(
-        questions: test.questions);
-    resulte.fold((failure) {
-      emit(QuestionsSolutionsImagesUploadedingFailure(
-          errMessage: failure.message));
-    }, (success) {
-      emit(QuestionsSolutionsImagesUploadedingSuccuss());
-    });
+      questions: test.questions,
+    );
+    resulte.fold(
+      (failure) {
+        emit(
+          QuestionsSolutionsImagesUploadedingFailure(
+            errMessage: failure.message,
+          ),
+        );
+      },
+      (success) {
+        emit(QuestionsSolutionsImagesUploadedingSuccuss());
+      },
+    );
   }
 
   void addTestItem({
@@ -106,12 +121,18 @@ class TestItemCubit extends Cubit<TestItemState> {
   }) async {
     emit(AddTestItemLoading());
     final result = await sectionItemsActionsRepo.addSectionItem(
-        sectionItem: test, courseId: courseId, sectionId: sectionId);
-    result.fold((failure) {
-      emit(AddTestItemFailure(errMessage: failure.message));
-    }, (sucUpdateCourseSectionsFailurecess) {
-      emit(AddTestItemSuccess());
-    });
+      sectionItem: test,
+      courseId: courseId,
+      sectionId: sectionId,
+    );
+    result.fold(
+      (failure) {
+        emit(AddTestItemFailure(errMessage: failure.message));
+      },
+      (sucUpdateCourseSectionsFailurecess) {
+        emit(AddTestItemSuccess());
+      },
+    );
   }
 
   int getResult({required CourseTestEntity test}) {
@@ -128,19 +149,23 @@ class TestItemCubit extends Cubit<TestItemState> {
     return result;
   }
 
-  List<ExamResultSolvedQuestionEntity> getSolvedQuestions(
-      {required CourseTestEntity test}) {
+  List<ExamResultSolvedQuestionEntity> getSolvedQuestions({
+    required CourseTestEntity test,
+  }) {
     List<ExamResultSolvedQuestionEntity> numbers = [];
     for (CourseTestQuestionEntity element in test.questions) {
       if (element.selectedSolution != null) {
-        numbers.add(ExamResultSolvedQuestionEntity(
-          question: element,
-          isCorrect: element.selectedSolution ==
-              element.solutions
-                  .where((element) => element.isCorrect)
-                  .first
-                  .answer,
-        ));
+        numbers.add(
+          ExamResultSolvedQuestionEntity(
+            question: element,
+            isCorrect:
+                element.selectedSolution ==
+                element.solutions
+                    .where((element) => element.isCorrect)
+                    .first
+                    .answer,
+          ),
+        );
       }
     }
 
@@ -160,6 +185,7 @@ class TestItemCubit extends Cubit<TestItemState> {
     return TestResultEntity(
       isPassed: score >= (test.questions.length / 2),
       courseSubject: courseSubject,
+      testName: test.title,
       joinedDate: DateTime.now(),
       serialNumber: "${DateTime.now().millisecondsSinceEpoch}-Result",
       testId: test.id,
@@ -228,15 +254,19 @@ class TestItemCubit extends Cubit<TestItemState> {
   }) async {
     emit(JoinToTestItemLoading());
     Either<Failure, void> result = await sectionItemsActionsRepo.addJoinedBy(
-        joinedByEntity: joinedByEntity,
-        courseId: courseId,
-        sectionId: sectionId,
-        sectionItemId: sectionItemId);
-    result.fold((failure) {
-      emit(JoinToTestItemFailure(errMessage: failure.message));
-    }, (sucUpdateCourseSectionsFailurecess) {
-      emit(JoinToTestItemSuccess());
-    });
+      joinedByEntity: joinedByEntity,
+      courseId: courseId,
+      sectionId: sectionId,
+      sectionItemId: sectionItemId,
+    );
+    result.fold(
+      (failure) {
+        emit(JoinToTestItemFailure(errMessage: failure.message));
+      },
+      (sucUpdateCourseSectionsFailurecess) {
+        emit(JoinToTestItemSuccess());
+      },
+    );
   }
 
   void resizeQuestionsImages({required String image, required bool isFilled}) {
@@ -246,20 +276,26 @@ class TestItemCubit extends Cubit<TestItemState> {
   Future<void> pickQuestionImage() async {
     emit(PickQuestionImageLoading());
     final result = await assetspickerrepo.pickImageFromGallery();
-    result.fold((failure) {
-      emit(PickQuestionImageFailure(errMessage: failure.message));
-    }, (pickedImage) {
-      emit(PickQuestionImageSuccess(file: pickedImage));
-    });
+    result.fold(
+      (failure) {
+        emit(PickQuestionImageFailure(errMessage: failure.message));
+      },
+      (pickedImage) {
+        emit(PickQuestionImageSuccess(file: pickedImage));
+      },
+    );
   }
 
   Future<void> pickQuestionSolutionImage() async {
     emit(PickQuestionSolutionImageLoading());
     final result = await assetspickerrepo.pickImageFromGallery();
-    result.fold((failure) {
-      emit(PickQuestionSolutionImageFailure(errMessage: failure.message));
-    }, (pickedImage) {
-      emit(PickQuestionSolutionImageSuccess(file: pickedImage));
-    });
+    result.fold(
+      (failure) {
+        emit(PickQuestionSolutionImageFailure(errMessage: failure.message));
+      },
+      (pickedImage) {
+        emit(PickQuestionSolutionImageSuccess(file: pickedImage));
+      },
+    );
   }
 }

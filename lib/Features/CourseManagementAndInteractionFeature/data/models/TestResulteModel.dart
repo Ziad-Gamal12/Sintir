@@ -15,6 +15,7 @@ class Testresultemodel {
   final String courseSubject;
   final String sectionId;
   final String testId;
+  final String testName;
   final List<Map<String, dynamic>> questionsSolvedList;
 
   Testresultemodel({
@@ -27,6 +28,7 @@ class Testresultemodel {
     required this.solvedQuestions,
     required this.joinedby,
     required this.courseId,
+    required this.testName,
     required this.courseSubject,
     required this.result,
     required this.questionsSolvedList,
@@ -40,6 +42,7 @@ class Testresultemodel {
       sectionId: json['sectionId'],
       courseSubject: json['courseSubject'] ?? "",
       testId: json['testId'],
+      testName: json['testName'] ?? "",
       isPassed: json['isPassed'],
       solvedQuestions: json['solvedQuestions'],
       joinedby: json['joinedby'],
@@ -51,8 +54,10 @@ class Testresultemodel {
     );
   }
 
-  factory Testresultemodel.fromEntity(TestResultEntity entity,
-      {bool includeCourseTest = true}) {
+  factory Testresultemodel.fromEntity(
+    TestResultEntity entity, {
+    bool includeCourseTest = true,
+  }) {
     return Testresultemodel(
       serialNumber: entity.serialNumber,
       joinedDate: entity.joinedDate,
@@ -63,6 +68,7 @@ class Testresultemodel {
       courseId: entity.courseId,
       totalQuestions: entity.totalQuestions,
       solvedQuestions: entity.solvedQuestions,
+      testName: entity.testName,
       joinedby: JoinedbyModel.fromEntity(entity.joinedbyentity).toJson(),
       result: entity.result,
       questionsSolvedList: entity.questionsSolvedListEntity
@@ -77,6 +83,7 @@ class Testresultemodel {
       joinedDate: joinedDate,
       sectionId: sectionId,
       testId: testId,
+      testName: testName,
       courseSubject: courseSubject,
       isPassed: isPassed,
       totalQuestions: totalQuestions,
@@ -91,17 +98,18 @@ class Testresultemodel {
   }
 
   Map<String, dynamic> toJson({bool includeCourseTest = true}) => {
-        "serialNumber": serialNumber,
-        "joinedDate": joinedDate,
-        "totalQuestions": totalQuestions,
-        "solvedQuestions": solvedQuestions,
-        "joinedby": joinedby,
-        "isPassed": isPassed,
-        "result": result,
-        "courseId": courseId,
-        "sectionId": sectionId,
-        "courseSubject": courseSubject,
-        "testId": testId,
-        "questionsSolvedList": questionsSolvedList,
-      };
+    "serialNumber": serialNumber,
+    "joinedDate": joinedDate,
+    "totalQuestions": totalQuestions,
+    "solvedQuestions": solvedQuestions,
+    "joinedby": joinedby,
+    "isPassed": isPassed,
+    "result": result,
+    "courseId": courseId,
+    "sectionId": sectionId,
+    "testName": testName,
+    "courseSubject": courseSubject,
+    "testId": testId,
+    "questionsSolvedList": questionsSolvedList,
+  };
 }

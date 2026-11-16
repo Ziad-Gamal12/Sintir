@@ -6,30 +6,30 @@ import 'package:sintir/locale_keys.dart';
 
 class TeacherWorkenvironmentviewBodyWalletSectionHeader
     extends StatelessWidget {
-  const TeacherWorkenvironmentviewBodyWalletSectionHeader({
-    super.key,
-  });
+  const TeacherWorkenvironmentviewBodyWalletSectionHeader({super.key});
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         Text(
           LocaleKeys.wallet,
-          style: AppTextStyles(context).bold20,
+          style: AppTextStyles(
+            context,
+          ).bold20.copyWith(color: textTheme.bodyLarge?.color),
         ),
         const Spacer(),
         InkWell(
-            onTap: () {
-              GoRouter.of(context).push(
-                TeacherWalletDetailsView.routeName,
-              );
-            },
-            child: Text(LocaleKeys.viewDetails,
-                style: AppTextStyles(context).regular16)),
+          onTap: () {
+            GoRouter.of(context).push(TeacherWalletDetailsView.routeName);
+          },
+          child: Text(
+            LocaleKeys.viewDetails,
+            style: AppTextStyles(context).regular16,
+          ),
+        ),
       ],
     );
   }

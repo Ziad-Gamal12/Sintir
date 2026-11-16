@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Features/Home/Domain/Entities/BottomNavBarEntity.dart';
-import 'package:sintir/Features/Home/presentation/manager/cubit/bottom_nav_cubit.dart';
+import 'package:sintir/Features/Home/presentation/manager/bottom_nav_cubit/bottom_nav_cubit.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/BottomNavBarItem.dart';
 
 class BottomNavBar extends StatelessWidget {

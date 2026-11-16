@@ -14,6 +14,8 @@
   "existing_checkout_message": "توجد عملية دفع سابقة ما زالت نشطة. راجع تفاصيل الدفع الأصلية قبل المتابعة.",
   "existing_checkout_later_message": "مغادرة هذه الشاشة لا تلغي محاولة الدفع المحفوظة. يمكنك العودة لاحقًا للتحقق من حالتها أو متابعة عملية الدفع نفسها.",
   "payment_pending": "الدفع قيد الانتظار",
+  "delete_item_title": "حذف هذا العنصر؟",
+  "cannot_be_undone": "لا يمكن التراجع عن هذا الإجراء",
   "payment_verification_in_progress": "جارٍ التحقق من الدفع",
   "payment_checking_status": "جارٍ التحقق من حالة الدفع…",
   "payment_confirmed_heading": "تم تأكيد الدفع",
@@ -45,6 +47,8 @@
   "passed": "ناجح",
   "failed": "راسب",
   "correct_answers": "الإجابات الصحيحة",
+  "submitted_at": "تم التسليم",
+  "submitted_at_with_date": "تم التسليم: {date}",
   "login": "تسجيل الدخول",
   
   "withdrawal_request_title": "طلب سحب رصيد",

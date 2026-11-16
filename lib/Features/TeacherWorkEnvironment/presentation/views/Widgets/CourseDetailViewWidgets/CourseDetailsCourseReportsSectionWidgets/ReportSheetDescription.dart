@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/locale_keys.dart';
-
-import 'utils/report_surface_colors.dart';
 
 class ReportSheetDescription extends StatelessWidget {
   const ReportSheetDescription({super.key, required this.text});
@@ -9,29 +8,30 @@ class ReportSheetDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
+    final scheme = Theme.of(context).colorScheme;
+    final style = AppTextStyles(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(LocaleKeys.reportFullText,
-            style: theme.textTheme.titleSmall
-                ?.copyWith(fontWeight: FontWeight.w700)),
+        Text(
+          LocaleKeys.reportFullText,
+          style: style.semiBold16.copyWith(color: scheme.onSurface),
+        ),
         const SizedBox(height: 10),
         Container(
           width: double.infinity,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: scheme.reportPanelFill,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: scheme.reportPanelBorder),
+            color: scheme.onSurface.withValues(alpha: 0.06),
+            borderRadius: BorderRadius.circular(14),
           ),
           child: SelectableText(
             text,
-            textAlign: TextAlign.start,
-            style: theme.textTheme.bodyMedium
-                ?.copyWith(height: 1.7, color: scheme.onSurface),
+            style: style.regular14.copyWith(
+              height: 1.7,
+              color: scheme.onSurface.withValues(alpha: 0.92),
+            ),
           ),
         ),
       ],

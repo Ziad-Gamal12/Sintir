@@ -3,25 +3,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
+import 'package:sintir/Core/widgets/AdaptiveSliverGrid.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TestConsequencesViewWidgets/StudentResultCard.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/get_exam_results_cubit/get_exam_results_cubit.dart';
 import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class TestResultsSliverListView extends StatefulWidget {
+class TestResultsSliverListView extends StatelessWidget {
   const TestResultsSliverListView({super.key, required this.testResults});
   final List<TestResultEntity> testResults;
 
-  @override
-  State<TestResultsSliverListView> createState() =>
-      _TestResultsSliverListViewState();
-}
-
-class _TestResultsSliverListViewState extends State<TestResultsSliverListView> {
-  late final List<TestResultEntity> _fakeResults = List.generate(
+  static final List<TestResultEntity> _fakeResults = List.generate(
     6,
     (_) => TestResultEntity.empty(),
   );
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GetExamResultsCubit, GetExamResultsState>(
@@ -32,45 +28,28 @@ class _TestResultsSliverListViewState extends State<TestResultsSliverListView> {
               child: CustomErrorWidget(errormessage: state.errmessage),
             ),
           );
-        } else if (state is GetExamResultsLoading &&
+        }
+        if (state is GetExamResultsLoading &&
             state.isPaginate == false &&
-            widget.testResults.isEmpty) {
-          return SliverToBoxAdapter(
-            child: ListView.builder(
-              itemCount: _fakeResults.length,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: Skeletonizer(
-                    enabled: true,
-                    child: StudentResultCard(
-                      testResultEntity: _fakeResults[index],
-                    ),
-                  ),
-                );
-              },
+            testResults.isEmpty) {
+          return AdaptiveSliverGrid(
+            itemCount: _fakeResults.length,
+            itemBuilder: (_, i) => Skeletonizer(
+              enabled: true,
+              child: StudentResultCard(testResultEntity: _fakeResults[i]),
             ),
           );
-        } else if (state is GetExamResultsSuccess &&
-            widget.testResults.isEmpty) {
+        }
+        if (state is GetExamResultsSuccess && testResults.isEmpty) {
           return SliverToBoxAdapter(
             child: CustomEmptyWidget(text: LocaleKeys.noResults),
           );
-        } else {
-          return SliverList.builder(
-            itemCount: widget.testResults.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: StudentResultCard(
-                  testResultEntity: widget.testResults[index],
-                ),
-              );
-            },
-          );
         }
+        return AdaptiveSliverGrid(
+          itemCount: testResults.length,
+          itemBuilder: (_, i) =>
+              StudentResultCard(testResultEntity: testResults[i]),
+        );
       },
     );
   }

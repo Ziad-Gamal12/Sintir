@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/locale_keys.dart';
-import 'package:sintir/Core/widgets/results/results_tokens.dart';
+import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results/results_tokens.dart';
 
 class ResultsStatus {
   const ResultsStatus(this.label, this.color, this.icon);
@@ -35,35 +35,78 @@ class ResultsStatusMapper {
         .toInt();
   }
 
+  static ResultsStatus outcome(TestResultEntity result, ThemeData theme) {
+    final tokens = ResultsTokens.of(theme);
+    if (result.totalQuestions <= 0) {
+      return ResultsStatus(
+        LocaleKeys.notAvailable,
+        tokens.muted,
+        Icons.remove_circle_outline_rounded,
+      );
+    }
+    return result.isPassed
+        ? ResultsStatus(
+            LocaleKeys.passed,
+            tokens.success,
+            Icons.check_circle_rounded,
+          )
+        : ResultsStatus(
+            LocaleKeys.failed,
+            tokens.failure,
+            Icons.cancel_rounded,
+          );
+  }
+
   static ResultsStatus average(double value, ThemeData theme) {
     final tokens = ResultsTokens.of(theme);
     switch (performanceTier(value)) {
       case ResultsPerformanceTier.excellent:
-        return ResultsStatus(LocaleKeys.resultsExcellent, tokens.success,
-            Icons.verified_rounded);
+        return ResultsStatus(
+          LocaleKeys.resultsExcellent,
+          tokens.success,
+          Icons.verified_rounded,
+        );
       case ResultsPerformanceTier.good:
         return ResultsStatus(
-            LocaleKeys.resultsGood, tokens.primary, Icons.trending_up_rounded);
+          LocaleKeys.resultsGood,
+          tokens.primary,
+          Icons.trending_up_rounded,
+        );
       case ResultsPerformanceTier.steady:
-        return ResultsStatus(LocaleKeys.resultsSteady, tokens.warning,
-            Icons.trending_flat_rounded);
+        return ResultsStatus(
+          LocaleKeys.resultsSteady,
+          tokens.warning,
+          Icons.trending_flat_rounded,
+        );
       case ResultsPerformanceTier.followUp:
-        return ResultsStatus(LocaleKeys.resultsFollowUp, tokens.failure,
-            Icons.warning_amber_rounded);
+        return ResultsStatus(
+          LocaleKeys.resultsFollowUp,
+          tokens.failure,
+          Icons.warning_amber_rounded,
+        );
     }
   }
 
   static ResultsStatus assessment(int value, ThemeData theme) {
     final tokens = ResultsTokens.of(theme);
     if (value >= 100) {
-      return ResultsStatus(LocaleKeys.resultsFullyComplete, tokens.success,
-          Icons.check_circle_rounded);
+      return ResultsStatus(
+        LocaleKeys.resultsFullyComplete,
+        tokens.success,
+        Icons.check_circle_rounded,
+      );
     }
     if (value > 0) {
-      return ResultsStatus(LocaleKeys.resultsPartiallyComplete, tokens.primary,
-          Icons.timelapse_rounded);
+      return ResultsStatus(
+        LocaleKeys.resultsPartiallyComplete,
+        tokens.primary,
+        Icons.timelapse_rounded,
+      );
     }
     return ResultsStatus(
-        LocaleKeys.resultsRecorded, tokens.muted, Icons.receipt_long_rounded);
+      LocaleKeys.resultsRecorded,
+      tokens.muted,
+      Icons.receipt_long_rounded,
+    );
   }
 }

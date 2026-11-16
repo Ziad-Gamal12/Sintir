@@ -10,7 +10,6 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manage
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 import 'package:uuid/uuid.dart';
-import 'package:uuid/v4.dart';
 
 class CustomAddCourseActionButton extends StatelessWidget {
   const CustomAddCourseActionButton({

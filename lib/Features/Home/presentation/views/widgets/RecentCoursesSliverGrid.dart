@@ -6,8 +6,8 @@ import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseCardMetrics.
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheet.dart';
 
-class LeatestCourseSliverGrid extends StatelessWidget {
-  const LeatestCourseSliverGrid({super.key, required this.courses});
+class RecentCoursesSliverGrid extends StatelessWidget {
+  const RecentCoursesSliverGrid({super.key, required this.courses});
   final List<CourseEntity> courses;
 
   static const double _spacing = 16;

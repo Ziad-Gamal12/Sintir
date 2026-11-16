@@ -96,7 +96,7 @@ class AuthRepoImpl implements AuthRepo {
   Future<String> getDeviceId() async {
     try {
       return (await _deviceIdReader())?.trim() ?? '';
-    } catch (error, stackTrace) {
+    } catch (error) {
       return '';
     }
   }

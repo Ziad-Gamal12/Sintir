@@ -1,59 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/widgets/CustomTrashIcon.dart';
-import 'package:sintir/Core/widgets/customListTileWidget.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/CourseFileEntity.dart';
-import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/CustomContainerSectionItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/SectionItemTile.dart';
 
 class CustomCourseDetailsSectionListViewFileItem extends StatelessWidget {
-  const CustomCourseDetailsSectionListViewFileItem(
-      {super.key,
-      required this.item,
-      required this.section,
-      required this.course});
+  const CustomCourseDetailsSectionListViewFileItem({
+    super.key,
+    required this.item,
+    required this.section,
+    required this.course,
+  });
   final CourseFileEntity item;
   final CourseSectionEntity section;
   final CourseEntity course;
   @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        CustomSnackBar.show(
-          context,
-          message: "${item.title} , ${item.description}",
-          type: SnackType.info,
-        );
-      },
-      child: BlocSelector<CourseSectionsCubit, CourseSectionsState, bool>(
-        selector: (state) {
-          return state is DeleteSectionItemLoading &&
-              state.sectionItemId == item.id;
-        },
-        builder: (context, state) {
-          return Customcontainersectionitem(
-              child: Customlisttilewidget(
-                  title: " ${item.title} ",
-                  image: item.preffixImage,
-                  subtitle: " (${item.description})",
-                  trailing: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: CustomTrashIcon(
-                          isLoading: state,
-                          onpressed: () {
-                            context
-                                .read<CourseSectionsCubit>()
-                                .deleteSectionItem(
-                                  courseId: course.id,
-                                  sectionId: section.id,
-                                  sectionItemId: item.id,
-                                );
-                          }))));
-        },
-      ),
-    );
-  }
+  Widget build(BuildContext context) => SectionItemTile(
+    course: course,
+    section: section,
+    itemId: item.id,
+    title: item.title,
+    image: item.preffixImage,
+    subtitle: item.description,
+    onTap: () => CustomSnackBar.show(
+      context,
+      message: "${item.title} , ${item.description}",
+      type: SnackType.info,
+    ),
+  );
 }

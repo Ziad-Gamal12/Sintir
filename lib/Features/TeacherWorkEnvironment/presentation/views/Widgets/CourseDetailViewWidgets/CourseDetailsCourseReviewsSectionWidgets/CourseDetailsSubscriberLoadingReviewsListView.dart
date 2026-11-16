@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/CoursefedbackItemEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReviewsSectionWidgets/CourseDetailsSubscriberReviewsListView_Item.dart';
+import 'package:sintir/constant.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CourseDetailsSubscriberLoadingReviewsListView extends StatelessWidget {
@@ -9,17 +10,20 @@ class CourseDetailsSubscriberLoadingReviewsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding: const EdgeInsets.symmetric(
+        vertical: KVerticalPadding,
+        horizontal: KHorizontalPadding,
+      ),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: getFakeLoadingReviews().length,
       itemBuilder: (context, index) => Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 10,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         child: Skeletonizer(
           enabled: true,
           child: CourseDetailsSubscriberReviewsListViewItem(
-              reviews: getFakeLoadingReviews()[index]),
+            reviews: getFakeLoadingReviews()[index],
+          ),
         ),
       ),
     );

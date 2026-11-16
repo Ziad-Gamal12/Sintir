@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseReportsCubit/course_reports_cubit.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/CourseReportsItemEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReportsSectionWidgets/CourseReportsMobileHeader.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReportsSectionWidgets/ReportDetailsSheet.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReportsSectionWidgets/ReportFilterToolbar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReportsSectionWidgets/ReportStatusFilterChips.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReportsSectionWidgets/ReportsList.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReportsSectionWidgets/ReportsSummaryStrip.dart';
 import 'package:sintir/constant.dart';
 
 class CourseReportsMobileLayout extends StatelessWidget {
-  const CourseReportsMobileLayout(
-      {super.key, required this.courseId, required this.state});
+  const CourseReportsMobileLayout({
+    super.key,
+    required this.courseId,
+    required this.state,
+  });
   final String courseId;
   final CourseReportsState state;
 
@@ -55,16 +56,12 @@ class CourseReportsMobileLayout extends StatelessWidget {
             SliverToBoxAdapter(
               child: Column(
                 children: [
-                  const CourseReportsMobileHeader(),
-                  ReportsSummaryStrip(
-                    summary: cubit.summary,
-                    includeDismissed: false,
-                    wrap: false,
-                  ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 20),
+
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: KHorizontalPadding),
+                      horizontal: KHorizontalPadding,
+                    ),
                     child: Column(
                       children: [
                         const ReportStatusFilterChips(compact: true),

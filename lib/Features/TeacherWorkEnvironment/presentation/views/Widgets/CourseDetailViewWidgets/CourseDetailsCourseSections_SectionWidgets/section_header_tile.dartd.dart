@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
-import 'package:sintir/Core/widgets/AwesomeDialog.dart';
+import 'package:sintir/Core/widgets/DeleteMenuButton.dart';
 import 'package:sintir/Core/widgets/customListTileWidget.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -32,16 +31,12 @@ class SectionHeaderTile extends StatelessWidget {
           title: title,
           subtitle: subtitle,
           image: Assets.assetsIconsSVGIconsSectionIcon,
-          trailing: IconButton(
-            onPressed: () {
-              warningdialog(context, LocaleKeys.areYouSureDeleteSection, () {
-                context.read<CourseSectionsCubit>().deleteSection(
-                      courseId: courseId,
-                      sectionId: sectionId,
-                    );
-              }).show();
-            },
-            icon: const FaIcon(FontAwesomeIcons.trashCan),
+          trailing: DeleteMenuButton(
+            confirmTitle: LocaleKeys.areYouSureDeleteSection,
+            itemName: title,
+            onConfirmed: () => context
+                .read<CourseSectionsCubit>()
+                .deleteSection(courseId: courseId, sectionId: sectionId),
           ),
         ),
       ),

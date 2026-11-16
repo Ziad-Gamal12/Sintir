@@ -8,11 +8,12 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manage
 import 'package:sintir/locale_keys.dart';
 
 class UpdateTestInfoBottomSheet extends StatefulWidget {
-  const UpdateTestInfoBottomSheet(
-      {super.key,
-      required this.coursetestentity,
-      required this.sectionId,
-      required this.courseId});
+  const UpdateTestInfoBottomSheet({
+    super.key,
+    required this.coursetestentity,
+    required this.sectionId,
+    required this.courseId,
+  });
   final CourseTestEntity coursetestentity;
   final String sectionId;
   final String courseId;
@@ -28,32 +29,35 @@ class _UpdateTestInfoBottomSheetState extends State<UpdateTestInfoBottomSheet> {
     return BlocListener<UpdateTestCubit, UpdateTestState>(
       listener: (context, state) {
         if (state is UpdateTestItemSuccess) {
-          CustomSnackBar.show(context,
-              message: LocaleKeys.operationSuccessful, type: SnackType.success);
+          CustomSnackBar.show(
+            context,
+            message: LocaleKeys.operationSuccessful,
+            type: SnackType.success,
+          );
           Navigator.pop(context);
         } else if (state is UpdateTestItemFailure) {
-          CustomSnackBar.show(context,
-              message: state.errMessage, type: SnackType.error);
+          CustomSnackBar.show(
+            context,
+            message: state.errMessage,
+            type: SnackType.error,
+          );
         }
       },
       child: IntrinsicHeight(
         child: Column(
           children: [
             CustomExamDetailsPageViewStep(
-                coursetestentity: widget.coursetestentity,
-                examDetailsFormKey: examDetailsFormKey),
-            const SizedBox(
-              height: 42,
+              coursetestentity: widget.coursetestentity,
+              examDetailsFormKey: examDetailsFormKey,
             ),
+            const SizedBox(height: 42),
             UpdateTestInfoBottomSheetActionButton(
               courseTestEntity: widget.coursetestentity,
               examDetailsFormKey: examDetailsFormKey,
               sectionId: widget.sectionId,
               courseId: widget.courseId,
             ),
-            const SizedBox(
-              height: 42,
-            ),
+            const SizedBox(height: 42),
           ],
         ),
       ),

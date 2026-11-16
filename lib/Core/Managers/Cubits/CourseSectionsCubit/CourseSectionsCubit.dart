@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, depend_on_referenced_packages
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -13,9 +14,8 @@ import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
 part 'CourseSectionsState.dart';
 
 class CourseSectionsCubit extends Cubit<CourseSectionsState> {
-  CourseSectionsCubit(
-    this._courseSectionsRepo,
-  ) : super(AddCourseSectionInitial());
+  CourseSectionsCubit(this._courseSectionsRepo)
+    : super(AddCourseSectionInitial());
 
   final CourseSectionsRepo _courseSectionsRepo;
 
@@ -38,23 +38,20 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
   }) async {
     emit(AddCourseSectionLoading());
 
-    final Either<Failure, void> addSectionResult =
-        await _courseSectionsRepo.addCourseSection(
-      section: section,
-      courseId: courseId,
-    );
+    final Either<Failure, void> addSectionResult = await _courseSectionsRepo
+        .addCourseSection(section: section, courseId: courseId);
 
     addSectionResult.fold(
       (failure) {
         _emitFailure(failure);
       },
       (r) async {
-        final Either<Failure, void> addItemResult =
-            await _courseSectionsRepo.addSectionItem(
-          courseId: courseId,
-          sectionId: section.id,
-          sectionItem: sectionItem,
-        );
+        final Either<Failure, void> addItemResult = await _courseSectionsRepo
+            .addSectionItem(
+              courseId: courseId,
+              sectionId: section.id,
+              sectionItem: sectionItem,
+            );
 
         addItemResult.fold(
           (failure) => _emitFailure(failure),
@@ -74,12 +71,12 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
   }) async {
     emit(AddCourseSectionItemLoading());
 
-    final Either<Failure, void> result =
-        await _courseSectionsRepo.addSectionItem(
-      sectionItem: sectionItem,
-      courseId: courseId,
-      sectionId: sectionId,
-    );
+    final Either<Failure, void> result = await _courseSectionsRepo
+        .addSectionItem(
+          sectionItem: sectionItem,
+          courseId: courseId,
+          sectionId: sectionId,
+        );
 
     result.fold(
       (failure) =>
@@ -99,9 +96,9 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
 
     final Either<Failure, GetCourseSectionsResonseEntity> result =
         await _courseSectionsRepo.getCourseSections(
-      courseId: courseId,
-      isPaginate: isPaginate,
-    );
+          courseId: courseId,
+          isPaginate: isPaginate,
+        );
 
     result.fold(
       (failure) => emit(GetCourseSectionsFailure(errMessage: failure.message)),
@@ -109,21 +106,14 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
     );
   }
 
-  // -----------------------
-  // Get items for a specific section
-  // -----------------------
   Future<void> getSectionItems({
     required String sectionId,
     required String courseId,
   }) async {
     emit(GetSectionItemsLoading(sectionId: sectionId));
 
-    // Prefer typed list where possible
-    final Either<Failure, List<dynamic>> result =
-        await _courseSectionsRepo.getSectionsItems(
-      courseId: courseId,
-      sectionId: sectionId,
-    );
+    final Either<Failure, List<dynamic>> result = await _courseSectionsRepo
+        .getSectionsItems(courseId: courseId, sectionId: sectionId);
 
     result.fold(
       (failure) => emit(GetSectionItemsFailure(errMessage: failure.message)),
@@ -142,37 +132,31 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
   }) async {
     emit(DeleteSectionItemLoading(sectionItemId: sectionItemId));
 
-    final Either<Failure, void> result =
-        await _courseSectionsRepo.deleteSectionItem(
-      courseId: courseId,
-      sectionId: sectionId,
-      sectionItemId: sectionItemId,
-    );
+    final Either<Failure, void> result = await _courseSectionsRepo
+        .deleteSectionItem(
+          courseId: courseId,
+          sectionId: sectionId,
+          sectionItemId: sectionItemId,
+        );
 
     result.fold(
       (failure) => emit(DeleteSectionItemFailure(errMessage: failure.message)),
-      (_) => emit(DeleteSectionItemSuccess()),
+      (_) => emit(DeleteSectionItemSuccess(deletedItemId: sectionItemId)),
     );
   }
 
-  // -----------------------
-  // Delete an entire section
-  // -----------------------
   Future<void> deleteSection({
     required String courseId,
     required String sectionId,
   }) async {
     emit(DeleteSectionLoading(sectionId: sectionId));
 
-    final Either<Failure, void> result =
-        await _courseSectionsRepo.deleteSection(
-      courseId: courseId,
-      sectionId: sectionId,
-    );
+    final Either<Failure, void> result = await _courseSectionsRepo
+        .deleteSection(courseId: courseId, sectionId: sectionId);
 
     result.fold(
       (failure) => emit(DeleteSectionFailure(errMessage: failure.message)),
-      (_) => emit(DeleteSectionSuccess()),
+      (_) => emit(DeleteSectionSuccess(deletedSectionId: sectionId)),
     );
   }
 }

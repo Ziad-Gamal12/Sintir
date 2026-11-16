@@ -8,12 +8,13 @@ import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentati
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/CustomUnAvilableSectionWidget.dart';
 
 class Customfilelistviewitem extends StatelessWidget {
-  const Customfilelistviewitem(
-      {super.key,
-      required this.item,
-      required this.section,
-      required this.isAvilabe,
-      required this.course});
+  const Customfilelistviewitem({
+    super.key,
+    required this.item,
+    required this.section,
+    required this.isAvilabe,
+    required this.course,
+  });
   final CourseFileEntity item;
   final CourseSectionEntity section;
   final bool isAvilabe;
@@ -31,9 +32,10 @@ class Customfilelistviewitem extends StatelessWidget {
                     sectionId: section.id,
                     course: course,
                   ),
-                  course: course)
+                  course: course,
+                )
               : null,
-          child: Customcontainersectionitem(
+          child: CustomContainerSectionItem(
             child: Customlisttilewidget(
               title: " ${item.title} ",
               image: item.preffixImage,
@@ -41,9 +43,7 @@ class Customfilelistviewitem extends StatelessWidget {
             ),
           ),
         ),
-        CustomUnAvailableSectionWidget(
-          isAvailable: isAvilabe,
-        )
+        CustomUnAvailableSectionWidget(isAvailable: isAvilabe),
       ],
     );
   }

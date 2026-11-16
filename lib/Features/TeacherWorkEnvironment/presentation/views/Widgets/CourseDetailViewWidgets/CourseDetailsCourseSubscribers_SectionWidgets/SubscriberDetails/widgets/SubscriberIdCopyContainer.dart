@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomCopyToClipboard.dart';
-import 'package:sintir/Core/widgets/results/results_tokens.dart';
+import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results/results_tokens.dart';
 import 'package:sintir/locale_keys.dart';
 
 class SubscriberIdCopyContainer extends StatelessWidget {
@@ -22,10 +22,13 @@ class SubscriberIdCopyContainer extends StatelessWidget {
       copied = false;
     }
     if (!context.mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content:
-          Text(copied ? LocaleKeys.subscriberIdCopied : LocaleKeys.copyFailed),
-    ));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          copied ? LocaleKeys.subscriberIdCopied : LocaleKeys.copyFailed,
+        ),
+      ),
+    );
   }
 
   @override
@@ -35,31 +38,40 @@ class SubscriberIdCopyContainer extends StatelessWidget {
     return Material(
       color: tokens.inner,
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-          side: BorderSide(color: tokens.border, width: 1)),
+        borderRadius: BorderRadius.circular(14),
+        side: BorderSide(color: tokens.border, width: 1),
+      ),
       child: InkWell(
         onTap: subscriberID.isEmpty ? null : () => _copy(context),
         borderRadius: BorderRadius.circular(14),
         child: Padding(
           padding: const EdgeInsetsDirectional.fromSTEB(12, 4, 4, 4),
-          child: Row(children: [
-            Text(LocaleKeys.studentCode,
-                style: AppTextStyles(context)
-                    .medium12
-                    .copyWith(color: theme.colorScheme.onSurface)),
-            const SizedBox(width: 6),
-            Expanded(
+          child: Row(
+            children: [
+              Text(
+                LocaleKeys.studentCode,
+                style: AppTextStyles(
+                  context,
+                ).medium12.copyWith(color: theme.colorScheme.onSurface),
+              ),
+              const SizedBox(width: 6),
+              Expanded(
                 child: Directionality(
-              textDirection: TextDirection.ltr,
-              child: Text(_displayId(subscriberID),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles(context).regular12.copyWith(
+                  textDirection: TextDirection.ltr,
+                  child: Text(
+                    _displayId(subscriberID),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles(context).regular12.copyWith(
                       color: theme.colorScheme.onSurfaceVariant,
-                      fontFeatures: const [FontFeature.tabularFigures()])),
-            )),
-            CustomCopyToClipboard(value: subscriberID)
-          ]),
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                    ),
+                  ),
+                ),
+              ),
+              CustomCopyToClipboard(value: subscriberID),
+            ],
+          ),
         ),
       ),
     );

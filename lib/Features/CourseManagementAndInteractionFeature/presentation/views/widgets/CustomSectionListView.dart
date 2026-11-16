@@ -11,8 +11,11 @@ import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentati
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/CustomVedioListViewItem.dart';
 
 class CustomSectionListView extends StatefulWidget {
-  const CustomSectionListView(
-      {super.key, required this.section, required this.items});
+  const CustomSectionListView({
+    super.key,
+    required this.section,
+    required this.items,
+  });
   final CourseSectionEntity section;
   final List<dynamic> items;
 
@@ -31,9 +34,7 @@ class _CustomSectionListViewState extends State<CustomSectionListView> {
     if (item is CourseVideoItemEntity) {
       return CustomVedioListViewItem(
         course: course,
-        isAvilabe: context
-            .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
-            .isSubscribed,
+        isAvilabe: isSubscribed,
         item: item,
         section: widget.section,
       );
@@ -42,16 +43,15 @@ class _CustomSectionListViewState extends State<CustomSectionListView> {
         course: course,
         item: item,
         section: widget.section,
-        isAvilabe: context
-            .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
-            .isSubscribed,
+        isAvilabe: isSubscribed,
       );
     } else {
       return Customfilelistviewitem(
-          section: widget.section,
-          item: item,
-          course: course,
-          isAvilabe: isSubscribed);
+        section: widget.section,
+        item: item,
+        course: course,
+        isAvilabe: isSubscribed,
+      );
     }
   }
 

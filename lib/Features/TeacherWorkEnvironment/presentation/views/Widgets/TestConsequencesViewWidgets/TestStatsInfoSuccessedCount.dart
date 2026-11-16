@@ -33,8 +33,9 @@ class _TestStatsInfoSuccessedCountState
           return Expanded(
             child: Text(
               state.errMessage,
-              style:
-                  AppTextStyles(context).regular14.copyWith(color: errorColor),
+              style: AppTextStyles(
+                context,
+              ).regular14.copyWith(color: errorColor),
             ),
           );
         }
@@ -42,30 +43,38 @@ class _TestStatsInfoSuccessedCountState
           child: Skeletonizer(
             enabled: state is TestConsequencesGetSuccessedCountLoading,
             child: _buildStatColumn(
-                LocaleKeys.studentsPassed,
-                state is TestConsequencesGetSuccessedCountSuccess
-                    ? state.count.toString()
-                    : "0",
-                context,
-                color: successColor),
+              LocaleKeys.studentsPassed,
+              state is TestConsequencesGetSuccessedCountSuccess
+                  ? state.count.toString()
+                  : "0",
+              context,
+              color: successColor,
+            ),
           ),
         );
       },
     );
   }
 
-  Widget _buildStatColumn(String label, String value, BuildContext context,
-      {Color color = Colors.black}) {
+  Widget _buildStatColumn(
+    String label,
+    String value,
+    BuildContext context, {
+    Color color = Colors.black,
+  }) {
     final Color labelColor = Theme.of(context).textTheme.bodyLarge!.color!;
 
     return Column(
       children: [
-        Text(label,
-            style:
-                AppTextStyles(context).semiBold14.copyWith(color: labelColor)),
+        Text(
+          label,
+          style: AppTextStyles(context).semiBold14.copyWith(color: labelColor),
+        ),
         const SizedBox(height: 10),
-        Text(value,
-            style: AppTextStyles(context).bold14.copyWith(color: color)),
+        Text(
+          value,
+          style: AppTextStyles(context).bold14.copyWith(color: color),
+        ),
       ],
     );
   }

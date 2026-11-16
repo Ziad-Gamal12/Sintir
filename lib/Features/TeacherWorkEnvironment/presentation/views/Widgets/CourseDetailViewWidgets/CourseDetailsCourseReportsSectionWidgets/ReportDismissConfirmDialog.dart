@@ -12,24 +12,37 @@ class ReportDismissConfirmDialog extends StatelessWidget {
       false;
   @override
   Widget build(BuildContext context) => AlertDialog(
-        icon: Icon(Icons.highlight_off, size: 32, color: Colors.red),
-        title: Text(LocaleKeys.reportDismissConfirmTitle),
-        content: Text(LocaleKeys.reportDismissConfirmBody),
-        actions: [
-          FilledButton(
-              onPressed: () => Navigator.pop(context, true),
-              style: FilledButton.styleFrom(
-                  backgroundColor: Colors.red, foregroundColor: Colors.red),
-              child: Text(
-                LocaleKeys.reportDismissAction,
-                style:
-                    AppTextStyles(context).bold16.copyWith(color: Colors.white),
-              )),
-          Center(
-            child: TextButton(
-                onPressed: () => Navigator.pop(context, false),
-                child: Text(LocaleKeys.cancel)),
+    title: Text(
+      LocaleKeys.reportDismissConfirmTitle,
+      textAlign: TextAlign.center,
+    ),
+    content: Text(
+      LocaleKeys.reportDismissConfirmBody,
+      textAlign: TextAlign.center,
+    ),
+    actions: [
+      FilledButton(
+        onPressed: () => Navigator.pop(context, true),
+        style: FilledButton.styleFrom(
+          backgroundColor: Colors.red,
+          foregroundColor: Colors.red,
+        ),
+        child: Text(
+          LocaleKeys.reportDismissAction,
+          style: AppTextStyles(context).bold16.copyWith(color: Colors.white),
+        ),
+      ),
+      Center(
+        child: TextButton(
+          onPressed: () => Navigator.pop(context, false),
+          child: Text(
+            LocaleKeys.cancel,
+            style: AppTextStyles(context).semiBold16.copyWith(
+              color: Theme.of(context).colorScheme.onSurface.withAlpha(0xCC),
+            ),
           ),
-        ],
-      );
+        ),
+      ),
+    ],
+  );
 }

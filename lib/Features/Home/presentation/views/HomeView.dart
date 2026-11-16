@@ -6,7 +6,7 @@ import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
 import 'package:sintir/Core/services/FireBase/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
-import 'package:sintir/Features/Home/presentation/manager/cubit/bottom_nav_cubit.dart';
+import 'package:sintir/Features/Home/presentation/manager/bottom_nav_cubit/bottom_nav_cubit.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_courses_cubit/get_courses_cubit.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_user_data_cubit/get_user_data_cubit.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/BottomNavBar.dart';

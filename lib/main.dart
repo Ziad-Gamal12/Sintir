@@ -17,6 +17,7 @@ import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/services/SupabaseStorageServices.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/App_router.dart';
+import 'package:sintir/Core/widgets/AppSkeletonizerConfig.dart';
 import 'package:sintir/Core/widgets/PrivacyWrapper.dart';
 import 'package:sintir/Features/Favorites/Domain/Repos/FavoritesRepo.dart';
 import 'package:sintir/Features/Favorites/presentation/views/Manager/favourites_cubit/favourites_cubit.dart';
@@ -80,6 +81,8 @@ class Sintir extends StatelessWidget {
                 locale: localeState,
                 debugShowCheckedModeBanner: false,
                 routerConfig: App_router.router,
+                builder: (context, child) =>
+                    AppSkeletonizerConfig(child: child!),
               );
             },
           );

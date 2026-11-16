@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Core/widgets/results/results_tokens.dart';
+import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results/results_tokens.dart';
 import 'package:sintir/locale_keys.dart';
 
 class TonalViewResultButton extends StatelessWidget {
@@ -16,8 +16,11 @@ class TonalViewResultButton extends StatelessWidget {
       child: OutlinedButton.icon(
         onPressed: onPressed,
         icon: const Icon(Icons.visibility_rounded, size: 18),
-        label: Text(LocaleKeys.viewResult,
-            maxLines: 2, overflow: TextOverflow.ellipsis),
+        label: Text(
+          LocaleKeys.viewResult,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
         style: OutlinedButton.styleFrom(
           minimumSize: const Size(0, 44),
           foregroundColor: theme.colorScheme.onSurface,
@@ -25,8 +28,9 @@ class TonalViewResultButton extends StatelessWidget {
           side: BorderSide(color: tokens.border),
           textStyle: AppTextStyles(context).medium12,
           padding: const EdgeInsetsDirectional.symmetric(horizontal: 12),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
       ),
     );

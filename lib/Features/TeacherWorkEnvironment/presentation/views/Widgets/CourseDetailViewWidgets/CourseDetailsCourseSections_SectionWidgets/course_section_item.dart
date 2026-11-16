@@ -3,11 +3,7 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
-import 'package:sintir/Core/utils/imageAssets.dart';
-import 'package:sintir/Core/widgets/CustomTrashIcon.dart';
-import 'package:sintir/Core/widgets/customListTileWidget.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/CourseFileEntity.dart';
-import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/CustomContainerSectionItem.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomCourseDetailsSectionListViewFileItem.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomCourseDetailsSectionListViewTestItem.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CustomCourseDetailsSectionListViewVideoItem.dart';
@@ -45,14 +41,7 @@ class CourseSectionItem extends StatelessWidget {
         course: course,
       );
     } else {
-      return Customcontainersectionitem(
-          child: Customlisttilewidget(
-              title: "unknown",
-              image: Assets.assetsIconsSVGIconsVideoIcon,
-              subtitle: " (Unknown)",
-              trailing: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: CustomTrashIcon(isLoading: false, onpressed: () {}))));
+      return SizedBox.shrink();
     }
   }
 }

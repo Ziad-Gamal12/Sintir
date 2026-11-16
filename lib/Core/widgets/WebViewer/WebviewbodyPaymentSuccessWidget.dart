@@ -70,7 +70,7 @@ class _WebviewbodyPaymentSuccessWidgetState
                                     ),
                                     repeat: false,
                                     fit: BoxFit.contain,
-                                    errorBuilder: (_, __, ___) =>
+                                    errorBuilder: (_, _, _) =>
                                         _SuccessMark(color: success.success),
                                   ),
                           ),

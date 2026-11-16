@@ -21,17 +21,20 @@ class _TestStatsInfoState extends State<TestStatsInfo> {
     super.initState();
     final cubit = context.read<TestConsequencesCubit>();
     cubit.getSuccessedStudentsCount(
-        courseId: widget.requirements.courseID,
-        sectionId: widget.requirements.sectionID,
-        testId: widget.requirements.test.id);
+      courseId: widget.requirements.courseID,
+      sectionId: widget.requirements.sectionID,
+      testId: widget.requirements.test.id,
+    );
     cubit.getFailedStudentsCount(
-        courseId: widget.requirements.courseID,
-        sectionId: widget.requirements.sectionID,
-        testId: widget.requirements.test.id);
+      courseId: widget.requirements.courseID,
+      sectionId: widget.requirements.sectionID,
+      testId: widget.requirements.test.id,
+    );
     cubit.getAttendedCount(
-        courseId: widget.requirements.courseID,
-        sectionId: widget.requirements.sectionID,
-        testId: widget.requirements.test.id);
+      courseId: widget.requirements.courseID,
+      sectionId: widget.requirements.sectionID,
+      testId: widget.requirements.test.id,
+    );
     cubit.getTotalStudentsCount(courseId: widget.requirements.courseID);
   }
 
@@ -45,9 +48,7 @@ class _TestStatsInfoState extends State<TestStatsInfo> {
           children: [
             const TestStatsInfoAttendedStudentCount(),
             verticalDivider(context),
-            const Expanded(
-              child: TestAttendancePresentage(),
-            ),
+            const Expanded(child: TestAttendancePresentage()),
           ],
         ),
         horizontalDivider(context),
@@ -65,15 +66,15 @@ class _TestStatsInfoState extends State<TestStatsInfo> {
   }
 
   Widget verticalDivider(BuildContext context) => Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10),
-        height: 50,
-        width: 1,
-        color: Theme.of(context).dividerColor,
-      );
+    margin: const EdgeInsets.symmetric(horizontal: 10),
+    height: 50,
+    width: 1,
+    color: Theme.of(context).dividerColor,
+  );
 
   Widget horizontalDivider(BuildContext context) => Container(
-        margin: const EdgeInsets.symmetric(vertical: 20),
-        height: 1,
-        color: Theme.of(context).dividerColor,
-      );
+    margin: const EdgeInsets.symmetric(vertical: 20),
+    height: 1,
+    color: Theme.of(context).dividerColor,
+  );
 }

@@ -23,8 +23,9 @@ class CustomTestInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final Color titleColor = theme.textTheme.bodyLarge!.color!;
-    final Color idColor =
-        theme.textTheme.bodySmall!.color!.withValues(alpha: 0.7);
+    final Color idColor = theme.textTheme.bodySmall!.color!.withValues(
+      alpha: 0.7,
+    );
 
     return Row(
       children: [
@@ -37,46 +38,40 @@ class CustomTestInfo extends StatelessWidget {
                 test.title,
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles(context)
-                    .semiBold20
-                    .copyWith(color: titleColor),
+                style: AppTextStyles(
+                  context,
+                ).semiBold20.copyWith(color: titleColor),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               Text(
                 test.id,
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
-                style:
-                    AppTextStyles(context).regular14.copyWith(color: idColor),
+                style: AppTextStyles(
+                  context,
+                ).regular14.copyWith(color: idColor),
               ),
             ],
           ),
         ),
-        const SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         IconButton(
-            onPressed: () {
-              showCustomBottomSheet(
-                child: BlocProvider(
-                  create: (context) => UpdateTestCubit(
-                    testitemrepo: getIt<Testitemrepo>(),
-                  ),
-                  child: UpdateTestInfoBottomSheet(
-                    courseId: courseId,
-                    sectionId: sectionId,
-                    coursetestentity: test,
-                  ),
+          onPressed: () {
+            showCustomBottomSheet(
+              child: BlocProvider(
+                create: (context) =>
+                    UpdateTestCubit(testitemrepo: getIt<Testitemrepo>()),
+                child: UpdateTestInfoBottomSheet(
+                  courseId: courseId,
+                  sectionId: sectionId,
+                  coursetestentity: test,
                 ),
-                context: context,
-              );
-            },
-            icon: Icon(
-              Icons.settings,
-              color: theme.iconTheme.color,
-            ))
+              ),
+              context: context,
+            );
+          },
+          icon: Icon(Icons.settings, color: theme.iconTheme.color),
+        ),
       ],
     );
   }

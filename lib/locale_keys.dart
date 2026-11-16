@@ -44,6 +44,11 @@ class LocaleKeys {
   static String get passed => 'passed'.tr();
   static String get failed => 'failed'.tr();
   static String get correctAnswers => 'correct_answers'.tr();
+  static String get submittedAt => 'submitted_at'.tr();
+  static String submittedAtWithDate(String date) =>
+      'submitted_at_with_date'.tr(args: {'date': date});
+  static String get deleteItemTitle => 'delete_item_title'.tr();
+  static String get cannotBeUndone => 'cannot_be_undone'.tr();
   static String get resultsGood => 'results_good'.tr();
   static String get resultsSteady => 'results_steady'.tr();
   static String get resultsFollowUp => 'results_follow_up'.tr();

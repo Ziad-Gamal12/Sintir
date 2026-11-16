@@ -29,17 +29,19 @@ class _VideoConsequencesViewBodyState extends State<VideoConsequencesViewBody> {
     scrollController = ScrollController();
     final cubit = context.read<GetVideoNotesCubit>();
     cubit.getVideoItemNotes(
-        videoId: widget.requirements.video.id,
-        isPaginate: false,
-        sectionId: widget.requirements.sectionID,
-        courseId: widget.requirements.courseID);
+      videoId: widget.requirements.video.id,
+      isPaginate: false,
+      sectionId: widget.requirements.sectionID,
+      courseId: widget.requirements.courseID,
+    );
     _scrollListener = () {
       if (_shouldFetchMore(cubit: cubit)) {
         cubit.getVideoItemNotes(
-            videoId: widget.requirements.video.id,
-            isPaginate: true,
-            sectionId: widget.requirements.sectionID,
-            courseId: widget.requirements.courseID);
+          videoId: widget.requirements.video.id,
+          isPaginate: true,
+          sectionId: widget.requirements.sectionID,
+          courseId: widget.requirements.courseID,
+        );
       }
     };
     scrollController.addListener(_scrollListener!);
@@ -61,6 +63,9 @@ class _VideoConsequencesViewBodyState extends State<VideoConsequencesViewBody> {
 
   @override
   Widget build(BuildContext context) {
+    final Color primaryTextColor = Theme.of(
+      context,
+    ).textTheme.bodyLarge!.color!;
     return BlocConsumer<GetVideoNotesCubit, GetVideoNotesState>(
       listener: (context, state) {
         if (state is GetVideoNotesSuccess) {
@@ -78,44 +83,40 @@ class _VideoConsequencesViewBodyState extends State<VideoConsequencesViewBody> {
       },
       builder: (context, state) {
         return Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: KHorizontalPadding, vertical: KVerticalPadding),
-            child: CustomScrollView(
-                controller: scrollController,
-                key: const PageStorageKey("VideoConsequencesViewBody"),
-                slivers: [
-                  SliverToBoxAdapter(
-                      child:
-                          VideoSummaryCard(requirements: widget.requirements)),
-                  const SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: 30,
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Text(LocaleKeys.videoNotes,
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles(context).bold20),
-                  ),
-                  const SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: 10,
-                    ),
-                  ),
-                  VideoNotesSliverList(
-                    notes: fetchedNotes,
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: state is GetVideoNotesLoading && state.isPaginate
-                          ? const CircularProgressIndicator(
-                              color: KMainColor,
-                            )
-                          : null,
-                    ),
-                  )
-                ]));
+          padding: const EdgeInsets.symmetric(
+            horizontal: KHorizontalPadding,
+            vertical: KVerticalPadding,
+          ),
+          child: CustomScrollView(
+            controller: scrollController,
+            key: const PageStorageKey("VideoConsequencesViewBody"),
+            slivers: [
+              SliverToBoxAdapter(
+                child: VideoSummaryCard(requirements: widget.requirements),
+              ),
+              SliverToBoxAdapter(child: Divider(height: 24)),
+              SliverToBoxAdapter(
+                child: Text(
+                  LocaleKeys.videoNotes,
+                  textAlign: TextAlign.start,
+                  style: AppTextStyles(
+                    context,
+                  ).bold18.copyWith(color: primaryTextColor),
+                ),
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 10)),
+              VideoNotesSliverList(notes: fetchedNotes),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: state is GetVideoNotesLoading && state.isPaginate
+                      ? const CircularProgressIndicator(color: KMainColor)
+                      : null,
+                ),
+              ),
+            ],
+          ),
+        );
       },
     );
   }

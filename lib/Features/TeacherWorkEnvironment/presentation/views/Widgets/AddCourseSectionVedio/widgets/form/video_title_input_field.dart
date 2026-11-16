@@ -20,10 +20,12 @@ class VideoTitleInputField extends StatelessWidget {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final colors = Theme.of(context).colorScheme;
     final styles = AppTextStyles(context);
-    final mutedStyle =
-        styles.regular12.copyWith(color: colors.onSurfaceVariant);
-    final Color borderColor =
-        isDarkMode ? Colors.white10 : const Color(0xFFE4E6E8);
+    final mutedStyle = styles.regular12.copyWith(
+      color: colors.onSurfaceVariant,
+    );
+    final Color borderColor = isDarkMode
+        ? Colors.white10
+        : const Color(0xFFE4E6E8);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -32,7 +34,7 @@ class VideoTitleInputField extends StatelessWidget {
             Expanded(child: RequiredLabel(text: LocaleKeys.videoTitleLabel)),
             ValueListenableBuilder<TextEditingValue>(
               valueListenable: controller,
-              builder: (_, value, __) => Text(
+              builder: (_, value, _) => Text(
                 '${value.text.length} / ${AddVideoFormController.maxTitleLength}',
                 textDirection: TextDirection.ltr,
                 style: mutedStyle,
@@ -59,8 +61,12 @@ class VideoTitleInputField extends StatelessWidget {
             suffixIcon: const Icon(Icons.edit_note),
             filled: true,
             fillColor: colors.surfaceContainerHighest.withValues(alpha: .45),
-            contentPadding:
-                const EdgeInsetsDirectional.fromSTEB(16, 14, 16, 14),
+            contentPadding: const EdgeInsetsDirectional.fromSTEB(
+              16,
+              14,
+              16,
+              14,
+            ),
             border: _outline(borderColor),
             enabledBorder: _outline(borderColor),
             disabledBorder: _outline(borderColor),
@@ -77,6 +83,6 @@ class VideoTitleInputField extends StatelessWidget {
 }
 
 OutlineInputBorder _outline(Color color) => OutlineInputBorder(
-      borderRadius: BorderRadius.circular(AddVideoDimens.radius),
-      borderSide: BorderSide(color: color, width: 1.5),
-    );
+  borderRadius: BorderRadius.circular(AddVideoDimens.radius),
+  borderSide: BorderSide(color: color, width: 1.5),
+);

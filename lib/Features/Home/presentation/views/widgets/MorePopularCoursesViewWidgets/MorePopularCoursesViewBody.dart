@@ -4,8 +4,8 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_courses_cubit/get_courses_cubit.dart';
-import 'package:sintir/Features/Home/presentation/views/widgets/LeatestCourseSliverGrid.dart';
-import 'package:sintir/Features/Home/presentation/views/widgets/RecentCoursesSectionLoadingWidget.dart';
+import 'package:sintir/Features/Home/presentation/views/widgets/RecentCoursesSliverGrid.dart';
+import 'package:sintir/Features/Home/presentation/views/widgets/RecentCoursesLoadingSliverGrid.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -70,7 +70,7 @@ class _MorePopularCoursesViewBodyState
             return CustomErrorWidget(errormessage: state.errmessage);
           } else if (state is GetPopularCoursesLoading &&
               state.isPaginate == false) {
-            return const RecentCoursesSectionLoadingWidget();
+            return const RecentCoursesLoadingSliverGrid();
           } else if (state is GetPopularCoursesSuccess &&
               fetchedCourses.isEmpty) {
             return CustomEmptyWidget(text: LocaleKeys.noNewCourses);
@@ -78,11 +78,11 @@ class _MorePopularCoursesViewBodyState
             return CustomScrollView(
               controller: scrollController,
               slivers: [
-                LeatestCourseSliverGrid(courses: fetchedCourses),
+                RecentCoursesSliverGrid(courses: fetchedCourses),
                 SliverToBoxAdapter(child: SizedBox(height: hasMore ? 20 : 0)),
                 SliverToBoxAdapter(
                   child: state is GetPopularCoursesLoading && state.isPaginate
-                      ? const RecentCoursesSectionLoadingWidget()
+                      ? const RecentCoursesLoadingSliverGrid()
                       : const SizedBox(),
                 ),
               ],
