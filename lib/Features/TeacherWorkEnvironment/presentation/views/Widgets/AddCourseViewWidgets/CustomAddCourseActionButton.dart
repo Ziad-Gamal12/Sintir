@@ -96,6 +96,9 @@ class CustomAddCourseActionButton extends StatelessWidget {
       title: titleController.text.trim(),
       description: descriptionController.text.trim(),
       price: price,
+      feedBacksCount: 0,
+      lessonsCount: 0,
+      testsCount: 0,
       language: selectedLanguage!,
       postedDate: DateTime.now(),
     );

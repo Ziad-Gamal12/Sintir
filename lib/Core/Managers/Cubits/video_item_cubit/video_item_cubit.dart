@@ -18,11 +18,11 @@ import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Ent
 part 'video_item_state.dart';
 
 class VideoItemCubit extends Cubit<VideoItemState> {
-  VideoItemCubit(
-      {required this.videoItemRepo,
-      required this.assetspickerrepo,
-      required this.sectionItemsActionsRepo})
-      : super(VideoItemInitial());
+  VideoItemCubit({
+    required this.videoItemRepo,
+    required this.assetspickerrepo,
+    required this.sectionItemsActionsRepo,
+  }) : super(VideoItemInitial());
   final VideoItemRepo videoItemRepo;
   final SectionItemsActionsRepo sectionItemsActionsRepo;
   final Assetspickerrepo assetspickerrepo;
@@ -30,20 +30,30 @@ class VideoItemCubit extends Cubit<VideoItemState> {
   void addVideoItem({
     required String courseId,
     required String sectionId,
+    required String teacherId,
+
     required CourseVideoItemEntity video,
   }) async {
     emit(AddVideoItemLoading());
     final result = await sectionItemsActionsRepo.addSectionItem(
-        sectionItem: video, courseId: courseId, sectionId: sectionId);
-    result.fold((failure) {
-      emit(AddVideoItemFailure(errMessage: failure.message));
-    }, (sucUpdateCourseSectionsFailurecess) {
-      emit(AddVideoItemSuccess());
-    });
+      teacherId: teacherId,
+      sectionItem: video,
+      courseId: courseId,
+      sectionId: sectionId,
+    );
+    result.fold(
+      (failure) {
+        emit(AddVideoItemFailure(errMessage: failure.message));
+      },
+      (sucUpdateCourseSectionsFailurecess) {
+        emit(AddVideoItemSuccess());
+      },
+    );
   }
 
-  Future<void> pickVideoFile(
-      {required CourseVideoItemEntity coursevedioitementity}) async {
+  Future<void> pickVideoFile({
+    required CourseVideoItemEntity coursevedioitementity,
+  }) async {
     final result = await assetspickerrepo.pickVideoFromGallery();
     final file = result.fold<File?>((failure) {
       emit(PickVideoFileFailure(errMessage: failure.message));
@@ -52,15 +62,20 @@ class VideoItemCubit extends Cubit<VideoItemState> {
     if (file == null) return;
     final extension = path.extension(file.path).toLowerCase();
     if (extension != '.mp4' && extension != '.mov') {
-      emit(PickVideoFileFailure(
-          errMessage: LocaleKeys.videoUnsupportedFileType));
+      emit(
+        PickVideoFileFailure(errMessage: LocaleKeys.videoUnsupportedFileType),
+      );
       return;
     }
     final size = await file.length();
     if (size > maxVideoSizeBytes) {
-      emit(PickVideoFileFailure(
-          errMessage:
-              LocaleKeys.videoFileTooLarge(maxVideoSizeMegabytes.toString())));
+      emit(
+        PickVideoFileFailure(
+          errMessage: LocaleKeys.videoFileTooLarge(
+            maxVideoSizeMegabytes.toString(),
+          ),
+        ),
+      );
       return;
     }
     coursevedioitementity.file = file;
@@ -72,10 +87,11 @@ class VideoItemCubit extends Cubit<VideoItemState> {
     emit(VideoFileCleared());
   }
 
-  Future<void> uploadVideo(
-      {required CourseVideoItemEntity coursevedioitementity,
-      required String courseId,
-      required String sectionId}) async {
+  Future<void> uploadVideo({
+    required CourseVideoItemEntity coursevedioitementity,
+    required String courseId,
+    required String sectionId,
+  }) async {
     final file = coursevedioitementity.file;
     if (file == null) return;
     final extension = path.extension(file.path).toLowerCase();
@@ -85,9 +101,13 @@ class VideoItemCubit extends Cubit<VideoItemState> {
     }
     final totalBytes = await file.length();
     if (totalBytes > maxVideoSizeBytes) {
-      emit(UploadVideoFailure(
-          errMessage:
-              LocaleKeys.videoFileTooLarge(maxVideoSizeMegabytes.toString())));
+      emit(
+        UploadVideoFailure(
+          errMessage: LocaleKeys.videoFileTooLarge(
+            maxVideoSizeMegabytes.toString(),
+          ),
+        ),
+      );
       return;
     }
     final timer = Stopwatch()..start();
@@ -115,16 +135,20 @@ class VideoItemCubit extends Cubit<VideoItemState> {
         final eta = speed != null && uploaded > 0 && uploaded < total
             ? ((total - uploaded) / speed).ceil()
             : null;
-        emit(UploadVideoLoading(
+        emit(
+          UploadVideoLoading(
             progress: progress,
             uploadedBytes: uploaded,
             totalBytes: total,
-            etaSeconds: eta));
+            etaSeconds: eta,
+          ),
+        );
       },
     );
     result.fold(
-        (failure) => emit(UploadVideoFailure(errMessage: failure.message)),
-        (session) => emit(UploadVideoSuccess(session: session)));
+      (failure) => emit(UploadVideoFailure(errMessage: failure.message)),
+      (session) => emit(UploadVideoSuccess(session: session)),
+    );
   }
 
   Future<void> cancelVideoUpload() async {
@@ -140,29 +164,41 @@ class VideoItemCubit extends Cubit<VideoItemState> {
   }) async {
     emit(JoinToVideoItemLoading());
     Either<Failure, void> result = await sectionItemsActionsRepo.addJoinedBy(
-        joinedByEntity: joinedByEntity,
-        courseId: courseId,
-        sectionId: sectionId,
-        sectionItemId: sectionItemId);
-    result.fold((failure) {
-      emit(JoinToVideoItemFailure(errMessage: failure.message));
-    }, (sucUpdateCourseSectionsFailurecess) {
-      emit(JoinToVideoItemSuccess());
-    });
+      joinedByEntity: joinedByEntity,
+      courseId: courseId,
+      sectionId: sectionId,
+      sectionItemId: sectionItemId,
+    );
+    result.fold(
+      (failure) {
+        emit(JoinToVideoItemFailure(errMessage: failure.message));
+      },
+      (sucUpdateCourseSectionsFailurecess) {
+        emit(JoinToVideoItemSuccess());
+      },
+    );
   }
 
-  Future<void> addVideoNote(
-      {required String coursId,
-      required String sectionId,
-      required String videoId,
-      required VideoNoteEntity note}) async {
+  Future<void> addVideoNote({
+    required String coursId,
+    required String sectionId,
+    required String videoId,
+    required VideoNoteEntity note,
+  }) async {
     emit(AddVideoNoteLoading());
     final result = await videoItemRepo.addVideoNote(
-        coursId: coursId, sectionId: sectionId, videoId: videoId, note: note);
-    result.fold((failure) {
-      emit(AddVideoNoteFailure(errMessage: failure.message));
-    }, (sucUpdateCourseSectionsFailurecess) {
-      emit(AddVideoNoteSuccess());
-    });
+      coursId: coursId,
+      sectionId: sectionId,
+      videoId: videoId,
+      note: note,
+    );
+    result.fold(
+      (failure) {
+        emit(AddVideoNoteFailure(errMessage: failure.message));
+      },
+      (sucUpdateCourseSectionsFailurecess) {
+        emit(AddVideoNoteSuccess());
+      },
+    );
   }
 }

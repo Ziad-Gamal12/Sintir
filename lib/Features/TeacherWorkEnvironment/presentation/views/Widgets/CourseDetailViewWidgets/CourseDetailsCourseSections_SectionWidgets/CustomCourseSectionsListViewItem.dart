@@ -77,6 +77,7 @@ class _CustomCourseDetailsSectionsListViewItemState
           header: SectionHeaderTile(
             title: widget.sectionItem.title,
             courseId: widget.course.id,
+            teacherId: widget.course.contentcreaterentity?.id ?? '',
             sectionId: widget.sectionItem.id,
             subtitle: widget.sectionItem.subtitle,
             onTap: () => _fetchSectionItems(context),

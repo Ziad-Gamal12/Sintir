@@ -20,6 +20,7 @@ class CustomCourseDetailsSectionListViewFileItem extends StatelessWidget {
     course: course,
     section: section,
     itemId: item.id,
+    teacherId: course.contentcreaterentity?.id ?? '',
     title: item.title,
     image: item.preffixImage,
     subtitle: item.description,

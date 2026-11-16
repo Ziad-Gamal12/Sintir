@@ -24,6 +24,8 @@ class CustomCourseDetailsSectionListViewTestItem extends StatelessWidget {
     section: section,
     itemId: item.id,
     title: item.title,
+    isTest: true,
+    teacherId: course.contentcreaterentity?.id ?? '',
     image: item.preffixImage,
     subtitle: '${item.durationTime} ${LocaleKeys.durationMinutes}',
     onTap: () => GoRouter.of(context).push(

@@ -12,6 +12,7 @@ import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntit
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/models/QuestionMistakeModel.dart';
+import 'package:sintir/Core/repos/CourseCountersRepo/CourseCountersRepo.dart';
 import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
@@ -26,7 +27,6 @@ class TestItemRepoImpli implements Testitemrepo {
   final StorageService storageService;
   final DataBaseService databaseservice;
   final MyResultsRepo myResultsRepo;
-
   DocumentSnapshot? lastTestResultDoc;
 
   TestItemRepoImpli({
@@ -44,7 +44,9 @@ class TestItemRepoImpli implements Testitemrepo {
         final file = question.imageFile;
         if (file != null) {
           final url = await storageService.uploadFile(
-              file: file, bucketname: SupabaseBuckets.Courses.name);
+            file: file,
+            bucketname: SupabaseBuckets.Courses.name,
+          );
           question.imageUrl = url;
         }
       }
@@ -65,7 +67,9 @@ class TestItemRepoImpli implements Testitemrepo {
         final file = question.solutionFile;
         if (file != null) {
           final url = await storageService.uploadFile(
-              file: file, bucketname: SupabaseBuckets.Courses.name);
+            file: file,
+            bucketname: SupabaseBuckets.Courses.name,
+          );
           question.solutionImageUrl = url;
         }
       }
@@ -90,7 +94,12 @@ class TestItemRepoImpli implements Testitemrepo {
 
       await Future.wait([
         addTestResultToExamResultsCollection(
-            courseId, sectionId, sectionItemId, testResult, json),
+          courseId,
+          sectionId,
+          sectionItemId,
+          testResult,
+          json,
+        ),
         addTestResultToUsersResults(userUID, testResult, json),
         storeMyMistakes(testResult: testResult, userUID: userUID),
       ]);
@@ -103,8 +112,11 @@ class TestItemRepoImpli implements Testitemrepo {
     }
   }
 
-  Future<void> addTestResultToUsersResults(String userUID,
-      TestResultEntity testResult, Map<String, dynamic> json) async {
+  Future<void> addTestResultToUsersResults(
+    String userUID,
+    TestResultEntity testResult,
+    Map<String, dynamic> json,
+  ) async {
     await databaseservice.setData(
       requirements: FireStoreRequirmentsEntity(
         collection: BackendEndpoints.usersCollectionName,
@@ -118,11 +130,12 @@ class TestItemRepoImpli implements Testitemrepo {
   }
 
   Future<void> addTestResultToExamResultsCollection(
-      String courseId,
-      String sectionId,
-      String sectionItemId,
-      TestResultEntity testResult,
-      Map<String, dynamic> json) {
+    String courseId,
+    String sectionId,
+    String sectionItemId,
+    TestResultEntity testResult,
+    Map<String, dynamic> json,
+  ) {
     return databaseservice.setData(
       requirements: FireStoreRequirmentsEntity(
         collection: BackendEndpoints.coursesCollection,
@@ -173,7 +186,10 @@ class TestItemRepoImpli implements Testitemrepo {
         if (!isPaginate) lastTestResultDoc = null;
         return right(
           GetExamResultsReponseEntity(
-              results: [], hasMore: false, isPaginate: isPaginate),
+            results: [],
+            hasMore: false,
+            isPaginate: isPaginate,
+          ),
         );
       }
 
@@ -188,8 +204,13 @@ class TestItemRepoImpli implements Testitemrepo {
           ? await compute(_parseTestResults, listData)
           : _parseTestResults(listData);
 
-      return right(GetExamResultsReponseEntity(
-          results: results, hasMore: hasMore, isPaginate: isPaginate));
+      return right(
+        GetExamResultsReponseEntity(
+          results: results,
+          hasMore: hasMore,
+          isPaginate: isPaginate,
+        ),
+      );
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {
@@ -204,10 +225,7 @@ class TestItemRepoImpli implements Testitemrepo {
     required String sectionItemId,
   }) async {
     try {
-      final query = {
-        "orderBy": "result",
-        "limit": 1,
-      };
+      final query = {"orderBy": "result", "limit": 1};
 
       final response = await databaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
@@ -229,8 +247,9 @@ class TestItemRepoImpli implements Testitemrepo {
         return right(TestResultEntity.empty());
       }
 
-      final result =
-          Testresultemodel.fromJson(response.listData![0]).toEntity();
+      final result = Testresultemodel.fromJson(
+        response.listData![0],
+      ).toEntity();
       return right(result);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
@@ -246,11 +265,7 @@ class TestItemRepoImpli implements Testitemrepo {
     required String sectionItemId,
   }) async {
     try {
-      final query = {
-        "orderBy": "result",
-        "descending": false,
-        "limit": 1,
-      };
+      final query = {"orderBy": "result", "descending": false, "limit": 1};
 
       final response = await databaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
@@ -272,8 +287,9 @@ class TestItemRepoImpli implements Testitemrepo {
         return right(TestResultEntity.empty());
       }
 
-      final result =
-          Testresultemodel.fromJson(response.listData![0]).toEntity();
+      final result = Testresultemodel.fromJson(
+        response.listData![0],
+      ).toEntity();
       return right(result);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
@@ -317,8 +333,8 @@ class TestItemRepoImpli implements Testitemrepo {
     try {
       final query = {
         "filters": [
-          {"field": "isPassed", "operator": "==", "value": false}
-        ]
+          {"field": "isPassed", "operator": "==", "value": false},
+        ],
       };
 
       final response = await databaseservice.getCollectionItemsCount(
@@ -351,8 +367,8 @@ class TestItemRepoImpli implements Testitemrepo {
     try {
       final query = {
         "filters": [
-          {"field": "isPassed", "operator": "==", "value": true}
-        ]
+          {"field": "isPassed", "operator": "==", "value": true},
+        ],
       };
 
       final response = await databaseservice.getCollectionItemsCount(
@@ -386,7 +402,7 @@ class TestItemRepoImpli implements Testitemrepo {
     try {
       final query = {
         "filters": [
-          {"field": "joinedby.uid", "operator": "==", "value": userId}
+          {"field": "joinedby.uid", "operator": "==", "value": userId},
         ],
         "orderBy": "joinedDate",
         "descending": true,
@@ -426,46 +442,51 @@ class TestItemRepoImpli implements Testitemrepo {
   }) async {
     try {
       final mistakes = _getMyMistakes(
-          questions: testResult.questionsSolvedListEntity,
-          courseId: testResult.courseId,
-          courseSubject: testResult.courseSubject,
-          sectionId: testResult.sectionId);
+        questions: testResult.questionsSolvedListEntity,
+        courseId: testResult.courseId,
+        courseSubject: testResult.courseSubject,
+        sectionId: testResult.sectionId,
+      );
 
-      await Future.wait(mistakes.map((mistake) async {
-        final String questionId = mistake.progress.questionId;
+      await Future.wait(
+        mistakes.map((mistake) async {
+          final String questionId = mistake.progress.questionId;
 
-        if (questionId.isEmpty) return;
-        final docPath = FireStoreRequirmentsEntity(
-          collection: BackendEndpoints.usersCollectionName,
-          docId: userUID,
-          subCollection: BackendEndpoints.myMistakesSubCollection,
-          subDocId: questionId,
-        );
-        final existingData =
-            await databaseservice.getData(requirements: docPath);
-
-        if (existingData.docData != null) {
-          final currentMistake =
-              QuestionMistakeModel.fromJson(existingData.docData!).toEntity();
-          final updatedMistake = mistake.copyWith(
-            progress: mistake.progress.copyWith(
-              wrongCount: currentMistake.progress.wrongCount + 1,
-              correctStreak: 0,
-              lastAnsweredAt: DateTime.now(),
-              status: MistakeStatus.active,
-            ),
+          if (questionId.isEmpty) return;
+          final docPath = FireStoreRequirmentsEntity(
+            collection: BackendEndpoints.usersCollectionName,
+            docId: userUID,
+            subCollection: BackendEndpoints.myMistakesSubCollection,
+            subDocId: questionId,
           );
-          await databaseservice.setData(
+          final existingData = await databaseservice.getData(
             requirements: docPath,
-            data: QuestionMistakeModel.fromEntity(updatedMistake).toJson(),
           );
-        } else {
-          await databaseservice.setData(
-            requirements: docPath,
-            data: QuestionMistakeModel.fromEntity(mistake).toJson(),
-          );
-        }
-      }));
+
+          if (existingData.docData != null) {
+            final currentMistake = QuestionMistakeModel.fromJson(
+              existingData.docData!,
+            ).toEntity();
+            final updatedMistake = mistake.copyWith(
+              progress: mistake.progress.copyWith(
+                wrongCount: currentMistake.progress.wrongCount + 1,
+                correctStreak: 0,
+                lastAnsweredAt: DateTime.now(),
+                status: MistakeStatus.active,
+              ),
+            );
+            await databaseservice.setData(
+              requirements: docPath,
+              data: QuestionMistakeModel.fromEntity(updatedMistake).toJson(),
+            );
+          } else {
+            await databaseservice.setData(
+              requirements: docPath,
+              data: QuestionMistakeModel.fromEntity(mistake).toJson(),
+            );
+          }
+        }),
+      );
 
       return right(null);
     } on CustomException catch (e) {
@@ -483,27 +504,30 @@ class TestItemRepoImpli implements Testitemrepo {
   }) {
     return questions
         .where((q) => q.isCorrect == false)
-        .map((q) => QuestionMistakeEntity(
-              courseId: courseId,
-              sectionId: sectionId,
-              courseSubject: courseSubject,
-              question: q,
-              progress: MistakeProgressEntity(
-                questionId: q.question.questionId,
-                lastAnsweredAt: DateTime.now(),
-                correctStreak: 0,
-                wrongCount: 1,
-                status: MistakeStatus.active,
-              ),
-            ))
+        .map(
+          (q) => QuestionMistakeEntity(
+            courseId: courseId,
+            sectionId: sectionId,
+            courseSubject: courseSubject,
+            question: q,
+            progress: MistakeProgressEntity(
+              questionId: q.question.questionId,
+              lastAnsweredAt: DateTime.now(),
+              correctStreak: 0,
+              wrongCount: 1,
+              status: MistakeStatus.active,
+            ),
+          ),
+        )
         .toList();
   }
 
   @override
-  Future<Either<Failure, void>> updateTest(
-      {required CourseTestEntity test,
-      required String courseId,
-      required String sectionId}) async {
+  Future<Either<Failure, void>> updateTest({
+    required CourseTestEntity test,
+    required String courseId,
+    required String sectionId,
+  }) async {
     try {
       await databaseservice.updateData(
         requirements: FireStoreRequirmentsEntity(
@@ -526,10 +550,11 @@ class TestItemRepoImpli implements Testitemrepo {
   }
 
   @override
-  Future<Either<Failure, bool>> checkIfTheResultHidden(
-      {required String courseId,
-      required String sectionId,
-      required String testId}) async {
+  Future<Either<Failure, bool>> checkIfTheResultHidden({
+    required String courseId,
+    required String sectionId,
+    required String testId,
+  }) async {
     try {
       final response = await databaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
@@ -545,8 +570,9 @@ class TestItemRepoImpli implements Testitemrepo {
         return right(false);
       }
       if (response.docData?["type"] == "Test") {
-        CourseTestEntity test =
-            Coursetestmodel.fromJson(response.docData!).toEntity();
+        CourseTestEntity test = Coursetestmodel.fromJson(
+          response.docData!,
+        ).toEntity();
         return right(!test.showResult);
       }
       return right(false);
@@ -569,7 +595,7 @@ class TestItemRepoImpli implements Testitemrepo {
 
       final query = {
         "filters": [
-          {"field": "joinedby.uid", "operator": "==", "value": userId}
+          {"field": "joinedby.uid", "operator": "==", "value": userId},
         ],
         "orderBy": "joinedDate",
         "descending": true,

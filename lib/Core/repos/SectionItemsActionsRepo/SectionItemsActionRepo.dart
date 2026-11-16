@@ -4,17 +4,26 @@ import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Ent
 
 abstract class SectionItemsActionsRepo {
   Future<Either<Failure, void>> addSectionItem({
-    required sectionItem,
+    required dynamic sectionItem,
+    required String teacherId,
     required String courseId,
     required String sectionId,
   });
-  // SectionItemsActionsRepo
-  Future<Either<Failure, List>> getSectionsItems(
-      {required String courseId, required String sectionId});
-  // SectionItemsActionsRepo
-  Future<Either<Failure, void>> addJoinedBy(
-      {required JoinedByEntity joinedByEntity,
-      required String courseId,
-      required String sectionId,
-      required String sectionItemId});
+  Future<Either<Failure, List>> getSectionsItems({
+    required String courseId,
+    required String sectionId,
+  });
+  Future<Either<Failure, void>> deleteSectionItem({
+    required String courseId,
+    required String teacherId,
+    required String sectionId,
+    required String sectionItemId,
+    required bool isTest,
+  });
+  Future<Either<Failure, void>> addJoinedBy({
+    required JoinedByEntity joinedByEntity,
+    required String courseId,
+    required String sectionId,
+    required String sectionItemId,
+  });
 }

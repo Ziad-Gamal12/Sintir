@@ -185,6 +185,9 @@ void main() {
       subscribtionRepo: repo,
       course: CourseEntity(
         id: 'course-id',
+        feedBacksCount: 0,
+        lessonsCount: 0,
+        testsCount: 0,
         state: 'Published',
         studentsCount: 0,
         subject: '',
@@ -210,6 +213,9 @@ void main() {
       gateway.result = false;
       final course = CourseEntity(
         id: 'course-id',
+        feedBacksCount: 0,
+        lessonsCount: 0,
+        testsCount: 0,
         state: 'Published',
         studentsCount: 0,
         subject: '',

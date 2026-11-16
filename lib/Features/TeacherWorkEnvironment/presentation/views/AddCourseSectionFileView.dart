@@ -14,8 +14,10 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/locale_keys.dart';
 
 class Addcoursesectionfileview extends StatelessWidget {
-  const Addcoursesectionfileview(
-      {super.key, required this.optionnavigationrequirementsentity});
+  const Addcoursesectionfileview({
+    super.key,
+    required this.optionnavigationrequirementsentity,
+  });
   static const routeName = '/Addcoursesectionfileview';
   final OptionNavigationRequirementsEntity optionnavigationrequirementsentity;
 
@@ -25,20 +27,24 @@ class Addcoursesectionfileview extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => CourseSectionsCubit(
-            getIt<CourseSectionsRepo>(),
+            courseSectionsRepo: getIt<CourseSectionsRepo>(),
+            sectionItemsActionsRepo: getIt<SectionItemsActionsRepo>(),
           ),
         ),
         BlocProvider(
-            create: (context) => FileItemCubit(
-                sectionItemsActionsRepo: getIt<SectionItemsActionsRepo>(),
-                fileItemRepo: getIt<FileItemRepo>(),
-                assetspickerrepo: getIt<Assetspickerrepo>()))
+          create: (context) => FileItemCubit(
+            sectionItemsActionsRepo: getIt<SectionItemsActionsRepo>(),
+            fileItemRepo: getIt<FileItemRepo>(),
+            assetspickerrepo: getIt<Assetspickerrepo>(),
+          ),
+        ),
       ],
       child: Scaffold(
         appBar: CustomAppBar(appBartitle: LocaleKeys.addFile),
         body: Provider.value(
-            value: optionnavigationrequirementsentity,
-            child: const AddcoursesectionfileviewBody()),
+          value: optionnavigationrequirementsentity,
+          child: const AddcoursesectionfileviewBody(),
+        ),
       ),
     );
   }

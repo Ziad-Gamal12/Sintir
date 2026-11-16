@@ -51,14 +51,17 @@ class CourseDetailActions extends StatelessWidget {
 
   void _updateCourseState(BuildContext context, String nextState) {
     context.read<UpdateCourseCubit>().updateCourseState(
-          courseEntity: _copyCourseWithState(nextState),
-        );
+      courseEntity: _copyCourseWithState(nextState),
+    );
   }
 
   CourseEntity _copyCourseWithState(String state) {
     return CourseEntity(
       id: course.id,
       state: state,
+      feedBacksCount: course.feedBacksCount,
+      lessonsCount: course.lessonsCount,
+      testsCount: course.testsCount,
       posterUrl: course.posterUrl,
       studentsCount: course.studentsCount,
       subject: course.subject,

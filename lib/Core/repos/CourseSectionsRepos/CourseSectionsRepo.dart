@@ -11,24 +11,14 @@ abstract class CourseSectionsRepo {
     required String courseId,
   });
 
-  Future<Either<Failure, GetCourseSectionsResonseEntity>> getCourseSections(
-      {required String courseId, required bool isPaginate});
-  // SectionItemsActionsRepo
-  Future<Either<Failure, void>> addSectionItem({
-    required sectionItem,
+  Future<Either<Failure, GetCourseSectionsResonseEntity>> getCourseSections({
     required String courseId,
-    required String sectionId,
+    required bool isPaginate,
   });
-  // SectionItemsActionsRepo
-  Future<Either<Failure, List>> getSectionsItems(
-      {required String courseId, required String sectionId});
+
   Future<Either<Failure, void>> deleteSection({
     required String courseId,
     required String sectionId,
-  });
-  Future<Either<Failure, void>> deleteSectionItem({
-    required String courseId,
-    required String sectionId,
-    required String sectionItemId,
+    required String teacherId,
   });
 }

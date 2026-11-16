@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
+import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
@@ -11,26 +12,28 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/locale_keys.dart';
 
 class CourseDetailsCourseSectionsView extends StatelessWidget {
-  const CourseDetailsCourseSectionsView(
-      {super.key, required this.courseEntity});
+  const CourseDetailsCourseSectionsView({
+    super.key,
+    required this.courseEntity,
+  });
   final CourseEntity courseEntity;
   static const String routeName = "/CourseDetailsCourseSectionsView";
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CourseSectionsCubit(
-        getIt<CourseSectionsRepo>(),
+        courseSectionsRepo: getIt<CourseSectionsRepo>(),
+        sectionItemsActionsRepo: getIt<SectionItemsActionsRepo>(),
       ),
       child: Scaffold(
         key: Variables.courseSectionsViewScaffoldKey,
         appBar: CustomAppBar(appBartitle: LocaleKeys.content),
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton:
-            CustomAddNewCourseSectionButton(course: courseEntity),
-        body: CourseDetailsCourseSectionsViewBody(
-          courseEntity: courseEntity,
+        floatingActionButton: CustomAddNewCourseSectionButton(
+          course: courseEntity,
         ),
+        body: CourseDetailsCourseSectionsViewBody(courseEntity: courseEntity),
       ),
     );
   }

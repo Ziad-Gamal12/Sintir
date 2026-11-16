@@ -26,6 +26,7 @@ class CustomCourseDetailsSectionListViewVideoItem extends StatelessWidget {
     itemId: item.id,
     title: item.title,
     image: item.preffixImage,
+    teacherId: course.contentcreaterentity?.id ?? '',
     subtitle: '${item.durationTime} ${LocaleKeys.durationMinutes}',
     onTap: () => GoRouter.of(context).push(
       VideoConsequencesView.routeName,

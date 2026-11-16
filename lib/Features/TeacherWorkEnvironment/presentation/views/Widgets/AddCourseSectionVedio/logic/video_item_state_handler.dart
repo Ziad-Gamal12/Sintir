@@ -62,16 +62,18 @@ class VideoItemStateHandler {
 
     if (option.isNewSection == true) {
       context.read<CourseSectionsCubit>().addCourseSection(
-            sectionItem: video,
-            courseId: option.courseEntity.id,
-            section: option.section,
-          );
+        sectionItem: video,
+        courseId: option.courseEntity.id,
+        teacherId: option.courseEntity.contentcreaterentity?.id ?? '',
+        section: option.section,
+      );
     } else {
       context.read<VideoItemCubit>().addVideoItem(
-            courseId: option.courseEntity.id,
-            sectionId: option.section.id,
-            video: video,
-          );
+        courseId: option.courseEntity.id,
+        teacherId: option.courseEntity.contentcreaterentity?.id ?? '',
+        sectionId: option.section.id,
+        video: video,
+      );
     }
   }
 }

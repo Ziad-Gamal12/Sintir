@@ -16,12 +16,15 @@ class SectionItemTile extends StatelessWidget {
     required this.itemId,
     required this.title,
     required this.image,
+    required this.teacherId,
     this.subtitle,
+    this.isTest = false,
     this.onTap,
   });
   final CourseEntity course;
   final CourseSectionEntity section;
-  final String itemId, title, image;
+  final bool isTest;
+  final String itemId, title, image, teacherId;
   final String? subtitle;
   final VoidCallback? onTap;
 
@@ -46,6 +49,8 @@ class SectionItemTile extends StatelessWidget {
                   courseId: course.id,
                   sectionId: section.id,
                   sectionItemId: itemId,
+                  teacherId: teacherId,
+                  isTest: isTest,
                 ),
           ),
         ),

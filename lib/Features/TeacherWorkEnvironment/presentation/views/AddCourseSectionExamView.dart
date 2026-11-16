@@ -17,8 +17,10 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/locale_keys.dart';
 
 class AddcourseSectionExamview extends StatefulWidget {
-  const AddcourseSectionExamview(
-      {super.key, required this.optionnavigationrequirementsentity});
+  const AddcourseSectionExamview({
+    super.key,
+    required this.optionnavigationrequirementsentity,
+  });
   static const routeName = '/AddCourseSectionExamView';
   final OptionNavigationRequirementsEntity optionnavigationrequirementsentity;
 
@@ -47,9 +49,10 @@ class _AddcourseSectionExamviewState extends State<AddcourseSectionExamview>
         ),
         BlocProvider(
           create: (context) => CourseSectionsCubit(
-            getIt<CourseSectionsRepo>(),
+            courseSectionsRepo: getIt<CourseSectionsRepo>(),
+            sectionItemsActionsRepo: getIt<SectionItemsActionsRepo>(),
           ),
-        )
+        ),
       ],
       child: Scaffold(
         resizeToAvoidBottomInset: false,

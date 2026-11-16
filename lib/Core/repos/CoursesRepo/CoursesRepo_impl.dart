@@ -29,8 +29,9 @@ class CoursesrepoImpl implements Coursesrepo {
   });
 
   @override
-  Future<Either<Failure, void>> addCourse(
-      {required CourseEntity courseEntity}) async {
+  Future<Either<Failure, void>> addCourse({
+    required CourseEntity courseEntity,
+  }) async {
     try {
       final isExists = await databaseservice.isDataExists(
         key: BackendEndpoints.coursesCollection,
@@ -58,7 +59,7 @@ class CoursesrepoImpl implements Coursesrepo {
             subCollection: BackendEndpoints.coursesCollection,
             subDocId: courseEntity.id,
           ),
-        )
+        ),
       ]);
       return right(null);
     } on CustomException catch (e) {
@@ -72,7 +73,9 @@ class CoursesrepoImpl implements Coursesrepo {
   Future<Either<Failure, String>> uplaodFile({required File file}) async {
     try {
       final url = await storageService.uploadFile(
-          file: file, bucketname: SupabaseBuckets.Courses.name);
+        file: file,
+        bucketname: SupabaseBuckets.Courses.name,
+      );
       return right(url);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
@@ -102,8 +105,13 @@ class CoursesrepoImpl implements Coursesrepo {
       );
 
       if (data.listData == null) {
-        return right(GetCoursesResonseEntity(
-            courses: [], isPaginate: isPaginate, hasMore: false));
+        return right(
+          GetCoursesResonseEntity(
+            courses: [],
+            isPaginate: isPaginate,
+            hasMore: false,
+          ),
+        );
       }
 
       if (data.listData!.isNotEmpty && data.lastDocumentSnapshot != null) {
@@ -113,9 +121,10 @@ class CoursesrepoImpl implements Coursesrepo {
       final courses = await compute(_parseCourses, data.listData!);
       return right(
         GetCoursesResonseEntity(
-            isPaginate: isPaginate,
-            courses: courses,
-            hasMore: data.hasMore ?? false),
+          isPaginate: isPaginate,
+          courses: courses,
+          hasMore: data.hasMore ?? false,
+        ),
       );
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
@@ -125,8 +134,9 @@ class CoursesrepoImpl implements Coursesrepo {
   }
 
   @override
-  Future<Either<Failure, GetCoursesResonseEntity>> getRecentCourses(
-      {required bool isPaginate}) {
+  Future<Either<Failure, GetCoursesResonseEntity>> getRecentCourses({
+    required bool isPaginate,
+  }) {
     return _getCourses(
       baseQuery: {
         "filters": [
@@ -134,7 +144,7 @@ class CoursesrepoImpl implements Coursesrepo {
             "field": "state",
             "operator": "==",
             "value": BackendEndpoints.coursePublishedState,
-          }
+          },
         ],
         "orderBy": "postedDate",
         "descending": true,
@@ -150,8 +160,9 @@ class CoursesrepoImpl implements Coursesrepo {
   }
 
   @override
-  Future<Either<Failure, GetCoursesResonseEntity>> getPopularCourses(
-      {required bool isPaginate}) {
+  Future<Either<Failure, GetCoursesResonseEntity>> getPopularCourses({
+    required bool isPaginate,
+  }) {
     return _getCourses(
       baseQuery: {
         "filters": [
@@ -159,7 +170,7 @@ class CoursesrepoImpl implements Coursesrepo {
             "field": "state",
             "operator": "==",
             "value": BackendEndpoints.coursePublishedState,
-          }
+          },
         ],
         "orderBy": "studentsCount",
         "limit": 10,
@@ -174,12 +185,11 @@ class CoursesrepoImpl implements Coursesrepo {
   }
 
   @override
-  Future<Either<Failure, GetCoursesResonseEntity>> getMyCourses(
-      {required bool isPaginate}) {
+  Future<Either<Failure, GetCoursesResonseEntity>> getMyCourses({
+    required bool isPaginate,
+  }) {
     return _getCourses(
-      baseQuery: {
-        "limit": 10,
-      },
+      baseQuery: {"limit": 10},
       requirements: FireStoreRequirmentsEntity(
         collection: BackendEndpoints.usersCollectionName,
         docId: getUserData().uid,
@@ -192,8 +202,9 @@ class CoursesrepoImpl implements Coursesrepo {
   }
 
   @override
-  Future<Either<Failure, void>> updateCourse(
-      {required CourseEntity courseEntity}) async {
+  Future<Either<Failure, void>> updateCourse({
+    required CourseEntity courseEntity,
+  }) async {
     try {
       final data = Coursemodel.fromEntity(courseEntity: courseEntity).toJson();
 
@@ -224,21 +235,19 @@ class CoursesrepoImpl implements Coursesrepo {
   }
 
   @override
-  Future<Either<Failure, GetCoursesResonseEntity>> getStudentInterestedCourses(
-      {required bool isPaginate, required String educationlevel}) async {
+  Future<Either<Failure, GetCoursesResonseEntity>> getStudentInterestedCourses({
+    required bool isPaginate,
+    required String educationlevel,
+  }) async {
     return _getCourses(
       baseQuery: {
         "filters": [
-          {
-            "field": "level",
-            "operator": "==",
-            "value": educationlevel,
-          },
+          {"field": "level", "operator": "==", "value": educationlevel},
           {
             "field": "state",
             "operator": "==",
             "value": BackendEndpoints.coursePublishedState,
-          }
+          },
         ],
         "orderBy": "postedDate",
         "limit": 10,
@@ -253,21 +262,20 @@ class CoursesrepoImpl implements Coursesrepo {
   }
 
   @override
-  Future<Either<Failure, GetCoursesResonseEntity>> getTeaceherInterestedCourses(
-      {required bool isPaginate, required String subject}) async {
+  Future<Either<Failure, GetCoursesResonseEntity>>
+  getTeaceherInterestedCourses({
+    required bool isPaginate,
+    required String subject,
+  }) async {
     return _getCourses(
       baseQuery: {
         "filters": [
-          {
-            "field": "subject",
-            "operator": "==",
-            "value": subject,
-          },
+          {"field": "subject", "operator": "==", "value": subject},
           {
             "field": "state",
             "operator": "==",
             "value": BackendEndpoints.coursePublishedState,
-          }
+          },
         ],
         "orderBy": "postedDate",
         "descending": true,

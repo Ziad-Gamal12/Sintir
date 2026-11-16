@@ -5,7 +5,7 @@ import 'package:sintir/Core/entities/CourseEntities/ContentCreaterEntity.dart';
 class CourseEntity {
   String id, title, description, language, state;
   int price;
-  final int studentsCount;
+  final int studentsCount, lessonsCount, testsCount, feedBacksCount;
   String? posterUrl;
   final DateTime postedDate;
   final String subject;
@@ -24,21 +24,32 @@ class CourseEntity {
     required this.price,
     required this.language,
     required this.postedDate,
+    required this.lessonsCount,
+    required this.testsCount,
+    required this.feedBacksCount,
     this.contentcreaterentity,
   });
+
   factory CourseEntity.empty() => CourseEntity(
-      id: 'loading',
-      state: 'loading',
-      title: 'loading',
-      description: 'loading',
-      posterUrl:
-          "https://foundr.com/wp-content/uploads/2021/09/Best-online-course-platforms.png",
-      price: 0,
-      language: 'loading',
-      subject: 'loading',
-      level: 'loading',
-      postedDate: DateTime.now(),
-      studentsCount: 0);
-  static List<CourseEntity> fakeCourses =
-      List.generate(10, (index) => CourseEntity.empty());
+    id: 'loading',
+    state: 'loading',
+    title: 'loading',
+
+    description: 'loading',
+    posterUrl:
+        "https://foundr.com/wp-content/uploads/2021/09/Best-online-course-platforms.png",
+    price: 0,
+    language: 'loading',
+    subject: 'loading',
+    level: 'loading',
+    postedDate: DateTime.now(),
+    studentsCount: 0,
+    lessonsCount: 0,
+    testsCount: 0,
+    feedBacksCount: 0,
+  );
+  static List<CourseEntity> fakeCourses = List.generate(
+    10,
+    (index) => CourseEntity.empty(),
+  );
 }

@@ -117,12 +117,15 @@ class TestItemCubit extends Cubit<TestItemState> {
   void addTestItem({
     required String courseId,
     required String sectionId,
+    required String teacherId,
+
     required CourseTestEntity test,
   }) async {
     emit(AddTestItemLoading());
     final result = await sectionItemsActionsRepo.addSectionItem(
       sectionItem: test,
       courseId: courseId,
+      teacherId: teacherId,
       sectionId: sectionId,
     );
     result.fold(

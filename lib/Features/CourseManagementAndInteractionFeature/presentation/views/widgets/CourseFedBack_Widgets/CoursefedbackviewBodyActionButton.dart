@@ -28,26 +28,30 @@ class CoursefedbackviewBodyActionButton extends StatelessWidget {
       },
       builder: (context, state) {
         return CustomChatTextField(
-            controller: controller,
-            isLoading: state,
-            onPressed: () {
-              if (requirmentsEntity.isSubscribed == true) {
-                if (formKey.currentState!.validate()) {
-                  coursefedbackItemEntity.fedBack = controller.text;
-                  context.read<CourseFeedBacksCubit>().addCourseFeedBack(
-                      courseId: requirmentsEntity.course.id,
-                      feedback: coursefedbackItemEntity);
-                }
-              } else {
-                errordialog(context, LocaleKeys.mustSubscribeToComment).show();
+          controller: controller,
+          isLoading: state,
+          onPressed: () {
+            if (requirmentsEntity.isSubscribed == true) {
+              if (formKey.currentState!.validate()) {
+                coursefedbackItemEntity.fedBack = controller.text;
+                context.read<CourseFeedBacksCubit>().addCourseFeedBack(
+                  courseId: requirmentsEntity.course.id,
+                  teacherId:
+                      requirmentsEntity.course.contentcreaterentity?.id ?? "",
+                  feedback: coursefedbackItemEntity,
+                );
               }
-            },
-            validator: (value) {
-              if (value!.isEmpty) {
-                return LocaleKeys.fieldCannotBeEmpty;
-              }
-              return null;
-            });
+            } else {
+              errordialog(context, LocaleKeys.mustSubscribeToComment).show();
+            }
+          },
+          validator: (value) {
+            if (value!.isEmpty) {
+              return LocaleKeys.fieldCannotBeEmpty;
+            }
+            return null;
+          },
+        );
       },
     );
   }

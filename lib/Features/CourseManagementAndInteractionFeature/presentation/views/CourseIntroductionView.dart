@@ -9,34 +9,41 @@ import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
 import 'package:sintir/Core/repos/CourseSubscibtionsRepo/CourseSubscibtionsRepo.dart';
 import 'package:sintir/Core/repos/PaymobRepo.dart/PaymobRepo.dart';
+import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/CourseIntroduction_Widgets/CourseIntroductionViewBody.dart';
 
 class CourseIntroductionView extends StatelessWidget {
-  const CourseIntroductionView(
-      {super.key, required this.bottomsheetnavigationrequirmentsentity});
+  const CourseIntroductionView({
+    super.key,
+    required this.bottomsheetnavigationrequirmentsentity,
+  });
   static const routeName = "/CourseIntroductionView";
   final DisplayCourseBottomsheetNavigationRequirmentsEntity
-      bottomsheetnavigationrequirmentsentity;
+  bottomsheetnavigationrequirmentsentity;
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) => CourseSectionsCubit(
-            getIt<CourseSectionsRepo>(),
+            courseSectionsRepo: getIt<CourseSectionsRepo>(),
+            sectionItemsActionsRepo: getIt<SectionItemsActionsRepo>(),
           ),
         ),
         BlocProvider(
-            create: (context) => CourseSubscribtionsCubit(
-                paymobRepo: getIt<PaymobRepo>(),
-                course: bottomsheetnavigationrequirmentsentity.course,
-                subscribtionRepo: getIt<CourseSubscibtionsRepo>()))
+          create: (context) => CourseSubscribtionsCubit(
+            paymobRepo: getIt<PaymobRepo>(),
+            course: bottomsheetnavigationrequirmentsentity.course,
+            subscribtionRepo: getIt<CourseSubscibtionsRepo>(),
+          ),
+        ),
       ],
       child: Scaffold(
         appBar: CustomAppBar(
-            appBartitle: bottomsheetnavigationrequirmentsentity.course.title),
+          appBartitle: bottomsheetnavigationrequirmentsentity.course.title,
+        ),
         body: Provider.value(
           value: bottomsheetnavigationrequirmentsentity,
           child: const CourseIntroductionViewBody(),

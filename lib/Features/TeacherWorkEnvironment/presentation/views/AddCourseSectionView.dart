@@ -5,6 +5,7 @@ import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCu
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
+import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
@@ -20,17 +21,18 @@ class Addcoursesectionview extends StatelessWidget {
   Widget build(BuildContext context) {
     OptionNavigationRequirementsEntity optionnavigationrequirementsentity =
         OptionNavigationRequirementsEntity(
-      isNewSection: true,
-      courseEntity: course,
-      section: CourseSectionEntity(
-        title: "",
-        subtitle: "",
-        id: "${DateTime.now().toIso8601String()}-Section",
-      ),
-    );
+          isNewSection: true,
+          courseEntity: course,
+          section: CourseSectionEntity(
+            title: "",
+            subtitle: "",
+            id: "${DateTime.now().toIso8601String()}-Section",
+          ),
+        );
     return BlocProvider(
       create: (context) => CourseSectionsCubit(
-        getIt<CourseSectionsRepo>(),
+        courseSectionsRepo: getIt<CourseSectionsRepo>(),
+        sectionItemsActionsRepo: getIt<SectionItemsActionsRepo>(),
       ),
       child: Scaffold(
         appBar: CustomAppBar(appBartitle: LocaleKeys.addLecture),

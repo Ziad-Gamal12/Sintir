@@ -14,12 +14,13 @@ class SectionHeaderTile extends StatelessWidget {
     required this.onTap,
     required this.courseId,
     required this.sectionId,
+    required this.teacherId,
   });
 
   final String title;
   final String subtitle;
   final VoidCallback onTap;
-  final String courseId, sectionId;
+  final String courseId, sectionId, teacherId;
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +35,12 @@ class SectionHeaderTile extends StatelessWidget {
           trailing: DeleteMenuButton(
             confirmTitle: LocaleKeys.areYouSureDeleteSection,
             itemName: title,
-            onConfirmed: () => context
-                .read<CourseSectionsCubit>()
-                .deleteSection(courseId: courseId, sectionId: sectionId),
+            onConfirmed: () =>
+                context.read<CourseSectionsCubit>().deleteSection(
+                  courseId: courseId,
+                  sectionId: sectionId,
+                  teacherId: teacherId,
+                ),
           ),
         ),
       ),

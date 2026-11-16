@@ -3,27 +3,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
+import 'package:sintir/Core/Enums/courseCounterField.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
-import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
-import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
 import 'package:sintir/Core/entities/FetchDataResponses/GetCourseSectionsResonseEntity.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
+import 'package:sintir/Core/repos/CourseCountersRepo/CourseCountersRepo.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/CourseSectionModel.dart';
-import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/CourseTestModel.dart';
-import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/CoursefileModel.dart';
-import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/CoursevedioitemModel.dart';
-import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/locale_keys.dart';
 
 class CourseSectionsRepoImpl implements CourseSectionsRepo {
   final DataBaseService datebaseservice;
+  final CourseCountersRepo courseCountersRepo;
+
   CourseSectionsRepoImpl({
     required this.datebaseservice,
+    required this.courseCountersRepo,
   });
 
   @override
@@ -49,16 +48,13 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e) {
+    } catch (_) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     }
   }
 
   DocumentSnapshot? getCourseSectionsLastDoc;
-  final Map<String, dynamic> _baseQuery = {
-    "startAfter": null,
-    "limit": 10,
-  };
+  final Map<String, dynamic> _baseQuery = {"startAfter": null, "limit": 10};
 
   @override
   Future<Either<Failure, GetCourseSectionsResonseEntity>> getCourseSections({
@@ -81,25 +77,31 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
         return left(ServerFailure(message: LocaleKeys.dataNotFound));
       }
       if (response.listData!.isEmpty) {
-        return right(GetCourseSectionsResonseEntity(
-          isPaginate: isPaginate,
-          sections: [],
-          hasMore: false,
-        ));
+        return right(
+          GetCourseSectionsResonseEntity(
+            isPaginate: isPaginate,
+            sections: [],
+            hasMore: false,
+          ),
+        );
       }
 
       if (response.lastDocumentSnapshot != null) {
         getCourseSectionsLastDoc = response.lastDocumentSnapshot;
       }
 
-      final courseSections =
-          await compute(_parseCourseSections, response.listData!);
+      final courseSections = await compute(
+        _parseCourseSections,
+        response.listData!,
+      );
 
-      return right(GetCourseSectionsResonseEntity(
-        isPaginate: isPaginate,
-        sections: courseSections,
-        hasMore: response.hasMore ?? false,
-      ));
+      return right(
+        GetCourseSectionsResonseEntity(
+          isPaginate: isPaginate,
+          sections: courseSections,
+          hasMore: response.hasMore ?? false,
+        ),
+      );
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (_) {
@@ -112,83 +114,13 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
   }
 
   @override
-  Future<Either<Failure, void>> addSectionItem({
-    required dynamic sectionItem,
+  Future<Either<Failure, void>> deleteSection({
     required String courseId,
+    required String teacherId,
     required String sectionId,
   }) async {
     try {
-      if (sectionItem is! CourseTestEntity &&
-          sectionItem is! CourseVideoItemEntity &&
-          sectionItem is! CourseFileEntity) {
-        return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
-      }
-
-      final json = _getSectionItemData(sectionItem);
-      final requirements = getAddingSectionItemRequirments(
-        rootCollection: BackendEndpoints.coursesCollection,
-        rootDocId: courseId,
-        subCollection: BackendEndpoints.sectionsSubCollection,
-        subDocId: sectionId,
-        subCollection2: BackendEndpoints.sectionItemsSubCollection,
-        sub2DocId: (sectionItem.id) as String,
-      );
-      if (sectionItem is CourseVideoItemEntity &&
-          sectionItem.videoProvider == "mux") {
-        await datebaseservice.updateData(
-            data: json, requirements: requirements);
-      } else {
-        await datebaseservice.setData(data: json, requirements: requirements);
-      }
-      return right(null);
-    } on CustomException catch (e) {
-      return left(ServerFailure(message: e.message));
-    } catch (e) {
-      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
-    }
-  }
-
-  static Map<String, dynamic> _getSectionItemData(dynamic sectionItem) {
-    if (sectionItem is CourseTestEntity) {
-      return Coursetestmodel.fromEntity(sectionItem).toJson();
-    } else if (sectionItem is CourseVideoItemEntity) {
-      return CourseVideoItemModel.fromEntity(sectionItem).toJson();
-    } else if (sectionItem is CourseFileEntity) {
-      return Coursefilemodel.fromEntity(sectionItem).toJson();
-    } else {
-      return {};
-    }
-  }
-
-  FireStoreRequirmentsEntity getAddingSectionItemRequirments({
-    required String rootCollection,
-    required String rootDocId,
-    required String subCollection,
-    required String subDocId,
-    required String subCollection2,
-    required String sub2DocId,
-    String? subCollection3,
-    String? sub3DocId,
-  }) {
-    return FireStoreRequirmentsEntity(
-      collection: rootCollection,
-      docId: rootDocId,
-      subCollection: subCollection,
-      subDocId: subDocId,
-      subCollection2: subCollection2,
-      sub2DocId: sub2DocId,
-      subCollection3: subCollection3,
-      sub3DocId: sub3DocId,
-    );
-  }
-
-  @override
-  Future<Either<Failure, List>> getSectionsItems({
-    required String courseId,
-    required String sectionId,
-  }) async {
-    try {
-      final data = await datebaseservice.getData(
+      final itemsResponse = await datebaseservice.getData(
         requirements: FireStoreRequirmentsEntity(
           collection: BackendEndpoints.coursesCollection,
           docId: courseId,
@@ -198,69 +130,61 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
         ),
       );
 
-      if (data.listData == null) {
-        return left(ServerFailure(message: LocaleKeys.dataNotFound));
+      int deletedLessons = 0;
+      int deletedTests = 0;
+      final List<Future<void>> deleteFutures = [];
+
+      if (itemsResponse.listData != null &&
+          itemsResponse.listData!.isNotEmpty) {
+        for (final item in itemsResponse.listData!) {
+          final String? itemId = item["id"]?.toString();
+          final String? type = item["type"]?.toString();
+
+          if (type == "Test") {
+            deletedTests++;
+          } else {
+            deletedLessons++;
+          }
+          if (itemId != null && itemId.isNotEmpty) {
+            deleteFutures.add(
+              datebaseservice.deleteDoc(
+                collectionKey: BackendEndpoints.coursesCollection,
+                docId: courseId,
+                subCollectionKey: BackendEndpoints.sectionsSubCollection,
+                subDocId: sectionId,
+                subCollectionKey2: BackendEndpoints.sectionItemsSubCollection,
+                subDocId2: itemId,
+              ),
+            );
+          }
+        }
       }
-      if (data.listData!.isEmpty) {
-        return right([]);
-      }
 
-      final items = await compute(_parseSectionItems, data.listData!);
-
-      return right(items);
-    } on CustomException catch (e) {
-      return left(ServerFailure(message: e.message));
-    } catch (_) {
-      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
-    }
-  }
-
-  static List _parseSectionItems(List<dynamic> listData) {
-    final items = [];
-    for (var item in listData) {
-      if (item["type"] == "Test") {
-        items.add(Coursetestmodel.fromJson(item).toEntity());
-      } else if ((item["type"] == "Video" || item["type"] == "Vedio")) {
-        items.add(CourseVideoItemModel.fromJson(item).toEntity());
-      } else {
-        items.add(Coursefilemodel.fromJson(item).toEntity());
-      }
-    }
-    return items;
-  }
-
-  @override
-  Future<Either<Failure, void>> deleteSection(
-      {required String courseId, required String sectionId}) async {
-    try {
-      await datebaseservice.deleteDoc(
-        collectionKey: BackendEndpoints.coursesCollection,
-        docId: courseId,
-        subCollectionKey: BackendEndpoints.sectionsSubCollection,
-        subDocId: sectionId,
+      // 2. حذف وثيقة السيكشن نفسها + خصم العدادات دفعة واحدة
+      deleteFutures.add(
+        datebaseservice.deleteDoc(
+          collectionKey: BackendEndpoints.coursesCollection,
+          docId: courseId,
+          subCollectionKey: BackendEndpoints.sectionsSubCollection,
+          subDocId: sectionId,
+        ),
       );
-      return right(null);
-    } on CustomException catch (e) {
-      return left(ServerFailure(message: e.message));
-    } catch (_) {
-      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
-    }
-  }
 
-  @override
-  Future<Either<Failure, void>> deleteSectionItem(
-      {required String courseId,
-      required String sectionId,
-      required String sectionItemId}) async {
-    try {
-      await datebaseservice.deleteDoc(
-        collectionKey: BackendEndpoints.coursesCollection,
-        docId: courseId,
-        subCollectionKey: BackendEndpoints.sectionsSubCollection,
-        subDocId: sectionId,
-        subCollectionKey2: BackendEndpoints.sectionItemsSubCollection,
-        subDocId2: sectionItemId,
-      );
+      if (deletedLessons > 0 || deletedTests > 0) {
+        deleteFutures.add(
+          courseCountersRepo.updateMultipleCourseCounters(
+            courseId: courseId,
+            teacherId: teacherId,
+            deltas: {
+              if (deletedLessons > 0)
+                CourseCounterField.lessons: -deletedLessons,
+              if (deletedTests > 0) CourseCounterField.tests: -deletedTests,
+            },
+          ),
+        );
+      }
+
+      await Future.wait(deleteFutures);
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
