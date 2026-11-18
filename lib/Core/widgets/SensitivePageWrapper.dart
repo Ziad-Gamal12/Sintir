@@ -28,7 +28,7 @@ class SensitivePageWrapper extends StatelessWidget {
     final useAuth = requireBiometric && BiometricAvailability.isAvailable;
 
     return SecureContentScope(
-      enabled: true,
+      enabled: false,
       protectInAppSwitcher: true,
       appSwitcherColor: Colors.black,
       policy: SecureContentPolicy(
