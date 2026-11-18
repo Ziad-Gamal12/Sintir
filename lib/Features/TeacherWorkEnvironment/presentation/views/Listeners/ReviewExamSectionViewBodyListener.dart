@@ -15,10 +15,10 @@ class ReviewExamSectionViewBodyListener {
   void testItemBlocListener(TestItemState state, BuildContext context) {
     if (state is QuestionsImagesUploadedingSuccuss) {
       context.read<TestItemCubit>().uploadTestQuestionsSolutionsImages(
-            test: context
-                .read<NavigateExamReviewRequirmentsEntity>()
-                .coursetestentity,
-          );
+        test: context
+            .read<NavigateExamReviewRequirmentsEntity>()
+            .coursetestentity,
+      );
     } else if (state is QuestionsSolutionsImagesUploadedingSuccuss) {
       _addTestOrSection();
     } else if (state is QuestionsImagesUploadedingFailure ||
@@ -27,45 +27,70 @@ class ReviewExamSectionViewBodyListener {
       final message = state is QuestionsImagesUploadedingFailure
           ? state.errMessage
           : state is QuestionsSolutionsImagesUploadedingFailure
-              ? state.errMessage
-              : (state as AddTestItemFailure).errMessage;
+          ? state.errMessage
+          : (state as AddTestItemFailure).errMessage;
       CustomSnackBar.show(context, message: message, type: SnackType.error);
     } else if (state is AddTestItemSuccess) {
-      CustomSnackBar.show(context,
-          message: LocaleKeys.operationSuccessful, type: SnackType.success);
+      CustomSnackBar.show(
+        context,
+        message: LocaleKeys.operationSuccessful,
+        type: SnackType.success,
+      );
 
-      Navigator.popUntil(context,
-          ModalRoute.withName(CourseDetailsCourseSectionsView.routeName));
+      Navigator.popUntil(
+        context,
+        ModalRoute.withName(CourseDetailsCourseSectionsView.routeName),
+      );
     }
   }
 
   void courseSectionListener(CourseSectionsState state, BuildContext context) {
     if (state is AddCourseSectionFailure) {
-      CustomSnackBar.show(context,
-          message: state.errMessage, type: SnackType.error);
+      CustomSnackBar.show(
+        context,
+        message: state.errMessage,
+        type: SnackType.error,
+      );
     } else if (state is AddCourseSectionSuccess) {
-      CustomSnackBar.show(context,
-          message: LocaleKeys.operationSuccessful, type: SnackType.success);
-      Navigator.popUntil(context,
-          ModalRoute.withName(CourseDetailsCourseSectionsView.routeName));
+      CustomSnackBar.show(
+        context,
+        message: LocaleKeys.operationSuccessful,
+        type: SnackType.success,
+      );
+      Navigator.popUntil(
+        context,
+        ModalRoute.withName(CourseDetailsCourseSectionsView.routeName),
+      );
     }
   }
 
   void _addTestOrSection() {
-    final navigatesqlreviewrequirmentsentity =
-        context.read<NavigateExamReviewRequirmentsEntity>();
+    final navigatesqlreviewrequirmentsentity = context
+        .read<NavigateExamReviewRequirmentsEntity>();
     if (navigatesqlreviewrequirmentsentity.isNewSection) {
       context.read<CourseSectionsCubit>().addCourseSection(
-            sectionItem: navigatesqlreviewrequirmentsentity.coursetestentity,
-            courseId: navigatesqlreviewrequirmentsentity.courseEntity.id,
-            section: navigatesqlreviewrequirmentsentity.section,
-          );
+        sectionItem: navigatesqlreviewrequirmentsentity.coursetestentity,
+        courseId: navigatesqlreviewrequirmentsentity.courseEntity.id,
+        section: navigatesqlreviewrequirmentsentity.section,
+        teacherId:
+            navigatesqlreviewrequirmentsentity
+                .courseEntity
+                .contentcreaterentity
+                ?.id ??
+            '',
+      );
     } else {
       context.read<TestItemCubit>().addTestItem(
-            courseId: navigatesqlreviewrequirmentsentity.courseEntity.id,
-            sectionId: navigatesqlreviewrequirmentsentity.section.id,
-            test: navigatesqlreviewrequirmentsentity.coursetestentity,
-          );
+        teacherId:
+            navigatesqlreviewrequirmentsentity
+                .courseEntity
+                .contentcreaterentity
+                ?.id ??
+            '',
+        courseId: navigatesqlreviewrequirmentsentity.courseEntity.id,
+        sectionId: navigatesqlreviewrequirmentsentity.section.id,
+        test: navigatesqlreviewrequirmentsentity.coursetestentity,
+      );
     }
   }
 }

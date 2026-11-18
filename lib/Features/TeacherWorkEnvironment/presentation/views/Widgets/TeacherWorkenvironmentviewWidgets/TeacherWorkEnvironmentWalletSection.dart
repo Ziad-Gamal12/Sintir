@@ -1,77 +1,22 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/utils/Backend_EndPoints.dart';
-import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
-import 'package:sintir/Features/Auth/Data/models/UserModel.dart';
-import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
-import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWallet/CustomTeacherCardItem.dart';
-import 'package:sintir/locale_keys.dart';
-import 'package:skeletonizer/skeletonizer.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/SharedWallet/teacher_live_wallet_builder.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/SharedWallet/teacher_wallet_card.dart';
 
-class TeacherWorkEnvironmentWalletSection extends StatefulWidget {
-  const TeacherWorkEnvironmentWalletSection(
-      {super.key, required this.teacherId});
-  final String teacherId;
-  @override
-  State<TeacherWorkEnvironmentWalletSection> createState() =>
-      _TeacherWorkEnvironmentWalletSectionState();
-}
-
-class _TeacherWorkEnvironmentWalletSectionState
-    extends State<TeacherWorkEnvironmentWalletSection> {
-  late Stream<DocumentSnapshot<Map<String, dynamic>>> walletStream;
-  @override
-  void initState() {
-    super.initState();
-    walletStream = FirebaseFirestore.instance
-        .collection(BackendEndpoints.usersCollectionName)
-        .doc(widget.teacherId)
-        .snapshots();
-  }
+class TeacherWorkEnvironmentWalletSection extends StatelessWidget {
+  const TeacherWorkEnvironmentWalletSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        stream: walletStream,
-        builder: (context, asyncSnapshot) {
-          if (asyncSnapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-                child: Skeletonizer(
-                    child: CustomTeacherWalletCardItem(
-              wallet: TeacherWalletEntity.empty(),
-            )));
-          } else if (asyncSnapshot.hasError) {
-            return Center(
-              child: CustomErrorWidget(
-                  errormessage: LocaleKeys.errorOccurredMessage),
-            );
-          }
-          if (!asyncSnapshot.hasData || !asyncSnapshot.data!.exists) {
-            return Center(
-              child: CustomErrorWidget(
-                  errormessage: LocaleKeys.walletNotFoundError),
-            );
-          }
-          final data = asyncSnapshot.data!.data();
-          if (data == null) {
-            return Center(
-              child: CustomErrorWidget(
-                  errormessage: LocaleKeys.walletDocumentEmptyError),
-            );
-          }
-          UserEntity user = UserModel.fromJson(data).toEntity();
-          final wallet = user.teacherExtraDataEntity?.wallet;
-          if (wallet == null) {
-            return Center(
-              child: CustomErrorWidget(
-                  errormessage: LocaleKeys.walletNotFoundError),
-            );
-          }
-
-          return CustomTeacherWalletCardItem(
-            wallet: wallet,
-          );
-        });
+    return TeacherLiveWalletBuilder(
+      builder: (context, wallet, staleNotice) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TeacherWalletCard(wallet: wallet),
+          if (staleNotice != null) ...[const SizedBox(height: 8), staleNotice],
+        ],
+      ),
+    );
   }
 }

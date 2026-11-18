@@ -34,7 +34,8 @@ class _WithDrawBalanceViewBodyState extends State<WithDrawBalanceViewBody> {
     super.initState();
     final wallet = context.read<TeacherWalletEntity>();
     _amountController = TextEditingController(
-        text: math.min(wallet.balance, 1000).toStringAsFixed(2));
+      text: math.min(wallet.balance, 1000).toStringAsFixed(2),
+    );
     _recipientWalletNumber = TextEditingController();
     _selectedMethod = WithdrawalMethods.all.first;
   }
@@ -50,13 +51,16 @@ class _WithDrawBalanceViewBodyState extends State<WithDrawBalanceViewBody> {
   Widget build(BuildContext context) {
     final wallet = context.read<TeacherWalletEntity>();
     final dark = Theme.of(context).brightness == Brightness.dark;
-    return BlocListener<WithDrawTeacherBalanceCubit,
-        WithDrawTeacherBalanceState>(
+    return BlocListener<
+      WithDrawTeacherBalanceCubit,
+      WithDrawTeacherBalanceState
+    >(
       listener: (context, state) {
         if (state is WithDrawBalanceSuccess) {
           CustomSnackBar.show(
             context,
-            message: state.result.message ??
+            message:
+                state.result.message ??
                 'Withdrawal request received. Check its status in transactions.',
             type: SnackType.success,
           );
@@ -69,46 +73,56 @@ class _WithDrawBalanceViewBodyState extends State<WithDrawBalanceViewBody> {
         }
       },
       child: Directionality(
-          textDirection: Directionality.of(context),
-          child: ColoredBox(
-              color: dark ? const Color(0xFF121212) : const Color(0xFFF7F9FC),
-              child: Form(
-                  key: _formKey,
-                  child: ListView(padding: const EdgeInsets.all(16), children: [
-                    AvailableBalanceSectionCard(
-                        availableBalance: wallet.balance),
-                    const SizedBox(height: 16),
-                    WithdrawalAmountCard(
-                        controller: _amountController,
-                        availableAmount: wallet.balance,
-                        onWithdrawAll: () => setState(() => _amountController
-                                .text =
-                            math.min(wallet.balance, 1000).toStringAsFixed(2))),
-                    const SizedBox(height: 16),
-                    WithdrawalMethodsCard(
-                        methods: WithdrawalMethods.all,
-                        selectedId: _selectedMethod.id,
-                        onSelected: (value) =>
-                            setState(() => _selectedMethod = value)),
-                    const SizedBox(height: 16),
-                    WithdrawalAccountCard(controller: _recipientWalletNumber),
-                    const SizedBox(height: 16),
-                    WithdrawalSummaryCard(amount: _amountController.text),
-                    const SizedBox(height: 22),
-                    WithDrawBalanceConditionsRow(
-                      onChanged: (value) {
-                        setState(() => isTremsAccepted = value);
-                      },
-                    ),
-                    const SizedBox(height: 12),
-                    WithDrawBalanceActionButton(
-                        formKey: _formKey,
-                        amountController: _amountController,
-                        phoneController: _recipientWalletNumber,
-                        issuer: _selectedMethod.id,
-                        isConditionAccepted: isTremsAccepted,
-                        walletEntity: wallet)
-                  ])))),
+        textDirection: Directionality.of(context),
+        child: ColoredBox(
+          color: dark ? const Color(0xFF121212) : const Color(0xFFF7F9FC),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                AvailableBalanceSectionCard(availableBalance: wallet.balance),
+                const SizedBox(height: 16),
+                WithdrawalAmountCard(
+                  controller: _amountController,
+                  availableAmount: wallet.balance,
+                  onWithdrawAll: () => setState(
+                    () => _amountController.text = math
+                        .min(wallet.balance, 1000)
+                        .toStringAsFixed(2),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                WithdrawalMethodsCard(
+                  methods: WithdrawalMethods.all,
+                  selectedId: _selectedMethod.id,
+                  onSelected: (value) =>
+                      setState(() => _selectedMethod = value),
+                ),
+                const SizedBox(height: 16),
+                WithdrawalAccountCard(controller: _recipientWalletNumber),
+                const SizedBox(height: 16),
+                WithdrawalSummaryCard(amount: _amountController.text),
+                const SizedBox(height: 22),
+                WithDrawBalanceConditionsRow(
+                  onChanged: (value) {
+                    setState(() => isTremsAccepted = value);
+                  },
+                ),
+                const SizedBox(height: 12),
+                WithDrawBalanceActionButton(
+                  formKey: _formKey,
+                  amountController: _amountController,
+                  phoneController: _recipientWalletNumber,
+                  issuer: _selectedMethod.id,
+                  isConditionAccepted: isTremsAccepted,
+                  walletEntity: wallet,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

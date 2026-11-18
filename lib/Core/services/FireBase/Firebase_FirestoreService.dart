@@ -5,10 +5,51 @@ import 'package:sintir/Core/entities/FireStoreEntities/FireStorePaginateResponse
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
+import 'package:sintir/Core/services/NetworkStatus.dart';
+import 'package:sintir/Core/services/RealtimeDataBaseService.dart';
 import 'package:sintir/locale_keys.dart';
 
-class FirebaseFirestoreservice implements DataBaseService {
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+class FirebaseFirestoreservice
+    implements DataBaseService, RealtimeDataBaseService {
+  FirebaseFirestoreservice({FirebaseFirestore? firestore, NetworkStatus? network})
+      : firestore = firestore ?? FirebaseFirestore.instance,
+        _network = network;
+
+  FirebaseFirestore firestore;
+  final NetworkStatus? _network;
+
+  NetworkStatus get network => _network ?? NetworkStatus.current;
+
+  GetOptions get readOptions => GetOptions(
+        source: network.isOnline ? Source.serverAndCache : Source.cache,
+      );
+
+  void requireOnline() {
+    if (!network.isOnline) {
+      throw CustomException(message: LocaleKeys.noInternet);
+    }
+  }
+
+  static bool isEmptyResponse(FireStoreResponse response) =>
+      response.docData == null &&
+      (response.listData == null || response.listData!.isEmpty);
+
+  @override
+  Stream<Map<String, dynamic>?> watchDocument({
+    required FireStoreRequirmentsEntity requirements,
+  }) {
+    try {
+      // Metadata-only changes (pending writes, cache → server) are skipped,
+      // so listeners only wake up when the document's data changes.
+      return _resolveUpdateTarget(
+        requirements,
+      ).snapshots().map((snapshot) => snapshot.data());
+    } catch (error, stackTrace) {
+      // Invalid paths throw synchronously; surface them on the stream so
+      // every failure reaches the caller the same way.
+      return Stream.error(error, stackTrace);
+    }
+  }
 
   CollectionReference<Map<String, dynamic>> _collectionRef(String collection) =>
       firestore.collection(collection);
@@ -93,7 +134,9 @@ class FirebaseFirestoreservice implements DataBaseService {
         );
       case 'unavailable':
         throw CustomException(
-          message: LocaleKeys.serverUnavailable,
+          message: network.isOnline
+              ? LocaleKeys.serverUnavailable
+              : LocaleKeys.noInternet,
         );
       case 'invalid-argument':
         throw CustomException(
@@ -101,7 +144,9 @@ class FirebaseFirestoreservice implements DataBaseService {
         );
       case 'deadline-exceeded':
         throw CustomException(
-          message: LocaleKeys.deadlineExceeded,
+          message: network.isOnline
+              ? LocaleKeys.deadlineExceeded
+              : LocaleKeys.noInternet,
         );
       case 'resource-exhausted':
         throw CustomException(
@@ -117,6 +162,7 @@ class FirebaseFirestoreservice implements DataBaseService {
     required Map<String, dynamic> data,
     required FireStoreRequirmentsEntity requirements,
   }) async {
+    requireOnline();
     try {
       if (requirements.collection == null) return;
 
@@ -182,6 +228,17 @@ class FirebaseFirestoreservice implements DataBaseService {
     required FireStoreRequirmentsEntity requirements,
     Map<String, dynamic>? query,
   }) async {
+    final response = await _readData(requirements: requirements, query: query);
+    if (!network.isOnline && isEmptyResponse(response)) {
+      throw CustomException(message: LocaleKeys.noInternet);
+    }
+    return response;
+  }
+
+  Future<FireStoreResponse> _readData({
+    required FireStoreRequirmentsEntity requirements,
+    Map<String, dynamic>? query,
+  }) async {
     try {
       if (requirements.collection == null) {
         return FireStoreResponse();
@@ -223,7 +280,7 @@ class FirebaseFirestoreservice implements DataBaseService {
             } else {
               Query<Map<String, dynamic>> queryData =
                   _applyQueryOptions(currentCollection, query);
-              final snapshot = await queryData.get();
+              final snapshot = await queryData.get(readOptions);
               return FireStoreResponse(
                 hasMore: snapshot.docs.length == query?["limit"],
                 lastDocumentSnapshot:
@@ -234,12 +291,12 @@ class FirebaseFirestoreservice implements DataBaseService {
           }
         }
 
-        final finalDocSnap = await currentDoc!.get();
+        final finalDocSnap = await currentDoc!.get(readOptions);
         return FireStoreResponse(docData: finalDocSnap.data());
       }
       Query<Map<String, dynamic>> queryData =
           _applyQueryOptions(currentCollection, query);
-      final querySnapshot = await queryData.get();
+      final querySnapshot = await queryData.get(readOptions);
       return FireStoreResponse(
         hasMore: querySnapshot.docs.length == query?["limit"],
         lastDocumentSnapshot:
@@ -248,6 +305,8 @@ class FirebaseFirestoreservice implements DataBaseService {
       );
     } on FirebaseException catch (e) {
       throw _getFireStoreCustomException(e: e);
+    } on CustomException {
+      rethrow;
     } catch (e) {
       throw CustomException(message: LocaleKeys.unexpectedError);
     }
@@ -266,11 +325,12 @@ class FirebaseFirestoreservice implements DataBaseService {
           .doc(docId)
           .collection(subCollectionKey)
           .doc(subDocId)
-          .get();
+          .get(readOptions);
       return snapshot.exists;
     }
 
-    final snapshot = await firestore.collection(key).doc(docId).get();
+    final snapshot =
+        await firestore.collection(key).doc(docId).get(readOptions);
     return snapshot.exists;
   }
 
@@ -283,7 +343,7 @@ class FirebaseFirestoreservice implements DataBaseService {
     final fileds = await firestore
         .collection(key)
         .where(feild, isEqualTo: feildValue)
-        .get();
+        .get(readOptions);
     return fileds.docs.isNotEmpty;
   }
 
@@ -293,6 +353,7 @@ class FirebaseFirestoreservice implements DataBaseService {
     required FireStoreRequirmentsEntity requirements,
     String? field,
   }) async {
+    requireOnline();
     try {
       DocumentReference<Map<String, dynamic>> target =
           _resolveUpdateTarget(requirements);
@@ -338,6 +399,7 @@ class FirebaseFirestoreservice implements DataBaseService {
       String? subCollectionKey2,
       String? subDocId2,
       String? subDocId}) async {
+    requireOnline();
     try {
       if (subCollectionKey != null) {
         if (subCollectionKey2 != null) {
@@ -372,6 +434,7 @@ class FirebaseFirestoreservice implements DataBaseService {
     required FireStoreRequirmentsEntity requirements,
     Map<String, dynamic>? query,
   }) async {
+    requireOnline();
     try {
       if (requirements.collection == null) {
         return 0;
@@ -440,6 +503,7 @@ class FirebaseFirestoreservice implements DataBaseService {
     required FireStoreRequirmentsEntity requirements,
     required DocumentTransactionAction<T> action,
   }) async {
+    requireOnline();
     try {
       final ref = _resolveUpdateTarget(requirements);
 

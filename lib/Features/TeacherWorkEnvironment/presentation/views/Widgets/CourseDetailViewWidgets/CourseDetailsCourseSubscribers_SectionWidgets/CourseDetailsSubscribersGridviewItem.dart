@@ -46,8 +46,10 @@ class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
         color: cardColor,
         borderRadius: BorderRadius.circular(20),
         boxShadow: boxShadows,
-        border:
-            Border.all(color: borderColor.withValues(alpha: 0.5), width: .5),
+        border: Border.all(
+          color: borderColor.withValues(alpha: 0.5),
+          width: .5,
+        ),
       ),
       child: compact
           ? _buildCompact(context, primaryTextColor)
@@ -59,11 +61,10 @@ class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
                   height: 90,
                   width: 90,
                   child: CourseDetailsSubscribersGridviewItemAvatar(
-                      imageUrl: subscriber.imageUrl),
+                    imageUrl: subscriber.imageUrl,
+                  ),
                 ),
-                const SizedBox(
-                  height: 12,
-                ),
+                const SizedBox(height: 12),
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -71,23 +72,21 @@ class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
                     children: [
                       Text(
                         subscriber.name,
-                        style: AppTextStyles(context)
-                            .semiBold16
-                            .copyWith(color: primaryTextColor),
+                        style: AppTextStyles(
+                          context,
+                        ).semiBold16.copyWith(color: primaryTextColor),
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(
-                        height: 12,
-                      ),
+                      const SizedBox(height: 12),
                       CourseDetailsSubscribersGridviewItemPhoneNumber(
-                          phone: subscriber.phone),
-                      const SizedBox(
-                        height: 8,
+                        phone: subscriber.phone,
                       ),
+                      const SizedBox(height: 8),
                       CourseDetailsSubscribersGridviewItemAddress(
-                          address: subscriber.address),
+                        address: subscriber.address,
+                      ),
                     ],
                   ),
                 ),
@@ -101,54 +100,67 @@ class CourseDetailsSubscribersGridviewItem extends StatelessWidget {
       textDirection: Directionality.of(context),
       children: [
         SizedBox(
-            width: 60,
-            height: 60,
-            child: CourseDetailsSubscribersGridviewItemAvatar(
-                imageUrl: subscriber.imageUrl)),
+          width: 60,
+          height: 60,
+          child: CourseDetailsSubscribersGridviewItemAvatar(
+            imageUrl: subscriber.imageUrl,
+          ),
+        ),
         const SizedBox(width: 12),
         Expanded(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(subscriber.name.trim().isEmpty ? '—' : subscriber.name,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                subscriber.name.trim().isEmpty ? '—' : subscriber.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles(context)
-                    .semiBold16
-                    .copyWith(color: textColor)),
-            const SizedBox(height: 3),
-            Row(children: [
-              Expanded(
-                  child: Text(
+                style: AppTextStyles(
+                  context,
+                ).semiBold16.copyWith(color: textColor),
+              ),
+              const SizedBox(height: 3),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
                       subscriber.phone.trim().isEmpty ? '—' : subscriber.phone,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles(context)
-                          .regular13
-                          .copyWith(color: textColor.withValues(alpha: .75)))),
-              if (subscriber.educationLevel.trim().isNotEmpty) ...[
-                const SizedBox(width: 6),
-                Flexible(
-                    child: Text(subscriber.educationLevel,
+                      style: AppTextStyles(context).regular13.copyWith(
+                        color: textColor.withValues(alpha: .75),
+                      ),
+                    ),
+                  ),
+                  if (subscriber.educationLevel.trim().isNotEmpty) ...[
+                    const SizedBox(width: 6),
+                    Flexible(
+                      child: Text(
+                        subscriber.educationLevel,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyles(context).regular12.copyWith(
-                            color: textColor.withValues(alpha: .65)))),
-              ],
-            ]),
-            const SizedBox(height: 3),
-            CourseDetailsSubscribersGridviewItemAddress(
-                address: subscriber.address),
-          ],
-        )),
+                          color: textColor.withValues(alpha: .65),
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+              const SizedBox(height: 3),
+              CourseDetailsSubscribersGridviewItemAddress(
+                address: subscriber.address,
+              ),
+            ],
+          ),
+        ),
         const SizedBox(width: 8),
         SizedBox(
-            width: 48,
-            height: 48,
-            child: CustomPhoneIwidget(
-              phoneNumber: subscriber.phone,
-            )),
+          width: 48,
+          height: 48,
+          child: CustomPhoneIwidget(phoneNumber: subscriber.phone),
+        ),
       ],
     );
   }

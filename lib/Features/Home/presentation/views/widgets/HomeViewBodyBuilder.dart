@@ -4,7 +4,6 @@ import 'package:sintir/Features/Home/presentation/views/widgets/NewestCoursesHea
 import 'package:sintir/Features/Home/presentation/views/widgets/PopularCoursesSection.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/RecentCoursesSection.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/UserInterestedCoursesSection.dart';
-import 'package:sintir/constant.dart';
 
 class HomeViewBodyBuilder extends StatelessWidget {
   const HomeViewBodyBuilder({super.key});
@@ -12,10 +11,7 @@ class HomeViewBodyBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: KHorizontalPadding,
-        vertical: KVerticalPadding,
-      ),
+      padding: EdgeInsets.only(left: 16, right: 16, top: 20, bottom: 92),
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(child: HomeViewBodyAppBar()),

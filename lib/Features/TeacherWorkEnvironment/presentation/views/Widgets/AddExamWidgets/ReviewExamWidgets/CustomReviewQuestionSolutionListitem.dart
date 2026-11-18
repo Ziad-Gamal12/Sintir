@@ -20,12 +20,14 @@ class CustomReviewQuestionSolutionListItem extends StatelessWidget {
     final Color defaultTextColor = theme.textTheme.bodyLarge!.color!;
     final Color correctColor = Colors.green.shade600;
     final Color correctBackgroundColor = isCorrect
-        ? Colors.green
-            .withValues(alpha: theme.brightness == Brightness.dark ? 0.2 : 0.1)
+        ? Colors.green.withValues(
+            alpha: theme.brightness == Brightness.dark ? 0.2 : 0.1,
+          )
         : Colors.transparent;
     final Color correctBorderColor = isCorrect
         ? correctColor.withValues(
-            alpha: theme.brightness == Brightness.dark ? 0.5 : 1.0)
+            alpha: theme.brightness == Brightness.dark ? 0.5 : 1.0,
+          )
         : Colors.transparent;
 
     return Container(
@@ -48,9 +50,9 @@ class CustomReviewQuestionSolutionListItem extends StatelessWidget {
           Text(
             solution.answer,
             style: AppTextStyles(context).regular14.copyWith(
-                  // Use green for correct, otherwise use defaultTextColor
-                  color: isCorrect ? correctColor : defaultTextColor,
-                ),
+              // Use green for correct, otherwise use defaultTextColor
+              color: isCorrect ? correctColor : defaultTextColor,
+            ),
           ),
           const Spacer(),
           if (isCorrect)

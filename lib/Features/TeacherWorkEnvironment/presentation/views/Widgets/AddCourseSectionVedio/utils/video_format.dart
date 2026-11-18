@@ -1,5 +1,4 @@
-String formatMegabytes(int bytes) =>
-    (bytes / (1024 * 1024)).toStringAsFixed(1);
+String formatMegabytes(int bytes) => (bytes / (1024 * 1024)).toStringAsFixed(1);
 
 String formatDuration(Duration duration) {
   final minutes = duration.inMinutes.toString().padLeft(2, '0');

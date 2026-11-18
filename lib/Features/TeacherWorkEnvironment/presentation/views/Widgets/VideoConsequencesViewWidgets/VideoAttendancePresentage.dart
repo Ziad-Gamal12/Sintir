@@ -36,18 +36,23 @@ class _VideoAttendancePresentageState extends State<VideoAttendancePresentage> {
               current is VideoConsequencesGetTotalStudentsCountFailure,
           builder: (context, state) {
             if (state is VideoConsequencesGetVideoAttendedCountFailure) {
-              return Text(state.errMessage,
-                  style: AppTextStyles(context)
-                      .regular14
-                      .copyWith(color: errorColor));
+              return Text(
+                state.errMessage,
+                style: AppTextStyles(
+                  context,
+                ).regular14.copyWith(color: errorColor),
+              );
             } else if (state is VideoConsequencesGetTotalStudentsCountFailure) {
-              return Text(state.errMessage,
-                  style: AppTextStyles(context)
-                      .regular14
-                      .copyWith(color: errorColor));
+              return Text(
+                state.errMessage,
+                style: AppTextStyles(
+                  context,
+                ).regular14.copyWith(color: errorColor),
+              );
             }
             return Skeletonizer(
-              enabled: state is VideoConsequencesGetVideoAttendedCountLoading ||
+              enabled:
+                  state is VideoConsequencesGetVideoAttendedCountLoading ||
                   state is VideoConsequencesGetTotalStudentsCountLoading,
               child: CircularPercentIndicator(
                 radius: 45,
@@ -56,9 +61,9 @@ class _VideoAttendancePresentageState extends State<VideoAttendancePresentage> {
                 percent: (widget.percentage / 100).clamp(0.0, 1.0),
                 center: Text(
                   "${(widget.percentage).clamp(0.0, 100.0).toStringAsFixed(2)} %",
-                  style: AppTextStyles(context)
-                      .semiBold16
-                      .copyWith(color: primaryTextColor),
+                  style: AppTextStyles(
+                    context,
+                  ).semiBold16.copyWith(color: primaryTextColor),
                 ),
                 progressColor: primaryColor,
                 backgroundColor: backgroundColor,
@@ -67,14 +72,14 @@ class _VideoAttendancePresentageState extends State<VideoAttendancePresentage> {
             );
           },
         ),
-        const SizedBox(
-          height: 10,
+        const SizedBox(height: 10),
+        Text(
+          LocaleKeys.attendanceRate,
+          textAlign: TextAlign.center,
+          style: AppTextStyles(
+            context,
+          ).semiBold16.copyWith(color: primaryTextColor),
         ),
-        Text(LocaleKeys.attendanceRate,
-            textAlign: TextAlign.center,
-            style: AppTextStyles(context)
-                .semiBold16
-                .copyWith(color: primaryTextColor))
       ],
     );
   }

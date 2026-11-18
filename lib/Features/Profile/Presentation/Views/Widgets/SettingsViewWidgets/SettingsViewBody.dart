@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sintir/Features/Profile/Presentation/Views/DeleteAccountView.dart';
+import 'package:sintir/Features/Profile/Presentation/Views/Widgets/SettingsViewWidgets/CustomSettingsActionButton.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/SettingsViewWidgets/CustomSettingsDarkModeActionButton.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/Widgets/SettingsViewWidgets/CustomSettingsLanguageActionButton.dart';
 import 'package:sintir/constant.dart';
+import 'package:sintir/locale_keys.dart';
 
 class SettingsViewBody extends StatelessWidget {
   const SettingsViewBody({super.key});
@@ -12,12 +16,22 @@ class SettingsViewBody extends StatelessWidget {
       padding: const EdgeInsetsGeometry.symmetric(
           horizontal: KHorizontalPadding, vertical: KVerticalPadding),
       child: ListView(
-        children: const [
-          CustomSettingsLanguageActionButton(),
-          SizedBox(
+        children: [
+          const CustomSettingsLanguageActionButton(),
+          const SizedBox(
             height: 12,
           ),
-          CustomSettingsDarkModeActionButton()
+          const CustomSettingsDarkModeActionButton(),
+          const SizedBox(
+            height: 12,
+          ),
+          CustomSettingsActionButton(
+            key: const ValueKey('settings-delete-account'),
+            title: LocaleKeys.accountDeleteTitle,
+            leadingIcon: Icons.delete_forever_outlined,
+            onTap: () =>
+                GoRouter.of(context).push(DeleteAccountView.routeName),
+          ),
         ],
       ),
     );

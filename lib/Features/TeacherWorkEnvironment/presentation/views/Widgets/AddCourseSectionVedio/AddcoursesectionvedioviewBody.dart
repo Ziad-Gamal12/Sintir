@@ -34,10 +34,10 @@ class _AddcoursesectionvedioviewbodyState
     if (!_form.validate()) return;
     final option = context.read<OptionNavigationRequirementsEntity>();
     context.read<VideoItemCubit>().uploadVideo(
-          coursevedioitementity: _form.prepareForUpload(),
-          courseId: option.courseEntity.id,
-          sectionId: option.section.id,
-        );
+      coursevedioitementity: _form.prepareForUpload(),
+      courseId: option.courseEntity.id,
+      sectionId: option.section.id,
+    );
   }
 
   @override

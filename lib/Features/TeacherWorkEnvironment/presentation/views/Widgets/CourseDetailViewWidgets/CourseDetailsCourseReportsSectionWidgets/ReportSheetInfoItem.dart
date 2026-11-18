@@ -19,9 +19,13 @@ class ReportSheetInfoItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label,
-            style: theme.textTheme.bodySmall
-                ?.copyWith(color: muted, fontSize: 12)),
+        Text(
+          label,
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: muted,
+            fontSize: 12,
+          ),
+        ),
         const SizedBox(height: 6),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +39,10 @@ class ReportSheetInfoItem extends StatelessWidget {
               child: Text(
                 value,
                 style: theme.textTheme.bodyMedium?.copyWith(
-                    fontSize: 13, fontWeight: FontWeight.w700, height: 1.35),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  height: 1.35,
+                ),
               ),
             ),
           ],

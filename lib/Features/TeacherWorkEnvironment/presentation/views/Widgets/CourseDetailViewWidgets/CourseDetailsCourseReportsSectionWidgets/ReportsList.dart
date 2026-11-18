@@ -10,11 +10,12 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReportsSectionWidgets/states/ReportsNoResultsView.dart';
 
 class ReportsList extends StatelessWidget {
-  const ReportsList(
-      {super.key,
-      required this.state,
-      required this.onReportTap,
-      this.asSliver = false});
+  const ReportsList({
+    super.key,
+    required this.state,
+    required this.onReportTap,
+    this.asSliver = false,
+  });
   final CourseReportsState state;
   final ValueChanged<CourseReportsItemEntity> onReportTap;
   final bool asSliver;
@@ -24,7 +25,8 @@ class ReportsList extends StatelessWidget {
     final cubit = context.read<CourseReportsCubit>();
     final all = cubit.reports;
     final reports = cubit.visibleReports;
-    final initialLoading = state is CourseReportsGetReportLoading &&
+    final initialLoading =
+        state is CourseReportsGetReportLoading &&
         !(state as CourseReportsGetReportLoading).isPaginate &&
         all.isEmpty;
     if (initialLoading) {

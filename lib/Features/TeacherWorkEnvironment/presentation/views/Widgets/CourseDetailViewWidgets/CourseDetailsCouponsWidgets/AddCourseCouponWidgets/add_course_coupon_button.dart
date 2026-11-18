@@ -8,8 +8,11 @@ import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
 class AddCourseCouponButton extends StatelessWidget {
-  const AddCourseCouponButton(
-      {super.key, required this.formKey, required this.courseID});
+  const AddCourseCouponButton({
+    super.key,
+    required this.formKey,
+    required this.courseID,
+  });
   final GlobalKey<FormState> formKey;
   final String courseID;
   @override
@@ -30,8 +33,9 @@ class AddCourseCouponButton extends StatelessWidget {
                 if (formKey.currentState!.validate()) {
                   formKey.currentState!.save();
                   context.read<CourseCouponsCubit>().addCourseCoupon(
-                      coupon: context.read<CourseCouponEntity>(),
-                      courseID: courseID);
+                    coupon: context.read<CourseCouponEntity>(),
+                    courseID: courseID,
+                  );
                 }
               }
             },

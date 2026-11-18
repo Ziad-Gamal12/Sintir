@@ -10,12 +10,13 @@ import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentati
 import 'package:sintir/locale_keys.dart';
 
 class CustomVedioListViewItem extends StatelessWidget {
-  const CustomVedioListViewItem(
-      {super.key,
-      required this.item,
-      required this.course,
-      required this.section,
-      required this.isAvilabe});
+  const CustomVedioListViewItem({
+    super.key,
+    required this.item,
+    required this.course,
+    required this.section,
+    required this.isAvilabe,
+  });
   final CourseVideoItemEntity item;
   final CourseSectionEntity section;
   final bool isAvilabe;
@@ -28,21 +29,26 @@ class CustomVedioListViewItem extends StatelessWidget {
           ? item.ontap(
               context: context,
               requires: CourseVideoViewNavigationsRequirmentsEntity(
-                  sectionId: section.id, courseEntity: course, video: item),
-              course: course)
+                sectionId: section.id,
+                courseEntity: course,
+                video: item,
+              ),
+              course: course,
+            )
           : null,
       child: Stack(
         children: [
-          Customcontainersectionitem(
-              child: Customlisttilewidget(
-            title: item.title,
-            image: item.preffixImage,
-            trailing: Text(
-              "${item.durationTime} ${LocaleKeys.durationMinutes}",
-              style: AppTextStyles(context).regular14,
+          CustomContainerSectionItem(
+            child: Customlisttilewidget(
+              title: item.title,
+              image: item.preffixImage,
+              trailing: Text(
+                "${item.durationTime} ${LocaleKeys.durationMinutes}",
+                style: AppTextStyles(context).regular14,
+              ),
             ),
-          )),
-          CustomUnAvailableSectionWidget(isAvailable: isAvilabe)
+          ),
+          CustomUnAvailableSectionWidget(isAvailable: isAvilabe),
         ],
       ),
     );

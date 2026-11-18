@@ -17,24 +17,23 @@ class ExamQuestionInputsAddNewSoluotionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: () {
-          context.read<TestItemCubit>().addSolution(
-                question: coursetestquestionentity,
-              );
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.add,
-              color: KMainColor,
-            ),
-            Text(
-              LocaleKeys.addAnswer,
-              style:
-                  AppTextStyles(context).semiBold14.copyWith(color: KMainColor),
-            )
-          ],
-        ));
+      onTap: () {
+        context.read<TestItemCubit>().addSolution(
+          question: coursetestquestionentity,
+        );
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.add, color: KMainColor),
+          Text(
+            LocaleKeys.addAnswer,
+            style: AppTextStyles(
+              context,
+            ).semiBold14.copyWith(color: KMainColor),
+          ),
+        ],
+      ),
+    );
   }
 }

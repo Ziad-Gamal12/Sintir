@@ -28,8 +28,9 @@ class AddCourseExamAddQuestionListViewItem extends StatelessWidget {
 
     // Use a theme-aware color for the border and divider
     // In Dark Mode, a lighter shade is needed; in Light Mode, a darker shade.
-    final Color borderColor =
-        isDarkMode ? Colors.grey.shade600 : Colors.grey.shade300;
+    final Color borderColor = isDarkMode
+        ? Colors.grey.shade600
+        : Colors.grey.shade300;
 
     // Adjust shadow for Dark Mode: typically, shadows are less intense or omitted.
     final List<BoxShadow> boxShadows = isDarkMode
@@ -68,20 +69,14 @@ class AddCourseExamAddQuestionListViewItem extends StatelessWidget {
               coursetestquestionentity: coursetestquestionentity,
               courseTestEntity: coursetestentity,
             ),
-            Divider(
-              color: borderColor,
-              thickness: 1,
-            ),
+            Divider(color: borderColor, thickness: 1),
             AddCourseExamAddQuestionImage(
               coursetestquestionentity: coursetestquestionentity,
             ),
-            Divider(
-              color: borderColor,
-              thickness: 1,
-            ),
+            Divider(color: borderColor, thickness: 1),
             AddCourseExamAddQuestionExplainationImage(
               coursetestquestionentity: coursetestquestionentity,
-            )
+            ),
           ],
         ),
       ),
@@ -90,6 +85,8 @@ class AddCourseExamAddQuestionListViewItem extends StatelessWidget {
 
   void removeQuestionItem(BuildContext context) {
     context.read<TestItemCubit>().removeQuestion(
-        question: coursetestquestionentity, coursetestentity: coursetestentity);
+      question: coursetestquestionentity,
+      coursetestentity: coursetestentity,
+    );
   }
 }

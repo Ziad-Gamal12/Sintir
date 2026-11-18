@@ -9,8 +9,10 @@ import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class AddCourseExamAddQuestionImage extends StatefulWidget {
-  const AddCourseExamAddQuestionImage(
-      {super.key, required this.coursetestquestionentity});
+  const AddCourseExamAddQuestionImage({
+    super.key,
+    required this.coursetestquestionentity,
+  });
   final CourseTestQuestionEntity coursetestquestionentity;
   @override
   State<AddCourseExamAddQuestionImage> createState() =>
@@ -34,8 +36,12 @@ class _AddCourseExamAddQuestionImageState
       },
       child: Container(
         width: double.infinity,
-        padding:
-            const EdgeInsets.only(top: 20, left: 27, right: 27, bottom: 29),
+        padding: const EdgeInsets.only(
+          top: 20,
+          left: 27,
+          right: 27,
+          bottom: 29,
+        ),
         decoration: BoxDecoration(
           color: containerColor,
           borderRadius: const BorderRadius.only(
@@ -57,10 +63,7 @@ class _AddCourseExamAddQuestionImageState
               return CustomErrorWidget(errormessage: state.errMessage);
             } else if (state is PickQuestionImageSuccess) {
               widget.coursetestquestionentity.imageFile = state.file;
-              return Image.file(
-                state.file,
-                fit: BoxFit.cover,
-              );
+              return Image.file(state.file, fit: BoxFit.cover);
             } else {
               return Skeletonizer(
                 enabled: state is PickQuestionImageLoading,
@@ -74,16 +77,14 @@ class _AddCourseExamAddQuestionImageState
                       width: 25,
                       color: primaryTextColor,
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
+                    const SizedBox(width: 10),
                     Text(
                       LocaleKeys.questionImage,
                       textAlign: TextAlign.center,
-                      style: AppTextStyles(context)
-                          .semiBold12
-                          .copyWith(color: primaryTextColor),
-                    )
+                      style: AppTextStyles(
+                        context,
+                      ).semiBold12.copyWith(color: primaryTextColor),
+                    ),
                   ],
                 ),
               );

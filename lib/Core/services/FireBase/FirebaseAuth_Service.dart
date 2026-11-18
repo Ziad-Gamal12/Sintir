@@ -110,7 +110,7 @@ class firebaseAuthService {
       return user;
     } on CustomException {
       rethrow;
-    } on GoogleSignInException catch (e) {
+    } on GoogleSignInException {
       throw CustomException(message: LocaleKeys.errorOccurredMessage);
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -198,6 +198,105 @@ class firebaseAuthService {
 
   Future<void> deleteUSer() async {
     await auth.currentUser!.delete();
+  }
+
+  static const String passwordProvider = 'password';
+  static const String googleProvider = 'google.com';
+  static const String facebookProvider = 'facebook.com';
+
+  String? primarySignInProvider() {
+    final user = auth.currentUser;
+    if (user == null) return null;
+    return primaryProviderOf(
+      user.providerData.map((info) => info.providerId).toList(),
+    );
+  }
+
+  static String? primaryProviderOf(List<String> providerIds) {
+    for (final id in [passwordProvider, googleProvider, facebookProvider]) {
+      if (providerIds.contains(id)) return id;
+    }
+    return providerIds.isEmpty ? null : providerIds.first;
+  }
+
+  Future<void> reauthenticate({String? password}) async {
+    final user = auth.currentUser;
+    if (user == null) {
+      throw CustomException(message: LocaleKeys.accountDeleteSignInAgain);
+    }
+    try {
+      final provider = primarySignInProvider();
+      final AuthCredential credential;
+      if (provider == passwordProvider) {
+        final email = user.email;
+        if (password == null || password.isEmpty || email == null) {
+          throw CustomException(
+            message: LocaleKeys.accountDeletePasswordRequired,
+          );
+        }
+        credential = EmailAuthProvider.credential(
+          email: email,
+          password: password,
+        );
+      } else if (provider == googleProvider) {
+        final account = await GoogleSignIn.instance.authenticate();
+        final idToken = account.authentication.idToken;
+        if (idToken == null) {
+          throw CustomException(message: LocaleKeys.errorOccurredMessage);
+        }
+        credential = GoogleAuthProvider.credential(idToken: idToken);
+      } else if (provider == facebookProvider) {
+        final result = await FacebookAuth.instance.login();
+        final token = result.accessToken;
+        if (result.status != LoginStatus.success || token == null) {
+          throw CustomException(message: LocaleKeys.accountReauthCancelled);
+        }
+        credential = FacebookAuthProvider.credential(token.tokenString);
+      } else {
+        throw CustomException(message: LocaleKeys.errorOccurredMessage);
+      }
+      await user.reauthenticateWithCredential(credential);
+      await user.getIdToken(true);
+    } on CustomException {
+      rethrow;
+    } on GoogleSignInException {
+      throw CustomException(message: LocaleKeys.accountReauthCancelled);
+    } on FirebaseAuthException catch (e) {
+      throw CustomException(message: reauthErrorMessage(e.code));
+    } catch (_) {
+      throw CustomException(message: LocaleKeys.errorOccurredMessage);
+    }
+  }
+
+  static String reauthErrorMessage(String code) {
+    switch (code) {
+      case 'wrong-password':
+      case 'invalid-credential':
+      case 'invalid-login-credentials':
+        return LocaleKeys.wrongPassword;
+      case 'user-mismatch':
+        return LocaleKeys.accountReauthWrongAccount;
+      case 'network-request-failed':
+        return LocaleKeys.noInternet;
+      case 'too-many-requests':
+        return LocaleKeys.tooManyRequests;
+      case 'user-disabled':
+        return LocaleKeys.userDisabled;
+      default:
+        return LocaleKeys.errorOccurredMessage;
+    }
+  }
+
+  Future<void> clearLocalSession() async {
+    try {
+      await GoogleSignIn.instance.signOut();
+    } catch (_) {}
+    try {
+      await FacebookAuth.instance.logOut();
+    } catch (_) {}
+    try {
+      await signout();
+    } catch (_) {}
   }
 
   Future<void> signout() async {

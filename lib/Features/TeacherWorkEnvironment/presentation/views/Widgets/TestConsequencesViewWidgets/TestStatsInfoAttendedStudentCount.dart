@@ -17,8 +17,9 @@ class _TestStatsInfoAttendedStudentCountState
     extends State<TestStatsInfoAttendedStudentCount> {
   @override
   Widget build(BuildContext context) {
-    final Color primaryTextColor =
-        Theme.of(context).textTheme.bodyLarge!.color!;
+    final Color primaryTextColor = Theme.of(
+      context,
+    ).textTheme.bodyLarge!.color!;
     final Color errorColor = Theme.of(context).colorScheme.error;
 
     return BlocBuilder<TestConsequencesCubit, TestConsequencesState>(
@@ -30,39 +31,51 @@ class _TestStatsInfoAttendedStudentCountState
       builder: (context, state) {
         if (state is TestConsequencesGetAttendedCountFailure) {
           return Expanded(
-              child: Text(
-            state.errMessage,
-            style: AppTextStyles(context).regular14.copyWith(color: errorColor),
-          ));
+            child: Text(
+              state.errMessage,
+              style: AppTextStyles(
+                context,
+              ).regular14.copyWith(color: errorColor),
+            ),
+          );
         }
         return Expanded(
-            child: Skeletonizer(
-          enabled: state is TestConsequencesGetAttendedCountLoading,
-          child: _buildStatColumn(
+          child: Skeletonizer(
+            enabled: state is TestConsequencesGetAttendedCountLoading,
+            child: _buildStatColumn(
               LocaleKeys.studentsAttended,
               state is TestConsequencesGetAttendedCountSuccess
                   ? state.count.toString()
                   : "0",
               context,
               // Use primary text color for the value, as it represents a default count
-              color: primaryTextColor),
-        ));
+              color: primaryTextColor,
+            ),
+          ),
+        );
       },
     );
   }
 
-  Widget _buildStatColumn(String label, String value, BuildContext context,
-      {Color color = Colors.black}) {
+  Widget _buildStatColumn(
+    String label,
+    String value,
+    BuildContext context, {
+    Color color = Colors.black,
+  }) {
     final Color labelColor = Theme.of(context).textTheme.bodyLarge!.color!;
 
     return Column(
       children: [
-        Text(label,
-            style:
-                AppTextStyles(context).semiBold14.copyWith(color: labelColor)),
+        Text(
+          label,
+          style: AppTextStyles(context).semiBold14.copyWith(color: labelColor),
+        ),
         const SizedBox(height: 10),
-        Text(value,
-            style: AppTextStyles(context).bold14.copyWith(color: color)),
+        Text(
+          value,
+          style: AppTextStyles(context).bold14.copyWith(color: color),
+        ),
       ],
     );
   }

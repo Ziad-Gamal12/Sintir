@@ -21,12 +21,11 @@ class _AddcourseviewState extends State<Addcourseview> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AddCourseCubitCubit(
-          coursesrepo: getIt<Coursesrepo>(),
-          assetspickerrepo: getIt<Assetspickerrepo>()),
+        coursesrepo: getIt<Coursesrepo>(),
+        assetspickerrepo: getIt<Assetspickerrepo>(),
+      ),
       child: Scaffold(
-        appBar: CustomAppBar(
-          appBartitle: LocaleKeys.addNewCourse,
-        ),
+        appBar: CustomAppBar(appBartitle: LocaleKeys.addNewCourse),
         body: const AddCourseViewBody(),
       ),
     );

@@ -78,8 +78,8 @@ class CourseCouponsRepoImp implements CourseCouponsRepo {
     try {
       final json = CourseCouponModel.fromEntity(coupon).toJson();
 
-      await databaseservice.setData(
-        data: json,
+      await databaseservice.updateData(
+        data: editableCouponFields(json),
         requirements: FireStoreRequirmentsEntity(
           collection: BackendEndpoints.coursesCollection,
           docId: courseID,
@@ -93,6 +93,18 @@ class CourseCouponsRepoImp implements CourseCouponsRepo {
     } catch (e) {
       return left(ServerFailure(message: LocaleKeys.couponUpdateError));
     }
+  }
+
+  static Map<String, dynamic> editableCouponFields(Map<String, dynamic> json) {
+    return {
+      for (final field in const [
+        'discountPercentage',
+        'expiryDate',
+        'status',
+        'usageLimit',
+      ])
+        if (json.containsKey(field)) field: json[field],
+    };
   }
 
   @override

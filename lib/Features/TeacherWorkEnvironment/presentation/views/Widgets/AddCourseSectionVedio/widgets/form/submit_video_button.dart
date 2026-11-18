@@ -57,8 +57,9 @@ class _SubmitButtonLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style =
-        AppTextStyles(context).semiBold16.copyWith(color: Colors.white);
+    final style = AppTextStyles(
+      context,
+    ).semiBold16.copyWith(color: Colors.white);
 
     return switch (phase) {
       AddVideoPhase.uploading =>
@@ -72,15 +73,21 @@ class _SubmitButtonLabel extends StatelessWidget {
             style: style,
           ),
         ),
-      AddVideoPhase.saving =>
-        Text(LocaleKeys.savingVideo, textAlign: TextAlign.center, style: style),
-      AddVideoPhase.failed =>
-        Text(LocaleKeys.retryUpload, textAlign: TextAlign.center, style: style),
+      AddVideoPhase.saving => Text(
+        LocaleKeys.savingVideo,
+        textAlign: TextAlign.center,
+        style: style,
+      ),
+      AddVideoPhase.failed => Text(
+        LocaleKeys.retryUpload,
+        textAlign: TextAlign.center,
+        style: style,
+      ),
       AddVideoPhase.idle => Text(
-          LocaleKeys.uploadAndSaveVideo,
-          textAlign: TextAlign.center,
-          style: style,
-        ),
+        LocaleKeys.uploadAndSaveVideo,
+        textAlign: TextAlign.center,
+        style: style,
+      ),
     };
   }
 }

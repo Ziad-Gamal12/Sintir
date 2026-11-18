@@ -37,8 +37,10 @@ class FileItemStateHandler {
           message: LocaleKeys.fileAddedSuccessfully,
           type: SnackType.success,
         );
-        Navigator.popUntil(context,
-            ModalRoute.withName(CourseDetailsCourseSectionsView.routeName));
+        Navigator.popUntil(
+          context,
+          ModalRoute.withName(CourseDetailsCourseSectionsView.routeName),
+        );
         break;
 
       case PickFileSuccess(:final file):
@@ -78,16 +80,18 @@ class FileItemStateHandler {
 
     if (option.isNewSection) {
       context.read<CourseSectionsCubit>().addCourseSection(
-            sectionItem: fileEntity,
-            courseId: option.courseEntity.id,
-            section: option.section,
-          );
+        sectionItem: fileEntity,
+        courseId: option.courseEntity.id,
+        teacherId: option.courseEntity.contentcreaterentity?.id ?? '',
+        section: option.section,
+      );
     } else {
       context.read<CourseSectionsCubit>().addSectionItem(
-            courseId: option.courseEntity.id,
-            sectionId: option.section.id,
-            sectionItem: fileEntity,
-          );
+        courseId: option.courseEntity.id,
+        sectionId: option.section.id,
+        teacherId: option.courseEntity.contentcreaterentity?.id ?? '',
+        sectionItem: fileEntity,
+      );
     }
   }
 }

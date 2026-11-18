@@ -9,12 +9,15 @@ class CustomMyCoursesGridHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
           LocaleKeys.myCourses,
-          style: AppTextStyles(context).bold20,
+          style: AppTextStyles(
+            context,
+          ).bold20.copyWith(color: textTheme.bodyLarge?.color),
         ),
       ],
     );

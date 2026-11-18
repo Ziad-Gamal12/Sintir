@@ -8,16 +8,17 @@ class Customreviewquestionsolutionlist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            child: CustomReviewQuestionSolutionListItem(
-              solution: solutions[index],
-            ),
-          );
-        },
-        itemCount: solutions.length);
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: CustomReviewQuestionSolutionListItem(
+            solution: solutions[index],
+          ),
+        );
+      },
+      itemCount: solutions.length,
+    );
   }
 }

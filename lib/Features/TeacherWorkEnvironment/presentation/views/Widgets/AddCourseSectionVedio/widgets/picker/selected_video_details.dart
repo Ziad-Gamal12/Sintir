@@ -12,8 +12,9 @@ class SelectedVideoDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = AppTextStyles(context);
-    final mutedStyle = styles.regular12
-        .copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant);
+    final mutedStyle = styles.regular12.copyWith(
+      color: Theme.of(context).colorScheme.onSurfaceVariant,
+    );
 
     return ListenableBuilder(
       listenable: preview,

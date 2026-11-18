@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/report_enums.dart';
 
 class ReportSheetActionsTheme extends StatelessWidget {
-  const ReportSheetActionsTheme(
-      {super.key, required this.status, required this.child});
+  const ReportSheetActionsTheme({
+    super.key,
+    required this.status,
+    required this.child,
+  });
   final ReportStatus status;
   final Widget child;
 
@@ -11,16 +14,19 @@ class ReportSheetActionsTheme extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    final shape =
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(12));
+    final shape = RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+    );
     const minimumSize = Size.fromHeight(56);
-    final label = (theme.textTheme.labelLarge ?? const TextStyle())
-        .copyWith(fontSize: 15, fontWeight: FontWeight.w700);
+    final label = (theme.textTheme.labelLarge ?? const TextStyle()).copyWith(
+      fontSize: 15,
+      fontWeight: FontWeight.w700,
+    );
 
     final onPrimary =
         ThemeData.estimateBrightnessForColor(scheme.primary) == Brightness.dark
-            ? Colors.white
-            : Colors.black;
+        ? Colors.white
+        : Colors.black;
 
     final isOpen = status == ReportStatus.open;
     final outlinedColor = isOpen ? scheme.error : scheme.onSurface;

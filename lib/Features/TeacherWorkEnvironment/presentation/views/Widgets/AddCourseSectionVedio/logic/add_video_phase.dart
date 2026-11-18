@@ -14,11 +14,11 @@ enum AddVideoPhase {
   bool get isBusy => this == uploading || this == saving;
 
   static AddVideoPhase fromVideoState(VideoItemState state) => switch (state) {
-        UploadVideoLoading() => uploading,
-        UploadVideoSuccess() || AddVideoItemLoading() => saving,
-        UploadVideoFailure() => failed,
-        _ => idle,
-      };
+    UploadVideoLoading() => uploading,
+    UploadVideoSuccess() || AddVideoItemLoading() => saving,
+    UploadVideoFailure() => failed,
+    _ => idle,
+  };
 
   /// One-off read for callbacks (not for build methods).
   static AddVideoPhase read(BuildContext context) {
@@ -40,12 +40,12 @@ class AddVideoPhaseBuilder extends StatelessWidget {
       selector: (state) => state is AddCourseSectionItemLoading,
       builder: (context, isSavingSection) =>
           BlocSelector<VideoItemCubit, VideoItemState, AddVideoPhase>(
-        selector: AddVideoPhase.fromVideoState,
-        builder: (context, videoPhase) => builder(
-          context,
-          isSavingSection ? AddVideoPhase.saving : videoPhase,
-        ),
-      ),
+            selector: AddVideoPhase.fromVideoState,
+            builder: (context, videoPhase) => builder(
+              context,
+              isSavingSection ? AddVideoPhase.saving : videoPhase,
+            ),
+          ),
     );
   }
 }

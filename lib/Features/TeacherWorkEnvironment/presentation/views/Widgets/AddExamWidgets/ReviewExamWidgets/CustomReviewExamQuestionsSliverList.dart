@@ -5,9 +5,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateE
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ReviewExamWidgets/CustomReviewExamQuestionListItem.dart';
 
 class CustomReviewExamQuestionsSliverList extends StatelessWidget {
-  const CustomReviewExamQuestionsSliverList({
-    super.key,
-  });
+  const CustomReviewExamQuestionsSliverList({super.key});
   @override
   Widget build(BuildContext context) {
     List<CourseTestQuestionEntity> questions = context
@@ -15,16 +13,17 @@ class CustomReviewExamQuestionsSliverList extends StatelessWidget {
         .coursetestentity
         .questions;
     return SliverList.builder(
-        itemCount: questions.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: CustomReviewExamQuestionListItem(
-              index: index,
-              totalQuestions: questions.length,
-              question: questions[index],
-            ),
-          );
-        });
+      itemCount: questions.length,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: CustomReviewExamQuestionListItem(
+            index: index,
+            totalQuestions: questions.length,
+            question: questions[index],
+          ),
+        );
+      },
+    );
   }
 }

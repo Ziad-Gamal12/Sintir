@@ -72,7 +72,9 @@ class _AddCourseCouponViewBodyState extends State<AddCourseCouponViewBody> {
               const AddCourseCouponDiscountField(),
               const SizedBox(height: 20),
               AddCourseCouponExpiryField(
-                  pickedDate: pickedDate, onTap: () => showDatePickerDialog()),
+                pickedDate: pickedDate,
+                onTap: () => showDatePickerDialog(),
+              ),
               const SizedBox(height: 20),
               const AddCourseCouponUsageLimitField(),
               const Spacer(),

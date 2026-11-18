@@ -101,14 +101,14 @@ class _TestConsequencesViewBodyState extends State<TestConsequencesViewBody> {
             SliverToBoxAdapter(
               child: TestSummaryCard(requirements: widget.requirements),
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: 30)),
+            const SliverToBoxAdapter(child: SizedBox(height: 24)),
             SliverToBoxAdapter(
               child: ResultsAnalysisCard(
                 requirements: widget.requirements,
                 averageScore: results.averageScore,
               ),
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: 30)),
+            const SliverToBoxAdapter(child: SizedBox(height: 24)),
             SliverToBoxAdapter(
               child: Text(
                 LocaleKeys.examResults,
@@ -118,7 +118,7 @@ class _TestConsequencesViewBodyState extends State<TestConsequencesViewBody> {
                 ).bold18.copyWith(color: primaryTextColor),
               ),
             ),
-            const SliverToBoxAdapter(child: SizedBox(height: 20)),
+            const SliverToBoxAdapter(child: SizedBox(height: 18)),
             TestResultsSliverListView(testResults: results),
             SliverToBoxAdapter(
               child: Padding(

@@ -1,11 +1,16 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
+import 'package:sintir/Core/Enums/courseCounterField.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStorePaginateResponse.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
+import 'package:sintir/Core/helper/GetUserData.dart';
+import 'package:sintir/Core/repos/CourseCountersRepo/CourseCountersRepo.dart';
 import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
+import 'package:sintir/Core/repos/Test-Item-Repo/TestAnswerKeyStore.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/CourseTestModel.dart';
@@ -18,82 +23,154 @@ import 'package:sintir/locale_keys.dart';
 
 class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
   final DataBaseService datebaseservice;
+  final CourseCountersRepo courseCountersRepo;
+  final TestAnswerKeyStore answerKeys;
+  final bool Function() isTeacher;
 
-  SectionItemsActionsRepoImpli({required this.datebaseservice});
+  SectionItemsActionsRepoImpli({
+    required this.datebaseservice,
+    required this.courseCountersRepo,
+    TestAnswerKeyStore? answerKeys,
+    bool Function()? isTeacher,
+  })  : answerKeys = answerKeys ?? TestAnswerKeyStore(),
+        isTeacher = isTeacher ?? _signedInUserIsTeacher;
+
+  static bool _signedInUserIsTeacher() {
+    try {
+      return getUserData().role == BackendEndpoints.teacherRole;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  FireStoreRequirmentsEntity _itemRequirements({
+    required String courseId,
+    required String sectionId,
+    String? itemId,
+  }) {
+    return FireStoreRequirmentsEntity(
+      collection: BackendEndpoints.coursesCollection,
+      docId: courseId,
+      subCollection: BackendEndpoints.sectionsSubCollection,
+      subDocId: sectionId,
+      subCollection2: BackendEndpoints.sectionItemsSubCollection,
+      sub2DocId: itemId,
+    );
+  }
 
   @override
   Future<Either<Failure, void>> addSectionItem({
-    required sectionItem,
+    required dynamic sectionItem,
     required String courseId,
+    required String teacherId,
     required String sectionId,
   }) async {
     try {
+      late final String itemId;
+      late final Map<String, dynamic> json;
+      late final CourseCounterField counterField;
+      bool isMuxUpdate = false;
+
       if (sectionItem is CourseTestEntity) {
-        Map<String, dynamic> json =
-            Coursetestmodel.fromEntity(sectionItem).toJson();
-        await datebaseservice.setData(
-            requirements: FireStoreRequirmentsEntity(
-                collection: BackendEndpoints.coursesCollection,
-                docId: courseId,
-                subCollection: BackendEndpoints.sectionsSubCollection,
-                subDocId: sectionId,
-                subCollection2: BackendEndpoints.sectionItemsSubCollection,
-                sub2DocId: sectionItem.id),
-            data: json);
-        return right(null);
+        itemId = sectionItem.id;
+        json = Coursetestmodel.fromEntity(sectionItem).toJson();
+        counterField = CourseCounterField.tests;
       } else if (sectionItem is CourseVideoItemEntity) {
-        Map<String, dynamic> json =
-            CourseVideoItemModel.fromEntity(sectionItem).toJson();
-        final requirements = FireStoreRequirmentsEntity(
-          collection: BackendEndpoints.coursesCollection,
-          docId: courseId,
-          subCollection: BackendEndpoints.sectionsSubCollection,
-          subDocId: sectionId,
-          subCollection2: BackendEndpoints.sectionItemsSubCollection,
-          sub2DocId: sectionItem.id,
-        );
-        if (sectionItem.videoProvider == "mux") {
-          await datebaseservice.updateData(
-              data: json, requirements: requirements);
-        } else {
-          await datebaseservice.setData(data: json, requirements: requirements);
-        }
-        return right(null);
+        itemId = sectionItem.id;
+        json = CourseVideoItemModel.fromEntity(sectionItem).toJson();
+        counterField = CourseCounterField.lessons;
+        isMuxUpdate = sectionItem.videoProvider == "mux";
       } else if (sectionItem is CourseFileEntity) {
-        Map<String, dynamic> json =
-            Coursefilemodel.fromEntity(sectionItem).toJson();
-        await datebaseservice.setData(
-            requirements: FireStoreRequirmentsEntity(
-                collection: BackendEndpoints.coursesCollection,
-                docId: courseId,
-                subCollection: BackendEndpoints.sectionsSubCollection,
-                subDocId: sectionId,
-                subCollection2: BackendEndpoints.sectionItemsSubCollection,
-                sub2DocId: sectionItem.id),
-            data: json);
-        return right(null);
+        itemId = sectionItem.id;
+        json = Coursefilemodel.fromEntity(sectionItem).toJson();
+        counterField = CourseCounterField.lessons;
       } else {
         return left(ServerFailure(message: LocaleKeys.unexpectedError));
       }
+
+      final requirements = _itemRequirements(
+        courseId: courseId,
+        sectionId: sectionId,
+        itemId: itemId,
+      );
+
+      final Future<void> writeItemFuture = sectionItem is CourseTestEntity
+          ? answerKeys.saveTest(
+              courseId: courseId,
+              sectionId: sectionId,
+              test: sectionItem,
+            )
+          : isMuxUpdate
+              ? datebaseservice.updateData(data: json, requirements: requirements)
+              : datebaseservice.setData(data: json, requirements: requirements);
+
+      await Future.wait([
+        writeItemFuture,
+        courseCountersRepo.updateCourseCounters(
+          courseId: courseId,
+          teacherId: teacherId,
+          field: counterField,
+          delta: 1,
+        ),
+      ]);
+
+      return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e) {
+    } catch (_) {
       return left(ServerFailure(message: LocaleKeys.unexpectedError));
     }
   }
 
   @override
-  Future<Either<Failure, List>> getSectionsItems(
-      {required String courseId, required String sectionId}) async {
+  Future<Either<Failure, void>> deleteSectionItem({
+    required String courseId,
+    required String teacherId,
+    required String sectionId,
+    required String sectionItemId,
+    required bool isTest,
+  }) async {
     try {
-      List items = [];
-      FireStoreResponse data = await datebaseservice.getData(
-        requirements: FireStoreRequirmentsEntity(
-          collection: BackendEndpoints.coursesCollection,
-          docId: courseId,
-          subCollection: BackendEndpoints.sectionsSubCollection,
-          subDocId: sectionId,
-          subCollection2: BackendEndpoints.sectionItemsSubCollection,
+      await Future.wait([
+        isTest
+            ? answerKeys.deleteTest(
+                courseId: courseId,
+                sectionId: sectionId,
+                testId: sectionItemId,
+              )
+            : datebaseservice.deleteDoc(
+                collectionKey: BackendEndpoints.coursesCollection,
+                docId: courseId,
+                subCollectionKey: BackendEndpoints.sectionsSubCollection,
+                subDocId: sectionId,
+                subCollectionKey2: BackendEndpoints.sectionItemsSubCollection,
+                subDocId2: sectionItemId,
+              ),
+        courseCountersRepo.updateCourseCounters(
+          courseId: courseId,
+          teacherId: teacherId,
+          field: isTest ? CourseCounterField.tests : CourseCounterField.lessons,
+          delta: -1,
+        ),
+      ]);
+      return right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (_) {
+      return left(ServerFailure(message: LocaleKeys.unexpectedError));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List>> getSectionsItems({
+    required String courseId,
+    required String sectionId,
+  }) async {
+    try {
+      final FireStoreResponse data = await datebaseservice.getData(
+        requirements: _itemRequirements(
+          courseId: courseId,
+          sectionId: sectionId,
         ),
       );
       if (data.listData == null) {
@@ -102,47 +179,83 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
       if (data.listData!.isEmpty) {
         return right([]);
       }
-      for (var item in data.listData!) {
-        if (item["type"] == "Test") {
-          items.add(Coursetestmodel.fromJson(item).toEntity());
-        } else if ((item["type"] == "Vedio" || item["type"] == "Video")) {
-          items.add(CourseVideoItemModel.fromJson(item).toEntity());
-        } else {
-          items.add(Coursefilemodel.fromJson(item).toEntity());
-        }
+
+      final items = await compute(_parseSectionItems, data.listData!);
+      if (isTeacher()) {
+        await _fillAnswerKeys(
+          courseId: courseId,
+          sectionId: sectionId,
+          items: items,
+        );
       }
       return right(items);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e) {
+    } catch (_) {
       return left(ServerFailure(message: LocaleKeys.unexpectedError));
     }
   }
 
+  Future<void> _fillAnswerKeys({
+    required String courseId,
+    required String sectionId,
+    required List items,
+  }) async {
+    await Future.wait(
+      items.whereType<CourseTestEntity>().map((test) async {
+        try {
+          await answerKeys.fillAnswers(
+            courseId: courseId,
+            sectionId: sectionId,
+            test: test,
+          );
+        } catch (_) {}
+      }),
+    );
+  }
+
+  static List _parseSectionItems(List<dynamic> listData) {
+    final items = [];
+    for (final item in listData) {
+      if (item["type"] == "Test") {
+        items.add(Coursetestmodel.fromJson(item).toEntity());
+      } else if (item["type"] == "Vedio" || item["type"] == "Video") {
+        items.add(CourseVideoItemModel.fromJson(item).toEntity());
+      } else {
+        items.add(Coursefilemodel.fromJson(item).toEntity());
+      }
+    }
+    return items;
+  }
+
   @override
-  Future<Either<Failure, void>> addJoinedBy(
-      {required JoinedByEntity joinedByEntity,
-      required String courseId,
-      required String sectionId,
-      required String sectionItemId}) async {
+  Future<Either<Failure, void>> addJoinedBy({
+    required JoinedByEntity joinedByEntity,
+    required String courseId,
+    required String sectionId,
+    required String sectionItemId,
+  }) async {
     try {
-      Map<String, dynamic> json =
-          JoinedbyModel.fromEntity(joinedByEntity).toJson();
+      final Map<String, dynamic> json = JoinedbyModel.fromEntity(
+        joinedByEntity,
+      ).toJson();
       await datebaseservice.setData(
-          requirements: FireStoreRequirmentsEntity(
-              collection: BackendEndpoints.coursesCollection,
-              docId: courseId,
-              subCollection: BackendEndpoints.sectionsSubCollection,
-              subDocId: sectionId,
-              subCollection2: BackendEndpoints.sectionItemsSubCollection,
-              sub2DocId: sectionItemId,
-              subCollection3: BackendEndpoints.joinedBySubCollection,
-              sub3DocId: joinedByEntity.uid),
-          data: json);
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.coursesCollection,
+          docId: courseId,
+          subCollection: BackendEndpoints.sectionsSubCollection,
+          subDocId: sectionId,
+          subCollection2: BackendEndpoints.sectionItemsSubCollection,
+          sub2DocId: sectionItemId,
+          subCollection3: BackendEndpoints.joinedBySubCollection,
+          sub3DocId: joinedByEntity.uid,
+        ),
+        data: json,
+      );
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
-    } catch (e) {
+    } catch (_) {
       return left(ServerFailure(message: LocaleKeys.unexpectedError));
     }
   }

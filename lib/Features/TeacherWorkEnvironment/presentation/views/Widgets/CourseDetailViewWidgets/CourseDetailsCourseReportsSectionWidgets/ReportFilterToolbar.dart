@@ -7,10 +7,11 @@ class ReportFilterToolbar extends StatelessWidget {
   final bool isMobile;
   @override
   Widget build(BuildContext context) => Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          spacing: 8,
-          children: [
-            ReportTypeFilterButton(isMobile: isMobile),
-            ReportSortButton(isMobile: isMobile),
-          ]);
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    spacing: 8,
+    children: [
+      ReportTypeFilterButton(isMobile: isMobile),
+      ReportSortButton(isMobile: isMobile),
+    ],
+  );
 }

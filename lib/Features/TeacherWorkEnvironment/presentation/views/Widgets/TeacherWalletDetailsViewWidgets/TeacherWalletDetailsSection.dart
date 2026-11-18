@@ -1,50 +1,42 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
-import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/SharedWallet/teacher_wallet_card.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/EarningsSummarySection/EarningsSummarySection.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/ExpandableWalletDetailsWidgets/expandable_wallet_details.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/ProfitSettlementNoteWidgets/ProfitSettlementNoteCard.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWallet/CustomTeacherCardItem.dart';
 
 class TeacherWalletDetailsSection extends StatelessWidget {
   const TeacherWalletDetailsSection({
     super.key,
     required this.wallet,
-    required this.user,
-    required this.colorScheme,
+    this.staleNotice,
   });
 
   final TeacherWalletEntity wallet;
-  final UserEntity user;
-  final ColorScheme colorScheme;
+
+  /// Shown under the card when live updates stopped.
+  final Widget? staleNotice;
 
   @override
   Widget build(BuildContext context) {
+    final onSurface = Theme.of(context).colorScheme.onSurface;
+
     return Column(
       children: [
-        CustomTeacherWalletCardItem(
-          wallet: wallet,
-        ),
+        TeacherWalletCard(wallet: wallet),
+        if (staleNotice != null) ...[const SizedBox(height: 8), staleNotice!],
         Divider(
-          color: colorScheme.onSurface.withValues(alpha: 0.1),
+          color: onSurface.withValues(alpha: 0.1),
           thickness: 1,
           height: 40,
         ),
-        EarningsSummarySection(
-          teacherWallet: wallet,
-        ),
-        Divider(
-          color: colorScheme.onSurface.withValues(alpha: 0.05),
-          height: 20,
-        ),
+        EarningsSummarySection(teacherWallet: wallet),
+        Divider(color: onSurface.withValues(alpha: 0.05), height: 20),
         ProfitSettlementNoteCard(),
-        Divider(
-          color: colorScheme.onSurface.withValues(alpha: 0.05),
-          height: 20,
-        ),
-        ExpandableWalletDetails(
-          wallet: wallet,
-        )
+        Divider(color: onSurface.withValues(alpha: 0.05), height: 20),
+        ExpandableWalletDetails(wallet: wallet),
       ],
     );
   }

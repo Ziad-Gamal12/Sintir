@@ -27,8 +27,9 @@ class TintedIconTile extends StatelessWidget {
       decoration: BoxDecoration(
         color: accent.withValues(alpha: .13),
         shape: isCircle ? BoxShape.circle : BoxShape.rectangle,
-        borderRadius:
-            isCircle ? null : BorderRadius.circular(AddVideoDimens.radius),
+        borderRadius: isCircle
+            ? null
+            : BorderRadius.circular(AddVideoDimens.radius),
       ),
       child: Icon(icon, color: accent, size: iconSize),
     );

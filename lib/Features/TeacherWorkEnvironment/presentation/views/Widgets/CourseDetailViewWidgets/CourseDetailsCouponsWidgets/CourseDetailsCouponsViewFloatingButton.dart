@@ -15,14 +15,11 @@ class CourseDetailsCouponsViewFloatingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       backgroundColor: KMainColor,
-      child: const Icon(
-        Icons.add,
-        color: Colors.white,
-        size: 30,
-      ),
+      child: const Icon(Icons.add, color: Colors.white, size: 30),
       onPressed: () {
-        GoRouter.of(context)
-            .push(AddCourseCouponView.routeName, extra: courseId);
+        GoRouter.of(
+          context,
+        ).push(AddCourseCouponView.routeName, extra: courseId);
       },
     );
   }

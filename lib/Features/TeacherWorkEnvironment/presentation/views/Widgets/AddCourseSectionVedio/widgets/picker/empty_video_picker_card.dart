@@ -47,8 +47,9 @@ class EmptyVideoPickerCard extends StatelessWidget {
                   Text(
                     LocaleKeys.videoPickerSubtitle,
                     textAlign: TextAlign.center,
-                    style: styles.regular12
-                        .copyWith(color: colors.onSurfaceVariant),
+                    style: styles.regular12.copyWith(
+                      color: colors.onSurfaceVariant,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   FilledButton.icon(

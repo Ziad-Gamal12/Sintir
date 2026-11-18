@@ -7,12 +7,13 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReportsSectionWidgets/states/ReportDetailEmptyView.dart';
 
 class ReportDetailsContent extends StatelessWidget {
-  const ReportDetailsContent(
-      {super.key,
-      required this.courseId,
-      required this.reportId,
-      this.fallbackReport,
-      this.inBottomSheet = false});
+  const ReportDetailsContent({
+    super.key,
+    required this.courseId,
+    required this.reportId,
+    this.fallbackReport,
+    this.inBottomSheet = false,
+  });
   final String courseId;
   final String reportId;
   final CourseReportsItemEntity? fallbackReport;
@@ -30,7 +31,7 @@ class ReportDetailsContent extends StatelessWidget {
         builder: (context, _) {
           final report =
               context.read<CourseReportsCubit>().reportById(reportId) ??
-                  fallbackReport;
+              fallbackReport;
           if (report == null) return const ReportDetailEmptyView();
           return inBottomSheet
               ? ReportDetailsSheetBody(courseId: courseId, report: report)

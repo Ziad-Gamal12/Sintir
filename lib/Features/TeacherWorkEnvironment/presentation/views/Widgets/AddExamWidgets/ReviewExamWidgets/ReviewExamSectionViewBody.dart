@@ -28,44 +28,37 @@ class _ReviewExamSectionViewBodyState extends State<ReviewExamSectionViewBody> {
     return Provider.value(
       value: widget.navigateExamReviewRequirmentsEntity,
       child: MultiBlocListener(
-          listeners: [
-            BlocListener<TestItemCubit, TestItemState>(
-                listener: (context, state) {
-              ReviewExamSectionViewBodyListener(context)
-                  .testItemBlocListener(state, context);
-            }),
-            BlocListener<CourseSectionsCubit, CourseSectionsState>(
-                listener: (context, state) {
-              ReviewExamSectionViewBodyListener(context)
-                  .courseSectionListener(state, context);
-            })
-          ],
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: KHorizontalPadding),
-            child: CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: TestSummaryCard(),
-                ),
-                SliverToBoxAdapter(
-                  child: Divider(
-                    thickness: 1,
-                    height: 40,
-                    color: Colors.grey,
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: CustomReviewExamQuestionsHeader(),
-                ),
-                CustomReviewExamQuestionsSliverList(),
-                SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 100,
-                  ),
-                ),
-              ],
-            ),
-          )),
+        listeners: [
+          BlocListener<TestItemCubit, TestItemState>(
+            listener: (context, state) {
+              ReviewExamSectionViewBodyListener(
+                context,
+              ).testItemBlocListener(state, context);
+            },
+          ),
+          BlocListener<CourseSectionsCubit, CourseSectionsState>(
+            listener: (context, state) {
+              ReviewExamSectionViewBodyListener(
+                context,
+              ).courseSectionListener(state, context);
+            },
+          ),
+        ],
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: KHorizontalPadding),
+          child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(child: TestSummaryCard()),
+              SliverToBoxAdapter(
+                child: Divider(thickness: 1, height: 40, color: Colors.grey),
+              ),
+              SliverToBoxAdapter(child: CustomReviewExamQuestionsHeader()),
+              CustomReviewExamQuestionsSliverList(),
+              SliverToBoxAdapter(child: SizedBox(height: 100)),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

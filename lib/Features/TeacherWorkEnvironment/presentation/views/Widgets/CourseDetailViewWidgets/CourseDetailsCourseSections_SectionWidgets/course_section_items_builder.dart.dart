@@ -5,7 +5,6 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/empty_section_message.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/error_section_message.dart.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/loading_section_items_list.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/section_items_list.dart';
 
 class CourseSectionItemsBuilder extends StatelessWidget {
@@ -29,10 +28,11 @@ class CourseSectionItemsBuilder extends StatelessWidget {
           current is GetSectionItemsLoading,
       builder: (context, state) {
         if (state is GetSectionItemsLoading && state.sectionId == section.id) {
-          return LoadingSectionItemsList(
-            fakeItems: List.generate(6, (index) => index),
-            course: course,
-            section: section,
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CircularProgressIndicator(),
+            ),
           );
         } else if (state is GetSectionItemsFailure) {
           return ErrorSectionMessage(message: state.errMessage);
@@ -41,11 +41,7 @@ class CourseSectionItemsBuilder extends StatelessWidget {
             state.items.isEmpty) {
           return const EmptySectionMessage();
         }
-        return SectionItemsList(
-          items: items,
-          course: course,
-          section: section,
-        );
+        return SectionItemsList(items: items, course: course, section: section);
       },
     );
   }

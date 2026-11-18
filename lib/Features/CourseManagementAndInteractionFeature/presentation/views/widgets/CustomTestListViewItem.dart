@@ -30,23 +30,26 @@ class Customtestlistviewitem extends StatelessWidget {
               ? item.ontap(
                   context: context,
                   item: CourseExamViewNavigationsRequirmentsEntity(
-                      isCourseExam: true,
-                      test: item,
-                      courseSubject: course.subject,
-                      sectionId: section.id,
-                      courseId: course.id),
-                  course: course)
+                    isCourseExam: true,
+                    test: item,
+                    courseSubject: course.subject,
+                    sectionId: section.id,
+                    courseId: course.id,
+                  ),
+                  course: course,
+                )
               : null,
-          child: Customcontainersectionitem(
-              child: Customlisttilewidget(
-            title: " ${item.title} ",
-            image: item.preffixImage,
-            subtitle: " (${item.durationTime} ${LocaleKeys.durationMinutes})",
-            trailing: Text(
-              "${item.questions.length} ${LocaleKeys.questionsCount}",
-              style: AppTextStyles(context).regular14,
+          child: CustomContainerSectionItem(
+            child: Customlisttilewidget(
+              title: " ${item.title} ",
+              image: item.preffixImage,
+              subtitle: " (${item.durationTime} ${LocaleKeys.durationMinutes})",
+              trailing: Text(
+                "${item.questions.length} ${LocaleKeys.questionsCount}",
+                style: AppTextStyles(context).regular14,
+              ),
             ),
-          )),
+          ),
         ),
         CustomUnAvailableSectionWidget(isAvailable: isAvilabe),
       ],

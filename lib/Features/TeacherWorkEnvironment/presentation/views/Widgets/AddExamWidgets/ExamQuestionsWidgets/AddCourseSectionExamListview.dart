@@ -5,8 +5,10 @@ import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/Cours
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ExamQuestionsWidgets/AddCourseExamAddQuestionListViewItem.dart';
 
 class AddCourseSectionExamListview extends StatelessWidget {
-  const AddCourseSectionExamListview(
-      {super.key, required this.coursetestentity});
+  const AddCourseSectionExamListview({
+    super.key,
+    required this.coursetestentity,
+  });
   final CourseTestEntity coursetestentity;
   @override
   Widget build(BuildContext context) {
@@ -20,17 +22,18 @@ class AddCourseSectionExamListview extends StatelessWidget {
       },
       builder: (context, state) {
         return SliverList.builder(
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: AddCourseExamAddQuestionListViewItem(
-                  index: index,
-                  coursetestquestionentity: coursetestentity.questions[index],
-                  coursetestentity: coursetestentity,
-                ),
-              );
-            },
-            itemCount: coursetestentity.questions.length);
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: AddCourseExamAddQuestionListViewItem(
+                index: index,
+                coursetestquestionentity: coursetestentity.questions[index],
+                coursetestentity: coursetestentity,
+              ),
+            );
+          },
+          itemCount: coursetestentity.questions.length,
+        );
       },
     );
   }

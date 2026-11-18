@@ -26,6 +26,10 @@ class BackendEndpoints {
   static String updateCourseSectionCollection = "Courses";
   static String reportsSubCollection = "Reports";
   static String feedBacksSubCollection = "Feedbacks";
+  static const String reviewReportsCollection = "ReviewReports";
+  static const String teacherReplyField = "teacherReply";
+  static const String deleteAccountFunction = "delete-account";
+  static const String deletingStatus = "Deleting";
   static String couponsSubCollection = "Coupons";
   static String sectionsSubCollection = "Sections";
   static String subscribersSubCollection = "Subscribers";
@@ -46,6 +50,8 @@ class BackendEndpoints {
   static String supportTicketMessagesSubCollection = "Messages";
   static String courseSectionsSubCollection = "Sections";
   static String sectionItemsSubCollection = "Items";
+  static String testPrivateSubCollection = "Private";
+  static String testAnswerKeyDoc = "answerKey";
   static String subscribetoCourseCollection = "Courses";
   static String checkifSubscribedCollection = "Courses";
   static String checkifSubscribedSubCollection = "Courses";
@@ -56,6 +62,9 @@ class BackendEndpoints {
   static String coursePendingState = "Pending";
   static String courseDeletedState = "DeletedByTeacher";
   static String coursedeclinedState = "Declined";
+  static String courseRejectedLegacyState = "Rejected";
+  static String courseHiddenByAdminState = "Archived";
+  static String courseDeletedByAdminState = "DeletedByAdmin";
   static String userKind = "kind";
   static String checkIsTeacherExistCollectionName = "Teachers";
   static String vedioType = "Vedio";

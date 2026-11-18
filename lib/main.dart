@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,14 +11,18 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:localingo/localingo.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sintir/Core/Managers/Cubits/LocalizationCubit/LocaleCubit.dart';
+import 'package:sintir/Core/Managers/Cubits/network_status_cubit/network_status_cubit.dart';
 import 'package:sintir/Core/Themes/app_theme.dart';
 import 'package:sintir/Core/Themes/theme_cubit.dart';
 import 'package:sintir/Core/helper/BiometricAvailability.dart';
 import 'package:sintir/Core/services/HiveService.dart';
+import 'package:sintir/Core/services/NetworkStatus.dart';
 import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/Core/services/SupabaseStorageServices.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/App_router.dart';
+import 'package:sintir/Core/widgets/AppSkeletonizerConfig.dart';
+import 'package:sintir/Core/widgets/NetworkStatusBanner.dart';
 import 'package:sintir/Core/widgets/PrivacyWrapper.dart';
 import 'package:sintir/Features/Favorites/Domain/Repos/FavoritesRepo.dart';
 import 'package:sintir/Features/Favorites/presentation/views/Manager/favourites_cubit/favourites_cubit.dart';
@@ -44,6 +50,9 @@ void main() async {
         '769176418060-smo79qpqjcab1k21is8sod904kpai4f8.apps.googleusercontent.com',
   );
   setup_Getit();
+  final connectivity = getIt<ConnectivityService>();
+  NetworkStatus.current = connectivity;
+  unawaited(connectivity.start());
   runApp(const Portal(child: PrivacyWrapper(child: Sintir())));
 }
 
@@ -61,6 +70,9 @@ class Sintir extends StatelessWidget {
         ),
         BlocProvider(create: (_) => ThemeCubit()),
         BlocProvider(create: (_) => LocaleCubit()),
+        BlocProvider(
+          create: (_) => NetworkStatusCubit(network: NetworkStatus.current),
+        ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {
@@ -80,6 +92,9 @@ class Sintir extends StatelessWidget {
                 locale: localeState,
                 debugShowCheckedModeBanner: false,
                 routerConfig: App_router.router,
+                builder: (context, child) => AppSkeletonizerConfig(
+                  child: NetworkStatusBanner(child: child!),
+                ),
               );
             },
           );

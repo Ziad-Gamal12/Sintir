@@ -20,12 +20,18 @@ class CustomAddNewSectionItemBottomSheetChild extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(20),
       decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-          color: Colors.transparent),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(8),
+          topRight: Radius.circular(8),
+        ),
+        color: Colors.transparent,
+      ),
       child: AddCourseSectionItemContentOptions(
         optionRequirementsEntity: OptionNavigationRequirementsEntity(
-            isNewSection: false, section: section, courseEntity: courseEntity),
+          isNewSection: false,
+          section: section,
+          courseEntity: courseEntity,
+        ),
       ),
     );
   }

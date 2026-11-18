@@ -13,14 +13,15 @@ class AddcourseExamQuestionItemTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
-        hintText: LocaleKeys.enterQuestionHere,
-        obscureText: false,
-        textInputType: TextInputType.text,
-        onSaved: (value) {
-          coursetestquestionentity.questionTitle = value!;
-        },
-        validator: (value) {
-          return null;
-        });
+      hintText: LocaleKeys.enterQuestionHere,
+      obscureText: false,
+      textInputType: TextInputType.text,
+      onSaved: (value) {
+        coursetestquestionentity.questionTitle = value!;
+      },
+      validator: (value) {
+        return null;
+      },
+    );
   }
 }

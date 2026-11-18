@@ -7,36 +7,40 @@ class ReportsListSkeleton extends StatelessWidget {
   final bool asSliver;
 
   Widget _item(BuildContext context, int index) => Padding(
-        padding: const EdgeInsets.only(bottom: 10),
-        child: Skeletonizer(
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(14),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    padding: const EdgeInsets.only(bottom: 10),
+    child: Skeletonizer(
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(14),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Row(
                 children: [
-                  const Row(children: [
-                    Bone(width: 90, height: 22),
-                    Spacer(),
-                    Bone(width: 110, height: 22),
-                  ]),
-                  const SizedBox(height: 12),
-                  const Bone(width: double.infinity, height: 14),
-                  const SizedBox(height: 7),
-                  const Bone(width: double.infinity, height: 14),
-                  const SizedBox(height: 13),
-                  const Divider(),
-                  Row(children: [
-                    const Bone(width: 100, height: 14),
-                    const Spacer(),
-                    const Bone(width: 65, height: 14),
-                  ]),
+                  Bone(width: 90, height: 22),
+                  Spacer(),
+                  Bone(width: 110, height: 22),
                 ],
               ),
-            ),
+              const SizedBox(height: 12),
+              const Bone(width: double.infinity, height: 14),
+              const SizedBox(height: 7),
+              const Bone(width: double.infinity, height: 14),
+              const SizedBox(height: 13),
+              const Divider(),
+              Row(
+                children: [
+                  const Bone(width: 100, height: 14),
+                  const Spacer(),
+                  const Bone(width: 65, height: 14),
+                ],
+              ),
+            ],
           ),
         ),
-      );
+      ),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) => asSliver

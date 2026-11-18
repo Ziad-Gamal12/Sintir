@@ -3,9 +3,7 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/locale_keys.dart';
 
 class EditCourseInfoSectionHeader extends StatelessWidget {
-  const EditCourseInfoSectionHeader({
-    super.key,
-  });
+  const EditCourseInfoSectionHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +21,7 @@ class EditCourseInfoSectionHeader extends StatelessWidget {
         ),
         const Spacer(),
         IconButton(
-          icon: const Icon(
-            Icons.close,
-            color: closeIconColor,
-            size: 30,
-          ),
+          icon: const Icon(Icons.close, color: closeIconColor, size: 30),
           onPressed: () {
             Navigator.pop(context);
           },

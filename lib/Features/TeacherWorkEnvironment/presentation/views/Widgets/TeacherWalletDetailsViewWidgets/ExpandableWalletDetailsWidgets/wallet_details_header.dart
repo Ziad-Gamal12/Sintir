@@ -18,14 +18,9 @@ class WalletDetailsHeader extends StatelessWidget {
 
     return InkWell(
       onTap: onTap,
-      borderRadius: const BorderRadius.vertical(
-        top: Radius.circular(20),
-      ),
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 20,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Row(
           children: [
             Expanded(
@@ -39,8 +34,9 @@ class WalletDetailsHeader extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text(
                     LocaleKeys.walletDetailsHeaderTitle,
-                    style: theme.textTheme.titleMedium
-                        ?.copyWith(fontWeight: FontWeight.w700),
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ],
               ),
@@ -50,9 +46,7 @@ class WalletDetailsHeader extends StatelessWidget {
               duration: const Duration(milliseconds: 250),
               child: Icon(
                 Icons.keyboard_arrow_down_rounded,
-                color: colorScheme.onSurface.withValues(
-                  alpha: 0.65,
-                ),
+                color: colorScheme.onSurface.withValues(alpha: 0.65),
               ),
             ),
           ],

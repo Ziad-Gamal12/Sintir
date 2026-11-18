@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
@@ -13,8 +14,19 @@ import 'package:sintir/locale_keys.dart';
 
 class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
   final DataBaseService databaseservice;
+  final String? Function() currentUserId;
 
-  SubscribersDetailsRepoImpl({required this.databaseservice});
+  SubscribersDetailsRepoImpl({
+    required this.databaseservice,
+    String? Function()? currentUserId,
+  }) : currentUserId =
+            currentUserId ?? (() => FirebaseAuth.instance.currentUser?.uid);
+
+  Map<String, dynamic> _teacherResultsFilter() => {
+        "field": "teacherId",
+        "operator": "==",
+        "value": currentUserId() ?? "",
+      };
 
   @override
   Future<Either<Failure, List<CourseEntity>>>
@@ -74,6 +86,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
             "operator": "==",
             "value": courseId,
           },
+          _teacherResultsFilter(),
         ]
       };
       FireStoreRequirmentsEntity requirmentsEntity = FireStoreRequirmentsEntity(
@@ -120,6 +133,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
             "operator": "==",
             "value": courseId,
           },
+          _teacherResultsFilter(),
         ]
       };
       FireStoreRequirmentsEntity requirmentsEntity = FireStoreRequirmentsEntity(
@@ -163,6 +177,7 @@ class SubscribersDetailsRepoImpl implements SubscribersDetailsRepo {
             "operator": "==",
             "value": courseId,
           },
+          _teacherResultsFilter(),
         ]
       };
       FireStoreRequirmentsEntity requirmentsEntity = FireStoreRequirmentsEntity(

@@ -38,15 +38,17 @@ class EarningsSummaryHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(LocaleKeys.earningsSummaryTitle,
-            style: AppTextStyles(context).bold16.copyWith(
-                  color: theme.textTheme.bodyLarge?.color,
-                )),
+        Text(
+          LocaleKeys.earningsSummaryTitle,
+          style: AppTextStyles(
+            context,
+          ).bold16.copyWith(color: theme.textTheme.bodyLarge?.color),
+        ),
         Text(
           LocaleKeys.earningsSummaryUpdateNote,
           style: AppTextStyles(context).regular12.copyWith(
-                color: isDarkMode ? Color(0xff8E909F) : Color(0xff64748B),
-              ),
+            color: isDarkMode ? Color(0xff8E909F) : Color(0xff64748B),
+          ),
         ),
       ],
     );

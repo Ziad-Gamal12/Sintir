@@ -5,9 +5,7 @@ import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/locale_keys.dart';
 
 class EditCourseTitleField extends StatelessWidget {
-  const EditCourseTitleField({
-    super.key,
-  });
+  const EditCourseTitleField({super.key});
   @override
   Widget build(BuildContext context) {
     CourseEntity course = context.read<CourseEntity>();

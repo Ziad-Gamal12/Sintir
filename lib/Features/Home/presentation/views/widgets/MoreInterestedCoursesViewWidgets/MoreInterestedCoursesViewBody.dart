@@ -6,8 +6,8 @@ import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Home/presentation/manager/get_courses_cubit/get_courses_cubit.dart';
-import 'package:sintir/Features/Home/presentation/views/widgets/RecentCoursesSectionLoadingWidget.dart';
-import 'package:sintir/Features/Home/presentation/views/widgets/LeatestCourseSliverGrid.dart';
+import 'package:sintir/Features/Home/presentation/views/widgets/RecentCoursesLoadingSliverGrid.dart';
+import 'package:sintir/Features/Home/presentation/views/widgets/RecentCoursesSliverGrid.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -79,7 +79,7 @@ class _MoreInterestedCoursesViewBodyState
             return CustomErrorWidget(errormessage: state.errmessage);
           } else if (state is GetUserInerestCoursesLoading &&
               state.isPaginate == false) {
-            return const RecentCoursesSectionLoadingWidget();
+            return const RecentCoursesLoadingSliverGrid();
           } else if (state is GetUserInerestCoursesSuccess &&
               fetchedCourses.isEmpty) {
             return CustomEmptyWidget(text: LocaleKeys.noNewCourses);
@@ -87,12 +87,12 @@ class _MoreInterestedCoursesViewBodyState
             return CustomScrollView(
               controller: scrollController,
               slivers: [
-                LeatestCourseSliverGrid(courses: fetchedCourses),
+                RecentCoursesSliverGrid(courses: fetchedCourses),
                 SliverToBoxAdapter(child: SizedBox(height: hasMore ? 20 : 0)),
                 SliverToBoxAdapter(
                   child:
                       state is GetUserInerestCoursesLoading && state.isPaginate
-                      ? const RecentCoursesSectionLoadingWidget()
+                      ? const RecentCoursesLoadingSliverGrid()
                       : const SizedBox(),
                 ),
               ],

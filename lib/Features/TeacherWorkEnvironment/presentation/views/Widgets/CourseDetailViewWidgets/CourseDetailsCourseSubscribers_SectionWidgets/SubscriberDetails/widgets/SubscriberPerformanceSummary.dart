@@ -1,5 +1,5 @@
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
-import 'package:sintir/Core/widgets/results/results_status_mapper.dart';
+import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results/results_status_mapper.dart';
 
 class SubscriberPerformanceSummary {
   const SubscriberPerformanceSummary({
@@ -35,11 +35,13 @@ class SubscriberPerformanceSummary {
     final scores = percentages.map((value) => value / 100).toList();
     final indexed = List<int>.generate(percentages.length, (i) => i);
     final discrepancyCount = chronological
-        .where((result) =>
-            result.result !=
-            result.questionsSolvedListEntity
-                .where((question) => question.isCorrect)
-                .length)
+        .where(
+          (result) =>
+              result.result !=
+              result.questionsSolvedListEntity
+                  .where((question) => question.isCorrect)
+                  .length,
+        )
         .length;
     if (indexed.isEmpty) {
       return const SubscriberPerformanceSummary(

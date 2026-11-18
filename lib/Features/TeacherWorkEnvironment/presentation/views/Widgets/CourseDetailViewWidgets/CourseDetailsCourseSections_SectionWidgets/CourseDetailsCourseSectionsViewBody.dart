@@ -36,13 +36,17 @@ class _CourseDetailsCourseSectionsViewBodyState
     scrollController = ScrollController();
     final cubit = context.read<CourseSectionsCubit>();
     cubit.getCourseSections(
-        isPaginate: false, courseId: widget.courseEntity.id);
+      isPaginate: false,
+      courseId: widget.courseEntity.id,
+    );
 
     _scrollListener = () {
       if (!mounted) return;
       if (_shouldFetchMoreSections(cubit)) {
         cubit.getCourseSections(
-            isPaginate: true, courseId: widget.courseEntity.id);
+          isPaginate: true,
+          courseId: widget.courseEntity.id,
+        );
       }
     };
 
@@ -76,7 +80,8 @@ class _CourseDetailsCourseSectionsViewBodyState
       },
       listenWhen: (previous, current) {
         return current is GetCourseSectionsSuccess ||
-            current is GetCourseSectionsFailure;
+            current is GetCourseSectionsFailure ||
+            current is DeleteSectionSuccess;
       },
       listener: (context, state) {
         if (state is GetCourseSectionsSuccess) {
@@ -90,6 +95,12 @@ class _CourseDetailsCourseSectionsViewBodyState
             });
           }
           hasMore = state.response.hasMore;
+        } else if (state is DeleteSectionSuccess) {
+          setState(() {
+            courseSections = courseSections
+                .where((s) => s.id != state.deletedSectionId)
+                .toList();
+          });
         }
       },
       builder: (context, state) {
@@ -117,9 +128,8 @@ class _CourseDetailsCourseSectionsViewBodyState
                 )
               else if (state is! GetCourseSectionsLoading)
                 SliverToBoxAdapter(
-                    child: CustomEmptyWidget(
-                  text: LocaleKeys.emptyContent,
-                )),
+                  child: CustomEmptyWidget(text: LocaleKeys.emptyContent),
+                ),
             ],
           ),
         );

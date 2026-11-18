@@ -16,9 +16,9 @@ class _CourseReportsSectionState extends State<CourseReportsSection> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        context
-            .read<CourseReportsCubit>()
-            .loadInitial(courseId: widget.courseId);
+        context.read<CourseReportsCubit>().loadInitial(
+          courseId: widget.courseId,
+        );
       }
     });
   }
@@ -33,9 +33,11 @@ class _CourseReportsSectionState extends State<CourseReportsSection> {
             state is CourseReportsUpdateStatusSuccess ||
             state is CourseReportsUpdateStatusFailure,
         builder: (context, state) => LayoutBuilder(
-            builder: (context, constraints) => CourseReportsAdaptiveLayout(
-                courseId: widget.courseId,
-                width: constraints.maxWidth,
-                state: state)),
+          builder: (context, constraints) => CourseReportsAdaptiveLayout(
+            courseId: widget.courseId,
+            width: constraints.maxWidth,
+            state: state,
+          ),
+        ),
       );
 }

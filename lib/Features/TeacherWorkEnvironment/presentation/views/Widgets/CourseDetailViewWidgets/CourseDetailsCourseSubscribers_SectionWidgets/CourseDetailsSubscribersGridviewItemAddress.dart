@@ -17,13 +17,8 @@ class CourseDetailsSubscribersGridviewItemAddress extends StatelessWidget {
 
     return Row(
       children: [
-        Icon(
-          Icons.location_on,
-          color: iconColor,
-        ),
-        const SizedBox(
-          width: 5,
-        ),
+        Icon(Icons.location_on, color: iconColor),
+        const SizedBox(width: 5),
         Expanded(
           child: Text(
             address == "" ? "_" : address,

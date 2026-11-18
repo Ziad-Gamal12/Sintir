@@ -12,46 +12,41 @@ part 'get_courses_state.dart';
 class GetCoursesCubit extends Cubit<GetCoursesState> {
   GetCoursesCubit({required this.coursesrepo}) : super(GetCoursesInitial());
   final Coursesrepo coursesrepo;
+  bool hasInterestedCourses = true;
   Future<void> getRecentCourses({required bool isPaginate}) async {
-    emit(GetRecentCoursesLoading(
-      isPaginate: isPaginate,
-    ));
-    final result = await coursesrepo.getRecentCourses(
-      isPaginate: isPaginate,
-    );
+    emit(GetRecentCoursesLoading(isPaginate: isPaginate));
+    final result = await coursesrepo.getRecentCourses(isPaginate: isPaginate);
     result.fold(
-        (failure) => emit(GetRecentCoursesFailure(errmessage: failure.message)),
-        (response) => emit(GetRecentCoursesSuccess(resonseEntity: response)));
+      (failure) => emit(GetRecentCoursesFailure(errmessage: failure.message)),
+      (response) => emit(GetRecentCoursesSuccess(resonseEntity: response)),
+    );
   }
 
   Future<void> getPopularCourses({required bool isPaginate}) async {
-    emit(GetPopularCoursesLoading(
-      isPaginate: isPaginate,
-    ));
-    final result = await coursesrepo.getPopularCourses(
-      isPaginate: isPaginate,
-    );
+    emit(GetPopularCoursesLoading(isPaginate: isPaginate));
+    final result = await coursesrepo.getPopularCourses(isPaginate: isPaginate);
     result.fold(
-        (failure) =>
-            emit(GetPopularCoursesFailure(errmessage: failure.message)),
-        (response) => emit(GetPopularCoursesSuccess(resonseEntity: response)));
+      (failure) => emit(GetPopularCoursesFailure(errmessage: failure.message)),
+      (response) => emit(GetPopularCoursesSuccess(resonseEntity: response)),
+    );
   }
 
-  Future<void> getUserInterestedCourses(
-      {required bool isPaginate, required UserEntity user}) async {
+  Future<void> getUserInterestedCourses({
+    required bool isPaginate,
+    required UserEntity user,
+  }) async {
+    if (hasInterestedCourses == false) {
+      return;
+    }
     Either<Failure, GetCoursesResonseEntity>? result;
     if (user.role == BackendEndpoints.teacherRole) {
-      emit(GetUserInerestCoursesLoading(
-        isPaginate: isPaginate,
-      ));
+      emit(GetUserInerestCoursesLoading(isPaginate: isPaginate));
       result = await coursesrepo.getTeaceherInterestedCourses(
         isPaginate: isPaginate,
         subject: user.teacherExtraDataEntity?.subject ?? "",
       );
     } else if (user.role == BackendEndpoints.studentRole) {
-      emit(GetUserInerestCoursesLoading(
-        isPaginate: isPaginate,
-      ));
+      emit(GetUserInerestCoursesLoading(isPaginate: isPaginate));
       result = await coursesrepo.getStudentInterestedCourses(
         isPaginate: isPaginate,
         educationlevel: user.studentExtraDataEntity?.educationLevel ?? "",
@@ -59,10 +54,19 @@ class GetCoursesCubit extends Cubit<GetCoursesState> {
     }
     if (result != null) {
       result.fold(
-          (failure) =>
-              emit(GetUserInerestCoursesFailure(errmessage: failure.message)),
-          (response) =>
-              emit(GetUserInerestCoursesSuccess(resonseEntity: response)));
+        (failure) =>
+            emit(GetUserInerestCoursesFailure(errmessage: failure.message)),
+        (response) =>
+            emit(GetUserInerestCoursesSuccess(resonseEntity: response)),
+      );
+    }
+    if (state is GetUserInerestCoursesSuccess) {
+      hasInterestedCourses = (state as GetUserInerestCoursesSuccess)
+          .resonseEntity
+          .courses
+          .isNotEmpty;
+    } else {
+      hasInterestedCourses = false;
     }
   }
 }

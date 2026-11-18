@@ -26,38 +26,45 @@ class SubscriberAnalysisSection extends StatelessWidget {
               ? state.summary
               : SubscriberPerformanceSummary.fromResults(const []);
           return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SubscriberSectionHeader(
-                  title: LocaleKeys.performanceAnalysis,
-                  trailing: state is GetSubscriberResultsSuccess
-                      ? SubscriberTrendPill(summary: state.summary)
-                      : null,
-                ),
-                const SizedBox(height: 12),
-                if (state is GetSubscriberResultsFailure)
-                  Column(children: [
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SubscriberSectionHeader(
+                title: LocaleKeys.performanceAnalysis,
+                trailing: state is GetSubscriberResultsSuccess
+                    ? SubscriberTrendPill(summary: state.summary)
+                    : null,
+              ),
+              const SizedBox(height: 12),
+              if (state is GetSubscriberResultsFailure)
+                Column(
+                  children: [
                     CustomErrorWidget(errormessage: state.errmessage),
                     if (onRetry != null)
                       TextButton(
-                          onPressed: onRetry,
-                          child: Text(LocaleKeys.resultsRetry)),
-                  ])
-                else if (state is GetSubscriberResultsLoading ||
-                    state is SubuscriberDetailsInitial)
-                  Skeletonizer(
-                      enabled: true,
-                      child: Column(children: [
-                        SubscriberResultsChart(summary: summary),
-                        const SizedBox(height: 12),
-                        const SubscriberResultsAnalysisCard(summary: null),
-                      ]))
-                else ...[
-                  SubscriberResultsChart(summary: summary),
-                  const SizedBox(height: 12),
-                  SubscriberResultsAnalysisCard(summary: summary),
-                ],
-              ]);
+                        onPressed: onRetry,
+                        child: Text(LocaleKeys.resultsRetry),
+                      ),
+                  ],
+                )
+              else if (state is GetSubscriberResultsLoading ||
+                  state is SubuscriberDetailsInitial)
+                Skeletonizer(
+                  enabled: true,
+                  child: Column(
+                    children: [
+                      SubscriberResultsChart(summary: summary),
+                      const SizedBox(height: 12),
+                      const SubscriberResultsAnalysisCard(summary: null),
+                    ],
+                  ),
+                )
+              else ...[
+                SubscriberResultsChart(summary: summary),
+                const SizedBox(height: 12),
+                SubscriberResultsAnalysisCard(summary: summary),
+              ],
+            ],
+          );
         },
       );
 }

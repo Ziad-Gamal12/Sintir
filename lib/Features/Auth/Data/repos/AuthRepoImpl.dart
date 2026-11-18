@@ -96,7 +96,7 @@ class AuthRepoImpl implements AuthRepo {
   Future<String> getDeviceId() async {
     try {
       return (await _deviceIdReader())?.trim() ?? '';
-    } catch (error, stackTrace) {
+    } catch (error) {
       return '';
     }
   }
@@ -410,15 +410,13 @@ class AuthRepoImpl implements AuthRepo {
         await authService.changeEmail(email: newEmail);
       }
 
-      final saveResult = await storeUserDataInFireStore(
-        user: user,
-        userjson: userJson,
-        uid: user.uid,
-        signOut: false,
-        checkVerified: false,
+      await databaseservice.updateData(
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.usersCollectionName,
+          docId: user.uid,
+        ),
+        data: editableProfileFields(userJson),
       );
-
-      if (saveResult.isLeft()) return saveResult;
 
       await storeUserLocally(userJson);
       return const Right(null);
@@ -427,6 +425,33 @@ class AuthRepoImpl implements AuthRepo {
     } catch (error) {
       return Left(_toFailure(error));
     }
+  }
+
+  static Map<String, dynamic> editableProfileFields(
+    Map<String, dynamic> userJson,
+  ) {
+    const fields = [
+      'firstName',
+      'lastName',
+      'fullName',
+      'email',
+      'address',
+      'phoneNumber',
+      'gender',
+      'profilePicurl',
+      'studentExtraData',
+    ];
+    final data = <String, dynamic>{
+      for (final field in fields)
+        if (userJson.containsKey(field)) field: userJson[field],
+    };
+    final teacherExtraData = userJson['teacherExtraData'];
+    if (teacherExtraData is Map) {
+      data['teacherExtraData.subject'] = teacherExtraData['subject'];
+      data['teacherExtraData.workExperience'] =
+          teacherExtraData['workExperience'];
+    }
+    return data;
   }
 
   @override

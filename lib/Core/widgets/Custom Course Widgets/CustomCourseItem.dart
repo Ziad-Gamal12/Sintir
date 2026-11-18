@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseCardMetrics.dart';
+import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseItemBadge.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseItemDetails.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseItemImage.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomAddFavouriteIcon.dart';
@@ -17,63 +18,54 @@ class CustomCourseItem extends StatelessWidget {
     required this.courseItem,
   });
 
-  static const double _radius = 16;
-
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final borderRadius = BorderRadius.circular(_radius);
+    final borderRadius = BorderRadius.circular(CourseCardMetrics.radius);
 
     return MediaQuery.withClampedTextScaling(
       maxScaleFactor: CourseCardMetrics.maxTextScale,
       child: DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: borderRadius,
-          boxShadow: isDark
-              ? null
-              : [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: .07),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
+          boxShadow: CourseCardMetrics.shadow(context),
         ),
         child: Material(
-          color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+          color: CourseCardMetrics.surfaceColor(context),
           clipBehavior: Clip.antiAlias,
           shape: RoundedRectangleBorder(
             borderRadius: borderRadius,
-            side: BorderSide(
-              color: isDark
-                  ? Colors.white.withValues(alpha: .08)
-                  : Colors.black.withValues(alpha: .05),
-            ),
+            side: BorderSide(color: CourseCardMetrics.borderColor(context)),
           ),
           child: InkWell(
             onTap: ontap,
-            child: Stack(
-              fit: StackFit.expand,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AspectRatio(
-                      aspectRatio: CourseCardMetrics.imageAspectRatio,
-                      child: CourseItemImage(imageUrl: courseItem.posterUrl ?? ''),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: CourseCardMetrics.detailsPadding,
-                        child: CourseItemDetails(courseItem: courseItem),
+                AspectRatio(
+                  aspectRatio: CourseCardMetrics.imageAspectRatio,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      CourseItemImage(imageUrl: courseItem.posterUrl ?? ''),
+                      if (CourseItemBadge.isNew(courseItem))
+                        const PositionedDirectional(
+                          start: 8,
+                          bottom: 8,
+                          child: CourseItemBadge(),
+                        ),
+                      PositionedDirectional(
+                        top: 2,
+                        end: 2,
+                        child: CustomAddFavouriteIcon(courseEntity: courseItem),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-                PositionedDirectional(
-                  top: 6,
-                  end: 6,
-                  child: CustomAddFavouriteIcon(courseEntity: courseItem),
+                Expanded(
+                  child: Padding(
+                    padding: CourseCardMetrics.detailsPadding,
+                    child: CourseItemDetails(courseItem: courseItem),
+                  ),
                 ),
               ],
             ),

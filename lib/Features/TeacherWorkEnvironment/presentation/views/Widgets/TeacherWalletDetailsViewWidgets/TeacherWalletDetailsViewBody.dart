@@ -1,76 +1,45 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
-import 'package:sintir/Core/helper/GetUserData.dart';
-import 'package:sintir/Core/utils/Backend_EndPoints.dart';
-import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
-import 'package:sintir/Features/Auth/Data/models/UserModel.dart';
-import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWalletDetailsViewBodyBuilder.dart';
-import 'package:sintir/locale_keys.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/SharedWallet/teacher_live_wallet_builder.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWalletDetailsSection.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWalletTransactions/TeachersTransactionsListView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWalletDetailsViewWidgets/TeacherWalletTransactions/TeachersTransactionsListViewHeader.dart';
+import 'package:sintir/constant.dart';
 
-class TeacherWalletDetailsViewBody extends StatefulWidget {
-  const TeacherWalletDetailsViewBody({
-    super.key,
-  });
-  @override
-  State<TeacherWalletDetailsViewBody> createState() =>
-      _TeacherWalletDetailsViewBodyState();
-}
+/// Wallet details: the live wallet section on top, then transactions.
+///
+/// Only the wallet sliver listens to wallet updates; the transactions list
+/// has its own stream and is not rebuilt when the wallet changes.
+class TeacherWalletDetailsViewBody extends StatelessWidget {
+  const TeacherWalletDetailsViewBody({super.key, required this.teacherId});
 
-class _TeacherWalletDetailsViewBodyState
-    extends State<TeacherWalletDetailsViewBody> {
-  late Stream<DocumentSnapshot<Map<String, dynamic>>> walletStream;
-  String teacherId = getUserData().uid;
-  @override
-  void initState() {
-    super.initState();
-    walletStream = FirebaseFirestore.instance
-        .collection(BackendEndpoints.usersCollectionName)
-        .doc(teacherId)
-        .snapshots();
-  }
+  final String teacherId;
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final ColorScheme colorScheme = theme.colorScheme;
-    return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        stream: walletStream,
-        builder: (context, asyncSnapshot) {
-          if (asyncSnapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (asyncSnapshot.hasError) {
-            return Center(
-              child: CustomErrorWidget(
-                  errormessage: LocaleKeys.errorOccurredMessage),
-            );
-          }
-          if (!asyncSnapshot.hasData || !asyncSnapshot.data!.exists) {
-            return Center(
-              child: CustomErrorWidget(
-                  errormessage: LocaleKeys.walletNotFoundError),
-            );
-          }
-          final data = asyncSnapshot.data!.data();
-          if (data == null) {
-            return Center(
-              child: CustomErrorWidget(
-                  errormessage: LocaleKeys.walletDocumentEmptyError),
-            );
-          }
-          UserEntity user = UserModel.fromJson(data).toEntity();
-          final wallet = user.teacherExtraDataEntity?.wallet;
-          if (wallet == null) {
-            return Center(
-              child: CustomErrorWidget(
-                  errormessage: LocaleKeys.walletNotFoundError),
-            );
-          }
-          return TeacherWalletDetailsViewBodyBuilder(
-              wallet: wallet,
-              user: user,
-              colorScheme: colorScheme,
-              teacherId: teacherId);
-        });
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: KHorizontalPadding,
+        vertical: KVerticalPadding,
+      ),
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: TeacherLiveWalletBuilder(
+              builder: (context, wallet, staleNotice) =>
+                  TeacherWalletDetailsSection(
+                    wallet: wallet,
+                    staleNotice: staleNotice,
+                  ),
+            ),
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 20)),
+          SliverToBoxAdapter(child: TeachersTransactionsListViewHeader()),
+          TeachersTransactionsListView(teacherId: teacherId),
+          const SliverToBoxAdapter(child: SizedBox(height: 100)),
+        ],
+      ),
+    );
   }
 }

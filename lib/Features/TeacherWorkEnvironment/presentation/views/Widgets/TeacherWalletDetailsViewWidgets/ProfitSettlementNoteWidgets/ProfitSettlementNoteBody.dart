@@ -3,9 +3,7 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/locale_keys.dart';
 
 class ProfitSettlementNoteBody extends StatelessWidget {
-  const ProfitSettlementNoteBody({
-    super.key,
-  });
+  const ProfitSettlementNoteBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +14,15 @@ class ProfitSettlementNoteBody extends StatelessWidget {
       children: [
         Text(
           LocaleKeys.profitSettlementNoteTitle,
-          style: AppTextStyles(context)
-              .bold12
-              .copyWith(color: theme.textTheme.bodyLarge?.color),
+          style: AppTextStyles(
+            context,
+          ).bold12.copyWith(color: theme.textTheme.bodyLarge?.color),
         ),
         const SizedBox(height: 2),
-        Text(LocaleKeys.profitSettlementNoteDescription,
-            style: AppTextStyles(context).regular12),
+        Text(
+          LocaleKeys.profitSettlementNoteDescription,
+          style: AppTextStyles(context).regular12,
+        ),
       ],
     );
   }

@@ -13,12 +13,11 @@ abstract class Testitemrepo {
   Future<Either<Failure, void>> uploadTestQuestionsSolutionsImages({
     required List<CourseTestQuestionEntity> questions,
   });
-  Future<Either<Failure, void>> addTestResult(
-      {required TestResultEntity testResult,
-      required String courseId,
-      required String userUID,
-      required String sectionId,
-      required String sectionItemId});
+  Future<Either<Failure, TestResultEntity>> submitTestAttempt({
+    required String courseId,
+    required String sectionId,
+    required CourseTestEntity test,
+  });
   Future<Either<Failure, void>> updateTest({
     required CourseTestEntity test,
     required String courseId,

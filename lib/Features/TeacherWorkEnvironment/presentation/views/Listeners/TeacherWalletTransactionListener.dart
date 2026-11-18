@@ -8,9 +8,10 @@ class TeacherWalletTransactionListener {
 
   TeacherWalletTransactionListener({required this.transactionID});
 
-  void withDrawtTeacherBalanceListener(
-      {required BuildContext context,
-      required WithDrawTeacherBalanceState state}) {
+  void withDrawtTeacherBalanceListener({
+    required BuildContext context,
+    required WithDrawTeacherBalanceState state,
+  }) {
     if (state is ReconcileTransactionFailure &&
         state.transactionId == transactionID) {
       CustomSnackBar.show(

@@ -33,9 +33,10 @@ class ReportStatCardHorizontalContent extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: textTheme.bodyMedium?.copyWith(
-                      color: titleColor,
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600),
+                    color: titleColor,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 FittedBox(
@@ -44,10 +45,11 @@ class ReportStatCardHorizontalContent extends StatelessWidget {
                   child: Text(
                     '$count',
                     style: textTheme.headlineSmall?.copyWith(
-                        color: accent,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w800,
-                        height: 1.1),
+                      color: accent,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w800,
+                      height: 1.1,
+                    ),
                   ),
                 ),
               ],

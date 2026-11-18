@@ -8,21 +8,21 @@ const Color reportResolvedDark = Color(0xff47D7A3);
 
 extension ReportStatusUi on ReportStatus {
   String get label => switch (this) {
-        ReportStatus.open => LocaleKeys.reportOpen,
-        ReportStatus.resolved => LocaleKeys.reportResolved,
-        ReportStatus.dismissed => LocaleKeys.reportDismissed,
-      };
+    ReportStatus.open => LocaleKeys.reportOpen,
+    ReportStatus.resolved => LocaleKeys.reportResolved,
+    ReportStatus.dismissed => LocaleKeys.reportDismissed,
+  };
   IconData get icon => switch (this) {
-        ReportStatus.open => Icons.circle,
-        ReportStatus.resolved => Icons.check_circle_outline,
-        ReportStatus.dismissed => Icons.highlight_off,
-      };
+    ReportStatus.open => Icons.circle,
+    ReportStatus.resolved => Icons.check_circle_outline,
+    ReportStatus.dismissed => Icons.highlight_off,
+  };
   Color color(BuildContext context) => switch (this) {
-        ReportStatus.open => KSecondaryColor,
-        ReportStatus.resolved => Theme.of(context).brightness == Brightness.dark
-            ? reportResolvedDark
-            : reportResolvedLight,
-        ReportStatus.dismissed =>
-          Theme.of(context).colorScheme.onSurfaceVariant,
-      };
+    ReportStatus.open => KSecondaryColor,
+    ReportStatus.resolved =>
+      Theme.of(context).brightness == Brightness.dark
+          ? reportResolvedDark
+          : reportResolvedLight,
+    ReportStatus.dismissed => Theme.of(context).colorScheme.onSurfaceVariant,
+  };
 }

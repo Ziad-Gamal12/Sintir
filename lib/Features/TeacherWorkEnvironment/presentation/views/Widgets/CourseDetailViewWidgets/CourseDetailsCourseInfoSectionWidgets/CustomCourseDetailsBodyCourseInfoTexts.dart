@@ -21,23 +21,23 @@ class CustomCourseDetailsBodyCourseInfoTexts extends StatelessWidget {
       children: [
         Text(
           "${LocaleKeys.createdDate} (${courseEntity.postedDate})",
-          style: AppTextStyles(context)
-              .regular10
-              .copyWith(color: textColor.withValues(alpha: 0.7)),
+          style: AppTextStyles(
+            context,
+          ).regular10.copyWith(color: textColor.withValues(alpha: 0.7)),
         ),
         Text(
           " ${LocaleKeys.descriptionLabel}:",
-          style: AppTextStyles(context)
-              .semiBold12
-              .copyWith(color: textColor.withValues(alpha: 0.8)),
+          style: AppTextStyles(
+            context,
+          ).semiBold12.copyWith(color: textColor.withValues(alpha: 0.8)),
         ),
         Text(
           courseEntity.description,
           overflow: TextOverflow.ellipsis,
           maxLines: 6,
-          style: AppTextStyles(context)
-              .regular10
-              .copyWith(color: textColor.withValues(alpha: 0.7)),
+          style: AppTextStyles(
+            context,
+          ).regular10.copyWith(color: textColor.withValues(alpha: 0.7)),
         ),
       ],
     );

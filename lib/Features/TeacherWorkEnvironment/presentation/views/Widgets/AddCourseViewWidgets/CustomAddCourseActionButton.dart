@@ -10,7 +10,6 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manage
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 import 'package:uuid/uuid.dart';
-import 'package:uuid/v4.dart';
 
 class CustomAddCourseActionButton extends StatelessWidget {
   const CustomAddCourseActionButton({
@@ -97,6 +96,9 @@ class CustomAddCourseActionButton extends StatelessWidget {
       title: titleController.text.trim(),
       description: descriptionController.text.trim(),
       price: price,
+      feedBacksCount: 0,
+      lessonsCount: 0,
+      testsCount: 0,
       language: selectedLanguage!,
       postedDate: DateTime.now(),
     );

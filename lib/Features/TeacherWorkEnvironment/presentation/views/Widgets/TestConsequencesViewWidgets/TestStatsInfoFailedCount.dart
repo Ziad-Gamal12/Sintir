@@ -31,9 +31,9 @@ class _TestStatsInfoFailedCountState extends State<TestStatsInfoFailedCount> {
           return Expanded(
             child: Text(
               state.errMessage,
-              style: AppTextStyles(context)
-                  .regular14
-                  .copyWith(color: failureColor),
+              style: AppTextStyles(
+                context,
+              ).regular14.copyWith(color: failureColor),
             ),
           );
         }
@@ -41,30 +41,38 @@ class _TestStatsInfoFailedCountState extends State<TestStatsInfoFailedCount> {
           child: Skeletonizer(
             enabled: state is TestConsequencesGetFailedCountLoading,
             child: _buildStatColumn(
-                LocaleKeys.studentsFailed,
-                state is TestConsequencesGetFailedCountSuccess
-                    ? state.count.toString()
-                    : "0",
-                context,
-                color: failureColor),
+              LocaleKeys.studentsFailed,
+              state is TestConsequencesGetFailedCountSuccess
+                  ? state.count.toString()
+                  : "0",
+              context,
+              color: failureColor,
+            ),
           ),
         );
       },
     );
   }
 
-  Widget _buildStatColumn(String label, String value, BuildContext context,
-      {Color color = Colors.black}) {
+  Widget _buildStatColumn(
+    String label,
+    String value,
+    BuildContext context, {
+    Color color = Colors.black,
+  }) {
     final Color labelColor = Theme.of(context).textTheme.bodyLarge!.color!;
 
     return Column(
       children: [
-        Text(label,
-            style:
-                AppTextStyles(context).semiBold14.copyWith(color: labelColor)),
+        Text(
+          label,
+          style: AppTextStyles(context).semiBold14.copyWith(color: labelColor),
+        ),
         const SizedBox(height: 10),
-        Text(value,
-            style: AppTextStyles(context).bold14.copyWith(color: color)),
+        Text(
+          value,
+          style: AppTextStyles(context).bold14.copyWith(color: color),
+        ),
       ],
     );
   }

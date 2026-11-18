@@ -7,9 +7,10 @@ import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 part 'test_consequences_state.dart';
 
 class TestConsequencesCubit extends Cubit<TestConsequencesState> {
-  TestConsequencesCubit(
-      {required this.testRepo, required this.courseSubscibtionsRepo})
-      : super(TestConsequencesInitial());
+  TestConsequencesCubit({
+    required this.testRepo,
+    required this.courseSubscibtionsRepo,
+  }) : super(TestConsequencesInitial());
   final Testitemrepo testRepo;
   final CourseSubscibtionsRepo courseSubscibtionsRepo;
   Future<void> getHighestScore({
@@ -19,12 +20,20 @@ class TestConsequencesCubit extends Cubit<TestConsequencesState> {
   }) async {
     emit(TestConsequencesGetHighestScorLoading());
     final result = await testRepo.getHighestScore(
-        courseId: courseId, sectionId: sectionId, sectionItemId: testId);
-    result.fold((failure) {
-      emit(TestConsequencesGetHighestScorFailure(errMessage: failure.message));
-    }, (success) {
-      emit(TestConsequencesGetHighestScorSuccess(testResultEntity: success));
-    });
+      courseId: courseId,
+      sectionId: sectionId,
+      sectionItemId: testId,
+    );
+    result.fold(
+      (failure) {
+        emit(
+          TestConsequencesGetHighestScorFailure(errMessage: failure.message),
+        );
+      },
+      (success) {
+        emit(TestConsequencesGetHighestScorSuccess(testResultEntity: success));
+      },
+    );
   }
 
   Future<void> getLowestScore({
@@ -34,12 +43,18 @@ class TestConsequencesCubit extends Cubit<TestConsequencesState> {
   }) async {
     emit(TestConsequencesGetLowestScorLoading());
     final result = await testRepo.getLowestScore(
-        courseId: courseId, sectionId: sectionId, sectionItemId: testId);
-    result.fold((failure) {
-      emit(TestConsequencesGetLowestScorFailure(errMessage: failure.message));
-    }, (success) {
-      emit(TestConsequencesGetLowestScorSuccess(testResultEntity: success));
-    });
+      courseId: courseId,
+      sectionId: sectionId,
+      sectionItemId: testId,
+    );
+    result.fold(
+      (failure) {
+        emit(TestConsequencesGetLowestScorFailure(errMessage: failure.message));
+      },
+      (success) {
+        emit(TestConsequencesGetLowestScorSuccess(testResultEntity: success));
+      },
+    );
   }
 
   Future<void> getAttendedCount({
@@ -49,13 +64,20 @@ class TestConsequencesCubit extends Cubit<TestConsequencesState> {
   }) async {
     emit(TestConsequencesGetAttendedCountLoading());
     final result = await testRepo.getAttendedCount(
-        courseId: courseId, sectionId: sectionId, testId: testId);
-    result.fold((failure) {
-      emit(
-          TestConsequencesGetAttendedCountFailure(errMessage: failure.message));
-    }, (success) {
-      emit(TestConsequencesGetAttendedCountSuccess(count: success));
-    });
+      courseId: courseId,
+      sectionId: sectionId,
+      testId: testId,
+    );
+    result.fold(
+      (failure) {
+        emit(
+          TestConsequencesGetAttendedCountFailure(errMessage: failure.message),
+        );
+      },
+      (success) {
+        emit(TestConsequencesGetAttendedCountSuccess(count: success));
+      },
+    );
   }
 
   Future<void> getFailedStudentsCount({
@@ -65,12 +87,20 @@ class TestConsequencesCubit extends Cubit<TestConsequencesState> {
   }) async {
     emit(TestConsequencesGetFailedCountLoading());
     final result = await testRepo.getFailedStudentsCount(
-        courseId: courseId, sectionId: sectionId, testId: testId);
-    result.fold((failure) {
-      emit(TestConsequencesGetFailedCountFailure(errMessage: failure.message));
-    }, (success) {
-      emit(TestConsequencesGetFailedCountSuccess(count: success));
-    });
+      courseId: courseId,
+      sectionId: sectionId,
+      testId: testId,
+    );
+    result.fold(
+      (failure) {
+        emit(
+          TestConsequencesGetFailedCountFailure(errMessage: failure.message),
+        );
+      },
+      (success) {
+        emit(TestConsequencesGetFailedCountSuccess(count: success));
+      },
+    );
   }
 
   Future<void> getSuccessedStudentsCount({
@@ -80,26 +110,38 @@ class TestConsequencesCubit extends Cubit<TestConsequencesState> {
   }) async {
     emit(TestConsequencesGetSuccessedCountLoading());
     final result = await testRepo.getSuccessedStudentsCount(
-        courseId: courseId, sectionId: sectionId, testId: testId);
-    result.fold((failure) {
-      emit(TestConsequencesGetSuccessedCountFailure(
-          errMessage: failure.message));
-    }, (success) {
-      emit(TestConsequencesGetSuccessedCountSuccess(count: success));
-    });
+      courseId: courseId,
+      sectionId: sectionId,
+      testId: testId,
+    );
+    result.fold(
+      (failure) {
+        emit(
+          TestConsequencesGetSuccessedCountFailure(errMessage: failure.message),
+        );
+      },
+      (success) {
+        emit(TestConsequencesGetSuccessedCountSuccess(count: success));
+      },
+    );
   }
 
-  Future<void> getTotalStudentsCount({
-    required String courseId,
-  }) async {
+  Future<void> getTotalStudentsCount({required String courseId}) async {
     emit(TestConsequencesGetTotalStudentsCountLoading());
-    final result =
-        await courseSubscibtionsRepo.getSubscribersCount(courseID: courseId);
-    result.fold((failure) {
-      emit(TestConsequencesGetTotalStudentsCountFailure(
-          errMessage: failure.message));
-    }, (success) {
-      emit(TestConsequencesGetTotalStudentsCountSuccess(count: success));
-    });
+    final result = await courseSubscibtionsRepo.getSubscribersCount(
+      courseID: courseId,
+    );
+    result.fold(
+      (failure) {
+        emit(
+          TestConsequencesGetTotalStudentsCountFailure(
+            errMessage: failure.message,
+          ),
+        );
+      },
+      (success) {
+        emit(TestConsequencesGetTotalStudentsCountSuccess(count: success));
+      },
+    );
   }
 }

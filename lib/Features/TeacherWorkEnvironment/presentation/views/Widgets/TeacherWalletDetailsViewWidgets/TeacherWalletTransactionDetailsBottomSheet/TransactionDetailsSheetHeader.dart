@@ -31,11 +31,7 @@ class TransactionDetailsSheetHeader extends StatelessWidget {
                 shape: BoxShape.circle,
                 border: Border.all(color: theme.dividerTheme.color!),
               ),
-              child: Icon(
-                Icons.close,
-                size: 18,
-                color: theme.iconTheme.color,
-              ),
+              child: Icon(Icons.close, size: 18, color: theme.iconTheme.color),
             ),
           ),
         ),

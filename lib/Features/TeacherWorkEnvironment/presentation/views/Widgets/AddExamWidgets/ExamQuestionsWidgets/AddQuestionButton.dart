@@ -6,10 +6,7 @@ import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/locale_keys.dart';
 
 class AddQuestionButton extends StatelessWidget {
-  const AddQuestionButton({
-    super.key,
-    required this.coursetestentity,
-  });
+  const AddQuestionButton({super.key, required this.coursetestentity});
 
   final CourseTestEntity coursetestentity;
 
@@ -17,19 +14,17 @@ class AddQuestionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Divider(
-          color: Colors.grey.shade300,
-          height: 40,
-        ),
+        Divider(color: Colors.grey.shade300, height: 40),
         Custombutton(
-            text: LocaleKeys.addQuestion,
-            color: Colors.blue,
-            textColor: Colors.white,
-            onPressed: () {
-              context
-                  .read<TestItemCubit>()
-                  .addNewQuestion(coursetestentity: coursetestentity);
-            }),
+          text: LocaleKeys.addQuestion,
+          color: Colors.blue,
+          textColor: Colors.white,
+          onPressed: () {
+            context.read<TestItemCubit>().addNewQuestion(
+              coursetestentity: coursetestentity,
+            );
+          },
+        ),
         const SizedBox(height: 120),
       ],
     );

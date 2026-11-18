@@ -25,22 +25,22 @@ class ReportStatusFilterChips extends StatelessWidget {
           (
             status: null,
             label: LocaleKeys.reportFilterAll,
-            count: summary.total
+            count: summary.total,
           ),
           (
             status: ReportStatus.open,
             label: LocaleKeys.reportOpen,
-            count: summary.open
+            count: summary.open,
           ),
           (
             status: ReportStatus.resolved,
             label: LocaleKeys.reportResolved,
-            count: summary.resolved
+            count: summary.resolved,
           ),
           (
             status: ReportStatus.dismissed,
             label: LocaleKeys.reportDismissed,
-            count: summary.dismissed
+            count: summary.dismissed,
           ),
         ];
 

@@ -31,7 +31,11 @@ final class UpdateCourseStateLoading extends UpdateCourseState {}
 
 final class UpdateCourseStateSuccess extends UpdateCourseState {
   final CourseEntity courseEntity;
-  UpdateCourseStateSuccess({required this.courseEntity});
+  final bool resubmitted;
+  UpdateCourseStateSuccess({
+    required this.courseEntity,
+    this.resubmitted = false,
+  });
 }
 
 final class UpdateCourseStateFailure extends UpdateCourseState {

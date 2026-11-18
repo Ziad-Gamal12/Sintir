@@ -3,11 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Core/widgets/AppConfirmationSheet.dart';
+import 'package:sintir/constant.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/CoursedetailsviewOptionitemEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TeacherCourseState.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/course_detail_actions.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/course_detail_management_tile.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/course_detail_metadata.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/course_detail_poster.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/course_detail_state_notice.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/course_detail_summary.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/UpdateCourseCubit/Update_Course_Cubit.dart';
 import 'package:sintir/locale_keys.dart';
@@ -28,8 +32,10 @@ class _CourseDetailScreenBodyState extends State<CourseDetailScreenBody> {
       listener: _handleCourseUpdate,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final contentWidth =
-              constraints.maxWidth.clamp(0.0, 760.0).toDouble();
+          final contentWidth = constraints.maxWidth
+              .clamp(0.0, 760.0)
+              .toDouble();
+          final state = TeacherCourseState.fromRaw(widget.course.state);
           final managementItems = CoursedetailsviewOptionitemEntity.toList(
             context: context,
             course: widget.course,
@@ -44,6 +50,22 @@ class _CourseDetailScreenBodyState extends State<CourseDetailScreenBody> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     CourseDetailPoster(course: widget.course),
+                    if (CourseDetailStateNotice.showsFor(state)) ...[
+                      const SizedBox(height: 12),
+                      BlocSelector<UpdateCourseCubit, UpdateCourseState, bool>(
+                        selector: (s) => s is UpdateCourseStateLoading,
+                        builder: (context, resubmitting) =>
+                            CourseDetailStateNotice(
+                              state: state,
+                              declineReason: widget.course.declineReason,
+                              declinedAt: widget.course.declinedAt,
+                              resubmitting: resubmitting,
+                              onResubmit: state == TeacherCourseState.declined
+                                  ? () => _confirmResubmit(context)
+                                  : null,
+                            ),
+                      ),
+                    ],
                     const SizedBox(height: 16),
                     CourseDetailSummary(course: widget.course),
                     const SizedBox(height: 12),
@@ -69,12 +91,33 @@ class _CourseDetailScreenBodyState extends State<CourseDetailScreenBody> {
     );
   }
 
+  Future<void> _confirmResubmit(BuildContext context) async {
+    final cubit = context.read<UpdateCourseCubit>();
+    final confirmed = await AppConfirmationSheet.show(
+      context,
+      icon: Icons.send_rounded,
+      color: KMainColor,
+      title: LocaleKeys.courseResubmitTitle,
+      body: LocaleKeys.courseResubmitBody,
+      confirmLabel: LocaleKeys.courseResubmitButton,
+    );
+    if (!confirmed || !mounted) return;
+    await cubit.resubmitForReview(courseEntity: widget.course);
+  }
+
   void _handleCourseUpdate(BuildContext context, UpdateCourseState state) {
-    if (state is UpdateCourseStateSuccess) {
+    if (state is UpdateCourseSuccess) {
+      widget.course.state = UpdateCourseCubit.stateAfterEdit(
+        widget.course.state,
+      );
+      setState(() {});
+    } else if (state is UpdateCourseStateSuccess) {
       widget.course.state = state.courseEntity.state;
       CustomSnackBar.show(
         context,
-        message: LocaleKeys.operationSuccessful,
+        message: state.resubmitted
+            ? LocaleKeys.courseResubmitDone
+            : LocaleKeys.operationSuccessful,
         type: SnackType.success,
       );
       setState(() {});

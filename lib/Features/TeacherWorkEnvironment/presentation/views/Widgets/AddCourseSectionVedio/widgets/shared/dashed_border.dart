@@ -45,7 +45,11 @@ class _DashedBorderPainter extends CustomPainter {
       ..addRRect(RRect.fromRectAndRadius(rect, Radius.circular(radius)));
 
     for (final metric in path.computeMetrics()) {
-      for (var start = 0.0; start < metric.length; start += _dashLength + _gapLength) {
+      for (
+        var start = 0.0;
+        start < metric.length;
+        start += _dashLength + _gapLength
+      ) {
         final end = math.min(start + _dashLength, metric.length);
         canvas.drawPath(metric.extractPath(start, end), paint);
       }

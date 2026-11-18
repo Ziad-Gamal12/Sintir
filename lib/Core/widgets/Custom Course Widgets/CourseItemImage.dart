@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseCardMetrics.dart';
 import 'package:sintir/Core/widgets/CustomCachedNetworkImage.dart';
 
 class CourseItemImage extends StatelessWidget {
@@ -7,18 +8,19 @@ class CourseItemImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(12),
+    if (imageUrl.trim().isEmpty) {
+      return ColoredBox(
+        key: const ValueKey('course-image-placeholder'),
+        color: CourseCardMetrics.placeholderColor(context),
+        child: Center(
+          child: Icon(
+            Icons.image_outlined,
+            size: 28,
+            color: CourseCardMetrics.mutedColor(context),
+          ),
         ),
-        child: SizedBox(
-          width: double.infinity,
-          height: double.infinity,
-          child: CustomCachedNetworkImage(imageUrl: imageUrl),
-        ),
-      ),
-    );
+      );
+    }
+    return CustomCachedNetworkImage(imageUrl: imageUrl);
   }
 }

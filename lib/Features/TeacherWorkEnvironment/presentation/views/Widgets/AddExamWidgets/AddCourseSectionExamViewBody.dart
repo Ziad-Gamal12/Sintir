@@ -13,9 +13,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:uuid/uuid.dart';
 
 class AddCourseSectionExamViewBody extends StatefulWidget {
-  const AddCourseSectionExamViewBody({
-    super.key,
-  });
+  const AddCourseSectionExamViewBody({super.key});
 
   @override
   State<AddCourseSectionExamViewBody> createState() =>
@@ -41,12 +39,13 @@ class _AddCourseSectionExamViewBodyState
       id: "${DateTime.now().toIso8601String()}-Test",
       questions: [
         CourseTestQuestionEntity(
-            isOpened: false,
-            questionId: const Uuid().v4(),
-            questionTitle: "",
-            solutions: [
-              CourseTestQuestionSolutionEntity(answer: "", isCorrect: false)
-            ])
+          isOpened: false,
+          questionId: const Uuid().v4(),
+          questionTitle: "",
+          solutions: [
+            CourseTestQuestionSolutionEntity(answer: "", isCorrect: false),
+          ],
+        ),
       ],
       title: "",
       durationTime: 0,
@@ -75,7 +74,7 @@ class _AddCourseSectionExamViewBodyState
         children: [
           ValueListenableBuilder<int>(
             valueListenable: currentIndexNotifier,
-            builder: (_, index, __) => CustomAddExamStepsRow(
+            builder: (_, index, _) => CustomAddExamStepsRow(
               pageController: pageController,
               currentStep: index,
             ),
@@ -96,7 +95,7 @@ class _AddCourseSectionExamViewBodyState
                 ),
                 ValueListenableBuilder<int>(
                   valueListenable: currentIndexNotifier,
-                  builder: (_, index, __) => AddCourseSectionExamActionButtons(
+                  builder: (_, index, _) => AddCourseSectionExamActionButtons(
                     currentStep: index,
                     examDetailsFormKey: examDetailsFormKey,
                     questionsFormKey: questionsFormKey,

@@ -8,8 +8,10 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCou
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionViewWidgets/AddCourseSectionContentItem.dart';
 
 class AddCourseSectionItemContentOptions extends StatelessWidget {
-  const AddCourseSectionItemContentOptions(
-      {super.key, required this.optionRequirementsEntity});
+  const AddCourseSectionItemContentOptions({
+    super.key,
+    required this.optionRequirementsEntity,
+  });
   final OptionNavigationRequirementsEntity optionRequirementsEntity;
 
   @override
@@ -23,8 +25,10 @@ class AddCourseSectionItemContentOptions extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 if (e.key == 1) {
-                  GoRouter.of(context).push(AddcourseSectionExamview.routeName,
-                      extra: optionRequirementsEntity);
+                  GoRouter.of(context).push(
+                    AddcourseSectionExamview.routeName,
+                    extra: optionRequirementsEntity,
+                  );
                 } else if (e.key == 0) {
                   GoRouter.of(context).push(
                     Addcoursesectionvedioview.routeName,
@@ -37,9 +41,7 @@ class AddCourseSectionItemContentOptions extends StatelessWidget {
                   );
                 }
               },
-              child: AddCourseSectionContentItem(
-                item: e.value,
-              ),
+              child: AddCourseSectionContentItem(item: e.value),
             ),
           ),
         );

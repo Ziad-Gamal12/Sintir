@@ -5,42 +5,40 @@ class StudentStatItemIcon extends StatelessWidget {
     super.key,
     required this.icon,
     required this.backgroundColor,
+    this.size = 32,
   });
 
   final String icon;
   final Color backgroundColor;
+  final double size;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
+    final iconColor = isDark
+        ? Color.lerp(backgroundColor, Colors.white, 0.45)!
+        : backgroundColor;
+
     return Container(
-      width: 42,
-      height: 42,
+      width: size,
+      height: size,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            backgroundColor.withValues(alpha: 0.85),
-            isDark ? Colors.white10 : Colors.white.withValues(alpha: 0.4),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+        color: backgroundColor.withValues(alpha: isDark ? 0.16 : 0.10),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: backgroundColor.withValues(alpha: isDark ? 0.25 : 0.16),
+          width: 0.75,
         ),
-        borderRadius: BorderRadius.circular(14),
-        boxShadow: [
-          BoxShadow(
-            color: backgroundColor.withValues(alpha: isDark ? 0.2 : 0.35),
-            blurRadius: 25,
-            offset: const Offset(0, 12),
-          ),
-        ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Image.asset(
-          icon,
-          color: isDark ? Colors.white70 : Colors.black87,
-        ),
+      padding: const EdgeInsets.all(6),
+      child: Image.asset(
+        icon,
+        color: iconColor,
+        fit: BoxFit.contain,
+        errorBuilder: (_, _, _) =>
+            Icon(Icons.bar_chart_rounded, size: size * 0.55, color: iconColor),
       ),
     );
   }

@@ -11,10 +11,12 @@ class TeachersTransactionsListViewHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(LocaleKeys.recentTransactionsTitle,
-            style: AppTextStyles(context)
-                .bold16
-                .copyWith(color: theme.textTheme.bodyMedium?.color)),
+        Text(
+          LocaleKeys.recentTransactionsTitle,
+          style: AppTextStyles(
+            context,
+          ).bold16.copyWith(color: theme.textTheme.bodyMedium?.color),
+        ),
       ],
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/TeacherWorkEnvironmentTheme.dart';
 import 'package:sintir/constant.dart';
 
 class AppTheme {
@@ -17,6 +18,7 @@ class AppTheme {
       surface: Colors.white,
       onSurface: Colors.black,
     ),
+
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.white,
       elevation: 0,
@@ -46,6 +48,7 @@ class AppTheme {
       selectedItemColor: KMainColor,
       unselectedItemColor: Colors.grey,
     ),
+    extensions: const [WorkEnvironmentThemeExtension.light],
   );
 
   // -----------------------------
@@ -77,10 +80,7 @@ class AppTheme {
     cardColor: const Color(0xFF1E1E1E),
 
     // ICONS
-    iconTheme: const IconThemeData(
-      color: Colors.white70,
-      size: 22,
-    ),
+    iconTheme: const IconThemeData(color: Colors.white70, size: 22),
 
     // TEXTS
     textTheme: const TextTheme(
@@ -116,17 +116,13 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: KMainColor,
         foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         padding: const EdgeInsets.symmetric(vertical: 14),
       ),
     ),
 
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(
-        foregroundColor: KMainColor,
-      ),
+      style: TextButton.styleFrom(foregroundColor: KMainColor),
     ),
 
     // BOTTOM NAVIGATION
@@ -149,5 +145,6 @@ class AppTheme {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
     ),
+    extensions: const [WorkEnvironmentThemeExtension.dark],
   );
 }

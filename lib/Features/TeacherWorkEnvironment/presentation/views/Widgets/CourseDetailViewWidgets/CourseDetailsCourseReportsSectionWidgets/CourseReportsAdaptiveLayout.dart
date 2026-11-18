@@ -5,11 +5,12 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReportsSectionWidgets/utils/report_breakpoints.dart';
 
 class CourseReportsAdaptiveLayout extends StatelessWidget {
-  const CourseReportsAdaptiveLayout(
-      {super.key,
-      required this.courseId,
-      required this.width,
-      required this.state});
+  const CourseReportsAdaptiveLayout({
+    super.key,
+    required this.courseId,
+    required this.width,
+    required this.state,
+  });
   final String courseId;
   final double width;
   final CourseReportsState state;
@@ -18,11 +19,17 @@ class CourseReportsAdaptiveLayout extends StatelessWidget {
     final content = width < ReportBreakpoints.mobile
         ? CourseReportsMobileLayout(courseId: courseId, state: state)
         : CourseReportsTabletLayout(
-            courseId: courseId, width: width, state: state);
+            courseId: courseId,
+            width: width,
+            state: state,
+          );
     return Center(
-        child: ConstrainedBox(
-            constraints: const BoxConstraints(
-                maxWidth: ReportBreakpoints.maxContentWidth),
-            child: content));
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+          maxWidth: ReportBreakpoints.maxContentWidth,
+        ),
+        child: content,
+      ),
+    );
   }
 }

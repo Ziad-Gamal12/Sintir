@@ -6,8 +6,6 @@ sealed class VideoConsequencesState {}
 final class VideoConsequencesInitial extends VideoConsequencesState {}
 // getVideoNotes States
 
-
-
 // getVideo Attended Count States
 final class VideoConsequencesGetVideoAttendedCountLoading
     extends VideoConsequencesState {}

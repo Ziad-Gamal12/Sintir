@@ -5,69 +5,141 @@ import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Ent
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReportsSectionWidgets/ReportDismissConfirmDialog.dart';
 import 'package:sintir/locale_keys.dart';
 
-class ReportActionsBar extends StatelessWidget {
-  const ReportActionsBar(
-      {super.key,
-      required this.courseId,
-      required this.reportId,
-      required this.status,
-      this.vertical = false});
+class ReportActionsBar extends StatefulWidget {
+  const ReportActionsBar({
+    super.key,
+    required this.courseId,
+    required this.reportId,
+    required this.status,
+    this.vertical = false,
+  });
   final String courseId, reportId;
   final ReportStatus status;
   final bool vertical;
 
   @override
-  Widget build(BuildContext context) {
-    final cubit = context.read<CourseReportsCubit>();
-    final theme = Theme.of(context);
-    final resolved = FilledButton.icon(
-      onPressed: () => cubit.updateReportStatus(
-          courseId: courseId,
-          reportId: reportId,
-          newStatus: ReportStatus.resolved),
-      icon: const Icon(Icons.check_circle_outline),
-      label: Text(LocaleKeys.reportMarkResolved),
+  State<ReportActionsBar> createState() => _ReportActionsBarState();
+}
+
+class _ReportActionsBarState extends State<ReportActionsBar> {
+  static const double _height = 52;
+  ReportStatus? _pending; // الزرار اللي اتضغط، عشان الـspinner
+
+  void _update(ReportStatus status) {
+    _pending = status;
+    context.read<CourseReportsCubit>().updateReportStatus(
+      courseId: widget.courseId,
+      reportId: widget.reportId,
+      newStatus: status,
     );
-    final dismiss = OutlinedButton.icon(
-      onPressed: () async {
-        if (await ReportDismissConfirmDialog.confirm(context)) {
-          cubit.updateReportStatus(
-              courseId: courseId,
-              reportId: reportId,
-              newStatus: ReportStatus.dismissed);
-        }
-      },
-      icon: const Icon(Icons.block),
-      label: Text(LocaleKeys.reportDismissAction),
-      style: OutlinedButton.styleFrom(
-          foregroundColor: theme.colorScheme.error,
-          side: BorderSide(color: theme.colorScheme.error)),
+  }
+
+  Future<void> _dismiss() async {
+    final confirmed = await ReportDismissConfirmDialog.confirm(context);
+    if (confirmed && mounted) _update(ReportStatus.dismissed);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+    final neutral = OutlinedButton.styleFrom(
+      foregroundColor: scheme.onSurface.withValues(alpha: 0.87),
+      side: BorderSide(color: scheme.onSurface.withValues(alpha: 0.24)),
     );
 
-    if (status != ReportStatus.open) {
-      return SizedBox(
-        width: double.infinity,
-        height: 48,
-        child: FilledButton.icon(
-          onPressed: () => cubit.updateReportStatus(
-              courseId: courseId,
-              reportId: reportId,
-              newStatus: ReportStatus.open),
-          icon: const Icon(Icons.restart_alt),
-          label: Text(LocaleKeys.reportActionReopen),
-        ),
-      );
-    }
-    if (vertical) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(height: 56, child: resolved),
-          const SizedBox(height: 10),
-          SizedBox(height: 56, child: dismiss)
-        ],
-      );
-    }
-    return Wrap(spacing: 10, runSpacing: 8, children: [resolved, dismiss]);
+    return BlocBuilder<CourseReportsCubit, CourseReportsState>(
+      buildWhen: (_, s) =>
+          s is CourseReportsUpdateStatusLoading ||
+          s is CourseReportsUpdateStatusSuccess ||
+          s is CourseReportsUpdateStatusFailure,
+      builder: (context, state) {
+        final busy = state is CourseReportsUpdateStatusLoading;
+        Widget icon(IconData data, ReportStatus target) =>
+            busy && _pending == target ? const _ButtonSpinner() : Icon(data);
+
+        if (widget.status != ReportStatus.open) {
+          return SizedBox(
+            width: double.infinity,
+            height: _height,
+            child: OutlinedButton.icon(
+              onPressed: busy ? null : () => _update(ReportStatus.open),
+              icon: icon(Icons.restart_alt, ReportStatus.open),
+              label: Text(LocaleKeys.reportActionReopen),
+              style: neutral,
+            ),
+          );
+        }
+
+        final resolved = FilledButton.icon(
+          onPressed: busy ? null : () => _update(ReportStatus.resolved),
+          icon: icon(Icons.check_circle_outline, ReportStatus.resolved),
+          label: Text(
+            LocaleKeys.reportMarkResolved,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        );
+        final dismiss = OutlinedButton.icon(
+          onPressed: busy ? null : _dismiss,
+          icon: icon(Icons.block, ReportStatus.dismissed),
+          label: Text(
+            LocaleKeys.reportDismissAction,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          style: neutral,
+        );
+
+        if (!widget.vertical) {
+          return Wrap(
+            spacing: 10,
+            runSpacing: 8,
+            children: [resolved, dismiss],
+          );
+        }
+
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth >= 440) {
+              return Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: SizedBox(height: _height, child: resolved),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    flex: 2,
+                    child: SizedBox(height: _height, child: dismiss),
+                  ),
+                ],
+              );
+            }
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: _height, child: resolved),
+                const SizedBox(height: 10),
+                SizedBox(height: _height, child: dismiss),
+              ],
+            );
+          },
+        );
+      },
+    );
   }
+}
+
+class _ButtonSpinner extends StatelessWidget {
+  const _ButtonSpinner();
+
+  @override
+  Widget build(BuildContext context) => SizedBox.square(
+    dimension: 18,
+    child: CircularProgressIndicator(
+      strokeWidth: 2,
+      color: IconTheme.of(context).color,
+    ),
+  );
 }

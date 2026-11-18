@@ -20,11 +20,7 @@ class TransactionIssuerBadge extends StatelessWidget {
         color: issuerColor.withAlpha(30),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: SvgPicture.asset(
-        issuerSVG,
-        width: 22,
-        height: 22,
-      ),
+      child: SvgPicture.asset(issuerSVG, width: 22, height: 22),
     );
   }
 }

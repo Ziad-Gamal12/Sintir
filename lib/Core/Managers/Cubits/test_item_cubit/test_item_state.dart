@@ -40,7 +40,10 @@ final class AddTestResultFailure extends TestItemState {
   AddTestResultFailure({required this.errMessage});
 }
 
-final class AddTestResultSuccess extends TestItemState {}
+final class AddTestResultSuccess extends TestItemState {
+  final TestResultEntity? result;
+  AddTestResultSuccess({this.result});
+}
 
 final class JoinToTestItemFailure extends TestItemState {
   final String errMessage;

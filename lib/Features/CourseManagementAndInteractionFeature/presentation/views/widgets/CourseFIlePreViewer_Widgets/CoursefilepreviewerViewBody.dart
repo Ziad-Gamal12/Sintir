@@ -30,10 +30,34 @@ class _CoursefilepreviewerviewbodyState
   int totalPages = 0;
   int currentPage = 1;
   bool isLoading = true;
+  bool loadFailed = false;
 
   Future<void> loadPdf() async {
+    final navigation = context.read<Coursefileviewnavigationsrequirmentsentity>();
+    final urlResult = await context
+        .read<FileItemCubit>()
+        .fileItemRepo
+        .getFileUrl(
+          courseId: navigation.course.id,
+          sectionId: navigation.sectionId,
+          file: widget.file,
+        );
+    final url = urlResult.fold<String?>((failure) {
+      if (mounted) {
+        CustomSnackBar.show(
+          context,
+          message: failure.message,
+          type: SnackType.error,
+        );
+      }
+      return null;
+    }, (url) => url);
+    if (url == null) {
+      if (mounted) setState(() => loadFailed = true);
+      return;
+    }
     try {
-      final response = await http.get(Uri.parse(widget.file.fileUrl));
+      final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         Uint8List pdfData = response.bodyBytes;
 
@@ -51,12 +75,16 @@ class _CoursefilepreviewerviewbodyState
             message: LocaleKeys.fileNotFound,
             type: SnackType.error,
           );
+          setState(() => loadFailed = true);
         }
       }
     } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+          loadFailed = pdfControllerPinch == null;
+        });
+      }
     }
   }
 
@@ -96,7 +124,11 @@ class _CoursefilepreviewerviewbodyState
   @override
   Widget build(BuildContext context) {
     if (pdfControllerPinch == null) {
-      return const Center(child: CircularProgressIndicator());
+      return Center(
+        child: loadFailed
+            ? Text(LocaleKeys.fileNotFound, textAlign: TextAlign.center)
+            : const CircularProgressIndicator(),
+      );
     } else {
       return BlocConsumer<FileItemCubit, FileItemState>(
         listener: (context, state) {

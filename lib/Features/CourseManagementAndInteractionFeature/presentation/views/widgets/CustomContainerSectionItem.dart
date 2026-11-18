@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
 
-class Customcontainersectionitem extends StatelessWidget {
-  const Customcontainersectionitem({super.key, required this.child});
+class CustomContainerSectionItem extends StatelessWidget {
+  const CustomContainerSectionItem({
+    super.key,
+    required this.child,
+    this.onTap,
+  });
   final Widget child;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    bool isDark = theme.brightness == Brightness.dark;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      alignment: AlignmentDirectional.center,
+    final scheme = Theme.of(context).colorScheme;
+    return SizedBox(
       width: double.infinity,
-      decoration: BoxDecoration(
-        color: isDark ? Colors.grey.shade900 : Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(8),
+      child: Material(
+        color: scheme.onSurface.withValues(alpha: 0.05),
+        borderRadius: BorderRadius.circular(12),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsetsDirectional.only(start: 14, end: 4),
+            child: child,
+          ),
+        ),
       ),
-      child: child,
     );
   }
 }

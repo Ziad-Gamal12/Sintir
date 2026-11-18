@@ -19,15 +19,17 @@ class CourseReportsFilter {
   final ReportStatus? status;
   final ReportType? type;
   final ReportSortOrder sortOrder;
-  const CourseReportsFilter(
-      {this.status, this.type, this.sortOrder = ReportSortOrder.newestFirst});
+  const CourseReportsFilter({
+    this.status,
+    this.type,
+    this.sortOrder = ReportSortOrder.newestFirst,
+  });
 }
 
 class CourseReportsCubit extends Cubit<CourseReportsState> {
   CourseReportsCubit({required this.coursereportsrepo})
-      : updateStatusUseCase =
-            UpdateCourseReportStatusUseCase(coursereportsrepo),
-        super(const CourseReportsInitial());
+    : updateStatusUseCase = UpdateCourseReportStatusUseCase(coursereportsrepo),
+      super(const CourseReportsInitial());
 
   final CourseReportsRepo coursereportsrepo;
   final UpdateCourseReportStatusUseCase updateStatusUseCase;
@@ -51,13 +53,19 @@ class CourseReportsCubit extends Cubit<CourseReportsState> {
     final needle = _searchQuery.trim().toLowerCase();
     return needle.isEmpty
         ? reports
-        : List.unmodifiable(_reports.where(
-            (report) => report.description.toLowerCase().contains(needle)));
+        : List.unmodifiable(
+            _reports.where(
+              (report) => report.description.toLowerCase().contains(needle),
+            ),
+          );
   }
 
   CourseReportsSummaryEntity get summary => _summary;
   CourseReportsFilter get filter => CourseReportsFilter(
-      status: _statusFilter, type: _typeFilter, sortOrder: _sortOrder);
+    status: _statusFilter,
+    type: _typeFilter,
+    sortOrder: _sortOrder,
+  );
   ReportStatus? get statusFilter => _statusFilter;
   ReportType? get typeFilter => _typeFilter;
   ReportSortOrder get sortOrder => _sortOrder;
@@ -79,7 +87,9 @@ class CourseReportsCubit extends Cubit<CourseReportsState> {
     _hasMore = false;
     _searchQuery = '';
     await _fetchFirstPage(
-        normalize: !_normalizedCourseIds.contains(courseId), loadTitle: true);
+      normalize: !_normalizedCourseIds.contains(courseId),
+      loadTitle: true,
+    );
   }
 
   Future<void> addCourseReport({
@@ -87,8 +97,9 @@ class CourseReportsCubit extends Cubit<CourseReportsState> {
   }) async {
     if (isClosed) return;
     emit(const CourseReportsAddReportLoading());
-    final result =
-        await coursereportsrepo.addCourseReport(report: reportEntity);
+    final result = await coursereportsrepo.addCourseReport(
+      report: reportEntity,
+    );
     if (isClosed) return;
     result.fold(
       (failure) =>
@@ -97,8 +108,10 @@ class CourseReportsCubit extends Cubit<CourseReportsState> {
     );
   }
 
-  Future<void> getCourseReports(
-      {required String courseId, required bool isPaginate}) async {
+  Future<void> getCourseReports({
+    required String courseId,
+    required bool isPaginate,
+  }) async {
     this.courseId = courseId;
     if (isPaginate) {
       await loadMore();
@@ -109,10 +122,11 @@ class CourseReportsCubit extends Cubit<CourseReportsState> {
 
   Future<void> refresh() => _fetchFirstPage();
 
-  Future<void> applyFilters(
-      {ReportStatus? status,
-      ReportType? type,
-      ReportSortOrder? sortOrder}) async {
+  Future<void> applyFilters({
+    ReportStatus? status,
+    ReportType? type,
+    ReportSortOrder? sortOrder,
+  }) async {
     _statusFilter = status;
     _typeFilter = type;
     if (sortOrder != null) _sortOrder = sortOrder;
@@ -136,8 +150,10 @@ class CourseReportsCubit extends Cubit<CourseReportsState> {
     _emitViewChange();
   }
 
-  Future<void> _fetchFirstPage(
-      {bool normalize = false, bool loadTitle = false}) async {
+  Future<void> _fetchFirstPage({
+    bool normalize = false,
+    bool loadTitle = false,
+  }) async {
     _requestVersion++;
     if (_fetching) {
       _reloadPending = true;
@@ -153,28 +169,32 @@ class CourseReportsCubit extends Cubit<CourseReportsState> {
         if (isClosed) return;
         _normalizedCourseIds.add(courseId);
       }
-      final summaryFuture =
-          coursereportsrepo.getCourseReportsSummary(courseId: courseId);
+      final summaryFuture = coursereportsrepo.getCourseReportsSummary(
+        courseId: courseId,
+      );
       final reportsFuture = coursereportsrepo.getCourseReports(
-          courseId: courseId,
-          isPaginate: false,
-          status: _statusFilter,
-          type: _typeFilter,
-          sortOrder: _sortOrder);
+        courseId: courseId,
+        isPaginate: false,
+        status: _statusFilter,
+        type: _typeFilter,
+        sortOrder: _sortOrder,
+      );
       final titleFuture = loadTitle
           ? coursereportsrepo.getCourseTitle(courseId: courseId)
           : null;
-      await Future.wait<Object>(
-          [summaryFuture, reportsFuture, if (titleFuture != null) titleFuture]);
+      await Future.wait<Object>([summaryFuture, reportsFuture, ?titleFuture]);
       if (isClosed || version != _requestVersion) return;
       final Either<Failure, CourseReportsSummaryEntity> summaryResult =
           await summaryFuture;
       final Either<Failure, GetCourseReportsResponseEntity> reportsResult =
           await reportsFuture;
-      summaryResult.fold((failure) => _emitFailure(failure.message),
-          (value) => _summary = value);
-      reportsResult.fold((failure) => _emitFailure(failure.message),
-          (response) {
+      summaryResult.fold(
+        (failure) => _emitFailure(failure.message),
+        (value) => _summary = value,
+      );
+      reportsResult.fold((failure) => _emitFailure(failure.message), (
+        response,
+      ) {
         _reports = response.reports;
         _hasMore = response.hasMore;
       });
@@ -202,17 +222,18 @@ class CourseReportsCubit extends Cubit<CourseReportsState> {
     emit(CourseReportsGetReportLoading(isPaginate: true, reports: reports));
     try {
       final result = await coursereportsrepo.getCourseReports(
-          courseId: courseId,
-          isPaginate: true,
-          status: _statusFilter,
-          type: _typeFilter,
-          sortOrder: _sortOrder);
+        courseId: courseId,
+        isPaginate: true,
+        status: _statusFilter,
+        type: _typeFilter,
+        sortOrder: _sortOrder,
+      );
       if (isClosed || version != _requestVersion) return;
       result.fold((failure) => _emitFailure(failure.message), (response) {
         final knownIds = _reports.map((report) => report.id).toSet();
         _reports = [
           ..._reports,
-          ...response.reports.where((report) => knownIds.add(report.id))
+          ...response.reports.where((report) => knownIds.add(report.id)),
         ];
         _hasMore = response.hasMore;
         _emitLoaded(isPaginate: true, pageReports: response.reports);
@@ -228,57 +249,79 @@ class CourseReportsCubit extends Cubit<CourseReportsState> {
     }
   }
 
-  Future<void> updateReportStatus(
-      {required String courseId,
-      required String reportId,
-      required ReportStatus newStatus}) async {
+  Future<void> updateReportStatus({
+    required String courseId,
+    required String reportId,
+    required ReportStatus newStatus,
+  }) async {
     emit(CourseReportsUpdateStatusLoading());
     final current = reportById(reportId);
     if (current == null || current.status == newStatus) return;
     final previousReports = _reports;
     final previousSummary = _summary;
     _reports = _reports
-        .map((report) => report.id == reportId
-            ? report.copyWith(
-                status: newStatus,
-                resolvedAt:
-                    newStatus == ReportStatus.open ? null : DateTime.now(),
-                clearResolvedAt: newStatus == ReportStatus.open,
-              )
-            : report)
+        .map(
+          (report) => report.id == reportId
+              ? report.copyWith(
+                  status: newStatus,
+                  resolvedAt: newStatus == ReportStatus.open
+                      ? null
+                      : DateTime.now(),
+                  clearResolvedAt: newStatus == ReportStatus.open,
+                )
+              : report,
+        )
         .where(
-            (report) => _statusFilter == null || report.status == _statusFilter)
+          (report) => _statusFilter == null || report.status == _statusFilter,
+        )
         .toList();
     _summary = _summary.moved(current.status, newStatus);
     _emitLoaded(isPaginate: false);
     final result = await updateStatusUseCase(
-        courseId: courseId, reportId: reportId, status: newStatus);
+      courseId: courseId,
+      reportId: reportId,
+      status: newStatus,
+    );
     if (isClosed) return;
-    result.fold((failure) {
-      _reports = previousReports;
-      _summary = previousSummary;
-      emit(CourseReportsUpdateStatusFailure(
-          errMessage: failure.message, reports: reports));
-    },
-        (_) => emit(CourseReportsUpdateStatusSuccess(
-            reports: reports, summary: summary)));
+    result.fold(
+      (failure) {
+        _reports = previousReports;
+        _summary = previousSummary;
+        emit(
+          CourseReportsUpdateStatusFailure(
+            errMessage: failure.message,
+            reports: reports,
+          ),
+        );
+      },
+      (_) => emit(
+        CourseReportsUpdateStatusSuccess(reports: reports, summary: summary),
+      ),
+    );
   }
 
-  void _emitLoaded(
-      {required bool isPaginate, List<CourseReportsItemEntity>? pageReports}) {
+  void _emitLoaded({
+    required bool isPaginate,
+    List<CourseReportsItemEntity>? pageReports,
+  }) {
     final response = GetCourseReportsResponseEntity(
-        reports: pageReports ?? reports,
-        hasMore: _hasMore,
-        isPaginate: isPaginate);
-    emit(CourseReportsGetReportSuccess(
+      reports: pageReports ?? reports,
+      hasMore: _hasMore,
+      isPaginate: isPaginate,
+    );
+    emit(
+      CourseReportsGetReportSuccess(
         response: response,
         reports: reports,
         summary: summary,
-        courseTitle: courseTitle));
+        courseTitle: courseTitle,
+      ),
+    );
   }
 
   void _emitFailure(String message) => emit(
-      CourseReportsGetReportFailure(errMessage: message, reports: reports));
+    CourseReportsGetReportFailure(errMessage: message, reports: reports),
+  );
   void _emitViewChange() {
     if (state is CourseReportsGetReportSuccess) _emitLoaded(isPaginate: false);
   }

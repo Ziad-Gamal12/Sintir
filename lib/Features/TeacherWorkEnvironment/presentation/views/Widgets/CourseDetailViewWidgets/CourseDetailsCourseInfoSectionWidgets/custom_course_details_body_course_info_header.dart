@@ -24,9 +24,9 @@ class CustomCourseDetailsBodyCourseInfoHeader extends StatelessWidget {
             child: Text(
               courseEntity.title,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyles(context)
-                  .semiBold20
-                  .copyWith(color: theme.textTheme.bodyLarge?.color),
+              style: AppTextStyles(
+                context,
+              ).semiBold20.copyWith(color: theme.textTheme.bodyLarge?.color),
             ),
           ),
         ),
@@ -39,10 +39,7 @@ class CustomCourseDetailsBodyCourseInfoHeader extends StatelessWidget {
               context: context,
             );
           },
-          icon: Icon(
-            Icons.edit,
-            color: theme.iconTheme.color,
-          ),
+          icon: Icon(Icons.edit, color: theme.iconTheme.color),
         ),
       ],
     );

@@ -1,7 +1,7 @@
 // CustomSubscriberMetaInfoCard.dart
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Core/widgets/results/results_tokens.dart';
+import 'package:sintir/Features/MyResults/Presentation/Views/Widgets/results/results_tokens.dart';
 
 class CustomSubscriberMetaInfoCard extends StatelessWidget {
   const CustomSubscriberMetaInfoCard({
@@ -46,27 +46,30 @@ class CustomSubscriberMetaInfoCard extends StatelessWidget {
           constraints: const BoxConstraints(minHeight: 44),
           child: Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(8, 8, 12, 8),
-            child: Row(children: [
-              _MetaIconBadge(icon: icon, color: badgeColor),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: Directionality(
-                    textDirection: textDirection ?? Directionality.of(context),
-                    child: Text(
-                      text,
-                      maxLines: maxLines,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles(context).medium12.copyWith(
-                        color: textColor,
-                        fontFeatures: const [FontFeature.tabularFigures()],
+            child: Row(
+              children: [
+                _MetaIconBadge(icon: icon, color: badgeColor),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Directionality(
+                      textDirection:
+                          textDirection ?? Directionality.of(context),
+                      child: Text(
+                        text,
+                        maxLines: maxLines,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles(context).medium12.copyWith(
+                          color: textColor,
+                          fontFeatures: const [FontFeature.tabularFigures()],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ]),
+              ],
+            ),
           ),
         ),
       ),
@@ -81,12 +84,12 @@ class _MetaIconBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        width: 28,
-        height: 28,
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: .14),
-          borderRadius: BorderRadius.circular(9),
-        ),
-        child: Icon(icon, size: 16, color: color),
-      );
+    width: 28,
+    height: 28,
+    decoration: BoxDecoration(
+      color: color.withValues(alpha: .14),
+      borderRadius: BorderRadius.circular(9),
+    ),
+    child: Icon(icon, size: 16, color: color),
+  );
 }

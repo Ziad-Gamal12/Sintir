@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-// Core
 import 'package:sintir/Core/Managers/Cubits/course_checkout_cubit/course_checkout_cubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Core/widgets/CustomCourseHorizontalItem/CustomCourseHorizintalItem.dart';
+import 'package:sintir/Core/utils/course_price_formatter.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebView.dart';
-import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobWebViewRequirmentsEntity.dart';
-import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobResponse.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/CourseCheckoutEntity.dart';
-// Features
-import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/SubscribtionViewBodyActionButton.dart';
-import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/SubscribtionViewBodyCouponTextField.dart';
-import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/SubscribtionViewBodyCourseDetailsTitle.dart';
-import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/SubscribtionViewBodyDiscountDetailsSection.dart';
+import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobResponse.dart';
+import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobWebViewRequirmentsEntity.dart';
+import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/CheckoutBottomBar.dart';
+import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/CheckoutCouponSection.dart';
+import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/CheckoutCourseSummaryCard.dart';
+import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/CheckoutIncludesSection.dart';
+import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/CheckoutPriceBreakdown.dart';
 import 'package:sintir/Features/Subscribtion/Presentation/View/Widgets/ExistingCheckoutDialog.dart';
-// Constants
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -35,88 +32,130 @@ class SubscribtionViewBody extends StatefulWidget {
 }
 
 class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
-  String? couponCode;
-  int? quoteAmountCents;
-  double discountPercent = 0;
+  CourseCheckoutQuote? _quote;
+  bool _quoting = false;
+  String? _couponError;
+
+  CourseEntity get _course => widget.requirmentsEntity.course;
+
+  void _applyCoupon(String code) {
+    setState(() {
+      _quoting = true;
+      _couponError = null;
+    });
+    context.read<CourseCheckoutCubit>().quote(_course.id, couponCode: code);
+  }
+
+  void _removeCoupon() {
+    setState(() {
+      _quote = null;
+      _couponError = null;
+    });
+  }
+
+  void _subscribe() {
+    context.read<CourseCheckoutCubit>().createPayment(
+          _course.id,
+          couponCode: _quote?.couponCode,
+        );
+  }
+
+  void _onCheckoutState(BuildContext context, CourseCheckoutState state) {
+    if (state is CourseCheckoutCreated) {
+      _openAttempt(context, _course, state.attempt);
+    } else if (state is CourseCheckoutQuoteReady) {
+      setState(() {
+        _quoting = false;
+        _couponError = null;
+        _quote = state.quote.couponCode == null ? null : state.quote;
+      });
+    } else if (state is CourseCheckoutFailure) {
+      if (_quoting) {
+        setState(() {
+          _quoting = false;
+          _quote = null;
+          _couponError = state.message;
+        });
+      } else {
+        CustomSnackBar.show(
+          context,
+          message: state.message,
+          type: SnackType.error,
+        );
+      }
+    } else if (state is CourseCheckoutRecoveryRequired) {
+      setState(() => _quoting = false);
+      CustomSnackBar.show(context, message: state.message, type: SnackType.info);
+    } else if (state is CourseCheckoutReviewRequired) {
+      setState(() => _quoting = false);
+      CustomSnackBar.show(
+        context,
+        message: state.message,
+        type: SnackType.warning,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final course = widget.requirmentsEntity.course;
+    final course = _course;
+    final locale = Localizations.localeOf(context).languageCode;
+    final quote = _quote;
+    final originalCents = quote?.originalAmountCents ?? course.price * 100;
+    final discountCents = quote?.discountAmountCents ?? 0;
+    final totalCents = quote?.amountCents ?? course.price * 100;
+    final hasDiscount = discountCents > 0;
 
-    final double payableAmount = (quoteAmountCents ?? course.price * 100) / 100;
-
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<CourseCheckoutCubit, CourseCheckoutState>(
-          listener: (context, state) {
-            if (state is CourseCheckoutCreated) {
-              _openAttempt(context, course, state.attempt);
-            } else if (state is CourseCheckoutQuoteReady) {
-              setState(() {
-                quoteAmountCents = state.quote.amountCents;
-                discountPercent = state.quote.discountPercentage;
-                couponCode = state.quote.couponCode;
-              });
-            } else if (state is CourseCheckoutFailure) {
-              setState(() {
-                quoteAmountCents = null;
-                discountPercent = 0;
-                couponCode = null;
-              });
-              CustomSnackBar.show(context,
-                  message: state.message, type: SnackType.error);
-            } else if (state is CourseCheckoutRecoveryRequired) {
-              CustomSnackBar.show(context,
-                  message: state.message, type: SnackType.info);
-            } else if (state is CourseCheckoutReviewRequired) {
-              CustomSnackBar.show(context,
-                  message: state.message, type: SnackType.warning);
-            }
-          },
-        ),
-      ],
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: KHorizontalPadding,
-          vertical: KVerticalPadding,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SubscribtionViewBodyCourseDetailsTitle(),
-            const SizedBox(height: 20),
-            AspectRatio(
-              aspectRatio: 16 / 10,
-              child: CustomCourseHorizontalItem(
-                course: course,
+    return BlocListener<CourseCheckoutCubit, CourseCheckoutState>(
+      listener: _onCheckoutState,
+      child: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(
+                KHorizontalPadding,
+                8,
+                KHorizontalPadding,
+                24,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  CheckoutCourseSummaryCard(course: course),
+                  const SizedBox(height: 24),
+                  CheckoutIncludesSection(course: course),
+                  const SizedBox(height: 16),
+                  CheckoutCouponSection(
+                    appliedCode: quote?.couponCode,
+                    discountPercent: quote?.discountPercentage ?? 0,
+                    isApplying: _quoting,
+                    errorText: _couponError,
+                    onApply: _applyCoupon,
+                    onRemove: _removeCoupon,
+                  ),
+                  if (hasDiscount) ...[
+                    const SizedBox(height: 16),
+                    CheckoutPriceBreakdown(
+                      originalCents: originalCents,
+                      discountCents: discountCents,
+                      totalCents: totalCents,
+                    ),
+                  ],
+                ],
               ),
             ),
-            Divider(
-              color: Colors.grey.shade200,
-              thickness: 2,
-              height: 40,
-            ),
-            Text(
-              LocaleKeys.discountedPrice,
-              style: AppTextStyles(context).semiBold20,
-            ),
-            const SizedBox(height: 20),
-            SubscribtionViewBodyCouponTextFieldSection(
-              courseID: course.id,
-            ),
-            const SizedBox(height: 20),
-            PremiumSubscriptionPriceSection(
-              originalPrice: course.price,
-              discountPercent: discountPercent,
-              payableAmount: payableAmount,
-            ),
-            const Spacer(),
-            SubscribtionViewBodyActionButton(
-              courseID: course.id,
-              couponCode: couponCode,
-            ),
-          ],
-        ),
+          ),
+          CheckoutBottomBar(
+            totalText: totalCents <= 0
+                ? LocaleKeys.free
+                : CoursePriceFormatter.fromCents(totalCents, locale),
+            originalText: hasDiscount
+                ? CoursePriceFormatter.fromCents(originalCents, locale)
+                : null,
+            isQuoting: _quoting,
+            onPressed: _subscribe,
+          ),
+        ],
       ),
     );
   }

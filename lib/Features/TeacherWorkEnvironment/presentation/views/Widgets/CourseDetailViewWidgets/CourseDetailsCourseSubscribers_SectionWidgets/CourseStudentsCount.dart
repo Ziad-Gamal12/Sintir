@@ -19,23 +19,22 @@ class CourseStudentsCount extends StatelessWidget {
           height: 8,
           decoration: BoxDecoration(shape: BoxShape.circle, color: accentColor),
         ),
-        SizedBox(
-          width: 6,
-        ),
+        SizedBox(width: 6),
         RichText(
           text: TextSpan(
             style: AppTextStyles(context).regular16,
             children: [
               TextSpan(
-                  text: LocaleKeys.subscribersCount,
-                  style: AppTextStyles(context)
-                      .regular16
-                      .copyWith(color: primaryTextColor)),
+                text: LocaleKeys.subscribersCount,
+                style: AppTextStyles(
+                  context,
+                ).regular16.copyWith(color: primaryTextColor),
+              ),
               TextSpan(
                 text: " $count ",
-                style: AppTextStyles(context).semiBold16.copyWith(
-                      color: primaryTextColor,
-                    ),
+                style: AppTextStyles(
+                  context,
+                ).semiBold16.copyWith(color: primaryTextColor),
               ),
             ],
           ),

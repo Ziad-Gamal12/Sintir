@@ -52,54 +52,67 @@ class _AddCourseSectionExamActionButtonsState
     OptionNavigationRequirementsEntity optionnavigationrequirementsentity =
         Provider.of<OptionNavigationRequirementsEntity>(context);
     return Positioned(
-        bottom: 20,
-        right: 16,
-        left: 16,
-        child: BlocBuilder<TestItemCubit, TestItemState>(
-            builder: (context, state) {
+      bottom: 20,
+      right: 16,
+      left: 16,
+      child: BlocBuilder<TestItemCubit, TestItemState>(
+        builder: (context, state) {
           return Custom_Loading_Widget(
-            isLoading: state is AddTestItemLoading ||
+            isLoading:
+                state is AddTestItemLoading ||
                 state is QuestionsImagesUploadedingLoading ||
                 state is QuestionsSolutionsImagesUploadedingLoading,
             child: Custombutton(
-                text: currentIndex == 2 ? LocaleKeys.addExam : LocaleKeys.save,
-                color: KSecondaryColor,
-                textColor: Colors.white,
-                onPressed: () {
-                  actions(optionnavigationrequirementsentity,
-                      widget.courseTestEntity, currentIndex, context);
-                }),
+              text: currentIndex == 2 ? LocaleKeys.addExam : LocaleKeys.save,
+              color: KSecondaryColor,
+              textColor: Colors.white,
+              onPressed: () {
+                actions(
+                  optionnavigationrequirementsentity,
+                  widget.courseTestEntity,
+                  currentIndex,
+                  context,
+                );
+              },
+            ),
           );
-        }));
+        },
+      ),
+    );
   }
 
   void actions(
-      OptionNavigationRequirementsEntity optionnavigationrequirementsentity,
-      CourseTestEntity courseTestEntity,
-      int index,
-      BuildContext context) {
+    OptionNavigationRequirementsEntity optionnavigationrequirementsentity,
+    CourseTestEntity courseTestEntity,
+    int index,
+    BuildContext context,
+  ) {
     if (index == 0) {
       if (widget.examDetailsFormKey.currentState != null) {
         if (widget.examDetailsFormKey.currentState!.validate()) {
           widget.examDetailsFormKey.currentState!.save();
-          widget.pageController.animateToPage(1,
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeInOut);
+          widget.pageController.animateToPage(
+            1,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+          );
         }
       }
     } else if (widget.currentStep == 1) {
       if (widget.questionsFormKey.currentState != null) {
         if (widget.questionsFormKey.currentState!.validate()) {
           widget.questionsFormKey.currentState!.save();
-          widget.pageController.animateToPage(2,
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeInOut);
+          widget.pageController.animateToPage(
+            2,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+          );
         }
       }
     } else if (widget.currentStep == 2) {
       context.read<TestItemCubit>().uploadTestQuestionsImages(
-            test: courseTestEntity,
-          );
+        test: courseTestEntity,
+      );
     }
   }
 }

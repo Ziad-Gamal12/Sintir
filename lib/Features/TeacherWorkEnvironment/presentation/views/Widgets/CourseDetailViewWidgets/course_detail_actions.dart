@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TeacherCourseState.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseInfoSectionWidgets/CustomCourseDetails_EditeCoureInfoWidget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/course_archive_confirmation_sheet.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/course_edit_review_confirmation_sheet.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/UpdateCourseCubit/Update_Course_Cubit.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -15,17 +18,34 @@ class CourseDetailActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isArchived = course.state == BackendEndpoints.courseDeletedState;
+    final state = TeacherCourseState.fromRaw(course.state);
+    final isArchived = state.canRestore;
 
     return _ActionsLayout(
       isArchived: isArchived,
+      showArchive: state.canArchive || state.canRestore,
       onEdit: () => _openEditSheet(context),
       onArchiveOrRestore: () =>
           isArchived ? _restoreCourse(context) : _confirmArchive(context),
     );
   }
 
-  void _openEditSheet(BuildContext context) {
+  Future<void> _openEditSheet(BuildContext context) async {
+    final state = TeacherCourseState.fromRaw(course.state);
+    if (state == TeacherCourseState.hiddenByAdmin ||
+        state == TeacherCourseState.removedByAdmin) {
+      CustomSnackBar.show(
+        context,
+        message: LocaleKeys.courseEditBlockedByAdmin,
+        type: SnackType.error,
+      );
+      return;
+    }
+    if (state == TeacherCourseState.published ||
+        state == TeacherCourseState.archived) {
+      final confirmed = await CourseEditReviewConfirmationSheet.show(context);
+      if (!confirmed || !context.mounted) return;
+    }
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -51,14 +71,17 @@ class CourseDetailActions extends StatelessWidget {
 
   void _updateCourseState(BuildContext context, String nextState) {
     context.read<UpdateCourseCubit>().updateCourseState(
-          courseEntity: _copyCourseWithState(nextState),
-        );
+      courseEntity: _copyCourseWithState(nextState),
+    );
   }
 
   CourseEntity _copyCourseWithState(String state) {
     return CourseEntity(
       id: course.id,
       state: state,
+      feedBacksCount: course.feedBacksCount,
+      lessonsCount: course.lessonsCount,
+      testsCount: course.testsCount,
       posterUrl: course.posterUrl,
       studentsCount: course.studentsCount,
       subject: course.subject,
@@ -76,11 +99,13 @@ class CourseDetailActions extends StatelessWidget {
 class _ActionsLayout extends StatelessWidget {
   const _ActionsLayout({
     required this.isArchived,
+    required this.showArchive,
     required this.onEdit,
     required this.onArchiveOrRestore,
   });
 
   final bool isArchived;
+  final bool showArchive;
   final VoidCallback onEdit;
   final VoidCallback onArchiveOrRestore;
 
@@ -109,40 +134,42 @@ class _ActionsLayout extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 8),
-        SizedBox(
-          width: double.infinity,
-          child: BlocSelector<UpdateCourseCubit, UpdateCourseState, bool>(
-            selector: (state) => state is UpdateCourseStateLoading,
-            builder: (context, isStateUpdateLoading) => OutlinedButton.icon(
-              style: OutlinedButton.styleFrom(
-                side: BorderSide.none,
-                foregroundColor: isArchived ? Colors.green : colors.error,
-              ),
-              onPressed: isStateUpdateLoading ? null : onArchiveOrRestore,
-              icon: isStateUpdateLoading
-                  ? SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: isArchived ? Colors.green : colors.error,
+        if (showArchive) ...[
+          const SizedBox(height: 8),
+          SizedBox(
+            width: double.infinity,
+            child: BlocSelector<UpdateCourseCubit, UpdateCourseState, bool>(
+              selector: (state) => state is UpdateCourseStateLoading,
+              builder: (context, isStateUpdateLoading) => OutlinedButton.icon(
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide.none,
+                  foregroundColor: isArchived ? Colors.green : colors.error,
+                ),
+                onPressed: isStateUpdateLoading ? null : onArchiveOrRestore,
+                icon: isStateUpdateLoading
+                    ? SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: isArchived ? Colors.green : colors.error,
+                        ),
+                      )
+                    : Icon(
+                        isArchived
+                            ? Icons.unarchive_outlined
+                            : Icons.archive_outlined,
                       ),
-                    )
-                  : Icon(
-                      isArchived
-                          ? Icons.unarchive_outlined
-                          : Icons.archive_outlined,
-                    ),
-              label: Text(
-                isArchived
-                    ? LocaleKeys.restoreCourse
-                    : LocaleKeys.archiveCourse,
-                style: textStyles.semiBold14,
+                label: Text(
+                  isArchived
+                      ? LocaleKeys.restoreCourse
+                      : LocaleKeys.archiveCourse,
+                  style: textStyles.semiBold14,
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ],
     );
   }

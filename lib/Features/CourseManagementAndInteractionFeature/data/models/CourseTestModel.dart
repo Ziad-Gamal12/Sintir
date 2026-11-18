@@ -57,6 +57,35 @@ class Coursetestmodel {
     );
   }
 
+  Map<String, dynamic> toPublicJson() => {
+        ...toJson(),
+        "questions": questions.map(_publicQuestion).toList(),
+        "questionsCount": questions.length,
+      };
+
+  Map<String, dynamic> toAnswerKeyJson() => {
+        "testId": id,
+        "questions": questions,
+        "updatedAt": DateTime.now(),
+      };
+
+  static Map<String, dynamic> _publicQuestion(Map<String, dynamic> question) {
+    final solutions = question["solutions"];
+    return {
+      "questionTitle": question["questionTitle"],
+      "questionId": question["questionId"],
+      "imageUrl": question["imageUrl"],
+      "isOpened": false,
+      "selectedSolution": "",
+      "solutions": solutions is List
+          ? solutions
+              .whereType<Map>()
+              .map((solution) => {"answer": solution["answer"]})
+              .toList()
+          : const [],
+    };
+  }
+
   Map<String, dynamic> toJson() => {
         "durationTime": durationTime,
         "title": title,

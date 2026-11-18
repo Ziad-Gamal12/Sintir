@@ -3,8 +3,11 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/locale_keys.dart';
 
 class CourseCouponGridViewItemExpiry extends StatelessWidget {
-  const CourseCouponGridViewItemExpiry(
-      {super.key, required this.expirationDate, required this.hasReachedLimit});
+  const CourseCouponGridViewItemExpiry({
+    super.key,
+    required this.expirationDate,
+    required this.hasReachedLimit,
+  });
   final DateTime expirationDate;
   final bool hasReachedLimit;
   @override
@@ -21,15 +24,14 @@ class CourseCouponGridViewItemExpiry extends StatelessWidget {
               : Color(0xff8E909F),
           size: 16,
         ),
-        SizedBox(
-          width: 6,
-        ),
+        SizedBox(width: 6),
         Text(
           "${LocaleKeys.expiresIn}: ${expirationDate.day} / ${expirationDate.month} / ${expirationDate.year}",
           style: AppTextStyles(context).regular14.copyWith(
-              color: hasReachedLimit
-                  ? primaryTextColor.withAlpha(60)
-                  : primaryTextColor),
+            color: hasReachedLimit
+                ? primaryTextColor.withAlpha(60)
+                : primaryTextColor,
+          ),
           overflow: TextOverflow.ellipsis,
         ),
       ],

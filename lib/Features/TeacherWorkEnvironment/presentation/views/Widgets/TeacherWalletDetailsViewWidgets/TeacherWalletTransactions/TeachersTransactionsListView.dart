@@ -52,7 +52,8 @@ class _TeachersTransactionsListViewState
           return SliverFillRemaining(
             hasScrollBody: false,
             child: CustomErrorWidget(
-                errormessage: LocaleKeys.errorOccurredMessage),
+              errormessage: LocaleKeys.errorOccurredMessage,
+            ),
           );
         }
 
@@ -87,8 +88,9 @@ class _TeachersTransactionsListViewState
                 child: TeachersTransactionsListViewItem(
                   transactionRequirements:
                       TeacherWalletTransactionItemRequirements(
-                          transaction: transactions[index],
-                          teacherId: widget.teacherId),
+                        transaction: transactions[index],
+                        teacherId: widget.teacherId,
+                      ),
                 ),
               );
             },
@@ -97,8 +99,9 @@ class _TeachersTransactionsListViewState
 
         return SliverFillRemaining(
           hasScrollBody: false,
-          child:
-              CustomErrorWidget(errormessage: LocaleKeys.errorOccurredMessage),
+          child: CustomErrorWidget(
+            errormessage: LocaleKeys.errorOccurredMessage,
+          ),
         );
       },
     );

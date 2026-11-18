@@ -13,26 +13,30 @@ class TestResultEntity {
   final String courseId;
   final String sectionId;
   final String testId;
+  final String testName;
   final String courseSubject;
-  TestResultEntity(
-      {required this.serialNumber,
-      required this.joinedDate,
-      required this.totalQuestions,
-      required this.isPassed,
-      required this.solvedQuestions,
-      required this.sectionId,
-      required this.testId,
-      required this.joinedbyentity,
-      required this.courseId,
-      required this.courseSubject,
-      required this.result,
-      required this.questionsSolvedListEntity});
+  TestResultEntity({
+    required this.serialNumber,
+    required this.joinedDate,
+    required this.totalQuestions,
+    required this.isPassed,
+    required this.solvedQuestions,
+    required this.sectionId,
+    required this.testId,
+    required this.testName,
+    required this.joinedbyentity,
+    required this.courseId,
+    required this.courseSubject,
+    required this.result,
+    required this.questionsSolvedListEntity,
+  });
   static TestResultEntity empty() {
     return TestResultEntity(
       serialNumber: "123456789",
       joinedDate: DateTime.now(),
       sectionId: "00000",
       testId: "00000",
+      testName: "Test Name",
       courseSubject: "",
       totalQuestions: 0,
       courseId: "00000",

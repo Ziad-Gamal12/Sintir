@@ -12,7 +12,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/WithDrawalTe
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/WithDrawTeacherBalanceCubit/WithDrawTeacherBalanceCubit.dart';
 
 class _FakeWithdrawalRepo implements WithDrawalTeacherBalanceRepo {
-  _FakeWithdrawalRepo({this.createResult, this.reconcileResult});
+  _FakeWithdrawalRepo({this.reconcileResult}) : createResult = null;
 
   final Either<Failure, TeacherWithdrawalResultEntity>? createResult;
   final Either<Failure, TeacherWithdrawalResultEntity>? reconcileResult;
@@ -67,27 +67,30 @@ void main() {
       expect(first.idempotencyKey, isNot(second.idempotencyKey));
     });
 
-    test('timeout retry reuses the persisted key and exact request details', () {
-      final first = WithdrawalRequestSnapshot.resolve(
-        saved: null,
-        proposedKey: firstKey,
-        amount: 125,
-        issuer: 'orange',
-        mobileNumber: '01212345678',
-      );
-      final retry = WithdrawalRequestSnapshot.resolve(
-        saved: first.encode(),
-        proposedKey: secondKey,
-        amount: 125,
-        issuer: 'orange',
-        mobileNumber: '01212345678',
-      );
+    test(
+      'timeout retry reuses the persisted key and exact request details',
+      () {
+        final first = WithdrawalRequestSnapshot.resolve(
+          saved: null,
+          proposedKey: firstKey,
+          amount: 125,
+          issuer: 'orange',
+          mobileNumber: '01212345678',
+        );
+        final retry = WithdrawalRequestSnapshot.resolve(
+          saved: first.encode(),
+          proposedKey: secondKey,
+          amount: 125,
+          issuer: 'orange',
+          mobileNumber: '01212345678',
+        );
 
-      expect(retry.idempotencyKey, firstKey);
-      expect(retry.amount, 125);
-      expect(retry.issuer, 'orange');
-      expect(retry.mobileNumber, '01212345678');
-    });
+        expect(retry.idempotencyKey, firstKey);
+        expect(retry.amount, 125);
+        expect(retry.issuer, 'orange');
+        expect(retry.mobileNumber, '01212345678');
+      },
+    );
 
     test('completed withdrawal releases its snapshot for a new request', () {
       expect(withdrawalRequestIsResolved('SUCCESS'), isTrue);
@@ -173,42 +176,51 @@ void main() {
   });
 
   group('WithDrawTeacherBalanceCubit', () {
-    test('ignores a second withdrawal submit while the first is in flight', () async {
-      final repo = _FakeWithdrawalRepo()
-        ..createCompleter =
-            Completer<Either<Failure, TeacherWithdrawalResultEntity>>();
-      final cubit = WithDrawTeacherBalanceCubit(withdrawalRepo: repo);
+    test(
+      'ignores a second withdrawal submit while the first is in flight',
+      () async {
+        final repo = _FakeWithdrawalRepo()
+          ..createCompleter =
+              Completer<Either<Failure, TeacherWithdrawalResultEntity>>();
+        final cubit = WithDrawTeacherBalanceCubit(withdrawalRepo: repo);
 
-      final first = cubit.requestWithdrawal(
-        amount: 100,
-        issuer: 'vodafone',
-        mobileNumber: '01012345678',
-        idempotencyKey: 'first-key',
-      );
-      await cubit.requestWithdrawal(
-        amount: 100,
-        issuer: 'vodafone',
-        mobileNumber: '01012345678',
-        idempotencyKey: 'second-key',
-      );
+        final first = cubit.requestWithdrawal(
+          amount: 100,
+          issuer: 'vodafone',
+          mobileNumber: '01012345678',
+          idempotencyKey: 'first-key',
+        );
+        await cubit.requestWithdrawal(
+          amount: 100,
+          issuer: 'vodafone',
+          mobileNumber: '01012345678',
+          idempotencyKey: 'second-key',
+        );
 
-      expect(repo.createCalls, 1);
-      expect(repo.idempotencyKeys, ['first-key']);
-      repo.createCompleter!.complete(right(const TeacherWithdrawalResultEntity(
-        withdrawalId: 'withdrawal-id',
-        status: 'PENDING',
-      )));
-      await first;
-      await cubit.close();
-    });
+        expect(repo.createCalls, 1);
+        expect(repo.idempotencyKeys, ['first-key']);
+        repo.createCompleter!.complete(
+          right(
+            const TeacherWithdrawalResultEntity(
+              withdrawalId: 'withdrawal-id',
+              status: 'PENDING',
+            ),
+          ),
+        );
+        await first;
+        await cubit.close();
+      },
+    );
 
     test('emits a successful reconciliation result', () async {
       final repo = _FakeWithdrawalRepo(
-        reconcileResult: right(const TeacherWithdrawalResultEntity(
-          withdrawalId: 'withdrawal-id',
-          status: 'FAILED',
-          message: 'Balance restored.',
-        )),
+        reconcileResult: right(
+          const TeacherWithdrawalResultEntity(
+            withdrawalId: 'withdrawal-id',
+            status: 'FAILED',
+            message: 'Balance restored.',
+          ),
+        ),
       );
       final cubit = WithDrawTeacherBalanceCubit(withdrawalRepo: repo);
 
@@ -219,16 +231,18 @@ void main() {
       await cubit.close();
     });
 
-    test('rejects an empty reconciliation ID without calling the backend',
-        () async {
-      final repo = _FakeWithdrawalRepo();
-      final cubit = WithDrawTeacherBalanceCubit(withdrawalRepo: repo);
+    test(
+      'rejects an empty reconciliation ID without calling the backend',
+      () async {
+        final repo = _FakeWithdrawalRepo();
+        final cubit = WithDrawTeacherBalanceCubit(withdrawalRepo: repo);
 
-      await cubit.reconcileWithdrawal(withdrawalId: '   ');
+        await cubit.reconcileWithdrawal(withdrawalId: '   ');
 
-      expect(repo.reconcileCalls, 0);
-      expect(cubit.state, isA<ReconcileTransactionFailure>());
-      await cubit.close();
-    });
+        expect(repo.reconcileCalls, 0);
+        expect(cubit.state, isA<ReconcileTransactionFailure>());
+        await cubit.close();
+      },
+    );
   });
 }

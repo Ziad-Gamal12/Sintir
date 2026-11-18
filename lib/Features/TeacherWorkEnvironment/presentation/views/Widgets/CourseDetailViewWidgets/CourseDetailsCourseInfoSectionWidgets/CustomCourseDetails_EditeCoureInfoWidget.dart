@@ -24,56 +24,52 @@ class EditCourseInfoSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<UpdateCourseCubit, UpdateCourseState>(
-        listener: (context, state) {
-          if (state is UpdateCourseSuccess) {
-            GoRouter.of(context).pop();
-            CustomSnackBar.show(
-              context,
-              message: LocaleKeys.operationSuccessful,
-              type: SnackType.success,
-            );
-          } else if (state is UpdateCourseFailure) {
-            CustomSnackBar.show(
-              context,
-              message: state.errmessage,
-              type: SnackType.error,
-            );
-          } else if (state is UpdateCourseCubitAssetPicked) {
-            coursePoster = state.file;
-          } else if (state is UpdateCourseCubitAssetFailure) {
-            CustomSnackBar.show(
-              context,
-              message: state.errmessage,
-              type: SnackType.error,
-            );
-          }
-        },
-        child: Provider.value(
-          value: course,
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Form(
-              key: formKey,
-              child: Column(
-                children: [
-                  const EditCourseInfoSectionHeader(),
-                  const SizedBox(height: 20),
-                  const EditCourseTitleField(),
-                  const SizedBox(height: 10),
-                  const EditCourseDescriptionField(),
-                  const SizedBox(height: 20),
-                  EditCoursePoster(
-                    coursePosterUrl: course.posterUrl ?? "",
-                  ),
-                  const SizedBox(height: 40),
-                  EditCourseSaveButton(
-                    formKey: formKey,
-                    course: course,
-                  ),
-                ],
-              ),
+      listener: (context, state) {
+        if (state is UpdateCourseSuccess) {
+          GoRouter.of(context).pop();
+          CustomSnackBar.show(
+            context,
+            message: LocaleKeys.operationSuccessful,
+            type: SnackType.success,
+          );
+        } else if (state is UpdateCourseFailure) {
+          CustomSnackBar.show(
+            context,
+            message: state.errmessage,
+            type: SnackType.error,
+          );
+        } else if (state is UpdateCourseCubitAssetPicked) {
+          coursePoster = state.file;
+        } else if (state is UpdateCourseCubitAssetFailure) {
+          CustomSnackBar.show(
+            context,
+            message: state.errmessage,
+            type: SnackType.error,
+          );
+        }
+      },
+      child: Provider.value(
+        value: course,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            key: formKey,
+            child: Column(
+              children: [
+                const EditCourseInfoSectionHeader(),
+                const SizedBox(height: 20),
+                const EditCourseTitleField(),
+                const SizedBox(height: 10),
+                const EditCourseDescriptionField(),
+                const SizedBox(height: 20),
+                EditCoursePoster(coursePosterUrl: course.posterUrl ?? ""),
+                const SizedBox(height: 40),
+                EditCourseSaveButton(formKey: formKey, course: course),
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

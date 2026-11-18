@@ -25,9 +25,8 @@ class VideoConsequencesView extends StatelessWidget {
           ),
         ),
         BlocProvider(
-          create: (context) => GetVideoNotesCubit(
-            videoItemRepo: getIt<VideoItemRepo>(),
-          ),
+          create: (context) =>
+              GetVideoNotesCubit(videoItemRepo: getIt<VideoItemRepo>()),
         ),
       ],
       child: Scaffold(

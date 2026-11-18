@@ -9,14 +9,15 @@ import 'package:sintir/locale_keys.dart';
 import 'package:uuid/uuid.dart';
 
 class WithDrawBalanceActionButton extends StatelessWidget {
-  const WithDrawBalanceActionButton(
-      {super.key,
-      required this.formKey,
-      required this.amountController,
-      required this.phoneController,
-      required this.issuer,
-      required this.isConditionAccepted,
-      required this.walletEntity});
+  const WithDrawBalanceActionButton({
+    super.key,
+    required this.formKey,
+    required this.amountController,
+    required this.phoneController,
+    required this.issuer,
+    required this.isConditionAccepted,
+    required this.walletEntity,
+  });
   final GlobalKey<FormState> formKey;
   final TextEditingController amountController;
   final TextEditingController phoneController;
@@ -26,22 +27,28 @@ class WithDrawBalanceActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    final enabled = isConditionAccepted &&
+    final enabled =
+        isConditionAccepted &&
         walletEntity.status == BackendEndpoints.walletActive;
     final loading = context.select<WithDrawTeacherBalanceCubit, bool>(
-        (c) => c.state is WithDrawBalanceLoading);
+      (c) => c.state is WithDrawBalanceLoading,
+    );
     return Custombutton(
-        text: LocaleKeys.sendMoney,
-        color: enabled ? colors.primary : Colors.blue.shade100,
-        textColor: Colors.white,
-        onPressed: enabled && !loading ? () => _submit(context) : () {},
-        child: loading
-            ? const SizedBox(
-                width: 22,
-                height: 22,
-                child: CircularProgressIndicator(
-                    strokeWidth: 2, color: Colors.white))
-            : null);
+      text: LocaleKeys.sendMoney,
+      color: enabled ? colors.primary : Colors.blue.shade100,
+      textColor: Colors.white,
+      onPressed: enabled && !loading ? () => _submit(context) : () {},
+      child: loading
+          ? const SizedBox(
+              width: 22,
+              height: 22,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: Colors.white,
+              ),
+            )
+          : null,
+    );
   }
 
   void _submit(BuildContext context) {
@@ -61,10 +68,11 @@ class WithDrawBalanceActionButton extends StatelessWidget {
       return;
     }
     context.read<WithDrawTeacherBalanceCubit>().requestWithdrawal(
-        amount: amount,
-        issuer: issuer,
-        mobileNumber: phoneController.text.trim(),
-        idempotencyKey: const Uuid().v4());
+      amount: amount,
+      issuer: issuer,
+      mobileNumber: phoneController.text.trim(),
+      idempotencyKey: const Uuid().v4(),
+    );
   }
 
   bool _matchesIssuer(String phone) {

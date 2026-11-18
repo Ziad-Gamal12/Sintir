@@ -21,8 +21,6 @@ class CourseVideoItemEntity {
   String? muxPlaybackId;
   String? status;
 
-  /// Source dimensions returned by Mux/your processing pipeline.
-  /// These are optional because older Firestore records may not contain them.
   int? sourceWidth;
   int? sourceHeight;
 
@@ -34,10 +32,9 @@ class CourseVideoItemEntity {
     required CourseVideoViewNavigationsRequirmentsEntity requires,
     required CourseEntity course,
   }) {
-    GoRouter.of(context).push(
-      Displaycoursevedioveiw.routeName,
-      extra: requires,
-    );
+    GoRouter.of(
+      context,
+    ).push(Displaycoursevedioveiw.routeName, extra: requires);
   }
 
   CourseVideoItemEntity({

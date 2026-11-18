@@ -6,8 +6,10 @@ import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class VideoStateInfoVideoAbsentWidget extends StatefulWidget {
-  const VideoStateInfoVideoAbsentWidget(
-      {super.key, required this.videoAbsentCount});
+  const VideoStateInfoVideoAbsentWidget({
+    super.key,
+    required this.videoAbsentCount,
+  });
   final int videoAbsentCount;
   @override
   State<VideoStateInfoVideoAbsentWidget> createState() =>
@@ -32,11 +34,15 @@ class _VideoStateInfoVideoAbsentWidgetState
       },
       builder: (context, state) {
         return Skeletonizer(
-          enabled: state is VideoConsequencesGetVideoAttendedCountLoading ||
+          enabled:
+              state is VideoConsequencesGetVideoAttendedCountLoading ||
               state is VideoConsequencesGetTotalStudentsCountLoading,
-          child: _buildStatColumn(LocaleKeys.studentsAbsent,
-              getVideoAbsentCount(state: state, context: context), context,
-              color: errorColor),
+          child: _buildStatColumn(
+            LocaleKeys.studentsAbsent,
+            getVideoAbsentCount(state: state, context: context),
+            context,
+            color: errorColor,
+          ),
         );
       },
     );
@@ -52,29 +58,32 @@ class _VideoStateInfoVideoAbsentWidgetState
       return state.errMessage;
     } else {
       return widget.videoAbsentCount.clamp(0, double.infinity).toString();
-      
     }
   }
 
-  Widget _buildStatColumn(String label, String value, BuildContext context,
-      {Color color = Colors.black}) {
+  Widget _buildStatColumn(
+    String label,
+    String value,
+    BuildContext context, {
+    Color color = Colors.black,
+  }) {
     final ThemeData theme = Theme.of(context);
     final Color labelColor = theme.textTheme.bodyLarge!.color!;
     final Color errorColor = theme.colorScheme.error;
 
-    final String? failureMessage1 = (context
-            .read<VideoConsequencesCubit>()
-            .state is VideoConsequencesGetVideoAttendedCountFailure)
+    final String? failureMessage1 =
+        (context.read<VideoConsequencesCubit>().state
+            is VideoConsequencesGetVideoAttendedCountFailure)
         ? (context.read<VideoConsequencesCubit>().state
-                as VideoConsequencesGetVideoAttendedCountFailure)
-            .errMessage
+                  as VideoConsequencesGetVideoAttendedCountFailure)
+              .errMessage
         : null;
-    final String? failureMessage2 = (context
-            .read<VideoConsequencesCubit>()
-            .state is VideoConsequencesGetTotalStudentsCountFailure)
+    final String? failureMessage2 =
+        (context.read<VideoConsequencesCubit>().state
+            is VideoConsequencesGetTotalStudentsCountFailure)
         ? (context.read<VideoConsequencesCubit>().state
-                as VideoConsequencesGetTotalStudentsCountFailure)
-            .errMessage
+                  as VideoConsequencesGetTotalStudentsCountFailure)
+              .errMessage
         : null;
 
     final bool isError = value == failureMessage1 || value == failureMessage2;
@@ -83,12 +92,15 @@ class _VideoStateInfoVideoAbsentWidgetState
 
     return Column(
       children: [
-        Text(label,
-            style:
-                AppTextStyles(context).semiBold14.copyWith(color: labelColor)),
+        Text(
+          label,
+          style: AppTextStyles(context).semiBold14.copyWith(color: labelColor),
+        ),
         const SizedBox(height: 10),
-        Text(value,
-            style: AppTextStyles(context).bold14.copyWith(color: valueColor)),
+        Text(
+          value,
+          style: AppTextStyles(context).bold14.copyWith(color: valueColor),
+        ),
       ],
     );
   }

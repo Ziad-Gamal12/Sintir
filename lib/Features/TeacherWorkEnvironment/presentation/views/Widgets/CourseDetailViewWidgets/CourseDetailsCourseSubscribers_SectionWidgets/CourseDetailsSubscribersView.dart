@@ -18,14 +18,13 @@ class CourseDetailsSubscribersView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CourseSubscribtionsCubit(
-          paymobRepo: getIt<PaymobRepo>(),
-          course: courseEntity,
-          subscribtionRepo: getIt<CourseSubscibtionsRepo>()),
+        paymobRepo: getIt<PaymobRepo>(),
+        course: courseEntity,
+        subscribtionRepo: getIt<CourseSubscibtionsRepo>(),
+      ),
       child: Scaffold(
         appBar: CustomAppBar(appBartitle: LocaleKeys.students),
-        body: CourseDetailsSubscribersViewBody(
-          courseEntity: courseEntity,
-        ),
+        body: CourseDetailsSubscribersViewBody(courseEntity: courseEntity),
       ),
     );
   }

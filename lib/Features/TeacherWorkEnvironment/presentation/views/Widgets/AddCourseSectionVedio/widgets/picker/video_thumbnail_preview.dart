@@ -84,9 +84,9 @@ class _ReadyChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         child: Text(
           LocaleKeys.videoReadyToUpload,
-          style: AppTextStyles(context)
-              .semiBold11
-              .copyWith(color: colors.onTertiaryContainer),
+          style: AppTextStyles(
+            context,
+          ).semiBold11.copyWith(color: colors.onTertiaryContainer),
         ),
       ),
     );
@@ -134,9 +134,9 @@ class _DurationBadge extends StatelessWidget {
             child: Text(
               formatDuration(preview.duration),
               textDirection: TextDirection.ltr,
-              style: AppTextStyles(context)
-                  .regular11
-                  .copyWith(color: colors.onInverseSurface),
+              style: AppTextStyles(
+                context,
+              ).regular11.copyWith(color: colors.onInverseSurface),
             ),
           ),
         );

@@ -21,38 +21,51 @@ class CourseDetailManagementTile extends StatelessWidget {
       _ => Icons.flag_outlined,
     };
     return Material(
-        color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: .55),
+      color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: .55),
+      borderRadius: BorderRadius.circular(16),
+      child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(16),
-          onTap: item.onTap,
-          child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-              child: Row(children: [
-                CircleAvatar(
-                    backgroundColor:
-                        theme.colorScheme.primary.withValues(alpha: .13),
-                    foregroundColor: theme.colorScheme.primary,
-                    child: Icon(icon)),
-                const SizedBox(width: 10),
-                Expanded(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                      Text(item.title,
-                          style: textStyles.semiBold16.copyWith(
-                              color: theme.textTheme.titleMedium?.color)),
-                      Text(item.description,
-                          textAlign: TextAlign.start,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: textStyles.regular12.copyWith(
-                              color: theme.textTheme.bodySmall?.color)),
-                    ])),
-                const SizedBox(width: 12),
-                Icon(Icons.chevron_left,
-                    color: theme.textTheme.bodySmall?.color),
-              ])),
-        ));
+        onTap: item.onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          child: Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: theme.colorScheme.primary.withValues(
+                  alpha: .13,
+                ),
+                foregroundColor: theme.colorScheme.primary,
+                child: Icon(icon),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.title,
+                      style: textStyles.semiBold16.copyWith(
+                        color: theme.textTheme.titleMedium?.color,
+                      ),
+                    ),
+                    Text(
+                      item.description,
+                      textAlign: TextAlign.start,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: textStyles.regular12.copyWith(
+                        color: theme.textTheme.bodySmall?.color,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 12),
+              Icon(Icons.chevron_left, color: theme.textTheme.bodySmall?.color),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
