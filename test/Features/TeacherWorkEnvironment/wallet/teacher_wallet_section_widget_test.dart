@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sintir/Core/Themes/app_theme.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/SharedWallet/teacher_wallet_card.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/TeacherWorkEnvironmentWalletSection.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkspace/TeacherWorkspaceWalletSection.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/SharedWallet/states/teacher_wallet_error_card.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/SharedWallet/states/teacher_wallet_retry_button.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/SharedWallet/states/teacher_wallet_skeleton.dart';
