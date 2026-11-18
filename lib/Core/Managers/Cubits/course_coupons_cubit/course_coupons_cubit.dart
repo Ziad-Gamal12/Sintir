@@ -32,6 +32,10 @@ class CourseCouponsCubit extends Cubit<CourseCouponsState> {
         (success) => emit(AddCourseCouponSuccess()));
   }
 
+  void showAddedCoupon(CourseCouponEntity coupon) {
+    emit(CourseCouponAddedLocally(coupon: coupon));
+  }
+
   Future<void> useCoupon(
       {required CourseCouponEntity coupon, required String courseID}) async {
     emit(UseCouponLoading());

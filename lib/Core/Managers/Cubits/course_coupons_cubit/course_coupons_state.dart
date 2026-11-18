@@ -25,6 +25,11 @@ final class AddCourseCouponLoading extends CourseCouponsState {}
 
 final class AddCourseCouponSuccess extends CourseCouponsState {}
 
+final class CourseCouponAddedLocally extends CourseCouponsState {
+  final CourseCouponEntity coupon;
+  CourseCouponAddedLocally({required this.coupon});
+}
+
 final class AddCourseCouponFailure extends CourseCouponsState {
   final String errmessage;
   AddCourseCouponFailure({required this.errmessage});

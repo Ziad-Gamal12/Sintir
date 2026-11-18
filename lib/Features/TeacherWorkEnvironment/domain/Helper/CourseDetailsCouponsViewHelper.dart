@@ -40,6 +40,18 @@ class CourseDetailsCouponsViewHelper {
     return mergedCoupons;
   }
 
+  static List<CourseCouponEntity> upsertCoupon({
+    required Iterable<CourseCouponEntity> coupons,
+    required CourseCouponEntity coupon,
+  }) {
+    final updated = coupons
+        .where((existing) => existing.code != coupon.code)
+        .toList()
+      ..add(coupon);
+    updated.sort((a, b) => b.expiryDate.compareTo(a.expiryDate));
+    return updated;
+  }
+
   static List<CourseCouponEntity> removeCouponByCode({
     required Iterable<CourseCouponEntity> coupons,
     required String code,
