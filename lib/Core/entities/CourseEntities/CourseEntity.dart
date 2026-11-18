@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:sintir/Core/entities/CourseEntities/ContentCreaterEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseRatingStatsEntity.dart';
 
 class CourseEntity {
   String id, title, description, language, state;
@@ -11,6 +12,15 @@ class CourseEntity {
   final String subject;
   final String level;
   Contentcreaterentity? contentcreaterentity;
+
+  /// Live only when read from `Courses/{id}`; enrollment snapshots under
+  /// `Users/{uid}/Courses` keep the values from the day the student enrolled.
+  final CourseRatingStatsEntity ratingStats;
+
+  /// Set by the reviewer when the course is declined; shown to the teacher.
+  String? declineReason;
+  DateTime? declinedAt;
+  DateTime? resubmittedAt;
 
   CourseEntity({
     required this.id,
@@ -28,10 +38,16 @@ class CourseEntity {
     required this.testsCount,
     required this.feedBacksCount,
     this.contentcreaterentity,
+    this.ratingStats = const CourseRatingStatsEntity(),
+    this.declineReason,
+    this.declinedAt,
+    this.resubmittedAt,
   });
 
+  static const String loadingId = 'loading';
+
   factory CourseEntity.empty() => CourseEntity(
-    id: 'loading',
+    id: loadingId,
     state: 'loading',
     title: 'loading',
 
@@ -44,9 +60,15 @@ class CourseEntity {
     level: 'loading',
     postedDate: DateTime.now(),
     studentsCount: 0,
-    lessonsCount: 0,
+    lessonsCount: 10,
     testsCount: 0,
     feedBacksCount: 0,
+    contentcreaterentity: Contentcreaterentity(
+      name: 'loading teacher',
+      profileImageUrl: '',
+      id: loadingId,
+      title: 'loading',
+    ),
   );
   static List<CourseEntity> fakeCourses = List.generate(
     10,

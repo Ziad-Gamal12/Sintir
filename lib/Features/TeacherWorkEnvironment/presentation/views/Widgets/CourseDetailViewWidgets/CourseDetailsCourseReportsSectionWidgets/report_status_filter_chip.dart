@@ -24,8 +24,8 @@ class ReportStatusFilterChip extends StatelessWidget {
 
     final onPrimary =
         ThemeData.estimateBrightnessForColor(scheme.primary) == Brightness.dark
-            ? Colors.white
-            : Colors.black;
+        ? Colors.white
+        : Colors.black;
 
     final backgroundColor = selected ? scheme.primary : scheme.surface;
     final foregroundColor = selected ? onPrimary : scheme.onSurface;
@@ -33,11 +33,11 @@ class ReportStatusFilterChip extends StatelessWidget {
         ? Colors.transparent
         : scheme.onSurface.withValues(alpha: 0.16);
 
-    final textStyle =
-        (theme.textTheme.labelLarge ?? const TextStyle()).copyWith(
-      color: foregroundColor,
-      fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-    );
+    final textStyle = (theme.textTheme.labelLarge ?? const TextStyle())
+        .copyWith(
+          color: foregroundColor,
+          fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+        );
 
     return MergeSemantics(
       child: Semantics(

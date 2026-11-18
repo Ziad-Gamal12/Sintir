@@ -28,34 +28,34 @@ class ExamQuestionInputsQuestionHeader extends StatelessWidget {
     return Row(
       children: [
         FaIcon(FontAwesomeIcons.circleInfo, color: iconColor, size: 25),
-        const SizedBox(
-          width: 10,
-        ),
+        const SizedBox(width: 10),
         Text.rich(
-          TextSpan(children: [
-            TextSpan(
-              text: " ${LocaleKeys.questionNumber}",
-              style: AppTextStyles(context)
-                  .semiBold16
-                  .copyWith(color: primaryTextColor),
-            ),
-            TextSpan(
-              text: "${index + 1}",
-              style: AppTextStyles(context).bold16.copyWith(color: iconColor),
-            ),
-            TextSpan(
-              text: " ${LocaleKeys.of} ",
-              style: AppTextStyles(context)
-                  .regular16
-                  .copyWith(color: primaryTextColor),
-            ),
-            TextSpan(
-              text: "$totalQuestions",
-              style: AppTextStyles(context)
-                  .bold16
-                  .copyWith(color: totalCountColor),
-            ),
-          ]),
+          TextSpan(
+            children: [
+              TextSpan(
+                text: " ${LocaleKeys.questionNumber}",
+                style: AppTextStyles(
+                  context,
+                ).semiBold16.copyWith(color: primaryTextColor),
+              ),
+              TextSpan(
+                text: "${index + 1}",
+                style: AppTextStyles(context).bold16.copyWith(color: iconColor),
+              ),
+              TextSpan(
+                text: " ${LocaleKeys.of} ",
+                style: AppTextStyles(
+                  context,
+                ).regular16.copyWith(color: primaryTextColor),
+              ),
+              TextSpan(
+                text: "$totalQuestions",
+                style: AppTextStyles(
+                  context,
+                ).bold16.copyWith(color: totalCountColor),
+              ),
+            ],
+          ),
         ),
       ],
     );

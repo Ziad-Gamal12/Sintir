@@ -24,7 +24,12 @@ class _MyCoursesViewBodyGridViewState extends State<MyCoursesViewBodyGridView> {
     return BlocBuilder<MyCoursesCubit, MyCoursesState>(
       builder: (context, state) {
         if (state is GetMyCoursesFailure) {
-          return CustomErrorWidget(errormessage: state.errmessage);
+          return CustomErrorWidget(
+            errormessage: state.errmessage,
+            onRetry: () => context
+                .read<MyCoursesCubit>()
+                .getMyCourses(isPaginate: false),
+          );
         } else if (state is GetMyCoursesLoading &&
             widget.myCourses.isEmpty &&
             state.isPaginate == false) {

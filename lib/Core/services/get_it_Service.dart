@@ -37,9 +37,15 @@ import 'package:sintir/Core/services/FireBase/FirebaseAuth_Service.dart';
 import 'package:sintir/Core/services/FireBase/Firebase_FirestoreService.dart';
 import 'package:sintir/Core/services/Paymob/PayMobService.dart';
 import 'package:sintir/Core/services/PickerAssetsService.dart';
+import 'package:sintir/Core/services/RealtimeDataBaseService.dart';
 import 'package:sintir/Core/services/StorageService.dart';
 import 'package:sintir/Core/services/VideoUploadService.dart';
 import 'package:sintir/Core/services/SupabaseStorageServices.dart';
+import 'package:sintir/Core/helper/GetUserData.dart';
+import 'package:sintir/Core/repos/ReviewModerationRepo/ReviewModerationRepo.dart';
+import 'package:sintir/Core/repos/ReviewModerationRepo/ReviewModerationRepoImpl.dart';
+import 'package:sintir/Core/services/EdgeFunctionsService.dart';
+import 'package:sintir/Core/services/NetworkStatus.dart';
 import 'package:sintir/Core/services/TeacherWithdrawalService.dart';
 import 'package:sintir/Features/Auth/Data/repos/AuthRepoImpl.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
@@ -53,7 +59,9 @@ import 'package:sintir/Features/MyResults/Data/Repo/my_results_repo_impl.dart';
 import 'package:sintir/Features/MyResults/Domain/Repo/my_results_repo.dart';
 import 'package:sintir/Features/MyTransactions/Data/Repos/MyTransactionsRepImpl.dart';
 import 'package:sintir/Features/MyTransactions/Domain/Repos/MyTransactionsRep.dart';
+import 'package:sintir/Features/Profile/Data/Repos/AccountDeletionRepoImpl.dart';
 import 'package:sintir/Features/Profile/Data/Repos/PersonalDetailsRepoImpl.dart';
+import 'package:sintir/Features/Profile/Domain/Repos/AccountDeletionRepo.dart';
 import 'package:sintir/Features/Profile/Domain/Repos/PersonalDetailsRepo.dart';
 import 'package:sintir/Features/Search/Data/Repos/SearchRepoImpl.dart';
 import 'package:sintir/Features/Search/Domain/Repos/SearchRepo.dart';
@@ -62,25 +70,40 @@ import 'package:sintir/Features/Support/Data/Repos/SupportTicketsRepoImpl.dart';
 import 'package:sintir/Features/Support/Domain/Repos/SupportChatRepo.dart';
 import 'package:sintir/Features/Support/Domain/Repos/SupportTicketsRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/SubscribersDetailsRepoImpl.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/TeacherCourseReviewsRepoImpl.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/TeacherCourseReviewsRepo.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/TeacherWorkspaceRepoImpl.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/TeacherWorkspaceRepo.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/TeacherLiveWalletRepoImpl.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/TeacherLiveWalletRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/data/Repos/WithDrawalTeacherBalanceRepoImpl.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/SubscribersDetailsRepo.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Repos/WithDrawalTeacherBalanceRepo.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/UseCases/UpdateCourseReportStatusUseCase.dart';
+import 'package:sintir/Core/services/Shared_preferences.dart';
 import 'package:sintir/constant.dart';
 
 final getIt = GetIt.instance;
 
 void setup_Getit() {
   getIt.registerLazySingleton<Dio>(() => Dio());
+  getIt.registerLazySingleton<ConnectivityService>(() => ConnectivityService());
   getIt.registerLazySingleton<PickerAssetsService>(() => PickerAssetsService());
 
   // to ensure they are available immediately for auto-login logic.
   getIt.registerLazySingleton<firebaseAuthService>(() => firebaseAuthService());
-  getIt.registerLazySingleton<DataBaseService>(
+  // One Firestore service instance serves both one-shot and live reads.
+  getIt.registerLazySingleton<FirebaseFirestoreservice>(
     () => FirebaseFirestoreservice(),
   );
+  getIt.registerLazySingleton<DataBaseService>(
+    () => getIt<FirebaseFirestoreservice>(),
+  );
+  getIt.registerLazySingleton<RealtimeDataBaseService>(
+    () => getIt<FirebaseFirestoreservice>(),
+  );
   getIt.registerLazySingleton<SupabaseStorageServices>(
-    () => SupabaseStorageServices(),
+    () => SupabaseStorageServices(edgeFunctions: getIt<EdgeFunctionsService>()),
   );
   getIt.registerLazySingleton<StorageService>(
     () => getIt<SupabaseStorageServices>(),
@@ -135,7 +158,10 @@ void setup_Getit() {
   );
 
   getIt.registerLazySingleton<FileItemRepo>(
-    () => FileItemRepoImpli(storageService: getIt()),
+    () => FileItemRepoImpli(
+      storageService: getIt(),
+      edgeFunctions: getIt<EdgeFunctionsService>(),
+    ),
   );
 
   getIt.registerLazySingleton<Testitemrepo>(
@@ -143,6 +169,7 @@ void setup_Getit() {
       storageService: getIt(),
       databaseservice: getIt<DataBaseService>(),
       myResultsRepo: getIt<MyResultsRepo>(),
+      edgeFunctions: getIt<EdgeFunctionsService>(),
     ),
   );
 
@@ -167,10 +194,28 @@ void setup_Getit() {
     () => UpdateCourseReportStatusUseCase(getIt<CourseReportsRepo>()),
   );
 
+  getIt.registerLazySingleton<EdgeFunctionsService>(
+    () => EdgeFunctionsService(),
+  );
   getIt.registerLazySingleton<CourseFeedBacksRepo>(
     () => CourseFeedBacksRepoImpli(
       databaseservice: getIt<DataBaseService>(),
-      courseCountersRepo: getIt<CourseCountersRepo>(),
+      edgeFunctions: getIt<EdgeFunctionsService>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<TeacherCourseReviewsRepo>(
+    () => TeacherCourseReviewsRepoImpl(
+      databaseservice: getIt<DataBaseService>(),
+      feedBacksRepo: getIt<CourseFeedBacksRepo>(),
+      preferences: shared_preferences_Services.sharedPreferences,
+    ),
+  );
+
+  getIt.registerLazySingleton<TeacherWorkspaceRepo>(
+    () => TeacherWorkspaceRepoImpl(
+      preferences: shared_preferences_Services.sharedPreferences,
+      reviewsRepo: getIt<TeacherCourseReviewsRepo>(),
     ),
   );
 
@@ -207,6 +252,22 @@ void setup_Getit() {
     () => FavoritesRepoImpl(dataBaseService: getIt<DataBaseService>()),
   );
 
+  getIt.registerLazySingleton<ReviewModerationRepo>(
+    () => ReviewModerationRepoImpl(
+      databaseservice: getIt<DataBaseService>(),
+      currentUserId: () => getUserData().uid,
+      currentUserRole: () => getUserData().role,
+    ),
+  );
+  getIt.registerLazySingleton<AccountDeletionRepo>(() {
+    final auth = getIt<firebaseAuthService>();
+    return AccountDeletionRepoImpl(
+      edgeFunctions: getIt<EdgeFunctionsService>(),
+      reauthenticate: auth.reauthenticate,
+      signInProvider: auth.primarySignInProvider,
+      clearLocalSession: auth.clearLocalSession,
+    );
+  });
   getIt.registerLazySingleton<PersonalDetailsRepo>(
     () => PersonalDetailsRepoImpl(
       dataBaseService: getIt<DataBaseService>(),
@@ -241,6 +302,11 @@ void setup_Getit() {
   getIt.registerLazySingleton<WithDrawalTeacherBalanceRepo>(
     () => WithDrawalTeacherBalanceRepoImpl(
       service: getIt<TeacherWithdrawalService>(),
+    ),
+  );
+  getIt.registerLazySingleton<TeacherLiveWalletRepo>(
+    () => TeacherLiveWalletRepoImpl(
+      realtimeDataBaseService: getIt<RealtimeDataBaseService>(),
     ),
   );
 }

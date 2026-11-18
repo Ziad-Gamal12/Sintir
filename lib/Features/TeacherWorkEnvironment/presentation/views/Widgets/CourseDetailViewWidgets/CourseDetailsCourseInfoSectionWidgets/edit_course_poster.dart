@@ -4,10 +4,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/UpdateCourseCubit/Update_Course_Cubit.dart';
 
 class EditCoursePoster extends StatelessWidget {
-  const EditCoursePoster({
-    super.key,
-    required this.coursePosterUrl,
-  });
+  const EditCoursePoster({super.key, required this.coursePosterUrl});
   final String coursePosterUrl;
 
   @override
@@ -18,8 +15,9 @@ class EditCoursePoster extends StatelessWidget {
           width: double.infinity,
           child: Addcourseposter(
             coursePosterUrl: coursePosterUrl,
-            coursePosterImage:
-                context.watch<UpdateCourseCubit>().coursePosterImage,
+            coursePosterImage: context
+                .watch<UpdateCourseCubit>()
+                .coursePosterImage,
             onTap: () {
               context.read<UpdateCourseCubit>().pickCoursePosterImage();
             },

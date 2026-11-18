@@ -7,10 +7,11 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/constant.dart';
 
 class CustomExamDetailsPageViewStep extends StatelessWidget {
-  const CustomExamDetailsPageViewStep(
-      {super.key,
-      required this.coursetestentity,
-      required this.examDetailsFormKey});
+  const CustomExamDetailsPageViewStep({
+    super.key,
+    required this.coursetestentity,
+    required this.examDetailsFormKey,
+  });
   final CourseTestEntity coursetestentity;
   final GlobalKey<FormState> examDetailsFormKey;
   @override
@@ -21,31 +22,21 @@ class CustomExamDetailsPageViewStep extends StatelessWidget {
         key: examDetailsFormKey,
         child: Column(
           children: [
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             const CustomAddCourseSectionExamNameAndDurationHeader(),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             CustomAddCourseSectionExamNameAndDuration(
               coursetestentity: coursetestentity,
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            ExamNumbersOfAttemptsTextField(
-              coursetestentity: coursetestentity,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
+            ExamNumbersOfAttemptsTextField(coursetestentity: coursetestentity),
+            const SizedBox(height: 20),
             HideExamResultSwitcher(
               isHiddin: !coursetestentity.showResult,
               onChanged: (value) {
                 coursetestentity.showResult = !value;
               },
-            )
+            ),
           ],
         ),
       ),

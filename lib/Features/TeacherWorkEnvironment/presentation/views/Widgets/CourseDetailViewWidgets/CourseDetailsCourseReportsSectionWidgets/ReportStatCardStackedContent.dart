@@ -33,7 +33,10 @@ class ReportStatCardStackedContent extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
             style: textTheme.bodyMedium?.copyWith(
-                color: titleColor, fontSize: 13, fontWeight: FontWeight.w600),
+              color: titleColor,
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+            ),
           ),
           const SizedBox(height: 6),
           FittedBox(
@@ -41,10 +44,11 @@ class ReportStatCardStackedContent extends StatelessWidget {
             child: Text(
               '$count',
               style: textTheme.headlineSmall?.copyWith(
-                  color: accent,
-                  fontSize: 28,
-                  fontWeight: FontWeight.w800,
-                  height: 1.1),
+                color: accent,
+                fontSize: 28,
+                fontWeight: FontWeight.w800,
+                height: 1.1,
+              ),
             ),
           ),
           const SizedBox(height: 6),
@@ -53,8 +57,10 @@ class ReportStatCardStackedContent extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: textTheme.bodySmall
-                ?.copyWith(color: captionColor, fontSize: 11),
+            style: textTheme.bodySmall?.copyWith(
+              color: captionColor,
+              fontSize: 11,
+            ),
           ),
         ],
       ),

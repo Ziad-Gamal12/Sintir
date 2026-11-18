@@ -50,7 +50,8 @@ class CustomCourseDetailsBodyCourseSections_SliverList extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: Custom_Loading_Widget(
-              isLoading: state is DeleteSectionLoading &&
+              isLoading:
+                  state is DeleteSectionLoading &&
                   state.sectionId == courseSections[index].id,
               child: CustomCourseDetailsSectionsListViewItem(
                 course: course,

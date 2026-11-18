@@ -217,8 +217,18 @@ class TestItemCubit extends Cubit<TestItemState> {
     required String userId,
   }) async {
     emit(AddTestResultLoading());
-
-    // Prepare result once
+    if (isCourseExam) {
+      final result = await testitemrepo.submitTestAttempt(
+        courseId: courseId,
+        sectionId: sectionId,
+        test: test,
+      );
+      result.fold(
+        (failure) => emit(AddTestResultFailure(errMessage: failure.message)),
+        (testResult) => emit(AddTestResultSuccess(result: testResult)),
+      );
+      return;
+    }
     final testResult = prepareTestResultObject(
       test: test,
       courseId: courseId,
@@ -226,26 +236,13 @@ class TestItemCubit extends Cubit<TestItemState> {
       sectionId: sectionId,
       user: getUserData(),
     );
-
-    final Either<Failure, void> result;
-
-    if (isCourseExam) {
-      result = await testitemrepo.addTestResult(
-        userUID: userId,
-        testResult: testResult,
-        courseId: courseId,
-        sectionId: sectionId,
-        sectionItemId: sectionItemId,
-      );
-    } else {
-      result = await myMistakesRepo.storeTestMyMistakesExamResult(
-        userUID: userId,
-        testResult: testResult,
-      );
-    }
+    final result = await myMistakesRepo.storeTestMyMistakesExamResult(
+      userUID: userId,
+      testResult: testResult,
+    );
     result.fold(
       (failure) => emit(AddTestResultFailure(errMessage: failure.message)),
-      (_) => emit(AddTestResultSuccess()),
+      (_) => emit(AddTestResultSuccess(result: testResult)),
     );
   }
 

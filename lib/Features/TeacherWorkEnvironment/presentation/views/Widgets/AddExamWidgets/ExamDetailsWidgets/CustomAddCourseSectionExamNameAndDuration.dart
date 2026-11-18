@@ -23,12 +23,14 @@ class _CustomAddCourseSectionExamNameAndDurationState
   @override
   void initState() {
     super.initState();
-    titleController =
-        TextEditingController(text: widget.coursetestentity.title);
+    titleController = TextEditingController(
+      text: widget.coursetestentity.title,
+    );
     durationController = TextEditingController(
-        text: widget.coursetestentity.durationTime == 0
-            ? ""
-            : widget.coursetestentity.durationTime.toString());
+      text: widget.coursetestentity.durationTime == 0
+          ? ""
+          : widget.coursetestentity.durationTime.toString(),
+    );
   }
 
   @override

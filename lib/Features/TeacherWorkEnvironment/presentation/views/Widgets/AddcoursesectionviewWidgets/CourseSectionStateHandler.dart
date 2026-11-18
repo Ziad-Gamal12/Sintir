@@ -27,8 +27,10 @@ class CourseSectionStateHandler {
           message: LocaleKeys.sectionAddedSuccessfully,
           type: SnackType.success,
         );
-        Navigator.popUntil(context,
-            ModalRoute.withName(CourseDetailsCourseSectionsView.routeName));
+        Navigator.popUntil(
+          context,
+          ModalRoute.withName(CourseDetailsCourseSectionsView.routeName),
+        );
 
         break;
 

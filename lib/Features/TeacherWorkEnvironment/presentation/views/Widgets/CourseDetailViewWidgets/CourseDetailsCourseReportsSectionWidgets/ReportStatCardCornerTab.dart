@@ -11,8 +11,9 @@ class ReportStatCardCornerTab extends StatelessWidget {
       height: 16,
       decoration: BoxDecoration(
         color: color,
-        borderRadius:
-            const BorderRadiusDirectional.only(bottomEnd: Radius.circular(12)),
+        borderRadius: const BorderRadiusDirectional.only(
+          bottomEnd: Radius.circular(12),
+        ),
       ),
     );
   }

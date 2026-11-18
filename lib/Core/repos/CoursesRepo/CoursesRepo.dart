@@ -25,6 +25,9 @@ abstract class Coursesrepo {
   Future<Either<Failure, void>> updateCourse({
     required CourseEntity courseEntity,
   });
+  Future<Either<Failure, void>> resubmitCourseForReview({
+    required CourseEntity courseEntity,
+  });
   Future<Either<Failure, GetCoursesResonseEntity>>
   getTeaceherInterestedCourses({
     required bool isPaginate,

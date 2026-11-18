@@ -11,9 +11,7 @@ import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
 class Addcoursesectionviewbody extends StatelessWidget {
-  const Addcoursesectionviewbody({
-    super.key,
-  });
+  const Addcoursesectionviewbody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,24 +21,21 @@ class Addcoursesectionviewbody extends StatelessWidget {
       key: Variables.AddCourseSectionFormKey,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-            horizontal: KHorizontalPadding, vertical: 20),
+          horizontal: KHorizontalPadding,
+          vertical: 20,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const CourseSectionTextFields(),
-            Divider(
-              height: 40,
-              color: theme.dividerColor,
-            ),
+            Divider(height: 40, color: theme.dividerColor),
             Text(
               LocaleKeys.content,
-              style: AppTextStyles(context)
-                  .bold20
-                  .copyWith(color: theme.textTheme.bodyMedium?.color),
+              style: AppTextStyles(
+                context,
+              ).bold20.copyWith(color: theme.textTheme.bodyMedium?.color),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             AddCourseSectionContentOptions(
               onSave: () {
                 if (Variables.AddCourseSectionFormKey.currentState != null) {
@@ -50,9 +45,9 @@ class Addcoursesectionviewbody extends StatelessWidget {
                   }
                 }
               },
-              optionRequirementsEntity:
-                  context.read<OptionNavigationRequirementsEntity>(),
-            )
+              optionRequirementsEntity: context
+                  .read<OptionNavigationRequirementsEntity>(),
+            ),
           ],
         ),
       ),

@@ -1,0 +1,482 @@
+rules_version = '2';
+
+// Sintir Firestore security rules.
+//
+// Server code (Supabase Edge Functions with the service account) bypasses
+// these rules. Everything that moves money, enrolls students, grades tests or
+// writes ratings happens there; the rules below only cover what the app and
+// the admin dashboard do directly.
+//
+// Run firestore-tests/ against the emulator before every deploy.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------------------------------------------------------------- users
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function uid() {
+      return request.auth.uid;
+    }
+
+    function userPath(userId) {
+      return /databases/$(database)/documents/Users/$(userId);
+    }
+
+    function hasProfile() {
+      return signedIn() && exists(userPath(uid()));
+    }
+
+    function me() {
+      return get(userPath(uid())).data;
+    }
+
+    function isActive() {
+      return hasProfile() && me().status == 'Active';
+    }
+
+    function staffRoles() {
+      return ['Admin', 'CoursesManager', 'UsersManager', 'Support'];
+    }
+
+    function isStaff() {
+      return isActive() && me().role in staffRoles();
+    }
+
+    function isAdmin() {
+      return isActive() && me().role == 'Admin';
+    }
+
+    function canManageCourses() {
+      return isActive() && me().role in ['Admin', 'CoursesManager'];
+    }
+
+    function canManageUsers() {
+      return isActive() && me().role in ['Admin', 'UsersManager'];
+    }
+
+    function canManageSupport() {
+      return isActive() && me().role in ['Admin', 'Support'];
+    }
+
+    function isTeacher() {
+      return isActive() && me().role == 'Teacher';
+    }
+
+    // -------------------------------------------------------------- courses
+
+    function coursePath(courseId) {
+      return /databases/$(database)/documents/Courses/$(courseId);
+    }
+
+    function courseExists(courseId) {
+      return exists(coursePath(courseId));
+    }
+
+    function course(courseId) {
+      return get(coursePath(courseId)).data;
+    }
+
+    function adminBlockedStates() {
+      return ['Archived', 'DeletedByAdmin'];
+    }
+
+    function ownsCourse(courseId) {
+      return signedIn() && courseExists(courseId) &&
+        course(courseId).contentcreaterentity.id == uid();
+    }
+
+    // The owner may change content unless the admin removed the course.
+    function ownerCanWriteContent(courseId) {
+      return isTeacher() && ownsCourse(courseId) &&
+        course(courseId).state != 'DeletedByAdmin';
+    }
+
+    // Subscriber documents are written only by the server after payment.
+    function isEnrolled(courseId) {
+      return signedIn() &&
+        exists(/databases/$(database)/documents/Courses/$(courseId)/Subscribers/$(uid()));
+    }
+
+    // Paid content: owner, staff, or an enrolled student unless an admin took
+    // the course down (same policy as _shared/course_access.ts).
+    function canUseContent(courseId) {
+      return signedIn() && courseExists(courseId) && (
+        course(courseId).contentcreaterentity.id == uid() ||
+        isStaff() ||
+        (isEnrolled(courseId) && !(course(courseId).state in adminBlockedStates()))
+      );
+    }
+
+    // Section and lesson titles are shown before buying.
+    function canPreviewCourse(courseId) {
+      return signedIn() && courseExists(courseId) &&
+        course(courseId).state == 'Published';
+    }
+
+    function courseContentFields() {
+      return ['title', 'description', 'posterUrl', 'price', 'language', 'subject', 'level'];
+    }
+
+    function validPrice(data) {
+      return data.price is number && data.price >= 0;
+    }
+
+    function validNewCourse(courseId) {
+      let d = request.resource.data;
+      return d.id == courseId &&
+        d.contentcreaterentity.id == uid() &&
+        d.state == 'Pending' &&
+        validPrice(d) &&
+        d.get('studentsCount', 0) == 0 &&
+        d.get('feedBacksCount', 0) == 0 &&
+        d.get('ratingsCount', 0) == 0 &&
+        d.get('ratingsSum', 0) == 0;
+    }
+
+    function declinedStates() {
+      return ['Declined', 'Rejected'];
+    }
+
+    // Owner edits: any change to what students see sends the course back to
+    // review; archive / restore only toggles Published <-> DeletedByTeacher;
+    // counters for lessons and tests stay non-negative. A declined course can
+    // be sent back to review as it is (resubmittedAt). The review decision
+    // (declineReason, declinedAt, reviewedBy, reviewedAt) is staff-only.
+    function validOwnerCourseUpdate() {
+      let before = resource.data;
+      let after = request.resource.data;
+      let changed = after.diff(before).affectedKeys();
+      let editsContent = changed.hasAny(courseContentFields());
+      return !(before.state in adminBlockedStates()) &&
+        changed.hasOnly(courseContentFields().concat(['state', 'lessonsCount', 'testsCount', 'resubmittedAt'])) &&
+        (!changed.hasAny(['resubmittedAt']) || (
+          before.state in declinedStates() &&
+          after.state == 'Pending' &&
+          after.resubmittedAt == request.time
+        )) &&
+        (!changed.hasAny(['price']) || validPrice(after)) &&
+        (!changed.hasAny(['lessonsCount']) || (after.lessonsCount is int && after.lessonsCount >= 0)) &&
+        (!changed.hasAny(['testsCount']) || (after.testsCount is int && after.testsCount >= 0)) &&
+        (
+          after.state == 'Pending' ||
+          (!editsContent && !changed.hasAny(['state'])) ||
+          (!editsContent && before.state == 'Published' && after.state == 'DeletedByTeacher') ||
+          (!editsContent && before.state == 'DeletedByTeacher' && after.state == 'Published')
+        );
+    }
+
+    function canSeeCourse(data, courseId) {
+      return data.state == 'Published' ||
+        data.contentcreaterentity.id == uid() ||
+        isStaff() ||
+        isEnrolled(courseId);
+    }
+
+    match /Courses/{courseId} {
+      allow get: if signedIn() && (resource == null || canSeeCourse(resource.data, courseId));
+      allow list: if signedIn() && (
+                    resource.data.state == 'Published' ||
+                    resource.data.contentcreaterentity.id == uid() ||
+                    isStaff());
+      allow create: if isTeacher() && validNewCourse(courseId);
+      allow update: if (isTeacher() &&
+                        resource.data.contentcreaterentity.id == uid() &&
+                        validOwnerCourseUpdate()) ||
+                       canManageCourses();
+      allow delete: if canManageCourses();
+
+      match /Sections/{sectionId} {
+        allow read: if canPreviewCourse(courseId) || canUseContent(courseId);
+        allow write: if ownerCanWriteContent(courseId) || canManageCourses();
+
+        match /Items/{itemId} {
+          allow read: if canPreviewCourse(courseId) || canUseContent(courseId);
+          allow write: if ownerCanWriteContent(courseId) || canManageCourses();
+
+          // Test answer keys: teacher and server only.
+          match /Private/{docId} {
+            allow read: if ownsCourse(courseId) || canManageCourses();
+            allow write: if ownerCanWriteContent(courseId) || canManageCourses();
+          }
+
+          match /JoinedBy/{userId} {
+            allow read: if ownsCourse(courseId) || isStaff() ||
+                           (signedIn() && uid() == userId);
+            allow create, update: if signedIn() && uid() == userId &&
+                                     request.resource.data.uid == userId &&
+                                     canUseContent(courseId);
+            allow delete: if canManageCourses();
+          }
+
+          match /VideoNotes/{noteId} {
+            allow read: if ownsCourse(courseId) || isStaff() ||
+                           (signedIn() && resource.data.user.uid == uid());
+            allow create: if signedIn() &&
+                             request.resource.data.user.uid == uid() &&
+                             canUseContent(courseId);
+            allow update, delete: if canManageCourses() ||
+                                     (signedIn() && resource.data.user.uid == uid());
+          }
+
+          // Graded by submit-test-attempt.
+          match /Results/{resultId} {
+            allow read: if ownsCourse(courseId) || isStaff() ||
+                           (signedIn() && resource.data.joinedby.uid == uid());
+            allow write: if canManageCourses();
+          }
+        }
+      }
+
+      // Written by the payment webhook / free enrollment on the server.
+      match /Subscribers/{userId} {
+        allow read: if ownsCourse(courseId) || isStaff() ||
+                       (signedIn() && uid() == userId);
+        allow write: if canManageCourses();
+      }
+
+      // Written by upsert-course-feedback / delete-course-feedback. The
+      // course owner may only add, edit or remove one public reply.
+      match /Feedbacks/{feedbackId} {
+        allow read: if signedIn();
+        allow update: if validTeacherReply(courseId) || canManageCourses();
+        allow create, delete: if canManageCourses();
+      }
+
+      match /Coupons/{code} {
+        allow read: if ownsCourse(courseId) || isStaff();
+        allow create: if ownerCanWriteContent(courseId) &&
+                         request.resource.data.code == code &&
+                         request.resource.data.get('usedCount', 0) == 0 &&
+                         request.resource.data.get('reservedCount', 0) == 0 &&
+                         validCouponTerms(request.resource.data);
+        allow update: if (ownerCanWriteContent(courseId) &&
+                          request.resource.data.diff(resource.data).affectedKeys()
+                            .hasOnly(['discountPercentage', 'expiryDate', 'status', 'usageLimit']) &&
+                          validCouponTerms(request.resource.data)) ||
+                         canManageCourses();
+        allow delete: if ownerCanWriteContent(courseId) || canManageCourses();
+      }
+
+      match /Reports/{reportId} {
+        allow read: if ownsCourse(courseId) || isStaff() ||
+                       (signedIn() && resource.data.reporterId == uid());
+        allow create: if isActive() && courseExists(courseId) &&
+                         request.resource.data.reporterId == uid() &&
+                         request.resource.data.status == 'open' &&
+                         request.resource.data.get('resolvedAt', null) == null &&
+                         request.resource.data.description is string &&
+                         request.resource.data.description.size() <= 2000;
+        allow update: if (ownsCourse(courseId) &&
+                          request.resource.data.diff(resource.data).affectedKeys()
+                            .hasOnly(['status', 'resolvedAt', 'type'])) ||
+                         canManageCourses();
+        allow delete: if canManageCourses();
+      }
+
+      match /Transactions/{transactionId} {
+        allow read: if ownsCourse(courseId) || isStaff();
+        allow write: if false;
+      }
+    }
+
+    function validTeacherReply(courseId) {
+      let before = resource.data;
+      let after = request.resource.data;
+      let reply = after.get('teacherReply', null);
+      return isTeacher() && ownsCourse(courseId) &&
+        course(courseId).state != 'DeletedByAdmin' &&
+        after.diff(before).affectedKeys().hasOnly(['teacherReply']) &&
+        (reply == null || (
+          reply is map &&
+          reply.keys().hasOnly(['text', 'authorId', 'createdAt', 'updatedAt']) &&
+          reply.text is string && reply.text.size() >= 1 && reply.text.size() <= 1000 &&
+          reply.authorId == uid() &&
+          reply.updatedAt == request.time &&
+          ((before.get('teacherReply', null) == null && reply.createdAt == request.time) ||
+           (before.get('teacherReply', null) != null && reply.createdAt == before.teacherReply.createdAt))
+        ));
+    }
+
+    function reviewReportReasons() {
+      return ['offensive', 'harassment', 'spam', 'personal_info', 'irrelevant', 'other'];
+    }
+
+    // One report per reporter and review; the id makes that true.
+    function validReviewReport(reportId) {
+      let d = request.resource.data;
+      return isActive() &&
+        d.keys().hasOnly(['courseId', 'reviewUid', 'reportedBy', 'reporterRole', 'reason', 'details', 'status', 'createdAt']) &&
+        d.courseId is string && d.reviewUid is string &&
+        d.reportedBy == uid() && d.reviewUid != uid() &&
+        reportId == d.courseId + '_' + d.reviewUid + '_' + uid() &&
+        d.reporterRole == me().role &&
+        d.reason in reviewReportReasons() &&
+        d.details is string && d.details.size() <= 1000 &&
+        d.status == 'open' &&
+        d.createdAt == request.time &&
+        exists(/databases/$(database)/documents/Courses/$(d.courseId)/Feedbacks/$(d.reviewUid));
+    }
+
+    match /ReviewReports/{reportId} {
+      allow get: if signedIn() && (resource == null || resource.data.reportedBy == uid() || isStaff());
+      allow list: if isStaff();
+      allow create: if validReviewReport(reportId);
+      allow update, delete: if canManageCourses();
+    }
+
+    function validCouponTerms(data) {
+      return data.discountPercentage is number &&
+        data.discountPercentage > 0 && data.discountPercentage <= 100 &&
+        data.usageLimit is int && data.usageLimit >= 0;
+    }
+
+    // ------------------------------------------------------------ user docs
+
+    function validNewWallet(wallet) {
+      return wallet.get('balance', 0) == 0 &&
+        wallet.get('total_earned', 0) == 0 &&
+        wallet.get('payout_pending', 0) == 0 &&
+        wallet.get('status', 'suspended') == 'suspended';
+    }
+
+    function validNewUser(userId) {
+      let d = request.resource.data;
+      return d.uid == userId && (
+        (d.role == 'Student' && d.status == 'Active' &&
+          d.get('teacherExtraData', null) == null) ||
+        (d.role == 'Teacher' && d.status == 'Pending' &&
+          d.get('teacherExtraData', null) != null &&
+          validNewWallet(d.teacherExtraData.get('wallet', {}))) ||
+        (d.role in staffRoles() && d.status == 'Pending' &&
+          d.get('teacherExtraData', null) == null)
+      );
+    }
+
+    // Profile fields only: never role, status, uid or the teacher wallet.
+    function validSelfUpdate() {
+      let before = resource.data;
+      let after = request.resource.data;
+      let changed = after.diff(before).affectedKeys();
+      return changed.hasOnly([
+          'firstName', 'lastName', 'fullName', 'email', 'address',
+          'phoneNumber', 'gender', 'profilePicurl', 'deviceId',
+          'studentExtraData', 'teacherExtraData'
+        ]) &&
+        (!changed.hasAny(['teacherExtraData']) || (
+          before.role == 'Teacher' &&
+          after.teacherExtraData.keys().hasOnly(['subject', 'workExperience', 'wallet']) &&
+          after.teacherExtraData.get('wallet', null) == before.teacherExtraData.get('wallet', null)
+        ));
+    }
+
+    function validStaffUserUpdate() {
+      let before = resource.data;
+      let after = request.resource.data;
+      return isAdmin() ||
+        (canManageUsers() &&
+          !(before.role in staffRoles()) && !(after.role in staffRoles())) ||
+        (canManageSupport() &&
+          after.diff(before).affectedKeys().hasOnly(['status']) &&
+          !(before.role in staffRoles()));
+    }
+
+    match /Users/{userId} {
+      allow get: if signedIn() && (uid() == userId || isStaff());
+      allow list: if isStaff();
+      allow create: if signedIn() && uid() == userId && validNewUser(userId);
+      allow update: if signedIn() && (
+                      (uid() == userId && validSelfUpdate()) ||
+                      validStaffUserUpdate());
+      allow delete: if canManageUsers();
+
+      // A teacher's own copy of each course, or a student's enrollment
+      // snapshot (written by the server).
+      match /Courses/{courseId} {
+        allow read: if signedIn() && (
+                      uid() == userId || isStaff() ||
+                      resource.data.contentcreaterentity.id == uid());
+        allow create, update: if (signedIn() && uid() == userId && isTeacher() &&
+                                  request.resource.data.contentcreaterentity.id == uid() &&
+                                  (!courseExists(courseId) || ownsCourse(courseId))) ||
+                                 canManageCourses();
+        allow delete: if (signedIn() && uid() == userId && isTeacher() &&
+                          resource.data.contentcreaterentity.id == uid()) ||
+                         canManageCourses();
+      }
+
+      // Graded results (with teacherId) come from the server; practice
+      // results from the student's own mistakes have no teacherId.
+      match /MyResults/{resultId} {
+        allow read: if signedIn() && (
+                      uid() == userId || isStaff() ||
+                      resource.data.teacherId == uid());
+        allow create: if signedIn() && uid() == userId &&
+                         !('teacherId' in request.resource.data);
+        allow update: if signedIn() && uid() == userId &&
+                         !('teacherId' in resource.data) &&
+                         !('teacherId' in request.resource.data);
+        allow delete: if signedIn() && uid() == userId &&
+                         !('teacherId' in resource.data);
+      }
+
+      match /MyMistakes/{questionId} {
+        allow read, write: if signedIn() && uid() == userId;
+      }
+
+      match /Favorites/{courseId} {
+        allow read, write: if signedIn() && uid() == userId;
+      }
+
+      match /Transactions/{transactionId} {
+        allow read: if signedIn() && (uid() == userId || isStaff());
+        allow write: if false;
+      }
+    }
+
+    // -------------------------------------------------------------- support
+
+    function ticketPath(ticketId) {
+      return /databases/$(database)/documents/Tickets/$(ticketId);
+    }
+
+    function ownsTicket(ticketId) {
+      return signedIn() && exists(ticketPath(ticketId)) &&
+        get(ticketPath(ticketId)).data.sender.uid == uid();
+    }
+
+    match /Tickets/{ticketId} {
+      allow read: if signedIn() && (resource.data.sender.uid == uid() || isStaff());
+      allow create: if isActive() &&
+                       request.resource.data.sender.uid == uid() &&
+                       request.resource.data.id == ticketId;
+      allow update: if canManageSupport() ||
+                       (signedIn() && resource.data.sender.uid == uid() &&
+                        request.resource.data.diff(resource.data).affectedKeys()
+                          .hasOnly(['status', 'updatedAt']));
+      allow delete: if canManageSupport() ||
+                       (signedIn() && resource.data.sender.uid == uid());
+
+      match /Messages/{messageId} {
+        allow read: if ownsTicket(ticketId) || isStaff();
+        allow create: if signedIn() &&
+                         request.resource.data.sender.uid == uid() &&
+                         (ownsTicket(ticketId) || canManageSupport());
+        allow update, delete: if canManageSupport() ||
+                                 (signedIn() && resource.data.sender.uid == uid());
+      }
+    }
+
+    // ------------------------------------------------------------- fallback
+
+    // Staff can read everything (dashboard reports); the admin can fix
+    // anything by hand. Every other path is closed.
+    match /{document=**} {
+      allow read: if isStaff();
+      allow write: if isAdmin();
+    }
+  }
+}

@@ -8,8 +8,11 @@ import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
 class EditCourseSaveButton extends StatelessWidget {
-  const EditCourseSaveButton(
-      {super.key, required this.course, required this.formKey});
+  const EditCourseSaveButton({
+    super.key,
+    required this.course,
+    required this.formKey,
+  });
   final CourseEntity course;
   final GlobalKey<FormState> formKey;
   @override
@@ -22,9 +25,9 @@ class EditCourseSaveButton extends StatelessWidget {
         if (formKey.currentState != null) {
           if (formKey.currentState!.validate()) {
             formKey.currentState!.save();
-            context
-                .read<UpdateCourseCubit>()
-                .updateCourse(courseEntity: course);
+            context.read<UpdateCourseCubit>().updateCourse(
+              courseEntity: course,
+            );
           }
         } else {
           CustomSnackBar.show(

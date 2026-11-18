@@ -17,55 +17,49 @@ class SubscriberDetailsAdaptiveLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(
-        builder: (context, constraints) {
-          final tabletLandscape = MediaQuery.sizeOf(context).shortestSide >=
-                  SubscriberLayoutBreakpoints.medium &&
-              MediaQuery.orientationOf(context) == Orientation.landscape;
-          if (constraints.maxWidth >= SubscriberLayoutBreakpoints.expanded ||
-              tabletLandscape) {
-            return Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(
-                    maxWidth:
-                        SubscriberLayoutBreakpoints.expandedContentMaxWidth),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      flex: 4,
-                      child: _Pane(slivers: [
-                        _Box(profile, 24),
-                        _Box(courses, 0),
-                      ]),
-                    ),
-                    const SizedBox(width: 24),
-                    Expanded(
-                      flex: 6,
-                      child: _Pane(slivers: [
-                        _Box(analysis, 24),
-                        timeline,
-                      ]),
-                    ),
-                  ],
+    builder: (context, constraints) {
+      final tabletLandscape =
+          MediaQuery.sizeOf(context).shortestSide >=
+              SubscriberLayoutBreakpoints.medium &&
+          MediaQuery.orientationOf(context) == Orientation.landscape;
+      if (constraints.maxWidth >= SubscriberLayoutBreakpoints.expanded ||
+          tabletLandscape) {
+        return Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: SubscriberLayoutBreakpoints.expandedContentMaxWidth,
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  flex: 4,
+                  child: _Pane(slivers: [_Box(profile, 24), _Box(courses, 0)]),
                 ),
-              ),
-            );
-          }
-          final medium =
-              constraints.maxWidth >= SubscriberLayoutBreakpoints.medium;
-          return _Pane(
-            maxWidth: medium
-                ? SubscriberLayoutBreakpoints.mediumContentMaxWidth
-                : double.infinity,
-            slivers: [
-              _Box(profile, medium ? 24 : 16),
-              _Box(courses, 0),
-              _Box(analysis, medium ? 24 : 16),
-              timeline,
-            ],
-          );
-        },
+                const SizedBox(width: 24),
+                Expanded(
+                  flex: 6,
+                  child: _Pane(slivers: [_Box(analysis, 24), timeline]),
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+      final medium = constraints.maxWidth >= SubscriberLayoutBreakpoints.medium;
+      return _Pane(
+        maxWidth: medium
+            ? SubscriberLayoutBreakpoints.mediumContentMaxWidth
+            : double.infinity,
+        slivers: [
+          _Box(profile, medium ? 24 : 16),
+          _Box(courses, 0),
+          _Box(analysis, medium ? 24 : 16),
+          timeline,
+        ],
       );
+    },
+  );
 }
 
 class _Box extends StatelessWidget {
@@ -75,9 +69,9 @@ class _Box extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SliverPadding(
-        padding: EdgeInsetsDirectional.fromSTEB(padding, 0, padding, 24),
-        sliver: SliverToBoxAdapter(child: child),
-      );
+    padding: EdgeInsetsDirectional.fromSTEB(padding, 0, padding, 24),
+    sliver: SliverToBoxAdapter(child: child),
+  );
 }
 
 class _Pane extends StatelessWidget {
@@ -87,12 +81,12 @@ class _Pane extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Center(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: maxWidth),
-          child: CustomScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            slivers: slivers,
-          ),
-        ),
-      );
+    child: ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: maxWidth),
+      child: CustomScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        slivers: slivers,
+      ),
+    ),
+  );
 }

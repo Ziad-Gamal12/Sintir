@@ -9,10 +9,7 @@ import 'wallet_detail_row.dart';
 import 'wallet_details_header.dart';
 
 class ExpandableWalletDetails extends StatefulWidget {
-  const ExpandableWalletDetails({
-    super.key,
-    required this.wallet,
-  });
+  const ExpandableWalletDetails({super.key, required this.wallet});
 
   final TeacherWalletEntity wallet;
 
@@ -35,9 +32,7 @@ class _ExpandableWalletDetailsState extends State<ExpandableWalletDetails> {
         color: colorScheme.surface,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: colorScheme.onSurface.withValues(
-            alpha: 0.08,
-          ),
+          color: colorScheme.onSurface.withValues(alpha: 0.08),
         ),
       ),
       clipBehavior: Clip.antiAlias,
@@ -54,16 +49,15 @@ class _ExpandableWalletDetailsState extends State<ExpandableWalletDetails> {
           Divider(
             height: 1,
             thickness: 1,
-            color: colorScheme.onSurface.withValues(
-              alpha: 0.06,
-            ),
+            color: colorScheme.onSurface.withValues(alpha: 0.06),
           ),
           AnimatedSize(
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
             alignment: Alignment.topCenter,
-            child:
-                isExpanded ? _buildDetails(context) : const SizedBox.shrink(),
+            child: isExpanded
+                ? _buildDetails(context)
+                : const SizedBox.shrink(),
           ),
         ],
       ),
@@ -96,8 +90,10 @@ class _ExpandableWalletDetailsState extends State<ExpandableWalletDetails> {
         ),
         WalletDetailRow.text(
           label: LocaleKeys.walletUpdatedAtLabel,
-          value: DateFormat('d MMMM yyyy، h:mm a', locale)
-              .format(widget.wallet.updatedAt),
+          value: DateFormat(
+            'd MMMM yyyy، h:mm a',
+            locale,
+          ).format(widget.wallet.updatedAt),
         ),
         WalletDetailRow.text(
           label: LocaleKeys.lastTransactionIdLabel,

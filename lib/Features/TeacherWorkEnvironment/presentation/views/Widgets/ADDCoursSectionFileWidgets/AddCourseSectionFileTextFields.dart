@@ -14,35 +14,35 @@ class AddCourseSectionFileTextFields extends StatelessWidget {
     return Column(
       children: [
         CustomTextField(
-            hintText: LocaleKeys.enterFileNameHere,
-            obscureText: false,
-            textInputType: TextInputType.text,
-            onSaved: (value) {
-              coursefilEentity.title = value!;
-            },
-            validator: (value) {
-              if (value!.isEmpty) {
-                return LocaleKeys.enterFileName;
-              }
-              return null;
-            }),
-        const SizedBox(
-          height: 20,
+          hintText: LocaleKeys.enterFileNameHere,
+          obscureText: false,
+          textInputType: TextInputType.text,
+          onSaved: (value) {
+            coursefilEentity.title = value!;
+          },
+          validator: (value) {
+            if (value!.isEmpty) {
+              return LocaleKeys.enterFileName;
+            }
+            return null;
+          },
         ),
+        const SizedBox(height: 20),
         CustomTextField(
-            maxLines: 4,
-            hintText: LocaleKeys.enterFileDescriptionHere,
-            obscureText: false,
-            textInputType: TextInputType.text,
-            onSaved: (value) {
-              coursefilEentity.description = value!;
-            },
-            validator: (value) {
-              if (value!.isEmpty) {
-                return LocaleKeys.enterFileDescription;
-              }
-              return null;
-            }),
+          maxLines: 4,
+          hintText: LocaleKeys.enterFileDescriptionHere,
+          obscureText: false,
+          textInputType: TextInputType.text,
+          onSaved: (value) {
+            coursefilEentity.description = value!;
+          },
+          validator: (value) {
+            if (value!.isEmpty) {
+              return LocaleKeys.enterFileDescription;
+            }
+            return null;
+          },
+        ),
       ],
     );
   }

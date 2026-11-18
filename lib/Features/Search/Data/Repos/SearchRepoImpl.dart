@@ -6,7 +6,6 @@ import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntit
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/models/CourseModel.dart';
-import 'package:sintir/Core/models/contentCreaterModel.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Search/Domain/Entities/CustomFilterEntity.dart';
@@ -143,29 +142,22 @@ class SearchRepoImpl implements SearchRepo {
   Future<SearchResponse> searchTeachers({
     required String? keyword,
   }) async {
-    Map<String, dynamic> searchTeachersQuery = {
-      "limit": 10,
-      "searchField": "fullName",
-      "searchValue": "",
-      "filters": <Map<String, dynamic>>[
-        {
-          "field": "status",
-          "operator": "==",
-          "value": BackendEndpoints.activeStatus,
-        },
-        {
-          "field": "role",
-          "operator": "==",
-          "value": BackendEndpoints.teacherRole,
-        },
-      ],
-    };
-    searchTeachersQuery["searchValue"] = keyword;
     final response = await databaseservice.getData(
       requirements: FireStoreRequirmentsEntity(
-        collection: BackendEndpoints.usersCollectionName,
+        collection: BackendEndpoints.coursesCollection,
       ),
-      query: searchTeachersQuery,
+      query: {
+        "limit": 30,
+        "searchField": "contentcreaterentity.name",
+        "searchValue": keyword,
+        "filters": <Map<String, dynamic>>[
+          {
+            "field": "state",
+            "operator": "==",
+            "value": BackendEndpoints.coursePublishedState,
+          },
+        ],
+      },
     );
 
     if (response.listData == null || response.listData!.isEmpty) {
@@ -174,13 +166,18 @@ class SearchRepoImpl implements SearchRepo {
         fetchedTeachersList: [],
       );
     }
-    List<Contentcreaterentity> fetchedTeachers = await compute(
-      _parseTeachersFromTeacherJson,
+    final courses = await compute(
+      _parseCourses,
       response.listData! as List<Map<String, dynamic>>,
     );
+    final teachers = <String, Contentcreaterentity>{
+      for (final course in courses)
+        if (course.contentcreaterentity != null)
+          course.contentcreaterentity!.id: course.contentcreaterentity!,
+    };
     return SearchResponse(
       fetchedTeachersCoursesList: [],
-      fetchedTeachersList: fetchedTeachers,
+      fetchedTeachersList: teachers.values.toList(),
     );
   }
 
@@ -364,9 +361,3 @@ List<CourseEntity> _parseCourses(List<Map<String, dynamic>> listData) {
   return listData.map((e) => Coursemodel.fromJson(e).toEntity()).toList();
 }
 
-List<Contentcreaterentity> _parseTeachersFromTeacherJson(
-    List<Map<String, dynamic>> listData) {
-  return listData
-      .map((e) => Contentcreatermodel.fromTeacherJson(data: e).toEntity())
-      .toList();
-}

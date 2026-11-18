@@ -5,9 +5,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNav
 import 'package:sintir/locale_keys.dart';
 
 class CourseSectionTextFields extends StatelessWidget {
-  const CourseSectionTextFields({
-    super.key,
-  });
+  const CourseSectionTextFields({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,22 +28,24 @@ class CourseSectionTextFields extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         CustomTextField(
-            hintText: LocaleKeys.enterLectureDescriptionHere,
-            obscureText: false,
-            textInputType: TextInputType.text,
-            maxLines: 5,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return LocaleKeys.enterLectureDescription;
-              }
-              return null;
-            },
-            onSaved: (value) {
-              context
-                  .read<OptionNavigationRequirementsEntity>()
-                  .section
-                  .subtitle = value!;
-            }),
+          hintText: LocaleKeys.enterLectureDescriptionHere,
+          obscureText: false,
+          textInputType: TextInputType.text,
+          maxLines: 5,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return LocaleKeys.enterLectureDescription;
+            }
+            return null;
+          },
+          onSaved: (value) {
+            context
+                    .read<OptionNavigationRequirementsEntity>()
+                    .section
+                    .subtitle =
+                value!;
+          },
+        ),
       ],
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
-import 'package:sintir/Core/helper/GridHelper.dart';
 import 'package:sintir/Core/helper/ShowBottomSheet.dart';
+import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseCardMetrics.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheet.dart';
 
@@ -11,16 +11,9 @@ class SearchCoursesGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-
     return SliverGrid.builder(
       itemCount: courses.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: GridHelper.getCrossAxisCount(width),
-        childAspectRatio: GridHelper.getAspectRatio(maxWidth: width),
-        mainAxisSpacing: 20,
-        crossAxisSpacing: 20,
-      ),
+      gridDelegate: CourseCardGridDelegate.of(context, spacing: 20),
       itemBuilder: (context, index) => CustomCourseItem(
         courseItem: courses[index],
         ontap: () {

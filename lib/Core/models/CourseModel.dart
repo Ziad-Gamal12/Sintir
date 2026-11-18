@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseRatingStatsEntity.dart';
 import 'package:sintir/Core/models/contentCreaterModel.dart';
 
 class Coursemodel {
@@ -12,6 +13,14 @@ class Coursemodel {
   final String level;
   final DateTime postedDate;
   final Map contentcreaterentity;
+
+  /// Read-only here: written by the course feedback Edge Functions.
+  final CourseRatingStatsEntity ratingStats;
+
+  /// Written by the dashboard when a reviewer declines the course.
+  final String? declineReason;
+  final DateTime? declinedAt;
+  final DateTime? resubmittedAt;
 
   Coursemodel({
     required this.id,
@@ -29,7 +38,24 @@ class Coursemodel {
     required this.state,
     required this.postedDate,
     required this.contentcreaterentity,
+    this.ratingStats = const CourseRatingStatsEntity(),
+    this.declineReason,
+    this.declinedAt,
+    this.resubmittedAt,
   });
+
+  static DateTime? dateOrNull(Object? value) {
+    if (value is Timestamp) return value.toDate();
+    if (value is DateTime) return value;
+    if (value is String) return DateTime.tryParse(value);
+    return null;
+  }
+
+  static String? reasonOrNull(Object? value) {
+    if (value is! String) return null;
+    final trimmed = value.trim();
+    return trimmed.isEmpty ? null : trimmed;
+  }
 
   factory Coursemodel.fromEntity({required CourseEntity courseEntity}) {
     return Coursemodel(
@@ -52,6 +78,10 @@ class Coursemodel {
               entity: courseEntity.contentcreaterentity!,
             ).toJson()
           : {},
+      ratingStats: courseEntity.ratingStats,
+      declineReason: courseEntity.declineReason,
+      declinedAt: courseEntity.declinedAt,
+      resubmittedAt: courseEntity.resubmittedAt,
     );
   }
   factory Coursemodel.fromJson(Map<String, dynamic> json) {
@@ -77,6 +107,10 @@ class Coursemodel {
       state: json['state'],
       postedDate: (json['postedDate'] as Timestamp).toDate(),
       contentcreaterentity: json['contentcreaterentity'],
+      ratingStats: CourseRatingStatsEntity.fromJson(json),
+      declineReason: reasonOrNull(json['declineReason']),
+      declinedAt: dateOrNull(json['declinedAt']),
+      resubmittedAt: dateOrNull(json['resubmittedAt']),
     );
   }
   CourseEntity toEntity() {
@@ -98,6 +132,10 @@ class Coursemodel {
       contentcreaterentity: Contentcreatermodel.fromJson(
         data: contentcreaterentity,
       ).toEntity(),
+      ratingStats: ratingStats,
+      declineReason: declineReason,
+      declinedAt: declinedAt,
+      resubmittedAt: resubmittedAt,
     );
   }
 
@@ -118,6 +156,22 @@ class Coursemodel {
       'level': level,
       'state': state,
       'postedDate': postedDate,
+    };
+  }
+
+  /// Fields a teacher may change when editing a course. Updating only these
+  /// (instead of re-writing the whole document) keeps server-maintained
+  /// values intact: rating stats, studentsCount and the other counters.
+  Map<String, dynamic> toEditableJson() {
+    return {
+      'title': title,
+      'description': description,
+      'posterUrl': posterUrl,
+      'price': price,
+      'language': language,
+      'subject': subject,
+      'level': level,
+      'state': state,
     };
   }
 }

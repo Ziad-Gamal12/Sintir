@@ -21,10 +21,7 @@ class WalletDetailRow extends StatelessWidget {
     return WalletDetailRow(
       key: key,
       label: label,
-      value: Text(
-        value,
-        textAlign: TextAlign.end,
-      ),
+      value: Text(value, textAlign: TextAlign.end),
       showDivider: showDivider,
     );
   }
@@ -37,10 +34,7 @@ class WalletDetailRow extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 14,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -49,9 +43,7 @@ class WalletDetailRow extends StatelessWidget {
                 label,
                 textAlign: TextAlign.end,
                 style: theme.textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onSurface.withValues(
-                    alpha: 0.65,
-                  ),
+                  color: colorScheme.onSurface.withValues(alpha: 0.65),
                 ),
               ),
               const SizedBox(width: 16),
@@ -69,9 +61,7 @@ class WalletDetailRow extends StatelessWidget {
             height: 1,
             indent: 20,
             endIndent: 20,
-            color: colorScheme.onSurface.withValues(
-              alpha: 0.06,
-            ),
+            color: colorScheme.onSurface.withValues(alpha: 0.06),
           ),
       ],
     );

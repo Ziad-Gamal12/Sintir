@@ -23,8 +23,10 @@ class CouponItemStatusBadge extends StatelessWidget {
               size: 12,
             ),
             SizedBox(width: 4),
-            Text(availability.label,
-                style: textStyles.medium12.copyWith(color: availability.color)),
+            Text(
+              availability.label,
+              style: textStyles.medium12.copyWith(color: availability.color),
+            ),
           ],
         ),
       ),

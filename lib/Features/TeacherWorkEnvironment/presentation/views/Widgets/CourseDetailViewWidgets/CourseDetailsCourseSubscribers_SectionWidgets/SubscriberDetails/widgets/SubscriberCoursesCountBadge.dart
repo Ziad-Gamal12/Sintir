@@ -11,21 +11,27 @@ class SubscriberCoursesCountBadge extends StatelessWidget {
     final theme = Theme.of(context);
     final isDarkMode = theme.brightness == Brightness.dark;
     return Container(
-      padding:
-          const EdgeInsetsDirectional.symmetric(vertical: 4, horizontal: 8),
+      padding: const EdgeInsetsDirectional.symmetric(
+        vertical: 4,
+        horizontal: 8,
+      ),
       decoration: ShapeDecoration(
         color: theme.colorScheme.surfaceContainerHighest,
         shape: StadiumBorder(
-            side: BorderSide(
-                color: isDarkMode ? Colors.black54 : Colors.grey.shade200,
-                width: 1)),
+          side: BorderSide(
+            color: isDarkMode ? Colors.black54 : Colors.grey.shade200,
+            width: 1,
+          ),
+        ),
       ),
       child: Text(
         LocaleKeys.subscriberCourseCount(
-            count, Localizations.localeOf(context).toString()),
-        style: AppTextStyles(context)
-            .semiBold12
-            .copyWith(color: theme.colorScheme.onSurface),
+          count,
+          Localizations.localeOf(context).toString(),
+        ),
+        style: AppTextStyles(
+          context,
+        ).semiBold12.copyWith(color: theme.colorScheme.onSurface),
       ),
     );
   }

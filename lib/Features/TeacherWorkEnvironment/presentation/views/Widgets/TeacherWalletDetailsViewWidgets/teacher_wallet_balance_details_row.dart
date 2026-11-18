@@ -22,15 +22,19 @@ class TeacherWalletBalanceDetailsRow extends StatelessWidget {
       children: [
         FaIcon(icon, color: theme.iconTheme.color, size: 20),
         const SizedBox(width: 10),
-        Text(title,
-            style: AppTextStyles(context)
-                .regular16
-                .copyWith(color: theme.textTheme.bodyMedium?.color)),
+        Text(
+          title,
+          style: AppTextStyles(
+            context,
+          ).regular16.copyWith(color: theme.textTheme.bodyMedium?.color),
+        ),
         const Spacer(),
-        Text(value,
-            style: AppTextStyles(context)
-                .semiBold16
-                .copyWith(color: theme.textTheme.bodyMedium?.color)),
+        Text(
+          value,
+          style: AppTextStyles(
+            context,
+          ).semiBold16.copyWith(color: theme.textTheme.bodyMedium?.color),
+        ),
       ],
     );
   }

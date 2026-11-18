@@ -5,10 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class CustomReviewQuestionImage extends StatelessWidget {
-  CustomReviewQuestionImage({
-    super.key,
-    required this.imageFile,
-  });
+  CustomReviewQuestionImage({super.key, required this.imageFile});
   File? imageFile;
   @override
   Widget build(BuildContext context) {

@@ -34,7 +34,8 @@ class AddCourseCouponExpiryField extends StatelessWidget {
           color: fillBg,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-              color: isDarkMode ? Colors.white10 : const Color(0xFFE4E6E8)),
+            color: isDarkMode ? Colors.white10 : const Color(0xFFE4E6E8),
+          ),
         ),
         child: ListTile(
           dense: true,
@@ -42,11 +43,11 @@ class AddCourseCouponExpiryField extends StatelessWidget {
             dateText,
             style: pickedDate == null
                 ? AppTextStyles(context).regular14.copyWith(
-                      color: theme.hintColor.withValues(alpha: 0.5),
-                    )
+                    color: theme.hintColor.withValues(alpha: 0.5),
+                  )
                 : AppTextStyles(context).regular14.copyWith(
-                      color: isDarkMode ? Colors.white : Colors.black,
-                    ),
+                    color: isDarkMode ? Colors.white : Colors.black,
+                  ),
           ),
           leading: Icon(
             Icons.date_range_outlined,

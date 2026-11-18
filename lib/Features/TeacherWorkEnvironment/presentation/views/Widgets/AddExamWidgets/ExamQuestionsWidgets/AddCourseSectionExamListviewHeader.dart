@@ -3,25 +3,22 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/locale_keys.dart';
 
 class AddCourseSectionExamListviewHeader extends StatelessWidget {
-  const AddCourseSectionExamListviewHeader({
-    super.key,
-  });
+  const AddCourseSectionExamListviewHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const SizedBox(
-        height: 20,
-      ),
-      Text(
-        LocaleKeys.examQuestions,
-        style: AppTextStyles(context).semiBold20.copyWith(
-              color: Theme.of(context).textTheme.titleLarge?.color,
-            ),
-      ),
-      const SizedBox(
-        height: 10,
-      ),
-    ]);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 20),
+        Text(
+          LocaleKeys.examQuestions,
+          style: AppTextStyles(context).semiBold20.copyWith(
+            color: Theme.of(context).textTheme.titleLarge?.color,
+          ),
+        ),
+        const SizedBox(height: 10),
+      ],
+    );
   }
 }

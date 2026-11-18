@@ -17,10 +17,12 @@ class TransactionAmountSummaryCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
       decoration: BoxDecoration(
-          color: isDarkMode ? Colors.grey.shade900 : Colors.grey.shade100,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-              color: isDarkMode ? Colors.grey.shade800 : Colors.grey.shade200)),
+        color: isDarkMode ? Colors.grey.shade900 : Colors.grey.shade100,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: isDarkMode ? Colors.grey.shade800 : Colors.grey.shade200,
+        ),
+      ),
       child: Column(
         children: [
           Text(

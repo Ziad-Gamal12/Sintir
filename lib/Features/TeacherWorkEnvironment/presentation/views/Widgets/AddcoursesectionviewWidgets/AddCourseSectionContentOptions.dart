@@ -10,8 +10,11 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCou
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseSectionViewWidgets/AddCourseSectionContentItem.dart';
 
 class AddCourseSectionContentOptions extends StatelessWidget {
-  AddCourseSectionContentOptions(
-      {super.key, required this.optionRequirementsEntity, this.onSave});
+  AddCourseSectionContentOptions({
+    super.key,
+    required this.optionRequirementsEntity,
+    this.onSave,
+  });
   final OptionNavigationRequirementsEntity optionRequirementsEntity;
   VoidCallback? onSave;
 
@@ -28,8 +31,9 @@ class AddCourseSectionContentOptions extends StatelessWidget {
                 if (onSave != null) onSave!();
                 if (e.key == 1) {
                   GoRouter.of(context).pushReplacement(
-                      AddcourseSectionExamview.routeName,
-                      extra: optionRequirementsEntity);
+                    AddcourseSectionExamview.routeName,
+                    extra: optionRequirementsEntity,
+                  );
                 } else if (e.key == 0) {
                   GoRouter.of(context).pushReplacement(
                     Addcoursesectionvedioview.routeName,
@@ -42,9 +46,7 @@ class AddCourseSectionContentOptions extends StatelessWidget {
                   );
                 }
               },
-              child: AddCourseSectionContentItem(
-                item: e.value,
-              ),
+              child: AddCourseSectionContentItem(item: e.value),
             ),
           ),
         );

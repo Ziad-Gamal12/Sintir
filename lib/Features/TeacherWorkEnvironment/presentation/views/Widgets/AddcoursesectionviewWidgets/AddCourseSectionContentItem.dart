@@ -33,15 +33,13 @@ class AddCourseSectionContentItem extends StatelessWidget {
             width: 28,
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
         Text(
           item.title,
-          style: AppTextStyles(context)
-              .semiBold16
-              .copyWith(color: theme.textTheme.bodyMedium?.color),
-        )
+          style: AppTextStyles(
+            context,
+          ).semiBold16.copyWith(color: theme.textTheme.bodyMedium?.color),
+        ),
       ],
     );
   }

@@ -5,18 +5,14 @@ import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/locale_keys.dart';
 
 class EditCourseDescriptionField extends StatelessWidget {
-  const EditCourseDescriptionField({
-    super.key,
-  });
+  const EditCourseDescriptionField({super.key});
   @override
   Widget build(BuildContext context) {
     CourseEntity course = context.read<CourseEntity>();
     return CustomTextField(
       hintText: LocaleKeys.courseDescription,
       obscureText: false,
-      controller: TextEditingController(
-        text: course.description,
-      ),
+      controller: TextEditingController(text: course.description),
       onSaved: (value) {
         course.description = value!;
       },

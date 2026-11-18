@@ -4,9 +4,9 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseDetailsCouponsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReportsSectionWidgets/CourseDetailsCourseReportsView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReviewsSectionWidgets/CourseDetailsSubscribersReviewsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherCourseReviewsView.dart';
 import 'package:sintir/locale_keys.dart';
 
 class CoursedetailsviewOptionitemEntity {
@@ -47,9 +47,8 @@ class CoursedetailsviewOptionitemEntity {
         image: Assets.assetsIconsFeedback,
         description: LocaleKeys.studentsReviewsDescription,
         onTap: () {
-          GoRouter.of(context).push(
-              CourseDetailsSubscribersReviewsView.routeName,
-              extra: course.id);
+          GoRouter.of(context)
+              .push(TeacherCourseReviewsView.routeName, extra: course);
         },
       ),
       CoursedetailsviewOptionitemEntity(

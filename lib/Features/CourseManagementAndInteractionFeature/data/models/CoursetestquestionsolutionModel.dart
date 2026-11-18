@@ -11,7 +11,7 @@ class Coursetestquestionsolutionmodel {
 
   factory Coursetestquestionsolutionmodel.fromJson(Map<String, dynamic> json) {
     return Coursetestquestionsolutionmodel(
-        answer: json['answer'], isCorrect: json['isCorrect']);
+        answer: json['answer'] ?? '', isCorrect: json['isCorrect'] == true);
   }
   factory Coursetestquestionsolutionmodel.fromEntity(
       {required CourseTestQuestionSolutionEntity coursetestquestionsolution}) {

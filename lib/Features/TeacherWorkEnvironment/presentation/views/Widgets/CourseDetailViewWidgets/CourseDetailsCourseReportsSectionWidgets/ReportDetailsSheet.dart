@@ -8,8 +8,11 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/locale_keys.dart';
 
 class ReportDetailsSheet extends StatelessWidget {
-  const ReportDetailsSheet(
-      {super.key, required this.courseId, required this.report});
+  const ReportDetailsSheet({
+    super.key,
+    required this.courseId,
+    required this.report,
+  });
   final String courseId;
   final CourseReportsItemEntity report;
 
@@ -24,13 +27,18 @@ class ReportDetailsSheet extends StatelessWidget {
           state is CourseReportsUpdateStatusFailure,
       listener: (context, state) {
         if (state is CourseReportsUpdateStatusSuccess) {
-          CustomSnackBar.show(context,
-              message: LocaleKeys.reportStatusUpdated, type: SnackType.success);
+          CustomSnackBar.show(
+            context,
+            message: LocaleKeys.reportStatusUpdated,
+            type: SnackType.success,
+          );
           GoRouter.of(context).pop();
         } else if (state is CourseReportsUpdateStatusFailure) {
-          CustomSnackBar.show(context,
-              message: LocaleKeys.reportStatusUpdateFailed,
-              type: SnackType.error);
+          CustomSnackBar.show(
+            context,
+            message: LocaleKeys.reportStatusUpdateFailed,
+            type: SnackType.error,
+          );
         }
       },
       child: Material(

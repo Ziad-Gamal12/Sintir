@@ -36,10 +36,7 @@ class TransactionDetailRow extends StatelessWidget {
             textAlign: TextAlign.end,
           ),
         ),
-        if (leading != null) ...[
-          const SizedBox(width: 4),
-          leading!,
-        ],
+        if (leading != null) ...[const SizedBox(width: 4), leading!],
       ],
     );
 
@@ -57,9 +54,7 @@ class TransactionDetailRow extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              Expanded(
-                child: valueWidget,
-              ),
+              Expanded(child: valueWidget),
             ],
           ),
         ),

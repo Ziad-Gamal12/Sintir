@@ -22,23 +22,27 @@ class CustomAddNewCourseSectionItemButton extends StatelessWidget {
     final Color buttonColor = theme.cardColor; // Background
     final Color textColor = theme.textTheme.bodyLarge!.color!; // Text
 
-    final Color borderColor =
-        isDarkMode ? Colors.grey.shade700 : Colors.grey.shade300;
+    final Color borderColor = isDarkMode
+        ? Colors.grey.shade700
+        : Colors.grey.shade300;
 
     return Custombutton(
-        text: LocaleKeys.addLecture,
-        color: buttonColor,
-        textColor: textColor,
-        borderRadius: BorderRadius.circular(8),
-        side: BorderSide(color: borderColor),
-        onPressed: () {
-          showCustomBottomSheet(
-            context: context,
-            child: IntrinsicHeight(
-              child: CustomAddNewSectionItemBottomSheetChild(
-                  section: section, courseEntity: courseEntity),
+      text: LocaleKeys.addLecture,
+      color: buttonColor,
+      textColor: textColor,
+      borderRadius: BorderRadius.circular(8),
+      side: BorderSide(color: borderColor),
+      onPressed: () {
+        showCustomBottomSheet(
+          context: context,
+          child: IntrinsicHeight(
+            child: CustomAddNewSectionItemBottomSheetChild(
+              section: section,
+              courseEntity: courseEntity,
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }

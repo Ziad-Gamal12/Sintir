@@ -46,10 +46,7 @@ class CourseDetailsCouponsViewContent extends StatelessWidget {
       controller: scrollController,
       slivers: [
         if (coupons.isNotEmpty)
-          CourseCouponsSliverGridView(
-            courseId: courseId,
-            coupons: coupons,
-          )
+          CourseCouponsSliverGridView(courseId: courseId, coupons: coupons)
         else
           SliverFillRemaining(
             hasScrollBody: false,
@@ -57,9 +54,7 @@ class CourseDetailsCouponsViewContent extends StatelessWidget {
               child: SizedBox(
                 width: 28,
                 height: 28,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                ),
+                child: CircularProgressIndicator(strokeWidth: 2),
               ),
             ),
           ),
@@ -72,9 +67,7 @@ class CourseDetailsCouponsViewContent extends StatelessWidget {
                 child: SizedBox(
                   width: 24,
                   height: 24,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                  ),
+                  child: CircularProgressIndicator(strokeWidth: 2),
                 ),
               ),
             ),

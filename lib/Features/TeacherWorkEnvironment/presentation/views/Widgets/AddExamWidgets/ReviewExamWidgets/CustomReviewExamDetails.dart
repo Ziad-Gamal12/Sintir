@@ -14,8 +14,9 @@ class TestSummaryCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final isDark = theme.brightness == Brightness.dark;
 
-    final CourseTestEntity entity =
-        context.read<NavigateExamReviewRequirmentsEntity>().coursetestentity;
+    final CourseTestEntity entity = context
+        .read<NavigateExamReviewRequirmentsEntity>()
+        .coursetestentity;
 
     return Container(
       padding: const EdgeInsets.all(20),
@@ -23,7 +24,8 @@ class TestSummaryCard extends StatelessWidget {
         color: theme.cardColor,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(
-            color: theme.dividerColor.withValues(alpha: isDark ? 0.1 : 0.05)),
+          color: theme.dividerColor.withValues(alpha: isDark ? 0.1 : 0.05),
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: isDark ? 0.4 : 0.08),
@@ -44,17 +46,19 @@ class TestSummaryCard extends StatelessWidget {
                   color: colorScheme.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Icon(Icons.assignment_turned_in_rounded,
-                    color: colorScheme.primary),
+                child: Icon(
+                  Icons.assignment_turned_in_rounded,
+                  color: colorScheme.primary,
+                ),
               ),
               const SizedBox(width: 14),
               Expanded(
                 child: Text(
                   entity.title,
                   style: AppTextStyles(context).semiBold20.copyWith(
-                        color: theme.textTheme.bodyLarge?.color,
-                        letterSpacing: -0.5,
-                      ),
+                    color: theme.textTheme.bodyLarge?.color,
+                    letterSpacing: -0.5,
+                  ),
                 ),
               ),
             ],
@@ -119,17 +123,17 @@ class TestSummaryCard extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: AppTextStyles(context).regular13.copyWith(
-                      color: theme.textTheme.bodySmall?.color,
-                    ),
+                style: AppTextStyles(
+                  context,
+                ).regular13.copyWith(color: theme.textTheme.bodySmall?.color),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(
                 value,
-                style: AppTextStyles(context).semiBold14.copyWith(
-                      color: theme.textTheme.bodyLarge?.color,
-                    ),
+                style: AppTextStyles(
+                  context,
+                ).semiBold14.copyWith(color: theme.textTheme.bodyLarge?.color),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

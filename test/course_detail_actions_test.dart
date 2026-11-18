@@ -55,6 +55,20 @@ void main() {
     expect(find.byType(CircularProgressIndicator), findsNothing);
   });
 
+  testWidgets('only published or archived courses show the archive action',
+      (tester) async {
+    for (final state in ['Declined', 'Rejected', 'Pending', 'Archived']) {
+      course = CourseEntity.empty()..state = state;
+      await pumpActions(tester);
+      expect(find.byType(OutlinedButton), findsNothing, reason: state);
+      expect(find.byType(FilledButton), findsOneWidget, reason: state);
+    }
+
+    course = CourseEntity.empty()..state = 'DeletedByTeacher';
+    await pumpActions(tester);
+    expect(find.byIcon(Icons.unarchive_outlined), findsOneWidget);
+  });
+
   testWidgets('edit loading disables edit without showing archive spinner',
       (tester) async {
     await pumpActions(tester);
@@ -113,6 +127,11 @@ class _UnusedCoursesRepo implements Coursesrepo {
 
   @override
   Future<Either<Failure, void>> updateCourse(
+          {required CourseEntity courseEntity}) =>
+      throw UnimplementedError();
+
+  @override
+  Future<Either<Failure, void>> resubmitCourseForReview(
           {required CourseEntity courseEntity}) =>
       throw UnimplementedError();
 

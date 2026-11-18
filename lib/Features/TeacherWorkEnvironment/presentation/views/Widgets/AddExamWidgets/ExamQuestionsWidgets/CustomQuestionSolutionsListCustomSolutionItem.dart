@@ -36,17 +36,19 @@ class CustomQuestionSolutionsListCustomSolutionItem extends StatelessWidget {
                 coursetestquestionsolutionentity: e.value,
                 groupValue: getGroupValue(),
                 onChange: (value) {
-                  context
-                      .read<TestItemCubit>()
-                      .changeSelectedSolution(question: question, index: e.key);
+                  context.read<TestItemCubit>().changeSelectedSolution(
+                    question: question,
+                    index: e.key,
+                  );
                 },
               ),
             ),
-            const SizedBox(
-              width: 10,
-            ),
+            const SizedBox(width: 10),
             CustomRemoveSolutionItem(
-                coursetestentity: coursetestentity, e: e, question: question)
+              coursetestentity: coursetestentity,
+              e: e,
+              question: question,
+            ),
           ],
         );
       },
@@ -55,9 +57,11 @@ class CustomQuestionSolutionsListCustomSolutionItem extends StatelessWidget {
 
   String getGroupValue() {
     return question.solutions
-        .firstWhere((s) => s.isCorrect,
-            orElse: () =>
-                CourseTestQuestionSolutionEntity(answer: "", isCorrect: false))
+        .firstWhere(
+          (s) => s.isCorrect,
+          orElse: () =>
+              CourseTestQuestionSolutionEntity(answer: "", isCorrect: false),
+        )
         .id
         .toString();
   }

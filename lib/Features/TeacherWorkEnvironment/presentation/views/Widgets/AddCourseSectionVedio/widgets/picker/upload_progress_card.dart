@@ -25,8 +25,9 @@ class UploadProgressCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final styles = AppTextStyles(context);
-    final mutedStyle =
-        styles.regular12.copyWith(color: colors.onSurfaceVariant);
+    final mutedStyle = styles.regular12.copyWith(
+      color: colors.onSurfaceVariant,
+    );
     final value = progress.clamp(0.0, 1.0).toDouble();
     final percent = (value * 100).round();
 

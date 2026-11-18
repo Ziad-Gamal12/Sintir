@@ -8,15 +8,16 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ReviewExamWidgets/ReviewExamSectionViewBody.dart';
 
 class CustomAddExamStepsPageView extends StatefulWidget {
-  const CustomAddExamStepsPageView(
-      {super.key,
-      required this.courseTestEntity,
-      required this.courseEntity,
-      required this.isNewSection,
-      required this.examDetailsFormKey,
-      required this.questionsFormKey,
-      required this.pageController,
-      required this.section});
+  const CustomAddExamStepsPageView({
+    super.key,
+    required this.courseTestEntity,
+    required this.courseEntity,
+    required this.isNewSection,
+    required this.examDetailsFormKey,
+    required this.questionsFormKey,
+    required this.pageController,
+    required this.section,
+  });
   final CourseTestEntity courseTestEntity;
   final CourseEntity courseEntity;
   final bool isNewSection;
@@ -47,12 +48,12 @@ class _CustomAddExamStepsPageViewState
       ReviewExamSectionViewBody(
         navigateExamReviewRequirmentsEntity:
             NavigateExamReviewRequirmentsEntity(
-          courseEntity: widget.courseEntity,
-          section: widget.section,
-          isNewSection: widget.isNewSection,
-          coursetestentity: widget.courseTestEntity,
-        ),
-      )
+              courseEntity: widget.courseEntity,
+              section: widget.section,
+              isNewSection: widget.isNewSection,
+              coursetestentity: widget.courseTestEntity,
+            ),
+      ),
     ];
   }
 

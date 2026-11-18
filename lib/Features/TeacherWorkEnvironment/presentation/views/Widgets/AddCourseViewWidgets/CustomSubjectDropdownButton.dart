@@ -28,7 +28,7 @@ class _CustomSubjectDropdownButtonState
     "History",
     "Geography",
     "Computer Science",
-    "Other"
+    "Other",
   ];
   @override
   Widget build(BuildContext context) {

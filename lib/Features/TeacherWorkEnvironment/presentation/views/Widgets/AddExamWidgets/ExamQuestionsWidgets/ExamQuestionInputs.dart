@@ -31,21 +31,17 @@ class ExamQuestionInputs extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           ExamQuestionInputsQuestionHeader(
-              index: index, totalQuestions: courseTestEntity.questions.length),
-          const SizedBox(
-            height: 20,
+            index: index,
+            totalQuestions: courseTestEntity.questions.length,
           ),
+          const SizedBox(height: 20),
           // Note: AddcourseExamQuestionItemTextField needs to be theme-aware internally (text/border color)
           AddcourseExamQuestionItemTextField(
             coursetestquestionentity: coursetestquestionentity,
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -54,14 +50,13 @@ class ExamQuestionInputs extends StatelessWidget {
                 question: coursetestquestionentity,
                 coursetestentity: courseTestEntity,
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               // Note: ExamQuestionInputsAddNewSoluotionButton needs to be theme-aware internally
               ExamQuestionInputsAddNewSoluotionButton(
-                  coursetestquestionentity: coursetestquestionentity)
+                coursetestquestionentity: coursetestquestionentity,
+              ),
             ],
-          )
+          ),
         ],
       ),
     );

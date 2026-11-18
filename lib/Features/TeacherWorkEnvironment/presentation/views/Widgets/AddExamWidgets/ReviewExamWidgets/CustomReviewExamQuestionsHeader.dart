@@ -3,9 +3,7 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/locale_keys.dart';
 
 class CustomReviewExamQuestionsHeader extends StatelessWidget {
-  const CustomReviewExamQuestionsHeader({
-    super.key,
-  });
+  const CustomReviewExamQuestionsHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +14,7 @@ class CustomReviewExamQuestionsHeader extends StatelessWidget {
           LocaleKeys.examQuestions,
           style: AppTextStyles(context).semiBold20,
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const SizedBox(height: 10),
       ],
     );
   }

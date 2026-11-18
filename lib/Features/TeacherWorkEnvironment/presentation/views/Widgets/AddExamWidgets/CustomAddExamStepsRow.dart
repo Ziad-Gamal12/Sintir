@@ -28,7 +28,7 @@ class CustomAddExamStepsRow extends StatelessWidget {
             color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 20,
             offset: const Offset(0, 10),
-          )
+          ),
         ],
         border: Border.all(color: theme.dividerColor.withValues(alpha: 0.05)),
       ),
@@ -61,7 +61,11 @@ class CustomAddExamStepsRow extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           _buildNode(
-                              isCompleted, isSelected, primaryColor, theme),
+                            isCompleted,
+                            isSelected,
+                            primaryColor,
+                            theme,
+                          ),
                           const SizedBox(height: 12),
                           AnimatedDefaultTextStyle(
                             duration: const Duration(milliseconds: 300),
@@ -73,8 +77,8 @@ class CustomAddExamStepsRow extends StatelessWidget {
                               color: isSelected
                                   ? primaryColor
                                   : (isCompleted
-                                      ? theme.textTheme.bodyLarge?.color
-                                      : Colors.grey),
+                                        ? theme.textTheme.bodyLarge?.color
+                                        : Colors.grey),
                             ),
                             child: Text(e.value.title ?? ""),
                           ),
@@ -92,7 +96,11 @@ class CustomAddExamStepsRow extends StatelessWidget {
   }
 
   Widget _buildNode(
-      bool isCompleted, bool isSelected, Color primary, ThemeData theme) {
+    bool isCompleted,
+    bool isSelected,
+    Color primary,
+    ThemeData theme,
+  ) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 400),
       height: 40,
@@ -102,8 +110,8 @@ class CustomAddExamStepsRow extends StatelessWidget {
         color: isCompleted
             ? primary
             : (isSelected
-                ? theme.cardColor
-                : theme.dividerColor.withValues(alpha: 0.1)),
+                  ? theme.cardColor
+                  : theme.dividerColor.withValues(alpha: 0.1)),
         border: Border.all(
           color: isSelected ? primary : Colors.transparent,
           width: 2,
@@ -111,9 +119,10 @@ class CustomAddExamStepsRow extends StatelessWidget {
         boxShadow: isSelected
             ? [
                 BoxShadow(
-                    color: primary.withValues(alpha: 0.3),
-                    blurRadius: 12,
-                    offset: const Offset(0, 4))
+                  color: primary.withValues(alpha: 0.3),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
               ]
             : [],
       ),
@@ -123,8 +132,9 @@ class CustomAddExamStepsRow extends StatelessWidget {
             : Text(
                 "${currentStep + 1}",
                 style: TextStyle(
-                    color: isSelected ? primary : Colors.grey,
-                    fontWeight: FontWeight.bold),
+                  color: isSelected ? primary : Colors.grey,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
       ),
     );

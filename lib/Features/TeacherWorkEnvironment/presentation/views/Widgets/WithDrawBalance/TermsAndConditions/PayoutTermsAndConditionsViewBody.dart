@@ -60,7 +60,9 @@ class PayoutTermsAndConditionsViewBody extends StatelessWidget {
     return Scrollbar(
       child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
-            horizontal: KHorizontalPadding, vertical: KVerticalPadding),
+          horizontal: KHorizontalPadding,
+          vertical: KVerticalPadding,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [

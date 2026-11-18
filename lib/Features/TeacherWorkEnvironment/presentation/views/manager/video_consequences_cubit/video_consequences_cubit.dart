@@ -6,24 +6,30 @@ import 'package:sintir/Core/repos/Video-Item-Repo/VideoItemRepo.dart';
 part 'video_consequences_state.dart';
 
 class VideoConsequencesCubit extends Cubit<VideoConsequencesState> {
-  VideoConsequencesCubit(
-      {required this.videoItemRepo, required this.subscibtionsRepo})
-      : super(VideoConsequencesInitial());
+  VideoConsequencesCubit({
+    required this.videoItemRepo,
+    required this.subscibtionsRepo,
+  }) : super(VideoConsequencesInitial());
   final CourseSubscibtionsRepo subscibtionsRepo;
   final VideoItemRepo videoItemRepo;
 
-  Future<void> getTotalStudentsCount({
-    required String courseId,
-  }) async {
+  Future<void> getTotalStudentsCount({required String courseId}) async {
     emit(VideoConsequencesGetTotalStudentsCountLoading());
-    final result =
-        await subscibtionsRepo.getSubscribersCount(courseID: courseId);
-    result.fold((failure) {
-      emit(VideoConsequencesGetTotalStudentsCountFailure(
-          errMessage: failure.message));
-    }, (success) {
-      emit(VideoConsequencesGetTotalStudentsCountSuccess(count: success));
-    });
+    final result = await subscibtionsRepo.getSubscribersCount(
+      courseID: courseId,
+    );
+    result.fold(
+      (failure) {
+        emit(
+          VideoConsequencesGetTotalStudentsCountFailure(
+            errMessage: failure.message,
+          ),
+        );
+      },
+      (success) {
+        emit(VideoConsequencesGetTotalStudentsCountSuccess(count: success));
+      },
+    );
   }
 
   Future<void> getVideoAttendedCount({
@@ -33,12 +39,21 @@ class VideoConsequencesCubit extends Cubit<VideoConsequencesState> {
   }) async {
     emit(VideoConsequencesGetVideoAttendedCountLoading());
     final result = await videoItemRepo.getAttendedCount(
-        courseId: courseId, sectionId: sectionId, videoId: videoId);
-    result.fold((failure) {
-      emit(VideoConsequencesGetVideoAttendedCountFailure(
-          errMessage: failure.message));
-    }, (success) {
-      emit(VideoConsequencesGetVideoAttendedCountSuccess(count: success));
-    });
+      courseId: courseId,
+      sectionId: sectionId,
+      videoId: videoId,
+    );
+    result.fold(
+      (failure) {
+        emit(
+          VideoConsequencesGetVideoAttendedCountFailure(
+            errMessage: failure.message,
+          ),
+        );
+      },
+      (success) {
+        emit(VideoConsequencesGetVideoAttendedCountSuccess(count: success));
+      },
+    );
   }
 }

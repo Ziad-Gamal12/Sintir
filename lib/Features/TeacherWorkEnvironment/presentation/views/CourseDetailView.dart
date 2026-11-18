@@ -17,14 +17,14 @@ class CourseDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-        create: (_) => UpdateCourseCubit(
-          coursesrepo: getIt<Coursesrepo>(),
-          assetspickerrepo: getIt<Assetspickerrepo>(),
-        ),
-        child: Scaffold(
-          key: Variables.courseDeatilsViewScaffoldKey,
-          appBar: CustomAppBar(appBartitle: LocaleKeys.courseDetails),
-          body: CourseDetailScreenBody(course: courseEntity),
-        ),
-      );
+    create: (_) => UpdateCourseCubit(
+      coursesrepo: getIt<Coursesrepo>(),
+      assetspickerrepo: getIt<Assetspickerrepo>(),
+    ),
+    child: Scaffold(
+      key: Variables.courseDeatilsViewScaffoldKey,
+      appBar: CustomAppBar(appBartitle: LocaleKeys.courseDetails),
+      body: CourseDetailScreenBody(course: courseEntity),
+    ),
+  );
 }

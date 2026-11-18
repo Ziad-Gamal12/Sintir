@@ -26,8 +26,9 @@ class CustomReviewExamQuestionListItem extends StatelessWidget {
     final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
 
     // Adjust border color based on mode
-    final Color borderColor =
-        isDarkMode ? Colors.grey.shade600 : Colors.grey.shade400;
+    final Color borderColor = isDarkMode
+        ? Colors.grey.shade600
+        : Colors.grey.shade400;
 
     // Adjust shadow for Dark Mode
     final List<BoxShadow> boxShadows = isDarkMode
@@ -63,20 +64,17 @@ class CustomReviewExamQuestionListItem extends StatelessWidget {
         children: [
           // ExamQuestionInputsQuestionHeader is already theme-aware
           ExamQuestionInputsQuestionHeader(
-              index: index, totalQuestions: totalQuestions),
-          const SizedBox(
-            height: 10,
+            index: index,
+            totalQuestions: totalQuestions,
           ),
+          const SizedBox(height: 10),
           Text(
             "${question.questionTitle}؟",
-            style: AppTextStyles(context)
-                .semiBold20
+            style: AppTextStyles(context).semiBold20
                 // Use primaryTextColor instead of hardcoded Colors.black
                 .copyWith(color: primaryTextColor),
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -86,15 +84,13 @@ class CustomReviewExamQuestionListItem extends StatelessWidget {
                   solutions: question.solutions,
                 ),
               ),
-              const SizedBox(
-                width: 10,
-              ),
+              const SizedBox(width: 10),
               Expanded(
-                  // CustomReviewQuestionImage needs to be theme-aware internally
-                  child:
-                      CustomReviewQuestionImage(imageFile: question.imageFile))
+                // CustomReviewQuestionImage needs to be theme-aware internally
+                child: CustomReviewQuestionImage(imageFile: question.imageFile),
+              ),
             ],
-          )
+          ),
         ],
       ),
     );

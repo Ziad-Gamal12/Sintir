@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 
 class CouponItemUsage extends StatelessWidget {
-  const CouponItemUsage(
-      {super.key,
-      required this.usedCount,
-      required this.usageLimit,
-      required this.hasReachedLimit});
+  const CouponItemUsage({
+    super.key,
+    required this.usedCount,
+    required this.usageLimit,
+    required this.hasReachedLimit,
+  });
   final int usedCount, usageLimit;
   final bool hasReachedLimit;
 
@@ -18,19 +19,17 @@ class CouponItemUsage extends StatelessWidget {
       children: [
         Text(
           "$usedCount من $usageLimit",
-          style: AppTextStyles(context)
-              .semiBold11
-              .copyWith(color: _color(theme: theme)),
+          style: AppTextStyles(
+            context,
+          ).semiBold11.copyWith(color: _color(theme: theme)),
         ),
-        SizedBox(
-          width: 4,
-        ),
+        SizedBox(width: 4),
         Text(
           hasReachedLimit ? "(اكتمل الحد)" : "استخدام",
-          style: AppTextStyles(context)
-              .regular11
-              .copyWith(color: _color(theme: theme)),
-        )
+          style: AppTextStyles(
+            context,
+          ).regular11.copyWith(color: _color(theme: theme)),
+        ),
       ],
     );
   }

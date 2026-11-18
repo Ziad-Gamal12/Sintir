@@ -5,8 +5,11 @@ import 'package:sintir/Core/Managers/Cubits/CourseReportsCubit/course_reports_cu
 import 'package:sintir/locale_keys.dart';
 
 class ReportSearchField extends StatefulWidget {
-  const ReportSearchField(
-      {super.key, required this.onChanged, this.autofocus = false});
+  const ReportSearchField({
+    super.key,
+    required this.onChanged,
+    this.autofocus = false,
+  });
   final ValueChanged<String> onChanged;
   final bool autofocus;
   @override
@@ -20,7 +23,8 @@ class _ReportSearchFieldState extends State<ReportSearchField> {
   void initState() {
     super.initState();
     controller = TextEditingController(
-        text: context.read<CourseReportsCubit>().searchQuery);
+      text: context.read<CourseReportsCubit>().searchQuery,
+    );
   }
 
   @override
@@ -32,30 +36,33 @@ class _ReportSearchFieldState extends State<ReportSearchField> {
 
   void changed(String value) {
     debounce?.cancel();
-    debounce =
-        Timer(const Duration(milliseconds: 300), () => widget.onChanged(value));
+    debounce = Timer(
+      const Duration(milliseconds: 300),
+      () => widget.onChanged(value),
+    );
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) => TextField(
-        controller: controller,
-        autofocus: widget.autofocus,
-        textInputAction: TextInputAction.search,
-        onChanged: changed,
-        decoration: InputDecoration(
-          hintText: LocaleKeys.reportSearchHint,
-          prefixIcon: const Icon(Icons.search),
-          suffixIcon: controller.text.isEmpty
-              ? null
-              : IconButton(
-                  tooltip: LocaleKeys.reportClearFilters,
-                  onPressed: () {
-                    controller.clear();
-                    changed('');
-                  },
-                  icon: const Icon(Icons.clear)),
-          isDense: true,
-        ),
-      );
+    controller: controller,
+    autofocus: widget.autofocus,
+    textInputAction: TextInputAction.search,
+    onChanged: changed,
+    decoration: InputDecoration(
+      hintText: LocaleKeys.reportSearchHint,
+      prefixIcon: const Icon(Icons.search),
+      suffixIcon: controller.text.isEmpty
+          ? null
+          : IconButton(
+              tooltip: LocaleKeys.reportClearFilters,
+              onPressed: () {
+                controller.clear();
+                changed('');
+              },
+              icon: const Icon(Icons.clear),
+            ),
+      isDense: true,
+    ),
+  );
 }

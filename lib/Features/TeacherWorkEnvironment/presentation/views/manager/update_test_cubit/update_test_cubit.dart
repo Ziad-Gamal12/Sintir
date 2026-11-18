@@ -10,17 +10,24 @@ part 'update_test_state.dart';
 class UpdateTestCubit extends Cubit<UpdateTestState> {
   UpdateTestCubit({required this.testitemrepo}) : super(UpdateTestInitial());
   final Testitemrepo testitemrepo;
-  void updateTestItem(
-      {required CourseTestEntity test,
-      required String courseId,
-      required String sectionId}) async {
+  void updateTestItem({
+    required CourseTestEntity test,
+    required String courseId,
+    required String sectionId,
+  }) async {
     emit(UpdateTestItemLoading());
     Either<Failure, void> result = await testitemrepo.updateTest(
-        test: test, courseId: courseId, sectionId: sectionId);
-    result.fold((failure) {
-      emit(UpdateTestItemFailure(errMessage: failure.message));
-    }, (sucUpdateCourseSectionsFailurecess) {
-      emit(UpdateTestItemSuccess());
-    });
+      test: test,
+      courseId: courseId,
+      sectionId: sectionId,
+    );
+    result.fold(
+      (failure) {
+        emit(UpdateTestItemFailure(errMessage: failure.message));
+      },
+      (sucUpdateCourseSectionsFailurecess) {
+        emit(UpdateTestItemSuccess());
+      },
+    );
   }
 }

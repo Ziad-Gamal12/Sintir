@@ -40,6 +40,7 @@ import 'package:sintir/Features/MyResults/Presentation/Views/my_results_view.dar
 import 'package:sintir/Features/MyTransactions/Presentation/Views/MyTransactionsView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/AboutUsView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/ProfileView.dart';
+import 'package:sintir/Features/Profile/Presentation/Views/DeleteAccountView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/SettingsView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/UserPersonalDetailsView.dart';
 import 'package:sintir/Features/Search/Presentation/Views/SearchView.dart';
@@ -62,6 +63,7 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCou
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseSectionView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/AddCourseView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/CourseDetailView.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherCourseReviewsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/ExamConsequencesView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWalletDetailsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/TeacherWorkenvironmentview.dart';
@@ -69,7 +71,6 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/VideoC
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/AddCourseCouponWidgets/AddCourseCouponView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseDetailsCouponsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReportsSectionWidgets/CourseDetailsCourseReportsView.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseReviewsSectionWidgets/CourseDetailsSubscribersReviewsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSections_SectionWidgets/CourseDetailsCourseSectionsView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/CourseDetailsSubscribersView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCourseSubscribers_SectionWidgets/SubscriberDetails/SubscriberDetailsView.dart';
@@ -347,10 +348,10 @@ class App_router {
         },
       ),
       GoRoute(
-        path: CourseDetailsSubscribersReviewsView.routeName,
+        path: TeacherCourseReviewsView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return CourseDetailsSubscribersReviewsView(
-            courseId: state.extra as String,
+          return TeacherCourseReviewsView(
+            course: state.extra as CourseEntity,
           );
         },
       ),
@@ -416,6 +417,12 @@ class App_router {
         path: SettingsView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const SettingsView();
+        },
+      ),
+      GoRoute(
+        path: DeleteAccountView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          return const DeleteAccountView();
         },
       ),
       GoRoute(

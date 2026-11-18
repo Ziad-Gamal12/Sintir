@@ -24,13 +24,14 @@ class CourseCouponGridViewItemCode extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(
-            color: isDark ? Color(0xff353534) : Colors.grey.shade300,
-            borderRadius: BorderRadius.circular(8)),
+          color: isDark ? Color(0xff353534) : Colors.grey.shade300,
+          borderRadius: BorderRadius.circular(8),
+        ),
         child: Text(
           couponCode,
-          style: AppTextStyles(context)
-              .bold16
-              .copyWith(color: isDark == false ? Colors.black : Colors.white),
+          style: AppTextStyles(context).bold16.copyWith(
+            color: isDark == false ? Colors.black : Colors.white,
+          ),
         ),
       ),
     );

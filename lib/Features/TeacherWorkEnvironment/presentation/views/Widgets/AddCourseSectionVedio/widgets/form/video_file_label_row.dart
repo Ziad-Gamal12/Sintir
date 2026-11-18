@@ -9,9 +9,9 @@ class VideoFileLabelRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mutedStyle = AppTextStyles(context)
-        .regular12
-        .copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant);
+    final mutedStyle = AppTextStyles(
+      context,
+    ).regular12.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,

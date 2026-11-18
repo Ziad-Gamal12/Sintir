@@ -206,17 +206,22 @@ class CoursesrepoImpl implements Coursesrepo {
     required CourseEntity courseEntity,
   }) async {
     try {
-      final data = Coursemodel.fromEntity(courseEntity: courseEntity).toJson();
+      // Update only what the teacher edits. Re-writing the whole document
+      // would reset server-maintained values (rating stats, studentsCount,
+      // feedBacksCount) to whatever this possibly stale entity holds.
+      final data = Coursemodel.fromEntity(
+        courseEntity: courseEntity,
+      ).toEditableJson();
 
       await Future.wait([
-        databaseservice.setData(
+        databaseservice.updateData(
           requirements: FireStoreRequirmentsEntity(
             collection: BackendEndpoints.coursesCollection,
             docId: courseEntity.id,
           ),
           data: data,
         ),
-        databaseservice.setData(
+        databaseservice.updateData(
           requirements: FireStoreRequirmentsEntity(
             collection: BackendEndpoints.usersCollectionName,
             docId: courseEntity.contentcreaterentity!.id,
@@ -226,6 +231,40 @@ class CoursesrepoImpl implements Coursesrepo {
           data: data,
         ),
       ]);
+      return right(null);
+    } on CustomException catch (e) {
+      return left(ServerFailure(message: e.message));
+    } catch (_) {
+      return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
+    }
+  }
+
+  static Map<String, dynamic> resubmissionData() => {
+        'state': BackendEndpoints.coursePendingState,
+        'resubmittedAt': FieldValue.serverTimestamp(),
+      };
+
+  @override
+  Future<Either<Failure, void>> resubmitCourseForReview({
+    required CourseEntity courseEntity,
+  }) async {
+    try {
+      await databaseservice.updateData(
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.coursesCollection,
+          docId: courseEntity.id,
+        ),
+        data: resubmissionData(),
+      );
+      await databaseservice.updateData(
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.usersCollectionName,
+          docId: courseEntity.contentcreaterentity!.id,
+          subCollection: BackendEndpoints.coursesCollection,
+          subDocId: courseEntity.id,
+        ),
+        data: resubmissionData(),
+      );
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));

@@ -17,13 +17,8 @@ class CourseDetailsSubscribersGridviewItemPhoneNumber extends StatelessWidget {
 
     return Row(
       children: [
-        Icon(
-          Icons.phone,
-          color: iconColor,
-        ),
-        const SizedBox(
-          width: 5,
-        ),
+        Icon(Icons.phone, color: iconColor),
+        const SizedBox(width: 5),
         Expanded(
           child: Text(
             phone == "" ? "_" : phone,

@@ -7,8 +7,10 @@ import 'package:sintir/Core/entities/FireStoreEntities/FireStorePaginateResponse
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
+import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/repos/CourseCountersRepo/CourseCountersRepo.dart';
 import 'package:sintir/Core/repos/SectionItemsActionsRepo/SectionItemsActionRepo.dart';
+import 'package:sintir/Core/repos/Test-Item-Repo/TestAnswerKeyStore.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/CourseTestModel.dart';
@@ -22,11 +24,24 @@ import 'package:sintir/locale_keys.dart';
 class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
   final DataBaseService datebaseservice;
   final CourseCountersRepo courseCountersRepo;
+  final TestAnswerKeyStore answerKeys;
+  final bool Function() isTeacher;
 
   SectionItemsActionsRepoImpli({
     required this.datebaseservice,
     required this.courseCountersRepo,
-  });
+    TestAnswerKeyStore? answerKeys,
+    bool Function()? isTeacher,
+  })  : answerKeys = answerKeys ?? TestAnswerKeyStore(),
+        isTeacher = isTeacher ?? _signedInUserIsTeacher;
+
+  static bool _signedInUserIsTeacher() {
+    try {
+      return getUserData().role == BackendEndpoints.teacherRole;
+    } catch (_) {
+      return false;
+    }
+  }
 
   FireStoreRequirmentsEntity _itemRequirements({
     required String courseId,
@@ -79,9 +94,15 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
         itemId: itemId,
       );
 
-      final Future<void> writeItemFuture = isMuxUpdate
-          ? datebaseservice.updateData(data: json, requirements: requirements)
-          : datebaseservice.setData(data: json, requirements: requirements);
+      final Future<void> writeItemFuture = sectionItem is CourseTestEntity
+          ? answerKeys.saveTest(
+              courseId: courseId,
+              sectionId: sectionId,
+              test: sectionItem,
+            )
+          : isMuxUpdate
+              ? datebaseservice.updateData(data: json, requirements: requirements)
+              : datebaseservice.setData(data: json, requirements: requirements);
 
       await Future.wait([
         writeItemFuture,
@@ -111,14 +132,20 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
   }) async {
     try {
       await Future.wait([
-        datebaseservice.deleteDoc(
-          collectionKey: BackendEndpoints.coursesCollection,
-          docId: courseId,
-          subCollectionKey: BackendEndpoints.sectionsSubCollection,
-          subDocId: sectionId,
-          subCollectionKey2: BackendEndpoints.sectionItemsSubCollection,
-          subDocId2: sectionItemId,
-        ),
+        isTest
+            ? answerKeys.deleteTest(
+                courseId: courseId,
+                sectionId: sectionId,
+                testId: sectionItemId,
+              )
+            : datebaseservice.deleteDoc(
+                collectionKey: BackendEndpoints.coursesCollection,
+                docId: courseId,
+                subCollectionKey: BackendEndpoints.sectionsSubCollection,
+                subDocId: sectionId,
+                subCollectionKey2: BackendEndpoints.sectionItemsSubCollection,
+                subDocId2: sectionItemId,
+              ),
         courseCountersRepo.updateCourseCounters(
           courseId: courseId,
           teacherId: teacherId,
@@ -154,12 +181,37 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
       }
 
       final items = await compute(_parseSectionItems, data.listData!);
+      if (isTeacher()) {
+        await _fillAnswerKeys(
+          courseId: courseId,
+          sectionId: sectionId,
+          items: items,
+        );
+      }
       return right(items);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (_) {
       return left(ServerFailure(message: LocaleKeys.unexpectedError));
     }
+  }
+
+  Future<void> _fillAnswerKeys({
+    required String courseId,
+    required String sectionId,
+    required List items,
+  }) async {
+    await Future.wait(
+      items.whereType<CourseTestEntity>().map((test) async {
+        try {
+          await answerKeys.fillAnswers(
+            courseId: courseId,
+            sectionId: sectionId,
+            test: test,
+          );
+        } catch (_) {}
+      }),
+    );
   }
 
   static List _parseSectionItems(List<dynamic> listData) {

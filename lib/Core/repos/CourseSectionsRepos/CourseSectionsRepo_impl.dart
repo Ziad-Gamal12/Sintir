@@ -11,6 +11,7 @@ import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Core/repos/CourseCountersRepo/CourseCountersRepo.dart';
 import 'package:sintir/Core/repos/CourseSectionsRepos/CourseSectionsRepo.dart';
+import 'package:sintir/Core/repos/Test-Item-Repo/TestAnswerKeyStore.dart';
 import 'package:sintir/Core/services/DataBaseService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/CourseSectionModel.dart';
@@ -19,11 +20,13 @@ import 'package:sintir/locale_keys.dart';
 class CourseSectionsRepoImpl implements CourseSectionsRepo {
   final DataBaseService datebaseservice;
   final CourseCountersRepo courseCountersRepo;
+  final TestAnswerKeyStore answerKeys;
 
   CourseSectionsRepoImpl({
     required this.datebaseservice,
     required this.courseCountersRepo,
-  });
+    TestAnswerKeyStore? answerKeys,
+  }) : answerKeys = answerKeys ?? TestAnswerKeyStore();
 
   @override
   Future<Either<Failure, void>> addCourseSection({
@@ -145,6 +148,15 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
           } else {
             deletedLessons++;
           }
+          if (type == "Test" && itemId != null && itemId.isNotEmpty) {
+            deleteFutures.add(
+              answerKeys.deleteAnswerKey(
+                courseId: courseId,
+                sectionId: sectionId,
+                testId: itemId,
+              ),
+            );
+          }
           if (itemId != null && itemId.isNotEmpty) {
             deleteFutures.add(
               datebaseservice.deleteDoc(
@@ -160,7 +172,6 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
         }
       }
 
-      // 2. حذف وثيقة السيكشن نفسها + خصم العدادات دفعة واحدة
       deleteFutures.add(
         datebaseservice.deleteDoc(
           collectionKey: BackendEndpoints.coursesCollection,

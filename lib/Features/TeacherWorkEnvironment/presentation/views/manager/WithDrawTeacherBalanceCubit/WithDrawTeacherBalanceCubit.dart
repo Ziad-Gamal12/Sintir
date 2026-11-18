@@ -8,8 +8,8 @@ part 'WithDrawTeacherBalanceState.dart';
 class WithDrawTeacherBalanceCubit extends Cubit<WithDrawTeacherBalanceState> {
   WithDrawTeacherBalanceCubit({
     required WithDrawalTeacherBalanceRepo withdrawalRepo,
-  })  : _withdrawalRepo = withdrawalRepo,
-        super(const WithDrawBalanceInitial());
+  }) : _withdrawalRepo = withdrawalRepo,
+       super(const WithDrawBalanceInitial());
 
   final WithDrawalTeacherBalanceRepo _withdrawalRepo;
   bool _requestInFlight = false;
@@ -37,9 +37,11 @@ class WithDrawTeacherBalanceCubit extends Cubit<WithDrawTeacherBalanceState> {
         (withdrawal) => emit(WithDrawBalanceSuccess(result: withdrawal)),
       );
     } catch (_) {
-      emit(const WithDrawBalanceFailure(
-        errMessage: 'Unable to submit the withdrawal. Please try again.',
-      ));
+      emit(
+        const WithDrawBalanceFailure(
+          errMessage: 'Unable to submit the withdrawal. Please try again.',
+        ),
+      );
     } finally {
       _requestInFlight = false;
     }
@@ -48,30 +50,37 @@ class WithDrawTeacherBalanceCubit extends Cubit<WithDrawTeacherBalanceState> {
   Future<void> reconcileWithdrawal({required String withdrawalId}) async {
     final id = withdrawalId.trim();
     if (id.isEmpty) {
-      emit(const ReconcileTransactionFailure(
-        transactionId: '',
-        errMessage: 'Withdrawal ID is required.',
-      ));
+      emit(
+        const ReconcileTransactionFailure(
+          transactionId: '',
+          errMessage: 'Withdrawal ID is required.',
+        ),
+      );
       return;
     }
     if (!_reconcilingWithdrawalIds.add(id)) return;
 
     emit(ReconcileTransactionLoading(transactionId: id));
     try {
-      final result =
-          await _withdrawalRepo.reconcileWithdrawal(withdrawalId: id);
+      final result = await _withdrawalRepo.reconcileWithdrawal(
+        withdrawalId: id,
+      );
       result.fold(
-        (failure) => emit(ReconcileTransactionFailure(
-          transactionId: id,
-          errMessage: failure.message,
-        )),
+        (failure) => emit(
+          ReconcileTransactionFailure(
+            transactionId: id,
+            errMessage: failure.message,
+          ),
+        ),
         (withdrawal) => emit(ReconcileTransactionSuccess(result: withdrawal)),
       );
     } catch (_) {
-      emit(ReconcileTransactionFailure(
-        transactionId: id,
-        errMessage: 'Unable to check this withdrawal right now.',
-      ));
+      emit(
+        ReconcileTransactionFailure(
+          transactionId: id,
+          errMessage: 'Unable to check this withdrawal right now.',
+        ),
+      );
     } finally {
       _reconcilingWithdrawalIds.remove(id);
     }

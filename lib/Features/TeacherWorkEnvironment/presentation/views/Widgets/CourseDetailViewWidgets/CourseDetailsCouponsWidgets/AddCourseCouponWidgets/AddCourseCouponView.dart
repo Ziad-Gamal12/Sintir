@@ -20,26 +20,25 @@ class AddCourseCouponView extends StatefulWidget {
 
 class _AddCourseCouponViewState extends State<AddCourseCouponView> {
   final CourseCouponEntity coupon = CourseCouponEntity(
-      code: "",
-      discountPercentage: 0,
-      expiryDate: DateTime.now(),
-      status: CourseCouponStatus.active,
-      usageLimit: 0,
-      usedCount: 0);
+    code: "",
+    discountPercentage: 0,
+    expiryDate: DateTime.now(),
+    status: CourseCouponStatus.active,
+    usageLimit: 0,
+    usedCount: 0,
+  );
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CourseCouponsCubit(
-        courseCouponsRepo: getIt<CourseCouponsRepo>(),
-      ),
+      create: (context) =>
+          CourseCouponsCubit(courseCouponsRepo: getIt<CourseCouponsRepo>()),
       child: Scaffold(
         appBar: CustomAppBar(appBartitle: LocaleKeys.addCoupon),
         body: Provider.value(
-            value: coupon,
-            child: AddCourseCouponViewBody(
-              courseId: widget.courseId,
-            )),
+          value: coupon,
+          child: AddCourseCouponViewBody(courseId: widget.courseId),
+        ),
       ),
     );
   }

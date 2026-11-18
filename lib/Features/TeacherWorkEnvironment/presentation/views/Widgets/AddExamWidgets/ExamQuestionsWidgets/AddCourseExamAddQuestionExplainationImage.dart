@@ -33,8 +33,12 @@ class _AddCourseExamAddQuestionExplainationImageState
       },
       child: Container(
         width: double.infinity,
-        padding:
-            const EdgeInsets.only(top: 20, left: 27, right: 27, bottom: 29),
+        padding: const EdgeInsets.only(
+          top: 20,
+          left: 27,
+          right: 27,
+          bottom: 29,
+        ),
         decoration: BoxDecoration(
           color: theme.cardColor,
           borderRadius: const BorderRadius.only(
@@ -53,10 +57,7 @@ class _AddCourseExamAddQuestionExplainationImageState
               return CustomErrorWidget(errormessage: state.errMessage);
             } else if (state is PickQuestionSolutionImageSuccess) {
               widget.coursetestquestionentity.solutionFile = state.file;
-              return Image.file(
-                state.file,
-                fit: BoxFit.cover,
-              );
+              return Image.file(state.file, fit: BoxFit.cover);
             } else {
               return Skeletonizer(
                 enabled: state is PickQuestionSolutionImageLoading,
@@ -74,9 +75,9 @@ class _AddCourseExamAddQuestionExplainationImageState
                     Text(
                       LocaleKeys.answerImage,
                       textAlign: TextAlign.center,
-                      style: AppTextStyles(context)
-                          .semiBold12
-                          .copyWith(color: theme.textTheme.bodyMedium?.color),
+                      style: AppTextStyles(context).semiBold12.copyWith(
+                        color: theme.textTheme.bodyMedium?.color,
+                      ),
                     ),
                   ],
                 ),

@@ -16,8 +16,10 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/locale_keys.dart';
 
 class Addcoursesectionvedioview extends StatelessWidget {
-  const Addcoursesectionvedioview(
-      {super.key, required this.optionnavigationrequirementsentity});
+  const Addcoursesectionvedioview({
+    super.key,
+    required this.optionnavigationrequirementsentity,
+  });
   static const routeName = '/Addcoursesectionvedioview';
   final OptionNavigationRequirementsEntity optionnavigationrequirementsentity;
 
@@ -27,8 +29,8 @@ class Addcoursesectionvedioview extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context1) => CourseSectionsCubit(
-                       courseSectionsRepo:  getIt<CourseSectionsRepo>(),
-             sectionItemsActionsRepo: getIt<SectionItemsActionsRepo>(),
+            courseSectionsRepo: getIt<CourseSectionsRepo>(),
+            sectionItemsActionsRepo: getIt<SectionItemsActionsRepo>(),
           ),
         ),
         BlocProvider(
@@ -37,16 +39,19 @@ class Addcoursesectionvedioview extends StatelessWidget {
             videoItemRepo: getIt<VideoItemRepo>(),
             assetspickerrepo: getIt<Assetspickerrepo>(),
           ),
-        )
+        ),
       ],
-      child: Builder(builder: (context) {
-        return Scaffold(
-          appBar: CustomAppBar(appBartitle: LocaleKeys.addVideo),
-          body: Provider.value(
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: CustomAppBar(appBartitle: LocaleKeys.addVideo),
+            body: Provider.value(
               value: optionnavigationrequirementsentity,
-              child: const Addcoursesectionvedioviewbody()),
-        );
-      }),
+              child: const Addcoursesectionvedioviewbody(),
+            ),
+          );
+        },
+      ),
     );
   }
 }

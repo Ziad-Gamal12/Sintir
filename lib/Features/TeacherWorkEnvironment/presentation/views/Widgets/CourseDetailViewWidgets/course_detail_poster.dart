@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TeacherCourseState.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkspace/TeacherCourseStateStyle.dart';
 import 'package:sintir/locale_keys.dart';
 
 class CourseDetailPoster extends StatelessWidget {
@@ -34,32 +36,15 @@ class CourseDetailPoster extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
+            PositionedDirectional(
               top: 12,
-              right: 12,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.primary.withValues(alpha: .9),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(
-                      Icons.circle,
-                      size: 8,
-                      color: Colors.greenAccent,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      _localizedState(context),
-                      style: textStyles.bold12.copyWith(color: Colors.white),
-                    ),
-                  ],
+              start: 12,
+              end: 12,
+              child: Align(
+                alignment: AlignmentDirectional.topStart,
+                child: TeacherCourseStatePill(
+                  state: TeacherCourseState.fromRaw(course.state),
+                  textStyle: textStyles.bold12,
                 ),
               ),
             ),
@@ -85,15 +70,6 @@ class CourseDetailPoster extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _localizedState(BuildContext context) {
-    return switch (course.state) {
-      'Published' => LocaleKeys.courseStatePublished,
-      'Pending' => LocaleKeys.courseStatePending,
-      'DeletedByTeacher' => LocaleKeys.courseStateArchived,
-      _ => course.state,
-    };
   }
 
   Widget _placeholder(ThemeData theme) => ColoredBox(

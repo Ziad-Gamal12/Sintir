@@ -25,7 +25,12 @@ class PopularCoursesSection extends StatelessWidget {
                 curr is GetPopularCoursesFailure,
             builder: (context, state) {
               if (state is GetPopularCoursesFailure) {
-                return CustomErrorWidget(errormessage: state.errmessage);
+                return CustomErrorWidget(
+                  errormessage: state.errmessage,
+                  onRetry: () => context
+                      .read<GetCoursesCubit>()
+                      .getPopularCourses(isPaginate: false),
+                );
               } else if (state is GetPopularCoursesLoading) {
                 return const HorizentalLoadingCoursesListView();
               } else if (state is GetPopularCoursesSuccess) {

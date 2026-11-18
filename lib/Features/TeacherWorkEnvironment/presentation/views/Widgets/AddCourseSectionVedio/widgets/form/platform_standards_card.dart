@@ -36,8 +36,9 @@ class PlatformStandardsCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   LocaleKeys.videoStandardsBody,
-                  style: styles.regular12
-                      .copyWith(color: colors.onSurfaceVariant),
+                  style: styles.regular12.copyWith(
+                    color: colors.onSurfaceVariant,
+                  ),
                 ),
               ],
             ),

@@ -27,9 +27,12 @@ class _VideoStateInfoVideoAttendedWidgetState
       builder: (context, state) {
         return Skeletonizer(
           enabled: state is VideoConsequencesGetVideoAttendedCountLoading,
-          child: _buildStatColumn(LocaleKeys.studentsAttended,
-              getVideoAttendedCount(state: state, context: context), context,
-              color: successColor),
+          child: _buildStatColumn(
+            LocaleKeys.studentsAttended,
+            getVideoAttendedCount(state: state, context: context),
+            context,
+            color: successColor,
+          ),
         );
       },
     );
@@ -48,25 +51,33 @@ class _VideoStateInfoVideoAttendedWidgetState
     }
   }
 
-  Widget _buildStatColumn(String label, String value, BuildContext context,
-      {Color color = Colors.black}) {
+  Widget _buildStatColumn(
+    String label,
+    String value,
+    BuildContext context, {
+    Color color = Colors.black,
+  }) {
     final ThemeData theme = Theme.of(context);
     final Color labelColor = theme.textTheme.bodyLarge!.color!;
     final Color errorColor = theme.colorScheme.error;
 
-    final bool isError = (context.read<VideoConsequencesCubit>().state
-        is VideoConsequencesGetVideoAttendedCountFailure);
+    final bool isError =
+        (context.read<VideoConsequencesCubit>().state
+            is VideoConsequencesGetVideoAttendedCountFailure);
 
     final Color valueColor = isError ? errorColor : color;
 
     return Column(
       children: [
-        Text(label,
-            style:
-                AppTextStyles(context).semiBold14.copyWith(color: labelColor)),
+        Text(
+          label,
+          style: AppTextStyles(context).semiBold14.copyWith(color: labelColor),
+        ),
         const SizedBox(height: 10),
-        Text(value,
-            style: AppTextStyles(context).bold14.copyWith(color: valueColor)),
+        Text(
+          value,
+          style: AppTextStyles(context).bold14.copyWith(color: valueColor),
+        ),
       ],
     );
   }

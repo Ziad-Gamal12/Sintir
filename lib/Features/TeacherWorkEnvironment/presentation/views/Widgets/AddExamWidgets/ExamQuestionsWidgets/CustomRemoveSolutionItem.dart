@@ -23,14 +23,12 @@ class CustomRemoveSolutionItem extends StatelessWidget {
     return IconButton(
       onPressed: () {
         context.read<TestItemCubit>().removeSolutin(
-            coursetestentity: coursetestentity,
-            solution: e.value,
-            question: question);
+          coursetestentity: coursetestentity,
+          solution: e.value,
+          question: question,
+        );
       },
-      icon: const FaIcon(
-        FontAwesomeIcons.trashCan,
-        color: Colors.red,
-      ),
+      icon: const FaIcon(FontAwesomeIcons.trashCan, color: Colors.red),
     );
   }
 }

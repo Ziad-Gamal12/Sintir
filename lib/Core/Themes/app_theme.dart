@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/TeacherWorkEnvironmentTheme.dart';
 import 'package:sintir/constant.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class AppTheme {
   // -----------------------------
@@ -48,6 +48,7 @@ class AppTheme {
       selectedItemColor: KMainColor,
       unselectedItemColor: Colors.grey,
     ),
+    extensions: const [WorkEnvironmentThemeExtension.light],
   );
 
   // -----------------------------
@@ -144,5 +145,6 @@ class AppTheme {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
     ),
+    extensions: const [WorkEnvironmentThemeExtension.dark],
   );
 }

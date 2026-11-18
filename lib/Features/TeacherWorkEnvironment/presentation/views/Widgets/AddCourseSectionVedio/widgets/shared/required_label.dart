@@ -15,7 +15,10 @@ class RequiredLabel extends StatelessWidget {
         text: text,
         style: style,
         children: [
-          TextSpan(text: ' *', style: style.copyWith(color: errorColor)),
+          TextSpan(
+            text: ' *',
+            style: style.copyWith(color: errorColor),
+          ),
         ],
       ),
     );

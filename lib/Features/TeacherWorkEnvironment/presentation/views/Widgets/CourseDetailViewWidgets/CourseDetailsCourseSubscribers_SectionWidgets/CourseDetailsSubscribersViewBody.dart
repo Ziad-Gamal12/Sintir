@@ -16,8 +16,10 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/locale_keys.dart';
 
 class CourseDetailsSubscribersViewBody extends StatefulWidget {
-  const CourseDetailsSubscribersViewBody(
-      {super.key, required this.courseEntity});
+  const CourseDetailsSubscribersViewBody({
+    super.key,
+    required this.courseEntity,
+  });
   final CourseEntity courseEntity;
   @override
   State<CourseDetailsSubscribersViewBody> createState() =>
@@ -136,9 +138,9 @@ class _CourseDetailsSubscribersViewBodyState
           _normalInitialLoading = false;
           _normalPageLoading = false;
           if (_subscribers.isNotEmpty) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errMessage)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.errMessage)));
           }
         }
 
@@ -160,9 +162,9 @@ class _CourseDetailsSubscribersViewBodyState
           _searchInitialLoading = false;
           _searchPageLoading = false;
           if (_searchSubscribers.isNotEmpty) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errMessage)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.errMessage)));
           }
         }
       },
@@ -178,19 +180,25 @@ class _CourseDetailsSubscribersViewBodyState
           controller: scrollController,
           slivers: [
             SliverPadding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
-                sliver: SliverToBoxAdapter(
-                    child: CustomSearchTextField(controller: controller))),
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+              sliver: SliverToBoxAdapter(
+                child: CustomSearchTextField(controller: controller),
+              ),
+            ),
             SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                sliver: SliverToBoxAdapter(
-                    child: CourseStudentsCount(
-                        count: widget.courseEntity.studentsCount))),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              sliver: SliverToBoxAdapter(
+                child: CourseStudentsCount(
+                  count: widget.courseEntity.studentsCount,
+                ),
+              ),
+            ),
             const SliverToBoxAdapter(child: SizedBox(height: 16)),
             if (initialLoading)
               const SliverPadding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  sliver: CourseDetailsSubscribersLoadingGridView())
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                sliver: CourseDetailsSubscribersLoadingGridView(),
+              )
             else if (failure && list.isEmpty)
               SliverFillRemaining(
                 hasScrollBody: false,
@@ -210,8 +218,9 @@ class _CourseDetailsSubscribersViewBodyState
                             context
                                 .read<CourseSubscribtionsCubit>()
                                 .searchSubscribers(
-                                    keyword: controller.text.trim(),
-                                    isPaginate: false);
+                                  keyword: controller.text.trim(),
+                                  isPaginate: false,
+                                );
                           } else {
                             setState(() => _normalInitialLoading = true);
                             context
@@ -227,29 +236,36 @@ class _CourseDetailsSubscribersViewBodyState
               )
             else if (list.isNotEmpty)
               SliverPadding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  sliver: CourseDetailsSubscribersGridView(
-                    subscribers: list,
-                    courseEntity: widget.courseEntity,
-                  ))
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                sliver: CourseDetailsSubscribersGridView(
+                  subscribers: list,
+                  courseEntity: widget.courseEntity,
+                ),
+              )
             else if (state is! GetCourseSubscribersLoading &&
                 state is! SearchSubscribersLoading)
               SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Center(
-                      child: CustomEmptyWidget(
-                          text: LocaleKeys.noSubscribersInCourse))),
+                hasScrollBody: false,
+                child: Center(
+                  child: CustomEmptyWidget(
+                    text: LocaleKeys.noSubscribersInCourse,
+                  ),
+                ),
+              ),
             if (list.isNotEmpty &&
                 (isSearching ? _searchPageLoading : _normalPageLoading))
               const SliverToBoxAdapter(
-                  child: Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Center(
-                          child: SizedBox(
-                              width: 24,
-                              height: 24,
-                              child:
-                                  CircularProgressIndicator(strokeWidth: 2)))))
+                child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Center(
+                    child: SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  ),
+                ),
+              ),
           ],
         );
       },

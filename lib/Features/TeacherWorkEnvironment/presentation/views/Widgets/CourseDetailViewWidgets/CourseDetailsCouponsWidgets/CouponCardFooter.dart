@@ -26,14 +26,13 @@ class CouponCardFooter extends StatelessWidget {
               hasReachedLimit: coupon.hasReachedUsageLimit,
             ),
             CouponItemUsage(
-                usedCount: coupon.usedCount,
-                usageLimit: coupon.usageLimit,
-                hasReachedLimit: coupon.hasReachedUsageLimit)
+              usedCount: coupon.usedCount,
+              usageLimit: coupon.usageLimit,
+              hasReachedLimit: coupon.hasReachedUsageLimit,
+            ),
           ],
         ),
-        SizedBox(
-          height: 6,
-        ),
+        SizedBox(height: 6),
         LayoutBuilder(
           builder: (context, constraints) {
             final progressColor = coupon.hasReachedUsageLimit
@@ -52,14 +51,15 @@ class CouponCardFooter extends StatelessWidget {
                 curve: Curves.easeOutCubic,
                 isRTL: isRTL,
                 barRadius: const Radius.circular(100),
-                backgroundColor:
-                    theme.colorScheme.onSurface.withValues(alpha: 0.07),
+                backgroundColor: theme.colorScheme.onSurface.withValues(
+                  alpha: 0.07,
+                ),
                 progressColor: progressColor,
                 addAutomaticKeepAlive: false,
               ),
             );
           },
-        )
+        ),
       ],
     );
   }

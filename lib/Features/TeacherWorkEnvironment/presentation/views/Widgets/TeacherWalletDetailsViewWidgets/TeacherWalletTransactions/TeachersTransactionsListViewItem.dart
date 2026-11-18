@@ -47,8 +47,10 @@ class _TeachersTransactionsListViewItemState
     final theme = Theme.of(context);
     final textStyles = AppTextStyles(context);
 
-    return BlocConsumer<WithDrawTeacherBalanceCubit,
-        WithDrawTeacherBalanceState>(
+    return BlocConsumer<
+      WithDrawTeacherBalanceCubit,
+      WithDrawTeacherBalanceState
+    >(
       listener: (context, state) {
         teacherWalletTransactionListener.withDrawtTeacherBalanceListener(
           context: context,
@@ -61,12 +63,13 @@ class _TeachersTransactionsListViewItemState
         return InkWell(
           onTap: () {
             showCustomBottomSheet(
-                child: IntrinsicHeight(
-                  child: TeacherWalletTransactionDetailsBottomSheet(
-                    requirements: widget.transactionRequirements,
-                  ),
+              child: IntrinsicHeight(
+                child: TeacherWalletTransactionDetailsBottomSheet(
+                  requirements: widget.transactionRequirements,
                 ),
-                context: context);
+              ),
+              context: context,
+            );
           },
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,15 +122,19 @@ class _TeachersTransactionsListViewItemState
                               children: [
                                 TransactionStatusBadge(
                                   label: widget
-                                      .transactionRequirements.statusLabel,
+                                      .transactionRequirements
+                                      .statusLabel,
                                   color: widget
-                                      .transactionRequirements.statusColor,
+                                      .transactionRequirements
+                                      .statusColor,
                                 ),
                                 const SizedBox(width: 8),
                                 CheckTransactionStatus(
-                                    color: widget
-                                        .transactionRequirements.statusColor,
-                                    transaction: transaction)
+                                  color: widget
+                                      .transactionRequirements
+                                      .statusColor,
+                                  transaction: transaction,
+                                ),
                               ],
                             ),
                           ],

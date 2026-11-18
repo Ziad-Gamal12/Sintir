@@ -50,7 +50,8 @@ class CourseTestListener extends StatelessWidget {
             btnOkOnPress: () {
               GoRouter.of(context).pushReplacement(
                 Reviewtestresultview.routeName,
-                extra: context.read<TestItemCubit>().prepareTestResultObject(
+                extra: state.result ??
+                    context.read<TestItemCubit>().prepareTestResultObject(
                       courseId: courseId,
                       test: test,
                       courseSubject: courseSubject,

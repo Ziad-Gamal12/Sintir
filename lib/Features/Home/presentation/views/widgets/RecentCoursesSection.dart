@@ -20,7 +20,12 @@ class RecentCoursesSection extends StatelessWidget {
       builder: (context, state) {
         if (state is GetRecentCoursesFailure) {
           return SliverToBoxAdapter(
-            child: CustomErrorWidget(errormessage: state.errmessage),
+            child: CustomErrorWidget(
+              errormessage: state.errmessage,
+              onRetry: () => context
+                  .read<GetCoursesCubit>()
+                  .getRecentCourses(isPaginate: false),
+            ),
           );
         } else if (state is GetRecentCoursesSuccess &&
             state.resonseEntity.courses.isNotEmpty) {

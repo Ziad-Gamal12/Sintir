@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class CourseDetailsSubscribersGridviewItemAvatar extends StatelessWidget {
-  const CourseDetailsSubscribersGridviewItemAvatar(
-      {super.key, required this.imageUrl});
+  const CourseDetailsSubscribersGridviewItemAvatar({
+    super.key,
+    required this.imageUrl,
+  });
   final String imageUrl;
 
   @override
@@ -33,8 +35,8 @@ class _AvatarFallback extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Icon(
-        Icons.person,
-        size: 34,
-        color: Theme.of(context).colorScheme.primary.withValues(alpha: .65),
-      );
+    Icons.person,
+    size: 34,
+    color: Theme.of(context).colorScheme.primary.withValues(alpha: .65),
+  );
 }

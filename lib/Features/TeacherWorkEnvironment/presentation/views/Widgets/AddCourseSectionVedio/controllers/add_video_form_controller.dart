@@ -10,12 +10,12 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 /// nothing here calls setState and the whole screen never rebuilds.
 class AddVideoFormController {
   AddVideoFormController()
-      : video = CourseVideoItemEntity(
-          title: '',
-          vedioUrl: '',
-          durationTime: 0,
-          id: '${DateTime.now().toIso8601String()}-Video',
-        );
+    : video = CourseVideoItemEntity(
+        title: '',
+        vedioUrl: '',
+        durationTime: 0,
+        id: '${DateTime.now().toIso8601String()}-Video',
+      );
 
   static const int maxTitleLength = 80;
 
@@ -27,8 +27,11 @@ class AddVideoFormController {
 
   bool isLeaveDialogOpen = false;
 
-  late final Listenable changes =
-      Listenable.merge([titleController, preview, allowComments]);
+  late final Listenable changes = Listenable.merge([
+    titleController,
+    preview,
+    allowComments,
+  ]);
 
   File? get file => preview.value?.file;
   bool get hasTitle => titleController.text.trim().isNotEmpty;

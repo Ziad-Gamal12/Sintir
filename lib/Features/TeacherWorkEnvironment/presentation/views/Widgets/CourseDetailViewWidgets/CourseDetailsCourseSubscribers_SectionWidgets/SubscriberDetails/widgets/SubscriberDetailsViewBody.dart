@@ -41,32 +41,38 @@ class _SubscriberDetailsViewBodyState extends State<SubscriberDetailsViewBody> {
 
   @override
   Widget build(BuildContext context) => RefreshIndicator.adaptive(
-        onRefresh: _refresh,
-        child: SubscriberDetailsAdaptiveLayout(
-          profile: CustomSubscriberDetailsCard(
-              subscriberentity: widget.requirements.subscriber),
-          courses: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SubscriberEnrolledCoursesHeader(),
-              const SizedBox(height: 12),
-              LayoutBuilder(builder: (context, box) {
-                final scale =
-                    MediaQuery.textScalerOf(context).scale(1).clamp(1.0, 1.3);
-                final width = (box.maxWidth * .615)
-                    .clamp(230.0, 280.0)
-                    .toDouble()
-                    .toDouble();
-                return SizedBox(
-                  height: width / 1.03 * scale,
-                  child: SubscriberEnrolledCoursesListView(onRetry: _refresh),
-                );
-              }),
-            ],
+    onRefresh: _refresh,
+    child: SubscriberDetailsAdaptiveLayout(
+      profile: CustomSubscriberDetailsCard(
+        subscriberentity: widget.requirements.subscriber,
+      ),
+      courses: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SubscriberEnrolledCoursesHeader(),
+          const SizedBox(height: 12),
+          LayoutBuilder(
+            builder: (context, box) {
+              final scale = MediaQuery.textScalerOf(
+                context,
+              ).scale(1).clamp(1.0, 1.3);
+              final width = (box.maxWidth * .615)
+                  .clamp(230.0, 280.0)
+                  .toDouble()
+                  .toDouble();
+              return SizedBox(
+                height: width / 1.03 * scale,
+                child: SubscriberEnrolledCoursesListView(onRetry: _refresh),
+              );
+            },
           ),
-          analysis: SubscriberAnalysisSection(onRetry: _refresh),
-          timeline: SubscriberResultsSliverListView(
-              courseTitle: null, onRetry: _refresh),
-        ),
-      );
+        ],
+      ),
+      analysis: SubscriberAnalysisSection(onRetry: _refresh),
+      timeline: SubscriberResultsSliverListView(
+        courseTitle: null,
+        onRetry: _refresh,
+      ),
+    ),
+  );
 }

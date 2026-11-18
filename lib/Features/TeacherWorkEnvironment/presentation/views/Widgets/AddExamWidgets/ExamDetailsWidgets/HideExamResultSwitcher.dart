@@ -35,10 +35,12 @@ class _HideExamResultSwitcherState extends State<HideExamResultSwitcher> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final isDark = theme.brightness == Brightness.dark;
-    final activeBg =
-        colorScheme.primary.withValues(alpha: isDark ? 0.15 : 0.05);
-    final inactiveBorder =
-        isDark ? Colors.white10 : Colors.black.withValues(alpha: 0.05);
+    final activeBg = colorScheme.primary.withValues(
+      alpha: isDark ? 0.15 : 0.05,
+    );
+    final inactiveBorder = isDark
+        ? Colors.white10
+        : Colors.black.withValues(alpha: 0.05);
 
     return InkWell(
       onTap: _handleToggle,
@@ -60,11 +62,11 @@ class _HideExamResultSwitcherState extends State<HideExamResultSwitcher> {
               child: Text(
                 LocaleKeys.hideResultAfterSubmit,
                 style: AppTextStyles(context).regular16.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: currentValue
-                          ? colorScheme.primary
-                          : theme.textTheme.bodyLarge?.color,
-                    ),
+                  fontWeight: FontWeight.w600,
+                  color: currentValue
+                      ? colorScheme.primary
+                      : theme.textTheme.bodyLarge?.color,
+                ),
               ),
             ),
             _CustomToggle(
@@ -122,7 +124,7 @@ class _CustomToggle extends StatelessWidget {
                 color: Colors.black26,
                 blurRadius: 4,
                 offset: Offset(0, 1),
-              )
+              ),
             ],
           ),
         ),

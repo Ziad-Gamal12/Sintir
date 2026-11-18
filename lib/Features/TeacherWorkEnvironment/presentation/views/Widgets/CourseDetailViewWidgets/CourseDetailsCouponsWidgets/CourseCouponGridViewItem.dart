@@ -5,8 +5,11 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CouponCodeContainer.dart';
 
 class CourseCouponGridViewItem extends StatelessWidget {
-  const CourseCouponGridViewItem(
-      {super.key, required this.couponEntity, required this.courseId});
+  const CourseCouponGridViewItem({
+    super.key,
+    required this.couponEntity,
+    required this.courseId,
+  });
   final CourseCouponEntity couponEntity;
 
   final String courseId;
@@ -26,18 +29,10 @@ class CourseCouponGridViewItem extends StatelessWidget {
       child: Column(
         children: [
           CouponCardHeader(courseID: courseId, couponEntity: couponEntity),
-          SizedBox(
-            height: 12,
-          ),
-          CouponCodeContainer(
-            couponCode: couponEntity.code,
-          ),
-          SizedBox(
-            height: 12,
-          ),
-          CouponCardFooter(
-            coupon: couponEntity,
-          )
+          SizedBox(height: 12),
+          CouponCodeContainer(couponCode: couponEntity.code),
+          SizedBox(height: 12),
+          CouponCardFooter(coupon: couponEntity),
         ],
       ),
     );

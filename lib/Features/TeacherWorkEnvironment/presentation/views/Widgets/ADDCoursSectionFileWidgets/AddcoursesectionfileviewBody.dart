@@ -51,8 +51,9 @@ class _AddcoursesectionfileviewBodyState
         ),
         BlocListener<CourseSectionsCubit, CourseSectionsState>(
           listener: (context, state) => CourseSectionStateHandler(
-                  context, optionnavigationrequirementsentity.courseEntity)
-              .handle(state),
+            context,
+            optionnavigationrequirementsentity.courseEntity,
+          ).handle(state),
         ),
       ],
       child: BlocBuilder<FileItemCubit, FileItemState>(

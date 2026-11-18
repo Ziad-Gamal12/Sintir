@@ -3,8 +3,10 @@ import 'package:sintir/Core/widgets/CustomAnimatedDropDownButton.dart';
 import 'package:sintir/locale_keys.dart';
 
 class CustomEducationLevelDropdownButton extends StatefulWidget {
-  const CustomEducationLevelDropdownButton(
-      {super.key, required this.onValueChange});
+  const CustomEducationLevelDropdownButton({
+    super.key,
+    required this.onValueChange,
+  });
   final ValueChanged<String?> onValueChange;
   @override
   State<CustomEducationLevelDropdownButton> createState() =>

@@ -22,9 +22,10 @@ class _VideoStateInfoState extends State<VideoStateInfo> {
     final cubit = context.read<VideoConsequencesCubit>();
     cubit.getTotalStudentsCount(courseId: widget.requirements.courseID);
     cubit.getVideoAttendedCount(
-        courseId: widget.requirements.courseID,
-        sectionId: widget.requirements.sectionID,
-        videoId: widget.requirements.video.id);
+      courseId: widget.requirements.courseID,
+      sectionId: widget.requirements.sectionID,
+      videoId: widget.requirements.video.id,
+    );
   }
 
   @override
@@ -59,25 +60,25 @@ class _VideoStateInfoState extends State<VideoStateInfo> {
                 horizontalDivider(context),
                 VideoStateInfoVideoAbsentWidget(
                   videoAbsentCount: totalStudentsCount - attendedCount,
-                )
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
   }
 
   Widget verticalDivider(BuildContext context) => Container(
-        margin: const EdgeInsets.symmetric(horizontal: 10),
-        height: 50,
-        width: 1,
-        color: Theme.of(context).dividerColor,
-      );
+    margin: const EdgeInsets.symmetric(horizontal: 10),
+    height: 50,
+    width: 1,
+    color: Theme.of(context).dividerColor,
+  );
 
   Widget horizontalDivider(BuildContext context) => Container(
-        margin: const EdgeInsets.symmetric(vertical: 10),
-        height: 1,
-        color: Theme.of(context).dividerColor,
-      );
+    margin: const EdgeInsets.symmetric(vertical: 10),
+    height: 1,
+    color: Theme.of(context).dividerColor,
+  );
 }

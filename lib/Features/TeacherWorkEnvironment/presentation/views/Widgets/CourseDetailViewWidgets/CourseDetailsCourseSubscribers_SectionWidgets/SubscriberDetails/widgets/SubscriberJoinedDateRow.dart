@@ -11,19 +11,25 @@ class SubscriberJoinedDateRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final locale = Localizations.localeOf(context).toString();
-    return Row(children: [
-      Icon(Icons.calendar_month,
-          size: 16, color: theme.colorScheme.onSurfaceVariant),
-      const SizedBox(width: 6),
-      Expanded(
+    return Row(
+      children: [
+        Icon(
+          Icons.calendar_month,
+          size: 16,
+          color: theme.colorScheme.onSurfaceVariant,
+        ),
+        const SizedBox(width: 6),
+        Expanded(
           child: Text(
-        '${LocaleKeys.subscriberJoinedDate}: ${LocaleFormatter.longDate(joinedDate, locale)}',
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-        style: AppTextStyles(context)
-            .regular12
-            .copyWith(color: theme.colorScheme.onSurfaceVariant),
-      )),
-    ]);
+            '${LocaleKeys.subscriberJoinedDate}: ${LocaleFormatter.longDate(joinedDate, locale)}',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles(
+              context,
+            ).regular12.copyWith(color: theme.colorScheme.onSurfaceVariant),
+          ),
+        ),
+      ],
+    );
   }
 }

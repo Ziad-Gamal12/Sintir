@@ -6,8 +6,10 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 class CustomCourseDetailsBodyCourseSectionsLoadingSliverList
     extends StatelessWidget {
-  const CustomCourseDetailsBodyCourseSectionsLoadingSliverList(
-      {super.key, required this.course});
+  const CustomCourseDetailsBodyCourseSectionsLoadingSliverList({
+    super.key,
+    required this.course,
+  });
   final CourseEntity course;
   @override
   Widget build(BuildContext context) {

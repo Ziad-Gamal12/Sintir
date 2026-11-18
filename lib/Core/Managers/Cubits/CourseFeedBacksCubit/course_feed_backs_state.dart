@@ -5,7 +5,12 @@ sealed class CourseFeedBacksState {}
 
 final class CourseFeedBacksInitial extends CourseFeedBacksState {}
 
-final class CourseFeedBacksGetFeedBackLoading extends CourseFeedBacksState {}
+final class CourseFeedBacksGetFeedBackLoading extends CourseFeedBacksState {
+  CourseFeedBacksGetFeedBackLoading({this.isPaginate = false});
+
+  /// True while loading a next page (the loaded reviews stay visible).
+  final bool isPaginate;
+}
 
 final class CourseFeedBacksGetFeedBackSuccess extends CourseFeedBacksState {
   final GetCourseFeedBacksResponseEntity response;
@@ -14,14 +19,9 @@ final class CourseFeedBacksGetFeedBackSuccess extends CourseFeedBacksState {
 
 final class CourseFeedBacksGetFeedBackFailure extends CourseFeedBacksState {
   final String errMessage;
-  CourseFeedBacksGetFeedBackFailure({required this.errMessage});
-}
-
-final class CourseFeedBacksAddFeedBackLoading extends CourseFeedBacksState {}
-
-final class CourseFeedBacksAddFeedBackSuccess extends CourseFeedBacksState {}
-
-final class CourseFeedBacksAddFeedBackFailure extends CourseFeedBacksState {
-  final String errMessage;
-  CourseFeedBacksAddFeedBackFailure({required this.errMessage});
+  final bool isPaginate;
+  CourseFeedBacksGetFeedBackFailure({
+    required this.errMessage,
+    this.isPaginate = false,
+  });
 }

@@ -30,9 +30,7 @@ class TransactionDetailsList extends StatelessWidget {
           label: LocaleKeys.transactionDateLabel,
           value: requirements.dateLabel(context),
         ),
-        TransactionId(
-          transactionId: requirements.transactionId,
-        ),
+        TransactionId(transactionId: requirements.transactionId),
       ],
     );
   }
