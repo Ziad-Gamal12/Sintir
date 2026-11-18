@@ -7,7 +7,7 @@ import 'package:sintir/Core/utils/locale_formatter.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/Rating/StarRatingDisplay.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TeacherWorkspaceKpis.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/TeacherWorkEnvironmentTheme.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkspace/TeachespaceEnvironmentTheme.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkspace/TeacherWorkspaceKpiTile.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkspace/TeacherWorkspaceSectionTitle.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkspace/TeacherWorkspaceSurface.dart';
@@ -178,9 +178,7 @@ class _StudentsChange extends StatelessWidget {
     final amount = LocaleFormatter.number(change.abs(), locale);
     return TeacherWorkspaceKpiCaption(
       key: ValueKey(rising ? 'kpi-change-up' : 'kpi-change-down'),
-      text: LocaleKeys.kpiChangeVsPrevious(
-        '⁦${rising ? '+' : '−'}$amount⁩',
-      ),
+      text: LocaleKeys.kpiChangeVsPrevious('⁦${rising ? '+' : '−'}$amount⁩'),
       icon: rising ? Icons.trending_up_rounded : Icons.trending_down_rounded,
       color: rising ? tokens.successForeground : tokens.dangerForeground,
     );
