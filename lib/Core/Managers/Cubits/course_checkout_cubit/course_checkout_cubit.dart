@@ -115,7 +115,7 @@ class CourseCheckoutCubit extends Cubit<CourseCheckoutState> {
     }.contains(code)) {
       emit(CourseCheckoutReviewRequired(message));
     } else {
-      emit(CourseCheckoutFailure(message));
+      emit(CourseCheckoutFailure(message, code: code));
     }
   }
 }

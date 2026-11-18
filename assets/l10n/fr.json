@@ -1227,5 +1227,14 @@
   "review_report_sent": "Signalement envoyé",
   "review_report_already_sent": "Vous avez déjà signalé cet avis.",
   "review_report_own": "Vous ne pouvez pas signaler votre propre avis.",
-  "review_report_too_long": "Les détails dépassent 1000 caractères."
+  "review_report_too_long": "Les détails dépassent 1000 caractères.",
+  "complete_profile_title": "Complétez vos informations",
+  "complete_profile_subtitle": "Ajoutez quelques informations pour configurer votre compte et voir les cours de votre niveau.",
+  "complete_profile_payment_subtitle": "Un numéro de mobile est nécessaire pour payer. Ajoutez-le une fois et le paiement continuera.",
+  "complete_profile_phone_hint": "Numéro mobile égyptien, par exemple 01012345678",
+  "complete_profile_level_required": "Choisissez votre niveau scolaire",
+  "complete_profile_save": "Enregistrer et continuer",
+  "complete_profile_skip": "Plus tard",
+  "complete_profile_saved": "Vos informations ont été enregistrées",
+  "coupon_deleted_successfully": "Coupon supprimé"
 }

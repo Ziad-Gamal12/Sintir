@@ -1230,5 +1230,14 @@
   "review_report_sent": "تم إرسال البلاغ للمراجعة",
   "review_report_already_sent": "أبلغت عن هذا التقييم من قبل.",
   "review_report_own": "لا يمكنك الإبلاغ عن تقييمك.",
-  "review_report_too_long": "التفاصيل أطول من 1000 حرف."
+  "review_report_too_long": "التفاصيل أطول من 1000 حرف.",
+  "complete_profile_title": "أكمل بياناتك",
+  "complete_profile_subtitle": "أضف بعض البيانات لإعداد حسابك وعرض الكورسات المناسبة لمرحلتك الدراسية.",
+  "complete_profile_payment_subtitle": "رقم الموبايل مطلوب لإتمام الدفع. أضفه مرة واحدة وسيكمل الدفع بعدها.",
+  "complete_profile_phone_hint": "رقم موبايل مصري، مثل 01012345678",
+  "complete_profile_level_required": "اختر المرحلة الدراسية",
+  "complete_profile_save": "حفظ ومتابعة",
+  "complete_profile_skip": "لاحقًا",
+  "complete_profile_saved": "تم حفظ بياناتك",
+  "coupon_deleted_successfully": "تم حذف الكوبون"
 }

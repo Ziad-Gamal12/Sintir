@@ -1229,5 +1229,14 @@
   "review_report_sent": "Report sent for review",
   "review_report_already_sent": "You already reported this review.",
   "review_report_own": "You can't report your own review.",
-  "review_report_too_long": "Details are longer than 1000 characters."
+  "review_report_too_long": "Details are longer than 1000 characters.",
+  "complete_profile_title": "Complete your details",
+  "complete_profile_subtitle": "Add a few details so we can set up your account and show courses for your level.",
+  "complete_profile_payment_subtitle": "A mobile number is required to pay. Add it once and the payment will continue.",
+  "complete_profile_phone_hint": "Egyptian mobile number, for example 01012345678",
+  "complete_profile_level_required": "Choose your education level",
+  "complete_profile_save": "Save and continue",
+  "complete_profile_skip": "Later",
+  "complete_profile_saved": "Your details were saved",
+  "coupon_deleted_successfully": "Coupon deleted"
 }

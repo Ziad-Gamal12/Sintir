@@ -1668,4 +1668,13 @@ class LocaleKeys {
   static String get reviewReportAlreadySent => 'review_report_already_sent'.tr();
   static String get reviewReportOwn => 'review_report_own'.tr();
   static String get reviewReportTooLong => 'review_report_too_long'.tr();
+  static String get completeProfileTitle => 'complete_profile_title'.tr();
+  static String get completeProfileSubtitle => 'complete_profile_subtitle'.tr();
+  static String get completeProfilePaymentSubtitle => 'complete_profile_payment_subtitle'.tr();
+  static String get completeProfilePhoneHint => 'complete_profile_phone_hint'.tr();
+  static String get completeProfileLevelRequired => 'complete_profile_level_required'.tr();
+  static String get completeProfileSave => 'complete_profile_save'.tr();
+  static String get completeProfileSkip => 'complete_profile_skip'.tr();
+  static String get completeProfileSaved => 'complete_profile_saved'.tr();
+  static String get couponDeletedSuccessfully => 'coupon_deleted_successfully'.tr();
 }

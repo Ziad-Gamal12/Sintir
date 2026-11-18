@@ -63,6 +63,10 @@ import 'package:sintir/Features/Profile/Data/Repos/AccountDeletionRepoImpl.dart'
 import 'package:sintir/Features/Profile/Data/Repos/PersonalDetailsRepoImpl.dart';
 import 'package:sintir/Features/Profile/Domain/Repos/AccountDeletionRepo.dart';
 import 'package:sintir/Features/Profile/Domain/Repos/PersonalDetailsRepo.dart';
+import 'package:sintir/Core/services/HiveService.dart';
+import 'package:sintir/Core/utils/Backend_EndPoints.dart';
+import 'package:sintir/Features/CompleteProfile/Data/Repos/ProfileCompletionRepoImpl.dart';
+import 'package:sintir/Features/CompleteProfile/Domain/Repos/ProfileCompletionRepo.dart';
 import 'package:sintir/Features/Search/Data/Repos/SearchRepoImpl.dart';
 import 'package:sintir/Features/Search/Domain/Repos/SearchRepo.dart';
 import 'package:sintir/Features/Support/Data/Repos/SupportChatRepoImpl.dart';
@@ -268,6 +272,16 @@ void setup_Getit() {
       clearLocalSession: auth.clearLocalSession,
     );
   });
+  getIt.registerLazySingleton<ProfileCompletionRepo>(
+    () => ProfileCompletionRepoImpl(
+      databaseService: getIt<DataBaseService>(),
+      readCurrentUser: getUserData,
+      saveLocalUser: (userJson) => Hive_Services.jsonSetter(
+        key: BackendEndpoints.storeUserLocaly,
+        value: userJson,
+      ),
+    ),
+  );
   getIt.registerLazySingleton<PersonalDetailsRepo>(
     () => PersonalDetailsRepoImpl(
       dataBaseService: getIt<DataBaseService>(),

@@ -41,6 +41,8 @@ import 'package:sintir/Features/MyTransactions/Presentation/Views/MyTransactions
 import 'package:sintir/Features/Profile/Presentation/Views/AboutUsView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/ProfileView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/DeleteAccountView.dart';
+import 'package:sintir/Features/CompleteProfile/Domain/Entities/CompleteProfilePurpose.dart';
+import 'package:sintir/Features/CompleteProfile/Presentation/Views/CompleteProfileView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/SettingsView.dart';
 import 'package:sintir/Features/Profile/Presentation/Views/UserPersonalDetailsView.dart';
 import 'package:sintir/Features/Search/Presentation/Views/SearchView.dart';
@@ -423,6 +425,17 @@ class App_router {
         path: DeleteAccountView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return const DeleteAccountView();
+        },
+      ),
+      GoRoute(
+        path: CompleteProfileView.routeName,
+        builder: (BuildContext context, GoRouterState state) {
+          final extra = state.extra;
+          return CompleteProfileView(
+            purpose: extra is CompleteProfilePurpose
+                ? extra
+                : CompleteProfilePurpose.afterSignIn,
+          );
         },
       ),
       GoRoute(

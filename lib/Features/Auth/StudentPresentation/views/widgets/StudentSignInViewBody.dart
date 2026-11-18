@@ -3,9 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sintir/Core/helper/GetUserData.dart';
+import 'package:sintir/Core/helper/ProfileCompleteness.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/manager/StudentSignIn_Cubit/student_sign_in_cubit.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/views/BlocBuilder_section/StudentSigninViewBodyBlocBuilder.dart';
+import 'package:sintir/Features/CompleteProfile/Domain/Entities/CompleteProfilePurpose.dart';
+import 'package:sintir/Features/CompleteProfile/Presentation/Views/CompleteProfileView.dart';
 import 'package:sintir/Features/Home/presentation/views/HomeView.dart';
 
 class StudentSignInViewBody extends StatefulWidget {
@@ -21,7 +25,14 @@ class _StudentSignInViewBodyState extends State<StudentSignInViewBody> {
     return BlocConsumer<StudentSignInCubit, StudentSignInState>(
       listener: (context, state) {
         if (state is StudentSignInSuccess) {
-          GoRouter.of(context).go(Homeview.routeName);
+          if (ProfileCompleteness.needsCompletion(getUserData())) {
+            GoRouter.of(context).go(
+              CompleteProfileView.routeName,
+              extra: CompleteProfilePurpose.afterSignIn,
+            );
+          } else {
+            GoRouter.of(context).go(Homeview.routeName);
+          }
         } else if (state is StudentSignInFailure) {
           errordialog(context, state.errmessage).show();
         }

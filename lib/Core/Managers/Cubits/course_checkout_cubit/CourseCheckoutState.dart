@@ -23,8 +23,9 @@ class CourseCheckoutStatus extends CourseCheckoutState {
 }
 
 class CourseCheckoutFailure extends CourseCheckoutState {
-  CourseCheckoutFailure(this.message);
+  CourseCheckoutFailure(this.message, {this.code = ''});
   final String message;
+  final String code;
 }
 
 class CourseCheckoutRecoveryRequired extends CourseCheckoutState {
