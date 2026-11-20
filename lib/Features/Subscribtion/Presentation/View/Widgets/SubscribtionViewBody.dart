@@ -71,11 +71,10 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
   }
 
   Future<bool> _completeProfileForPayment() async {
-    final open = widget.openProfileCompletion ??
-        (context) => context.push<bool>(
-              CompleteProfileView.routeName,
-              extra: CompleteProfilePurpose.payment,
-            );
+    //navigate to a new screen
+    final open =
+        widget.openProfileCompletion ??
+        (context) => context.push<bool>(CompleteProfileView.routeName);
     final completed = await open(context);
     return completed == true && mounted;
   }
@@ -93,9 +92,9 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
 
   void _startPayment() {
     context.read<CourseCheckoutCubit>().createPayment(
-          _course.id,
-          couponCode: _quote?.couponCode,
-        );
+      _course.id,
+      couponCode: _quote?.couponCode,
+    );
   }
 
   Future<void> _retryAfterBillingFix() async {
@@ -131,7 +130,11 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
       }
     } else if (state is CourseCheckoutRecoveryRequired) {
       setState(() => _quoting = false);
-      CustomSnackBar.show(context, message: state.message, type: SnackType.info);
+      CustomSnackBar.show(
+        context,
+        message: state.message,
+        type: SnackType.info,
+      );
     } else if (state is CourseCheckoutReviewRequired) {
       setState(() => _quoting = false);
       CustomSnackBar.show(

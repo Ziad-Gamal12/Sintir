@@ -26,10 +26,9 @@ class _StudentSignInViewBodyState extends State<StudentSignInViewBody> {
       listener: (context, state) {
         if (state is StudentSignInSuccess) {
           if (ProfileCompleteness.needsCompletion(getUserData())) {
-            GoRouter.of(context).go(
-              CompleteProfileView.routeName,
-              extra: CompleteProfilePurpose.afterSignIn,
-            );
+            GoRouter.of(
+              context,
+            ).go(CompleteProfileView.routeName, extra: state.method);
           } else {
             GoRouter.of(context).go(Homeview.routeName);
           }

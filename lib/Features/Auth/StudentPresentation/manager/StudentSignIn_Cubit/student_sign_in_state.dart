@@ -7,7 +7,11 @@ final class StudentSignInInitial extends StudentSignInState {}
 
 final class StudentSignInLoading extends StudentSignInState {}
 
-final class StudentSignInSuccess extends StudentSignInState {}
+final class StudentSignInSuccess extends StudentSignInState {
+  final SiginInMethod? method;
+
+  StudentSignInSuccess({this.method});
+}
 
 final class StudentSignInFailure extends StudentSignInState {
   final String errmessage;

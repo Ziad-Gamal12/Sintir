@@ -17,6 +17,7 @@ import 'package:sintir/Features/Auth/TeacherPresentation/views/TeacherSignInView
 import 'package:sintir/Features/Auth/TeacherPresentation/views/TeacherSignUpView.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/views/teacherTermsAndConditionsView.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/ChoosingUserKindView.dart';
+import 'package:sintir/Features/CompleteProfile/Domain/Enums/SiginInMethod.dart';
 import 'package:sintir/Features/ContentCreatorProfile/Presentation/Views/ContentCreatorProfile.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/CourseFileviewnavigationsrequirmentsentity.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/CourseFedBackView.dart';
@@ -167,8 +168,9 @@ class App_router {
         path: CourseIntroductionView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return CourseIntroductionView(
-            bottomsheetnavigationrequirmentsentity: state.extra
-                as DisplayCourseBottomsheetNavigationRequirmentsEntity,
+            bottomsheetnavigationrequirmentsentity:
+                state.extra
+                    as DisplayCourseBottomsheetNavigationRequirmentsEntity,
           );
         },
       ),
@@ -194,8 +196,9 @@ class App_router {
         path: Sendcoursereportview.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return Sendcoursereportview(
-            requirmentsEntity: state.extra
-                as DisplayCourseBottomsheetNavigationRequirmentsEntity,
+            requirmentsEntity:
+                state.extra
+                    as DisplayCourseBottomsheetNavigationRequirmentsEntity,
           );
         },
       ),
@@ -203,8 +206,9 @@ class App_router {
         path: Coursefedbackview.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return Coursefedbackview(
-            requirmentsEntity: state.extra
-                as DisplayCourseBottomsheetNavigationRequirmentsEntity,
+            requirmentsEntity:
+                state.extra
+                    as DisplayCourseBottomsheetNavigationRequirmentsEntity,
           );
         },
       ),
@@ -232,17 +236,13 @@ class App_router {
       GoRoute(
         path: CourseDetailView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return CourseDetailView(
-            courseEntity: state.extra as CourseEntity,
-          );
+          return CourseDetailView(courseEntity: state.extra as CourseEntity);
         },
       ),
       GoRoute(
         path: Addcoursesectionview.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return Addcoursesectionview(
-            course: state.extra as CourseEntity,
-          );
+          return Addcoursesectionview(course: state.extra as CourseEntity);
         },
       ),
       GoRoute(
@@ -308,8 +308,9 @@ class App_router {
         path: SubscribtionView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return SubscribtionView(
-            requirmentsEntity: state.extra
-                as DisplayCourseBottomsheetNavigationRequirmentsEntity,
+            requirmentsEntity:
+                state.extra
+                    as DisplayCourseBottomsheetNavigationRequirmentsEntity,
           );
         },
       ),
@@ -352,25 +353,19 @@ class App_router {
       GoRoute(
         path: TeacherCourseReviewsView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return TeacherCourseReviewsView(
-            course: state.extra as CourseEntity,
-          );
+          return TeacherCourseReviewsView(course: state.extra as CourseEntity);
         },
       ),
       GoRoute(
         path: CourseDetailsCouponsView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return CourseDetailsCouponsView(
-            courseId: state.extra as String,
-          );
+          return CourseDetailsCouponsView(courseId: state.extra as String);
         },
       ),
       GoRoute(
         path: AddCourseCouponView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return AddCourseCouponView(
-            courseId: state.extra as String,
-          );
+          return AddCourseCouponView(courseId: state.extra as String);
         },
       ),
       GoRoute(
@@ -391,9 +386,7 @@ class App_router {
       GoRoute(
         path: MyCoursesView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return MyCoursesView(
-            isPopUp: true,
-          );
+          return MyCoursesView(isPopUp: true);
         },
       ),
       GoRoute(
@@ -412,7 +405,8 @@ class App_router {
         path: ContentCreatorProfile.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return ContentCreatorProfile(
-              contentcreaterentity: state.extra as Contentcreaterentity);
+            contentcreaterentity: state.extra as Contentcreaterentity,
+          );
         },
       ),
       GoRoute(
@@ -430,20 +424,16 @@ class App_router {
       GoRoute(
         path: CompleteProfileView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          final extra = state.extra;
-          return CompleteProfileView(
-            purpose: extra is CompleteProfilePurpose
-                ? extra
-                : CompleteProfilePurpose.afterSignIn,
-          );
+          return CompleteProfileView(method: state.extra as SiginInMethod);
         },
       ),
       GoRoute(
         path: SubscriberDetailsView.routeName,
         builder: (BuildContext context, GoRouterState state) {
           return SubscriberDetailsView(
-              requirements:
-                  state.extra as SubscriberDetailsNavigationRequirements);
+            requirements:
+                state.extra as SubscriberDetailsNavigationRequirements,
+          );
         },
       ),
       GoRoute(
@@ -511,9 +501,7 @@ class App_router {
       GoRoute(
         path: CreateOwnExamView.routeName,
         builder: (BuildContext context, GoRouterState state) {
-          return CreateOwnExamView(
-            cubit: state.extra as GetMyMistakesCubit,
-          );
+          return CreateOwnExamView(cubit: state.extra as GetMyMistakesCubit);
         },
       ),
       GoRoute(

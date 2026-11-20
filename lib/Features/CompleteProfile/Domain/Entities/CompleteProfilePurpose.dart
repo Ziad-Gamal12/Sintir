@@ -1,7 +1,5 @@
 // ignore_for_file: file_names
 
-enum CompleteProfilePurpose { afterSignIn, payment }
-
 class ProfileCompletionInput {
   const ProfileCompletionInput({
     required this.firstName,

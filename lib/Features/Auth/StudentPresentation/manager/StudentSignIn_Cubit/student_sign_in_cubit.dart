@@ -3,41 +3,55 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
+import 'package:sintir/Features/CompleteProfile/Domain/Enums/SiginInMethod.dart';
 
 part 'student_sign_in_state.dart';
 
 class StudentSignInCubit extends Cubit<StudentSignInState> {
   StudentSignInCubit(this.authrepo) : super(StudentSignInInitial());
   final AuthRepo authrepo;
-  Future<void> signInWithEmailAndPassword(
-      {required String email, required String password}) async {
+  Future<void> signInWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
     emit(StudentSignInLoading());
     var result = await authrepo.signInWithEmailAndPassword(
-        email: email, password: password);
-    result.fold((failure) {
-      emit(StudentSignInFailure(errmessage: failure.message));
-    }, (studentEntity) {
-      emit(StudentSignInSuccess());
-    });
+      email: email,
+      password: password,
+    );
+    result.fold(
+      (failure) {
+        emit(StudentSignInFailure(errmessage: failure.message));
+      },
+      (studentEntity) {
+        emit(StudentSignInSuccess());
+      },
+    );
   }
 
   Future<void> signInWithGoogle() async {
     emit(StudentSignInLoading());
     var result = await authrepo.signInWithGoogle();
-    result.fold((failure) {
-      emit(StudentSignInFailure(errmessage: failure.message));
-    }, (studentEntity) {
-      emit(StudentSignInSuccess());
-    });
+    result.fold(
+      (failure) {
+        emit(StudentSignInFailure(errmessage: failure.message));
+      },
+      (studentEntity) {
+        emit(StudentSignInSuccess(method: SiginInMethod.google));
+      },
+    );
   }
 
   Future<void> signInWithFacebook() async {
     emit(StudentSignInLoading());
     var result = await authrepo.signInWithFacebook();
-    result.fold((failure) {
-      emit(StudentSignInFailure(errmessage: failure.message));
-    }, (studentEntity) {
-      emit(StudentSignInSuccess());
-    });
+    result.fold(
+      (failure) {
+        emit(StudentSignInFailure(errmessage: failure.message));
+      },
+      (studentEntity) {
+        emit(StudentSignInSuccess(method: SiginInMethod.facebook));
+      },
+    );
   }
 }

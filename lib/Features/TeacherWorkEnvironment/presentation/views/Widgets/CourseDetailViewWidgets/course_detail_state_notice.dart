@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/TeacherCourseState.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkenvironmentviewWidgets/TeacherWorkEnvironmentTheme.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkspace/TeachespaceEnvironmentTheme.dart';
 import 'package:sintir/locale_keys.dart';
 
 class CourseDetailStateNotice extends StatelessWidget {
@@ -119,8 +119,11 @@ class CourseDetailStateNotice extends StatelessWidget {
                                     color: Colors.white,
                                   ),
                                 )
-                              : const Icon(Icons.send_rounded,
-                                  color: Colors.white, size: 18),
+                              : const Icon(
+                                  Icons.send_rounded,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
                           label: Text(
                             LocaleKeys.courseResubmitButton,
                             style: styles.semiBold13.copyWith(

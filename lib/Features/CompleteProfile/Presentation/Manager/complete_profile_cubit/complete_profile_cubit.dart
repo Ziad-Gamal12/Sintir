@@ -14,8 +14,7 @@ class CompleteProfileCubit extends Cubit<CompleteProfileState> {
   UserEntity get currentUser => repo.currentUser();
 
   Future<void> save(ProfileCompletionInput input) async {
-    if (state is CompleteProfileSaving || state is CompleteProfileSaved) return;
-    emit(const CompleteProfileSaving());
+    emit(CompleteProfileSaving());
     final result = await repo.completeProfile(input);
     result.fold(
       (failure) => emit(CompleteProfileFailure(failure.message)),

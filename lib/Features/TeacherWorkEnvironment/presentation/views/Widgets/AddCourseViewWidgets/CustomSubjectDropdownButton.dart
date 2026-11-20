@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/CustomAnimatedDropDownButton.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/SubjectDropdownEntityItem.dart';
 import 'package:sintir/locale_keys.dart';
 
 class CustomSubjectDropdownButton extends StatefulWidget {
@@ -12,24 +13,7 @@ class CustomSubjectDropdownButton extends StatefulWidget {
 
 class _CustomSubjectDropdownButtonState
     extends State<CustomSubjectDropdownButton> {
-  List<String> items = [
-    "Arabic",
-    "English",
-    "French",
-    "Italian",
-    "Spanish",
-    "Mathematics",
-    "Physics",
-    "Chemistry",
-    "Biology",
-    "Biological Science",
-    "Science",
-    "Philosophy",
-    "History",
-    "Geography",
-    "Computer Science",
-    "Other",
-  ];
+  List<String> items = SubjectDropdownEntityItem.getSubjectsLabels();
   @override
   Widget build(BuildContext context) {
     return CustomAnimatedDropDownButton(

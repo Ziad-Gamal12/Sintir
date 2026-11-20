@@ -8,10 +8,8 @@ import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/locale_keys.dart';
 
 class StudentGenderSelectionInput extends StatefulWidget {
-  const StudentGenderSelectionInput({
-    super.key,
-  });
-
+  const StudentGenderSelectionInput({super.key, this.onchange});
+  final void Function(String?)? onchange;
   @override
   State<StudentGenderSelectionInput> createState() =>
       _StudentGenderSelectionInputState();
@@ -22,6 +20,8 @@ class _StudentGenderSelectionInputState
   String radiovalue = "";
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return SizedBox(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -29,44 +29,46 @@ class _StudentGenderSelectionInputState
           Row(
             children: [
               CustomRadioWidget(
-                  value: "Male",
-                  groupValue: radiovalue,
-                  onchange: (val) {
-                    setState(() {
-                      radiovalue = val ?? "";
-                    });
-                    context.read<UserEntity>().gender = val ?? "";
-                  }),
-              const SizedBox(
-                width: 12,
+                value: "Male",
+                groupValue: radiovalue,
+                onchange:
+                    widget.onchange ??
+                    (val) {
+                      setState(() {
+                        radiovalue = val ?? "";
+                      });
+                      context.read<UserEntity>().gender = val ?? "";
+                    },
               ),
+              const SizedBox(width: 12),
               Text(
                 LocaleKeys.male,
-                style: AppTextStyles(context)
-                    .bold16
-                    .copyWith(color: const Color(0xff818181)),
+                style: AppTextStyles(
+                  context,
+                ).bold16.copyWith(color: theme.textTheme.bodyLarge?.color),
               ),
             ],
           ),
           Row(
             children: [
               CustomRadioWidget(
-                  value: "Female",
-                  groupValue: radiovalue,
-                  onchange: (val) {
-                    setState(() {
-                      radiovalue = val ?? "";
-                    });
-                    context.read<UserEntity>().gender = val ?? "";
-                  }),
-              const SizedBox(
-                width: 12,
+                value: "Female",
+                groupValue: radiovalue,
+                onchange:
+                    widget.onchange ??
+                    (val) {
+                      setState(() {
+                        radiovalue = val ?? "";
+                      });
+                      context.read<UserEntity>().gender = val ?? "";
+                    },
               ),
+              const SizedBox(width: 12),
               Text(
                 LocaleKeys.female,
-                style: AppTextStyles(context)
-                    .bold16
-                    .copyWith(color: const Color(0xff818181)),
+                style: AppTextStyles(
+                  context,
+                ).bold16.copyWith(color: theme.textTheme.bodyLarge?.color),
               ),
             ],
           ),

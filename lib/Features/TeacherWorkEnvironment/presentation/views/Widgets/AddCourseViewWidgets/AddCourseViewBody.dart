@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/EducationLevelDropdownEntityItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/SubjectDropdownEntityItem.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseViewWidgets/CourseInputsCard.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseViewWidgets/CustomAddCourseActionButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/AddCourseCubit/add_course_cubit.dart';
@@ -58,8 +60,24 @@ class _AddCourseViewBodyState extends State<AddCourseViewBody> {
                   titleController: titleController,
                   descriptionController: descriptionController,
                   priceController: priceController,
-                  onLevelChange: (v) => setState(() => selectedLevel = v),
-                  onSubjectChange: (v) => setState(() => selectedSubject = v),
+                  onLevelChange: (label) {
+                    if (label != null) {
+                      setState(
+                        () => selectedLevel =
+                            EducationLevelDropdownEntityItem.getValueByLabel(
+                              label,
+                            ),
+                      );
+                    }
+                  },
+                  onSubjectChange: (label) {
+                    if (label != null) {
+                      setState(
+                        () => selectedSubject =
+                            SubjectDropdownEntityItem.getValueByLabel(label),
+                      );
+                    }
+                  },
                   onLanguageChange: (v) => setState(() => selectedLanguage = v),
                 ),
                 const SizedBox(height: 50),

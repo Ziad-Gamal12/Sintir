@@ -16,11 +16,11 @@ class CustomAnimatedDropDownButton extends StatelessWidget {
   final String? hintText;
 
   Future<List<String>> _getFakeRequestData(String query) async {
-    return await Future.delayed(const Duration(milliseconds: 500), () {
-      return items.where((e) {
-        return e.toLowerCase().contains(query.toLowerCase());
-      }).toList();
-    });
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    return items.where((e) {
+      return e.toLowerCase().contains(query.toLowerCase());
+    }).toList();
   }
 
   @override
@@ -28,65 +28,71 @@ class CustomAnimatedDropDownButton extends StatelessWidget {
     final theme = Theme.of(context);
     final isDarkMode = theme.brightness == Brightness.dark;
 
-    // Modern adaptive colors
-    final Color surfaceColor =
-        isDarkMode ? const Color(0xFF1E1E1E) : theme.cardColor;
-    final Color borderColor =
-        isDarkMode ? Colors.white10 : const Color(0xFFE4E6E8);
-    final Color searchColor =
-        isDarkMode ? const Color(0xFF2A2A2A) : const Color(0xFFF8F9FA);
+    final Color fillColor = isDarkMode
+        ? Colors.white.withValues(alpha: 0.05)
+        : const Color(0xFFF8F9FA);
+
+    final Color borderColor = isDarkMode
+        ? Colors.white10
+        : const Color(0xFFE4E6E8);
+
+    final Color expandedColor = isDarkMode
+        ? const Color(0xFF1E1E1E)
+        : Colors.white;
 
     return CustomDropdown<String>.searchRequest(
       futureRequest: _getFakeRequestData,
       hintText: hintText ?? LocaleKeys.chooseOption,
+
       headerBuilder: (context, selectedItem, enabled) => Text(
         selectedItem,
-        style: AppTextStyles(context).semiBold14.copyWith(
-              color: theme.textTheme.bodyLarge?.color,
-            ),
+        style: AppTextStyles(
+          context,
+        ).semiBold14.copyWith(color: theme.textTheme.bodyLarge?.color),
       ),
+
       hintBuilder: (context, hint, enabled) => Text(
         hint,
-        style: AppTextStyles(context).regular14.copyWith(
-              color: theme.hintColor.withValues(alpha: 0.5),
-            ),
+        style: AppTextStyles(
+          context,
+        ).regular14.copyWith(color: theme.hintColor.withValues(alpha: 0.5)),
       ),
+
       decoration: CustomDropdownDecoration(
-        closedShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: isDarkMode ? 0.2 : 0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          )
-        ],
         expandedShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          )
+            color: Colors.black.withValues(alpha: isDarkMode ? 0.25 : 0.08),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
+          ),
         ],
+
         searchFieldDecoration: SearchFieldDecoration(
-          fillColor: searchColor,
+          fillColor: fillColor,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: borderColor),
+            borderSide: BorderSide(color: borderColor, width: 1),
           ),
-          textStyle: AppTextStyles(context).regular14,
+          textStyle: AppTextStyles(
+            context,
+          ).regular14.copyWith(color: theme.textTheme.bodyLarge?.color),
         ),
-        expandedFillColor: surfaceColor,
-        closedFillColor: surfaceColor,
-        closedBorder: BoxBorder.all(
-          color: borderColor,
-          width: 1.2,
-        ),
+
+        expandedFillColor: expandedColor,
+
+        closedFillColor: fillColor,
+
+        closedBorder: BoxBorder.all(color: borderColor, width: 1),
+
         expandedBorder: BoxBorder.all(
           color: theme.primaryColor.withValues(alpha: 0.5),
           width: 1.2,
         ),
-        closedBorderRadius: const BorderRadius.all(Radius.circular(14)),
-        expandedBorderRadius: const BorderRadius.all(Radius.circular(14)),
+
+        closedBorderRadius: BorderRadius.circular(14),
+        expandedBorderRadius: BorderRadius.circular(14),
       ),
+
       items: items,
       onChanged: onChanged,
     );

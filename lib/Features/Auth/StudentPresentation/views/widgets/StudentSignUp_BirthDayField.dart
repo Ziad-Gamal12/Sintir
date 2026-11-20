@@ -22,14 +22,14 @@ class _StudentsignupBirthdayfieldState
     showDatePicker(
       context: context,
       firstDate: DateTime(1990),
-      lastDate: DateTime(2025),
+      lastDate: DateTime.now(),
       initialEntryMode: DatePickerEntryMode.calendar,
       builder: (context, child) {
         final theme = Theme.of(context);
         final isDark = theme.brightness == Brightness.dark;
 
         return Theme(
-          data: Theme.of(context).copyWith(
+          data: theme.copyWith(
             colorScheme: isDark
                 ? const ColorScheme.dark(
                     primary: Color(0xFF4E7EFF),
@@ -62,7 +62,11 @@ class _StudentsignupBirthdayfieldState
       },
     ).then((value) {
       if (!mounted) return;
-      context.read<UserEntity>().studentExtraDataEntity?.birthDate = value;
+
+      if (value != null) {
+        context.read<UserEntity>().studentExtraDataEntity?.birthDate = value;
+      }
+
       setState(() {
         pickedDate = value;
       });
@@ -72,33 +76,61 @@ class _StudentsignupBirthdayfieldState
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
+    final isDarkMode = theme.brightness == Brightness.dark;
 
-    return InkWell(
-      onTap: showdatepicker,
-      child: Container(
-        height: 56,
-        width: double.infinity,
-        decoration: BoxDecoration(
-            color: isDark ? const Color(0xFF2A2A2A) : const Color(0xffF9FAFA),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-                color: isDark ? Colors.grey.shade700 : const Color(0xffF9FAFA),
-                width: 2)),
-        child: ListTile(
-          title: Text(
-            pickedDate == null
-                ? LocaleKeys.studentBirthDate
-                : "${pickedDate!.day}/${pickedDate!.month}/${pickedDate!.year}",
-            style: AppTextStyles(context).bold14.copyWith(
-                  color: pickedDate == null
-                      ? (isDark ? Colors.white54 : const Color(0xffAEAEB2))
-                      : (isDark ? Colors.white70 : Colors.grey.shade700),
-                ),
+    // Match CustomTextField styling exactly.
+    final Color fillBg = isDarkMode
+        ? Colors.white.withValues(alpha: 0.05)
+        : const Color(0xFFF8F9FA);
+
+    final Color borderColor = isDarkMode
+        ? Colors.white10
+        : const Color(0xFFE4E6E8);
+
+    final bool hasDate = pickedDate != null;
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: showdatepicker,
+        borderRadius: BorderRadius.circular(14),
+        child: Container(
+          height: 56,
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            color: fillBg,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: borderColor, width: 1),
           ),
-          leading: Icon(
-            Icons.date_range_outlined,
-            color: isDark ? Colors.white70 : const Color(0xFF6C6C70),
+          child: Row(
+            children: [
+              Icon(
+                Icons.date_range_outlined,
+                size: 20,
+                color: theme.primaryColor.withValues(alpha: 0.7),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  hasDate
+                      ? '${pickedDate!.day}/${pickedDate!.month}/${pickedDate!.year}'
+                      : LocaleKeys.studentBirthDate,
+                  style: hasDate
+                      ? AppTextStyles(context).semiBold14.copyWith(
+                          color: theme.textTheme.bodyLarge?.color,
+                        )
+                      : AppTextStyles(context).regular14.copyWith(
+                          color: theme.hintColor.withValues(alpha: 0.5),
+                        ),
+                ),
+              ),
+              Icon(
+                Icons.keyboard_arrow_down_rounded,
+                size: 20,
+                color: theme.hintColor.withValues(alpha: 0.6),
+              ),
+            ],
           ),
         ),
       ),

@@ -39,28 +39,27 @@ UserEntity _user({
   String lastName = '',
   String phone = '',
   String level = '',
-}) =>
-    UserEntity(
-      uid: 'u1',
-      firstName: firstName,
-      lastName: lastName,
-      fullName: '$firstName $lastName'.trim(),
-      email: 'ziad@example.com',
-      address: '',
-      phoneNumber: phone,
-      deviceId: 'device',
-      gender: '',
-      profilePicurl: '',
-      status: BackendEndpoints.activeStatus,
-      role: role == 'Student' ? BackendEndpoints.studentRole : role,
-      joinedDate: DateTime(2026, 1, 1),
-      studentExtraDataEntity: level.isEmpty
-          ? null
-          : StudentExtraDataEntity(
-              educationLevel: level,
-              birthDate: DateTime(2010, 5, 1),
-            ),
-    );
+}) => UserEntity(
+  uid: 'u1',
+  firstName: firstName,
+  lastName: lastName,
+  fullName: '$firstName $lastName'.trim(),
+  email: 'ziad@example.com',
+  address: '',
+  phoneNumber: phone,
+  deviceId: 'device',
+  gender: '',
+  profilePicurl: '',
+  status: BackendEndpoints.activeStatus,
+  role: role == 'Student' ? BackendEndpoints.studentRole : role,
+  joinedDate: DateTime(2026, 1, 1),
+  studentExtraDataEntity: level.isEmpty
+      ? null
+      : StudentExtraDataEntity(
+          educationLevel: level,
+          birthDate: DateTime(2010, 5, 1),
+        ),
+);
 
 const _validInput = ProfileCompletionInput(
   firstName: ' Ziad ',
@@ -121,8 +120,7 @@ class _FakeCheckoutGateway implements CourseCheckoutGateway {
   Future<CourseCheckoutQuote> quote({
     required String courseId,
     String? couponCode,
-  }) =>
-      throw UnimplementedError();
+  }) => throw UnimplementedError();
 
   @override
   Future<CoursePaymentAttempt> createPayment({
@@ -140,36 +138,37 @@ class _FakeCheckoutGateway implements CourseCheckoutGateway {
   }
 
   @override
-  Future<CoursePaymentStatusResult> paymentStatus(String paymentAttemptId) async =>
-      const CoursePaymentStatusResult(status: 'pending');
+  Future<CoursePaymentStatusResult> paymentStatus(
+    String paymentAttemptId,
+  ) async => const CoursePaymentStatusResult(status: 'pending');
 
   @override
   Future<bool> isSubscribed(String courseId) async => false;
 }
 
 CourseEntity _course() => CourseEntity(
-      id: 'c1',
-      state: 'published',
-      posterUrl: '',
-      studentsCount: 2,
-      subject: 'Chemistry',
-      level: '3rd Grade Secondary',
-      title: 'Chemistry',
-      description: '',
-      price: 200,
-      language: 'العربية',
-      postedDate: DateTime(2026, 9, 1),
-      lessonsCount: 2,
-      testsCount: 1,
-      feedBacksCount: 0,
-      contentcreaterentity: Contentcreaterentity(
-        name: 'Teacher',
-        profileImageUrl: '',
-        id: 't1',
-        title: '',
-      ),
-      ratingStats: const CourseRatingStatsEntity(ratingsSum: 0, ratingsCount: 0),
-    );
+  id: 'c1',
+  state: 'published',
+  posterUrl: '',
+  studentsCount: 2,
+  subject: 'Chemistry',
+  level: '3rd Grade Secondary',
+  title: 'Chemistry',
+  description: '',
+  price: 200,
+  language: 'العربية',
+  postedDate: DateTime(2026, 9, 1),
+  lessonsCount: 2,
+  testsCount: 1,
+  feedBacksCount: 0,
+  contentcreaterentity: Contentcreaterentity(
+    name: 'Teacher',
+    profileImageUrl: '',
+    id: 't1',
+    title: '',
+  ),
+  ratingStats: const CourseRatingStatsEntity(ratingsSum: 0, ratingsCount: 0),
+);
 
 const _delegates = [
   AppLocalizations.delegate,
@@ -195,44 +194,45 @@ Future<void> _pumpRouter(WidgetTester tester, GoRouter router) async {
   await tester.pumpAndSettle();
 }
 
-Widget _completionScreen(ProfileCompletionRepo repo, CompleteProfilePurpose purpose) =>
-    Scaffold(
-      body: BlocProvider(
-        create: (_) => CompleteProfileCubit(repo: repo),
-        child: CompleteProfileViewBody(purpose: purpose),
-      ),
-    );
+Widget _completionScreen(ProfileCompletionRepo repo) => Scaffold(
+  body: BlocProvider(
+    create: (_) => CompleteProfileCubit(repo: repo),
+    child: CompleteProfileViewBody(method: null),
+  ),
+);
 
-GoRouter _router(GlobalKey<NavigatorState> key, Widget Function(BuildContext) start,
-        {required ProfileCompletionRepo repo}) =>
-    GoRouter(
-      navigatorKey: key,
-      routes: [
-        GoRoute(path: '/', builder: (context, _) => start(context)),
-        GoRoute(
-          path: Homeview.routeName,
-          builder: (_, __) => const Scaffold(body: Text('home-screen')),
-        ),
-        GoRoute(
-          path: '/complete',
-          builder: (_, state) => _completionScreen(
-            repo,
-            state.extra as CompleteProfilePurpose,
-          ),
-        ),
-      ],
-    );
+GoRouter _router(
+  GlobalKey<NavigatorState> key,
+  Widget Function(BuildContext) start, {
+  required ProfileCompletionRepo repo,
+}) => GoRouter(
+  navigatorKey: key,
+  routes: [
+    GoRoute(path: '/', builder: (context, _) => start(context)),
+    GoRoute(
+      path: Homeview.routeName,
+      builder: (_, __) => const Scaffold(body: Text('home-screen')),
+    ),
+    GoRoute(path: '/complete', builder: (_, state) => _completionScreen(repo)),
+  ],
+);
 
 Finder _field(String key) => find.descendant(
-      of: find.byKey(ValueKey(key)),
-      matching: find.byType(TextFormField),
-    );
+  of: find.byKey(ValueKey(key)),
+  matching: find.byType(TextFormField),
+);
 
 void main() {
   group('profile completeness rules', () {
     test('Egyptian mobile numbers are normalized and validated', () {
-      expect(ProfileCompleteness.normalizePhone('+20 101 234 5678'), '01012345678');
-      expect(ProfileCompleteness.normalizePhone('00201112345678'), '01112345678');
+      expect(
+        ProfileCompleteness.normalizePhone('+20 101 234 5678'),
+        '01012345678',
+      );
+      expect(
+        ProfileCompleteness.normalizePhone('00201112345678'),
+        '01112345678',
+      );
       expect(ProfileCompleteness.normalizePhone('201512345678'), '01512345678');
       expect(ProfileCompleteness.isValidPhone('01012345678'), isTrue);
       expect(ProfileCompleteness.isValidPhone('01212345678'), isTrue);
@@ -242,14 +242,17 @@ void main() {
       expect(ProfileCompleteness.isValidPhone(''), isFalse);
     });
 
-    test('a Google or Facebook student is missing last name, phone and level', () {
-      expect(ProfileCompleteness.missingForAccount(_user()), [
-        ProfileField.lastName,
-        ProfileField.phone,
-        ProfileField.educationLevel,
-      ]);
-      expect(ProfileCompleteness.needsCompletion(_user()), isTrue);
-    });
+    test(
+      'a Google or Facebook student is missing last name, phone and level',
+      () {
+        expect(ProfileCompleteness.missingForAccount(_user()), [
+          ProfileField.lastName,
+          ProfileField.phone,
+          ProfileField.educationLevel,
+        ]);
+        expect(ProfileCompleteness.needsCompletion(_user()), isTrue);
+      },
+    );
 
     test('a complete student and any teacher need nothing', () {
       final complete = _user(
@@ -260,16 +263,23 @@ void main() {
       );
       expect(ProfileCompleteness.missingForAccount(complete), isEmpty);
       expect(ProfileCompleteness.missingForPayment(complete), isEmpty);
-      expect(ProfileCompleteness.missingForAccount(_user(role: 'Teacher')), isEmpty);
-      expect(ProfileCompleteness.missingForPayment(_user(role: 'Teacher')), isEmpty);
+      expect(
+        ProfileCompleteness.missingForAccount(_user(role: 'Teacher')),
+        isEmpty,
+      );
+      expect(
+        ProfileCompleteness.missingForPayment(_user(role: 'Teacher')),
+        isEmpty,
+      );
     });
 
     test('payment needs only a name and a valid phone', () {
-      expect(ProfileCompleteness.missingForPayment(_user()), [ProfileField.phone]);
-      expect(
-        ProfileCompleteness.missingForPayment(_user(phone: '0101')),
-        [ProfileField.phone],
-      );
+      expect(ProfileCompleteness.missingForPayment(_user()), [
+        ProfileField.phone,
+      ]);
+      expect(ProfileCompleteness.missingForPayment(_user(phone: '0101')), [
+        ProfileField.phone,
+      ]);
       expect(
         ProfileCompleteness.missingForPayment(_user(phone: '01012345678')),
         isEmpty,
@@ -277,7 +287,9 @@ void main() {
     });
 
     test('a display name is split into first and last name', () {
-      final name = ProfileCompleteness.splitName(_user(firstName: 'Ziad Gamal Ali'));
+      final name = ProfileCompleteness.splitName(
+        _user(firstName: 'Ziad Gamal Ali'),
+      );
       expect(name.first, 'Ziad');
       expect(name.last, 'Gamal Ali');
       final kept = ProfileCompleteness.splitName(
@@ -303,7 +315,10 @@ void main() {
       expect(result.isRight(), isTrue);
       expect(db.updates, hasLength(1));
       final update = db.updates.single;
-      expect(update.requirements.collection, BackendEndpoints.usersCollectionName);
+      expect(
+        update.requirements.collection,
+        BackendEndpoints.usersCollectionName,
+      );
       expect(update.requirements.docId, 'u1');
       expect(update.data['firstName'], 'Ziad');
       expect(update.data['lastName'], 'Gamal');
@@ -317,7 +332,10 @@ void main() {
       expect(update.data.keys, isNot(contains('role')));
       expect(update.data.keys, isNot(contains('status')));
       expect(local?['phoneNumber'], '01012345678');
-      expect(local?['studentExtraData']['educationLevel'], '3rd Grade Secondary');
+      expect(
+        local?['studentExtraData']['educationLevel'],
+        '3rd Grade Secondary',
+      );
       final user = result.getOrElse(() => _user());
       expect(ProfileCompleteness.needsCompletion(user), isFalse);
     });
@@ -330,22 +348,29 @@ void main() {
         saveLocalUser: (_) async {},
       );
 
-      final badPhone = await repo.completeProfile(const ProfileCompletionInput(
-        firstName: 'Ziad',
-        lastName: 'Gamal',
-        phoneNumber: '0123',
-        educationLevel: '3rd Grade Secondary',
-        gender: '',
-      ));
-      final noLevel = await repo.completeProfile(const ProfileCompletionInput(
-        firstName: 'Ziad',
-        lastName: 'Gamal',
-        phoneNumber: '01012345678',
-        educationLevel: '',
-        gender: '',
-      ));
+      final badPhone = await repo.completeProfile(
+        const ProfileCompletionInput(
+          firstName: 'Ziad',
+          lastName: 'Gamal',
+          phoneNumber: '0123',
+          educationLevel: '3rd Grade Secondary',
+          gender: '',
+        ),
+      );
+      final noLevel = await repo.completeProfile(
+        const ProfileCompletionInput(
+          firstName: 'Ziad',
+          lastName: 'Gamal',
+          phoneNumber: '01012345678',
+          educationLevel: '',
+          gender: '',
+        ),
+      );
 
-      expect(badPhone.fold((f) => f.message, (_) => ''), LocaleKeys.phoneInvalid);
+      expect(
+        badPhone.fold((f) => f.message, (_) => ''),
+        LocaleKeys.phoneInvalid,
+      );
       expect(
         noLevel.fold((f) => f.message, (_) => ''),
         LocaleKeys.completeProfileLevelRequired,
@@ -354,7 +379,8 @@ void main() {
     });
 
     test('a failed write keeps the local copy unchanged', () async {
-      final db = _RecordingDatabase()..failWith = CustomException(message: 'offline');
+      final db = _RecordingDatabase()
+        ..failWith = CustomException(message: 'offline');
       var localWrites = 0;
       final repo = ProfileCompletionRepoImpl(
         databaseService: db,
@@ -417,28 +443,44 @@ void main() {
   });
 
   group('complete profile screen', () {
-    testWidgets('after sign-in it prefills the name, validates and goes home', (tester) async {
+    testWidgets('after sign-in it prefills the name, validates and goes home', (
+      tester,
+    ) async {
       final key = GlobalKey<NavigatorState>();
       Localingo.setNavigatorKey(key);
       final repo = _FakeProfileRepo(_user());
       await _pumpRouter(
         tester,
-        _router(
-          key,
-          (_) => _completionScreen(repo, CompleteProfilePurpose.afterSignIn),
-          repo: repo,
-        ),
+        _router(key, (_) => _completionScreen(repo), repo: repo),
       );
 
-      expect(tester.widget<TextFormField>(_field('complete-profile-first-name')).controller?.text, 'Ziad');
-      expect(tester.widget<TextFormField>(_field('complete-profile-last-name')).controller?.text, 'Gamal');
-      expect(find.byKey(const ValueKey('complete-profile-skip')), findsOneWidget);
+      expect(
+        tester
+            .widget<TextFormField>(_field('complete-profile-first-name'))
+            .controller
+            ?.text,
+        'Ziad',
+      );
+      expect(
+        tester
+            .widget<TextFormField>(_field('complete-profile-last-name'))
+            .controller
+            ?.text,
+        'Gamal',
+      );
+      expect(
+        find.byKey(const ValueKey('complete-profile-skip')),
+        findsOneWidget,
+      );
 
       await tester.enterText(_field('complete-profile-phone'), '0101');
       await tester.tap(find.byKey(const ValueKey('complete-profile-save')));
       await tester.pumpAndSettle();
       expect(find.text(LocaleKeys.phoneInvalid), findsOneWidget);
-      expect(find.text(LocaleKeys.completeProfileLevelRequired), findsOneWidget);
+      expect(
+        find.text(LocaleKeys.completeProfileLevelRequired),
+        findsOneWidget,
+      );
       expect(repo.saved, isEmpty);
 
       await tester.enterText(_field('complete-profile-phone'), '01012345678');
@@ -446,7 +488,9 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.text('3rd Grade Secondary').last);
       await tester.pumpAndSettle();
-      await tester.tap(find.byKey(const ValueKey('complete-profile-gender-female')));
+      await tester.tap(
+        find.byKey(const ValueKey('complete-profile-gender-female')),
+      );
       await tester.pump();
       await tester.tap(find.byKey(const ValueKey('complete-profile-save')));
       await tester.pumpAndSettle();
@@ -464,11 +508,7 @@ void main() {
       final repo = _FakeProfileRepo(_user());
       await _pumpRouter(
         tester,
-        _router(
-          key,
-          (_) => _completionScreen(repo, CompleteProfilePurpose.afterSignIn),
-          repo: repo,
-        ),
+        _router(key, (_) => _completionScreen(repo), repo: repo),
       );
 
       await tester.tap(find.byKey(const ValueKey('complete-profile-skip')));
@@ -478,11 +518,17 @@ void main() {
       expect(find.text('home-screen'), findsOneWidget);
     });
 
-    testWidgets('for payment it has no skip and returns true after saving', (tester) async {
+    testWidgets('for payment it has no skip and returns true after saving', (
+      tester,
+    ) async {
       final key = GlobalKey<NavigatorState>();
       Localingo.setNavigatorKey(key);
       final repo = _FakeProfileRepo(
-        _user(firstName: 'Ziad', lastName: 'Gamal', level: '3rd Grade Secondary'),
+        _user(
+          firstName: 'Ziad',
+          lastName: 'Gamal',
+          level: '3rd Grade Secondary',
+        ),
       );
       bool? result;
       await _pumpRouter(
@@ -491,10 +537,8 @@ void main() {
           key,
           (context) => Scaffold(
             body: TextButton(
-              onPressed: () async => result = await context.push<bool>(
-                '/complete',
-                extra: CompleteProfilePurpose.payment,
-              ),
+              onPressed: () async =>
+                  result = await context.push<bool>('/complete'),
               child: const Text('pay'),
             ),
           ),
@@ -505,7 +549,10 @@ void main() {
       await tester.tap(find.text('pay'));
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('complete-profile-skip')), findsNothing);
-      expect(find.text(LocaleKeys.completeProfilePaymentSubtitle), findsOneWidget);
+      expect(
+        find.text(LocaleKeys.completeProfilePaymentSubtitle),
+        findsOneWidget,
+      );
 
       await tester.enterText(_field('complete-profile-phone'), '01112345678');
       await tester.tap(find.byKey(const ValueKey('complete-profile-save')));
@@ -543,11 +590,12 @@ void main() {
             body: BlocProvider(
               create: (_) => CourseCheckoutCubit(gateway),
               child: SubscribtionViewBody(
-                requirmentsEntity: DisplayCourseBottomsheetNavigationRequirmentsEntity(
-                  course: _course(),
-                  isSubscribed: false,
-                  hasSubscriptionCheckResult: false,
-                ),
+                requirmentsEntity:
+                    DisplayCourseBottomsheetNavigationRequirmentsEntity(
+                      course: _course(),
+                      isSubscribed: false,
+                      hasSubscriptionCheckResult: false,
+                    ),
                 readCurrentUser: () => user,
                 openProfileCompletion: (_) async {
                   openings?.add(++opened);
@@ -562,27 +610,37 @@ void main() {
       return gateway;
     }
 
-    Finder subscribe() => find.byKey(const ValueKey('checkout-subscribe-button'));
+    Finder subscribe() =>
+        find.byKey(const ValueKey('checkout-subscribe-button'));
 
-    testWidgets('without a phone the form opens first and payment waits for it', (tester) async {
-      final openings = <int>[];
+    testWidgets(
+      'without a phone the form opens first and payment waits for it',
+      (tester) async {
+        final openings = <int>[];
+        final gateway = await pumpCheckout(
+          tester,
+          user: _user(),
+          answers: [true],
+          openings: openings,
+        );
+
+        await tester.tap(subscribe());
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 50));
+
+        expect(openings, [1]);
+        expect(gateway.createCalls, 1);
+      },
+    );
+
+    testWidgets('leaving the form without saving starts no payment', (
+      tester,
+    ) async {
       final gateway = await pumpCheckout(
         tester,
         user: _user(),
-        answers: [true],
-        openings: openings,
+        answers: [false],
       );
-
-      await tester.tap(subscribe());
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 50));
-
-      expect(openings, [1]);
-      expect(gateway.createCalls, 1);
-    });
-
-    testWidgets('leaving the form without saving starts no payment', (tester) async {
-      final gateway = await pumpCheckout(tester, user: _user(), answers: [false]);
 
       await tester.tap(subscribe());
       await tester.pump();
@@ -608,27 +666,30 @@ void main() {
       expect(gateway.createCalls, 1);
     });
 
-    testWidgets('the server asking for a phone opens the form and retries once', (tester) async {
-      final openings = <int>[];
-      final gateway = await pumpCheckout(
-        tester,
-        user: _user(phone: '01012345678'),
-        answers: [true],
-        openings: openings,
-      );
-      gateway.createError = const CourseCheckoutRequestException(
-        'billing_phone_missing',
-        'Add a valid phone number to your account before checkout.',
-        409,
-      );
+    testWidgets(
+      'the server asking for a phone opens the form and retries once',
+      (tester) async {
+        final openings = <int>[];
+        final gateway = await pumpCheckout(
+          tester,
+          user: _user(phone: '01012345678'),
+          answers: [true],
+          openings: openings,
+        );
+        gateway.createError = const CourseCheckoutRequestException(
+          'billing_phone_missing',
+          'Add a valid phone number to your account before checkout.',
+          409,
+        );
 
-      await tester.tap(subscribe());
-      for (var i = 0; i < 5; i++) {
-        await tester.pump(const Duration(milliseconds: 50));
-      }
+        await tester.tap(subscribe());
+        for (var i = 0; i < 5; i++) {
+          await tester.pump(const Duration(milliseconds: 50));
+        }
 
-      expect(openings, [1]);
-      expect(gateway.createCalls, 2);
-    });
+        expect(openings, [1]);
+        expect(gateway.createCalls, 2);
+      },
+    );
   });
 }

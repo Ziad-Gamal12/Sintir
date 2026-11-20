@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Features/Search/Domain/Entities/CustomFilterEntity.dart';
 import 'package:sintir/Features/Search/Presentation/Views/Widgets/CustomFilterBottomSheetWidgets/CustomFilterCheckedBoxItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/EducationLevelDropdownEntityItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/SubjectDropdownEntityItem.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseViewWidgets/CustomEducationLevelDropdownButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCourseViewWidgets/CustomSubjectDropdownButton.dart';
 import 'package:sintir/locale_keys.dart';
@@ -23,29 +25,39 @@ class _CustomFilterMoreFiltersState extends State<CustomFilterMoreFilters> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             CustomFilterCheckedBoxItem(
-                onChanged: (value) {
-                  context.read<CourseFilterEntity>().sortByPopularity = true;
-                },
-                title: LocaleKeys.mostViewed),
+              onChanged: (value) {
+                context.read<CourseFilterEntity>().sortByPopularity = true;
+              },
+              title: LocaleKeys.mostViewed,
+            ),
             CustomFilterCheckedBoxItem(
-                onChanged: (value) {
-                  context.read<CourseFilterEntity>().sortByNewest = true;
-                },
-                title: LocaleKeys.latestCourses),
+              onChanged: (value) {
+                context.read<CourseFilterEntity>().sortByNewest = true;
+              },
+              title: LocaleKeys.latestCourses,
+            ),
           ],
         ),
-        const SizedBox(
-          height: 30,
+        const SizedBox(height: 30),
+        CustomEducationLevelDropdownButton(
+          onValueChange: (label) {
+            if (label != null) {
+              final value = EducationLevelDropdownEntityItem.getValueByLabel(
+                label,
+              );
+              context.read<CourseFilterEntity>().educaionLevel = value;
+            }
+          },
         ),
-        CustomEducationLevelDropdownButton(onValueChange: (value) {
-          context.read<CourseFilterEntity>().educaionLevel = value;
-        }),
-        const SizedBox(
-          height: 10,
+        const SizedBox(height: 10),
+        CustomSubjectDropdownButton(
+          onValueChange: (label) {
+            if (label != null) {
+              final value = SubjectDropdownEntityItem.getValueByLabel(label);
+              context.read<CourseFilterEntity>().subject = value;
+            }
+          },
         ),
-        CustomSubjectDropdownButton(onValueChange: (value) {
-          context.read<CourseFilterEntity>().subject = value;
-        }),
       ],
     );
   }

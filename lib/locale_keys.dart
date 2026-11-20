@@ -435,6 +435,38 @@ class LocaleKeys {
   static String get addressHint => 'address_hint'.tr();
   static String get addressRequired => 'address_required'.tr();
   static String get phoneNumber => 'phone_number'.tr();
+  // Education Levels
+  static String get grade1Primary => 'grade_1_primary'.tr();
+  static String get grade2Primary => 'grade_2_primary'.tr();
+  static String get grade3Primary => 'grade_3_primary'.tr();
+  static String get grade4Primary => 'grade_4_primary'.tr();
+  static String get grade5Primary => 'grade_5_primary'.tr();
+  static String get grade6Primary => 'grade_6_primary'.tr();
+  static String get grade1Preparatory => 'grade_1_preparatory'.tr();
+  static String get grade2Preparatory => 'grade_2_preparatory'.tr();
+  static String get grade3Preparatory => 'grade_3_preparatory'.tr();
+  static String get grade1Secondary => 'grade_1_secondary'.tr();
+  static String get grade2Secondary => 'grade_2_secondary'.tr();
+  static String get grade3Secondary => 'grade_3_secondary'.tr();
+
+  // Subjects
+  static String get subjectArabic => 'subject_arabic'.tr();
+  static String get subjectEnglish => 'subject_english'.tr();
+  static String get subjectFrench => 'subject_french'.tr();
+  static String get subjectItalian => 'subject_italian'.tr();
+  static String get subjectSpanish => 'subject_spanish'.tr();
+  static String get subjectMathematics => 'subject_mathematics'.tr();
+  static String get subjectPhysics => 'subject_physics'.tr();
+  static String get subjectChemistry => 'subject_chemistry'.tr();
+  static String get subjectBiology => 'subject_biology'.tr();
+  static String get subjectBiologicalScience =>
+      'subject_biological_science'.tr();
+  static String get subjectScience => 'subject_science'.tr();
+  static String get subjectPhilosophy => 'subject_philosophy'.tr();
+  static String get subjectHistory => 'subject_history'.tr();
+  static String get subjectGeography => 'subject_geography'.tr();
+  static String get subjectComputerScience => 'subject_computer_science'.tr();
+  static String get subjectOther => 'subject_other'.tr();
   static String get phoneRequired => 'phone_required'.tr();
   static String get phoneInvalid => 'phone_invalid'.tr();
   static String get createAccount => 'create_account'.tr();
@@ -442,6 +474,16 @@ class LocaleKeys {
   static String get mustAcceptTerms => 'must_accept_terms'.tr();
   static String get studentRole => 'student_role'.tr();
   static String get teacherRole => 'teacher_role'.tr();
+  static String get completeProfileTitle => 'complete_profile_title'.tr();
+  static String get completeProfileSubtitle => 'complete_profile_subtitle'.tr();
+  static String get completeProfilePhoneHint =>
+      'complete_profile_phone_hint'.tr();
+  static String get completeProfileEducationLevel =>
+      'complete_profile_education_level'.tr();
+  static String get completeProfileEducationLevelHint =>
+      'complete_profile_education_level_hint'.tr();
+  static String get genderMale => 'gender_male'.tr();
+  static String get genderFemale => 'gender_female'.tr();
   static String get chooseRoleStudent => 'choose_role_student'.tr();
   static String get chooseRoleTeacher => 'choose_role_teacher'.tr();
   static String get startAsButton => 'start_as_button'.tr();
@@ -1240,7 +1282,8 @@ class LocaleKeys {
   static String get courseNoticeDeclinedBody =>
       'course_notice_declined_body'.tr();
   static String get courseNoticeHiddenBody => 'course_notice_hidden_body'.tr();
-  static String get courseNoticeRemovedBody => 'course_notice_removed_body'.tr();
+  static String get courseNoticeRemovedBody =>
+      'course_notice_removed_body'.tr();
   static String get courseEditReviewTitle => 'course_edit_review_title'.tr();
   static String get courseEditReviewBody => 'course_edit_review_body'.tr();
   static String get courseEditReviewConfirm =>
@@ -1273,6 +1316,7 @@ class LocaleKeys {
       other: 'kpi_published_courses_other'.tr(args: {'count': formatted}),
     );
   }
+
   static String attentionItemsCount(int count, String locale) {
     final formatted = LocaleFormatter.number(count, locale);
     return Intl.plural(
@@ -1286,6 +1330,7 @@ class LocaleKeys {
       other: 'attention_items_other'.tr(args: {'count': formatted}),
     );
   }
+
   static String attentionOpenReports(int count, String locale) {
     final formatted = LocaleFormatter.number(count, locale);
     return Intl.plural(
@@ -1299,6 +1344,7 @@ class LocaleKeys {
       other: 'attention_open_reports_other'.tr(args: {'count': formatted}),
     );
   }
+
   static String attentionLowRatings(int count, String locale) {
     final formatted = LocaleFormatter.number(count, locale);
     return Intl.plural(
@@ -1312,6 +1358,7 @@ class LocaleKeys {
       other: 'attention_low_ratings_other'.tr(args: {'count': formatted}),
     );
   }
+
   static String cardOpenReports(int count, String locale) {
     final formatted = LocaleFormatter.number(count, locale);
     return Intl.plural(
@@ -1415,8 +1462,7 @@ class LocaleKeys {
       'rating_error_course_unavailable'.tr();
   static String get ratingErrorTooFast => 'rating_error_too_fast'.tr();
   static String get ratingErrorBusy => 'rating_error_busy'.tr();
-  static String get ratingErrorTextTooLong =>
-      'rating_error_text_too_long'.tr();
+  static String get ratingErrorTextTooLong => 'rating_error_text_too_long'.tr();
   static String get ratingErrorAlreadyDeleted =>
       'rating_error_already_deleted'.tr();
   static String get ratingErrorSignIn => 'rating_error_sign_in'.tr();
@@ -1484,6 +1530,7 @@ class LocaleKeys {
       other: 'reviews_new_count_other'.tr(args: {'count': formatted}),
     );
   }
+
   static String get whatStudentsSay => 'what_students_say'.tr();
   static String get noOtherReviewsYet => 'no_other_reviews_yet'.tr();
   static String get reviewEdited => 'review_edited'.tr();
@@ -1595,42 +1642,70 @@ class LocaleKeys {
   static String get connectionRestored => 'connection_restored'.tr();
   static String get offlineAutoRetryHint => 'offline_auto_retry_hint'.tr();
   static String get accountDeleteTitle => 'account_delete_title'.tr();
-  static String get accountDeleteWarningTitle => 'account_delete_warning_title'.tr();
-  static String get accountDeleteWarningBody => 'account_delete_warning_body'.tr();
-  static String get accountDeleteRemovedTitle => 'account_delete_removed_title'.tr();
-  static String get accountDeleteRemovedProfile => 'account_delete_removed_profile'.tr();
-  static String get accountDeleteRemovedLearning => 'account_delete_removed_learning'.tr();
-  static String get accountDeleteRemovedReviews => 'account_delete_removed_reviews'.tr();
-  static String get accountDeleteRemovedSupport => 'account_delete_removed_support'.tr();
-  static String get accountDeleteRemovedUnsoldCourses => 'account_delete_removed_unsold_courses'.tr();
+  static String get accountDeleteWarningTitle =>
+      'account_delete_warning_title'.tr();
+  static String get accountDeleteWarningBody =>
+      'account_delete_warning_body'.tr();
+  static String get accountDeleteRemovedTitle =>
+      'account_delete_removed_title'.tr();
+  static String get accountDeleteRemovedProfile =>
+      'account_delete_removed_profile'.tr();
+  static String get accountDeleteRemovedLearning =>
+      'account_delete_removed_learning'.tr();
+  static String get accountDeleteRemovedReviews =>
+      'account_delete_removed_reviews'.tr();
+  static String get accountDeleteRemovedSupport =>
+      'account_delete_removed_support'.tr();
+  static String get accountDeleteRemovedUnsoldCourses =>
+      'account_delete_removed_unsold_courses'.tr();
   static String get accountDeleteKeptTitle => 'account_delete_kept_title'.tr();
-  static String get accountDeleteKeptPayments => 'account_delete_kept_payments'.tr();
-  static String get accountDeleteKeptSoldCourses => 'account_delete_kept_sold_courses'.tr();
-  static String get accountDeletePayoutPendingTitle => 'account_delete_payout_pending_title'.tr();
-  static String get accountDeletePayoutPending => 'account_delete_payout_pending'.tr();
+  static String get accountDeleteKeptPayments =>
+      'account_delete_kept_payments'.tr();
+  static String get accountDeleteKeptSoldCourses =>
+      'account_delete_kept_sold_courses'.tr();
+  static String get accountDeletePayoutPendingTitle =>
+      'account_delete_payout_pending_title'.tr();
+  static String get accountDeletePayoutPending =>
+      'account_delete_payout_pending'.tr();
   static String accountDeleteBalanceTitle(String amount) =>
       'account_delete_balance_title'.tr(args: {'amount': amount});
-  static String get accountDeleteBalanceBody => 'account_delete_balance_body'.tr();
-  static String get accountDeleteBalanceAcknowledge => 'account_delete_balance_acknowledge'.tr();
-  static String get accountDeletePasswordLabel => 'account_delete_password_label'.tr();
-  static String get accountDeleteGoogleNote => 'account_delete_google_note'.tr();
-  static String get accountDeleteFacebookNote => 'account_delete_facebook_note'.tr();
-  static String get accountDeleteSignInNote => 'account_delete_sign_in_note'.tr();
+  static String get accountDeleteBalanceBody =>
+      'account_delete_balance_body'.tr();
+  static String get accountDeleteBalanceAcknowledge =>
+      'account_delete_balance_acknowledge'.tr();
+  static String get accountDeletePasswordLabel =>
+      'account_delete_password_label'.tr();
+  static String get accountDeleteGoogleNote =>
+      'account_delete_google_note'.tr();
+  static String get accountDeleteFacebookNote =>
+      'account_delete_facebook_note'.tr();
+  static String get accountDeleteSignInNote =>
+      'account_delete_sign_in_note'.tr();
   static String get accountDeleteUnderstand => 'account_delete_understand'.tr();
   static String get accountDeleteButton => 'account_delete_button'.tr();
-  static String get accountDeleteInProgress => 'account_delete_in_progress'.tr();
-  static String get accountDeleteConfirmTitle => 'account_delete_confirm_title'.tr();
-  static String get accountDeleteConfirmBody => 'account_delete_confirm_body'.tr();
+  static String get accountDeleteInProgress =>
+      'account_delete_in_progress'.tr();
+  static String get accountDeleteConfirmTitle =>
+      'account_delete_confirm_title'.tr();
+  static String get accountDeleteConfirmBody =>
+      'account_delete_confirm_body'.tr();
   static String get accountDeleteDone => 'account_delete_done'.tr();
-  static String get accountDeleteSignInAgain => 'account_delete_sign_in_again'.tr();
-  static String get accountDeletePasswordRequired => 'account_delete_password_required'.tr();
+  static String get accountDeleteSignInAgain =>
+      'account_delete_sign_in_again'.tr();
+  static String get accountDeletePasswordRequired =>
+      'account_delete_password_required'.tr();
   static String get accountReauthCancelled => 'account_reauth_cancelled'.tr();
-  static String get accountReauthWrongAccount => 'account_reauth_wrong_account'.tr();
-  static String get accountDeleteStaffBlocked => 'account_delete_staff_blocked'.tr();
-  static String get accountDeleteBalanceRemaining => 'account_delete_balance_remaining'.tr();
-  static String get accountDeletePaymentInProgress => 'account_delete_payment_in_progress'.tr();
+  static String get accountReauthWrongAccount =>
+      'account_reauth_wrong_account'.tr();
+  static String get accountDeleteStaffBlocked =>
+      'account_delete_staff_blocked'.tr();
+  static String get accountDeleteBalanceRemaining =>
+      'account_delete_balance_remaining'.tr();
+  static String get accountDeletePaymentInProgress =>
+      'account_delete_payment_in_progress'.tr();
   static String get accountDeleteIncomplete => 'account_delete_incomplete'.tr();
-  static String get courseDeclineReasonLabel => 'course_decline_reason_label'.tr();
+  static String get courseDeclineReasonLabel =>
+      'course_decline_reason_label'.tr();
   static String courseDeclinedOn(String date) =>
       'course_declined_on'.tr(args: {'date': date});
   static String get courseResubmitButton => 'course_resubmit_button'.tr();
@@ -1652,29 +1727,37 @@ class LocaleKeys {
   static String get reviewReplyDeleted => 'review_reply_deleted'.tr();
   static String get reviewReplyEmpty => 'review_reply_empty'.tr();
   static String get reviewReplyTooLong => 'review_reply_too_long'.tr();
-  static String get reviewTeacherReplyLabel => 'review_teacher_reply_label'.tr();
+  static String get reviewTeacherReplyLabel =>
+      'review_teacher_reply_label'.tr();
   static String get reviewReportAction => 'review_report_action'.tr();
   static String get reviewReportTitle => 'review_report_title'.tr();
   static String get reviewReportBody => 'review_report_body'.tr();
-  static String get reviewReportReasonOffensive => 'review_report_reason_offensive'.tr();
-  static String get reviewReportReasonHarassment => 'review_report_reason_harassment'.tr();
+  static String get reviewReportReasonOffensive =>
+      'review_report_reason_offensive'.tr();
+  static String get reviewReportReasonHarassment =>
+      'review_report_reason_harassment'.tr();
   static String get reviewReportReasonSpam => 'review_report_reason_spam'.tr();
-  static String get reviewReportReasonPersonalInfo => 'review_report_reason_personal_info'.tr();
-  static String get reviewReportReasonIrrelevant => 'review_report_reason_irrelevant'.tr();
-  static String get reviewReportReasonOther => 'review_report_reason_other'.tr();
-  static String get reviewReportDetailsHint => 'review_report_details_hint'.tr();
+  static String get reviewReportReasonPersonalInfo =>
+      'review_report_reason_personal_info'.tr();
+  static String get reviewReportReasonIrrelevant =>
+      'review_report_reason_irrelevant'.tr();
+  static String get reviewReportReasonOther =>
+      'review_report_reason_other'.tr();
+  static String get reviewReportDetailsHint =>
+      'review_report_details_hint'.tr();
   static String get reviewReportSend => 'review_report_send'.tr();
   static String get reviewReportSent => 'review_report_sent'.tr();
-  static String get reviewReportAlreadySent => 'review_report_already_sent'.tr();
+  static String get reviewReportAlreadySent =>
+      'review_report_already_sent'.tr();
   static String get reviewReportOwn => 'review_report_own'.tr();
   static String get reviewReportTooLong => 'review_report_too_long'.tr();
-  static String get completeProfileTitle => 'complete_profile_title'.tr();
-  static String get completeProfileSubtitle => 'complete_profile_subtitle'.tr();
-  static String get completeProfilePaymentSubtitle => 'complete_profile_payment_subtitle'.tr();
-  static String get completeProfilePhoneHint => 'complete_profile_phone_hint'.tr();
-  static String get completeProfileLevelRequired => 'complete_profile_level_required'.tr();
+  static String get completeProfilePaymentSubtitle =>
+      'complete_profile_payment_subtitle'.tr();
+  static String get completeProfileLevelRequired =>
+      'complete_profile_level_required'.tr();
   static String get completeProfileSave => 'complete_profile_save'.tr();
   static String get completeProfileSkip => 'complete_profile_skip'.tr();
   static String get completeProfileSaved => 'complete_profile_saved'.tr();
-  static String get couponDeletedSuccessfully => 'coupon_deleted_successfully'.tr();
+  static String get couponDeletedSuccessfully =>
+      'coupon_deleted_successfully'.tr();
 }
