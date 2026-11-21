@@ -67,6 +67,8 @@ import 'package:sintir/Core/services/HiveService.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/CompleteProfile/Data/Repos/ProfileCompletionRepoImpl.dart';
 import 'package:sintir/Features/CompleteProfile/Domain/Repos/ProfileCompletionRepo.dart';
+import 'package:sintir/Features/RequiresPhoneNumber/Data/Repos/UpdatePhoneNumberRepoImpl.dart';
+import 'package:sintir/Features/RequiresPhoneNumber/Domain/Repos/UpdatePhoneNumberRepo.dart';
 import 'package:sintir/Features/Search/Data/Repos/SearchRepoImpl.dart';
 import 'package:sintir/Features/Search/Domain/Repos/SearchRepo.dart';
 import 'package:sintir/Features/Support/Data/Repos/SupportChatRepoImpl.dart';
@@ -322,5 +324,8 @@ void setup_Getit() {
     () => TeacherLiveWalletRepoImpl(
       realtimeDataBaseService: getIt<RealtimeDataBaseService>(),
     ),
+  );
+  getIt.registerLazySingleton<UpdatePhoneNumberRepo>(
+    () => UpdatePhoneNumberRepoImpl(dataBaseService: getIt<DataBaseService>()),
   );
 }

@@ -10,8 +10,7 @@ import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/utils/course_price_formatter.dart';
 import 'package:sintir/Core/widgets/WebViewer/WebView.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
-import 'package:sintir/Features/CompleteProfile/Domain/Entities/CompleteProfilePurpose.dart';
-import 'package:sintir/Features/CompleteProfile/Presentation/Views/CompleteProfileView.dart';
+import 'package:sintir/Features/RequiresPhoneNumber/Presentation/View/requires_phone_number_view.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/CourseCheckoutEntity.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobResponse.dart';
 import 'package:sintir/Features/Subscribtion/Domain/Entities/PayMobWebViewRequirmentsEntity.dart';
@@ -70,11 +69,13 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
     }
   }
 
-  Future<bool> _completeProfileForPayment() async {
-    //navigate to a new screen
+  Future<bool> _completePhoneNumberForPayment() async {
     final open =
         widget.openProfileCompletion ??
-        (context) => context.push<bool>(CompleteProfileView.routeName);
+        (context) => RequiresPhoneNumberView.show<bool>(
+          context,
+          courseName: _course.title,
+        );
     final completed = await open(context);
     return completed == true && mounted;
   }
@@ -83,7 +84,7 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
     final user = _currentUser();
     if (user != null &&
         ProfileCompleteness.missingForPayment(user).isNotEmpty &&
-        !await _completeProfileForPayment()) {
+        !await _completePhoneNumberForPayment()) {
       return;
     }
     if (!mounted) return;
@@ -98,7 +99,7 @@ class _SubscribtionViewBodyState extends State<SubscribtionViewBody> {
   }
 
   Future<void> _retryAfterBillingFix() async {
-    if (await _completeProfileForPayment()) _startPayment();
+    if (await _completePhoneNumberForPayment()) _startPayment();
   }
 
   void _onCheckoutState(BuildContext context, CourseCheckoutState state) {

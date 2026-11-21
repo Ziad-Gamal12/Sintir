@@ -133,10 +133,7 @@ class TeacherWorkspaceRepoImpl implements TeacherWorkspaceRepo {
           ? _count(
               doc
                   .collection(BackendEndpoints.reportsSubCollection)
-                  .where(
-                    reportStatusField,
-                    isEqualTo: ReportStatus.open.key,
-                  ),
+                  .where(reportStatusField, isEqualTo: ReportStatus.open.key),
             )
           : Future.value(0);
       final recentReviews = course.ratingStats.hasRatings
@@ -166,6 +163,7 @@ class TeacherWorkspaceRepoImpl implements TeacherWorkspaceRepo {
         ),
       );
     } on FirebaseException catch (error) {
+      log(error.message ?? "error", stackTrace: error.stackTrace);
       return left(ServerFailure(message: _messageFor(error)));
     } catch (_) {
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));

@@ -1755,9 +1755,24 @@ class LocaleKeys {
       'complete_profile_payment_subtitle'.tr();
   static String get completeProfileLevelRequired =>
       'complete_profile_level_required'.tr();
+
   static String get completeProfileSave => 'complete_profile_save'.tr();
   static String get completeProfileSkip => 'complete_profile_skip'.tr();
   static String get completeProfileSaved => 'complete_profile_saved'.tr();
   static String get couponDeletedSuccessfully =>
       'coupon_deleted_successfully'.tr();
+  static String get requiredSubscriptionData =>
+      'required_subscription_data'.tr();
+  static String get phoneNumberRequiredTitle =>
+      'phone_number_required_title'.tr();
+  static String get phoneNumberRequiredSubtitle =>
+      'phone_number_required_subtitle'.tr();
+  static String get selectedCourseLabel => 'selected_course_label'.tr();
+  static String get registrationStepBadge => 'registration_step_badge'.tr();
+  static String get requiredForContactAndPayment =>
+      'required_for_contact_and_payment'.tr();
+  static String get phoneUsageInfo => 'phone_usage_info'.tr();
+  static String get saveAndContinueSubscription =>
+      'save_and_continue_subscription'.tr();
+  static String get goBack => 'go_back'.tr();
 }

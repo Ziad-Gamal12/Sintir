@@ -15,9 +15,9 @@ class GetUserDataCubit extends Cubit<GetUserDataState> {
     required this.authService,
     FirebaseAuth? firebaseAuth,
     UserEntity Function()? readLocalUser,
-  })  : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
-        _readLocalUser = readLocalUser ?? getUserData,
-        super(GetUserDataInitial());
+  }) : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
+       _readLocalUser = readLocalUser ?? getUserData,
+       super(GetUserDataInitial());
 
   final AuthRepo authRepo;
   final firebaseAuthService authService;
@@ -33,19 +33,24 @@ class GetUserDataCubit extends Cubit<GetUserDataState> {
       final currentUser = _firebaseAuth.currentUser;
       if (currentUser == null) {
         return _safeEmit(
-            GetUserDataFailure(errmessage: AuthMessages.userNotFound));
+          GetUserDataFailure(errmessage: AuthMessages.userNotFound),
+        );
       }
       final deviceId = await authRepo.getDeviceId();
       if (deviceId.isEmpty) {
         return _safeEmit(
-            GetUserDataFailure(errmessage: AuthMessages.deviceNotFound));
+          GetUserDataFailure(errmessage: AuthMessages.deviceNotFound),
+        );
       }
 
-      final result =
-          await authRepo.fetchUserAndStoreLocally(uid: currentUser.uid);
+      final result = await authRepo.fetchUserAndStoreLocally(
+        uid: currentUser.uid,
+      );
 
-      final errorMessage =
-          result.fold<String?>((failure) => failure.message, (_) => null);
+      final errorMessage = result.fold<String?>(
+        (failure) => failure.message,
+        (_) => null,
+      );
       if (errorMessage != null) {
         return _safeEmit(GetUserDataFailure(errmessage: errorMessage));
       }
@@ -59,7 +64,8 @@ class GetUserDataCubit extends Cubit<GetUserDataState> {
           GetUserDataFailure(errmessage: AuthMessages.deviceMismatch);
         }
         return _safeEmit(
-            GetUserDataFailure(errmessage: AuthMessages.deviceMismatch));
+          GetUserDataFailure(errmessage: AuthMessages.deviceMismatch),
+        );
       }
 
       isUserDataFetched = true;
@@ -69,8 +75,6 @@ class GetUserDataCubit extends Cubit<GetUserDataState> {
     }
   }
 
-  /// The cubit may be closed while a request is in flight (e.g. signout
-  /// navigates away and disposes the screen). Emitting then throws.
   void _safeEmit(GetUserDataState newState) {
     if (!isClosed) emit(newState);
   }

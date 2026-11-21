@@ -86,7 +86,6 @@ class _CompleteProfileViewBodyState extends State<CompleteProfileViewBody> {
     final styles = AppTextStyles(context);
     return BlocListener<CompleteProfileCubit, CompleteProfileState>(
       listener: (BuildContext context, CompleteProfileState state) {
-        log(state.toString());
         if (state is CompleteProfileSaved) {
           CustomSnackBar.show(
             context,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/ShowBottomSheet.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseCardMetrics.dart';
@@ -8,7 +7,6 @@ import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheet.da
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
-import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/CourseDetailView.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/subuscriber_details_cubit/subuscriber_details_cubit.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';

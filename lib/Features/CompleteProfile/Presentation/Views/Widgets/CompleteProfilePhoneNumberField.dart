@@ -9,10 +9,11 @@ class CompleteProfilePhoneNumberField extends StatefulWidget {
   const CompleteProfilePhoneNumberField({
     super.key,
     required this.phoneController,
+    this.onSaved,
   });
 
   final TextEditingController phoneController;
-
+  final Function(String?)? onSaved;
   @override
   State<CompleteProfilePhoneNumberField> createState() =>
       _CompleteProfilePhoneNumberFieldState();
@@ -63,6 +64,7 @@ class _CompleteProfilePhoneNumberFieldState
           title: LocaleKeys.phoneNumber,
           hintText: LocaleKeys.phoneNumber,
           obscureText: false,
+          onSaved: widget.onSaved,
           textInputType: TextInputType.phone,
           validator: (val) {
             final text = (val ?? '').trim();

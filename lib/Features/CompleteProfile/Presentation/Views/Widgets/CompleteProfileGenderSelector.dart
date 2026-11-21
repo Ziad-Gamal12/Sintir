@@ -67,6 +67,7 @@ class _GenderOptionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
     final colorScheme = theme.colorScheme;
 
     final backgroundColor = isSelected
@@ -76,8 +77,9 @@ class _GenderOptionCard extends StatelessWidget {
           )
         : theme.cardColor;
 
-    final borderColor = isSelected ? colorScheme.primary : Color(0xffE2E7F0);
-
+    final Color borderColor = isDarkMode
+        ? Colors.white10
+        : const Color(0xFFE4E6E8);
     final textColor = isSelected ? colorScheme.primary : colorScheme.onSurface;
 
     return Semantics(

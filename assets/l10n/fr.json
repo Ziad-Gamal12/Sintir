@@ -1268,5 +1268,14 @@
   "complete_profile_save": "Enregistrer et continuer",
   "complete_profile_skip": "Plus tard",
   "complete_profile_saved": "Vos informations ont été enregistrées",
-  "coupon_deleted_successfully": "Coupon supprimé"
+  "coupon_deleted_successfully": "Coupon supprimé",
+  "required_subscription_data": "Informations d'abonnement requises",
+"phone_number_required_title": "Votre numéro de téléphone est requis",
+"phone_number_required_subtitle": "Ajoutez votre numéro de téléphone pour finaliser votre inscription au cours.",
+"selected_course_label": "Cours sélectionné",
+"registration_step_badge": "Étape d'inscription",
+"required_for_contact_and_payment": "Requis pour le contact et le paiement",
+"phone_usage_info": "Nous utiliserons votre numéro de téléphone pour finaliser l'abonnement et le paiement.",
+"save_and_continue_subscription": "Enregistrer et continuer l'abonnement",
+"go_back": "Retour"
 }

@@ -554,8 +554,6 @@
   "view_result": "عرض النتيجة",
   "student_number": "رقم الطالب:",
   "joined_date": "تاريخ الانضمام:",
-  "lowest_score": "أدنى نتيجة",
-  "highest_score": "أعلى الدرجات",
   "course_request_sent_success": "تم إرسال طلب الدورة بنجاح… سيتم المراجعة قريباً",
   "enter_course_name": "ادخل اسم الدورة",
   "course_name": "اسم الدورة",
@@ -1271,5 +1269,15 @@
   "complete_profile_save": "حفظ ومتابعة",
   "complete_profile_skip": "لاحقًا",
   "complete_profile_saved": "تم حفظ بياناتك",
-  "coupon_deleted_successfully": "تم حذف الكوبون"
+  "coupon_deleted_successfully": "تم حذف الكوبون",
+  "required_subscription_data": "بيانات الاشتراك الضرورية",
+"phone_number_required_title": "رقم هاتفك مطلوب",
+"phone_number_required_subtitle": "أضف رقم هاتفك علشان تقدر تكمل اشتراكك في الكورس.",
+"selected_course_label": "الكورس الذي اخترته",
+"registration_step_badge": "خطوة التسجيل",
+"required_for_contact_and_payment": "ضروري للتواصل والدفع",
+"phone_usage_info": "سنستخدم رقم هاتفك لاستكمال عملية الاشتراك والدفع.",
+"save_and_continue_subscription": "حفظ ومتابعة الاشتراك",
+"go_back": "الرجوع"
+
 }

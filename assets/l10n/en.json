@@ -1270,5 +1270,14 @@
   "complete_profile_save": "Save and continue",
   "complete_profile_skip": "Later",
   "complete_profile_saved": "Your details were saved",
-  "coupon_deleted_successfully": "Coupon deleted"
+  "coupon_deleted_successfully": "Coupon deleted",
+  "required_subscription_data": "Required subscription details",
+"phone_number_required_title": "Your phone number is required",
+"phone_number_required_subtitle": "Add your phone number to complete your course subscription.",
+"selected_course_label": "Selected course",
+"registration_step_badge": "Registration step",
+"required_for_contact_and_payment": "Required for contact & payment",
+"phone_usage_info": "We will use your phone number to complete the subscription and payment process.",
+"save_and_continue_subscription": "Save & continue subscription",
+"go_back": "Back"
 }
