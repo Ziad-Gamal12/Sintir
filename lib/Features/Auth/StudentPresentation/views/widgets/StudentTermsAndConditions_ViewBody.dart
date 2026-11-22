@@ -13,46 +13,52 @@ class StudentTermsAndConditions_ViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 16),
-          Text(LocaleKeys.studentTermsIntroTitle,
-              style: AppTextStyles(context).bold19),
-          const SizedBox(height: 8),
-          Text(
-            LocaleKeys.studentTermsIntroText,
+      // Keeps lines at a readable length on tablets.
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 720),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 16),
+              Text(LocaleKeys.studentTermsIntroTitle,
+                  style: AppTextStyles(context).bold19),
+              const SizedBox(height: 8),
+              Text(
+                LocaleKeys.studentTermsIntroText,
+              ),
+              const SizedBox(height: 16),
+              Text(LocaleKeys.studentTermsUsageTitle,
+                  style: AppTextStyles(context).bold19),
+              const SizedBox(height: 8),
+              Text(
+                LocaleKeys.studentTermsUsageText,
+              ),
+              const SizedBox(height: 16),
+              Text(LocaleKeys.studentTermsPaymentsTitle,
+                  style: AppTextStyles(context).bold19),
+              const SizedBox(height: 8),
+              Text(
+                LocaleKeys.studentTermsPaymentsText,
+              ),
+              const SizedBox(height: 16),
+              Text(LocaleKeys.studentTermsPrivacyTitle,
+                  style: AppTextStyles(context).bold19),
+              const SizedBox(height: 8),
+              Text(
+                LocaleKeys.studentTermsPrivacyText,
+              ),
+              const SizedBox(height: 16),
+              Text(LocaleKeys.studentTermsChangesTitle,
+                  style: AppTextStyles(context).bold19),
+              const SizedBox(height: 8),
+              Text(
+                LocaleKeys.studentTermsChangesText,
+              ),
+              const SizedBox(height: 16),
+            ],
           ),
-          const SizedBox(height: 16),
-          Text(LocaleKeys.studentTermsUsageTitle,
-              style: AppTextStyles(context).bold19),
-          const SizedBox(height: 8),
-          Text(
-            LocaleKeys.studentTermsUsageText,
-          ),
-          const SizedBox(height: 16),
-          Text(LocaleKeys.studentTermsPaymentsTitle,
-              style: AppTextStyles(context).bold19),
-          const SizedBox(height: 8),
-          Text(
-            LocaleKeys.studentTermsPaymentsText,
-          ),
-          const SizedBox(height: 16),
-          Text(LocaleKeys.studentTermsPrivacyTitle,
-              style: AppTextStyles(context).bold19),
-          const SizedBox(height: 8),
-          Text(
-            LocaleKeys.studentTermsPrivacyText,
-          ),
-          const SizedBox(height: 16),
-          Text(LocaleKeys.studentTermsChangesTitle,
-              style: AppTextStyles(context).bold19),
-          const SizedBox(height: 8),
-          Text(
-            LocaleKeys.studentTermsChangesText,
-          ),
-          const SizedBox(height: 16),
-        ],
+        ),
       ),
     );
   }

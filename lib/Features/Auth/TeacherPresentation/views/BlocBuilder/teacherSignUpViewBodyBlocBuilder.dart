@@ -10,9 +10,9 @@ import 'package:sintir/Features/Auth/TeacherPresentation/views/Sections/TeacherS
 import 'package:sintir/Features/Auth/TeacherPresentation/views/teacherTermsAndConditionsView.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherSignUpViewBodyHaveAnAccountText.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/teacherSignUpViewBodyCustomButton.dart';
-import 'package:sintir/constant.dart';
 
-// ignore: must_be_immutable
+/// The teacher sign-up form only. Padding, scrolling and the page layout
+/// come from [AuthShell] in TeacherSignUpView.
 class teacherSignUpViewBodyBlocBuilder extends StatefulWidget {
   const teacherSignUpViewBodyBlocBuilder({
     super.key,
@@ -37,8 +37,8 @@ class _teacherSignUpViewBodyBlocBuilderState
 
   @override
   void dispose() {
-    super.dispose();
     teacherSignUpPasswordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -47,44 +47,37 @@ class _teacherSignUpViewBodyBlocBuilderState
       selector: (state) {
         return state is TeacherSignUpLoading;
       },
-      builder: (context, state) {
-        return SingleChildScrollView(
-          child: Form(
-            key: teacherSignUpFormKey,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: KHorizontalPadding, vertical: KVerticalPadding),
-              child: Column(
-                children: [
-                  TeacherSignUPTextFieldsSection(
-                    teacherSignUpPasswordController:
-                        teacherSignUpPasswordController,
-                  ),
-                  const SizedBox(height: 16),
-                  CustomTermsAndConditions(textOnPressed: () {
-                    GoRouter.of(context)
-                        .push(Teachertermsandconditionsview.routeName);
-                  }, onChanged: (value) {
-                    isChecked = value;
-                    setState(() {});
-                  }),
-                  const SizedBox(
-                    height: 32,
-                  ),
-                  Custom_Loading_Widget(
-                    isLoading: state,
-                    child: TeacherSignUpButton(
-                      teacherSignUpPasswordController:
-                          teacherSignUpPasswordController,
-                      isChecked: isChecked,
-                      formKey: teacherSignUpFormKey,
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-                  const TeacherSignUpViewBodyHaveAnAccountText()
-                ],
+      builder: (context, isLoading) {
+        return Form(
+          key: teacherSignUpFormKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TeacherSignUPTextFieldsSection(
+                teacherSignUpPasswordController:
+                    teacherSignUpPasswordController,
               ),
-            ),
+              const SizedBox(height: 16),
+              CustomTermsAndConditions(textOnPressed: () {
+                GoRouter.of(context)
+                    .push(Teachertermsandconditionsview.routeName);
+              }, onChanged: (value) {
+                isChecked = value;
+                setState(() {});
+              }),
+              const SizedBox(height: 24),
+              Custom_Loading_Widget(
+                isLoading: isLoading,
+                child: TeacherSignUpButton(
+                  teacherSignUpPasswordController:
+                      teacherSignUpPasswordController,
+                  isChecked: isChecked,
+                  formKey: teacherSignUpFormKey,
+                ),
+              ),
+              const SizedBox(height: 24),
+              const Center(child: TeacherSignUpViewBodyHaveAnAccountText()),
+            ],
           ),
         );
       },

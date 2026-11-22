@@ -5,7 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/services/get_it_Service.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
-import 'package:sintir/Core/widgets/CustomAppBar.dart';
+import 'package:sintir/Core/widgets/AdaptiveAuth/AuthBrandPanel.dart';
+import 'package:sintir/Core/widgets/AdaptiveAuth/AuthHeader.dart';
+import 'package:sintir/Core/widgets/AdaptiveAuth/AuthShell.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/StudentExtraDataEntity.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Auth/Domain/Repos/AuthRepo.dart';
@@ -42,9 +44,20 @@ class _StudentSignupViewState extends State<StudentSignupView> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => StudentSignUpCubit(getIt<AuthRepo>()),
-      child: Scaffold(
-        appBar: CustomAppBar(appBartitle: LocaleKeys.createAccount),
-        body: Provider.value(
+      child: AuthShell(
+        title: LocaleKeys.createAccount,
+        badge: AuthRoleBadge(
+          label: LocaleKeys.studentRole,
+          icon: Icons.school_outlined,
+        ),
+        brand: AuthBrandContent(
+          title: LocaleKeys.learnEasySafe,
+          description: LocaleKeys.description2,
+        ),
+        contentMaxWidth: 640,
+        cardMaxWidth: 640,
+        brandWidthFactor: 0.34,
+        child: Provider.value(
             value: userEntity, child: const StudentSignupViewBody()),
       ),
     );

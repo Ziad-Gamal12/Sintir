@@ -5,15 +5,32 @@ import 'package:provider/provider.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomEmailTextField.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 
-class TeacherSignUpEmailAddressFiled extends StatelessWidget {
+/// Stateful so the controller survives rebuilds (layout changes, loading
+/// state). It used to be created inside build(), which cleared the field.
+class TeacherSignUpEmailAddressFiled extends StatefulWidget {
   const TeacherSignUpEmailAddressFiled({
     super.key,
   });
 
   @override
+  State<TeacherSignUpEmailAddressFiled> createState() =>
+      _TeacherSignUpEmailAddressFiledState();
+}
+
+class _TeacherSignUpEmailAddressFiledState
+    extends State<TeacherSignUpEmailAddressFiled> {
+  final TextEditingController controller = TextEditingController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CustomEmailTextField(
-      controller: TextEditingController(),
+      controller: controller,
       onSaved: (val) {
         context.read<UserEntity>().email = val ?? "";
       },

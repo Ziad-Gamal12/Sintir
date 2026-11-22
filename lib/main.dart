@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,10 @@ import 'package:sintir/Features/Favorites/presentation/views/Manager/favourites_
 import 'package:sintir/firebase_options.dart';
 
 void main() async {
+  // device_preview 3.x: no widget wrapper any more. It installs its own
+  // binding, so it goes first, before anything initialises the binding.
+  // Off in release builds by default (!kReleaseMode).
+  DevicePreview.enable();
   WidgetsFlutterBinding.ensureInitialized();
   final storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
@@ -45,9 +50,11 @@ void main() async {
     shared_preferences_Services.init(),
     Hive_Services.init(),
   ]);
+  const googleWebClientId =
+      '769176418060-smo79qpqjcab1k21is8sod904kpai4f8.apps.googleusercontent.com';
   await GoogleSignIn.instance.initialize(
-    serverClientId:
-        '769176418060-smo79qpqjcab1k21is8sod904kpai4f8.apps.googleusercontent.com',
+    clientId: kIsWeb ? googleWebClientId : null,
+    serverClientId: kIsWeb ? null : googleWebClientId,
   );
   setup_Getit();
   final connectivity = getIt<ConnectivityService>();

@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:sintir/Features/ChoosingUserKind/Presentation/views/domain/ChoosingUserKindpageViewItemEntity.dart';
+import 'package:sintir/Features/ChoosingUserKind/domain/ChoosingUserKindpageViewItemEntity.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/widgets/CustomPageViewItem.dart';
 
 class CustomPageview extends StatelessWidget {

@@ -11,9 +11,9 @@ import 'package:sintir/Features/Auth/TeacherPresentation/views/TeacherSignUpView
 import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherLoginViewBodyForgetPasswordText.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherSignInViewBodyCustomButton.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherSignInViewBodyTextFieledInPuts.dart';
-import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherSigninViewBodyWelcomeSection.dart';
-import 'package:sintir/constant.dart';
 
+/// The teacher sign-in form only. The welcome illustration and title, the
+/// padding and the scrolling now come from [AuthShell] in TeacherSignInView.
 class TeacherSigninViewBody extends StatefulWidget {
   const TeacherSigninViewBody({super.key});
 
@@ -48,45 +48,37 @@ class _TeacherSigninViewBodyState extends State<TeacherSigninViewBody> {
         teacherSignInBlocListener(context, state);
       },
       builder: (context, state) {
-        return SingleChildScrollView(
-          child: Form(
-              key: teacherLoginFormKey,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: KHorizontalPadding, vertical: KVerticalPadding),
-                child: Column(
-                  children: [
-                    const TeacherSigninViewBodyWelcomeSection(),
-                    const SizedBox(
-                      height: 48,
-                    ),
-                    TeacherSignInViewBodyTextFieledInPuts(
-                      teacherSignInPasswordController:
-                          teacherSignInPasswordController,
-                      teacherSignInEmailController:
-                          teacherSignInEmailController,
-                    ),
-                    const SizedBox(height: 16),
-                    const TeacherLoginViewBodyForgetPasswordText(),
-                    const SizedBox(height: 32),
-                    Custom_Loading_Widget(
-                        isLoading: state is TeacherSignInLoading,
-                        child: TeacherSignInViewBodyCustomButton(
-                          teacherLoginFormKey: teacherLoginFormKey,
-                          teacherSignInPasswordController:
-                              teacherSignInPasswordController,
-                          teacherSignInEmailController:
-                              teacherSignInEmailController,
-                        )),
-                    const SizedBox(height: 32),
-                    CustomLoginViewBodyDonotHaveAccountText(
-                      onTap: () {
-                        GoRouter.of(context).push(TeacherSignUpView.routeName);
-                      },
-                    )
-                  ],
+        return Form(
+          key: teacherLoginFormKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TeacherSignInViewBodyTextFieledInPuts(
+                teacherSignInPasswordController:
+                    teacherSignInPasswordController,
+                teacherSignInEmailController: teacherSignInEmailController,
+              ),
+              const SizedBox(height: 16),
+              const TeacherLoginViewBodyForgetPasswordText(),
+              const SizedBox(height: 32),
+              Custom_Loading_Widget(
+                  isLoading: state is TeacherSignInLoading,
+                  child: TeacherSignInViewBodyCustomButton(
+                    teacherLoginFormKey: teacherLoginFormKey,
+                    teacherSignInPasswordController:
+                        teacherSignInPasswordController,
+                    teacherSignInEmailController: teacherSignInEmailController,
+                  )),
+              const SizedBox(height: 32),
+              Center(
+                child: CustomLoginViewBodyDonotHaveAccountText(
+                  onTap: () {
+                    GoRouter.of(context).push(TeacherSignUpView.routeName);
+                  },
                 ),
-              )),
+              ),
+            ],
+          ),
         );
       },
     );

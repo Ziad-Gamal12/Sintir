@@ -14,25 +14,30 @@ class TeachertermsandconditionsviewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Section1Laws(),
-          SizedBox(height: 16),
-          Section2ContentQuality(),
-          SizedBox(height: 16),
-          Section3StudentRespect(),
-          SizedBox(height: 16),
-          Section4PaymentPolicy(),
-          SizedBox(height: 16),
-          Section5AccountTermination(),
-          SizedBox(height: 16),
-          Section6Updates(),
-          SizedBox(height: 16),
-          Section7Disclaimer(),
-        ],
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 720),
+          child: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Section1Laws(),
+              SizedBox(height: 16),
+              Section2ContentQuality(),
+              SizedBox(height: 16),
+              Section3StudentRespect(),
+              SizedBox(height: 16),
+              Section4PaymentPolicy(),
+              SizedBox(height: 16),
+              Section5AccountTermination(),
+              SizedBox(height: 16),
+              Section6Updates(),
+              SizedBox(height: 16),
+              Section7Disclaimer(),
+            ],
+          ),
+        ),
       ),
     );
   }

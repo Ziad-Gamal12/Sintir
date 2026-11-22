@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sintir/Features/ChoosingUserKind/Presentation/views/domain/ChoosingUserKindpageViewItemEntity.dart';
+import 'package:sintir/Features/ChoosingUserKind/domain/ChoosingUserKindpageViewItemEntity.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/widgets/ChoosingUserKindButton.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/widgets/CustomChoosingUserKindSmoothPageIndicator.dart';
 

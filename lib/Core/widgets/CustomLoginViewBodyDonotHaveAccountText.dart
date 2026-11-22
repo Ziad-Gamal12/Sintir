@@ -26,6 +26,7 @@ class CustomLoginViewBodyDonotHaveAccountText extends StatelessWidget {
                   .semiBold16
                   .copyWith(color: const Color(0xff949D9E)),
             ),
+            const TextSpan(text: ' '),
             TextSpan(
               text: LocaleKeys.createAccount,
               style:

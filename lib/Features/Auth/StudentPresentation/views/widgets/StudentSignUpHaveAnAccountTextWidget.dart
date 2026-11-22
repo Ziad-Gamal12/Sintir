@@ -21,6 +21,7 @@ class StudentSignUpHaveAnAccountTextWidget extends StatelessWidget {
             style: AppTextStyles(context)
                 .semiBold16
                 .copyWith(color: const Color(0xff949D9E))),
+        const TextSpan(text: ' '),
         TextSpan(
             text: LocaleKeys.login,
             style:

@@ -12,10 +12,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.appBartitle,
     this.isPopUp = true,
     this.onBackPressed,
+    this.backgroundColor,
   });
   final String appBartitle;
   final VoidCallback? onBackPressed;
   final bool? isPopUp;
+
+  /// Defaults to the scaffold background of the current theme.
+  final Color? backgroundColor;
 
   @override
   AppBar build(BuildContext context) {
@@ -26,7 +30,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leadingWidth: 50,
       elevation: 0,
       scrolledUnderElevation: 0,
-      backgroundColor: theme.scaffoldBackgroundColor,
+      backgroundColor: backgroundColor ?? theme.scaffoldBackgroundColor,
       leading: isPopUp == true
           ? Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),

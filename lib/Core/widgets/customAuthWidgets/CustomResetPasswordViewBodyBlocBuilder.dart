@@ -53,35 +53,40 @@ class _CustomResetPasswordViewBodyBlocBuilderState
           child: Center(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 26),
-              child: Column(
-                children: [
-                  const SizedBox(height: 40),
+              // Same column as on phones, capped so the card does not
+              // stretch across a tablet.
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 480),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 40),
 
-                  const CustomResetPassIcon(),
+                    const CustomResetPassIcon(),
 
-                  const SizedBox(height: 35),
+                    const SizedBox(height: 35),
 
-                  // Title
-                  Text(
-                    LocaleKeys.resetPassword,
-                    style: AppTextStyles(context).semiBold24,
-                  ),
+                    // Title
+                    Text(
+                      LocaleKeys.resetPassword,
+                      style: AppTextStyles(context).semiBold24,
+                    ),
 
-                  const SizedBox(height: 14),
+                    const SizedBox(height: 14),
 
-                  // Description
-                  const CustomResetPasswordViewBodyDescription(),
+                    // Description
+                    const CustomResetPasswordViewBodyDescription(),
 
-                  const SizedBox(height: 40),
+                    const SizedBox(height: 40),
 
-                  CustomResetPassCard(emailController: emailController),
+                    CustomResetPassCard(emailController: emailController),
 
-                  const SizedBox(height: 40),
+                    const SizedBox(height: 40),
 
-                  const CustomResetPasswordViewBodyPopUpButton(),
+                    const CustomResetPasswordViewBodyPopUpButton(),
 
-                  const SizedBox(height: 30),
-                ],
+                    const SizedBox(height: 30),
+                  ],
+                ),
               ),
             ),
           ),

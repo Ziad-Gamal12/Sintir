@@ -21,6 +21,7 @@ class Customstudentsocialbutton extends StatelessWidget {
     return MaterialButton(
       height: 54,
       minWidth: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       shape: RoundedRectangleBorder(
         side: BorderSide(
           color: isDark
@@ -31,25 +32,28 @@ class Customstudentsocialbutton extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       onPressed: onPressed,
-      child: Padding(
-        padding: const EdgeInsets.all(17),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SvgPicture.asset(
-              iconpath,
-              width: 20,
-              height: 20,
-            ),
-            const SizedBox(width: 40),
-            Text(
+      // Icon + label centred as one group, so the button reads the same at any width.
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        spacing: 12,
+        children: [
+          SvgPicture.asset(
+            iconpath,
+            width: 20,
+            height: 20,
+          ),
+          Flexible(
+            child: Text(
               text,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
               style: AppTextStyles(context).semiBold16.copyWith(
                     color: isDark ? Colors.white : const Color(0xff0C0D0D),
                   ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

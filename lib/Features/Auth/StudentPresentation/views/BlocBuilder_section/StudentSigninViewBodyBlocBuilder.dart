@@ -12,9 +12,10 @@ import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/StudentSi
 import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/StudentSignInForgetPasswordTextWidget.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/Student_SigninSocialbuttonssection.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/student_SigninTextfiledsection.dart';
-import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
+/// The sign-in form only. Padding, scrolling and the page layout come from
+/// [AuthShell] in StudentSignInView.
 class StudentSigninViewBodyBlocBuilder extends StatefulWidget {
   const StudentSigninViewBodyBlocBuilder({
     super.key,
@@ -40,60 +41,50 @@ class _StudentSigninViewBodyBlocBuilderState
 
   @override
   void dispose() {
-    super.dispose();
     studentSignInEmailController.dispose();
     studentSignInPasswordController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocSelector<StudentSignInCubit, StudentSignInState, bool>(
-      selector: (state) {
-        if (state is StudentSignInLoading) {
-          return true;
-        } else {
-          return false;
-        }
-      },
-      builder: (context, state) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: KHorizontalPadding, vertical: KVerticalPadding),
-          child: SingleChildScrollView(
-            child: Form(
-              key: studentSignInFormKey,
-              child: Column(
-                children: [
-                  student_SigninTextfiledsection(
+      selector: (state) => state is StudentSignInLoading,
+      builder: (context, isLoading) {
+        return Form(
+          key: studentSignInFormKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              student_SigninTextfiledsection(
+                studentSignInEmailController: studentSignInEmailController,
+                studentSignInPasswordController:
+                    studentSignInPasswordController,
+              ),
+              const SizedBox(height: 16),
+              const StudentSignInForgetPasswordTextWidget(),
+              const SizedBox(height: 32),
+              Custom_Loading_Widget(
+                isLoading: isLoading,
+                child: StudentSignInCustomButton(
+                    studetSignInFormKey: studentSignInFormKey,
                     studentSignInEmailController: studentSignInEmailController,
                     studentSignInPasswordController:
-                        studentSignInPasswordController,
-                  ),
-                  const SizedBox(height: 16),
-                  const StudentSignInForgetPasswordTextWidget(),
-                  const SizedBox(height: 32),
-                  Custom_Loading_Widget(
-                    isLoading: state,
-                    child: StudentSignInCustomButton(
-                        studetSignInFormKey: studentSignInFormKey,
-                        studentSignInEmailController:
-                            studentSignInEmailController,
-                        studentSignInPasswordController:
-                            studentSignInPasswordController),
-                  ),
-                  const SizedBox(height: 32),
-                  CustomLoginViewBodyDonotHaveAccountText(onTap: () {
-                    GoRouter.of(context).push(StudentSignupView.routeName);
-                  }),
-                  const SizedBox(height: 32),
-                  Customsepratedwidget(
-                    centerTitle: LocaleKeys.orSeparator,
-                  ),
-                  const SizedBox(height: 32),
-                  const Student_SigninSocialbuttonssection()
-                ],
+                        studentSignInPasswordController),
               ),
-            ),
+              const SizedBox(height: 32),
+              Customsepratedwidget(
+                centerTitle: LocaleKeys.orSeparator,
+              ),
+              const SizedBox(height: 32),
+              const Student_SigninSocialbuttonssection(),
+              const SizedBox(height: 32),
+              Center(
+                child: CustomLoginViewBodyDonotHaveAccountText(onTap: () {
+                  GoRouter.of(context).push(StudentSignupView.routeName);
+                }),
+              ),
+            ],
           ),
         );
       },

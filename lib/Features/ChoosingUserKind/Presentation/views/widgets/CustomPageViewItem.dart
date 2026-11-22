@@ -1,7 +1,7 @@
 // ignore_for_file: file_names, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
-import 'package:sintir/Features/ChoosingUserKind/Presentation/views/domain/ChoosingUserKindpageViewItemEntity.dart';
+import 'package:sintir/Features/ChoosingUserKind/domain/ChoosingUserKindpageViewItemEntity.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/widgets/ChoosingUserKindDescription.dart';
 import 'package:sintir/Features/ChoosingUserKind/Presentation/views/widgets/ChoosingUserKindTitle.dart';
 import 'package:sintir/constant.dart';

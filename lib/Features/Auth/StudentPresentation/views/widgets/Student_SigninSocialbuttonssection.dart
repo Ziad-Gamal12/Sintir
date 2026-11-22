@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
-import 'package:sintir/Core/widgets/CustomSizedBox.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/manager/StudentSignIn_Cubit/student_sign_in_cubit.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/customStudentSocialButton.dart';
 import 'package:sintir/locale_keys.dart';
@@ -11,26 +10,40 @@ import 'package:sintir/locale_keys.dart';
 class Student_SigninSocialbuttonssection extends StatelessWidget {
   const Student_SigninSocialbuttonssection({super.key});
 
+  /// From this width the two buttons share one row.
+  static const double _rowMinWidth = 420;
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Customstudentsocialbutton(
-          text: LocaleKeys.signInGoogle,
-          onPressed: () {
-            BlocProvider.of<StudentSignInCubit>(context).signInWithGoogle();
-          },
-          iconpath: Assets.assetsIconsSVGIconsGoogle,
-        ),
-        const Customsizedbox(width: 0, height: 16),
-        Customstudentsocialbutton(
-          text: LocaleKeys.signInFacebook,
-          onPressed: () {
-            BlocProvider.of<StudentSignInCubit>(context).signInWithFacebook();
-          },
-          iconpath: Assets.assetsIconsSVGIconsFaceBookIcons,
-        ),
-      ],
+    final google = Customstudentsocialbutton(
+      text: LocaleKeys.signInGoogle,
+      onPressed: () {
+        BlocProvider.of<StudentSignInCubit>(context).signInWithGoogle();
+      },
+      iconpath: Assets.assetsIconsSVGIconsGoogle,
+    );
+    final facebook = Customstudentsocialbutton(
+      text: LocaleKeys.signInFacebook,
+      onPressed: () {
+        BlocProvider.of<StudentSignInCubit>(context).signInWithFacebook();
+      },
+      iconpath: Assets.assetsIconsSVGIconsFaceBookIcons,
+    );
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth >= _rowMinWidth) {
+          return Row(
+            spacing: 12,
+            children: [Expanded(child: google), Expanded(child: facebook)],
+          );
+        }
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          spacing: 16,
+          children: [google, facebook],
+        );
+      },
     );
   }
 }
