@@ -50,7 +50,8 @@ class _AddSupportTicketViewBodyState extends State<AddSupportTicketViewBody> {
           if (state is SendSupportTicketSuccess) {
             CustomSnackBar.show(context,
                 message: LocaleKeys.ticketSentSuccess, type: SnackType.success);
-            GoRouter.of(context).pop();
+            // Hand the sent ticket back so the tickets list shows it at once.
+            GoRouter.of(context).pop(supportTicketEntity);
           } else if (state is SendSupportTicketFailure) {
             CustomSnackBar.show(context,
                 message: state.errMessage, type: SnackType.error);

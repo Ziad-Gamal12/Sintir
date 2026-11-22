@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, depend_on_referenced_packages
 
+import 'dart:async';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -21,6 +22,50 @@ class CourseSectionsCubit extends Cubit<CourseSectionsState> {
 
   final CourseSectionsRepo courseSectionsRepo;
   final SectionItemsActionsRepo sectionItemsActionsRepo;
+
+  final List<StreamSubscription<Object>> _contentSubscriptions = [];
+
+  /// Re-emits sections and items saved for [courseId] anywhere in the app
+  /// (usually on the add screens pushed above this one) as
+  /// [CourseSectionAddedLocally] and [SectionItemAddedLocally], so the list
+  /// shows them without a refetch.
+  void watchCourseContent({required String courseId}) {
+    _cancelContentSubscriptions();
+    _contentSubscriptions.addAll([
+      courseSectionsRepo.addedSections
+          .where((change) => change.courseId == courseId)
+          .listen((change) {
+            if (!isClosed) {
+              emit(CourseSectionAddedLocally(section: change.section));
+            }
+          }),
+      sectionItemsActionsRepo.addedItems
+          .where((change) => change.courseId == courseId)
+          .listen((change) {
+            if (!isClosed) {
+              emit(
+                SectionItemAddedLocally(
+                  sectionId: change.sectionId,
+                  item: change.item,
+                ),
+              );
+            }
+          }),
+    ]);
+  }
+
+  void _cancelContentSubscriptions() {
+    for (final subscription in _contentSubscriptions) {
+      subscription.cancel();
+    }
+    _contentSubscriptions.clear();
+  }
+
+  @override
+  Future<void> close() {
+    _cancelContentSubscriptions();
+    return super.close();
+  }
 
   void _emitFailure(Failure failure) {
     emit(AddCourseSectionFailure(errMessage: failure.message));

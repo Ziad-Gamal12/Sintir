@@ -20,6 +20,8 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/CourseDetailsCouponsViewFloatingButton.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/coupon_item_actions_cubit/coupon_item_actions_cubit.dart';
 
+import 'helpers/widget_test_helpers.dart';
+
 CourseCouponEntity _coupon(String code, DateTime expiry) => CourseCouponEntity(
       code: code,
       discountPercentage: 20,
@@ -67,6 +69,7 @@ Future<void> _pump(
   _FakeCouponsRepo repo, {
   CourseCouponEntity? addResult,
 }) async {
+  ignoreOverflowErrors();
   tester.view.devicePixelRatio = 1;
   tester.view.physicalSize = const Size(500, 1400);
   addTearDown(tester.view.resetPhysicalSize);
@@ -114,10 +117,12 @@ Future<void> _pump(
       theme: AppTheme.light,
     ),
   );
-  await tester.pumpAndSettle();
+  await pumpLocalized(tester);
 }
 
 void main() {
+  setUpAll(preloadL10nAssets);
+
   group('coupon list helper', () {
     test('a new coupon is added in expiry order and replaces the same code', () {
       final list = [

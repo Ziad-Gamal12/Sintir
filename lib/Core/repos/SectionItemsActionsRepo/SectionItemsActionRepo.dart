@@ -1,8 +1,12 @@
 import 'package:dartz/dartz.dart';
+import 'package:sintir/Core/entities/CourseEntities/course_content_changes.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/JoinedByEntity.dart';
 
 abstract class SectionItemsActionsRepo {
+  /// Every item [addSectionItem] saves successfully, from any screen.
+  Stream<AddedSectionItem> get addedItems;
+
   Future<Either<Failure, void>> addSectionItem({
     required dynamic sectionItem,
     required String teacherId,

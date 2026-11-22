@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/Support/Domain/Entities/SupportTicketEntity.dart';
@@ -10,7 +9,10 @@ import 'package:sintir/Features/Support/Presentation/Views/Widgets/MySupportTick
 import 'package:sintir/locale_keys.dart';
 
 class MySupportTicketsViewBody extends StatefulWidget {
-  const MySupportTicketsViewBody({super.key});
+  const MySupportTicketsViewBody({super.key, required this.userId});
+
+  /// Whose tickets to list.
+  final String userId;
 
   @override
   State<MySupportTicketsViewBody> createState() =>
@@ -25,7 +27,7 @@ class _MySupportTicketsViewBodyState extends State<MySupportTicketsViewBody> {
   void initState() {
     super.initState();
     _scrollController = ScrollController();
-    String userUID = getUserData().uid;
+    final String userUID = widget.userId;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context
           .read<SupportTicketsCubit>()
@@ -58,11 +60,23 @@ class _MySupportTicketsViewBodyState extends State<MySupportTicketsViewBody> {
       listener: (context, state) {
         if (state is GetUserSupportTicketsSuccess) {
           if (state.response.isPaginate == true) {
-            fetchedSupportTickets.addAll(state.response.supportTickets);
+            // Skip tickets already shown, such as one sent from this screen.
+            final shownIds = fetchedSupportTickets.map((t) => t.id).toSet();
+            fetchedSupportTickets.addAll(
+              state.response.supportTickets.where(
+                (t) => !shownIds.contains(t.id),
+              ),
+            );
           } else {
             fetchedSupportTickets = state.response.supportTickets;
           }
           hasMore = state.response.hasMore;
+        } else if (state is SupportTicketAddedLocally) {
+          // Tickets are listed newest first, so a new one goes on top.
+          fetchedSupportTickets = [
+            state.ticket,
+            ...fetchedSupportTickets.where((t) => t.id != state.ticket.id),
+          ];
         }
       },
       builder: (context, state) {

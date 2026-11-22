@@ -30,6 +30,7 @@ class CouponPopupMenuButton extends StatelessWidget {
           );
         }
         return PopupMenuButton<String>(
+          key: ValueKey('coupon-menu-$couponID'),
           onSelected: (String value) {
             if (value == 'delete') {
               context.read<CouponItemActionsCubit>().deleteCourseCoupon(
@@ -43,6 +44,7 @@ class CouponPopupMenuButton extends StatelessWidget {
           position: PopupMenuPosition.under,
           itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
             const PopupMenuItem<String>(
+              key: ValueKey('coupon-delete-action'),
               value: 'delete',
               child: Row(
                 children: [

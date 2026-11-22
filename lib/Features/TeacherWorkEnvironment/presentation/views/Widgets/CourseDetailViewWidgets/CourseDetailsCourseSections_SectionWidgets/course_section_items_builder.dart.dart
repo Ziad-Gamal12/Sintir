@@ -38,7 +38,7 @@ class CourseSectionItemsBuilder extends StatelessWidget {
           return ErrorSectionMessage(message: state.errMessage);
         } else if (state is GetSectionItemsSuccess &&
             state.sectionId == section.id &&
-            state.items.isEmpty) {
+            items.isEmpty) {
           return const EmptySectionMessage();
         }
         return SectionItemsList(items: items, course: course, section: section);

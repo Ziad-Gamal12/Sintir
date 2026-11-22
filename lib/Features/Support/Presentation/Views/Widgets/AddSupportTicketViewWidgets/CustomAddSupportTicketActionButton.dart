@@ -31,6 +31,7 @@ class CustomAddSupportTicketActionButton extends StatelessWidget {
                         context,
                         LocaleKeys.selectTicketCategory,
                       ).show();
+                      return;
                     }
                     context.read<SupportTicketsCubit>().sendSupportTicket(
                           supportTicket: ticket,

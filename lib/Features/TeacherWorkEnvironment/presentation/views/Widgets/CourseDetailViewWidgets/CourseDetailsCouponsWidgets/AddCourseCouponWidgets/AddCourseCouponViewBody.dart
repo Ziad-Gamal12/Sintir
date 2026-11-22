@@ -44,7 +44,8 @@ class _AddCourseCouponViewBodyState extends State<AddCourseCouponViewBody> {
     return BlocListener<CourseCouponsCubit, CourseCouponsState>(
       listener: (context, state) {
         if (state is AddCourseCouponSuccess) {
-          GoRouter.of(context).pop();
+          // Hand the saved coupon back so the coupons list shows it at once.
+          GoRouter.of(context).pop(context.read<CourseCouponEntity>());
           CustomSnackBar.show(
             context,
             message: LocaleKeys.couponAddedSuccessfully,

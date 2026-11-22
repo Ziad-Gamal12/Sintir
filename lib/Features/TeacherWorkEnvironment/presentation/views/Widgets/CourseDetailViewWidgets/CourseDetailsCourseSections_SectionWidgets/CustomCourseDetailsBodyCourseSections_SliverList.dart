@@ -46,8 +46,16 @@ class CustomCourseDetailsBodyCourseSections_SliverList extends StatelessWidget {
       },
       builder: (context, state) => SliverList.builder(
         itemCount: courseSections.length,
+        // Each section keeps its own expanded state and loaded items, so tie
+        // it to the section id rather than its position in the list.
+        findChildIndexCallback: (key) {
+          if (key is! ValueKey<String>) return null;
+          final index = courseSections.indexWhere((s) => s.id == key.value);
+          return index < 0 ? null : index;
+        },
         itemBuilder: (context, index) {
           return Padding(
+            key: ValueKey<String>(courseSections[index].id),
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: Custom_Loading_Widget(
               isLoading:

@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sintir/Core/Enums/courseCounterField.dart';
+import 'package:sintir/Core/entities/CourseEntities/course_content_changes.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseVideoItemEntities/CourseVedioItemEntity.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStorePaginateResponse.dart';
@@ -34,6 +37,12 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
     bool Function()? isTeacher,
   })  : answerKeys = answerKeys ?? TestAnswerKeyStore(),
         isTeacher = isTeacher ?? _signedInUserIsTeacher;
+
+  final StreamController<AddedSectionItem> _addedItems =
+      StreamController<AddedSectionItem>.broadcast();
+
+  @override
+  Stream<AddedSectionItem> get addedItems => _addedItems.stream;
 
   static bool _signedInUserIsTeacher() {
     try {
@@ -114,6 +123,13 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
         ),
       ]);
 
+      _addedItems.add(
+        AddedSectionItem(
+          courseId: courseId,
+          sectionId: sectionId,
+          item: sectionItem,
+        ),
+      );
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));

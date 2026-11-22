@@ -24,6 +24,7 @@ class CourseCouponsSliverGridView extends StatelessWidget {
       ),
       itemBuilder: (context, index) {
         return CourseCouponGridViewItem(
+          key: ValueKey('coupon-${coupons[index].code}'),
           couponEntity: coupons[index],
           courseId: courseId,
         );

@@ -91,6 +91,15 @@ class _CourseDetailsCouponsViewBodyState
       _schedulePaginationCheck();
       return;
     }
+    if (state is CourseCouponAddedLocally) {
+      setState(() {
+        _coupons = CourseDetailsCouponsViewHelper.upsertCoupon(
+          coupons: _coupons,
+          coupon: state.coupon,
+        );
+      });
+      return;
+    }
     if (state is GetCourseCouponsFailure && _coupons.isNotEmpty) {
       CustomSnackBar.show(
         context,

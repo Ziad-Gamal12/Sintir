@@ -1,10 +1,13 @@
 // ignore_for_file: file_names
 
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sintir/Core/Enums/courseCounterField.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/course_content_changes.dart';
 import 'package:sintir/Core/entities/FetchDataResponses/GetCourseSectionsResonseEntity.dart';
 import 'package:sintir/Core/entities/FireStoreEntities/FireStoreRequirmentsEntity.dart';
 import 'package:sintir/Core/errors/Exceptioons.dart';
@@ -28,6 +31,12 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
     TestAnswerKeyStore? answerKeys,
   }) : answerKeys = answerKeys ?? TestAnswerKeyStore();
 
+  final StreamController<AddedCourseSection> _addedSections =
+      StreamController<AddedCourseSection>.broadcast();
+
+  @override
+  Stream<AddedCourseSection> get addedSections => _addedSections.stream;
+
   @override
   Future<Either<Failure, void>> addCourseSection({
     required String courseId,
@@ -48,6 +57,9 @@ class CourseSectionsRepoImpl implements CourseSectionsRepo {
         ),
       );
 
+      _addedSections.add(
+        AddedCourseSection(courseId: courseId, section: section),
+      );
       return right(null);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));

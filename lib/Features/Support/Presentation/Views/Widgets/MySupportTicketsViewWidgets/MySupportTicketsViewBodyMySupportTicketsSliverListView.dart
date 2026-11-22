@@ -15,6 +15,7 @@ class MySupportTicketsViewBodyMySupportTicketsSliverListView
       itemCount: supportTickets.length,
       itemBuilder: (context, index) {
         return Padding(
+          key: ValueKey('support-ticket-${supportTickets[index].id}'),
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: InkWell(
             onTap: () {

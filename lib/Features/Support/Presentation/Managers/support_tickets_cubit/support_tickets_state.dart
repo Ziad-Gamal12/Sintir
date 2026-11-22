@@ -15,6 +15,12 @@ final class SendSupportTicketFailure extends SupportTicketsState {
   SendSupportTicketFailure({required this.errMessage});
 }
 
+/// A ticket sent on the add-ticket screen that the list should now show.
+final class SupportTicketAddedLocally extends SupportTicketsState {
+  final SupportTicketEntity ticket;
+  SupportTicketAddedLocally({required this.ticket});
+}
+
 // Delete Ticket
 final class DeleteSupportTicketLoading extends SupportTicketsState {}
 

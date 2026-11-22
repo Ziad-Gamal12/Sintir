@@ -35,6 +35,7 @@ class _CourseDetailsCourseSectionsViewBodyState
     super.initState();
     scrollController = ScrollController();
     final cubit = context.read<CourseSectionsCubit>();
+    cubit.watchCourseContent(courseId: widget.courseEntity.id);
     cubit.getCourseSections(
       isPaginate: false,
       courseId: widget.courseEntity.id,
@@ -81,13 +82,19 @@ class _CourseDetailsCourseSectionsViewBodyState
       listenWhen: (previous, current) {
         return current is GetCourseSectionsSuccess ||
             current is GetCourseSectionsFailure ||
-            current is DeleteSectionSuccess;
+            current is DeleteSectionSuccess ||
+            current is CourseSectionAddedLocally;
       },
       listener: (context, state) {
         if (state is GetCourseSectionsSuccess) {
           if (state.response.isPaginate) {
+            // A section added from this screen may already be in the list
+            // before its page arrives, so skip the ones we already show.
+            final shownIds = courseSections.map((s) => s.id).toSet();
             setState(() {
-              courseSections.addAll(state.response.sections);
+              courseSections.addAll(
+                state.response.sections.where((s) => !shownIds.contains(s.id)),
+              );
             });
           } else {
             setState(() {
@@ -95,6 +102,13 @@ class _CourseDetailsCourseSectionsViewBodyState
             });
           }
           hasMore = state.response.hasMore;
+        } else if (state is CourseSectionAddedLocally) {
+          if (courseSections.any((s) => s.id == state.section.id)) return;
+          // Section ids start with their creation time and Firestore returns
+          // them in id order, so a new section belongs at the end.
+          setState(() {
+            courseSections = [...courseSections, state.section];
+          });
         } else if (state is DeleteSectionSuccess) {
           setState(() {
             courseSections = courseSections
@@ -104,7 +118,7 @@ class _CourseDetailsCourseSectionsViewBodyState
         }
       },
       builder: (context, state) {
-        if (state is GetCourseSectionsFailure) {
+        if (state is GetCourseSectionsFailure && courseSections.isEmpty) {
           return Center(
             child: CustomErrorWidget(errormessage: state.errMessage),
           );

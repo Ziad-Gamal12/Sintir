@@ -2,10 +2,14 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/course_content_changes.dart';
 import 'package:sintir/Core/entities/FetchDataResponses/GetCourseSectionsResonseEntity.dart';
 import 'package:sintir/Core/errors/Failures.dart';
 
 abstract class CourseSectionsRepo {
+  /// Every section [addCourseSection] saves successfully, from any screen.
+  Stream<AddedCourseSection> get addedSections;
+
   Future<Either<Failure, void>> addCourseSection({
     required CourseSectionEntity section,
     required String courseId,

@@ -23,6 +23,11 @@ class SupportTicketsCubit extends Cubit<SupportTicketsState> {
         (response) => emit(SendSupportTicketSuccess()));
   }
 
+  /// Shows a ticket sent from the add-ticket screen in this cubit's list.
+  void showAddedTicket(SupportTicketEntity ticket) {
+    emit(SupportTicketAddedLocally(ticket: ticket));
+  }
+
 // Delete Support Ticket
   Future<void> deleteSupportTicket({required String ticketId}) async {
     emit(DeleteSupportTicketLoading());

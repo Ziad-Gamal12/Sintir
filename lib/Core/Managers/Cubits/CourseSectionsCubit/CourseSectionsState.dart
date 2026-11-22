@@ -57,6 +57,19 @@ final class AddCourseSectionItemSuccess extends CourseSectionsState {}
 
 final class AddCourseSectionItemLoading extends CourseSectionsState {}
 
+/// A section saved on another screen that the list should now show.
+final class CourseSectionAddedLocally extends CourseSectionsState {
+  final CourseSectionEntity section;
+  CourseSectionAddedLocally({required this.section});
+}
+
+/// An item saved on another screen that its section should now show.
+final class SectionItemAddedLocally extends CourseSectionsState {
+  final String sectionId;
+  final dynamic item;
+  SectionItemAddedLocally({required this.sectionId, required this.item});
+}
+
 final class GetSectionItemsLoading extends CourseSectionsState {
   final String sectionId;
   GetSectionItemsLoading({required this.sectionId});

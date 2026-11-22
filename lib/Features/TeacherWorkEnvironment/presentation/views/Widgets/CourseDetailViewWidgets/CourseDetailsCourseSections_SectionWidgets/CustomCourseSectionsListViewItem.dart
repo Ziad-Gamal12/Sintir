@@ -27,6 +27,10 @@ class CustomCourseDetailsSectionsListViewItem extends StatefulWidget {
 class _CustomCourseDetailsSectionsListViewItemState
     extends State<CustomCourseDetailsSectionsListViewItem> {
   List<dynamic> sectionLessons = [];
+
+  /// Whether [sectionLessons] holds this section's items from the server.
+  /// Until then, items added elsewhere are left for the first fetch to bring.
+  bool _itemsLoaded = false;
   late ExpandableController _controller;
 
   @override
@@ -42,7 +46,7 @@ class _CustomCourseDetailsSectionsListViewItemState
   }
 
   void _fetchSectionItems(BuildContext context) {
-    if (sectionLessons.isEmpty) {
+    if (!_itemsLoaded) {
       context.read<CourseSectionsCubit>().getSectionItems(
         sectionId: widget.sectionItem.id,
         courseId: widget.course.id,
@@ -99,7 +103,20 @@ class _CustomCourseDetailsSectionsListViewItemState
   ) {
     if (state is GetSectionItemsSuccess &&
         state.sectionId == widget.sectionItem.id) {
-      setState(() => sectionLessons = state.items);
+      setState(() {
+        sectionLessons = state.items;
+        _itemsLoaded = true;
+      });
+    } else if (state is SectionItemAddedLocally &&
+        state.sectionId == widget.sectionItem.id) {
+      if (!_itemsLoaded) return;
+      final id = state.item.id;
+      setState(() {
+        sectionLessons = [
+          ...sectionLessons.where((item) => item.id != id),
+          state.item,
+        ];
+      });
     } else if (state is DeleteSectionItemSuccess) {
       final id = state.deletedItemId;
       if (sectionLessons.any((item) => item.id == id)) {
