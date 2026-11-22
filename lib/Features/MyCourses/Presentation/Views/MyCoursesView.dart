@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/repos/CoursesRepo/CoursesRepo.dart';
@@ -14,15 +16,11 @@ class MyCoursesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        appBartitle: LocaleKeys.myCourses,
-        isPopUp: isPopUp,
-      ),
+      appBar: CustomAppBar(appBartitle: LocaleKeys.myCourses, isPopUp: isPopUp),
       body: BlocProvider(
-          create: (context) => MyCoursesCubit(
-                coursesrepo: getIt<Coursesrepo>(),
-              ),
-          child: const MyCoursesViewBody()),
+        create: (context) => MyCoursesCubit(coursesrepo: getIt<Coursesrepo>()),
+        child: const MyCoursesViewBody(),
+      ),
     );
   }
 }

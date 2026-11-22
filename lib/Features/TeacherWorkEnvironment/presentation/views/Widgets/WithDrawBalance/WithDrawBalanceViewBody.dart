@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/TeacherWalletEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/WithdrawalMethodEntity.dart';
@@ -64,6 +65,7 @@ class _WithDrawBalanceViewBodyState extends State<WithDrawBalanceViewBody> {
                 'Withdrawal request received. Check its status in transactions.',
             type: SnackType.success,
           );
+          GoRouter.of(context).pop();
         } else if (state is WithDrawBalanceFailure) {
           CustomSnackBar.show(
             context,

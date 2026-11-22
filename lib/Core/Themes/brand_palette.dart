@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/constant.dart';
 
 @immutable
 class BrandPalette {
@@ -38,7 +39,7 @@ class BrandPalette {
     placeholder: Color(0xFF8C929E),
     outline: Color(0xFF666B79),
     link: Color(0xFF8AA4FF),
-    accent: Color(0xFFFF8C1A),
+    accent: KSecondaryColor,
     brandPanel: Color(0xFF1F2A4C),
     brandStage: Color(0xFF283766),
     onBrand: Color(0xFFFFFFFF),

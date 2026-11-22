@@ -41,8 +41,8 @@ class _MoreNewestCoursesViewBodyState extends State<MoreNewestCoursesViewBody> {
 
   @override
   void dispose() {
-    super.dispose();
     scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -69,7 +69,10 @@ class _MoreNewestCoursesViewBodyState extends State<MoreNewestCoursesViewBody> {
             return CustomErrorWidget(errormessage: state.errmessage);
           } else if (state is GetRecentCoursesLoading &&
               state.isPaginate == false) {
-            return const RecentCoursesLoadingSliverGrid();
+            return const CustomScrollView(
+              physics: NeverScrollableScrollPhysics(),
+              slivers: [RecentCoursesLoadingSliverGrid()],
+            );
           } else if (state is GetRecentCoursesSuccess &&
               fetchedCourses.isEmpty) {
             return CustomEmptyWidget(text: LocaleKeys.noNewCourses);
@@ -79,11 +82,8 @@ class _MoreNewestCoursesViewBodyState extends State<MoreNewestCoursesViewBody> {
               slivers: [
                 RecentCoursesSliverGrid(courses: fetchedCourses),
                 SliverToBoxAdapter(child: SizedBox(height: hasMore ? 20 : 0)),
-                SliverToBoxAdapter(
-                  child: state is GetRecentCoursesLoading && state.isPaginate
-                      ? const RecentCoursesLoadingSliverGrid()
-                      : const SizedBox(),
-                ),
+                if (state is GetRecentCoursesLoading && state.isPaginate)
+                  const RecentCoursesLoadingSliverGrid(),
               ],
             );
           }

@@ -96,11 +96,8 @@ class _HomeviewState extends State<Homeview> {
             bottomNavigationBar: BottomNavBar(onPageChanged: onPageChanged),
             body: MediaQuery.removePadding(
               context: context,
-              removeBottom: true,
-              child: SafeArea(
-                bottom: false,
-                child: pages,
-              ),
+              removeBottom: false,
+              child: SafeArea(bottom: true, child: pages),
             ),
           );
         },

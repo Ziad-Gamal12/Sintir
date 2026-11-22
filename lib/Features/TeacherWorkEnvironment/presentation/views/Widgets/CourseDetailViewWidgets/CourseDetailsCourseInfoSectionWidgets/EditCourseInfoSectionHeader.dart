@@ -9,7 +9,6 @@ class EditCourseInfoSectionHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textColor = theme.textTheme.bodyLarge?.color ?? Colors.black;
-    const closeIconColor = Colors.redAccent; // ثابت لأن عادة الأحمر يبقى أحمر
 
     return Row(
       children: [
@@ -21,7 +20,7 @@ class EditCourseInfoSectionHeader extends StatelessWidget {
         ),
         const Spacer(),
         IconButton(
-          icon: const Icon(Icons.close, color: closeIconColor, size: 30),
+          icon: const Icon(Icons.close, size: 30),
           onPressed: () {
             Navigator.pop(context);
           },

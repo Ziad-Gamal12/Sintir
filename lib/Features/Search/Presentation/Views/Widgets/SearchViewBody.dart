@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/entities/CourseEntities/ContentCreaterEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/responsive/breakpoints.dart';
 import 'package:sintir/Features/Search/Presentation/Managers/cubit/search_cubit.dart';
 import 'package:sintir/Features/Search/Presentation/Views/Widgets/SearchViewBodyCoursesSliverGridView.dart';
 import 'package:sintir/Features/Search/Presentation/Views/Widgets/SearchViewBodySearchAndFilterSection.dart';
@@ -29,7 +30,8 @@ class _SearchViewBodyState extends State<SearchViewBody> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
-        (_) => _controller.init(context, filters: null, userId: null));
+      (_) => _controller.init(context, filters: null, userId: null),
+    );
   }
 
   @override
@@ -54,8 +56,12 @@ class _SearchViewBodyState extends State<SearchViewBody> {
       builder: (context, state) {
         final bool isSearching = _controller.isSearching;
         return Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: KHorizontalPadding, vertical: KVerticalPadding),
+          padding: EdgeInsets.only(
+            top: 20,
+            bottom: context.hasSideNavigation ? 20 : 92,
+            left: KHorizontalPadding,
+            right: KHorizontalPadding,
+          ),
           child: CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
@@ -66,21 +72,21 @@ class _SearchViewBodyState extends State<SearchViewBody> {
               const SliverToBoxAdapter(child: SizedBox(height: 24)),
               SliverToBoxAdapter(
                 child: SearchTeachersSection(
-                  teachers:
-                      isSearching == true ? searchedTeachers : defaultTeachers,
+                  teachers: isSearching == true
+                      ? searchedTeachers
+                      : defaultTeachers,
                 ),
               ),
               const SliverToBoxAdapter(
-                  child: Divider(height: 32, color: Color(0xffE5E5EA))),
+                child: Divider(height: 32, color: Color(0xffE5E5EA)),
+              ),
               const SliverToBoxAdapter(
                 child: SearchViewBodySearchViewBodyCoursesListHeader(),
               ),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 12),
-              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 12)),
               SearchCoursesSliverGridView(
-                  courses:
-                      isSearching == true ? searchedCourses : defaultCourses),
+                courses: isSearching == true ? searchedCourses : defaultCourses,
+              ),
             ],
           ),
         );

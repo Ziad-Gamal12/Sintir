@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/EducationLevelDropdownEntityItem.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/SubjectDropdownEntityItem.dart';
 import 'package:sintir/locale_keys.dart';
 
 class CourseDetailMetadata extends StatelessWidget {
@@ -20,12 +22,12 @@ class CourseDetailMetadata extends StatelessWidget {
       _MetadataItem(
         Icons.menu_book_outlined,
         LocaleKeys.studentEducationLevel,
-        course.level,
+        EducationLevelDropdownEntityItem.getLabelByValue(course.level),
       ),
       _MetadataItem(
         Icons.workspace_premium_outlined,
         LocaleKeys.teacherSubject,
-        course.subject,
+        SubjectDropdownEntityItem.getLabelByValue(course.subject),
       ),
       _MetadataItem(
         Icons.calendar_month_outlined,
@@ -45,7 +47,11 @@ class CourseDetailMetadata extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    for (var index = start; index < start + columns; index++) ...[
+                    for (
+                      var index = start;
+                      index < start + columns;
+                      index++
+                    ) ...[
                       if (index > start) const SizedBox(width: _spacing),
                       Expanded(
                         child: index < items.length

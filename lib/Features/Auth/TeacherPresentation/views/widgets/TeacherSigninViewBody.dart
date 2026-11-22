@@ -12,8 +12,6 @@ import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherLo
 import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherSignInViewBodyCustomButton.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherSignInViewBodyTextFieledInPuts.dart';
 
-/// The teacher sign-in form only. The welcome illustration and title, the
-/// padding and the scrolling now come from [AuthShell] in TeacherSignInView.
 class TeacherSigninViewBody extends StatefulWidget {
   const TeacherSigninViewBody({super.key});
 
@@ -62,13 +60,14 @@ class _TeacherSigninViewBodyState extends State<TeacherSigninViewBody> {
               const TeacherLoginViewBodyForgetPasswordText(),
               const SizedBox(height: 32),
               Custom_Loading_Widget(
-                  isLoading: state is TeacherSignInLoading,
-                  child: TeacherSignInViewBodyCustomButton(
-                    teacherLoginFormKey: teacherLoginFormKey,
-                    teacherSignInPasswordController:
-                        teacherSignInPasswordController,
-                    teacherSignInEmailController: teacherSignInEmailController,
-                  )),
+                isLoading: state is TeacherSignInLoading,
+                child: TeacherSignInViewBodyCustomButton(
+                  teacherLoginFormKey: teacherLoginFormKey,
+                  teacherSignInPasswordController:
+                      teacherSignInPasswordController,
+                  teacherSignInEmailController: teacherSignInEmailController,
+                ),
+              ),
               const SizedBox(height: 32),
               Center(
                 child: CustomLoginViewBodyDonotHaveAccountText(

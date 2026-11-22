@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
+import 'package:sintir/Core/responsive/breakpoints.dart';
 import 'package:sintir/Features/MyCourses/Presentation/Manager/cubit/my_courses_cubit.dart';
 import 'package:sintir/Features/MyCourses/Presentation/Views/Widgets/MyCoursesViewBodyGridView.dart';
 import 'package:sintir/constant.dart';
@@ -25,9 +26,7 @@ class _MyCoursesViewBodyState extends State<MyCoursesViewBody> {
       context.read<MyCoursesCubit>().getMyCourses(isPaginate: false);
       scrollController.addListener(() {
         if (_canFetchMore()) {
-          context.read<MyCoursesCubit>().getMyCourses(
-                isPaginate: true,
-              );
+          context.read<MyCoursesCubit>().getMyCourses(isPaginate: true);
         }
       });
     });
@@ -52,24 +51,29 @@ class _MyCoursesViewBodyState extends State<MyCoursesViewBody> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<MyCoursesCubit, MyCoursesState>(
-        listener: (context, state) {
-          if (state is GetMyCoursesSuccess) {
-            if (state.isPaginate == true) {
-              myCourses.addAll(state.response.courses);
-            } else {
-              myCourses = state.response.courses;
-            }
-            hasMore = state.response.hasMore;
-            setState(() {});
+      listener: (context, state) {
+        if (state is GetMyCoursesSuccess) {
+          if (state.isPaginate == true) {
+            myCourses.addAll(state.response.courses);
+          } else {
+            myCourses = state.response.courses;
           }
-        },
-        child: Padding(
-          padding: const EdgeInsetsGeometry.symmetric(
-              horizontal: KHorizontalPadding, vertical: KVerticalPadding),
-          child: MyCoursesViewBodyGridView(
-            myCourses: myCourses,
-            scrollController: scrollController,
-          ),
-        ));
+          hasMore = state.response.hasMore;
+          setState(() {});
+        }
+      },
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: 20,
+          bottom: context.hasSideNavigation ? 20 : 92,
+          left: KHorizontalPadding,
+          right: KHorizontalPadding,
+        ),
+        child: MyCoursesViewBodyGridView(
+          myCourses: myCourses,
+          scrollController: scrollController,
+        ),
+      ),
+    );
   }
 }
