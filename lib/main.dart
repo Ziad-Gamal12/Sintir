@@ -30,10 +30,6 @@ import 'package:sintir/Features/Favorites/presentation/views/Manager/favourites_
 import 'package:sintir/firebase_options.dart';
 
 void main() async {
-  // device_preview 3.x: no widget wrapper any more. It installs its own
-  // binding, so it goes first, before anything initialises the binding.
-  // Off in release builds by default (!kReleaseMode).
-  DevicePreview.enable();
   WidgetsFlutterBinding.ensureInitialized();
   final storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
