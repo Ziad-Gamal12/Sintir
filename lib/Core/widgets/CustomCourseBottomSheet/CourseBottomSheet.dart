@@ -18,6 +18,8 @@ class CourseBottomSheet extends StatefulWidget {
   });
   final CourseEntity courseEntity;
 
+  static const double maxHeightFactor = .9;
+
   @override
   State<CourseBottomSheet> createState() => _CourseBottomSheetState();
 }
@@ -41,23 +43,29 @@ class _CourseBottomSheetState extends State<CourseBottomSheet> {
         subscribtionRepo: getIt<CourseSubscibtionsRepo>(),
         course: widget.courseEntity,
       ),
-      child: IntrinsicHeight(
-        child: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: isDark ? const Color(0xFF1F1F1F) : Colors.white,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.sizeOf(context).height *
+              CourseBottomSheet.maxHeightFactor,
+        ),
+        child: IntrinsicHeight(
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: isDark ? const Color(0xFF1F1F1F) : Colors.white,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+              border: Border.all(
+                  color: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+                  width: 1),
             ),
-            border: Border.all(
-                color: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
-                width: 1),
-          ),
-          child: SafeArea(
-            child: Provider.value(
-              value: bottomsheetnavigationrequirmentsentity,
-              child: const CourseBottomSheetBody(),
+            child: SafeArea(
+              child: Provider.value(
+                value: bottomsheetnavigationrequirmentsentity,
+                child: const CourseBottomSheetBody(),
+              ),
             ),
           ),
         ),

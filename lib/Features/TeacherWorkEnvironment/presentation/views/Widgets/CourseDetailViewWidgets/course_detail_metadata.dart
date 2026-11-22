@@ -7,43 +7,57 @@ import 'package:sintir/locale_keys.dart';
 class CourseDetailMetadata extends StatelessWidget {
   const CourseDetailMetadata({super.key, required this.course});
   final CourseEntity course;
+
+  static const double _spacing = 10;
+  static const double _minCardWidth = 200;
+
   @override
   Widget build(BuildContext context) {
     final locale = Localizations.localeOf(context).toLanguageTag();
     final date = DateFormat.yMMMMd(locale).format(course.postedDate);
+    final items = [
+      _MetadataItem(Icons.translate, LocaleKeys.language, course.language),
+      _MetadataItem(
+        Icons.menu_book_outlined,
+        LocaleKeys.studentEducationLevel,
+        course.level,
+      ),
+      _MetadataItem(
+        Icons.workspace_premium_outlined,
+        LocaleKeys.teacherSubject,
+        course.subject,
+      ),
+      _MetadataItem(
+        Icons.calendar_month_outlined,
+        LocaleKeys.createdDate,
+        date,
+      ),
+    ];
     return LayoutBuilder(
       builder: (context, constraints) {
-        final count = constraints.maxWidth > 560 ? 4 : 2;
-        final width = (constraints.maxWidth - (count - 1) * 10) / count;
-        final items = [
-          _MetadataItem(Icons.translate, LocaleKeys.language, course.language),
-          _MetadataItem(
-            Icons.menu_book_outlined,
-            LocaleKeys.studentEducationLevel,
-            course.level,
-          ),
-          _MetadataItem(
-            Icons.workspace_premium_outlined,
-            LocaleKeys.teacherSubject,
-            course.subject,
-          ),
-          _MetadataItem(
-            Icons.calendar_month_outlined,
-            LocaleKeys.createdDate,
-            date,
-          ),
-        ];
-        return Wrap(
-          spacing: 10,
-          runSpacing: 10,
-          children: items
-              .map(
-                (item) => SizedBox(
-                  width: width,
-                  child: _MetadataCard(item: item),
+        final columns =
+            (constraints.maxWidth - _spacing * 3) / 4 >= _minCardWidth ? 4 : 2;
+        return Column(
+          children: [
+            for (var start = 0; start < items.length; start += columns) ...[
+              if (start > 0) const SizedBox(height: _spacing),
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (var index = start; index < start + columns; index++) ...[
+                      if (index > start) const SizedBox(width: _spacing),
+                      Expanded(
+                        child: index < items.length
+                            ? _MetadataCard(item: items[index])
+                            : const SizedBox.shrink(),
+                      ),
+                    ],
+                  ],
                 ),
-              )
-              .toList(),
+              ),
+            ],
+          ],
         );
       },
     );
@@ -91,7 +105,7 @@ class _MetadataCard extends StatelessWidget {
                 ),
                 Text(
                   item.value,
-                  maxLines: 1,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: textStyles.semiBold12.copyWith(
                     color: theme.textTheme.bodyLarge?.color,

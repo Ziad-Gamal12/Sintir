@@ -10,38 +10,43 @@ import 'package:sintir/locale_keys.dart';
 class Student_SigninSocialbuttonssection extends StatelessWidget {
   const Student_SigninSocialbuttonssection({super.key});
 
-  /// From this width the two buttons share one row.
   static const double _rowMinWidth = 420;
 
   @override
   Widget build(BuildContext context) {
-    final google = Customstudentsocialbutton(
-      text: LocaleKeys.signInGoogle,
-      onPressed: () {
-        BlocProvider.of<StudentSignInCubit>(context).signInWithGoogle();
-      },
-      iconpath: Assets.assetsIconsSVGIconsGoogle,
-    );
-    final facebook = Customstudentsocialbutton(
-      text: LocaleKeys.signInFacebook,
-      onPressed: () {
-        BlocProvider.of<StudentSignInCubit>(context).signInWithFacebook();
-      },
-      iconpath: Assets.assetsIconsSVGIconsFaceBookIcons,
-    );
+    Widget google(String text) => Customstudentsocialbutton(
+          text: text,
+          onPressed: () {
+            BlocProvider.of<StudentSignInCubit>(context).signInWithGoogle();
+          },
+          iconpath: Assets.assetsIconsSVGIconsGoogle,
+        );
+    Widget facebook(String text) => Customstudentsocialbutton(
+          text: text,
+          onPressed: () {
+            BlocProvider.of<StudentSignInCubit>(context).signInWithFacebook();
+          },
+          iconpath: Assets.assetsIconsSVGIconsFaceBookIcons,
+        );
 
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth >= _rowMinWidth) {
           return Row(
             spacing: 12,
-            children: [Expanded(child: google), Expanded(child: facebook)],
+            children: [
+              Expanded(child: google('Google')),
+              Expanded(child: facebook('Facebook')),
+            ],
           );
         }
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           spacing: 16,
-          children: [google, facebook],
+          children: [
+            google(LocaleKeys.signInGoogle),
+            facebook(LocaleKeys.signInFacebook),
+          ],
         );
       },
     );

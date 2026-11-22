@@ -1,5 +1,6 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/Themes/brand_palette.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -32,9 +33,8 @@ class CustomAnimatedDropDownButton extends StatelessWidget {
         ? Colors.white.withValues(alpha: 0.05)
         : const Color(0xFFF8F9FA);
 
-    final Color borderColor = isDarkMode
-        ? Colors.white10
-        : const Color(0xFFE4E6E8);
+    final palette = BrandPalette.of(context);
+    final Color borderColor = palette.outline;
 
     final Color expandedColor = isDarkMode
         ? const Color(0xFF1E1E1E)
@@ -55,7 +55,7 @@ class CustomAnimatedDropDownButton extends StatelessWidget {
         hint,
         style: AppTextStyles(
           context,
-        ).regular14.copyWith(color: theme.hintColor.withValues(alpha: 0.5)),
+        ).regular14.copyWith(color: palette.placeholder),
       ),
 
       decoration: CustomDropdownDecoration(

@@ -2,23 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sintir/Core/Themes/brand_palette.dart';
 import 'package:sintir/Core/responsive/breakpoints.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/AdaptiveAuth/AuthBrandPanel.dart';
 import 'package:sintir/Core/widgets/AdaptiveAuth/AuthHeader.dart';
+import 'package:sintir/Core/widgets/AdaptiveAuth/AuthParts.dart';
 import 'package:sintir/Core/widgets/CustomAppBar.dart';
 import 'package:sintir/constant.dart';
+import 'package:svg_flutter/svg.dart';
 
-/// Adaptive page frame shared by the sign-in / sign-up screens.
-///
-/// * compact  (< 600):  app bar + one scrolling column (the phone layout).
-/// * medium   (600–839): app bar + the form in a centred card, max [cardMaxWidth].
-/// * expanded (≥ 840):  split — [AuthBrandPanel] on the start side, the form on
-///   the end side, max [contentMaxWidth].
-///
-/// [child] is the form only: no Scaffold, padding or scroll view. It is kept
-/// under a [GlobalKey], so typed text and validation state survive a rotation
-/// that switches the layout.
 class AuthShell extends StatefulWidget {
   const AuthShell({
     super.key,
@@ -26,26 +19,25 @@ class AuthShell extends StatefulWidget {
     required this.brand,
     required this.child,
     this.illustration,
+    this.brandIllustration,
     this.headline,
     this.subtitle,
     this.badge,
     this.contentMaxWidth = 440,
     this.cardMaxWidth = 520,
-    this.brandWidthFactor = 0.42,
     this.onBack,
   });
 
-  /// App bar title (compact / medium); the form-pane title when [headline] is null.
   final String title;
   final AuthBrandContent brand;
   final Widget child;
   final String? illustration;
+  final String? brandIllustration;
   final Widget? headline;
   final String? subtitle;
   final Widget? badge;
   final double contentMaxWidth;
   final double cardMaxWidth;
-  final double brandWidthFactor;
   final VoidCallback? onBack;
 
   @override
@@ -59,6 +51,9 @@ class _AuthShellState extends State<AuthShell> {
       widget.illustration != null ||
       widget.headline != null ||
       widget.subtitle != null;
+
+  String? get _stageIllustration =>
+      widget.brandIllustration ?? widget.illustration;
 
   void _back() {
     if (widget.onBack != null) {
@@ -75,6 +70,7 @@ class _AuthShellState extends State<AuthShell> {
     return LayoutBuilder(
       builder: (context, constraints) {
         return switch (Breakpoints.of(constraints.maxWidth)) {
+          WindowSize.large ||
           WindowSize.expanded => _buildSplit(context, constraints, content),
           WindowSize.medium => _buildCentered(context, content),
           WindowSize.compact => _buildCompact(context, content),
@@ -116,39 +112,69 @@ class _AuthShellState extends State<AuthShell> {
     );
   }
 
+  Widget _formHeader(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        if (widget.badge != null) ...[
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: widget.badge!,
+          ),
+          const SizedBox(height: 20),
+        ],
+        AuthHeader(
+          headline: widget.headline ??
+              Text(widget.title, style: AppTextStyles(context).bold24),
+          subtitle: widget.subtitle,
+          centered: false,
+        ),
+        const SizedBox(height: 32),
+      ],
+    );
+  }
+
   Widget _buildCentered(BuildContext context, Widget content) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-    final background =
-        isDark ? theme.scaffoldBackgroundColor : const Color(0xFFF4F6FB);
+    final palette = BrandPalette.of(context);
+    final stageHeight =
+        (MediaQuery.sizeOf(context).height * 0.25).clamp(160.0, 280.0).toDouble();
+    final stageIllustration = _stageIllustration;
 
     return Scaffold(
-      backgroundColor: background,
-      appBar: CustomAppBar(
-        appBartitle: widget.title,
-        onBackPressed: widget.onBack,
-        backgroundColor: background,
-      ),
+      backgroundColor: palette.page,
       body: SafeArea(
-        top: false,
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(40, 16, 40, 40),
+            padding: const EdgeInsets.fromLTRB(40, 24, 40, 40),
             child: ConstrainedBox(
               constraints: BoxConstraints(maxWidth: widget.cardMaxWidth),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  if (_hasHeader) ...[
-                    AuthHeader(
-                      illustration: widget.illustration,
-                      illustrationMaxHeight: 220,
-                      headline: widget.headline,
-                      subtitle: widget.subtitle,
+                  Row(
+                    children: [
+                      AuthBackButton(onPressed: _back),
+                      const Spacer(),
+                      SintirWordmark(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 28),
+                  if (stageIllustration != null) ...[
+                    SizedBox(
+                      height: stageHeight,
+                      child: AuthIllustrationStage(
+                        child: SvgPicture.asset(
+                          stageIllustration,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
                     ),
-                    const SizedBox(height: 28),
+                    const SizedBox(height: 32),
                   ],
-                  _AuthCard(child: content),
+                  _formHeader(context),
+                  content,
                 ],
               ),
             ),
@@ -163,14 +189,13 @@ class _AuthShellState extends State<AuthShell> {
     BoxConstraints constraints,
     Widget content,
   ) {
-    final brandWidth =
-        (constraints.maxWidth * widget.brandWidthFactor)
-            .clamp(340.0, 560.0)
-            .toDouble();
+    final palette = BrandPalette.of(context);
+    final brandWidth = AuthBrandPanel.widthFor(constraints.maxWidth);
     final paneWidth = constraints.maxWidth - brandWidth;
-    final panePadding = paneWidth >= 640 ? 56.0 : 32.0;
+    final panePadding = paneWidth >= 640 ? 64.0 : 32.0;
 
     return Scaffold(
+      backgroundColor: palette.page,
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -178,82 +203,54 @@ class _AuthShellState extends State<AuthShell> {
             width: brandWidth,
             child: AuthBrandPanel(
               content: widget.brand,
-              illustration: widget.illustration,
-              onBack: _back,
+              illustration: _stageIllustration,
             ),
           ),
           Expanded(
             child: SafeArea(
-              child: Center(
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: panePadding,
-                    vertical: 40,
-                  ),
-                  child: ConstrainedBox(
-                    constraints:
-                        BoxConstraints(maxWidth: widget.contentMaxWidth),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        if (widget.badge != null) ...[
-                          Align(
-                            alignment: AlignmentDirectional.centerStart,
-                            child: widget.badge!,
-                          ),
-                          const SizedBox(height: 16),
-                        ],
-                        AuthHeader(
-                          headline: widget.headline ??
-                              Text(
-                                widget.title,
-                                style: AppTextStyles(context).bold24,
-                              ),
-                          subtitle: widget.subtitle,
-                          centered: false,
-                        ),
-                        const SizedBox(height: 28),
-                        content,
-                      ],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(
+                      panePadding,
+                      24,
+                      panePadding,
+                      0,
+                    ),
+                    child: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: AuthBackButton(onPressed: _back),
                     ),
                   ),
-                ),
+                  Expanded(
+                    child: Center(
+                      child: SingleChildScrollView(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: panePadding,
+                          vertical: 32,
+                        ),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxWidth: widget.contentMaxWidth,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              _formHeader(context),
+                              content,
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
         ],
       ),
-    );
-  }
-}
-
-class _AuthCard extends StatelessWidget {
-  const _AuthCard({required this.child});
-
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-
-    return Container(
-      padding: const EdgeInsets.all(32),
-      decoration: BoxDecoration(
-        color: theme.cardColor,
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(
-          color: isDark ? Colors.white10 : const Color(0xFFE9ECF2),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: isDark ? .25 : .05),
-            blurRadius: 30,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      child: child,
     );
   }
 }

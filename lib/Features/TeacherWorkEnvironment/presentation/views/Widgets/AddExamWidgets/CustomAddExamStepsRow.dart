@@ -46,6 +46,7 @@ class CustomAddExamStepsRow extends StatelessWidget {
                   final bool isCompleted = e.key < currentStep;
                   final bool isSelected = currentStep == e.key;
                   return GestureDetector(
+                    behavior: HitTestBehavior.opaque,
                     onTap: () {
                       if (e.key <= currentStep) {
                         pageController.animateToPage(
@@ -61,6 +62,7 @@ class CustomAddExamStepsRow extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           _buildNode(
+                            e.key,
                             isCompleted,
                             isSelected,
                             primaryColor,
@@ -96,6 +98,7 @@ class CustomAddExamStepsRow extends StatelessWidget {
   }
 
   Widget _buildNode(
+    int index,
     bool isCompleted,
     bool isSelected,
     Color primary,
@@ -130,7 +133,7 @@ class CustomAddExamStepsRow extends StatelessWidget {
         child: isCompleted
             ? const Icon(Icons.check, color: Colors.white, size: 20)
             : Text(
-                "${currentStep + 1}",
+                "${index + 1}",
                 style: TextStyle(
                   color: isSelected ? primary : Colors.grey,
                   fontWeight: FontWeight.bold,

@@ -8,6 +8,8 @@ import 'package:sintir/locale_keys.dart';
 class TestSummaryCard extends StatelessWidget {
   const TestSummaryCard({super.key});
 
+  static const double _singleRowMinWidth = 560;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -64,40 +66,66 @@ class TestSummaryCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 24),
-          GridView.count(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: 2,
-            childAspectRatio: 2.2,
-            mainAxisSpacing: 16,
-            crossAxisSpacing: 16,
-            children: [
-              _buildModernItem(
-                context,
-                icon: Icons.timer_rounded,
-                label: LocaleKeys.examDuration,
-                value: "${entity.durationTime} ${LocaleKeys.durationMinutes}",
-              ),
-              _buildModernItem(
-                context,
-                icon: Icons.help_center_rounded,
-                label: LocaleKeys.numberOfQuestions,
-                value: "${entity.questions.length}",
-              ),
-              _buildModernItem(
-                context,
-                icon: Icons.refresh_rounded,
-                label: LocaleKeys.examAttemptsCount,
-                value:
-                    entity.numberOfAttempts?.toString() ?? LocaleKeys.unlimited,
-              ),
-              _buildModernItem(
-                context,
-                icon: Icons.visibility_off_rounded,
-                label: LocaleKeys.hideResultAfterSubmit,
-                value: entity.showResult ? LocaleKeys.no : LocaleKeys.yes,
-              ),
-            ],
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final items = [
+                (
+                  Icons.timer_rounded,
+                  LocaleKeys.examDuration,
+                  "${entity.durationTime} ${LocaleKeys.durationMinutes}",
+                ),
+                (
+                  Icons.help_center_rounded,
+                  LocaleKeys.numberOfQuestions,
+                  "${entity.questions.length}",
+                ),
+                (
+                  Icons.refresh_rounded,
+                  LocaleKeys.examAttemptsCount,
+                  entity.numberOfAttempts?.toString() ?? LocaleKeys.unlimited,
+                ),
+                (
+                  Icons.visibility_off_rounded,
+                  LocaleKeys.hideResultAfterSubmit,
+                  entity.showResult ? LocaleKeys.no : LocaleKeys.yes,
+                ),
+              ];
+              if (constraints.maxWidth >= _singleRowMinWidth) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 16,
+                  children: [
+                    for (final item in items)
+                      Expanded(
+                        child: _buildModernItem(
+                          context,
+                          icon: item.$1,
+                          label: item.$2,
+                          value: item.$3,
+                          labelMaxLines: 2,
+                        ),
+                      ),
+                  ],
+                );
+              }
+              return GridView.count(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisCount: 2,
+                childAspectRatio: 2.2,
+                mainAxisSpacing: 16,
+                crossAxisSpacing: 16,
+                children: [
+                  for (final item in items)
+                    _buildModernItem(
+                      context,
+                      icon: item.$1,
+                      label: item.$2,
+                      value: item.$3,
+                    ),
+                ],
+              );
+            },
           ),
         ],
       ),
@@ -109,6 +137,7 @@ class TestSummaryCard extends StatelessWidget {
     required IconData icon,
     required String label,
     required String value,
+    int labelMaxLines = 1,
   }) {
     final theme = Theme.of(context);
     final primaryColor = theme.primaryColor;
@@ -126,7 +155,7 @@ class TestSummaryCard extends StatelessWidget {
                 style: AppTextStyles(
                   context,
                 ).regular13.copyWith(color: theme.textTheme.bodySmall?.color),
-                maxLines: 1,
+                maxLines: labelMaxLines,
                 overflow: TextOverflow.ellipsis,
               ),
               Text(

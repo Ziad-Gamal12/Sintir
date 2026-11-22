@@ -4,6 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:sintir/Core/Managers/Cubits/course_coupons_cubit/course_coupons_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Core/responsive/breakpoints.dart';
+import 'package:sintir/Core/responsive/max_width_box.dart';
+import 'package:sintir/Core/widgets/AdaptiveFormRow.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/AddCourseCouponWidgets/add_course_coupon_code_field.dart.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
@@ -59,32 +62,68 @@ class _AddCourseCouponViewBodyState extends State<AddCourseCouponViewBody> {
           );
         }
       },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: KVerticalPadding,
-          horizontal: KHorizontalPadding,
-        ),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              const AddCourseCouponCodeField(),
-              const SizedBox(height: 20),
-              const AddCourseCouponDiscountField(),
-              const SizedBox(height: 20),
-              AddCourseCouponExpiryField(
-                pickedDate: pickedDate,
-                onTap: () => showDatePickerDialog(),
-              ),
-              const SizedBox(height: 20),
-              const AddCourseCouponUsageLimitField(),
-              const Spacer(),
-              AddCourseCouponButton(
-                formKey: _formKey,
-                courseID: widget.courseId,
-              ),
-            ],
-          ),
+      child: Form(
+        key: _formKey,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final isWide = constraints.maxWidth >= Breakpoints.medium;
+            final button = AddCourseCouponButton(
+              formKey: _formKey,
+              courseID: widget.courseId,
+            );
+            return Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(
+                      KHorizontalPadding,
+                      KVerticalPadding,
+                      KHorizontalPadding,
+                      KVerticalPadding,
+                    ),
+                    child: MaxWidthBox(
+                      child: Column(
+                        children: [
+                          const AdaptiveFormRow(
+                            runSpacing: 20,
+                            children: [
+                              AddCourseCouponCodeField(),
+                              AddCourseCouponDiscountField(),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          AdaptiveFormRow(
+                            runSpacing: 20,
+                            children: [
+                              AddCourseCouponExpiryField(
+                                pickedDate: pickedDate,
+                                onTap: () => showDatePickerDialog(),
+                              ),
+                              const AddCourseCouponUsageLimitField(),
+                            ],
+                          ),
+                          if (isWide) ...[
+                            const SizedBox(height: 32),
+                            button,
+                          ],
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                if (!isWide)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      KHorizontalPadding,
+                      0,
+                      KHorizontalPadding,
+                      KVerticalPadding,
+                    ),
+                    child: button,
+                  ),
+              ],
+            );
+          },
         ),
       ),
     );

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
+import 'package:sintir/Core/responsive/breakpoints.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/navigateExamReviewRequirmentsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Listeners/ReviewExamSectionViewBodyListener.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ReviewExamWidgets/CustomReviewExamDetails.dart';
@@ -44,17 +45,35 @@ class _ReviewExamSectionViewBodyState extends State<ReviewExamSectionViewBody> {
             },
           ),
         ],
-        child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: KHorizontalPadding),
-          child: CustomScrollView(
+        child: LayoutBuilder(
+          builder: (context, constraints) => CustomScrollView(
             slivers: [
-              SliverToBoxAdapter(child: TestSummaryCard()),
-              SliverToBoxAdapter(
-                child: Divider(thickness: 1, height: 40, color: Colors.grey),
+              SliverPadding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: ContentWidth.gutter(
+                    constraints.maxWidth,
+                    ContentWidth.reading,
+                    min: KHorizontalPadding,
+                  ),
+                ),
+                sliver: const SliverMainAxisGroup(
+                  slivers: [
+                    SliverToBoxAdapter(child: TestSummaryCard()),
+                    SliverToBoxAdapter(
+                      child: Divider(
+                        thickness: 1,
+                        height: 40,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    SliverToBoxAdapter(
+                      child: CustomReviewExamQuestionsHeader(),
+                    ),
+                    CustomReviewExamQuestionsSliverList(),
+                    SliverToBoxAdapter(child: SizedBox(height: 100)),
+                  ],
+                ),
               ),
-              SliverToBoxAdapter(child: CustomReviewExamQuestionsHeader()),
-              CustomReviewExamQuestionsSliverList(),
-              SliverToBoxAdapter(child: SizedBox(height: 100)),
             ],
           ),
         ),

@@ -13,6 +13,7 @@ class CustomEmptyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(
             height: 20,
@@ -23,6 +24,7 @@ class CustomEmptyWidget extends StatelessWidget {
           ),
           Text(
             text ?? LocaleKeys.emptyContent,
+            textAlign: TextAlign.center,
             style: AppTextStyles(context).semiBold16,
           ),
         ],

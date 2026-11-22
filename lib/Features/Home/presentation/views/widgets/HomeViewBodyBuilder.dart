@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/responsive/breakpoints.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/HomeViewBodyAppBar.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/NewestCoursesHeader.dart';
 import 'package:sintir/Features/Home/presentation/views/widgets/PopularCoursesSection.dart';
@@ -11,19 +12,47 @@ class HomeViewBodyBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 16, right: 16, top: 20, bottom: 92),
-      child: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(child: HomeViewBodyAppBar()),
-          SliverToBoxAdapter(child: SizedBox(height: 16)),
-          UserInterestedCoursesSection(),
-          SliverToBoxAdapter(child: SizedBox(height: 16)),
-          PopularCoursesSection(),
-          SliverToBoxAdapter(child: SizedBox(height: 16)),
-          SliverToBoxAdapter(child: NewestCoursesHeader()),
-          SliverToBoxAdapter(child: SizedBox(height: 12)),
-          RecentCoursesSection(),
-        ],
+      padding: EdgeInsets.only(
+        top: 20,
+        bottom: context.hasSideNavigation ? 20 : 92,
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final horizontal = EdgeInsets.symmetric(
+            horizontal: ContentWidth.gutter(
+              constraints.maxWidth,
+              ContentWidth.page,
+            ),
+          );
+          return CustomScrollView(
+            slivers: [
+              SliverPadding(
+                padding: horizontal,
+                sliver: const SliverToBoxAdapter(child: HomeViewBodyAppBar()),
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 16)),
+              SliverPadding(
+                padding: horizontal,
+                sliver: const UserInterestedCoursesSection(),
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 16)),
+              SliverPadding(
+                padding: horizontal,
+                sliver: const PopularCoursesSection(),
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 16)),
+              SliverPadding(
+                padding: horizontal,
+                sliver: const SliverToBoxAdapter(child: NewestCoursesHeader()),
+              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 12)),
+              SliverPadding(
+                padding: horizontal,
+                sliver: const RecentCoursesSection(),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

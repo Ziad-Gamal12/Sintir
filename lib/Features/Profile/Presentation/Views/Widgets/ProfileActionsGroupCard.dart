@@ -18,6 +18,7 @@ class ProfileActionsGroupCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return Padding(
       padding: EdgeInsets.only(top: topSpacing),
@@ -35,9 +36,15 @@ class ProfileActionsGroupCard extends StatelessWidget {
             ),
           ),
           Container(
+            clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: theme.cardColor,
+              border: Border.all(
+                color: theme.colorScheme.onSurface.withValues(
+                  alpha: isDark ? 0.06 : 0.07,
+                ),
+              ),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,

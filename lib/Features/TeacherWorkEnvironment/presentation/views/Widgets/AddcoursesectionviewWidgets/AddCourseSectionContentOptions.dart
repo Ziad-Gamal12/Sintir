@@ -26,27 +26,30 @@ class AddCourseSectionContentOptions extends StatelessWidget {
         return Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4),
-            child: GestureDetector(
-              onTap: () {
-                if (onSave != null) onSave!();
-                if (e.key == 1) {
-                  GoRouter.of(context).pushReplacement(
-                    AddcourseSectionExamview.routeName,
-                    extra: optionRequirementsEntity,
-                  );
-                } else if (e.key == 0) {
-                  GoRouter.of(context).pushReplacement(
-                    Addcoursesectionvedioview.routeName,
-                    extra: optionRequirementsEntity,
-                  );
-                } else if (e.key == 2) {
-                  GoRouter.of(context).pushReplacement(
-                    Addcoursesectionfileview.routeName,
-                    extra: optionRequirementsEntity,
-                  );
-                }
-              },
-              child: AddCourseSectionContentItem(item: e.value),
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () {
+                  if (onSave != null) onSave!();
+                  if (e.key == 1) {
+                    GoRouter.of(context).pushReplacement(
+                      AddcourseSectionExamview.routeName,
+                      extra: optionRequirementsEntity,
+                    );
+                  } else if (e.key == 0) {
+                    GoRouter.of(context).pushReplacement(
+                      Addcoursesectionvedioview.routeName,
+                      extra: optionRequirementsEntity,
+                    );
+                  } else if (e.key == 2) {
+                    GoRouter.of(context).pushReplacement(
+                      Addcoursesectionfileview.routeName,
+                      extra: optionRequirementsEntity,
+                    );
+                  }
+                },
+                child: AddCourseSectionContentItem(item: e.value),
+              ),
             ),
           ),
         );

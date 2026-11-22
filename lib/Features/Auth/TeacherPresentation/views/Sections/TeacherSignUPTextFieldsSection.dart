@@ -12,8 +12,6 @@ import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherSi
 import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherSignUpPhoneNumberFiled.dart';
 import 'package:sintir/Features/Auth/TeacherPresentation/views/widgets/TeacherSigninPasswordTextField.dart';
 
-/// Paired fields share a row once the form is wide enough (tablets);
-/// on phones they stack.
 class TeacherSignUPTextFieldsSection extends StatelessWidget {
   const TeacherSignUPTextFieldsSection({
     super.key,
@@ -28,24 +26,22 @@ class TeacherSignUPTextFieldsSection extends StatelessWidget {
       spacing: 12,
       children: [
         const TeacherSignFirstAndLastNameField(),
-        const AdaptiveFormRow(
-          children: [
-            TeacherSignUpEmailAddressFiled(),
-            TeacherSignUpPhoneNumberFiled(),
-          ],
-        ),
-        const TeacherSignUpAddressFiled(),
-        const TeacherSignUPGenderAndExperienceAndSubjectSection(),
+        const TeacherSignUpEmailAddressFiled(),
         AdaptiveFormRow(
           children: [
+            const TeacherSignUpPhoneNumberFiled(),
             GenderSegmentedInput(
               initialValue: context.read<UserEntity>().gender,
               onChanged: (value) => context.read<UserEntity>().gender = value,
             ),
-            TeacherSignUpPasswordTextField(
-              teacherSignUpPasswordController: teacherSignUpPasswordController,
-            ),
           ],
+        ),
+        const SizedBox(height: 4),
+        const TeacherSignUPGenderAndExperienceAndSubjectSection(),
+        const TeacherSignUpAddressFiled(),
+        const SizedBox(height: 4),
+        TeacherSignUpPasswordTextField(
+          teacherSignUpPasswordController: teacherSignUpPasswordController,
         ),
       ],
     );

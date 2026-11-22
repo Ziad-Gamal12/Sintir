@@ -15,6 +15,7 @@ class TeacherSignUpPhoneNumberFiled extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomTextField(
         hintText: LocaleKeys.phoneNumber,
+        floatingLabel: true,
         prefixIcon: Icons.phone_outlined,
         obscureText: false,
         onSaved: (val) {

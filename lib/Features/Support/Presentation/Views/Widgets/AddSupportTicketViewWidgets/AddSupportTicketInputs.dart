@@ -9,18 +9,17 @@ class AddSupportTicketInputs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        SupportSenderInputs(),
-        SizedBox(height: 32),
+        const SupportSenderInputs(),
+        const SizedBox(height: 32),
         Divider(
-          thickness: 4,
-          color: Colors.grey,
-          indent: 20,
-          endIndent: 20,
+          height: 1,
+          thickness: 1,
+          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.12),
         ),
-        SizedBox(height: 32),
-        SupportTicketDetailsInputs(),
+        const SizedBox(height: 32),
+        const SupportTicketDetailsInputs(),
       ],
     );
   }

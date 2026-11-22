@@ -51,21 +51,7 @@ class _SubscriberDetailsViewBodyState extends State<SubscriberDetailsViewBody> {
         children: [
           const SubscriberEnrolledCoursesHeader(),
           const SizedBox(height: 12),
-          LayoutBuilder(
-            builder: (context, box) {
-              final scale = MediaQuery.textScalerOf(
-                context,
-              ).scale(1).clamp(1.0, 1.3);
-              final width = (box.maxWidth * .615)
-                  .clamp(230.0, 280.0)
-                  .toDouble()
-                  .toDouble();
-              return SizedBox(
-                height: width / 1.03 * scale,
-                child: SubscriberEnrolledCoursesListView(onRetry: _refresh),
-              );
-            },
-          ),
+          SubscriberEnrolledCoursesListView(onRetry: _refresh),
         ],
       ),
       analysis: SubscriberAnalysisSection(onRetry: _refresh),

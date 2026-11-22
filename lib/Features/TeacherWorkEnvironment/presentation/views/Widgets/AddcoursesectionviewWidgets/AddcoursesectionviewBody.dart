@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sintir/Core/responsive/max_width_box.dart';
 import 'package:sintir/Core/utils/Variables.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
@@ -19,36 +20,38 @@ class Addcoursesectionviewbody extends StatelessWidget {
 
     return Form(
       key: Variables.AddCourseSectionFormKey,
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
           horizontal: KHorizontalPadding,
           vertical: 20,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const CourseSectionTextFields(),
-            Divider(height: 40, color: theme.dividerColor),
-            Text(
-              LocaleKeys.content,
-              style: AppTextStyles(
-                context,
-              ).bold20.copyWith(color: theme.textTheme.bodyMedium?.color),
-            ),
-            const SizedBox(height: 20),
-            AddCourseSectionContentOptions(
-              onSave: () {
-                if (Variables.AddCourseSectionFormKey.currentState != null) {
-                  if (Variables.AddCourseSectionFormKey.currentState!
-                      .validate()) {
-                    Variables.AddCourseSectionFormKey.currentState!.save();
+        child: MaxWidthBox(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const CourseSectionTextFields(),
+              Divider(height: 40, color: theme.dividerColor),
+              Text(
+                LocaleKeys.content,
+                style: AppTextStyles(
+                  context,
+                ).bold20.copyWith(color: theme.textTheme.bodyMedium?.color),
+              ),
+              const SizedBox(height: 20),
+              AddCourseSectionContentOptions(
+                onSave: () {
+                  if (Variables.AddCourseSectionFormKey.currentState != null) {
+                    if (Variables.AddCourseSectionFormKey.currentState!
+                        .validate()) {
+                      Variables.AddCourseSectionFormKey.currentState!.save();
+                    }
                   }
-                }
-              },
-              optionRequirementsEntity: context
-                  .read<OptionNavigationRequirementsEntity>(),
-            ),
-          ],
+                },
+                optionRequirementsEntity: context
+                    .read<OptionNavigationRequirementsEntity>(),
+              ),
+            ],
+          ),
         ),
       ),
     );

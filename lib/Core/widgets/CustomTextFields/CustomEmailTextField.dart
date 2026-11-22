@@ -18,6 +18,7 @@ class CustomEmailTextField extends StatelessWidget {
     return CustomTextField(
         controller: controller,
         hintText: LocaleKeys.emailHint,
+        floatingLabel: true,
         prefixIcon: isIconVisible ? Icons.email : null,
         onSaved: onSaved,
         obscureText: false,

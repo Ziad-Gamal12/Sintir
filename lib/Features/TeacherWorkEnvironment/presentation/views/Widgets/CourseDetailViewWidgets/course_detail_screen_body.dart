@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Core/responsive/breakpoints.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/AppConfirmationSheet.dart';
 import 'package:sintir/constant.dart';
@@ -32,15 +33,80 @@ class _CourseDetailScreenBodyState extends State<CourseDetailScreenBody> {
       listener: _handleCourseUpdate,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final contentWidth = constraints.maxWidth
-              .clamp(0.0, 760.0)
-              .toDouble();
           final state = TeacherCourseState.fromRaw(widget.course.state);
           final managementItems = CoursedetailsviewOptionitemEntity.toList(
             context: context,
             course: widget.course,
           );
+          final overview = <Widget>[
+            CourseDetailPoster(course: widget.course),
+            if (CourseDetailStateNotice.showsFor(state)) ...[
+              const SizedBox(height: 12),
+              BlocSelector<UpdateCourseCubit, UpdateCourseState, bool>(
+                selector: (s) => s is UpdateCourseStateLoading,
+                builder: (context, resubmitting) => CourseDetailStateNotice(
+                  state: state,
+                  declineReason: widget.course.declineReason,
+                  declinedAt: widget.course.declinedAt,
+                  resubmitting: resubmitting,
+                  onResubmit: state == TeacherCourseState.declined
+                      ? () => _confirmResubmit(context)
+                      : null,
+                ),
+              ),
+            ],
+            const SizedBox(height: 16),
+            CourseDetailSummary(course: widget.course),
+            const SizedBox(height: 12),
+            CourseDetailMetadata(course: widget.course),
+          ];
+          final management = <Widget>[
+            _ManagementSectionHeader(),
+            const SizedBox(height: 10),
+            ...managementItems.map(
+              (item) => Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: CourseDetailManagementTile(item: item),
+              ),
+            ),
+            const SizedBox(height: 10),
+            CourseDetailActions(course: widget.course),
+          ];
 
+          if (constraints.maxWidth >= Breakpoints.expanded) {
+            final gutter = ContentWidth.gutter(
+              constraints.maxWidth,
+              ContentWidth.detail,
+              min: 24,
+            );
+            return SingleChildScrollView(
+              padding: EdgeInsets.fromLTRB(gutter, 16, gutter, 32),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: overview,
+                    ),
+                  ),
+                  const SizedBox(width: 24),
+                  Expanded(
+                    flex: 6,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: management,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          final contentWidth = constraints.maxWidth
+              .clamp(0.0, 760.0)
+              .toDouble();
           return SingleChildScrollView(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
             child: Center(
@@ -49,38 +115,9 @@ class _CourseDetailScreenBodyState extends State<CourseDetailScreenBody> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    CourseDetailPoster(course: widget.course),
-                    if (CourseDetailStateNotice.showsFor(state)) ...[
-                      const SizedBox(height: 12),
-                      BlocSelector<UpdateCourseCubit, UpdateCourseState, bool>(
-                        selector: (s) => s is UpdateCourseStateLoading,
-                        builder: (context, resubmitting) =>
-                            CourseDetailStateNotice(
-                              state: state,
-                              declineReason: widget.course.declineReason,
-                              declinedAt: widget.course.declinedAt,
-                              resubmitting: resubmitting,
-                              onResubmit: state == TeacherCourseState.declined
-                                  ? () => _confirmResubmit(context)
-                                  : null,
-                            ),
-                      ),
-                    ],
-                    const SizedBox(height: 16),
-                    CourseDetailSummary(course: widget.course),
-                    const SizedBox(height: 12),
-                    CourseDetailMetadata(course: widget.course),
+                    ...overview,
                     const SizedBox(height: 22),
-                    _ManagementSectionHeader(),
-                    const SizedBox(height: 10),
-                    ...managementItems.map(
-                      (item) => Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: CourseDetailManagementTile(item: item),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    CourseDetailActions(course: widget.course),
+                    ...management,
                   ],
                 ),
               ),

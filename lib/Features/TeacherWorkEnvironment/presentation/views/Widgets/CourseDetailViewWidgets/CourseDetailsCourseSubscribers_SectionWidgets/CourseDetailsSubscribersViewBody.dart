@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/SubscriberEntity.dart';
+import 'package:sintir/Core/responsive/breakpoints.dart';
 import 'package:sintir/Core/widgets/CustomEmptyWidget.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomSearchTextField.dart';
@@ -176,97 +177,120 @@ class _CourseDetailsSubscribersViewBodyState
         final failure = isSearching
             ? state is SearchSubscribersFailure
             : state is GetCourseSubscribersFailure;
-        return CustomScrollView(
-          controller: scrollController,
-          slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
-              sliver: SliverToBoxAdapter(
-                child: CustomSearchTextField(controller: controller),
-              ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              sliver: SliverToBoxAdapter(
-                child: CourseStudentsCount(
-                  count: widget.courseEntity.studentsCount,
-                ),
-              ),
-            ),
-            const SliverToBoxAdapter(child: SizedBox(height: 16)),
-            if (initialLoading)
-              const SliverPadding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                sliver: CourseDetailsSubscribersLoadingGridView(),
-              )
-            else if (failure && list.isEmpty)
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      CustomErrorWidget(
-                        errormessage: state is GetCourseSubscribersFailure
-                            ? state.errMessage
-                            : (state as SearchSubscribersFailure).errMessage,
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            final gutter = ContentWidth.gutter(
+              constraints.maxWidth,
+              ContentWidth.detail,
+            );
+            final isWide = constraints.maxWidth >= Breakpoints.expanded;
+            final search = CustomSearchTextField(controller: controller);
+            final count = CourseStudentsCount(
+              count: widget.courseEntity.studentsCount,
+            );
+            return CustomScrollView(
+              controller: scrollController,
+              slivers: [
+                if (isWide)
+                  SliverPadding(
+                    padding: EdgeInsets.fromLTRB(gutter, 24, gutter, 20),
+                    sliver: SliverToBoxAdapter(
+                      child: Row(
+                        children: [
+                          Expanded(child: search),
+                          const SizedBox(width: 24),
+                          count,
+                        ],
                       ),
-                      TextButton(
-                        onPressed: () {
-                          if (isSearching) {
-                            setState(() => _searchInitialLoading = true);
-                            context
-                                .read<CourseSubscribtionsCubit>()
-                                .searchSubscribers(
-                                  keyword: controller.text.trim(),
-                                  isPaginate: false,
-                                );
-                          } else {
-                            setState(() => _normalInitialLoading = true);
-                            context
-                                .read<CourseSubscribtionsCubit>()
-                                .getCoursSubscribers(isPaginate: false);
-                          }
-                        },
-                        child: Text(LocaleKeys.reportRetry),
+                    ),
+                  )
+                else ...[
+                  SliverPadding(
+                    padding: EdgeInsets.fromLTRB(gutter, 16, gutter, 12),
+                    sliver: SliverToBoxAdapter(child: search),
+                  ),
+                  SliverPadding(
+                    padding: EdgeInsets.symmetric(horizontal: gutter),
+                    sliver: SliverToBoxAdapter(child: count),
+                  ),
+                  const SliverToBoxAdapter(child: SizedBox(height: 16)),
+                ],
+                if (initialLoading)
+                  SliverPadding(
+                    padding: EdgeInsets.symmetric(horizontal: gutter),
+                    sliver: const CourseDetailsSubscribersLoadingGridView(),
+                  )
+                else if (failure && list.isEmpty)
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CustomErrorWidget(
+                            errormessage: state is GetCourseSubscribersFailure
+                                ? state.errMessage
+                                : (state as SearchSubscribersFailure)
+                                      .errMessage,
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              if (isSearching) {
+                                setState(() => _searchInitialLoading = true);
+                                context
+                                    .read<CourseSubscribtionsCubit>()
+                                    .searchSubscribers(
+                                      keyword: controller.text.trim(),
+                                      isPaginate: false,
+                                    );
+                              } else {
+                                setState(() => _normalInitialLoading = true);
+                                context
+                                    .read<CourseSubscribtionsCubit>()
+                                    .getCoursSubscribers(isPaginate: false);
+                              }
+                            },
+                            child: Text(LocaleKeys.reportRetry),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              )
-            else if (list.isNotEmpty)
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                sliver: CourseDetailsSubscribersGridView(
-                  subscribers: list,
-                  courseEntity: widget.courseEntity,
-                ),
-              )
-            else if (state is! GetCourseSubscribersLoading &&
-                state is! SearchSubscribersLoading)
-              SliverFillRemaining(
-                hasScrollBody: false,
-                child: Center(
-                  child: CustomEmptyWidget(
-                    text: LocaleKeys.noSubscribersInCourse,
-                  ),
-                ),
-              ),
-            if (list.isNotEmpty &&
-                (isSearching ? _searchPageLoading : _normalPageLoading))
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Center(
-                    child: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  )
+                else if (list.isNotEmpty)
+                  SliverPadding(
+                    padding: EdgeInsets.fromLTRB(gutter, 0, gutter, 16),
+                    sliver: CourseDetailsSubscribersGridView(
+                      subscribers: list,
+                      courseEntity: widget.courseEntity,
+                    ),
+                  )
+                else if (state is! GetCourseSubscribersLoading &&
+                    state is! SearchSubscribersLoading)
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Center(
+                      child: CustomEmptyWidget(
+                        text: LocaleKeys.noSubscribersInCourse,
+                      ),
                     ),
                   ),
-                ),
-              ),
-          ],
+                if (list.isNotEmpty &&
+                    (isSearching ? _searchPageLoading : _normalPageLoading))
+                  const SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Center(
+                        child: SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
         );
       },
     );

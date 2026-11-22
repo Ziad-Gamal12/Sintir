@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSubscribtionsCubit/CourseSubscribtionsCubit.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Core/responsive/breakpoints.dart';
 import 'package:sintir/Core/widgets/AwesomeDialog.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomContentCreator.dart';
 import 'package:sintir/Core/widgets/CustomCourseBottomSheet/CourseBottomSheetBodyCoursePoster.dart';
@@ -15,23 +16,26 @@ import 'package:sintir/locale_keys.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CourseBottomSheetBody extends StatefulWidget {
-  const CourseBottomSheetBody({
-    super.key,
-  });
+  const CourseBottomSheetBody({super.key});
 
   @override
   State<CourseBottomSheetBody> createState() => _CourseBottomSheetBodyState();
 }
 
 class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
+  static const double _sidePosterWidth = 240;
+
   @override
   void initState() {
-    if (mounted) context.read<CourseSubscribtionsCubit>().checkIfSubscribed();
+    if (mounted) {
+      context.read<CourseSubscribtionsCubit>().checkIfSubscribed();
+    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final sidePoster = MediaQuery.sizeOf(context).width >= Breakpoints.medium;
     return BlocConsumer<CourseSubscribtionsCubit, CourseSubscribtionsState>(
       listener: (context, state) {
         courseBottomSheetBlocListener(state, context);
@@ -41,14 +45,30 @@ class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
           enabled: state is CheckIfSubscribedLoading,
           child: Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: KHorizontalPadding, vertical: KVerticalPadding),
+              horizontal: KHorizontalPadding,
+              vertical: KVerticalPadding,
+            ),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CourseBottomSheetBodyCoursePoster(),
-                  SizedBox(height: 24),
-                  CourseBottomSheetCourseDetails(),
+                  if (sidePoster)
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: _sidePosterWidth,
+                          child: CourseBottomSheetBodyCoursePoster(),
+                        ),
+                        SizedBox(width: 20),
+                        Expanded(child: CourseBottomSheetCourseDetails()),
+                      ],
+                    )
+                  else ...[
+                    CourseBottomSheetBodyCoursePoster(),
+                    SizedBox(height: 24),
+                    CourseBottomSheetCourseDetails(),
+                  ],
                   SizedBox(height: 24),
                   CourseBottomContentCreator(),
                   SizedBox(height: 24),
@@ -63,19 +83,21 @@ class _CourseBottomSheetBodyState extends State<CourseBottomSheetBody> {
   }
 
   void courseBottomSheetBlocListener(
-      CourseSubscribtionsState state, BuildContext context) {
+    CourseSubscribtionsState state,
+    BuildContext context,
+  ) {
     if (state is SubscibeingToCourseSuccess) {
       successdialog(
-          context: context,
-          SuccessMessage: LocaleKeys.successSubscribe,
-          btnOkOnPress: () {});
+        context: context,
+        SuccessMessage: LocaleKeys.successSubscribe,
+        btnOkOnPress: () {},
+      );
     } else if (state is SubscibeingToCourseFailure) {
       errordialog(context, state.errMessge).show();
     } else if (state is CheckIfSubscribedSuccess) {
-      context
-          .read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
-          ..isSubscribed = state.isSubscribed
-          ..hasSubscriptionCheckResult = true;
+      context.read<DisplayCourseBottomsheetNavigationRequirmentsEntity>()
+        ..isSubscribed = state.isSubscribed
+        ..hasSubscriptionCheckResult = true;
     } else if (state is CheckIfSubscribedFailure) {
       CustomSnackBar.show(
         context,

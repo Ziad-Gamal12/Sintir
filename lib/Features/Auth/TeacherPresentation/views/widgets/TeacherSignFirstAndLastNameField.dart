@@ -21,6 +21,7 @@ class TeacherSignFirstAndLastNameField extends StatelessWidget {
           Expanded(
             child: CustomTextField(
                 hintText: LocaleKeys.firstName,
+                floatingLabel: true,
                 prefixIcon: Icons.person,
                 obscureText: false,
                 textInputType: TextInputType.name,
@@ -39,6 +40,7 @@ class TeacherSignFirstAndLastNameField extends StatelessWidget {
           Expanded(
             child: CustomTextField(
                 hintText: LocaleKeys.lastName,
+                floatingLabel: true,
                 prefixIcon: Icons.person,
                 obscureText: false,
                 onSaved: (val) {

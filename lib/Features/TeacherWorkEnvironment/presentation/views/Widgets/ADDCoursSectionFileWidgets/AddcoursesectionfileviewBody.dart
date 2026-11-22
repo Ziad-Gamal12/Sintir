@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/Managers/Cubits/CourseSectionsCubit/CourseSectionsCubit.dart';
 import 'package:sintir/Core/Managers/Cubits/file_item_cubit/file_item_cubit.dart';
+import 'package:sintir/Core/responsive/max_width_box.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/CourseFileEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddCoursSectionFileWidgets/AddCourseSectionFileTextFields.dart';
@@ -64,16 +65,21 @@ class _AddcoursesectionfileviewBodyState
               key: formKey,
               child: Stack(
                 children: [
-                  AddCourseSectionFileTextFields(
-                    coursefilEentity: courseFileEntity,
+                  MaxWidthBox(
+                    child: AddCourseSectionFileTextFields(
+                      coursefilEentity: courseFileEntity,
+                    ),
                   ),
                   Positioned(
                     bottom: 20,
                     left: 16,
                     right: 16,
-                    child: CustomAddCourseSectionFileActionButton(
-                      fileentity: courseFileEntity,
-                      formKey: formKey,
+                    child: MaxWidthBox(
+                      alignment: Alignment.bottomCenter,
+                      child: CustomAddCourseSectionFileActionButton(
+                        fileentity: courseFileEntity,
+                        formKey: formKey,
+                      ),
                     ),
                   ),
                 ],

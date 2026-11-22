@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sintir/Core/Themes/brand_palette.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/locale_keys.dart';
@@ -83,9 +84,8 @@ class _StudentsignupBirthdayfieldState
         ? Colors.white.withValues(alpha: 0.05)
         : const Color(0xFFF8F9FA);
 
-    final Color borderColor = isDarkMode
-        ? Colors.white10
-        : const Color(0xFFE4E6E8);
+    final palette = BrandPalette.of(context);
+    final Color borderColor = palette.outline;
 
     final bool hasDate = pickedDate != null;
 
@@ -108,7 +108,7 @@ class _StudentsignupBirthdayfieldState
               Icon(
                 Icons.date_range_outlined,
                 size: 20,
-                color: theme.primaryColor.withValues(alpha: 0.7),
+                color: palette.placeholder,
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -121,14 +121,14 @@ class _StudentsignupBirthdayfieldState
                           color: theme.textTheme.bodyLarge?.color,
                         )
                       : AppTextStyles(context).regular14.copyWith(
-                          color: theme.hintColor.withValues(alpha: 0.5),
+                          color: palette.placeholder,
                         ),
                 ),
               ),
               Icon(
                 Icons.keyboard_arrow_down_rounded,
                 size: 20,
-                color: theme.hintColor.withValues(alpha: 0.6),
+                color: palette.placeholder,
               ),
             ],
           ),

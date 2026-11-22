@@ -1,12 +1,11 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/Themes/brand_palette.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
-/// Two-option gender picker styled like the text fields (56dp, radius 14).
-/// Emits "Male" / "Female", the same values the old radio inputs stored.
 class GenderSegmentedInput extends StatefulWidget {
   const GenderSegmentedInput({
     super.key,
@@ -42,7 +41,7 @@ class _GenderSegmentedInputState extends State<GenderSegmentedInput> {
 
     final fill =
         isDark ? Colors.white.withValues(alpha: 0.05) : const Color(0xFFF8F9FA);
-    final border = isDark ? Colors.white10 : const Color(0xFFE4E6E8);
+    final border = BrandPalette.of(context).outline;
 
     return Container(
       height: 56,
@@ -94,7 +93,7 @@ class _Segment extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final color = selected ? KMainColor : theme.hintColor;
+    final color = selected ? KMainColor : BrandPalette.of(context).placeholder;
 
     return Semantics(
       button: true,

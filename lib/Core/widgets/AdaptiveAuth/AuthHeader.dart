@@ -1,14 +1,11 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/Themes/brand_palette.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 import 'package:svg_flutter/svg.dart';
 
-/// Illustration + headline + subtitle shown above an auth form.
-/// The headline inherits [TextAlign] from here, so build it without its own
-/// `textAlign` (see [SintirWelcomeTitle]).
 class AuthHeader extends StatelessWidget {
   const AuthHeader({
     super.key,
@@ -41,13 +38,19 @@ class AuthHeader extends StatelessWidget {
           const SizedBox(height: 20),
         ],
         if (headline != null)
-          DefaultTextStyle.merge(textAlign: align, child: headline!),
+          DefaultTextStyle.merge(
+            textAlign: align,
+            style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+            child: headline!,
+          ),
         if (subtitle != null) ...[
           const SizedBox(height: 8),
           Text(
             subtitle!,
             textAlign: align,
-            style: AppTextStyles(context).regular16,
+            style: AppTextStyles(context).regular16.copyWith(
+                  color: BrandPalette.of(context).textMuted,
+                ),
           ),
         ],
       ],
@@ -55,26 +58,26 @@ class AuthHeader extends StatelessWidget {
   }
 }
 
-/// "Welcome back to Sintir" title used by both sign-in screens.
 class SintirWelcomeTitle extends StatelessWidget {
   const SintirWelcomeTitle({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final style = AppTextStyles(context).semiBold24;
+    final style = AppTextStyles(context).bold24;
     return Text.rich(
       TextSpan(
         children: [
           TextSpan(text: LocaleKeys.welcomeBack, style: style),
-          // Leading space: the old trailing space ended up on the wrong side in RTL.
-          TextSpan(text: ' Sintir', style: style.copyWith(color: KMainColor)),
+          TextSpan(
+            text: ' Sintir',
+            style: style.copyWith(color: BrandPalette.of(context).accent),
+          ),
         ],
       ),
     );
   }
 }
 
-/// Small pill naming the account type ("طالب" / "معلم") above the form.
 class AuthRoleBadge extends StatelessWidget {
   const AuthRoleBadge({super.key, required this.label, required this.icon});
 
@@ -83,20 +86,24 @@ class AuthRoleBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = BrandPalette.of(context);
+
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
       decoration: BoxDecoration(
-        color: KMainColor.withValues(alpha: .10),
+        color: palette.chipBackground,
         borderRadius: BorderRadius.circular(999),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        spacing: 6,
+        spacing: 8,
         children: [
-          Icon(icon, size: 16, color: KMainColor),
+          Icon(icon, size: 16, color: palette.chipForeground),
           Text(
             label,
-            style: AppTextStyles(context).bold13.copyWith(color: KMainColor),
+            style: AppTextStyles(context)
+                .bold13
+                .copyWith(color: palette.chipForeground),
           ),
         ],
       ),

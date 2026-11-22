@@ -6,12 +6,20 @@ import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Manager/get_my_mistakes_cubit/get_my_mistakes_cubit.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Views/Widgets/GetMyMistakesViewBodyListViewLoading.dart';
 import 'package:sintir/Features/MyMistakes/Presentation/Views/Widgets/MyMistakeCardItem.dart';
+import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
 class GetMyMistakesViewBodyListView extends StatefulWidget {
-  const GetMyMistakesViewBodyListView(
-      {super.key, required this.scrollController});
+  const GetMyMistakesViewBodyListView({
+    super.key,
+    required this.scrollController,
+    this.padding = const EdgeInsets.symmetric(
+      horizontal: KHorizontalPadding,
+      vertical: KVerticalPadding,
+    ),
+  });
   final ScrollController scrollController;
+  final EdgeInsets padding;
   @override
   State<GetMyMistakesViewBodyListView> createState() =>
       _GetMyMistakesViewBodyListViewState();
@@ -26,11 +34,18 @@ class _GetMyMistakesViewBodyListViewState
       List<QuestionMistakeEntity> myMistakes =
           context.read<GetMyMistakesCubit>().myMistakes;
       if (state is GetMyMistakesFailure) {
-        return Center(child: CustomErrorWidget(errormessage: state.errmessage));
+        return Padding(
+          padding: widget.padding,
+          child:
+              Center(child: CustomErrorWidget(errormessage: state.errmessage)),
+        );
       } else if (state is GetMyMistakesLoading &&
           myMistakes.isEmpty &&
           state.isPaginate == false) {
-        return const GetMyMistakesViewBodyListViewLoading();
+        return Padding(
+          padding: widget.padding,
+          child: const GetMyMistakesViewBodyListViewLoading(),
+        );
       } else if (state is GetMyMistakesSuccess && myMistakes.isEmpty) {
         return CustomEmptyWidget(
           text: LocaleKeys.emptyContent,
@@ -38,6 +53,7 @@ class _GetMyMistakesViewBodyListViewState
       } else {
         return ListView.builder(
           controller: widget.scrollController,
+          padding: widget.padding,
           itemCount: state is GetMyMistakesLoading && state.isPaginate
               ? myMistakes.length + 1
               : myMistakes.length,

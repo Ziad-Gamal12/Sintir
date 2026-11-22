@@ -19,9 +19,6 @@ import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/StudentSi
 import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/StudentSignUpemailaddressfiled.dart';
 import 'package:sintir/Features/Auth/StudentPresentation/views/widgets/studentSignUp_passwordField.dart';
 
-/// The student sign-up form only. Padding, scrolling and the page layout
-/// come from [AuthShell] in StudentSignupView. Paired fields share a row
-/// once the form is wide enough (tablets); on phones they stack.
 class StundetSignUpViewBody_BlocBuilder extends StatefulWidget {
   const StundetSignUpViewBody_BlocBuilder({
     super.key,
@@ -61,30 +58,27 @@ class _StundetSignUpViewBody_BlocBuilderState
         spacing: 12,
         children: [
           const StudentSignUpFirstAndLastNameField(),
-          const AdaptiveFormRow(
+          const StudentSignUpemailaddressfiled(),
+          AdaptiveFormRow(
             children: [
-              StudentSignUpemailaddressfiled(),
-              StudentSignUpPhoneNumberFiled(),
+              const StudentSignUpPhoneNumberFiled(),
+              GenderSegmentedInput(
+                initialValue: context.read<UserEntity>().gender,
+                onChanged: (value) =>
+                    context.read<UserEntity>().gender = value,
+              ),
             ],
           ),
+          const SizedBox(height: 4),
           const AdaptiveFormRow(
             children: [
               StudentsignupBirthdayfield(),
               CustomstudentsignupSchoollevel(),
             ],
           ),
-          AdaptiveFormRow(
-            children: [
-              GenderSegmentedInput(
-                initialValue: context.read<UserEntity>().gender,
-                onChanged: (value) =>
-                    context.read<UserEntity>().gender = value,
-              ),
-              StudentSignUpPasswordField(
-                studentSignUpPasswordController:
-                    studentSignUpPasswordController,
-              ),
-            ],
+          const SizedBox(height: 4),
+          StudentSignUpPasswordField(
+            studentSignUpPasswordController: studentSignUpPasswordController,
           ),
           const SizedBox(height: 4),
           CustomTermsAndConditions(textOnPressed: () {

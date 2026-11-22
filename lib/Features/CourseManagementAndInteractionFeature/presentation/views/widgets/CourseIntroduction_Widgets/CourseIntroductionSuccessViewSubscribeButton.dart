@@ -20,6 +20,8 @@ class CourseIntroductionSuccessViewSubscribeButton extends StatelessWidget {
   final bool isSubscribed;
   final CourseEntity course;
 
+  static const double _contentMaxWidth = 560;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -43,32 +45,35 @@ class CourseIntroductionSuccessViewSubscribeButton extends StatelessWidget {
                 color: shadowColor, blurRadius: 30, offset: Offset(0, -15))
           ],
         ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Custombutton(
-                  text: LocaleKeys.subscribeNow,
-                  color: KSecondaryColor,
-                  textColor: Colors.white,
-                  onPressed: () async {
-                    final completed = await GoRouter.of(context).push<bool>(
-                      SubscribtionView.routeName,
-                      extra: context.read<
-                          DisplayCourseBottomsheetNavigationRequirmentsEntity>(),
-                    );
-                    if (completed == true && context.mounted) {
-                      await context
-                          .read<CourseSubscribtionsCubit>()
-                          .checkIfSubscribed();
-                    }
-                  }),
-            ),
-            const SizedBox(width: 20),
-            Text("${course.price}  ${LocaleKeys.priceEgp}",
-                style:
-                    AppTextStyles(context).bold20.copyWith(color: priceColor))
-          ],
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: _contentMaxWidth),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Custombutton(
+                    text: LocaleKeys.subscribeNow,
+                    color: KSecondaryColor,
+                    textColor: Colors.white,
+                    onPressed: () async {
+                      final completed = await GoRouter.of(context).push<bool>(
+                        SubscribtionView.routeName,
+                        extra: context.read<
+                            DisplayCourseBottomsheetNavigationRequirmentsEntity>(),
+                      );
+                      if (completed == true && context.mounted) {
+                        await context
+                            .read<CourseSubscribtionsCubit>()
+                            .checkIfSubscribed();
+                      }
+                    }),
+              ),
+              const SizedBox(width: 20),
+              Text("${course.price}  ${LocaleKeys.priceEgp}",
+                  style:
+                      AppTextStyles(context).bold20.copyWith(color: priceColor))
+            ],
+          ),
         ),
       ),
     );

@@ -15,6 +15,7 @@ class TeacherSignUpAddressFiled extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomTextField(
         hintText: LocaleKeys.addressHint,
+        floatingLabel: true,
         prefixIcon: Icons.location_on_outlined,
         obscureText: false,
         onSaved: (val) {

@@ -14,6 +14,7 @@ import 'package:sintir/locale_keys.dart';
 class MyMistakesView extends StatelessWidget {
   const MyMistakesView({super.key});
   static const routeName = '/MyMistakesView';
+  static const double _actionMaxWidth = 480;
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +29,19 @@ class MyMistakesView extends StatelessWidget {
           builder: (innerContext) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Custombutton(
-                text: LocaleKeys.createOwnExam,
-                color: KMainColor,
-                textColor: Colors.white,
-                onPressed: () {
-                  GoRouter.of(innerContext).push(
-                    CreateOwnExamView.routeName,
-                    extra: BlocProvider.of<GetMyMistakesCubit>(innerContext),
-                  );
-                },
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: _actionMaxWidth),
+                child: Custombutton(
+                  text: LocaleKeys.createOwnExam,
+                  color: KMainColor,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    GoRouter.of(innerContext).push(
+                      CreateOwnExamView.routeName,
+                      extra: BlocProvider.of<GetMyMistakesCubit>(innerContext),
+                    );
+                  },
+                ),
               ),
             );
           },

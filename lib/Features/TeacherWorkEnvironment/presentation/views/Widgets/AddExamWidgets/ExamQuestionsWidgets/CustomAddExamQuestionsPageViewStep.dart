@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
+import 'package:sintir/Core/responsive/breakpoints.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ExamQuestionsWidgets/AddCourseSectionExamListview.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ExamQuestionsWidgets/AddCourseSectionExamListviewHeader.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ExamQuestionsWidgets/AddQuestionButton.dart';
@@ -16,22 +17,38 @@ class CustomAddExamQuestionsPageViewStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: KHorizontalPadding,
-        vertical: KVerticalPadding,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: KVerticalPadding),
       child: Form(
         key: questionsFormKey,
-        child: CustomScrollView(
-          slivers: [
-            const SliverToBoxAdapter(
-              child: AddCourseSectionExamListviewHeader(),
-            ),
-            AddCourseSectionExamListview(coursetestentity: coursetestentity),
-            SliverToBoxAdapter(
-              child: AddQuestionButton(coursetestentity: coursetestentity),
-            ),
-          ],
+        child: LayoutBuilder(
+          builder: (context, constraints) => CustomScrollView(
+            slivers: [
+              SliverPadding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: ContentWidth.gutter(
+                    constraints.maxWidth,
+                    ContentWidth.reading,
+                    min: KHorizontalPadding,
+                  ),
+                ),
+                sliver: SliverMainAxisGroup(
+                  slivers: [
+                    const SliverToBoxAdapter(
+                      child: AddCourseSectionExamListviewHeader(),
+                    ),
+                    AddCourseSectionExamListview(
+                      coursetestentity: coursetestentity,
+                    ),
+                    SliverToBoxAdapter(
+                      child: AddQuestionButton(
+                        coursetestentity: coursetestentity,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

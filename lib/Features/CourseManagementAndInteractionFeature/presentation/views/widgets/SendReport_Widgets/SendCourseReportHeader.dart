@@ -23,10 +23,12 @@ class SendCourseReportHeader extends StatelessWidget {
           children: [
             Icon(Icons.security, size: 16, color: Color(0xff006645)),
             SizedBox(width: 6),
-            Text(
-              LocaleKeys.sendCourseReportPrivacyNotice,
-              style: textStyles.regular14
-                  .copyWith(color: textTheme.bodyLarge?.color),
+            Flexible(
+              child: Text(
+                LocaleKeys.sendCourseReportPrivacyNotice,
+                style: textStyles.regular14
+                    .copyWith(color: textTheme.bodyLarge?.color),
+              ),
             ),
           ],
         )

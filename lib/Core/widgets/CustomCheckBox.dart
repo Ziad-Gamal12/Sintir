@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/Themes/brand_palette.dart';
 import 'package:sintir/Core/utils/imageAssets.dart';
 import 'package:sintir/constant.dart';
 import 'package:svg_flutter/svg.dart';
@@ -33,7 +34,8 @@ class _CustomcheckboxState extends State<Customcheckbox> {
         decoration: ShapeDecoration(
           shape: RoundedRectangleBorder(
             side: BorderSide(
-                width: 1.50, color: getBorderColor(isDark: isDarkMode)),
+                width: 1.50,
+                color: getBorderColor(BrandPalette.of(context).outline)),
             borderRadius: BorderRadius.circular(8),
           ),
           color: getFilledColor(isDark: isDarkMode),
@@ -59,15 +61,11 @@ class _CustomcheckboxState extends State<Customcheckbox> {
     }
   }
 
-  Color getBorderColor({required bool isDark}) {
+  Color getBorderColor(Color outline) {
     if (isChecked) {
       return Colors.transparent;
     } else {
-      if (isDark) {
-        return const Color(0xFF2A2A2A);
-      } else {
-        return const Color(0xFFDCDEDE);
-      }
+      return outline;
     }
   }
 }

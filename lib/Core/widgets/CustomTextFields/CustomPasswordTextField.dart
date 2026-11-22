@@ -28,6 +28,7 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
         },
       ),
       hintText: widget.hintOrlabalText ?? LocaleKeys.passwordHint,
+      floatingLabel: true,
       obscureText: !ispasswordVisible,
       controller: widget.controller,
       textInputType: TextInputType.visiblePassword,

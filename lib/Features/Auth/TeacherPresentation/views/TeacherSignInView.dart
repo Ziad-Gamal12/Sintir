@@ -22,6 +22,7 @@ class TeacherSignInView extends StatelessWidget {
       child: AuthShell(
         title: LocaleKeys.login,
         illustration: Assets.assetsImagesSVGImagesLoginWelcomeImage,
+        brandIllustration: Assets.assetsImagesSVGImagesTeacherOnboarding2,
         headline: const SintirWelcomeTitle(),
         subtitle: LocaleKeys.loginToContinue,
         badge: AuthRoleBadge(

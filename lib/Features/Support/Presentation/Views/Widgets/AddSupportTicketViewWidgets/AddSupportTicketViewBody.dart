@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/helper/GetUserData.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Core/responsive/max_width_box.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/Support/Domain/Entities/SupportSenderEntity.dart';
@@ -57,14 +58,14 @@ class _AddSupportTicketViewBodyState extends State<AddSupportTicketViewBody> {
                 message: state.errMessage, type: SnackType.error);
           }
         },
-        child: Padding(
-          padding: const EdgeInsetsGeometry.symmetric(
-              horizontal: KHorizontalPadding, vertical: KVerticalPadding),
-          child: Provider.value(
-            value: supportTicketEntity,
-            child: Form(
-              key: supportTicketFormKey,
-              child: SingleChildScrollView(
+        child: Provider.value(
+          value: supportTicketEntity,
+          child: Form(
+            key: supportTicketFormKey,
+            child: SingleChildScrollView(
+              padding: const EdgeInsetsGeometry.symmetric(
+                  horizontal: KHorizontalPadding, vertical: KVerticalPadding),
+              child: MaxWidthBox(
                 child: Column(
                   children: [
                     const AddSupportTicketInputs(),

@@ -14,33 +14,52 @@ class ReportReasonsGridView extends StatefulWidget {
 class _ReportReasonsGridViewState extends State<ReportReasonsGridView> {
   int currentSelectedIndex = -1;
 
+  static const double _spacing = 12;
+  static const double _fourColumnsMinWidth = 880;
+
   @override
   Widget build(BuildContext context) {
-    final textScale = MediaQuery.textScalerOf(context).scale(1.0);
-
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-        maxCrossAxisExtent: 220,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        mainAxisExtent: (96 * textScale.clamp(1.0, 1.5)).toDouble(),
-      ),
-      itemCount: widget.reportReasons.length,
-      itemBuilder: (context, index) {
-        final reportReason = widget.reportReasons[index];
-        return InkWell(
-          onTap: () {
-            setState(() => currentSelectedIndex = index);
-            widget.onSelected(reportReason);
-          },
-          child: ReportReasonGridItem(
-            reportReasonCardEntity: reportReason,
-            isSelected: index == currentSelectedIndex,
-          ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final reasons = widget.reportReasons;
+        final columns = constraints.maxWidth >= _fourColumnsMinWidth ? 4 : 2;
+        return Column(
+          children: [
+            for (var start = 0; start < reasons.length; start += columns) ...[
+              if (start > 0) const SizedBox(height: _spacing),
+              IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (var index = start; index < start + columns; index++) ...[
+                      if (index > start) const SizedBox(width: _spacing),
+                      Expanded(
+                        child: index < reasons.length
+                            ? _buildItem(index)
+                            : const SizedBox.shrink(),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
+          ],
         );
       },
+    );
+  }
+
+  Widget _buildItem(int index) {
+    final reportReason = widget.reportReasons[index];
+    return InkWell(
+      onTap: () {
+        setState(() => currentSelectedIndex = index);
+        widget.onSelected(reportReason);
+      },
+      child: ReportReasonGridItem(
+        reportReasonCardEntity: reportReason,
+        isSelected: index == currentSelectedIndex,
+      ),
     );
   }
 }

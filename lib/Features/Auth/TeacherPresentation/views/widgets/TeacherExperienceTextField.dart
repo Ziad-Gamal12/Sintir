@@ -15,6 +15,7 @@ class TeacherExperienceTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomTextField(
         hintText: LocaleKeys.experienceYears,
+        floatingLabel: true,
         prefixIcon: Icons.workspace_premium,
         obscureText: false,
         onSaved: (val) {

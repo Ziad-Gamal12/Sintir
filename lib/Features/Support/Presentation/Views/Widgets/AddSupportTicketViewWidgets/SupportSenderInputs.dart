@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sintir/Core/widgets/AdaptiveFormRow.dart';
 import 'package:sintir/Core/widgets/CustomTextFields/CustomTeaxtField.dart';
 import 'package:sintir/Features/Support/Domain/Entities/SupportTicketEntity.dart';
 import 'package:sintir/locale_keys.dart';
@@ -37,37 +38,41 @@ class SupportSenderInputs extends StatelessWidget {
         ),
         const SizedBox(height: 16),
 
-        // Email Address
-        CustomTextField(
-          hintText: LocaleKeys.emailHint,
-          obscureText: false,
-          textInputType: TextInputType.emailAddress,
-          validator: (val) {
-            if (val == null || val.isEmpty) {
-              return LocaleKeys.emailRequired;
-            }
-            return null;
-          },
-          onSaved: (val) {
-            context.read<SupportTicketEntity>().sender.email = val ?? "";
-          },
-        ),
-        const SizedBox(height: 16),
+        AdaptiveFormRow(
+          runSpacing: 16,
+          children: [
+            // Email Address
+            CustomTextField(
+              hintText: LocaleKeys.emailHint,
+              obscureText: false,
+              textInputType: TextInputType.emailAddress,
+              validator: (val) {
+                if (val == null || val.isEmpty) {
+                  return LocaleKeys.emailRequired;
+                }
+                return null;
+              },
+              onSaved: (val) {
+                context.read<SupportTicketEntity>().sender.email = val ?? "";
+              },
+            ),
 
-        // Phone Number
-        CustomTextField(
-          hintText: LocaleKeys.phoneNumber,
-          obscureText: false,
-          textInputType: TextInputType.phone,
-          validator: (val) {
-            if (val == null || val.isEmpty) {
-              return LocaleKeys.phoneRequired;
-            }
-            return null;
-          },
-          onSaved: (val) {
-            context.read<SupportTicketEntity>().sender.phone = val ?? "";
-          },
+            // Phone Number
+            CustomTextField(
+              hintText: LocaleKeys.phoneNumber,
+              obscureText: false,
+              textInputType: TextInputType.phone,
+              validator: (val) {
+                if (val == null || val.isEmpty) {
+                  return LocaleKeys.phoneRequired;
+                }
+                return null;
+              },
+              onSaved: (val) {
+                context.read<SupportTicketEntity>().sender.phone = val ?? "";
+              },
+            ),
+          ],
         ),
       ],
     );

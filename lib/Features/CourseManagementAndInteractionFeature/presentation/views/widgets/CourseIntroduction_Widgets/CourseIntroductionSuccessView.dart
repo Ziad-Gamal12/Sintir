@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/entities/BottomSheetNavigationRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseSectionEntity.dart';
+import 'package:sintir/Core/responsive/breakpoints.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/CourseContentListView.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/views/widgets/CourseIntroduction_Widgets/CourseIntroductionStaticWidgets.dart';
@@ -23,43 +24,70 @@ class CourseIntroductionSuccessView extends StatelessWidget {
         .isSubscribed;
     return Stack(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: KHorizontalPadding, vertical: KVerticalPadding),
-          child: CustomScrollView(
-            controller: scrollController,
-            slivers: [
-              const SliverToBoxAdapter(child: CourseIntroductionStaticHeader()),
-              const SliverToBoxAdapter(child: SizedBox(height: 32)),
-              const SliverToBoxAdapter(
-                  child: courseIntroductionViewBodyListViewHeader()),
-              const SliverToBoxAdapter(child: SizedBox(height: 12)),
-              if (sections.isEmpty)
-                SliverToBoxAdapter(
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 100),
-                      child: Text(
-                        LocaleKeys.contentComingSoon,
-                        style: AppTextStyles(context).semiBold20,
+        LayoutBuilder(
+          builder: (context, constraints) {
+            final gutter = ContentWidth.gutter(
+              constraints.maxWidth,
+              ContentWidth.reading,
+              min: KHorizontalPadding,
+            );
+            final horizontal = EdgeInsets.symmetric(horizontal: gutter);
+            return CustomScrollView(
+              controller: scrollController,
+              slivers: [
+                SliverPadding(
+                  padding:
+                      EdgeInsets.fromLTRB(gutter, KVerticalPadding, gutter, 0),
+                  sliver: const SliverToBoxAdapter(
+                      child: CourseIntroductionStaticHeader()),
+                ),
+                const SliverToBoxAdapter(child: SizedBox(height: 32)),
+                SliverPadding(
+                  padding: horizontal,
+                  sliver: const SliverToBoxAdapter(
+                      child: courseIntroductionViewBodyListViewHeader()),
+                ),
+                const SliverToBoxAdapter(child: SizedBox(height: 12)),
+                if (sections.isEmpty)
+                  SliverToBoxAdapter(
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 100),
+                        child: Text(
+                          LocaleKeys.contentComingSoon,
+                          style: AppTextStyles(context).semiBold20,
+                        ),
                       ),
                     ),
+                  )
+                else
+                  SliverPadding(
+                    padding: horizontal,
+                    sliver:
+                        CourseContentListView(courseSectionsEntity: sections),
                   ),
-                )
-              else
-                CourseContentListView(courseSectionsEntity: sections),
-              isSubscribed
-                  ? const SliverToBoxAdapter(child: SizedBox())
-                  : const SliverToBoxAdapter(child: SizedBox(height: 100)),
-            ],
-          ),
+                SliverToBoxAdapter(
+                  child: SizedBox(height: isSubscribed ? KVerticalPadding : 100),
+                ),
+              ],
+            );
+          },
         ),
         Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: CourseIntroductionSuccessViewSubscribeButtonBuilder(
-                isSubscribed: isSubscribed))
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            heightFactor: 1,
+            child: ConstrainedBox(
+              constraints:
+                  const BoxConstraints(maxWidth: ContentWidth.reading),
+              child: CourseIntroductionSuccessViewSubscribeButtonBuilder(
+                  isSubscribed: isSubscribed),
+            ),
+          ),
+        ),
       ],
     );
   }

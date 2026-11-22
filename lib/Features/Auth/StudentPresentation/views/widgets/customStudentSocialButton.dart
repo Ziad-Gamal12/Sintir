@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/Themes/brand_palette.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:svg_flutter/svg.dart';
 
@@ -24,15 +25,12 @@ class Customstudentsocialbutton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       shape: RoundedRectangleBorder(
         side: BorderSide(
-          color: isDark
-              ? Colors.white.withValues(alpha: .15)
-              : const Color(0xffDDDFDF),
+          color: BrandPalette.of(context).outline,
           width: 1,
         ),
         borderRadius: BorderRadius.circular(16),
       ),
       onPressed: onPressed,
-      // Icon + label centred as one group, so the button reads the same at any width.
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,

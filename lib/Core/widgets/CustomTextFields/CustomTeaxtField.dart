@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sintir/Core/Themes/brand_palette.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/constant.dart';
 
@@ -15,6 +16,7 @@ class CustomTextField extends StatelessWidget {
   final Function(String?)? onSaved;
   final int maxLines;
   final int? maxLength;
+  final bool floatingLabel;
 
   const CustomTextField({
     super.key,
@@ -29,18 +31,26 @@ class CustomTextField extends StatelessWidget {
     this.onSaved,
     this.maxLength,
     this.maxLines = 1,
+    this.floatingLabel = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDarkMode = theme.brightness == Brightness.dark;
+    final palette = BrandPalette.of(context);
+    final styles = AppTextStyles(context);
 
-    final Color borderColor =
-        isDarkMode ? Colors.white10 : const Color(0xFFE4E6E8);
+    final Color borderColor = palette.outline;
     final Color fillBg = isDarkMode
         ? Colors.white.withValues(alpha: 0.05)
         : const Color(0xFFF8F9FA);
+
+    Color stateColor(Set<WidgetState> states) {
+      if (states.contains(WidgetState.error)) return Colors.redAccent;
+      if (states.contains(WidgetState.focused)) return palette.link;
+      return palette.placeholder;
+    }
 
     return TextFormField(
       onSaved: onSaved,
@@ -51,24 +61,28 @@ class CustomTextField extends StatelessWidget {
       validator: validator,
       maxLines: maxLines,
       maxLength: maxLength,
-      style: AppTextStyles(context).semiBold14.copyWith(
+      style: styles.semiBold14.copyWith(
             color: theme.textTheme.bodyLarge?.color,
           ),
       decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: AppTextStyles(context).regular14.copyWith(
-              color: theme.hintColor.withValues(alpha: 0.5),
-            ),
+        hintText: floatingLabel ? null : hintText,
+        labelText: floatingLabel ? hintText : null,
+        hintStyle: styles.regular14.copyWith(color: palette.placeholder),
+        labelStyle: styles.regular14.copyWith(color: palette.placeholder),
+        floatingLabelStyle: WidgetStateTextStyle.resolveWith(
+          (states) => styles.semiBold14.copyWith(color: stateColor(states)),
+        ),
+        alignLabelWithHint: maxLines > 1,
 
         filled: true,
         fillColor: fillBg,
+        prefixIconColor: WidgetStateColor.resolveWith(stateColor),
         prefixIcon: prefixIcon != null
             ? Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Icon(
                   prefixIcon,
                   size: 20,
-                  color: theme.primaryColor.withValues(alpha: 0.7),
                 ),
               )
             : null,
@@ -83,7 +97,7 @@ class CustomTextField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: KMainColor, width: 1.5),
+          borderSide: const BorderSide(color: KMainColor, width: 2),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
@@ -91,7 +105,7 @@ class CustomTextField extends StatelessWidget {
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          borderSide: const BorderSide(color: Colors.redAccent, width: 1.5),
+          borderSide: const BorderSide(color: Colors.redAccent, width: 2),
         ),
 
         contentPadding: const EdgeInsets.symmetric(

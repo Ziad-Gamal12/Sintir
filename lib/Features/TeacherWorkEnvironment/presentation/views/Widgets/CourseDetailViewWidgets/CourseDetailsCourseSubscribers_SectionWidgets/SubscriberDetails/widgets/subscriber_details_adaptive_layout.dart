@@ -83,9 +83,11 @@ class _Pane extends StatelessWidget {
   Widget build(BuildContext context) => Center(
     child: ConstrainedBox(
       constraints: BoxConstraints(maxWidth: maxWidth),
-      child: CustomScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        slivers: slivers,
+      child: ClipRect(
+        child: CustomScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          slivers: slivers,
+        ),
       ),
     ),
   );

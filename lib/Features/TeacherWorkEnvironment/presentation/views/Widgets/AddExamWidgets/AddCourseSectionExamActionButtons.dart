@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
+import 'package:sintir/Core/responsive/max_width_box.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
@@ -55,28 +56,31 @@ class _AddCourseSectionExamActionButtonsState
       bottom: 20,
       right: 16,
       left: 16,
-      child: BlocBuilder<TestItemCubit, TestItemState>(
-        builder: (context, state) {
-          return Custom_Loading_Widget(
-            isLoading:
-                state is AddTestItemLoading ||
-                state is QuestionsImagesUploadedingLoading ||
-                state is QuestionsSolutionsImagesUploadedingLoading,
-            child: Custombutton(
-              text: currentIndex == 2 ? LocaleKeys.addExam : LocaleKeys.save,
-              color: KSecondaryColor,
-              textColor: Colors.white,
-              onPressed: () {
-                actions(
-                  optionnavigationrequirementsentity,
-                  widget.courseTestEntity,
-                  currentIndex,
-                  context,
-                );
-              },
-            ),
-          );
-        },
+      child: MaxWidthBox(
+        alignment: Alignment.bottomCenter,
+        child: BlocBuilder<TestItemCubit, TestItemState>(
+          builder: (context, state) {
+            return Custom_Loading_Widget(
+              isLoading:
+                  state is AddTestItemLoading ||
+                  state is QuestionsImagesUploadedingLoading ||
+                  state is QuestionsSolutionsImagesUploadedingLoading,
+              child: Custombutton(
+                text: currentIndex == 2 ? LocaleKeys.addExam : LocaleKeys.save,
+                color: KSecondaryColor,
+                textColor: Colors.white,
+                onPressed: () {
+                  actions(
+                    optionnavigationrequirementsentity,
+                    widget.courseTestEntity,
+                    currentIndex,
+                    context,
+                  );
+                },
+              ),
+            );
+          },
+        ),
       ),
     );
   }

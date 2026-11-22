@@ -16,8 +16,6 @@ class StudentOnboardingInfoCard extends StatelessWidget {
   final ValueNotifier<int> currentPageNotifier;
   final PageController pageController;
 
-  /// true: a free-standing rounded card beside the illustration (wide layouts).
-  /// false: the bottom sheet under the illustration (phones, tablets in portrait).
   final bool isSideCard;
 
   @override
@@ -51,7 +49,6 @@ class StudentOnboardingInfoCard extends StatelessWidget {
       ),
       child: Align(
         alignment: Alignment.topCenter,
-        // Text lines stay readable when the sheet spans a tablet.
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 560),
           child: ValueListenableBuilder<int>(
@@ -73,19 +70,23 @@ class StudentOnboardingInfoCard extends StatelessWidget {
                       ),
                 ),
               );
+              final title = DefaultTextStyle.merge(
+                style: AppTextStyles(context).semiBold24,
+                textAlign: TextAlign.center,
+                child: page.title,
+              );
               final button = StudentOnboardingButton(
                 currentPageNotifier: currentPageNotifier,
                 pageController: pageController,
               );
 
               if (isSideCard) {
-                // Centred, and scrollable when a phone in landscape is too short.
                 return Center(
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        page.title,
+                        title,
                         const SizedBox(height: 20),
                         description,
                         const SizedBox(height: 32),
@@ -98,7 +99,7 @@ class StudentOnboardingInfoCard extends StatelessWidget {
 
               return Column(
                 children: [
-                  page.title,
+                  title,
                   const SizedBox(height: 20),
                   description,
                   const Spacer(),

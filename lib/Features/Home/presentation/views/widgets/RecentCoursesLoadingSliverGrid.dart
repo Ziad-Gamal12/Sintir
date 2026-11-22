@@ -3,18 +3,19 @@ import 'package:sintir/Core/entities/CourseEntities/CourseEntity.dart';
 import 'package:sintir/Core/helper/GridHelper.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CourseCardMetrics.dart';
 import 'package:sintir/Core/widgets/Custom%20Course%20Widgets/CustomCourseItem.dart';
+import 'package:sintir/Features/Home/presentation/views/widgets/HorizentalCoursesListLayout.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class RecentCoursesLoadingSliverGrid extends StatelessWidget {
   const RecentCoursesLoadingSliverGrid({super.key});
-  static const double _spacing = 16;
+  static const double _spacing = HorizentalCoursesListLayout.gridSpacing;
   @override
   Widget build(BuildContext context) {
-    final crossAxisCount = GridHelper.getCrossAxisCount(
-      MediaQuery.sizeOf(context).width,
-    );
     return SliverLayoutBuilder(
       builder: (context, constraints) {
+        final crossAxisCount = GridHelper.getCrossAxisCount(
+          constraints.crossAxisExtent,
+        );
         final itemWidth =
             (constraints.crossAxisExtent - _spacing * (crossAxisCount - 1)) /
             crossAxisCount;
