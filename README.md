@@ -1,241 +1,246 @@
 <div align="center">
 
-<img src="assets/Icons/SintiAppIcon.png" alt="Sintir Logo" width="96" />
+<img src="assets/Icons/SintiAppIcon.png" alt="Sintir app icon" width="80" />
 
-# Sintir — Digital Learning Platform
+# Sintir
 
-**A 59-screen multilingual Flutter application connecting instructors and students with course management, chunked video streaming, timed assessments, mistake analytics, and integrated Paymob payments.**
+**The tutoring center, in your pocket.**
 
-![Flutter](https://img.shields.io/badge/Flutter-Cross--Platform-02569B?logo=flutter&logoColor=white)
-![Dart](https://img.shields.io/badge/Dart-3.5%2B-0175C2?logo=dart&logoColor=white)
-![State Management](https://img.shields.io/badge/State-BLoC%20%2F%20Cubit-4169E2)
-![Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture-2E7D32)
-![Firebase](https://img.shields.io/badge/Firebase-Auth%20%7C%20Firestore-FFCA28?logo=firebase&logoColor=black)
-![Supabase](https://img.shields.io/badge/Supabase-Storage%20%7C%20Edge%20Functions-3ECF8E?logo=supabase&logoColor=white)
-![Payments](https://img.shields.io/badge/Payments-Paymob-00A8E8)
+A Flutter app where Egyptian school students find teachers, buy their courses, watch video lessons and take exams, and where teachers run the business side: content, students, coupons and payouts.
 
-[**Companion Admin Panel Repo**](https://github.com/Ziad-Gamal12/Sintir_DashBoard) · [**Live Admin Dashboard**](https://sintir-2f0be.web.app/) · [**Latest Releases**](https://github.com/Ziad-Gamal12/Sintir/releases)
+Designed and built solo · 20 feature modules · about 84k lines of Dart
+
+[Demo video (MP4, 7 MB)](Screenshots/SINTIR_Demo_v3_GitHub.mp4) · [Admin dashboard repo](https://github.com/Ziad-Gamal12/Sintir_DashBoard) · [LinkedIn](https://www.linkedin.com/in/ziad-gamal-54b052375/) · [Email](mailto:ziadgamal.work@gmail.com)
+
+![Flutter 3.38](https://img.shields.io/badge/Flutter-3.38-02569B?logo=flutter&logoColor=white)
+![Dart 3.10](https://img.shields.io/badge/Dart-3.10-0175C2?logo=dart&logoColor=white)
+![Platform: Android](https://img.shields.io/badge/platform-Android-3DDC84?logo=android&logoColor=white)
+![Languages: Arabic, English, French](https://img.shields.io/badge/i18n-AR%20%C2%B7%20EN%20%C2%B7%20FR-6E56CF)
 
 </div>
 
-## 📖 Overview
+## What's worth a look
 
-**Sintir** is a full-featured digital education platform built with Flutter for students and instructors. It streamlines the entire learning lifecycle—from discovering courses and processing payments to streaming protected video lectures, taking timed exams, practicing past mistakes, and managing instructor payouts.
+- **[Payments the app can't tamper with](#payments-the-app-cannot-tamper-with).** The server sets the price, reserves the order idempotently, and enrolls the student only after Paymob's signed callback.
+- **[Exams graded on the server](#exams-graded-on-the-server).** The answer key never reaches the student's phone, and attempt limits hold even under concurrent submissions.
+- **[A video bug traced into the platform](#green-bars-on-android-video).** Green bars on some Android phones came from decoder padding. I fixed them by changing how Flutter renders the video surface.
+- **[Tests where mistakes are expensive](#testing).** 32 emulator tests for the Firestore rules, plus unit and widget tests for checkout recovery, the teacher wallet and exam results.
 
-- **59 Screens Across Dual Role Workflows:** Covers 52 declarative `GoRouter` routes plus interactive modal sheets and sub-views tailored for both **Students** and **Teachers**.
-- **Multilingual & Adaptive Design:** Ships with full **Arabic (RTL), English, and French** localization alongside persistent **Light and Dark** themes.
-- **Production Back-Office Ecosystem:** Operates alongside the [**Sintir Admin Panel**](https://github.com/Ziad-Gamal12/Sintir_DashBoard) ([Live Demo](https://sintir-2f0be.web.app/)), which provides role-based back-office governance over courses, users, support tickets, and platform analytics.
+## Screenshots
 
-## 📱 Screenshots
-
-| Select Sign-In Role | Sign In as Student | Student Home Feed |
+| Subscribe and pay | Recorded lessons | Timed exams |
 | :---: | :---: | :---: |
-| <img src="Screenshots/Screenshot_2025-12-11-18-44-04-34_f9966819976412588049618dad4b8aef.jpg" alt="Select Role" width="220" /> | <img src="Screenshots/Screenshot_2025-12-11-18-44-15-75_f9966819976412588049618dad4b8aef.jpg" alt="Sign In as Student" width="220" /> | <img src="Screenshots/Screenshot_2025-12-11-18-18-03-39_f9966819976412588049618dad4b8aef.jpg" alt="Home Page" width="220" /> |
+| <img src="Screenshots/SINTIR_EN_04_subscribe.png" alt="Course page with price, coupon and subscribe button" width="260" /> | <img src="Screenshots/SINTIR_EN_05_recorded.png" alt="Video lesson player" width="260" /> | <img src="Screenshots/SINTIR_EN_07_exam.png" alt="Timed multiple-choice exam" width="260" /> |
+| **Upload lessons** (teacher) | **Auto-graded exam reports** (teacher) | **Earnings and payouts** (teacher) |
+| <img src="Screenshots/SINTIR_EN_12_upload.png" alt="Teacher uploading a lesson video with progress" width="260" /> | <img src="Screenshots/SINTIR_EN_13_auto-exams.png" alt="Exam report with pass rate and score analysis" width="260" /> | <img src="Screenshots/SINTIR_EN_15_earnings.png" alt="Teacher wallet with balance and withdrawals" width="260" /> |
 
-| Course & Teacher Search | Instructor Wallet | Course Coupons |
+<details>
+<summary><b>All 16 screens</b></summary>
+
+| | | |
 | :---: | :---: | :---: |
-| <img src="Screenshots/Screenshot_2025-12-11-18-18-30-44_f9966819976412588049618dad4b8aef.jpg" alt="Search Page" width="220" /> | <img src="Screenshots/Screenshot_2025-12-11-18-19-03-65_f9966819976412588049618dad4b8aef.jpg" alt="Wallet Page" width="220" /> | <img src="Screenshots/Screenshot_2025-12-11-18-25-46-73_f9966819976412588049618dad4b8aef.jpg" alt="Coupons" width="220" /> |
+| <img src="Screenshots/SINTIR_EN_01_cover.png" alt="Home feed with most-watched and newest courses" width="260" /> | <img src="Screenshots/SINTIR_EN_02_teachers.png" alt="Teacher discovery" width="260" /> | <img src="Screenshots/SINTIR_EN_03_search.png" alt="Search with filters" width="260" /> |
+| <img src="Screenshots/SINTIR_EN_06_notes.png" alt="Timestamped video notes" width="260" /> | <img src="Screenshots/SINTIR_EN_08_results.png" alt="Exam results and mistakes" width="260" /> | <img src="Screenshots/SINTIR_EN_09_ratings.png" alt="Course ratings and reviews" width="260" /> |
+| <img src="Screenshots/SINTIR_EN_10_themes.png" alt="Light and dark themes" width="260" /> | <img src="Screenshots/SINTIR_EN_11_teacher-cover.png" alt="Teacher workspace overview" width="260" /> | <img src="Screenshots/SINTIR_EN_14_students.png" alt="Subscribed students and their progress" width="260" /> |
+| <img src="Screenshots/SINTIR_EN_16_coupons.png" alt="Course coupons" width="260" /> | <img src="Screenshots/SINTIR_EN_17_reviews-reports.png" alt="Reviews and content reports" width="260" /> | |
 
-| Create Course | Build Exam | Active Timed Exam |
-| :---: | :---: | :---: |
-| <img src="Screenshots/Screenshot_2025-12-11-18-21-53-34_f9966819976412588049618dad4b8aef.jpg" alt="Add Course" width="220" /> | <img src="Screenshots/Screenshot_2025-12-11-18-22-38-28_f9966819976412588049618dad4b8aef.jpg" alt="Add Exam" width="220" /> | <img src="Screenshots/Screenshot_2025-12-11-18-40-44-30_f9966819976412588049618dad4b8aef.jpg" alt="Taking Exam" width="220" /> |
+</details>
 
-| Pre-Exam Instructions | Post-Exam Analytics & Results |
-| :---: | :---: |
-| <img src="Screenshots/Screenshot_2025-12-11-18-40-39-97_f9966819976412588049618dad4b8aef.jpg" alt="Before Joining Exam" width="220" /> | <img src="Screenshots/Screenshot_2025-12-11-18-25-29-19_f9966819976412588049618dad4b8aef.jpg" alt="Result After Exam" width="220" /> |
+## Why it exists
 
-## ✨ Key Features
+*Sintir* (سنتر) is what Egyptian students call the private tutoring center they go to after school. When teachers take those lessons online, they usually stitch together WhatsApp groups, shared Drive links and manual wallet transfers. Paid videos get passed around, payments are hard to track, and nobody can see how students are actually doing.
 
-### 🎓 For Students
-- **Curated Discovery & Search:** Browse popular, newest, and interest-matched courses on the home feed, or search courses and instructors with filters for price, education level, and subscription status.
-- **Course Enrollment & Paymob Checkout:** Preview course syllabi, apply discount coupons, and complete purchases via **Paymob Unified Checkout** (supporting online cards, mobile wallets, kiosk, and cash collection).
-- **Interactive Learning Player:** Stream protected course videos using token-authenticated playback, add timestamped video notes, and read attached PDF study materials (`pdfx`) inside the app.
-- **Timed Assessments & Attempt Tracking:** Take countdown-timed exams (`stop_watch_timer`) with question navigation, attempt limits, and automated grading.
-- **Mistake Bank & Custom Practice Exams:** Review historical exam results and incorrect answers with highlighted solutions, and generate custom practice exams directly from saved mistakes.
-- **Feedback, Reporting & Support:** Rate courses, submit content reports, track payment history, and chat with support agents via real-time support tickets.
+Sintir puts that loop in one app: students discover, pay, learn and get graded; teachers publish, see who is struggling, and get paid.
 
-### 👨‍🏫 For Teachers
-- **Course & Curriculum Builder:** Create courses with metadata (subject, education level, language, pricing) and organize content into structured sections containing video lectures, downloadable files, and exams.
-- **Resumable Chunked Video Uploads:** Upload large lecture videos using byte-range chunking with automatic retry, pause/resume, and cancellation orchestrated via Supabase Edge Functions.
-- **Multi-Step Exam Authoring:** Build rich assessments with image attachments, multiple-choice options, custom durations, and maximum attempt rules.
-- **Engagement & Performance Analytics:** Track per-video attendance, inspect student video notes, and analyze exam completion rates and score distributions (`fl_chart`).
-- **Coupon & Subscriber Management:** Generate promotional course coupons, inspect enrolled students, and review or resolve student content reports.
-- **Instructor Wallet & Withdrawals:** Monitor wallet balances, total earnings, and transaction logs, and submit payout requests processed through **Paymob** via the `teacher-withdrawal` Edge Function.
+## Features
 
-## 🛡️ Engineering Highlights & Security
+**Students**
+- Home feed of most-watched, newest and interest-matched courses; search by course or teacher with price, level and subscription filters.
+- Paymob checkout with coupons, and a status screen that waits for the server to confirm the payment.
+- Video lessons with quality switching and timestamped notes; PDF materials open in the app.
+- Timed exams with question navigation and attempt limits.
+- A mistakes bank that saves every wrong answer, and lets students build a practice exam from them.
+- Ratings, reviews, content reports, payment history and live support tickets.
 
-- **Device-Bound Authentication:** Prevents unauthorized account sharing by pairing user sessions with hardware identifiers (`unique_device_identifier`) verified through `GetUserDataCubit` against Firestore user records.
-- **Anti-Capture Content Protection:** Protects proprietary educational videos and exams using `PrivacyWrapper` and `SensitivePageWrapper` (`secure_content`) to restrict unauthorized screenshots and screen recording.
-- **Encrypted Local Storage:** Secures sensitive local cache using `hive_flutter` encrypted with keys stored in `flutter_secure_storage`, paired with `hydrated_bloc` for seamless state restoration.
-- **Serverless Media & Payout Pipeline:** Keeps third-party API secrets off the client by routing video upload session creation, signed playback token generation, and teacher payouts through authenticated **Supabase Edge Functions** verified with Firebase ID tokens.
+**Teachers**
+- Course builder with sections of videos, files and exams. Editing published content sends the course back to review.
+- Resumable video uploads that you can pause, resume or cancel.
+- Exam authoring with images, answer explanations, time limits, attempt limits and an option to hide results.
+- Reports per exam and per video: attendance, pass rate, score spread and each student's notes.
+- Subscriber list, coupons, review replies and report handling.
+- A wallet showing earnings after commission, with withdrawals to mobile wallets.
 
-## 🛠 Tech Stack
+## Engineering highlights
 
-| Category | Packages & Technologies |
-| :--- | :--- |
-| **Framework & Language** | Flutter (Android, iOS, Web, Desktop scaffolding), Dart `^3.5.0` |
-| **State Management** | `flutter_bloc`, `bloc`, `hydrated_bloc`, `bloc_concurrency`, `provider` |
-| **Dependency Injection** | `get_it` |
-| **Navigation & Routing** | `go_router` (52 declarative routes with typed `state.extra` payloads) |
-| **Backend & Serverless** | Firebase Auth, Cloud Firestore, Supabase Storage, Supabase Edge Functions |
-| **Payments & Payouts** | Paymob Unified Checkout (`PayMobService` via `dio` + WebView), `teacher-withdrawal` Edge Function |
-| **Networking** | `dio`, `http` |
-| **Media & Documents** | `better_player_plus`, `video_player`, `pdfx`, `webview_flutter`, `image_picker`, `file_selector` |
-| **UI, Charts & Animations** | `fl_chart`, `percent_indicator`, `flutter_animate`, `lottie`, `skeletonizer`, `awesome_dialog`, `cached_network_image` |
-| **Security & Auth Providers** | `google_sign_in`, `flutter_facebook_auth`, `flutter_secure_storage`, `secure_content`, `unique_device_identifier`, `crypto` |
-| **Local Persistence** | `hive_flutter` (encrypted), `shared_preferences`, `path_provider` |
-| **Localization** | `flutter_localizations`, `intl`, `localingo` (Arabic, English, French) |
-| **Functional & Utilities** | `dartz`, `meta`, `uuid`, `stop_watch_timer`, `restart_app` |
-| **Testing & Linting** | `flutter_test`, `test_api`, `flutter_lints` |
+### Payments the app cannot tamper with
 
-## 🏗 Architecture
+The app never sends a price.
 
-Sintir is structured around **Clean Architecture** principles with a **feature-first** modular organization. Features encapsulate their own **Presentation** (Views, Widgets, Cubits), **Domain** (Entities, Repository Interfaces), and **Data** (Models, Repository Implementations) layers, while cross-cutting repositories and service abstractions live in `lib/Core/`.
+1. `course-checkout-quote` computes the amount on the server, in integer piastres, from the course and coupon stored in Firestore.
+2. `create-course-payment` takes an idempotency key and reserves the coupon and the attempt *before* it calls Paymob.
+3. Enrollment is written only on the server, after Paymob's HMAC-signed callback or a server-side status inquiry confirms the payment.
+4. The app polls `get-course-payment-status`. The payment redirect is never treated as proof.
 
-~~~mermaid
-flowchart LR
-    UI[Presentation Layer<br/>Views & Widgets] --> Cubit[State Management<br/>BLoC / Cubit]
-    Cubit --> Repo[Domain / Core<br/>Repository Interface]
-    Repo --> RepoImpl[Data Layer<br/>Repository Implementation]
-    RepoImpl --> DB[Shared Services<br/>Firestore / Storage / Paymob]
-    DB --> FB[(Firebase<br/>Auth & Firestore)]
-    DB --> SB[(Supabase<br/>Storage & Edge Functions)]
-~~~
+### Exams graded on the server
 
-### Example Data Flow: Course Video Playback & Upload
-1. **View:** `DisplayCourseVedioVeiw` dispatches playback or upload actions to `VideoItemCubit`.
-2. **Cubit:** `VideoItemCubit` coordinates state transitions and invokes `VideoItemRepo`.
-3. **Repository:** `VideoItemRepoImpli` queries item metadata via `FirebaseFirestoreservice` and delegates media operations to `VideoUploadService`.
-4. **Service & Edge Functions:** `VideoUploadService` attaches the user's Firebase ID token, calls Supabase Edge Functions (`create-video-upload`, `resume-video-upload`, or `get-video-playback-token`), and handles byte-range chunk uploads with automatic retries.
+The answer key lives in a private subdocument that only the teacher and the server can read, so the questions a student downloads carry no `isCorrect` flags. `submit-test-attempt` checks enrollment and the attempt limit, grades, and writes the teacher's copy, the student's copy and the wrong answers in one Firestore transaction. Result IDs are `{uid}-attempt-{n}`, so two simultaneous submissions can't both use the last attempt.
 
-### Folder Structure
+### Paid video delivery
 
-~~~text
+- **Upload:** teachers upload straight to Mux through signed direct uploads, in 5 MiB chunks that resume after a dropped connection. A Mux webhook marks the lesson ready.
+- **Playback:** `get-video-playback-token` checks *both* enrollment records (the student's and the course's) before it signs a short-lived playback token. The app keeps that token in memory only.
+
+### Green bars on Android video
+
+Some hardware decoders pad frames to an aligned size; an 854 px-wide video decodes into an 896 px buffer. On Android 10+, Flutter's texture path ignores the decoder's crop rectangle ([flutter#144407](https://github.com/flutter/flutter/issues/144407)), so the padding showed up as a green bar along the edge.
+
+I replaced `better_player_plus` with `video_player` and render through a platform view (`SurfaceView`). Android composites that surface itself, with the crop applied. A native surface doesn't follow Flutter's page transitions, so full screen became its own route with no animation.
+
+### Security in layers
+
+- **Firestore rules:** 482 lines, covered by 32 emulator tests with names like *"sign-up cannot pick a privileged role or status"* and *"teachers cannot approve themselves or fake stats"*.
+- **Server checks:** every Edge Function call carries a Firebase ID token, which the function verifies.
+- **Local data:** the cached profile is stored in Hive, encrypted with a key held in `flutter_secure_storage`. The app goes black in the recent-apps switcher.
+- **Not active yet:** blocking screenshots on lesson and exam screens, and biometric re-auth on the wallet, are built (`SensitivePageWrapper` over `secure_content`) but switched off in the current build. See [Project status](#project-status).
+
+### Arabic first, any screen size
+
+Arabic (right-to-left) is the default locale, and about 1,280 strings are also translated into English and French. Layouts adapt at 600, 840 and 1200 dp and switch to side navigation on tablets and desktops.
+
+## Decisions and lessons
+
+- **Two backends, on purpose.** Reads and live updates go straight to Firestore, protected by security rules. Anything that moves money, decides a grade or unlocks paid video runs in a Supabase Edge Function. The client stays thin and is never trusted with prices or answers. The cost is two platforms to deploy and secure.
+- **Grading moved off the device.** Older exam documents carried the `isCorrect` flags, so the answer key shipped with every exam. Moving grading into `submit-test-attempt` closed that hole. The function still reads the legacy format, so old exams keep working.
+- **Payments get interrupted.** If a student closes the app mid-payment, the server keeps the reservation. On the next try it answers `checkout_in_progress`, and the app offers to resume that checkout instead of starting a second one.
+- **Owning the video player.** Moving to `video_player` meant writing my own controls, quality switching and full-screen route. In return, I control how the video surface is rendered, which is what the green-bar fix needed.
+
+## Architecture
+
+```mermaid
+flowchart TB
+  Repos["Flutter app (this repo)<br/>Screens → Cubits → Repositories"]
+  subgraph Firebase
+    Auth[Auth]
+    FS[(Firestore)]
+  end
+  subgraph Supabase
+    EF[Edge Functions]
+    ST[(Storage)]
+  end
+  Repos --> Auth
+  Repos -->|reads and live updates| FS
+  Repos -->|calls with ID token| EF
+  Repos -->|signed URLs| ST
+  EF --> FS
+  EF <-->|uploads, webhooks, tokens| Mux
+  EF <-->|checkout, callbacks, payouts| Paymob
+```
+
+The Edge Functions and the admin dashboard live in [Sintir_DashBoard](https://github.com/Ziad-Gamal12/Sintir_DashBoard/tree/master/supabase/functions).
+
+**Conventions in this codebase**
+- **Folders:** feature-first; most features are split into `data`, `domain` and `presentation`.
+- **State:** one Cubit per screen or flow. App-wide state (theme, locale, favourites, network) is provided at the root, and theme and locale persist across launches with `hydrated_bloc`.
+- **Errors:** repositories return `Either<Failure, T>` (`dartz`), so failures reach the UI as values, not exceptions.
+- **Wiring:** dependencies are registered in `get_it`, and navigation uses `go_router` (61 routes).
+
+```text
 lib/
 ├── Core/
-│   ├── Entities/          # Shared domain entities across features
-│   ├── Errors/            # Failure classes and exception mapping
-│   ├── Helper/            # UI helpers, dialogs, and formatters
-│   ├── Managers/          # Shared Cubits (video item, theme, locale, user data)
-│   ├── Models/            # Shared data models and serialization
-│   ├── Themes/            # Light and Dark ThemeData definitions
-│   ├── repos/             # Shared repository contracts and implementations
-│   ├── services/          # Firebase, Supabase, Paymob, VideoUpload, and GetIt setup
-│   ├── utils/             # GoRouter (App_router.dart), Backend_EndPoints, AppTextStyles
-│   └── widgets/           # Reusable UI components and Paymob WebView checkout
-├── Features/
-│   ├── Auth/
-│   ├── ChoosingUserKind/
-│   ├── ContentCreatorProfile/
-│   ├── CourseManagementAndInteractionFeature/
-│   ├── Favorites/
-│   ├── Home/
-│   ├── MyCourses/
-│   ├── MyMistakes/
-│   ├── MyResults/
-│   ├── MyTransactions/
-│   ├── Profile/
-│   ├── Search/
-│   ├── Splash/
-│   ├── StudentOnboarding/
-│   ├── Subscribtion/
-│   ├── Support/
-│   ├── TeaacherOnBoarding/
-│   └── TeacherWorkEnvironment/
-├── generated/             # Generated localization delegates
-├── l10n/                  # Localization ARB resources
-├── constant.dart          # App-wide constants and public config keys
-├── firebase_options.dart  # Platform-specific Firebase initialization options
-├── locale_keys.dart       # Localization key definitions
-└── main.dart              # App entry point, storage encryption, and DI bootstrap
-~~~
+│   ├── services/     Firebase, Supabase, Edge Functions, Hive, video upload, DI setup
+│   ├── repos/        repositories shared across features (courses, checkout, tests, video)
+│   ├── Managers/     app-wide cubits
+│   ├── responsive/   breakpoints and max-width helpers
+│   ├── widgets/      shared UI, the video player, privacy wrappers
+│   └── utils/        router, text styles, formatters
+├── Features/         20 modules: Auth, Home, Search, MyCourses, MyMistakes, MyResults,
+│                     CourseManagementAndInteractionFeature, TeacherWorkEnvironment, Support, …
+└── main.dart
+```
 
-## ☁️ Backend & Cloud Services
+## Tech stack
 
-### Cloud Firestore Collections
-- **Top-Level Collections:** `Users`, `Students`, `Teachers`, `Courses`, `Transactions`, `Tickets`
-- **User & Teacher Subcollections:** Enrolled courses, `Favorites`, `MyResults`, `MyMistakes`, and `Transactions`
-- **Course Subcollections:** `Sections` → `Items` (`Results`, `JoinedBy`, `VideoNotes`), `Subscribers`, `Reports`, `Feedbacks`, and `Coupons`
-- **Support Subcollections:** `Tickets/{ticketId}/Messages`
+| Area | Choice | Why |
+| :--- | :--- | :--- |
+| App | Flutter 3.38, Dart 3.10 | One codebase for phones, tablets and desktop layouts |
+| State and DI | `flutter_bloc` (Cubit), `hydrated_bloc`, `get_it` | States per screen are explicit and easy to test |
+| Navigation | `go_router` | Declarative routes with typed arguments |
+| Data and auth | Firebase Auth (email, Google, Facebook), Cloud Firestore | Live updates and per-document security rules |
+| Server logic | Supabase Edge Functions (TypeScript, Deno) | Trusted code for prices, grades and video tokens |
+| Video | Mux, `video_player` | HLS streaming with signed playback |
+| Payments | Paymob | Egyptian cards and mobile wallets, plus payouts |
+| Storage | Supabase Storage, Hive (encrypted), `flutter_secure_storage` | Course files, and the cached profile on the device |
+| UI | `fl_chart`, `skeletonizer`, `flutter_animate`, `lottie` | Reports, loading states, motion |
 
-### Supabase Storage & Edge Functions
-- **Storage Buckets:** `Courses`, `Users`, `DefaultBucket`, `Support` (used for course thumbnails, PDFs, profile avatars, and support attachments)
-- **Edge Functions:**
-  | Edge Function | Responsibility |
-  | :--- | :--- |
-  | `create-video-upload` | Validates teacher authorization and initializes a chunked video upload session |
-  | `resume-video-upload` | Checks upload status and resumes interrupted byte-range transfers |
-  | `cancel-video-upload` | Cancels an active upload session and cleans up pending video records |
-  | `get-video-playback-token` | Verifies student enrollment and issues a signed video playback token |
-  | `teacher-withdrawal` | Processes instructor wallet payout requests through Paymob |
+## Testing
 
-## 🎨 Localization & Theming
+There are 355 tests in 55 files (237 unit, 118 widget). They cover checkout and payment recovery, the teacher wallet and withdrawal idempotency, course reviews, exam results, live-updating lists, localization, and light/dark theme parity.
 
-- **Supported Languages:** Arabic (`ar` — default startup locale with RTL layout), English (`en`), and French (`fr`), managed by `LocaleCubit`.
-- **Adaptive Theming:** Full Light and Dark mode palettes defined in `lib/Core/Themes/app_theme.dart` and persisted across app launches via `ThemeCubit` and `HydratedBloc`.
-- **Typography:** Uses **Cairo** and **Poppins** font families (`Regular`, `Medium`, `SemiBold`, `Bold`) paired with a centralized `AppTextStyles` scale.
+**Current state:** the last local run (24 Nov 2026) passed 293 tests and failed 94, and there's no CI yet. Most of the failures come from the test harness, not the app:
 
-## 🚀 Getting Started
+- Once the translation files grew past 50 KB, Flutter started decoding them on a background isolate. That isolate never finishes inside `testWidgets`' fake async, so those widget tests render an empty screen.
+- The fix (`preloadL10nAssets` and `pumpLocalized` in `test/helpers/widget_test_helpers.dart`) is applied to the live-update tests but not yet to the rest.
+- Two more tests still expect widgets from before a redesign.
 
-### Prerequisites
-- [Flutter SDK](https://docs.flutter.dev/get-started/install) with Dart `^3.5.0`
-- Configured **Firebase** project (Authentication & Cloud Firestore)
-- Configured **Supabase** project (Storage & Edge Functions)
-- **Paymob** merchant account (for course checkout and wallet integrations)
+```bash
+flutter test          # needs lib/constant.dart (see Getting started)
+```
 
-### Installation & Setup
+The Firestore rules have their own suite, which runs against the emulator. It needs Node.js and Java:
 
-1. **Clone the repository**
-   ~~~bash
+```bash
+cd firestore-tests
+npm ci
+npm test
+```
+
+## Getting started
+
+**Prerequisites:**
+- Flutter 3.38.1+ (Dart 3.10+)
+- An Android device or emulator
+- A Firebase project and a Supabase project
+
+Mux and Paymob keys live in the Edge Functions, not in the app.
+
+1. Clone and install dependencies:
+   ```bash
    git clone https://github.com/Ziad-Gamal12/Sintir.git
    cd Sintir
-   ~~~
-
-2. **Install dependencies**
-   ~~~bash
    flutter pub get
-   ~~~
+   ```
+2. Create `lib/constant.dart`. It's gitignored because it holds the Supabase keys. Only those two values matter; the UI values can be anything:
+   ```dart
+   import 'package:flutter/material.dart';
 
-3. **Configure Firebase**
-   - Generate your `lib/firebase_options.dart` via the FlutterFire CLI (`flutterfire configure`) or place your platform files in:
-     - Android: `android/app/google-services.json`
-     - iOS: `ios/Runner/GoogleService-Info.plist`
+   const double KHorizontalPadding = 16;
+   const double KVerticalPadding = 16;
+   const Color KMainColor = Color(0xFF2F5BEA);
+   const Color KSecondaryColor = Color(0xFFFF8A00);
 
-4. **Configure Environment & Service Keys**
-   - Provide your Supabase and Paymob configuration values in `.env` / `lib/constant.dart`:
-     ~~~text
-     supaBaseUrl
-     supaAnonKey
-     PayMobTestPublicKey
-     PayMobSecretKey
-     PaymobWalletsIntegrationID
-     PaymobOnlineCardIntegrationID
-     PaymobAcceptKioskIntegrationID
-     PaymobCashCollectionIntegrationID
-     ~~~
-   > **Security Note:** Never commit production secret keys to version control. Keep `.env` excluded via `.gitignore`.
-
-5. **Run the application**
-   ~~~bash
+   const String currentVersion = '1.0.0';
+   const String supaBaseUrl = 'https://<project-ref>.supabase.co';
+   const String supaAnonKey = '<supabase-anon-key>';
+   ```
+3. Point the app at your Firebase project with `flutterfire configure`. This rewrites `lib/firebase_options.dart` and `android/app/google-services.json`.
+4. Deploy this repo's `firestore.rules`, and the Edge Functions from the [dashboard repo](https://github.com/Ziad-Gamal12/Sintir_DashBoard).
+5. Run the app:
+   ```bash
    flutter run
-   ~~~
+   ```
 
-### Build & Test Commands
+## Project status
 
-~~~bash
-# Run unit tests (course actions, report helpers, video models, withdrawal logic)
-flutter test
+All the student and teacher flows above are built. The app is in pre-release testing on Android. Before the first Play Store release:
 
-# Build release artifacts
-flutter build apk
-flutter build appbundle
-flutter build ios
-~~~
+- [ ] Re-enable screenshot blocking and biometric re-auth (built, switched off in `SensitivePageWrapper`)
+- [ ] Final application ID and a signed release build (currently `com.example.sintir`)
+- [ ] Roll the localization test helper out to every widget test, then add CI that runs `flutter analyze` and both suites on every push
+- [ ] iOS build (the code is cross-platform, but only Android has been built and tested)
+- [ ] Move the pending-withdrawal retry data from SharedPreferences to secure storage
 
-## 👤 Author
+## Author
 
-**Ziad Gamal** — Flutter Developer
+**Ziad Gamal**, Flutter developer
 
-- **LinkedIn:** [linkedin.com/in/ziad-gamal-54b052375](https://www.linkedin.com/in/ziad-gamal-54b052375/)
-- **GitHub:** [@Ziad-Gamal12](https://github.com/Ziad-Gamal12)
-- **Email:** [ziadgamal.work@gmail.com](mailto:ziadgamal.work@gmail.com)
+[LinkedIn](https://www.linkedin.com/in/ziad-gamal-54b052375/) · [GitHub](https://github.com/Ziad-Gamal12) · [ziadgamal.work@gmail.com](mailto:ziadgamal.work@gmail.com)
