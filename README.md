@@ -35,7 +35,7 @@ Designed and built solo · 20 feature modules · about 84k lines of Dart
 | <img src="Screenshots/SINTIR_EN_12_upload.png" alt="Teacher uploading a lesson video with progress" width="260" /> | <img src="Screenshots/SINTIR_EN_13_auto-exams.png" alt="Exam report with pass rate and score analysis" width="260" /> | <img src="Screenshots/SINTIR_EN_15_earnings.png" alt="Teacher wallet with balance and withdrawals" width="260" /> |
 
 <details>
-<summary><b>All 16 screens</b></summary>
+<summary><b>11 more screens</b></summary>
 
 | | | |
 | :---: | :---: | :---: |
