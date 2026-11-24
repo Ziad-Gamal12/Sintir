@@ -27,6 +27,8 @@ class MyCoursesViewBodyMyCoursesGridView extends StatelessWidget {
       builder: (context, isLoading) {
         return GridView.builder(
           controller: scrollController,
+          // Keeps pull-to-refresh working when the courses don't fill the screen.
+          physics: const AlwaysScrollableScrollPhysics(),
           itemCount: isLoading ? myCourses.length + 1 : myCourses.length,
           gridDelegate: CourseCardGridDelegate.of(context, spacing: 20),
           itemBuilder: (context, index) =>

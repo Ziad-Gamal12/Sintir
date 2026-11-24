@@ -42,6 +42,12 @@ class _MyCoursesViewBodyState extends State<MyCoursesViewBody> {
     return false;
   }
 
+  Future<void> _refresh() async {
+    final cubit = context.read<MyCoursesCubit>();
+    if (cubit.state is GetMyCoursesLoading) return;
+    await cubit.getMyCourses(isPaginate: false);
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -62,16 +68,20 @@ class _MyCoursesViewBodyState extends State<MyCoursesViewBody> {
           setState(() {});
         }
       },
-      child: Padding(
-        padding: EdgeInsets.only(
-          top: 20,
-          bottom: context.hasSideNavigation ? 20 : 92,
-          left: KHorizontalPadding,
-          right: KHorizontalPadding,
-        ),
-        child: MyCoursesViewBodyGridView(
-          myCourses: myCourses,
-          scrollController: scrollController,
+      child: RefreshIndicator(
+        color: KMainColor,
+        onRefresh: _refresh,
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: 20,
+            bottom: context.hasSideNavigation ? 20 : 92,
+            left: KHorizontalPadding,
+            right: KHorizontalPadding,
+          ),
+          child: MyCoursesViewBodyGridView(
+            myCourses: myCourses,
+            scrollController: scrollController,
+          ),
         ),
       ),
     );
