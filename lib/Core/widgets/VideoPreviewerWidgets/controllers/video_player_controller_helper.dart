@@ -1,15 +1,25 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:better_player_plus/better_player_plus.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:video_player/video_player.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 enum PremiumVideoPlayerStatus { idle, initializing, ready, failed }
 
-typedef PlayerControlsBuilder = Widget Function(BetterPlayerController player);
-
-class CustomVideoControllerBetter extends ChangeNotifier {
-  BetterPlayerController? betterPlayerController;
+/// Owns the [VideoPlayerController] behind `PremiumVideoPlayer`: loading,
+/// retry, quality switching, speed and keeping the screen awake.
+///
+/// On Android the video is rendered through a platform view (a native
+/// `SurfaceView`) instead of a Flutter texture. On API 29+ the texture path
+/// is backed by `ImageReader`, which ignores the decoder's crop rectangle
+/// (see `SurfaceProducer.handlesCropAndRotation()` and
+/// https://github.com/flutter/flutter/issues/144407). Hardware decoders that
+/// pad frames to an aligned size (e.g. 854 px wide → 896 px buffer) then show
+/// the uninitialised padding as a green bar on the right or bottom edge.
+/// A `SurfaceView` is composited by Android itself, which honours the crop.
+class PremiumVideoController extends ChangeNotifier {
+  VideoPlayerController? player;
 
   PremiumVideoPlayerStatus status = PremiumVideoPlayerStatus.idle;
   String? errorMessage;
@@ -19,13 +29,16 @@ class CustomVideoControllerBetter extends ChangeNotifier {
   int? selectedHeight;
   double speed = 1.0;
 
+  /// Whether playback has started at least once for the current video.
+  /// The poster is shown until then.
+  bool hasStarted = false;
+
   double _aspectRatio = 16 / 9;
 
   String? _videoUrl;
   File? _file;
-  String? _posterUrl;
   bool _autoPlay = false;
-  PlayerControlsBuilder? _controlsBuilder;
+  Future<String> Function(int? height)? _urlResolver;
 
   /// Quality options (e.g. 720, 540, 480, 360), highest first.
   List<int> _qualities = const [];
@@ -34,11 +47,17 @@ class CustomVideoControllerBetter extends ChangeNotifier {
   Duration? _resumeAt;
 
   bool _disposed = false;
+  bool _wakelockOn = false;
   int _session = 0;
-  Future<String> Function(int? height)? _urlResolver;
+
   double get aspectRatio => _aspectRatio;
   bool get hasError => status == PremiumVideoPlayerStatus.failed;
   List<int> get qualityHeights => _qualities;
+
+  static VideoViewType get _viewType =>
+      !kIsWeb && defaultTargetPlatform == TargetPlatform.android
+      ? VideoViewType.platformView
+      : VideoViewType.textureView;
 
   @override
   void notifyListeners() {
@@ -53,38 +72,33 @@ class CustomVideoControllerBetter extends ChangeNotifier {
   Future<void> initializeVideo({
     required String? videoUrl,
     required File? file,
-    required PlayerControlsBuilder controlsBuilder,
     List<int> qualities = const [],
     Future<String> Function(int? height)? urlResolver,
-    String? posterUrl,
-    ValueChanged<Duration>? onDurationChanged,
     double? aspectRatio,
     bool autoPlay = false,
   }) async {
     _urlResolver = urlResolver;
     _videoUrl = videoUrl;
     _file = file;
-    _posterUrl = posterUrl;
     _autoPlay = autoPlay;
-    _controlsBuilder = controlsBuilder;
     _qualities = qualities;
 
     if (aspectRatio != null && aspectRatio > 0) _aspectRatio = aspectRatio;
 
     selectedHeight = null;
     speed = 1.0;
+    hasStarted = false;
     _resumeAt = null;
 
     await _start(play: autoPlay);
   }
 
   /// Creates a fresh player. Used for the first load, retry and quality
-  /// switches. A new player means a new texture, so the frame size is
-  /// always correct (no green bars).
+  /// switches.
   Future<void> _start({required bool play}) async {
     final session = ++_session;
 
-    _disposeCurrentPlayer();
+    _releasePlayer();
 
     status = PremiumVideoPlayerStatus.initializing;
     errorMessage = null;
@@ -92,46 +106,36 @@ class CustomVideoControllerBetter extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final controller = BetterPlayerController(_buildConfiguration(play));
-      controller.addEventsListener(_handlePlayerEvent);
-      betterPlayerController = controller;
+      final controller = _createPlayer();
+      player = controller;
+      controller.addListener(_onPlayerValue);
 
-      await controller
-          .setupDataSource(_buildDataSource())
-          .timeout(const Duration(seconds: 25));
-
+      await controller.initialize().timeout(const Duration(seconds: 25));
       if (_isStale(session)) return;
 
-      if (controller.isVideoInitialized() == true) _handleInitialized();
-    } catch (e) {
+      await _handleInitialized(controller, play: play, session: session);
+    } catch (_) {
       if (_isStale(session)) return;
       _setFailure();
     }
   }
 
-  BetterPlayerDataSource _buildDataSource() {
-    if (_file == null && (_videoUrl == null || _videoUrl!.trim().isEmpty)) {
+  VideoPlayerController _createPlayer() {
+    final file = _file;
+    if (file != null) {
+      return VideoPlayerController.file(file, viewType: _viewType);
+    }
+
+    final raw = _videoUrl?.trim();
+    if (raw == null || raw.isEmpty) {
       throw ArgumentError('A video file or playback URL is required.');
     }
 
-    if (_file != null) {
-      return BetterPlayerDataSource(
-        BetterPlayerDataSourceType.file,
-        _file!.path,
-      );
-    }
-
-    final url = _withQuality(_videoUrl!.trim());
-    final isHls = _isHlsUrl(url);
-
-    return BetterPlayerDataSource(
-      BetterPlayerDataSourceType.network,
-      url,
-      videoFormat: isHls ? BetterPlayerVideoFormat.hls : null,
-      useAsmsTracks: false, // we no longer switch tracks inside the player
-      useAsmsAudioTracks: false,
-      useAsmsSubtitles: false,
-      liveStream: false,
+    final url = _withQuality(raw);
+    return VideoPlayerController.networkUrl(
+      Uri.parse(url),
+      formatHint: _isHlsUrl(url) ? VideoFormat.hls : null,
+      viewType: _viewType,
     );
   }
 
@@ -156,82 +160,64 @@ class CustomVideoControllerBetter extends ChangeNotifier {
         .toString();
   }
 
-  BetterPlayerConfiguration _buildConfiguration(bool play) {
-    final poster = _posterUrl;
-    final builder = _controlsBuilder;
+  Future<void> _handleInitialized(
+    VideoPlayerController controller, {
+    required bool play,
+    required int session,
+  }) async {
+    final value = controller.value;
 
-    return BetterPlayerConfiguration(
-      autoPlay: play,
-      looping: false,
-      allowedScreenSleep: false,
-      fit: BoxFit.contain,
-      aspectRatio: _aspectRatio,
-      autoDispose: false,
-      handleLifecycle: true,
-      autoDetectFullscreenDeviceOrientation: true,
-      autoDetectFullscreenAspectRatio: true,
-      placeholder: poster == null
-          ? null
-          : Image.network(
-              poster,
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: double.infinity,
-              errorBuilder: (_, _, _) => const SizedBox.shrink(),
-            ),
-      // After a quality switch, show the video frame, not the poster.
-      showPlaceholderUntilPlay: poster != null && _resumeAt == null,
-      controlsConfiguration: BetterPlayerControlsConfiguration(
-        playerTheme: BetterPlayerTheme.custom,
-        customControlsBuilder: builder == null
-            ? null
-            : (player, onVisibilityChanged, config) => builder(player),
-      ),
-    );
-  }
+    if (value.duration > Duration.zero) duration = value.duration;
 
-  // ───────── events ─────────
-
-  void _handlePlayerEvent(BetterPlayerEvent event) {
-    switch (event.betterPlayerEventType) {
-      case BetterPlayerEventType.initialized:
-        _handleInitialized();
-        break;
-      case BetterPlayerEventType.exception:
-        _setFailure();
-        break;
-      default:
-        break;
-    }
-  }
-
-  void _handleInitialized() {
-    final player = betterPlayerController;
-    if (player == null) {
-      _setFailure();
-      return;
-    }
-
-    final value = player.videoPlayerController?.value;
-
-    final d = value?.duration;
-    if (d != null && d != Duration.zero) duration = d;
-
-    final size = value?.size;
-    if (size != null && size.width > 0 && size.height > 0) {
+    final size = value.size;
+    if (size.width > 0 && size.height > 0) {
       _aspectRatio = size.width / size.height;
     }
 
     // Restore state after a quality switch / retry.
-    if (speed != 1.0) player.setSpeed(speed);
+    if (speed != 1.0) await controller.setPlaybackSpeed(speed);
 
     final resume = _resumeAt;
     _resumeAt = null;
-    if (resume != null && resume > Duration.zero) player.seekTo(resume);
+    if (resume != null && resume > Duration.zero) {
+      await controller.seekTo(resume);
+    }
+    if (_isStale(session)) return;
 
     status = PremiumVideoPlayerStatus.ready;
     errorMessage = null;
     notifyListeners();
+
+    if (play) await controller.play();
+  }
+
+  // ───────── player events ─────────
+
+  void _onPlayerValue() {
+    final value = player?.value;
+    if (value == null) return;
+
+    // Errors during initialize() are handled by _start's catch.
+    if (value.hasError && status == PremiumVideoPlayerStatus.ready) {
+      _setFailure();
+      return;
+    }
+
+    _syncWakelock(value.isPlaying);
+
+    if (value.isPlaying && !hasStarted) {
+      hasStarted = true;
+      notifyListeners();
+    }
+  }
+
+  /// Keeps the screen on while a video is playing.
+  void _syncWakelock(bool on) {
+    if (on == _wakelockOn) return;
+    _wakelockOn = on;
+    unawaited(
+      (on ? WakelockPlus.enable() : WakelockPlus.disable()).catchError((_) {}),
+    );
   }
 
   // ───────── actions ─────────
@@ -241,60 +227,58 @@ class CustomVideoControllerBetter extends ChangeNotifier {
     await _start(play: _autoPlay);
   }
 
-  Future<void> play() async => betterPlayerController?.play();
-  Future<void> pause() async => betterPlayerController?.pause();
-  Future<void> seekTo(Duration p) async => betterPlayerController?.seekTo(p);
+  Future<void> play() async => player?.play();
+  Future<void> pause() async => player?.pause();
+  Future<void> seekTo(Duration p) async => player?.seekTo(p);
 
   Future<void> setSpeed(double value) async {
-    await betterPlayerController?.setSpeed(value);
+    await player?.setPlaybackSpeed(value);
     speed = value;
     notifyListeners();
   }
 
   /// [height] null = Auto. Rebuilds the player at the same position.
   Future<void> setQuality(int? height) async {
-    final player = betterPlayerController;
-    if (player == null || height == selectedHeight) return;
+    final current = player;
+    if (current == null || height == selectedHeight) return;
 
     String? freshUrl;
     final resolver = _urlResolver;
     if (resolver != null) {
       try {
         freshUrl = await resolver(height);
-      } catch (e) {
+      } catch (_) {
         return;
       }
-      if (_disposed || betterPlayerController != player) return;
+      if (_disposed || player != current) return;
     }
 
-    final wasPlaying = player.isPlaying() ?? false;
-    final position = await player.videoPlayerController?.position;
-    if (_disposed || betterPlayerController != player) return;
-
-    if (player.isFullScreen) {
-      player.exitFullScreen();
-      await Future<void>.delayed(const Duration(milliseconds: 300));
-      if (_disposed || betterPlayerController != player) return;
-    }
+    final wasPlaying = current.value.isPlaying;
+    final position = await current.position;
+    if (_disposed || player != current) return;
 
     if (freshUrl != null) _videoUrl = freshUrl;
     selectedHeight = height;
     _resumeAt = position;
+    // Show the video frame after a switch, not the poster.
+    hasStarted = true;
     await _start(play: wasPlaying);
   }
 
   // ───────── cleanup ─────────
 
-  void _disposeCurrentPlayer() {
-    final controller = betterPlayerController;
+  void _releasePlayer() {
+    final controller = player;
     if (controller == null) return;
 
-    controller.removeEventsListener(_handlePlayerEvent);
-    controller.dispose(forceDispose: true);
-    betterPlayerController = null;
+    player = null;
+    controller.removeListener(_onPlayerValue);
+    _syncWakelock(false);
+    unawaited(controller.dispose());
   }
 
   void _setFailure() {
+    _syncWakelock(false);
     status = PremiumVideoPlayerStatus.failed;
     errorMessage = 'Unable to load video.';
     notifyListeners();
@@ -309,7 +293,7 @@ class CustomVideoControllerBetter extends ChangeNotifier {
   void dispose() {
     _disposed = true;
     _session++;
-    _disposeCurrentPlayer();
+    _releasePlayer();
     super.dispose();
   }
 }

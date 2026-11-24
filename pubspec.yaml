@@ -31,7 +31,6 @@ environment:
 dependencies:
   animated_custom_dropdown: ^4.0.0
   awesome_dialog: ^3.3.0
-  better_player_plus: ^2.0.0
   bloc: ^9.0.1
   bloc_concurrency: ^0.3.0
   cached_network_image: ^4.0.5
@@ -90,7 +89,10 @@ dependencies:
   unique_device_identifier: ^2.1.0
   url_launcher: ^6.3.2
   uuid: ^4.5.1
+  # Android renders through VideoViewType.platformView (SurfaceView) to avoid
+  # green padding bars from the ImageReader texture path.
   video_player: ^2.10.0
+  wakelock_plus: ^1.8.2
   webview_flutter: ^4.10.0
 
 dependency_overrides:

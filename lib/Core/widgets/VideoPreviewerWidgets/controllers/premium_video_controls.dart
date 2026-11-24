@@ -1,19 +1,23 @@
 import 'dart:async';
 
-import 'package:better_player_plus/better_player_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/widgets/VideoPreviewerWidgets/controllers/PremiumVideoStrings.dart';
 import 'package:sintir/Core/widgets/VideoPreviewerWidgets/controllers/video_player_controller_helper.dart';
+import 'package:video_player/video_player.dart';
 
 class PremiumVideoControls extends StatefulWidget {
-  final BetterPlayerController player;
-  final CustomVideoControllerBetter controller;
+  final VideoPlayerController player;
+  final PremiumVideoController controller;
   final String? title;
+  final bool isFullScreen;
+  final VoidCallback onToggleFullScreen;
 
   const PremiumVideoControls({
     super.key,
     required this.player,
     required this.controller,
+    required this.isFullScreen,
+    required this.onToggleFullScreen,
     this.title,
   });
 
@@ -26,7 +30,6 @@ class _PremiumVideoControlsState extends State<PremiumVideoControls> {
   static const _skip = Duration(seconds: 10);
   static const _speeds = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
 
-  ChangeNotifier? _videoNotifier;
   Timer? _hideTimer;
   Timer? _hintTimer;
 
@@ -38,28 +41,40 @@ class _PremiumVideoControlsState extends State<PremiumVideoControls> {
   @override
   void initState() {
     super.initState();
-    _videoNotifier = widget.player.videoPlayerController;
-    _videoNotifier?.addListener(_onTick);
+    widget.player.addListener(_onTick);
     widget.controller.addListener(_onTick);
+  }
+
+  @override
+  void didUpdateWidget(covariant PremiumVideoControls oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.player != widget.player) {
+      oldWidget.player.removeListener(_onTick);
+      widget.player.addListener(_onTick);
+    }
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller.removeListener(_onTick);
+      widget.controller.addListener(_onTick);
+    }
   }
 
   @override
   void dispose() {
     _hideTimer?.cancel();
     _hintTimer?.cancel();
-    _videoNotifier?.removeListener(_onTick);
+    widget.player.removeListener(_onTick);
     widget.controller.removeListener(_onTick);
     super.dispose();
   }
 
   // ───────── state helpers ─────────
 
-  dynamic get _value => widget.player.videoPlayerController?.value;
+  VideoPlayerValue get _value => widget.player.value;
 
-  bool get _isPlaying => (_value?.isPlaying as bool?) ?? false;
-  bool get _isBuffering => (_value?.isBuffering as bool?) ?? false;
-  Duration get _position => (_value?.position as Duration?) ?? Duration.zero;
-  Duration get _total => (_value?.duration as Duration?) ?? Duration.zero;
+  bool get _isPlaying => _value.isPlaying;
+  bool get _isBuffering => _value.isBuffering;
+  Duration get _position => _value.position;
+  Duration get _total => _value.duration;
 
   bool get _ended =>
       _total > Duration.zero &&
@@ -67,9 +82,9 @@ class _PremiumVideoControlsState extends State<PremiumVideoControls> {
       !_isPlaying;
 
   Duration get _buffered {
-    final ranges = _value?.buffered as List?;
-    if (ranges == null || ranges.isEmpty) return Duration.zero;
-    return ranges.last.end as Duration;
+    final ranges = _value.buffered;
+    if (ranges.isEmpty) return Duration.zero;
+    return ranges.last.end;
   }
 
   void _onTick() {
@@ -260,7 +275,7 @@ class _PremiumVideoControlsState extends State<PremiumVideoControls> {
 
   @override
   Widget build(BuildContext context) {
-    final isFull = widget.player.isFullScreen;
+    final isFull = widget.isFullScreen;
     final pad = isFull ? MediaQuery.of(context).padding : EdgeInsets.zero;
     final buffering = _isBuffering && !_ended;
 
@@ -507,11 +522,11 @@ class _PremiumVideoControlsState extends State<PremiumVideoControls> {
             IconButton(
               visualDensity: VisualDensity.compact,
               onPressed: () {
-                widget.player.toggleFullScreen();
+                widget.onToggleFullScreen();
                 _scheduleHide();
               },
               icon: Icon(
-                widget.player.isFullScreen
+                widget.isFullScreen
                     ? Icons.fullscreen_exit_rounded
                     : Icons.fullscreen_rounded,
                 color: Colors.white,
