@@ -229,16 +229,6 @@ Mux and Paymob keys live in the Edge Functions, not in the app.
    flutter run
    ```
 
-## Project status
-
-All the student and teacher flows above are built. The app is in pre-release testing on Android. Before the first Play Store release:
-
-- [ ] Re-enable screenshot blocking and biometric re-auth (built, switched off in `SensitivePageWrapper`)
-- [ ] Final application ID and a signed release build (currently `com.example.sintir`)
-- [ ] Roll the localization test helper out to every widget test, then add CI that runs `flutter analyze` and both suites on every push
-- [ ] iOS build (the code is cross-platform, but only Android has been built and tested)
-- [ ] Move the pending-withdrawal retry data from SharedPreferences to secure storage
-
 ## Author
 
 **Ziad Gamal**, Flutter developer
