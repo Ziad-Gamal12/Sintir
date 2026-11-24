@@ -31,35 +31,59 @@ class _CourseTestLayoutState extends State<CourseTestLayout> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(
-              horizontal: KHorizontalPadding, vertical: KVerticalPadding),
+            horizontal: KHorizontalPadding,
+            vertical: KVerticalPadding,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TestQuestionDisplay(
-                test: widget.test,
-                currentQuestionIndex: widget.currentQuestionIndex,
-                onAnswerSelected: (answer) {
-                  widget.test.questions[widget.currentQuestionIndex]
-                      .selectedSolution = answer;
-                  setState(() {});
-                  if (widget.currentQuestionIndex <
-                      widget.test.questions.length - 1) {
-                    widget.onQuestionChanged(widget.currentQuestionIndex + 1);
-                    setState(() {
-                      widget.test.questions[widget.currentQuestionIndex + 1]
-                          .isOpened = true;
-                    });
-                  }
-                },
+              // Scrolls when wrapped answers or a stacked image make the
+              // question taller than the screen.
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TestQuestionDisplay(
+                        test: widget.test,
+                        currentQuestionIndex: widget.currentQuestionIndex,
+                        onAnswerSelected: (answer) {
+                          widget
+                                  .test
+                                  .questions[widget.currentQuestionIndex]
+                                  .selectedSolution =
+                              answer;
+                          setState(() {});
+                          if (widget.currentQuestionIndex <
+                              widget.test.questions.length - 1) {
+                            widget.onQuestionChanged(
+                              widget.currentQuestionIndex + 1,
+                            );
+                            setState(() {
+                              widget
+                                      .test
+                                      .questions[widget.currentQuestionIndex +
+                                          1]
+                                      .isOpened =
+                                  true;
+                            });
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 24),
+                      QuestionNavigationBar(
+                        currentIndex: widget.currentQuestionIndex,
+                        onSelect: widget.onQuestionChanged,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              const SizedBox(height: 24),
-              QuestionNavigationBar(
-                currentIndex: widget.currentQuestionIndex,
-                onSelect: widget.onQuestionChanged,
-              ),
-              const Spacer(),
+              const SizedBox(height: 16),
               CourseTestControlPanel(
-                  stopWatchTimer: widget.stopWatchTimer, exam: widget.test),
+                stopWatchTimer: widget.stopWatchTimer,
+                exam: widget.test,
+              ),
             ],
           ),
         ),

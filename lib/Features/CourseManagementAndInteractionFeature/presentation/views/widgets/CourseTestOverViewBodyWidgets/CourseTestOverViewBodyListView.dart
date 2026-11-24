@@ -23,50 +23,44 @@ class _CourseTestOverViewBodyListViewState
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TestOverViewCubit, TestOverViewState>(
-        buildWhen: (previous, current) {
-      return current is GetUserPerviousResultsOfExamSuccess ||
-          current is GetUserPerviousResultsOfExamFailure ||
-          current is GetUserPerviousResultsOfExamLoading;
-    }, listener: (context, state) {
-      if (state is GetUserPerviousResultsOfExamSuccess) {
-        results = state.resultsOfExamsList;
-      }
-    }, builder: (context, state) {
-      if (state is GetUserPerviousResultsOfExamLoading) {
-        return const SliverToBoxAdapter(
-          child: Center(
-            child: CircularProgressIndicator(
-              color: KMainColor,
+      buildWhen: (previous, current) {
+        return current is GetUserPerviousResultsOfExamSuccess ||
+            current is GetUserPerviousResultsOfExamFailure ||
+            current is GetUserPerviousResultsOfExamLoading;
+      },
+      listener: (context, state) {
+        if (state is GetUserPerviousResultsOfExamSuccess) {
+          results = state.resultsOfExamsList;
+        }
+      },
+      builder: (context, state) {
+        if (state is GetUserPerviousResultsOfExamLoading) {
+          return const SliverToBoxAdapter(
+            child: Center(child: CircularProgressIndicator(color: KMainColor)),
+          );
+        } else if (state is GetUserPerviousResultsOfExamFailure) {
+          return SliverToBoxAdapter(
+            child: Center(
+              child: CustomErrorWidget(errormessage: state.errMessage),
             ),
-          ),
-        );
-      } else if (state is GetUserPerviousResultsOfExamFailure) {
-        return SliverToBoxAdapter(
-          child: Center(
-            child: CustomErrorWidget(
-              errormessage: state.errMessage,
-            ),
-          ),
-        );
-      } else if (state is GetUserPerviousResultsOfExamSuccess &&
-          results.isEmpty) {
-        return SliverToBoxAdapter(
-            child: CustomEmptyWidget(text: LocaleKeys.noResults));
-      } else {
-        return SliverList.builder(
-          itemCount: results.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: AspectRatio(
-                  aspectRatio: 2 / 1.75,
-                  child: StudentResultCard(
-                    testResultEntity: results[index],
-                  )),
-            );
-          },
-        );
-      }
-    });
+          );
+        } else if (state is GetUserPerviousResultsOfExamSuccess &&
+            results.isEmpty) {
+          return SliverToBoxAdapter(
+            child: CustomEmptyWidget(text: LocaleKeys.noResults),
+          );
+        } else {
+          return SliverList.builder(
+            itemCount: results.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: StudentResultCard(testResultEntity: results[index]),
+              );
+            },
+          );
+        }
+      },
+    );
   }
 }

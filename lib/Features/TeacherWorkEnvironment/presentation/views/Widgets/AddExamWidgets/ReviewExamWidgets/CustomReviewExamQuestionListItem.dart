@@ -30,7 +30,6 @@ class CustomReviewExamQuestionListItem extends StatelessWidget {
         ? Colors.grey.shade600
         : Colors.grey.shade400;
 
-    // Adjust shadow for Dark Mode
     final List<BoxShadow> boxShadows = isDarkMode
         ? [
             BoxShadow(
@@ -62,7 +61,6 @@ class CustomReviewExamQuestionListItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ExamQuestionInputsQuestionHeader is already theme-aware
           ExamQuestionInputsQuestionHeader(
             index: index,
             totalQuestions: totalQuestions,
@@ -79,7 +77,6 @@ class CustomReviewExamQuestionListItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                // CustomReviewQuestionSolutionList needs to be theme-aware internally
                 child: Customreviewquestionsolutionlist(
                   solutions: question.solutions,
                 ),

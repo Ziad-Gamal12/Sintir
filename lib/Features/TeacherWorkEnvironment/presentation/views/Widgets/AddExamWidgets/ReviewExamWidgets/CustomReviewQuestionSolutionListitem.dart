@@ -33,34 +33,24 @@ class CustomReviewQuestionSolutionListItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        // Use theme-aware success background color
         color: correctBackgroundColor,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          // Use theme-aware border color
-          color: correctBorderColor,
-          width: 1,
-        ),
+        border: Border.all(color: correctBorderColor, width: 1),
       ),
       child: Row(
         children: [
-          // CustomReviewQuestionSolutionIndicator needs to be theme-aware internally
           CustomReviewQuestionSolutionIndicator(isCorrect: isCorrect),
           const SizedBox(width: 10),
-          Text(
-            solution.answer,
-            style: AppTextStyles(context).regular14.copyWith(
-              // Use green for correct, otherwise use defaultTextColor
-              color: isCorrect ? correctColor : defaultTextColor,
+          Expanded(
+            child: Text(
+              solution.answer,
+              style: AppTextStyles(context).regular14.copyWith(
+                color: isCorrect ? correctColor : defaultTextColor,
+              ),
             ),
           ),
           const Spacer(),
-          if (isCorrect)
-            Icon(
-              Icons.check,
-              // Use the theme-aware correct color for the icon
-              color: correctColor,
-            ),
+          if (isCorrect) Icon(Icons.check, color: correctColor),
         ],
       ),
     );
