@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -69,11 +71,28 @@ class VideoItemRepoImpli implements VideoItemRepo {
       _activeSession = null;
       _activeUploadKey = null;
       return right(completedSession);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      // The user sees a generic message; keep the real reason (server error
+      // code or the HTTP status from the upload) in the log.
+      log(
+        'Video upload failed: ${_describeUploadError(e)}',
+        name: 'VideoItemRepo',
+        error: e,
+        stackTrace: stackTrace,
+      );
       return left(ServerFailure(message: LocaleKeys.errorOccurredMessage));
     } finally {
       _activeCancelToken = null;
     }
+  }
+
+  String _describeUploadError(Object error) {
+    if (error is DioException) {
+      final status = error.response?.statusCode;
+      return 'upload request ${error.type.name}'
+          '${status == null ? '' : ' (HTTP $status)'}';
+    }
+    return error.toString();
   }
 
   @override
