@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/CouponStatusBadgeIconEntity.dart';
+import 'package:sintir/locale_keys.dart';
 
 enum CourseCouponStatus {
   active,
@@ -25,10 +26,11 @@ extension CourseCouponAvailabilityStyle on CourseCouponAvailability {
 
   String get label {
     return switch (this) {
-      CourseCouponAvailability.active => 'نشط',
-      CourseCouponAvailability.inactive => 'غير نشط',
-      CourseCouponAvailability.expired => 'منتهي الصلاحية',
-      CourseCouponAvailability.usageLimitReached => 'أكتمل الحد',
+      CourseCouponAvailability.active => LocaleKeys.couponStatusActive,
+      CourseCouponAvailability.inactive => LocaleKeys.couponStatusInactive,
+      CourseCouponAvailability.expired => LocaleKeys.couponStatusExpired,
+      CourseCouponAvailability.usageLimitReached =>
+        LocaleKeys.couponLimitReached,
     };
   }
 

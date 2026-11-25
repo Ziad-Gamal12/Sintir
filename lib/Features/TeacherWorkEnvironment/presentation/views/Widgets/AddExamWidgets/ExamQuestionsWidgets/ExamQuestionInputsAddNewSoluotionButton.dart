@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
+import 'package:sintir/Core/Themes/brand_palette.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/constant.dart';
 import 'package:sintir/locale_keys.dart';
 
 class ExamQuestionInputsAddNewSoluotionButton extends StatelessWidget {
@@ -16,23 +16,18 @@ class ExamQuestionInputsAddNewSoluotionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
+    final color = BrandPalette.of(context).link;
+    return TextButton.icon(
+      onPressed: () {
         context.read<TestItemCubit>().addSolution(
           question: coursetestquestionentity,
         );
       },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.add, color: KMainColor),
-          Text(
-            LocaleKeys.addAnswer,
-            style: AppTextStyles(
-              context,
-            ).semiBold14.copyWith(color: KMainColor),
-          ),
-        ],
+      style: TextButton.styleFrom(foregroundColor: color),
+      icon: const Icon(Icons.add_rounded),
+      label: Text(
+        LocaleKeys.addAnswer,
+        style: AppTextStyles(context).semiBold14.copyWith(color: color),
       ),
     );
   }

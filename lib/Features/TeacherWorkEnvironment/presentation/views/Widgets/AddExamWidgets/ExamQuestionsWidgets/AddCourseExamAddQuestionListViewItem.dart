@@ -1,92 +1,156 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ExamQuestionsWidgets/AddCourseExamAddQuestionExplainationImage.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ExamQuestionsWidgets/AddCourseExamAddQuestionImage.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ExamQuestionsWidgets/ExamQuestionInputs.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkspace/TeachespaceEnvironmentTheme.dart';
 
-class AddCourseExamAddQuestionListViewItem extends StatelessWidget {
+/// The editing card for one exam question.
+///
+/// Its layout follows the card's own width: the two image pickers sit side by
+/// side from [sideBySideMinWidth] up and stack below it, with tighter padding
+/// on narrow cards. When the teacher tries to continue without marking a
+/// correct answer here, the card turns red and, if it is the first such
+/// question, scrolls into view.
+class AddCourseExamAddQuestionListViewItem extends StatefulWidget {
   const AddCourseExamAddQuestionListViewItem({
     super.key,
     required this.coursetestquestionentity,
     required this.coursetestentity,
     required this.index,
   });
+
   final CourseTestQuestionEntity coursetestquestionentity;
   final CourseTestEntity coursetestentity;
   final int index;
+
+  static const double sideBySideMinWidth = 520;
+
+  @override
+  State<AddCourseExamAddQuestionListViewItem> createState() =>
+      _AddCourseExamAddQuestionListViewItemState();
+}
+
+class _AddCourseExamAddQuestionListViewItemState
+    extends State<AddCourseExamAddQuestionListViewItem> {
+  bool _flagged = false;
+
+  CourseTestQuestionEntity get _question => widget.coursetestquestionentity;
+
+  void _onMissingCorrectAnswer(
+    BuildContext context,
+    ExamQuestionsMissingCorrectAnswer state,
+  ) {
+    setState(() => _flagged = true);
+    if (identical(state.questions.first, _question)) {
+      Scrollable.ensureVisible(
+        context,
+        alignment: 0.05,
+        duration: const Duration(milliseconds: 450),
+        curve: Curves.easeOutCubic,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // 💡 Fetching theme colors dynamically for Dark Mode compatibility
-    final ThemeData theme = Theme.of(context);
-    final bool isDarkMode = theme.brightness == Brightness.dark;
+    final tokens = WorkEnvironmentThemeExtension.of(context);
 
-    // Use a theme-aware color for the container background
-    final Color containerColor = theme.cardColor;
+    // Built once per build() and reused by the BlocBuilder below, which then
+    // only repaints the card's border when the correct answer changes.
+    final content = LayoutBuilder(
+      builder: (context, constraints) {
+        final sideBySide =
+            constraints.maxWidth >=
+            AddCourseExamAddQuestionListViewItem.sideBySideMinWidth;
+        final questionImage = AddCourseExamAddQuestionImage(
+          coursetestquestionentity: _question,
+        );
+        final explanationImage = AddCourseExamAddQuestionExplainationImage(
+          coursetestquestionentity: _question,
+        );
 
-    // Use a theme-aware color for the border and divider
-    // In Dark Mode, a lighter shade is needed; in Light Mode, a darker shade.
-    final Color borderColor = isDarkMode
-        ? Colors.grey.shade600
-        : Colors.grey.shade300;
-
-    // Adjust shadow for Dark Mode: typically, shadows are less intense or omitted.
-    final List<BoxShadow> boxShadows = isDarkMode
-        ? [
-            // Lighter/fewer shadow in dark mode for a flat look
-            const BoxShadow(
-              color: Colors.white10,
-              blurRadius: 2,
-              offset: Offset(0, 2),
-            ),
-          ]
-        : const [
-            // Standard shadow for light mode
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 4,
-              offset: Offset(0, 4),
-            ),
-          ];
+        return Padding(
+          padding: EdgeInsets.all(sideBySide ? 20 : 14),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ExamQuestionInputs(
+                index: widget.index,
+                coursetestquestionentity: _question,
+                courseTestEntity: widget.coursetestentity,
+                flagged: _flagged,
+              ),
+              const SizedBox(height: 12),
+              Divider(height: 1, color: tokens.cardBorder),
+              const SizedBox(height: 16),
+              if (sideBySide)
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: questionImage),
+                    const SizedBox(width: 12),
+                    Expanded(child: explanationImage),
+                  ],
+                )
+              else ...[
+                questionImage,
+                const SizedBox(height: 12),
+                explanationImage,
+              ],
+            ],
+          ),
+        );
+      },
+    );
 
     return Dismissible(
-      key: ObjectKey(coursetestquestionentity),
+      key: ObjectKey(_question),
       onDismissed: (direction) => removeQuestionItem(context),
       direction: DismissDirection.horizontal,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: boxShadows,
-          color: containerColor,
-          border: Border.all(color: borderColor, width: 1),
+      child: BlocConsumer<TestItemCubit, TestItemState>(
+        listenWhen: (previous, current) =>
+            current is ExamQuestionsMissingCorrectAnswer &&
+            current.questions.any((q) => identical(q, _question)),
+        listener: (context, state) => _onMissingCorrectAnswer(
+          context,
+          state as ExamQuestionsMissingCorrectAnswer,
         ),
-        child: Column(
-          children: [
-            ExamQuestionInputs(
-              index: index,
-              coursetestquestionentity: coursetestquestionentity,
-              courseTestEntity: coursetestentity,
+        buildWhen: (previous, current) =>
+            current is AddCourseSectionTestSolutionChanged ||
+            current is AddCourseSectionTestSolutionRemoved,
+        builder: (context, state) {
+          final showError = _flagged && !_question.hasCorrectAnswer;
+          return AnimatedContainer(
+            duration: const Duration(milliseconds: 250),
+            decoration: BoxDecoration(
+              color: tokens.cardBackground,
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(
+                color: showError ? tokens.dangerForeground : tokens.cardBorder,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: tokens.cardShadow,
+                  blurRadius: 16,
+                  offset: const Offset(0, 6),
+                ),
+              ],
             ),
-            Divider(color: borderColor, thickness: 1),
-            AddCourseExamAddQuestionImage(
-              coursetestquestionentity: coursetestquestionentity,
-            ),
-            Divider(color: borderColor, thickness: 1),
-            AddCourseExamAddQuestionExplainationImage(
-              coursetestquestionentity: coursetestquestionentity,
-            ),
-          ],
-        ),
+            child: content,
+          );
+        },
       ),
     );
   }
 
   void removeQuestionItem(BuildContext context) {
     context.read<TestItemCubit>().removeQuestion(
-      question: coursetestquestionentity,
-      coursetestentity: coursetestentity,
+      question: _question,
+      coursetestentity: widget.coursetestentity,
     );
   }
 }

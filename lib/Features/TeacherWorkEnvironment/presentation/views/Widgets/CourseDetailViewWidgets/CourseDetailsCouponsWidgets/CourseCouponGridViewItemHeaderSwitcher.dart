@@ -4,6 +4,7 @@ import 'package:sintir/Core/Enums/CourseCouponEnum.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseCouponEntity.dart';
 import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/coupon_item_actions_cubit/coupon_item_actions_cubit.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseCouponGridViewItemHeaderSwitcher extends StatefulWidget {
   const CourseCouponGridViewItemHeaderSwitcher({
@@ -45,7 +46,7 @@ class _CourseCouponGridViewItemHeaderSwitcherState
       if (mounted) {
         CustomSnackBar.show(
           context,
-          message: 'Failed to update coupon. Please try again.',
+          message: LocaleKeys.couponUpdateError,
           type: SnackType.error,
         );
       }

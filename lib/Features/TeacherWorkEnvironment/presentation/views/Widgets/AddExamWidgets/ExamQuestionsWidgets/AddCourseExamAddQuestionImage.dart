@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
-import 'package:sintir/Core/utils/imageAssets.dart';
-import 'package:sintir/Core/utils/textStyles.dart';
-import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
+import 'package:sintir/Core/helper/ShowSnackBar.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ExamQuestionsWidgets/ExamQuestionImageTile.dart';
 import 'package:sintir/locale_keys.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
+/// The image shown with the question. The question holds the picked file;
+/// the cubit's pick states only refresh this question's tile.
 class AddCourseExamAddQuestionImage extends StatefulWidget {
   const AddCourseExamAddQuestionImage({
     super.key,
     required this.coursetestquestionentity,
   });
+
   final CourseTestQuestionEntity coursetestquestionentity;
+
   @override
   State<AddCourseExamAddQuestionImage> createState() =>
       _AddCourseExamAddQuestionImageState();
@@ -21,77 +23,38 @@ class AddCourseExamAddQuestionImage extends StatefulWidget {
 
 class _AddCourseExamAddQuestionImageState
     extends State<AddCourseExamAddQuestionImage> {
+  CourseTestQuestionEntity get _question => widget.coursetestquestionentity;
+
+  bool _isForThisQuestion(TestItemState state) => switch (state) {
+    PickQuestionImageLoading(:final question) ||
+    PickQuestionImageSuccess(:final question) ||
+    PickQuestionImageFailure(:final question) => identical(question, _question),
+    _ => false,
+  };
+
   @override
   Widget build(BuildContext context) {
-    // Get the current theme to determine text color
-    final ThemeData theme = Theme.of(context);
-    // Use the primary text color, which is usually dark in Light Mode and light in Dark Mode
-    final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
-    // Use cardColor, which is a good default for container backgrounds (e.g., white in light mode, dark gray in dark mode)
-    final Color containerColor = theme.cardColor;
-
-    return InkWell(
-      onTap: () {
-        context.read<TestItemCubit>().pickQuestionImage();
-      },
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.only(
-          top: 20,
-          left: 27,
-          right: 27,
-          bottom: 29,
-        ),
-        decoration: BoxDecoration(
-          color: containerColor,
-          borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10),
-          ),
-        ),
-        child: BlocBuilder<TestItemCubit, TestItemState>(
-          buildWhen: (previous, current) {
-            if (current is PickQuestionImageSuccess ||
-                current is PickQuestionImageFailure ||
-                current is PickQuestionImageLoading) {
-              return true;
-            }
-            return false;
-          },
-          builder: (context, state) {
-            if (state is PickQuestionImageFailure) {
-              return CustomErrorWidget(errormessage: state.errMessage);
-            } else if (state is PickQuestionImageSuccess) {
-              widget.coursetestquestionentity.imageFile = state.file;
-              return Image.file(state.file, fit: BoxFit.cover);
-            } else {
-              return Skeletonizer(
-                enabled: state is PickQuestionImageLoading,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      Assets.assetsIconsAddImageIcon,
-                      height: 25,
-                      width: 25,
-                      color: primaryTextColor,
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      LocaleKeys.questionImage,
-                      textAlign: TextAlign.center,
-                      style: AppTextStyles(
-                        context,
-                      ).semiBold12.copyWith(color: primaryTextColor),
-                    ),
-                  ],
-                ),
-              );
-            }
-          },
-        ),
+    return BlocConsumer<TestItemCubit, TestItemState>(
+      listenWhen: (previous, current) =>
+          current is PickQuestionImageFailure && _isForThisQuestion(current),
+      listener: (context, state) => CustomSnackBar.show(
+        context,
+        message: (state as PickQuestionImageFailure).errMessage,
+        type: SnackType.error,
       ),
+      buildWhen: (previous, current) => _isForThisQuestion(current),
+      builder: (context, state) {
+        return ExamQuestionImageTile(
+          label: LocaleKeys.questionImage,
+          file: _question.imageFile,
+          isLoading:
+              state is PickQuestionImageLoading && _isForThisQuestion(state),
+          onPick: () => context.read<TestItemCubit>().pickQuestionImage(
+            question: _question,
+          ),
+          onRemove: () => setState(() => _question.imageFile = null),
+        );
+      },
     );
   }
 }

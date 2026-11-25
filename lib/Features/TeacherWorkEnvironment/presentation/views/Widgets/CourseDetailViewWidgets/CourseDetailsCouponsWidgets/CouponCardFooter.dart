@@ -21,10 +21,13 @@ class CouponCardFooter extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CourseCouponGridViewItemExpiry(
-              expirationDate: coupon.expiryDate,
-              hasReachedLimit: coupon.hasReachedUsageLimit,
+            Flexible(
+              child: CourseCouponGridViewItemExpiry(
+                expirationDate: coupon.expiryDate,
+                hasReachedLimit: coupon.hasReachedUsageLimit,
+              ),
             ),
+            const SizedBox(width: 8),
             CouponItemUsage(
               usedCount: coupon.usedCount,
               usageLimit: coupon.usageLimit,

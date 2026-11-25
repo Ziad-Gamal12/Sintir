@@ -282,28 +282,66 @@ class TestItemCubit extends Cubit<TestItemState> {
     emit(ResizeQuestionsImageSuccess(imageUrl: image, isFilled: isFilled));
   }
 
-  Future<void> pickQuestionImage() async {
-    emit(PickQuestionImageLoading());
+  /// Points the question cards at [questions], which have no correct answer
+  /// marked, so they can flag themselves and the first can scroll into view.
+  void flagQuestionsMissingCorrectAnswer({
+    required List<CourseTestQuestionEntity> questions,
+  }) {
+    emit(
+      ExamQuestionsMissingCorrectAnswer(
+        questions: List.unmodifiable(questions),
+      ),
+    );
+  }
+
+  /// Picks the image shown with [question] and stores it on the question.
+  Future<void> pickQuestionImage({
+    required CourseTestQuestionEntity question,
+  }) async {
+    emit(PickQuestionImageLoading(question: question));
     final result = await assetspickerrepo.pickImageFromGallery();
+    if (isClosed) return;
     result.fold(
       (failure) {
-        emit(PickQuestionImageFailure(errMessage: failure.message));
+        emit(
+          PickQuestionImageFailure(
+            question: question,
+            errMessage: failure.message,
+          ),
+        );
       },
       (pickedImage) {
-        emit(PickQuestionImageSuccess(file: pickedImage));
+        question.imageFile = pickedImage;
+        emit(PickQuestionImageSuccess(question: question, file: pickedImage));
       },
     );
   }
 
-  Future<void> pickQuestionSolutionImage() async {
-    emit(PickQuestionSolutionImageLoading());
+  /// Picks the image that explains [question]'s answer and stores it on the
+  /// question.
+  Future<void> pickQuestionSolutionImage({
+    required CourseTestQuestionEntity question,
+  }) async {
+    emit(PickQuestionSolutionImageLoading(question: question));
     final result = await assetspickerrepo.pickImageFromGallery();
+    if (isClosed) return;
     result.fold(
       (failure) {
-        emit(PickQuestionSolutionImageFailure(errMessage: failure.message));
+        emit(
+          PickQuestionSolutionImageFailure(
+            question: question,
+            errMessage: failure.message,
+          ),
+        );
       },
       (pickedImage) {
-        emit(PickQuestionSolutionImageSuccess(file: pickedImage));
+        question.solutionFile = pickedImage;
+        emit(
+          PickQuestionSolutionImageSuccess(
+            question: question,
+            file: pickedImage,
+          ),
+        );
       },
     );
   }

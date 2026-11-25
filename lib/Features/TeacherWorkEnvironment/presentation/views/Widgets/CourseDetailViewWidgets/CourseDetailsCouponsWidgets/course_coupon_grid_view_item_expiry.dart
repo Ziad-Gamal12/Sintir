@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/utils/locale_formatter.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/locale_keys.dart';
 
@@ -14,8 +15,10 @@ class CourseCouponGridViewItemExpiry extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
+    final locale = Localizations.localeOf(context).languageCode;
 
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Icon(
           hasReachedLimit ? Icons.history : Icons.calendar_month_rounded,
@@ -25,14 +28,18 @@ class CourseCouponGridViewItemExpiry extends StatelessWidget {
           size: 16,
         ),
         SizedBox(width: 6),
-        Text(
-          "${LocaleKeys.expiresIn}: ${expirationDate.day} / ${expirationDate.month} / ${expirationDate.year}",
-          style: AppTextStyles(context).regular14.copyWith(
-            color: hasReachedLimit
-                ? primaryTextColor.withAlpha(60)
-                : primaryTextColor,
+        Flexible(
+          child: Text(
+            LocaleKeys.couponExpiresOn(
+              LocaleFormatter.date(expirationDate, locale),
+            ),
+            style: AppTextStyles(context).regular14.copyWith(
+              color: hasReachedLimit
+                  ? primaryTextColor.withAlpha(60)
+                  : primaryTextColor,
+            ),
+            overflow: TextOverflow.ellipsis,
           ),
-          overflow: TextOverflow.ellipsis,
         ),
       ],
     );

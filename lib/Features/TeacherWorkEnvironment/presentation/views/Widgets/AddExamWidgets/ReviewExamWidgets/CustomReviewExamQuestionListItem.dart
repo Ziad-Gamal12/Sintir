@@ -4,7 +4,12 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ExamQuestionsWidgets/ExamQuestionInputsQuestionHeader.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ReviewExamWidgets/CustomReviewQuestionImage.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ReviewExamWidgets/CustomReviewQuestionSolutionList.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkspace/TeachespaceEnvironmentTheme.dart';
 
+/// Read-only card for one question on the review step.
+///
+/// Without an image the answers use the full width. With one, the image sits
+/// beside the answers from [sideBySideMinWidth] up and above them below it.
 class CustomReviewExamQuestionListItem extends StatelessWidget {
   const CustomReviewExamQuestionListItem({
     super.key,
@@ -12,83 +17,82 @@ class CustomReviewExamQuestionListItem extends StatelessWidget {
     required this.totalQuestions,
     required this.index,
   });
+
   final CourseTestQuestionEntity question;
   final int totalQuestions;
   final int index;
+
+  static const double sideBySideMinWidth = 560;
+
   @override
   Widget build(BuildContext context) {
-    // Fetch theme data
-    final ThemeData theme = Theme.of(context);
-    final bool isDarkMode = theme.brightness == Brightness.dark;
-
-    // Use theme-aware colors
-    final Color containerColor = theme.cardColor;
-    final Color primaryTextColor = theme.textTheme.bodyLarge!.color!;
-
-    // Adjust border color based on mode
-    final Color borderColor = isDarkMode
-        ? Colors.grey.shade600
-        : Colors.grey.shade400;
-
-    final List<BoxShadow> boxShadows = isDarkMode
-        ? [
-            BoxShadow(
-              color: Colors.grey.withValues(alpha: 0.5),
-              blurRadius: 5,
-              spreadRadius: 1,
-              offset: const Offset(0, 2),
-            ),
-          ]
-        : [
-            BoxShadow(
-              color: Colors.grey.shade100,
-              blurRadius: 10,
-              spreadRadius: 2,
-              offset: const Offset(0, 3),
-            ),
-          ];
+    final theme = Theme.of(context);
+    final tokens = WorkEnvironmentThemeExtension.of(context);
+    final title = question.questionTitle?.trim() ?? '';
+    final image = question.imageFile;
+    final answers = Customreviewquestionsolutionlist(
+      solutions: question.solutions,
+    );
 
     return Container(
-      padding: const EdgeInsets.all(16),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: containerColor,
-        border: Border.all(color: borderColor, width: .5),
-        borderRadius: BorderRadius.circular(16),
-        // Use theme-aware shadows
-        boxShadow: boxShadows,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ExamQuestionInputsQuestionHeader(
-            index: index,
-            totalQuestions: totalQuestions,
-          ),
-          const SizedBox(height: 10),
-          Text(
-            "${question.questionTitle}؟",
-            style: AppTextStyles(context).semiBold20
-                // Use primaryTextColor instead of hardcoded Colors.black
-                .copyWith(color: primaryTextColor),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Customreviewquestionsolutionlist(
-                  solutions: question.solutions,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                // CustomReviewQuestionImage needs to be theme-aware internally
-                child: CustomReviewQuestionImage(imageFile: question.imageFile),
-              ),
-            ],
+        color: tokens.cardBackground,
+        border: Border.all(color: tokens.cardBorder),
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: tokens.cardShadow,
+            blurRadius: 16,
+            offset: const Offset(0, 6),
           ),
         ],
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final sideBySide = constraints.maxWidth >= sideBySideMinWidth;
+          return Padding(
+            padding: EdgeInsets.all(sideBySide ? 20 : 14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ExamQuestionInputsQuestionHeader(
+                  index: index,
+                  totalQuestions: totalQuestions,
+                ),
+                if (title.isNotEmpty) ...[
+                  const SizedBox(height: 12),
+                  Text(
+                    title,
+                    style: AppTextStyles(context).semiBold16.copyWith(
+                      color: theme.textTheme.bodyLarge?.color,
+                    ),
+                  ),
+                ],
+                const SizedBox(height: 16),
+                if (image == null)
+                  answers
+                else if (sideBySide)
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(flex: 3, child: answers),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        flex: 2,
+                        child: CustomReviewQuestionImage(imageFile: image),
+                      ),
+                    ],
+                  )
+                else ...[
+                  CustomReviewQuestionImage(imageFile: image),
+                  const SizedBox(height: 12),
+                  answers,
+                ],
+              ],
+            ),
+          );
+        },
       ),
     );
   }

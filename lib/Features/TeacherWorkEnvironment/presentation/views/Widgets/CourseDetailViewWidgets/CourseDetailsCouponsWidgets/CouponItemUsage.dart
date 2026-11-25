@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/utils/locale_formatter.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CouponItemUsage extends StatelessWidget {
   const CouponItemUsage({
@@ -14,18 +16,24 @@ class CouponItemUsage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final locale = Localizations.localeOf(context).languageCode;
 
     return Row(
       children: [
         Text(
-          "$usedCount من $usageLimit",
+          LocaleKeys.couponUsageCount(
+            LocaleFormatter.number(usedCount, locale),
+            LocaleFormatter.number(usageLimit, locale),
+          ),
           style: AppTextStyles(
             context,
           ).semiBold11.copyWith(color: _color(theme: theme)),
         ),
         SizedBox(width: 4),
         Text(
-          hasReachedLimit ? "(اكتمل الحد)" : "استخدام",
+          hasReachedLimit
+              ? "(${LocaleKeys.couponLimitReached})"
+              : LocaleKeys.couponUsageSuffix,
           style: AppTextStyles(
             context,
           ).regular11.copyWith(color: _color(theme: theme)),

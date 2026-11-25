@@ -26,6 +26,16 @@ class CourseTestQuestionEntity {
       this.solutionFile,
       this.selectedSolution = ""});
 
+  /// The answer the teacher marked as correct, or null if none is marked yet.
+  CourseTestQuestionSolutionEntity? get correctSolution {
+    for (final solution in solutions) {
+      if (solution.isCorrect) return solution;
+    }
+    return null;
+  }
+
+  bool get hasCorrectAnswer => correctSolution != null;
+
   void addSolution(CourseTestQuestionSolutionEntity? solution) {
     if (solution != null) {
       solutions.add(solution);

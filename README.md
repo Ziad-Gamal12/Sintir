@@ -8,9 +8,9 @@
 
 A Flutter app where Egyptian school students find teachers, buy their courses, watch video lessons and take exams, and where teachers run the business side: content, students, coupons and payouts.
 
-Designed and built solo · 20 feature modules · about 84k lines of Dart
+Designed and built solo · 20 feature modules · 61 routes · 355 tests
 
-[Demo video (MP4, 7 MB)](Screenshots/SINTIR_Demo_v3_GitHub.mp4) · [Admin dashboard repo](https://github.com/Ziad-Gamal12/Sintir_DashBoard) · [LinkedIn](https://www.linkedin.com/in/ziad-gamal-54b052375/) · [Email](mailto:ziadgamal.work@gmail.com)
+[Demo video](#demo) · [Admin dashboard repo](https://github.com/Ziad-Gamal12/Sintir_DashBoard) · [LinkedIn](https://www.linkedin.com/in/ziad-gamal-54b052375/) · [Email](mailto:ziadgamal.work@gmail.com)
 
 ![Flutter 3.38](https://img.shields.io/badge/Flutter-3.38-02569B?logo=flutter&logoColor=white)
 ![Dart 3.10](https://img.shields.io/badge/Dart-3.10-0175C2?logo=dart&logoColor=white)
@@ -18,6 +18,10 @@ Designed and built solo · 20 feature modules · about 84k lines of Dart
 ![Languages: Arabic, English, French](https://img.shields.io/badge/i18n-AR%20%C2%B7%20EN%20%C2%B7%20FR-6E56CF)
 
 </div>
+
+## Demo
+
+https://github.com/user-attachments/assets/957b618d-988b-48dc-8acc-08ecc231e90c
 
 ## What's worth a look
 
@@ -176,23 +180,28 @@ lib/
 
 There are 355 tests in 55 files (237 unit, 118 widget). They cover checkout and payment recovery, the teacher wallet and withdrawal idempotency, course reviews, exam results, live-updating lists, localization, and light/dark theme parity.
 
-**Current state:** the last local run (24 Nov 2026) passed 293 tests and failed 94, and there's no CI yet. Most of the failures come from the test harness, not the app:
-
-- Once the translation files grew past 50 KB, Flutter started decoding them on a background isolate. That isolate never finishes inside `testWidgets`' fake async, so those widget tests render an empty screen.
-- The fix (`preloadL10nAssets` and `pumpLocalized` in `test/helpers/widget_test_helpers.dart`) is applied to the live-update tests but not yet to the rest.
-- Two more tests still expect widgets from before a redesign.
-
 ```bash
 flutter test          # needs lib/constant.dart (see Getting started)
 ```
 
-The Firestore rules have their own suite, which runs against the emulator. It needs Node.js and Java:
+The Firestore rules have their own suite of 32 tests, which runs against the emulator. It needs Node.js and Java:
 
 ```bash
 cd firestore-tests
 npm ci
 npm test
 ```
+
+**Known issue in the widget tests.** Once the translation files grew past 50 KB, Flutter started decoding them on a background isolate. That isolate never finishes inside `testWidgets`' fake async, so affected widget tests render an empty screen. The fix, `preloadL10nAssets` and `pumpLocalized` in `test/helpers/widget_test_helpers.dart`, is applied to the live-update tests and is being rolled out to the rest. See [Project status](#project-status).
+
+## Project status
+
+The app runs end to end on Android: sign-up, checkout, video, exams and teacher payouts. Still open:
+
+- [ ] Roll out the localization test helpers to the remaining widget tests, and update two tests written before a redesign.
+- [ ] Add CI that runs `flutter analyze`, `flutter test` and the Firestore rules suite on every push.
+- [ ] Turn on screenshot blocking for lessons and exams, and biometric re-auth for the wallet. Both are built but switched off.
+- [ ] Test and ship an iOS build.
 
 ## Getting started
 
@@ -228,16 +237,6 @@ Mux and Paymob keys live in the Edge Functions, not in the app.
    ```bash
    flutter run
    ```
-
-## Project status
-
-All the student and teacher flows above are built. The app is in pre-release testing on Android. Before the first Play Store release:
-
-- [ ] Re-enable screenshot blocking and biometric re-auth (built, switched off in `SensitivePageWrapper`)
-- [ ] Final application ID and a signed release build (currently `com.example.sintir`)
-- [ ] Roll the localization test helper out to every widget test, then add CI that runs `flutter analyze` and both suites on every push
-- [ ] iOS build (the code is cross-platform, but only Android has been built and tested)
-- [ ] Move the pending-withdrawal retry data from SharedPreferences to secure storage
 
 ## Author
 

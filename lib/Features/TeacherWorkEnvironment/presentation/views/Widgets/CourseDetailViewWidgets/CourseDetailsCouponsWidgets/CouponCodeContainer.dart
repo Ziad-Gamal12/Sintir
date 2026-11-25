@@ -3,6 +3,7 @@ import 'package:sintir/Core/utils/textStyles.dart';
 import 'package:sintir/Core/widgets/CustomCopyToClipboard.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/course_coupon_grid_view_item_code.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/CourseDetailViewWidgets/CourseDetailsCouponsWidgets/course_coupon_grid_view_item_image.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CouponCodeContainer extends StatelessWidget {
   const CouponCodeContainer({super.key, required this.couponCode});
@@ -29,7 +30,7 @@ class CouponCodeContainer extends StatelessWidget {
                 CourseCouponGridViewItemImage(),
                 const SizedBox(width: 8),
                 Text(
-                  'الكود:',
+                  LocaleKeys.couponCodeLabel,
                   style: appTextStyles.medium12.copyWith(
                     color: isDarkMode ? Colors.white : Colors.black,
                   ),

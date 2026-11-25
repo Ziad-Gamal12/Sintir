@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/manager/coupon_item_actions_cubit/coupon_item_actions_cubit.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CouponPopupMenuButton extends StatelessWidget {
   const CouponPopupMenuButton({
@@ -43,14 +44,14 @@ class CouponPopupMenuButton extends StatelessWidget {
           padding: EdgeInsetsGeometry.zero,
           position: PopupMenuPosition.under,
           itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-            const PopupMenuItem<String>(
-              key: ValueKey('coupon-delete-action'),
+            PopupMenuItem<String>(
+              key: const ValueKey('coupon-delete-action'),
               value: 'delete',
               child: Row(
                 children: [
-                  Icon(Icons.delete, size: 16),
-                  SizedBox(width: 8),
-                  Text('حذف'),
+                  const Icon(Icons.delete, size: 16),
+                  const SizedBox(width: 8),
+                  Text(LocaleKeys.delete),
                 ],
               ),
             ),

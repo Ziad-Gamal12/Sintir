@@ -73,9 +73,14 @@ class CourseTestEntity {
       isOpened: false,
       questionTitle: "",
       solutions: [
-        CourseTestQuestionSolutionEntity(answer: "0", isCorrect: false)
+        CourseTestQuestionSolutionEntity(answer: "", isCorrect: false)
       ],
     );
     questions.add(question);
   }
+
+  /// Questions the teacher hasn't marked a correct answer for, in exam order.
+  /// An exam can't be published while this is non-empty.
+  List<CourseTestQuestionEntity> get questionsWithoutCorrectAnswer =>
+      questions.where((question) => !question.hasCorrectAnswer).toList();
 }

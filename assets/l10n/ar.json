@@ -264,6 +264,10 @@
   "select_file": "تحديد الملف",
   "add_answer": "اضافة جواب",
   "add_question": "اضافة سؤال",
+  "mark_correct_answer": "حدّد الإجابة الصحيحة",
+  "missing_correct_answers": "حدّد الإجابة الصحيحة لكل سؤال للمتابعة. الأسئلة المتبقية: {count}",
+  "change_image": "تغيير الصورة",
+  "remove_image": "إزالة الصورة",
   "add_lecture": "اضافة محاضرة",
   "content": "المحتوى",
   "enter_lecture_name_here": "يرجى كتابه اسم المحاضرة هنا ...",
@@ -1158,6 +1162,15 @@
   "coupon_ends_tomorrow": "ينتهي غدًا",
   "coupon_ends_in_two_days": "ينتهي خلال يومين",
   "coupon_ends_in_days": "ينتهي خلال {count} أيام",
+  "coupon_code_label": "الكود:",
+  "coupon_discount_off": "خصم",
+  "coupon_expires_on": "ينتهي في {date}",
+  "coupon_usage_count": "{used} من {limit}",
+  "coupon_usage_suffix": "استخدام",
+  "coupon_status_active": "نشط",
+  "coupon_status_inactive": "غير نشط",
+  "coupon_status_expired": "منتهي الصلاحية",
+  "coupon_limit_reached": "اكتمل الحد",
   "status_declined": "مرفوض",
   "filter_declined": "مرفوض ({count})",
   "card_open_reports_zero": "لا بلاغات",
@@ -1278,7 +1291,6 @@
 "required_for_contact_and_payment": "ضروري للتواصل والدفع",
 "phone_usage_info": "سنستخدم رقم هاتفك لاستكمال عملية الاشتراك والدفع.",
 "save_and_continue_subscription": "حفظ ومتابعة الاشتراك",
-"go_back": "الرجوع",
-"question_needs_correct_answer": "حدد الإجابة الصحيحة لكل سؤال."
+"go_back": "الرجوع"
 
 }

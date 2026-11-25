@@ -73,7 +73,7 @@ class GetMyMistakesCubit extends Cubit<GetMyMistakesState> {
                 e.progress.status == MistakeStatus.active ||
                 e.progress.status == MistakeStatus.improving)
             .map((e) => e.question.question)
-            .where((q) => q.solutions.any((s) => s.isCorrect))
+            .where((q) => q.hasCorrectAnswer)
             .map(_freshQuestion)
             .toList();
 

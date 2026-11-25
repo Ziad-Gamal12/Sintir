@@ -52,8 +52,11 @@ class TestAnswerKeyStore {
     // student can never practise, so such a test is never saved. This also
     // stops an edit from overwriting the key when the teacher's copy was
     // loaded without its answers.
-    if (test.questions.any((q) => !q.solutions.any((s) => s.isCorrect))) {
-      throw CustomException(message: LocaleKeys.questionNeedsCorrectAnswer);
+    final missing = test.questionsWithoutCorrectAnswer;
+    if (missing.isNotEmpty) {
+      throw CustomException(
+        message: LocaleKeys.missingCorrectAnswers('${missing.length}'),
+      );
     }
     final model = Coursetestmodel.fromEntity(test);
     final batch = _db.batch();
