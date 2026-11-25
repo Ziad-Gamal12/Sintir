@@ -1775,4 +1775,6 @@ class LocaleKeys {
   static String get saveAndContinueSubscription =>
       'save_and_continue_subscription'.tr();
   static String get goBack => 'go_back'.tr();
+  static String get questionNeedsCorrectAnswer =>
+      'question_needs_correct_answer'.tr();
 }

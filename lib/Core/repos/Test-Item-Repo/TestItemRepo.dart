@@ -13,10 +13,13 @@ abstract class Testitemrepo {
   Future<Either<Failure, void>> uploadTestQuestionsSolutionsImages({
     required List<CourseTestQuestionEntity> questions,
   });
+  /// [submissionId] is the same for every send of one sitting of the exam,
+  /// so the server stores a resent attempt once.
   Future<Either<Failure, TestResultEntity>> submitTestAttempt({
     required String courseId,
     required String sectionId,
     required CourseTestEntity test,
+    required String submissionId,
   });
   Future<Either<Failure, void>> updateTest({
     required CourseTestEntity test,

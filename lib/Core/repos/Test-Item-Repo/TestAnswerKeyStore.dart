@@ -1,7 +1,9 @@
 // ignore_for_file: file_names
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
+import 'package:sintir/Core/errors/Exceptioons.dart';
 import 'package:sintir/Core/utils/Backend_EndPoints.dart';
+import 'package:sintir/locale_keys.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/CourseTestModel.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/data/models/CoursetestquestionModel.dart';
 
@@ -45,6 +47,14 @@ class TestAnswerKeyStore {
     required String sectionId,
     required CourseTestEntity test,
   }) async {
+    // The answer key is what the server grades with. A question without a
+    // correct option marks every answer wrong and turns into a mistake the
+    // student can never practise, so such a test is never saved. This also
+    // stops an edit from overwriting the key when the teacher's copy was
+    // loaded without its answers.
+    if (test.questions.any((q) => !q.solutions.any((s) => s.isCorrect))) {
+      throw CustomException(message: LocaleKeys.questionNeedsCorrectAnswer);
+    }
     final model = Coursetestmodel.fromEntity(test);
     final batch = _db.batch();
     batch.set(

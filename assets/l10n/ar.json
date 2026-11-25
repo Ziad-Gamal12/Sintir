@@ -1278,6 +1278,7 @@
 "required_for_contact_and_payment": "ضروري للتواصل والدفع",
 "phone_usage_info": "سنستخدم رقم هاتفك لاستكمال عملية الاشتراك والدفع.",
 "save_and_continue_subscription": "حفظ ومتابعة الاشتراك",
-"go_back": "الرجوع"
+"go_back": "الرجوع",
+"question_needs_correct_answer": "حدد الإجابة الصحيحة لكل سؤال."
 
 }

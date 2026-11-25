@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
+import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/responsive/max_width_box.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
@@ -105,6 +106,17 @@ class _AddCourseSectionExamActionButtonsState
     } else if (widget.currentStep == 1) {
       if (widget.questionsFormKey.currentState != null) {
         if (widget.questionsFormKey.currentState!.validate()) {
+          // Every question needs a correct option, or the server would grade
+          // every answer wrong.
+          if (courseTestEntity.questions
+              .any((q) => !q.solutions.any((s) => s.isCorrect))) {
+            CustomSnackBar.show(
+              context,
+              message: LocaleKeys.questionNeedsCorrectAnswer,
+              type: SnackType.error,
+            );
+            return;
+          }
           widget.questionsFormKey.currentState!.save();
           widget.pageController.animateToPage(
             2,

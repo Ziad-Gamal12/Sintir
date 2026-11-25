@@ -44,8 +44,12 @@ class CourseTestListener extends StatelessWidget {
             type: SnackType.error,
           );
         } else if (state is AddTestResultSuccess) {
+          // The attempt is saved: stop the countdown so it cannot submit it
+          // again, and leave only through the dialog's button.
+          stopWatchTimer.onStopTimer();
           successdialog(
             context: context,
+            dismissible: false,
             SuccessMessage: LocaleKeys.examCompletedSuccess,
             btnOkOnPress: () {
               GoRouter.of(context).pushReplacement(

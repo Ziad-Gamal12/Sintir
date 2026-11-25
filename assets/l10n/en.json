@@ -1279,5 +1279,6 @@
 "required_for_contact_and_payment": "Required for contact & payment",
 "phone_usage_info": "We will use your phone number to complete the subscription and payment process.",
 "save_and_continue_subscription": "Save & continue subscription",
-"go_back": "Back"
+"go_back": "Back",
+"question_needs_correct_answer": "Mark the correct answer for every question."
 }

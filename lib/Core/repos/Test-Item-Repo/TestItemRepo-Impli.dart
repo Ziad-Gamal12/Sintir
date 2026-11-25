@@ -92,12 +92,14 @@ class TestItemRepoImpli implements Testitemrepo {
     required String courseId,
     required String sectionId,
     required CourseTestEntity test,
+    required String submissionId,
   }) async {
     try {
       final response = await edgeFunctions.invoke('submit-test-attempt', {
         'courseId': courseId,
         'sectionId': sectionId,
         'testId': test.id,
+        'submissionId': submissionId,
         'answers': {
           for (final question in test.questions)
             if ((question.selectedSolution ?? '').isNotEmpty)
@@ -595,14 +597,32 @@ class TestItemRepoImpli implements Testitemrepo {
     required String userId,
   }) async {
     try {
-      if (test.numberOfAttempts == null) return right(false);
+      // Same rule as submit-test-attempt: the limit stored on the test now
+      // (the teacher may have changed it since the list was loaded) against
+      // every result of this student. No orderBy: it would leave out results
+      // without the ordered field, which the server still counts.
+      final item = await databaseservice.getData(
+        requirements: FireStoreRequirmentsEntity(
+          collection: BackendEndpoints.coursesCollection,
+          docId: courseId,
+          subCollection: BackendEndpoints.sectionsSubCollection,
+          subDocId: sectionId,
+          subCollection2: BackendEndpoints.sectionItemsSubCollection,
+          sub2DocId: test.id,
+        ),
+      );
+      final stored = item.docData?["numberOfAttempts"];
+      final limit = item.docData == null
+          ? test.numberOfAttempts
+          : (stored is num && stored == stored.roundToDouble() && stored > 0
+              ? stored.toInt()
+              : null);
+      if (limit == null) return right(false);
 
       final query = {
         "filters": [
           {"field": "joinedby.uid", "operator": "==", "value": userId},
         ],
-        "orderBy": "joinedDate",
-        "descending": true,
       };
       final count = await databaseservice.getCollectionItemsCount(
         requirements: FireStoreRequirmentsEntity(
@@ -617,7 +637,7 @@ class TestItemRepoImpli implements Testitemrepo {
         query: query,
       );
 
-      return right(count >= test.numberOfAttempts!);
+      return right(count >= limit);
     } on CustomException catch (e) {
       return left(ServerFailure(message: e.message));
     } catch (e) {

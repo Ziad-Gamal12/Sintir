@@ -25,6 +25,7 @@ AwesomeDialog successdialog({
   required context,
   required String? SuccessMessage,
   required void Function()? btnOkOnPress,
+  bool dismissible = true,
 }) {
   return AwesomeDialog(
     context: context,
@@ -35,6 +36,8 @@ AwesomeDialog successdialog({
     btnOkText: LocaleKeys.confirm,
     btnOkOnPress: btnOkOnPress,
     btnOkColor: Colors.green,
+    dismissOnTouchOutside: dismissible,
+    dismissOnBackKeyPress: dismissible,
   );
 }
 

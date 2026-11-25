@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart' show FirebaseException;
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sintir/Core/Enums/courseCounterField.dart';
@@ -217,6 +218,10 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
     required String sectionId,
     required List items,
   }) async {
+    // A failure must surface: a teacher who edits a test loaded without its
+    // answers would otherwise save an answer key with no correct option.
+    // Only another teacher's course (whose key is unreadable and which this
+    // teacher cannot edit) is allowed to load without answers.
     await Future.wait(
       items.whereType<CourseTestEntity>().map((test) async {
         try {
@@ -225,7 +230,9 @@ class SectionItemsActionsRepoImpli implements SectionItemsActionsRepo {
             sectionId: sectionId,
             test: test,
           );
-        } catch (_) {}
+        } on FirebaseException catch (e) {
+          if (e.code != 'permission-denied') rethrow;
+        }
       }),
     );
   }

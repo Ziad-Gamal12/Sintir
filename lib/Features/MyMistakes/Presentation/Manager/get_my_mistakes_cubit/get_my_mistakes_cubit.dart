@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionEntity.dart';
+import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionSolutionEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestViewNavigationsRequirmentsEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/MistakeProgressEntity.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/QuestionMistakeEntity.dart';
@@ -65,12 +66,15 @@ class GetMyMistakesCubit extends Cubit<GetMyMistakesState> {
                 .where((m) => m.courseSubject == courseSubject)
                 .toList();
 
-        // 2. Filter by status (Only Active/Improving - never Mastered)
+        // 2. Only Active/Improving (never Mastered), and only questions that
+        // have a correct option: without one they can't be graded.
         List<CourseTestQuestionEntity> examQuestions = filteredList
             .where((e) =>
                 e.progress.status == MistakeStatus.active ||
                 e.progress.status == MistakeStatus.improving)
             .map((e) => e.question.question)
+            .where((q) => q.solutions.any((s) => s.isCorrect))
+            .map(_freshQuestion)
             .toList();
 
         // 3. Logic Safety Check
@@ -109,6 +113,26 @@ class GetMyMistakesCubit extends Cubit<GetMyMistakesState> {
 
         emit(CreateCustomExamSuccess(requirements: requirements));
       },
+    );
+  }
+
+  /// A copy for a new sitting: the stored mistake keeps the student's old
+  /// wrong answer, which must not come pre-selected in the practice exam.
+  static CourseTestQuestionEntity _freshQuestion(CourseTestQuestionEntity q) {
+    return CourseTestQuestionEntity(
+      questionId: q.questionId,
+      questionTitle: q.questionTitle,
+      imageUrl: q.imageUrl,
+      solutionImageUrl: q.solutionImageUrl,
+      isOpened: false,
+      selectedSolution: "",
+      solutions: [
+        for (final s in q.solutions)
+          CourseTestQuestionSolutionEntity(
+            answer: s.answer,
+            isCorrect: s.isCorrect,
+          ),
+      ],
     );
   }
 

@@ -18,6 +18,7 @@ import 'package:sintir/Core/repos/Test-Item-Repo/TestItemRepo.dart';
 import 'package:sintir/Features/Auth/Domain/Entities/UserEntity.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/domain/Entities/JoinedByEntity.dart';
 import 'package:sintir/Features/MyMistakes/Domain/Repo/MyMistakesRepo.dart';
+import 'package:uuid/uuid.dart';
 
 part 'test_item_state.dart';
 
@@ -32,6 +33,13 @@ class TestItemCubit extends Cubit<TestItemState> {
   final MyMistakesRepo myMistakesRepo;
   final SectionItemsActionsRepo sectionItemsActionsRepo;
   final Assetspickerrepo assetspickerrepo;
+
+  /// One id for this sitting of the exam. A resend of the same attempt (the
+  /// timer running out after a manual submit, a retry after a timeout) is
+  /// stored once by the server instead of using up another attempt.
+  final String submissionId = const Uuid().v4();
+  bool _submitting = false;
+  bool _submitted = false;
 
   void addNewQuestion({required CourseTestEntity coursetestentity}) {
     coursetestentity.addQuestion(null);
@@ -138,41 +146,27 @@ class TestItemCubit extends Cubit<TestItemState> {
     );
   }
 
+  /// Same scoring as the server: one point per answered question whose
+  /// selected answer is a correct one.
   int getResult({required CourseTestEntity test}) {
-    int result = 0;
-    for (var element in test.questions) {
-      String selectedAnswer = element.selectedSolution ?? "null";
-      for (var solution in element.solutions) {
-        String correctAnswer = solution.isCorrect ? solution.answer : "null";
-        if (selectedAnswer == correctAnswer) {
-          result++;
-        }
-      }
-    }
-    return result;
+    return getSolvedQuestions(test: test).where((q) => q.isCorrect).length;
   }
 
+  /// The answered questions only (an empty selection is unanswered). A
+  /// question without any correct option is graded wrong instead of throwing.
   List<ExamResultSolvedQuestionEntity> getSolvedQuestions({
     required CourseTestEntity test,
   }) {
-    List<ExamResultSolvedQuestionEntity> numbers = [];
-    for (CourseTestQuestionEntity element in test.questions) {
-      if (element.selectedSolution != null) {
-        numbers.add(
+    return [
+      for (final CourseTestQuestionEntity question in test.questions)
+        if ((question.selectedSolution ?? "").isNotEmpty)
           ExamResultSolvedQuestionEntity(
-            question: element,
-            isCorrect:
-                element.selectedSolution ==
-                element.solutions
-                    .where((element) => element.isCorrect)
-                    .first
-                    .answer,
+            question: question,
+            isCorrect: question.solutions.any(
+              (s) => s.isCorrect && s.answer == question.selectedSolution,
+            ),
           ),
-        );
-      }
-    }
-
-    return numbers;
+    ];
   }
 
   TestResultEntity prepareTestResultObject({
@@ -216,34 +210,49 @@ class TestItemCubit extends Cubit<TestItemState> {
     required bool isCourseExam,
     required String userId,
   }) async {
+    // The submit button and the exam timer both call this; only one send may
+    // be in flight, and none after the attempt is saved.
+    if (_submitting || _submitted) return;
+    _submitting = true;
     emit(AddTestResultLoading());
-    if (isCourseExam) {
-      final result = await testitemrepo.submitTestAttempt(
-        courseId: courseId,
-        sectionId: sectionId,
+    try {
+      if (isCourseExam) {
+        final result = await testitemrepo.submitTestAttempt(
+          courseId: courseId,
+          sectionId: sectionId,
+          test: test,
+          submissionId: submissionId,
+        );
+        result.fold(
+          (failure) => emit(AddTestResultFailure(errMessage: failure.message)),
+          (testResult) {
+            _submitted = true;
+            emit(AddTestResultSuccess(result: testResult));
+          },
+        );
+        return;
+      }
+      final testResult = prepareTestResultObject(
         test: test,
+        courseId: courseId,
+        courseSubject: courseSubject,
+        sectionId: sectionId,
+        user: getUserData(),
+      );
+      final result = await myMistakesRepo.storeTestMyMistakesExamResult(
+        userUID: userId,
+        testResult: testResult,
       );
       result.fold(
         (failure) => emit(AddTestResultFailure(errMessage: failure.message)),
-        (testResult) => emit(AddTestResultSuccess(result: testResult)),
+        (_) {
+          _submitted = true;
+          emit(AddTestResultSuccess(result: testResult));
+        },
       );
-      return;
+    } finally {
+      _submitting = false;
     }
-    final testResult = prepareTestResultObject(
-      test: test,
-      courseId: courseId,
-      courseSubject: courseSubject,
-      sectionId: sectionId,
-      user: getUserData(),
-    );
-    final result = await myMistakesRepo.storeTestMyMistakesExamResult(
-      userUID: userId,
-      testResult: testResult,
-    );
-    result.fold(
-      (failure) => emit(AddTestResultFailure(errMessage: failure.message)),
-      (_) => emit(AddTestResultSuccess(result: testResult)),
-    );
   }
 
   void joinToTestItem({

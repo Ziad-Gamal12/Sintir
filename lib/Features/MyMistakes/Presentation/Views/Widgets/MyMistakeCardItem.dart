@@ -15,12 +15,12 @@ class MyMistakeCardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
-    final String correctAnswer = mistake.question.question.solutions.isNotEmpty
-        ? mistake.question.question.solutions
-            .firstWhere((s) => s.isCorrect,
-                orElse: () => mistake.question.question.solutions.first)
-            .answer
-        : LocaleKeys.noSolution; // Localized fallback
+    // Never present a wrong option as the correct one.
+    final String correctAnswer = mistake.question.question.solutions
+            .where((s) => s.isCorrect)
+            .map((s) => s.answer)
+            .firstOrNull ??
+        LocaleKeys.noSolution;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
