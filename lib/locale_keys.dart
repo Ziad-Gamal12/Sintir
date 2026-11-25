@@ -717,6 +717,11 @@ class LocaleKeys {
   static String get enterAnswer => 'enter_answer'.tr();
   static String get addAnswer => 'add_answer'.tr();
   static String get addQuestion => 'add_question'.tr();
+  static String get markCorrectAnswer => 'mark_correct_answer'.tr();
+  static String missingCorrectAnswers(String count) =>
+      'missing_correct_answers'.tr(args: {'count': count});
+  static String get changeImage => 'change_image'.tr();
+  static String get removeImage => 'remove_image'.tr();
   static String get save => 'save'.tr();
   static String get questionImage => 'question_image'.tr();
   static String get answerImage => 'answer_image'.tr();
@@ -1268,6 +1273,17 @@ class LocaleKeys {
   static String get couponEndsInTwoDays => 'coupon_ends_in_two_days'.tr();
   static String couponEndsInDays(String count) =>
       'coupon_ends_in_days'.tr(args: {'count': count});
+  static String get couponCodeLabel => 'coupon_code_label'.tr();
+  static String get couponDiscountOff => 'coupon_discount_off'.tr();
+  static String couponExpiresOn(String date) =>
+      'coupon_expires_on'.tr(args: {'date': date});
+  static String couponUsageCount(String used, String limit) =>
+      'coupon_usage_count'.tr(args: {'used': used, 'limit': limit});
+  static String get couponUsageSuffix => 'coupon_usage_suffix'.tr();
+  static String get couponStatusActive => 'coupon_status_active'.tr();
+  static String get couponStatusInactive => 'coupon_status_inactive'.tr();
+  static String get couponStatusExpired => 'coupon_status_expired'.tr();
+  static String get couponLimitReached => 'coupon_limit_reached'.tr();
   static String get statusDeclined => 'status_declined'.tr();
   static String get statusHiddenByAdmin => 'status_hidden_by_admin'.tr();
   static String get statusRemovedByAdmin => 'status_removed_by_admin'.tr();

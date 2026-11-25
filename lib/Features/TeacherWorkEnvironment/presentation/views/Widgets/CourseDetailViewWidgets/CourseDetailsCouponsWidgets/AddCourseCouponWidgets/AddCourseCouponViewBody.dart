@@ -47,7 +47,6 @@ class _AddCourseCouponViewBodyState extends State<AddCourseCouponViewBody> {
     return BlocListener<CourseCouponsCubit, CourseCouponsState>(
       listener: (context, state) {
         if (state is AddCourseCouponSuccess) {
-          // Hand the saved coupon back so the coupons list shows it at once.
           GoRouter.of(context).pop(context.read<CourseCouponEntity>());
           CustomSnackBar.show(
             context,
@@ -102,10 +101,7 @@ class _AddCourseCouponViewBodyState extends State<AddCourseCouponViewBody> {
                               const AddCourseCouponUsageLimitField(),
                             ],
                           ),
-                          if (isWide) ...[
-                            const SizedBox(height: 32),
-                            button,
-                          ],
+                          if (isWide) ...[const SizedBox(height: 32), button],
                         ],
                       ),
                     ),

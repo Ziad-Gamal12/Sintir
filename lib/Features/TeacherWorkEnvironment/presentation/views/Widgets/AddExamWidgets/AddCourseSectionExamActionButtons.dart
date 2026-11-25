@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:sintir/Core/Managers/Cubits/test_item_cubit/test_item_cubit.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestEntity.dart';
+import 'package:sintir/Core/helper/ShowSnackBar.dart';
 import 'package:sintir/Core/responsive/max_width_box.dart';
+import 'package:sintir/Core/utils/locale_formatter.dart';
 import 'package:sintir/Core/widgets/CustomButton.dart';
 import 'package:sintir/Core/widgets/Custom_Loading_Widget.dart';
 import 'package:sintir/Features/TeacherWorkEnvironment/domain/Entities/OptionNavigationRequirementsEntity.dart';
@@ -32,7 +34,16 @@ class AddCourseSectionExamActionButtons extends StatefulWidget {
 
 class _AddCourseSectionExamActionButtonsState
     extends State<AddCourseSectionExamActionButtons> {
+  static const double _bottomOffset = 20;
+
   int currentIndex = 0;
+
+  /// Floats the step's feedback above this button instead of over it, so the
+  /// teacher can press it again as soon as the problem is fixed.
+  EdgeInsets get _snackBarMarginAboveButton {
+    final buttonHeight = context.size?.height ?? 56;
+    return EdgeInsets.fromLTRB(20, 10, 20, _bottomOffset + buttonHeight + 12);
+  }
 
   @override
   void initState() {
@@ -53,7 +64,7 @@ class _AddCourseSectionExamActionButtonsState
     OptionNavigationRequirementsEntity optionnavigationrequirementsentity =
         Provider.of<OptionNavigationRequirementsEntity>(context);
     return Positioned(
-      bottom: 20,
+      bottom: _bottomOffset,
       right: 16,
       left: 16,
       child: MaxWidthBox(
@@ -103,20 +114,59 @@ class _AddCourseSectionExamActionButtonsState
         }
       }
     } else if (widget.currentStep == 1) {
-      if (widget.questionsFormKey.currentState != null) {
-        if (widget.questionsFormKey.currentState!.validate()) {
-          widget.questionsFormKey.currentState!.save();
-          widget.pageController.animateToPage(
-            2,
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeInOut,
-          );
-        }
-      }
+      _submitQuestions(courseTestEntity, context);
     } else if (widget.currentStep == 2) {
       context.read<TestItemCubit>().uploadTestQuestionsImages(
         test: courseTestEntity,
       );
     }
+  }
+
+  /// Moves on to the review step only when the exam has questions, every
+  /// question has a correct answer marked, and every field is valid. Otherwise
+  /// the teacher is told what's missing and taken to the first such question.
+  void _submitQuestions(CourseTestEntity test, BuildContext context) {
+    final form = widget.questionsFormKey.currentState;
+    if (form == null) return;
+
+    if (test.questions.isEmpty) {
+      CustomSnackBar.show(
+        context,
+        message: LocaleKeys.errorNoQuestions,
+        type: SnackType.warning,
+        margin: _snackBarMarginAboveButton,
+      );
+      return;
+    }
+
+    // Validate first so empty fields are marked too, not only the answers.
+    final fieldsValid = form.validate();
+
+    final missing = test.questionsWithoutCorrectAnswer;
+    if (missing.isNotEmpty) {
+      context.read<TestItemCubit>().flagQuestionsMissingCorrectAnswer(
+        questions: missing,
+      );
+      CustomSnackBar.show(
+        context,
+        message: LocaleKeys.missingCorrectAnswers(
+          LocaleFormatter.number(
+            missing.length,
+            Localizations.localeOf(context).languageCode,
+          ),
+        ),
+        type: SnackType.warning,
+        margin: _snackBarMarginAboveButton,
+      );
+      return;
+    }
+    if (!fieldsValid) return;
+
+    form.save();
+    widget.pageController.animateToPage(
+      2,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
   }
 }

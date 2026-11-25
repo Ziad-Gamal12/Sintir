@@ -5,20 +5,19 @@ import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widget
 class Customreviewquestionsolutionlist extends StatelessWidget {
   const Customreviewquestionsolutionlist({super.key, required this.solutions});
   final List<CourseTestQuestionSolutionEntity> solutions;
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4),
-          child: CustomReviewQuestionSolutionListItem(
-            solution: solutions[index],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      spacing: 8,
+      children: [
+        for (final solution in solutions)
+          CustomReviewQuestionSolutionListItem(
+            key: ObjectKey(solution),
+            solution: solution,
           ),
-        );
-      },
-      itemCount: solutions.length,
+      ],
     );
   }
 }

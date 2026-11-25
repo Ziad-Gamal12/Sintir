@@ -6,16 +6,19 @@ import 'package:sintir/locale_keys.dart';
 enum SnackType { success, error, warning, info }
 
 class CustomSnackBar {
+  /// Pass [margin] to float the snackbar above controls pinned to the bottom
+  /// of the page, such as a step's Save button, so it doesn't cover them.
   static void show(
     BuildContext context, {
     required String message,
     required SnackType type,
+    EdgeInsetsGeometry? margin,
   }) {
     final colorData = _getSnackData(type, context);
 
     final snackBar = SnackBar(
       behavior: SnackBarBehavior.floating,
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      margin: margin ?? const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       elevation: 0,
       backgroundColor: Colors.transparent,
       duration: const Duration(seconds: 3),

@@ -70,7 +70,9 @@ class _MorePopularCoursesViewBodyState
             return CustomErrorWidget(errormessage: state.errmessage);
           } else if (state is GetPopularCoursesLoading &&
               state.isPaginate == false) {
-            return const RecentCoursesLoadingSliverGrid();
+            return CustomScrollView(
+              slivers: [const RecentCoursesLoadingSliverGrid()],
+            );
           } else if (state is GetPopularCoursesSuccess &&
               fetchedCourses.isEmpty) {
             return CustomEmptyWidget(text: LocaleKeys.noNewCourses);

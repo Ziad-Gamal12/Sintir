@@ -70,26 +70,53 @@ final class ResizeQuestionsImageSuccess extends TestItemState {
   ResizeQuestionsImageSuccess({required this.isFilled, required this.imageUrl});
 }
 
+// Image picks carry the question they were started from: every question card
+// listens to the same cubit, and only that question's card may react.
+
 final class PickQuestionImageFailure extends TestItemState {
+  final CourseTestQuestionEntity question;
   final String errMessage;
-  PickQuestionImageFailure({required this.errMessage});
+  PickQuestionImageFailure({required this.question, required this.errMessage});
 }
 
 final class PickQuestionImageSuccess extends TestItemState {
+  final CourseTestQuestionEntity question;
   final File file;
-  PickQuestionImageSuccess({required this.file});
+  PickQuestionImageSuccess({required this.question, required this.file});
 }
 
-final class PickQuestionImageLoading extends TestItemState {}
+final class PickQuestionImageLoading extends TestItemState {
+  final CourseTestQuestionEntity question;
+  PickQuestionImageLoading({required this.question});
+}
 
 final class PickQuestionSolutionImageFailure extends TestItemState {
+  final CourseTestQuestionEntity question;
   final String errMessage;
-  PickQuestionSolutionImageFailure({required this.errMessage});
+  PickQuestionSolutionImageFailure({
+    required this.question,
+    required this.errMessage,
+  });
 }
 
 final class PickQuestionSolutionImageSuccess extends TestItemState {
+  final CourseTestQuestionEntity question;
   final File file;
-  PickQuestionSolutionImageSuccess({required this.file});
+  PickQuestionSolutionImageSuccess({
+    required this.question,
+    required this.file,
+  });
 }
 
-final class PickQuestionSolutionImageLoading extends TestItemState {}
+final class PickQuestionSolutionImageLoading extends TestItemState {
+  final CourseTestQuestionEntity question;
+  PickQuestionSolutionImageLoading({required this.question});
+}
+
+/// The teacher tried to leave the questions step while [questions] (in exam
+/// order, never empty) have no correct answer marked. Those cards flag
+/// themselves and the first one scrolls into view.
+final class ExamQuestionsMissingCorrectAnswer extends TestItemState {
+  final List<CourseTestQuestionEntity> questions;
+  ExamQuestionsMissingCorrectAnswer({required this.questions});
+}

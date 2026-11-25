@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/TestResulteEntity.dart';
+import 'package:sintir/Core/responsive/breakpoints.dart';
 import 'package:sintir/Core/widgets/CustomErrorWidget.dart';
 import 'package:sintir/Core/widgets/CustomListORGridTextHeader.dart';
 import 'package:sintir/Features/CourseManagementAndInteractionFeature/presentation/manager/CheckIfResultHidden/check_if_result_hidden_cubit.dart';
@@ -54,29 +55,43 @@ class _ReviewtestresultviewbodyState extends State<Reviewtestresultviewbody> {
         } else if (state is CheckIfResultHiddenSuccessState && state.isHidden) {
           return const Center(child: CustomHiddenResultWidget());
         }
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: KHorizontalPadding),
-          child: CustomScrollView(slivers: [
-            const SliverToBoxAdapter(
-              child: ResultDetails(),
-            ),
-            const SliverToBoxAdapter(
-              child: Divider(
-                height: 40,
-                color: Color(0xffE5E5EA),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: CustomListORGridTextHeader(
-                text: "${LocaleKeys.totalQuestions} :",
-              ),
-            ),
-            const SliverToBoxAdapter(
-                child: SizedBox(
-              height: 10,
-            )),
-            const Customsolvedquestionsliverlist(),
-          ]),
+        // On tablets the content is centred at a reading width, and the side
+        // gutters stay part of the scroll view so they scroll it too.
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            final gutter = ContentWidth.gutter(
+              constraints.maxWidth,
+              ContentWidth.reading,
+              min: KHorizontalPadding,
+            );
+            return CustomScrollView(
+              slivers: [
+                SliverPadding(
+                  padding: EdgeInsets.fromLTRB(
+                    gutter,
+                    0,
+                    gutter,
+                    KVerticalPadding + MediaQuery.paddingOf(context).bottom,
+                  ),
+                  sliver: SliverMainAxisGroup(
+                    slivers: [
+                      const SliverToBoxAdapter(child: ResultDetails()),
+                      const SliverToBoxAdapter(
+                        child: Divider(height: 40, color: Color(0xffE5E5EA)),
+                      ),
+                      SliverToBoxAdapter(
+                        child: CustomListORGridTextHeader(
+                          text: "${LocaleKeys.totalQuestions} :",
+                        ),
+                      ),
+                      const SliverToBoxAdapter(child: SizedBox(height: 10)),
+                      const Customsolvedquestionsliverlist(),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
         );
       },
     );

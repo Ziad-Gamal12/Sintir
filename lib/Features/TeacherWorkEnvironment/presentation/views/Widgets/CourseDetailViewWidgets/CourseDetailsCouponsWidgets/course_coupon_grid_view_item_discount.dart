@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sintir/Core/utils/locale_formatter.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/locale_keys.dart';
 
 class CourseCouponGridViewItemDiscount extends StatelessWidget {
   const CourseCouponGridViewItemDiscount({
@@ -13,12 +15,13 @@ class CourseCouponGridViewItemDiscount extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDarkMode = theme.brightness == Brightness.dark;
+    final locale = Localizations.localeOf(context).languageCode;
     return Text.rich(
       TextSpan(
-        text: "$pecentage%",
+        text: "${LocaleFormatter.number(pecentage, locale)}%",
         children: [
           TextSpan(
-            text: " خصم",
+            text: " ${LocaleKeys.couponDiscountOff}",
             style: AppTextStyles(context).medium12.copyWith(
               color: isDarkMode
                   ? Color(0xffC4C5D6)

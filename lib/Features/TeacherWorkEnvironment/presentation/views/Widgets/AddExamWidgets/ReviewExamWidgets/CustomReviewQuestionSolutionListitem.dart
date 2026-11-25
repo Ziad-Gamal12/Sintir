@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:sintir/Core/entities/CourseEntities/CourseTestItemEntities/CourseTestQuestionSolutionEntity.dart';
 import 'package:sintir/Core/utils/textStyles.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/AddExamWidgets/ExamQuestionsWidgets/LineAlignedControl.dart';
+import 'package:sintir/Features/TeacherWorkEnvironment/presentation/views/Widgets/TeacherWorkspace/TeachespaceEnvironmentTheme.dart';
 
 import 'CustomReviewQuestionSolutionIndicator.dart';
 
+/// One answer on the review step; the correct one is tinted green. Long
+/// answers wrap with the indicator and check mark kept on the first line.
 class CustomReviewQuestionSolutionListItem extends StatelessWidget {
   const CustomReviewQuestionSolutionListItem({
     super.key,
@@ -14,43 +18,42 @@ class CustomReviewQuestionSolutionListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isCorrect = solution.isCorrect;
-    final ThemeData theme = Theme.of(context);
+    final isCorrect = solution.isCorrect;
+    final theme = Theme.of(context);
+    final tokens = WorkEnvironmentThemeExtension.of(context);
+    final correctColor = tokens.successForeground;
 
-    final Color defaultTextColor = theme.textTheme.bodyLarge!.color!;
-    final Color correctColor = Colors.green.shade600;
-    final Color correctBackgroundColor = isCorrect
-        ? Colors.green.withValues(
-            alpha: theme.brightness == Brightness.dark ? 0.2 : 0.1,
-          )
-        : Colors.transparent;
-    final Color correctBorderColor = isCorrect
-        ? correctColor.withValues(
-            alpha: theme.brightness == Brightness.dark ? 0.5 : 1.0,
-          )
-        : Colors.transparent;
+    final textStyle = AppTextStyles(context).regular14.copyWith(
+      color: isCorrect ? correctColor : theme.textTheme.bodyLarge?.color,
+    );
+    final lineStyle = DefaultTextStyle.of(context).style.merge(textStyle);
 
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
-        color: correctBackgroundColor,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: correctBorderColor, width: 1),
+        color: isCorrect ? tokens.successBackground : Colors.transparent,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: isCorrect ? tokens.successBorder : tokens.cardBorder,
+        ),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.baseline,
+        textBaseline: TextBaseline.alphabetic,
         children: [
-          CustomReviewQuestionSolutionIndicator(isCorrect: isCorrect),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(
-              solution.answer,
-              style: AppTextStyles(context).regular14.copyWith(
-                color: isCorrect ? correctColor : defaultTextColor,
-              ),
-            ),
+          LineAlignedControl(
+            style: lineStyle,
+            child: CustomReviewQuestionSolutionIndicator(isCorrect: isCorrect),
           ),
-          const Spacer(),
-          if (isCorrect) Icon(Icons.check, color: correctColor),
+          const SizedBox(width: 10),
+          Expanded(child: Text(solution.answer, style: textStyle)),
+          if (isCorrect) ...[
+            const SizedBox(width: 8),
+            LineAlignedControl(
+              style: lineStyle,
+              child: Icon(Icons.check_rounded, color: correctColor, size: 20),
+            ),
+          ],
         ],
       ),
     );

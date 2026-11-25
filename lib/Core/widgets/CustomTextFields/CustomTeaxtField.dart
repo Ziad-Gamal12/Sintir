@@ -15,6 +15,10 @@ class CustomTextField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final Function(String?)? onSaved;
   final int maxLines;
+
+  /// With [maxLines] above 1, lets the field start this short and grow as
+  /// the text wraps, instead of always being [maxLines] tall.
+  final int? minLines;
   final int? maxLength;
   final bool floatingLabel;
 
@@ -31,6 +35,7 @@ class CustomTextField extends StatelessWidget {
     this.onSaved,
     this.maxLength,
     this.maxLines = 1,
+    this.minLines,
     this.floatingLabel = false,
   });
 
@@ -60,6 +65,7 @@ class CustomTextField extends StatelessWidget {
       obscureText: obscureText,
       validator: validator,
       maxLines: maxLines,
+      minLines: minLines,
       maxLength: maxLength,
       style: styles.semiBold14.copyWith(
             color: theme.textTheme.bodyLarge?.color,
